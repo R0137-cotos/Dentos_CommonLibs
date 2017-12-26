@@ -1,0 +1,1 @@
+select id, moji from test_data;
