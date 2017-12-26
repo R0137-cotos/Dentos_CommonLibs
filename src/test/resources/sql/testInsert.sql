@@ -1,0 +1,1 @@
+insert into test_data (moji) values (:moji)
