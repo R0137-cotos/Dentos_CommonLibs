@@ -3,6 +3,7 @@ package jp.co.ricoh.cotos.commonlib.util;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -153,7 +154,7 @@ public class DBUtil {
 	public String loadSQLFromClasspath(String sqlFilePathOnClasspath, Map<String, Object> params) {
 		try {
 			MustacheFactory mf = new DefaultMustacheFactory();
-			Mustache mustache = mf.compile(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream(sqlFilePathOnClasspath)), sqlFilePathOnClasspath);
+			Mustache mustache = mf.compile(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream(sqlFilePathOnClasspath), Charset.forName("UTF-8")), sqlFilePathOnClasspath);
 			StringWriter out = new StringWriter();
 			mustache.execute(out, params).flush();
 			return out.toString();
@@ -171,7 +172,7 @@ public class DBUtil {
 	public String loadSQLFromClasspath(String sqlFilePathOnClasspath) {
 		try {
 			MustacheFactory mf = new DefaultMustacheFactory();
-			Mustache mustache = mf.compile(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream(sqlFilePathOnClasspath)), sqlFilePathOnClasspath);
+			Mustache mustache = mf.compile(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream(sqlFilePathOnClasspath), Charset.forName("UTF-8")), sqlFilePathOnClasspath);
 			StringWriter out = new StringWriter();
 			mustache.execute(out, Collections.emptyMap()).flush();
 			return out.toString();
