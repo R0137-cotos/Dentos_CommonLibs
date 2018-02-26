@@ -104,7 +104,13 @@ public class DBUtil {
 			} else {
 				return Arrays.asList(e);
 			}
-		}).flatMap(l -> l.stream()).forEach(entry -> query.setParameter(entry.getKey(), entry.getValue()));
+		}).flatMap(l -> l.stream()).forEach(entry -> {
+			try {
+				query.setParameter(entry.getKey(), entry.getValue());
+			} catch (IllegalArgumentException e) {
+				// SQL内でパラメータのvalueを使用しないパターンを考慮し、そのまま処理を継続する。
+			}
+		});
 
 		return query;
 	}
