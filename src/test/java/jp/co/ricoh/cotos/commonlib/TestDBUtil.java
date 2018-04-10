@@ -1,6 +1,8 @@
 package jp.co.ricoh.cotos.commonlib;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.IntStream;
 
 import javax.transaction.Transactional;
@@ -29,10 +31,20 @@ public class TestDBUtil {
 			long beforeCount = dbUtil.loadFromSQLFile("sql/testLoadAll.sql", TestData.class).size();
 			long beforeCountWithCountSql = dbUtil.loadCountFromSQLFile("sql/testCount.sql", Collections.emptyMap());
 			Assert.assertEquals("listで取ったものと、Countで取ったものと件数が一致する。", beforeCount, beforeCountWithCountSql);
+
+			Map<String, Object> testParam = new HashMap<>();
+
 			val moji = "どうでしょう?" + System.currentTimeMillis();
-			dbUtil.execute("sql/testInsert.sql", Collections.singletonMap("moji", moji));
+			val likeSearchString = "aiueo" + System.currentTimeMillis();
+			testParam.put("moji", moji);
+			testParam.put("likeSearchString", likeSearchString);
+
+			dbUtil.execute("sql/testInsert.sql", testParam);
 			Assert.assertEquals("インサート後にデータが増えている。", beforeCount + 1, dbUtil.loadFromSQLFile("sql/testLoadAll.sql", TestData.class).size());
 			Assert.assertEquals("文字が入ってる。", moji, dbUtil.loadSingleFromSQLFile("sql/testLoadMaxId.sql", TestData.class).getMoji());
+
+			Assert.assertNull("Like検索できないこと", dbUtil.loadSingleFromSQLFile("sql/testLoadLikeSearch.sql", TestData.class, Collections.singletonMap("likeSearchString", "a%")));
+			Assert.assertTrue("Like検索できること", dbUtil.loadFromSQLFile("sql/testLoadLikeSearch.sql", TestData.class, Collections.singletonMap("likeSearchString", "iue")).size() > 0);
 		});
 	}
 }
