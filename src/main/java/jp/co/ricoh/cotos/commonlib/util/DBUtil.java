@@ -124,7 +124,7 @@ public class DBUtil {
 
 			// 部分一致検索の項目に対して、エスケープ処理を実施
 			if (key.startsWith("likeSearch")) {
-				return likeKeywordValue.replace("%", "\\%").replace("_", "\\_");
+				return likeKeywordValue.replace("%", "\\%").replace("％", "\\％").replace("_", "\\_").replace("＿", "\\＿");
 			}
 		}
 
