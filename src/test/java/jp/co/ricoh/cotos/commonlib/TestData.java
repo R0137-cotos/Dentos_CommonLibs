@@ -13,4 +13,5 @@ public class TestData {
 	@GeneratedValue
 	private long id;
 	private String moji;
+	private String likeSearchString;
 }
