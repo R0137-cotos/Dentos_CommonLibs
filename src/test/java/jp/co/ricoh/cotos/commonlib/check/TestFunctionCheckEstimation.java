@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -17,6 +18,7 @@ import org.springframework.validation.ObjectError;
 
 import jp.co.ricoh.cotos.commonlib.common.check.FunctionCheckEstimation;
 import jp.co.ricoh.cotos.commonlib.common.entity.Estimation;
+import jp.co.ricoh.cotos.commonlib.common.entity.Estimation.Status;
 import jp.co.ricoh.cotos.commonlib.common.entity.EstimationApprovalRouteNode;
 import jp.co.ricoh.cotos.commonlib.common.exception.ErrorCheckException;
 import jp.co.ricoh.cotos.commonlib.common.master.KjbMaster;
@@ -88,14 +90,6 @@ public class TestFunctionCheckEstimation {
 			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error Estimation", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの見積情報が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
-		// 見積IDがTBLに存在しない
-		try {
-			functionCheckEstimation.checkEstimationUpdate(estimation, "00623070", bindingResult);
-			Assert.fail("正常終了してしまった");
-		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Entity Does Not Exist Estimation", ece.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "存在しない見積IDが設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
-		}
 		estimation = estimationRepository.findOne(1L);
 		// MoM社員IDがNull
 		try {
@@ -122,6 +116,16 @@ public class TestFunctionCheckEstimation {
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "テストID", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "テストメッセージ", ece.getErrorInfoList().get(0).getErrorMessage());
+		}
+		bindingResult = new BeanPropertyBindingResult(estimation, "estimation");
+		// 見積コピー時に見積ステータスが不正
+		try {
+			Estimation estimationTemp = estimationRepository.findOne(2L);
+			functionCheckEstimation.checkEstimationUpdate(estimationTemp, "00623070", bindingResult);
+			Assert.fail("正常終了してしまった");
+		} catch (ErrorCheckException ece) {
+			Assert.assertEquals("エラーIDが正しく設定されること", "Wrong Not Error EstimationStatus", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "見積ステータスに作成中以外が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 見積ID、MoM社員ID共にTBLに存在する
 		try {
@@ -302,6 +306,17 @@ public class TestFunctionCheckEstimation {
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "Master Does Not Exist EmployeeMaster", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "存在しないMoM社員が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
+		}
+		// 見積コピー時に見積ステータスが不正
+		try {
+			Estimation estimationTemp = new Estimation();
+			BeanUtils.copyProperties(estimation, estimationTemp);
+			estimationTemp.setStatus(Status.承認依頼中);
+			functionCheckEstimation.checkEstimationApprovalRequestFirst(estimationTemp, "00623070", bindingResult);
+			Assert.fail("正常終了してしまった");
+		} catch (ErrorCheckException ece) {
+			Assert.assertEquals("エラーIDが正しく設定されること", "Wrong Not Error EstimationStatus", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "見積ステータスに作成中以外が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// Entityチェックでエラー
 		try {

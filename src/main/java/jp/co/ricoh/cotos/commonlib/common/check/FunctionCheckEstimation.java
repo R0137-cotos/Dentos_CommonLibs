@@ -59,11 +59,21 @@ public class FunctionCheckEstimation {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		// 見積情報存在チェック
-		checkFoundEstimation(errorInfoList, estimation);
+		if (null == estimation) {
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorEstimation", "ArgumentNullErrorEstimationMsg");
+			throw new ErrorCheckException(errorInfoList);
+		}
 		// 操作者MoM社員存在チェック
 		checkFoundEmployeeMaster(errorInfoList, operatorId);
 		// Entityチェック
 		checkUtil.checkEntity(result);
+		// 見積ステータスチェック
+		if (0 != estimation.getId()) {
+			if (!businessCheck.existsEstimationStatusMatch(estimation.getStatus(), Status.作成中)) {
+				errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorEstimationStatus", "WrongNotErrorEstimationStatusMsg", new String[] { Status.作成中.name() });
+				throw new ErrorCheckException(errorInfoList);
+			}
+		}
 	}
 
 	/**
