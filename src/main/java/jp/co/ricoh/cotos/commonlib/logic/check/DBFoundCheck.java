@@ -5,8 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-
-import jp.co.ricoh.cotos.commonlib.dto.result.BillingCustomerInfo;
 import jp.co.ricoh.cotos.commonlib.entity.arrangement.Arrangement;
 import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangementWork;
 import jp.co.ricoh.cotos.commonlib.entity.contract.Contract;
@@ -18,7 +16,6 @@ import jp.co.ricoh.cotos.commonlib.entity.estimation.EstimationApprovalRouteNode
 import jp.co.ricoh.cotos.commonlib.entity.master.EmployeeMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.KjbMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmci101Master;
-import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmci105Master;
 import jp.co.ricoh.cotos.commonlib.repository.arrangement.ArrangementRepository;
 import jp.co.ricoh.cotos.commonlib.repository.arrangement.ArrangementWorkRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractApprovalRouteNodeRepository;
@@ -30,7 +27,6 @@ import jp.co.ricoh.cotos.commonlib.repository.estimation.EstimationRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.EmployeeMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.KjbMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTJmci101Repository;
-import jp.co.ricoh.cotos.commonlib.repository.master.MvTJmci105Repository;
 
 /**
  * DB存在チェック管理クラス
@@ -61,24 +57,22 @@ public class DBFoundCheck {
 	KjbMasterRepository kjbMasterRepository;
 	@Autowired
 	MvTJmci101Repository billingSiteMasterRepository;
-	@Autowired
-	MvTJmci105Repository billingCompanyMasterRepository;
 
 	/**
 	 * 見積情報存在チェック
 	 * 
 	 * @param estimationId
 	 *            見積ID
-	 * @return 見積情報
+	 * @return チェック結果
 	 */
-	public Estimation existsFoundEstimation(Long estimationId) {
+	public boolean existsEstimation(Long estimationId) {
 		if (null != estimationId) {
 			Estimation estimation = estimationRepository.findOne(estimationId);
 			if (null != estimation) {
-				return estimation;
+				return true;
 			}
 		}
-		return null;
+		return false;
 	}
 
 	/**
@@ -86,16 +80,16 @@ public class DBFoundCheck {
 	 * 
 	 * @param estimationApprovalRouteId
 	 *            見積承認ルートID
-	 * @return 見積承認ルート情報
+	 * @return チェック結果
 	 */
-	public EstimationApprovalRoute existsFoundEstimationApprovalRoute(Long estimationApprovalRouteId) {
+	public boolean existsEstimationApprovalRoute(Long estimationApprovalRouteId) {
 		if (null != estimationApprovalRouteId) {
 			EstimationApprovalRoute estimationApprovalRoute = estimationApprovalRouteRepository.findOne(estimationApprovalRouteId);
 			if (null != estimationApprovalRoute) {
-				return estimationApprovalRoute;
+				return true;
 			}
 		}
-		return null;
+		return false;
 	}
 
 	/**
@@ -103,16 +97,16 @@ public class DBFoundCheck {
 	 * 
 	 * @param estimationApprovalRouteNodeId
 	 *            見積承認ルートノードID
-	 * @return 見積承認ルートノード情報
+	 * @return チェック結果
 	 */
-	public EstimationApprovalRouteNode existsFoundEstimationApprovalRouteNode(Long estimationApprovalRouteNodeId) {
+	public boolean existsEstimationApprovalRouteNode(Long estimationApprovalRouteNodeId) {
 		if (null != estimationApprovalRouteNodeId) {
 			EstimationApprovalRouteNode estimationApprovalRouteNode = estimationApprovalRouteNodeRepository.findOne(estimationApprovalRouteNodeId);
 			if (null != estimationApprovalRouteNode) {
-				return estimationApprovalRouteNode;
+				return true;
 			}
 		}
-		return null;
+		return false;
 	}
 
 	/**
@@ -122,14 +116,14 @@ public class DBFoundCheck {
 	 *            契約ID
 	 * @return 契約情報
 	 */
-	public Contract existsFoundContract(Long contractId) {
+	public boolean existsContract(Long contractId) {
 		if (null != contractId) {
 			Contract contract = contractRepository.findOne(contractId);
 			if (null != contract) {
-				return contract;
+				return true;
 			}
 		}
-		return null;
+		return false;
 	}
 
 	/**
@@ -137,16 +131,16 @@ public class DBFoundCheck {
 	 * 
 	 * @param contractApprovalRouteId
 	 *            契約承認ルートID
-	 * @return 契約承認ルート情報
+	 * @return チェック結果
 	 */
-	public ContractApprovalRoute existsFoundContractApprovalRoute(Long contractApprovalRouteId) {
+	public boolean existsContractApprovalRoute(Long contractApprovalRouteId) {
 		if (null != contractApprovalRouteId) {
 			ContractApprovalRoute contractApprovalRoute = contractApprovalRouteRepository.findOne(contractApprovalRouteId);
 			if (null != contractApprovalRoute) {
-				return contractApprovalRoute;
+				return true;
 			}
 		}
-		return null;
+		return false;
 	}
 
 	/**
@@ -154,16 +148,16 @@ public class DBFoundCheck {
 	 * 
 	 * @param contractApprovalRouteNodeId
 	 *            契約承認ルートノードID
-	 * @return 契約承認ルートノード情報
+	 * @return チェック結果
 	 */
-	public ContractApprovalRouteNode existsFoundContractApprovalRouteNode(Long contractApprovalRouteNodeId) {
+	public boolean existsContractApprovalRouteNode(Long contractApprovalRouteNodeId) {
 		if (null != contractApprovalRouteNodeId) {
 			ContractApprovalRouteNode contractApprovalRouteNode = contractApprovalRouteNodeRepository.findOne(contractApprovalRouteNodeId);
 			if (null != contractApprovalRouteNode) {
-				return contractApprovalRouteNode;
+				return true;
 			}
 		}
-		return null;
+		return false;
 	}
 
 	/**
@@ -171,16 +165,16 @@ public class DBFoundCheck {
 	 * 
 	 * @param arrangementId
 	 *            手配ID
-	 * @return 手配情報
+	 * @return チェック結果
 	 */
-	public Arrangement existsFoundArrangement(Long arrangementId) {
+	public boolean existsArrangement(Long arrangementId) {
 		if (null != arrangementId) {
 			Arrangement arrangement = arrangementRepository.findOne(arrangementId);
 			if (null != arrangement) {
-				return arrangement;
+				return true;
 			}
 		}
-		return null;
+		return false;
 	}
 
 	/**
@@ -188,16 +182,16 @@ public class DBFoundCheck {
 	 * 
 	 * @param arrangementWorkId
 	 *            手配業務ID
-	 * @return 手配業務情報
+	 * @return チェック結果
 	 */
-	public ArrangementWork existsFoundArrangementWork(Long arrangementWorkId) {
+	public boolean existsArrangementWork(Long arrangementWorkId) {
 		if (null != arrangementWorkId) {
 			ArrangementWork arrangementWork = arrangementWorkRepository.findOne(arrangementWorkId);
 			if (null != arrangementWork) {
-				return arrangementWork;
+				return true;
 			}
 		}
-		return null;
+		return false;
 	}
 
 	/**
@@ -205,16 +199,16 @@ public class DBFoundCheck {
 	 * 
 	 * @param momEmployeeId
 	 *            MoM社員ID
-	 * @return 社員マスタ情報
+	 * @return チェック結果
 	 */
-	public EmployeeMaster existsFoundEmployeeMaster(String momEmployeeId) {
+	public boolean existsEmployeeMaster(String momEmployeeId) {
 		if (null != momEmployeeId) {
 			EmployeeMaster employeeMaster = employeeMasterRepository.findByMomEmployeeId(momEmployeeId);
 			if (null != employeeMaster) {
-				return employeeMaster;
+				return true;
 			}
 		}
-		return null;
+		return false;
 	}
 
 	/**
@@ -222,16 +216,16 @@ public class DBFoundCheck {
 	 * 
 	 * @param mclMomKjbId
 	 *            企事部ID
-	 * @return 企事部マスタ情報
+	 * @return チェック結果
 	 */
-	public KjbMaster existsFoundKjbMaster(String mclMomKjbId) {
+	public boolean existsKjbMaster(String mclMomKjbId) {
 		if (null != mclMomKjbId) {
 			List<KjbMaster> masterList = kjbMasterRepository.findByMclMomKjbIdOrderByMclMomRelId(mclMomKjbId);
 			if (0 != masterList.size()) {
-				return masterList.get(0);
+				return true;
 			}
 		}
-		return null;
+		return false;
 	}
 
 	/**
@@ -239,22 +233,15 @@ public class DBFoundCheck {
 	 * 
 	 * @param originalSystemCode
 	 *            得意先コード
-	 * @return 得意先マスタ情報
+	 * @return チェック結果
 	 */
-	public BillingCustomerInfo existsFoundBillingCustomerMaster(String originalSystemCode) {
-		BillingCustomerInfo customerInfo = new BillingCustomerInfo();
-		MvTJmci105Master billingCompanyMaster = new MvTJmci105Master();
-		MvTJmci101Master siteMaster = billingSiteMasterRepository.findByOriginalSystemCode(originalSystemCode);
-		if (siteMaster == null) {
-			return null;
-		} else if ("1".equals(siteMaster.getBillingCustomerSpecialFlg())) {
-			customerInfo.setCustomerName(siteMaster.getEbsBusinessPlaceName());
-		} else {
-			billingCompanyMaster = billingCompanyMasterRepository.findOne(siteMaster.getCustomerNumber());
-			customerInfo.setCustomerName(billingCompanyMaster.getEnterpriseName() + " " + siteMaster.getEbsBusinessPlaceName());
+	public boolean existsBillingCustomerMaster(String originalSystemCode) {
+		if (null != originalSystemCode) {
+			MvTJmci101Master siteMaster = billingSiteMasterRepository.findByOriginalSystemCode(originalSystemCode);
+			if (null != siteMaster) {
+				return true;
+			}
 		}
-		customerInfo.setOriginalSystemCode(siteMaster.getOriginalSystemCode());
-
-		return customerInfo;
+		return false;
 	}
 }

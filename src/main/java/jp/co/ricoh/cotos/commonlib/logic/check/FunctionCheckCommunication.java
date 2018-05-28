@@ -12,6 +12,7 @@ import jp.co.ricoh.cotos.commonlib.entity.communication.Communication;
 import jp.co.ricoh.cotos.commonlib.entity.communication.Communication.CommunicationCategory;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorCheckException;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorInfo;
+import jp.co.ricoh.cotos.commonlib.logic.check.CheckUtil.EmpMode;
 
 /**
  * コミュニケーション機能別チェック管理クラス
@@ -38,7 +39,7 @@ public class FunctionCheckCommunication {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		// Entityチェック
-		checkCommunicationEntity(errorInfoList, communication, result);
+		entityCheckCommunication(errorInfoList, communication, result);
 	}
 
 	/**
@@ -55,7 +56,7 @@ public class FunctionCheckCommunication {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		// Entityチェック
-		checkCommunicationEntity(errorInfoList, communication, result);
+		entityCheckCommunication(errorInfoList, communication, result);
 	}
 
 	/**
@@ -70,7 +71,7 @@ public class FunctionCheckCommunication {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		// MoM社員存在チェック
-		checkFoundEmployeeMaster(errorInfoList, momEmployeeId);
+		existsMomEmployeeId(errorInfoList, momEmployeeId);
 	}
 
 	/**
@@ -87,11 +88,11 @@ public class FunctionCheckCommunication {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		// Entityチェック
-		checkCommunicationEntity(errorInfoList, communication, result);
+		entityCheckCommunication(errorInfoList, communication, result);
 		// 伝達者MoM社員ID存在チェック
-		checkFoundEmployeeMaster(errorInfoList, communication.getRequestFrom());
+		existsMomEmployeeId(errorInfoList, communication.getRequestFrom());
 		// 被伝達者MoM社員ID存在チェック
-		checkFoundEmployeeMaster(errorInfoList, communication.getRequestTo());
+		existsMomEmployeeId(errorInfoList, communication.getRequestTo());
 	}
 
 	/**
@@ -135,7 +136,7 @@ public class FunctionCheckCommunication {
 	 * @throws ErrorCheckException
 	 *             エラーチェックException
 	 */
-	private void checkCommunicationEntity(List<ErrorInfo> errorInfoList, Communication communication, BindingResult result) throws ErrorCheckException {
+	private void entityCheckCommunication(List<ErrorInfo> errorInfoList, Communication communication, BindingResult result) throws ErrorCheckException {
 		if (null == communication) {
 			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorCommunication", "ArgumentNullErrorCommunicationMsg");
 			throw new ErrorCheckException(errorInfoList);
@@ -155,14 +156,14 @@ public class FunctionCheckCommunication {
 	 * @throws ErrorCheckException
 	 *             エラーチェックException
 	 */
-	private void checkFoundEmployeeMaster(List<ErrorInfo> errorInfoList, String momEmployeeId) throws ErrorCheckException {
+	private void existsMomEmployeeId(List<ErrorInfo> errorInfoList, String momEmployeeId) throws ErrorCheckException {
 		if (StringUtils.isBlank(momEmployeeId)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorMomEmployeeId", "ArgumentNullErrorMomEmployeeIdMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorMomEmployeeId", "ArgumentNullErrorMomEmployeeIdMsg", new String[] { EmpMode.パラメータ.name() });
 			throw new ErrorCheckException(errorInfoList);
 		}
 
-		if (null == dBFoundCheck.existsFoundEmployeeMaster(momEmployeeId)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "MasterDoesNotExistEmployeeMaster", "MasterDoesNotExistEmployeeMasterMsg");
+		if (!dBFoundCheck.existsEmployeeMaster(momEmployeeId)) {
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "MasterDoesNotExistEmployeeMaster", "MasterDoesNotExistEmployeeMasterMsg", new String[] { EmpMode.パラメータ.name() });
 			throw new ErrorCheckException(errorInfoList);
 		}
 	}

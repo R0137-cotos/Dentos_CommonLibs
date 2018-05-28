@@ -115,7 +115,7 @@ public class TestFunctionCheckCommunication {
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "Master Does Not Exist EmployeeMaster", ece.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "存在しないMoM社員が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータに存在しないMoM社員が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// MoM社員IDがTBLに存在する
 		try {
@@ -170,7 +170,7 @@ public class TestFunctionCheckCommunication {
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "Master Does Not Exist EmployeeMaster", ece.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "存在しないMoM社員が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータに存在しないMoM社員が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 被伝達者MoM社員IDがNull
 		try {
@@ -190,7 +190,7 @@ public class TestFunctionCheckCommunication {
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "Master Does Not Exist EmployeeMaster", ece.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "存在しないMoM社員が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータに存在しないMoM社員が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// コミュニケーション情報がNotNull、Entityチェックが正常
 		try {

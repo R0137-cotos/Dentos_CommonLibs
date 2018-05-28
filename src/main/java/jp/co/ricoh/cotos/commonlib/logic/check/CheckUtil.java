@@ -9,6 +9,8 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import jp.co.ricoh.cotos.commonlib.exception.ErrorCheckException;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorInfo;
 
@@ -20,6 +22,19 @@ public class CheckUtil {
 
 	@Autowired
 	MessageSource messageSource;
+
+	/**
+	 * 社員モード(パラメータ,操作者)
+	 */
+	public enum EmpMode {
+
+		パラメータ, 操作者;
+
+		@JsonValue
+		public String toValue() {
+			return this.name();
+		}
+	}
 
 	/**
 	 * Entityチェック

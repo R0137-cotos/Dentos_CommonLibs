@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 
-import jp.co.ricoh.cotos.commonlib.dto.result.BillingCustomerInfo;
 import jp.co.ricoh.cotos.commonlib.entity.contract.Contract;
 import jp.co.ricoh.cotos.commonlib.entity.contract.Contract.ContractStatus;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractApprovalRouteNode;
@@ -16,6 +15,9 @@ import jp.co.ricoh.cotos.commonlib.entity.estimation.Estimation;
 import jp.co.ricoh.cotos.commonlib.entity.estimation.Estimation.Status;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorCheckException;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorInfo;
+import jp.co.ricoh.cotos.commonlib.logic.check.CheckUtil.EmpMode;
+import jp.co.ricoh.cotos.commonlib.repository.contract.ContractRepository;
+import jp.co.ricoh.cotos.commonlib.repository.estimation.EstimationRepository;
 
 /**
  * 契約機能別チェック管理クラス
@@ -29,6 +31,10 @@ public class FunctionCheckContract {
 	DBFoundCheck dBFoundCheck;
 	@Autowired
 	BusinessCheck businessCheck;
+	@Autowired
+	EstimationRepository estimationRepository;
+	@Autowired
+	ContractRepository contractRepository;
 
 	/**
 	 * 契約情報作成チェック処理
@@ -48,15 +54,15 @@ public class FunctionCheckContract {
 			throw new ErrorCheckException(errorInfoList);
 		}
 
-		Estimation estimation = dBFoundCheck.existsFoundEstimation(estimationId);
-		if (null == estimation) {
+		if (!dBFoundCheck.existsEstimation(estimationId)) {
 			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistEstimation", "EntityDoesNotExistEstimationMsg");
 			throw new ErrorCheckException(errorInfoList);
 		}
 
 		// 操作者MoM社員存在チェック
-		checkFoundEmployeeMaster(errorInfoList, operatorId);
+		existsMomEmployeeId(errorInfoList, operatorId, EmpMode.操作者);
 		// 見積ステータスチェック
+		Estimation estimation = estimationRepository.findOne(estimationId);
 		if (!businessCheck.existsEstimationStatusMatch(estimation.getStatus(), Status.受注)) {
 			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorEstimationStatus", "WrongNotErrorEstimationStatusMsg", new String[] { Status.受注.name() });
 			throw new ErrorCheckException(errorInfoList);
@@ -75,7 +81,7 @@ public class FunctionCheckContract {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		// 契約情報存在チェック
-		checkFoundContractId(errorInfoList, contractId);
+		existsContractId(errorInfoList, contractId);
 	}
 
 	/**
@@ -94,9 +100,9 @@ public class FunctionCheckContract {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		// 契約情報存在チェック
-		checkFoundContract(errorInfoList, contract);
+		existsContract(errorInfoList, contract);
 		// 操作者MoM社員存在チェック
-		checkFoundEmployeeMaster(errorInfoList, operatorId);
+		existsMomEmployeeId(errorInfoList, operatorId, EmpMode.操作者);
 		// Entityチェック
 		checkUtil.checkEntity(result);
 		// 解約予定日非必須チェック
@@ -120,9 +126,9 @@ public class FunctionCheckContract {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		// 契約情報存在チェック
-		checkFoundContractId(errorInfoList, contractId);
+		existsContractId(errorInfoList, contractId);
 		// 操作者MoM社員存在チェック
-		checkFoundEmployeeMaster(errorInfoList, momEmployeeId);
+		existsMomEmployeeId(errorInfoList, momEmployeeId, EmpMode.パラメータ);
 	}
 
 	/**
@@ -143,13 +149,13 @@ public class FunctionCheckContract {
 			throw new ErrorCheckException(errorInfoList);
 		}
 
-		if (null == dBFoundCheck.existsFoundContractApprovalRouteNode(contractApprovalRouteNode.getId())) {
+		if (!dBFoundCheck.existsContractApprovalRouteNode(contractApprovalRouteNode.getId())) {
 			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistContractApprovalRouteNode", "EntityDoesNotExistContractApprovalRouteNodeMsg");
 			throw new ErrorCheckException(errorInfoList);
 		}
 
 		// 操作者MoM社員存在チェック
-		checkFoundEmployeeMaster(errorInfoList, operatorId);
+		existsMomEmployeeId(errorInfoList, operatorId, EmpMode.操作者);
 		// 承認者と代理承認者が重複してないか確認
 		if (!businessCheck.existsContractApprovalRouteApproverDuplication(contractApprovalRouteNode)) {
 			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "DuplicationErrorContractSubApproverEmployee", "DuplicationErrorContractSubApproverEmployeeMsg");
@@ -158,7 +164,7 @@ public class FunctionCheckContract {
 	}
 
 	/**
-	 * 契約情報承認依頼チェック処理第1弾
+	 * 契約情報承認依頼チェック処理1回目
 	 * 
 	 * @param contract
 	 *            契約情報
@@ -173,9 +179,9 @@ public class FunctionCheckContract {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		// 契約情報存在チェック
-		checkFoundContract(errorInfoList, contract);
+		existsContract(errorInfoList, contract);
 		// 操作者MoM社員存在チェック
-		checkFoundEmployeeMaster(errorInfoList, operatorId);
+		existsMomEmployeeId(errorInfoList, operatorId, EmpMode.操作者);
 		// Entityチェック
 		checkUtil.checkEntity(result);
 		// 契約ステータスチェック
@@ -183,10 +189,15 @@ public class FunctionCheckContract {
 			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorContractStatus", "WrongNotErrorContractStatusMsg", new String[] { ContractStatus.作成中.name() });
 			throw new ErrorCheckException(errorInfoList);
 		}
+		// 契約承認ルートNullチェック
+		if (null == contract.getContractApprovalRoute()) {
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistContractApprovalRoute", "EntityDoesNotExistContractApprovalRouteMsg");
+			throw new ErrorCheckException(errorInfoList);
+		}
 	}
 
 	/**
-	 * 契約情報承認依頼チェック処理第2弾
+	 * 契約情報承認依頼チェック処理2回目
 	 * 
 	 * @param contractApprovalRouteNodeList
 	 *            契約承認ルートノード
@@ -246,10 +257,11 @@ public class FunctionCheckContract {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		// 契約情報存在チェック
-		Contract contract = checkFoundContractId(errorInfoList, contractId);
+		existsContractId(errorInfoList, contractId);
 		// 操作者MoM社員存在チェック
-		checkFoundEmployeeMaster(errorInfoList, operatorId);
+		existsMomEmployeeId(errorInfoList, operatorId, EmpMode.操作者);
 		// 契約ステータスチェック
+		Contract contract = contractRepository.findOne(contractId);
 		if (!businessCheck.existsContractStatusMatch(contract.getContractStatus(), ContractStatus.承認依頼中)) {
 			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorContractStatus", "WrongNotErrorContractStatusMsg", new String[] { ContractStatus.承認依頼中.name() });
 			throw new ErrorCheckException(errorInfoList);
@@ -275,10 +287,11 @@ public class FunctionCheckContract {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		// 契約情報存在チェック
-		Contract contract = checkFoundContractId(errorInfoList, contractId);
+		existsContractId(errorInfoList, contractId);
 		// 操作者MoM社員存在チェック
-		checkFoundEmployeeMaster(errorInfoList, operatorId);
+		existsMomEmployeeId(errorInfoList, operatorId, EmpMode.操作者);
 		// 契約ステータスチェック
+		Contract contract = contractRepository.findOne(contractId);
 		if (!businessCheck.existsContractStatusMatch(contract.getContractStatus(), ContractStatus.承認依頼中)) {
 			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorContractStatus", "WrongNotErrorContractStatusMsg", new String[] { ContractStatus.承認依頼中.name() });
 			throw new ErrorCheckException(errorInfoList);
@@ -306,9 +319,9 @@ public class FunctionCheckContract {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		// 契約情報存在チェック
-		checkFoundContract(errorInfoList, contract);
+		existsContract(errorInfoList, contract);
 		// 操作者MoM社員存在チェック
-		checkFoundEmployeeMaster(errorInfoList, operatorId);
+		existsMomEmployeeId(errorInfoList, operatorId, EmpMode.操作者);
 		// Entityチェック
 		checkUtil.checkEntity(result);
 		// 契約ステータスチェック
@@ -349,9 +362,9 @@ public class FunctionCheckContract {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		// 契約情報存在チェック
-		checkFoundContract(errorInfoList, contract);
+		existsContract(errorInfoList, contract);
 		// 操作者MoM社員存在チェック
-		checkFoundEmployeeMaster(errorInfoList, operatorId);
+		existsMomEmployeeId(errorInfoList, operatorId, EmpMode.操作者);
 		// Entityチェック
 		checkUtil.checkEntity(result);
 		// 契約ステータスチェック
@@ -380,10 +393,11 @@ public class FunctionCheckContract {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		// 契約情報存在チェック
-		Contract contract = checkFoundContractId(errorInfoList, contractId);
+		existsContractId(errorInfoList, contractId);
 		// 操作者MoM社員存在チェック
-		checkFoundEmployeeMaster(errorInfoList, operatorId);
+		existsMomEmployeeId(errorInfoList, operatorId, EmpMode.操作者);
 		// 契約ステータスチェック
+		Contract contract = contractRepository.findOne(contractId);
 		if (!businessCheck.existsContractStatusMatch(contract.getContractStatus(), ContractStatus.承認済み)) {
 			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorContractStatus", "WrongNotErrorContractStatusMsg", new String[] { ContractStatus.承認済み.name() });
 			throw new ErrorCheckException(errorInfoList);
@@ -400,11 +414,10 @@ public class FunctionCheckContract {
 	 * 
 	 * @param originalSystemCode
 	 *            得意先コード
-	 * @return 得意先情報
 	 * @throws ErrorCheckException
 	 *             エラーチェックException
 	 */
-	public BillingCustomerInfo checkContractFindBillingCustomerInfo(String originalSystemCode) throws ErrorCheckException {
+	public void checkContractFindBillingCustomerInfo(String originalSystemCode) throws ErrorCheckException {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		if (null == originalSystemCode) {
@@ -412,13 +425,10 @@ public class FunctionCheckContract {
 			throw new ErrorCheckException(errorInfoList);
 		}
 
-		BillingCustomerInfo BillingCustomerInfo = dBFoundCheck.existsFoundBillingCustomerMaster(originalSystemCode);
-		if (null == BillingCustomerInfo) {
+		if (!dBFoundCheck.existsBillingCustomerMaster(originalSystemCode)) {
 			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "MasterDoesNotExistBillingCustomerMaster", "MasterDoesNotExistBillingCustomerMasterMsg");
 			throw new ErrorCheckException(errorInfoList);
 		}
-
-		return BillingCustomerInfo;
 	}
 
 	/**
@@ -426,18 +436,16 @@ public class FunctionCheckContract {
 	 * 
 	 * @param errorInfoList
 	 *            エラーリスト
-	 * @param contract
-	 *            契約情報
 	 * @throws ErrorCheckException
 	 *             エラーチェックException
 	 */
-	private void checkFoundContract(List<ErrorInfo> errorInfoList, Contract contract) throws ErrorCheckException {
+	private void existsContract(List<ErrorInfo> errorInfoList, Contract contract) throws ErrorCheckException {
 		if (null == contract) {
 			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorContract", "ArgumentNullErrorContractMsg");
 			throw new ErrorCheckException(errorInfoList);
 		}
 
-		if (null == dBFoundCheck.existsFoundContract(contract.getId())) {
+		if (!dBFoundCheck.existsContract(contract.getId())) {
 			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistContract", "EntityDoesNotExistContractMsg");
 			throw new ErrorCheckException(errorInfoList);
 		}
@@ -450,23 +458,19 @@ public class FunctionCheckContract {
 	 *            エラーリスト
 	 * @param contractId
 	 *            契約ID
-	 * @return 契約情報
 	 * @throws ErrorCheckException
 	 *             エラーチェックException
 	 */
-	private Contract checkFoundContractId(List<ErrorInfo> errorInfoList, Long contractId) throws ErrorCheckException {
+	private void existsContractId(List<ErrorInfo> errorInfoList, Long contractId) throws ErrorCheckException {
 		if (null == contractId) {
 			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorContractId", "ArgumentNullErrorContractIdMsg");
 			throw new ErrorCheckException(errorInfoList);
 		}
 
-		Contract contract = dBFoundCheck.existsFoundContract(contractId);
-		if (null == dBFoundCheck.existsFoundContract(contractId)) {
+		if (!dBFoundCheck.existsContract(contractId)) {
 			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistContract", "EntityDoesNotExistContractMsg");
 			throw new ErrorCheckException(errorInfoList);
 		}
-
-		return contract;
 	}
 
 	/**
@@ -476,17 +480,19 @@ public class FunctionCheckContract {
 	 *            エラーリスト
 	 * @param momEmployeeId
 	 *            MoM社員ID
+	 * @param empMode
+	 *            社員モード
 	 * @throws ErrorCheckException
 	 *             エラーチェックException
 	 */
-	private void checkFoundEmployeeMaster(List<ErrorInfo> errorInfoList, String momEmployeeId) throws ErrorCheckException {
+	private void existsMomEmployeeId(List<ErrorInfo> errorInfoList, String momEmployeeId, EmpMode empMode) throws ErrorCheckException {
 		if (StringUtils.isBlank(momEmployeeId)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorMomEmployeeId", "ArgumentNullErrorMomEmployeeIdMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorMomEmployeeId", "ArgumentNullErrorMomEmployeeIdMsg", new String[] { empMode.name() });
 			throw new ErrorCheckException(errorInfoList);
 		}
 
-		if (null == dBFoundCheck.existsFoundEmployeeMaster(momEmployeeId)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "MasterDoesNotExistEmployeeMaster", "MasterDoesNotExistEmployeeMasterMsg");
+		if (!dBFoundCheck.existsEmployeeMaster(momEmployeeId)) {
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "MasterDoesNotExistEmployeeMaster", "MasterDoesNotExistEmployeeMasterMsg", new String[] { empMode.name() });
 			throw new ErrorCheckException(errorInfoList);
 		}
 	}
