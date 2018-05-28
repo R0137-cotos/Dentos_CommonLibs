@@ -16,15 +16,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.ObjectError;
 
-import jp.co.ricoh.cotos.commonlib.common.check.FunctionCheckEstimation;
-import jp.co.ricoh.cotos.commonlib.common.entity.Estimation;
-import jp.co.ricoh.cotos.commonlib.common.entity.Estimation.Status;
-import jp.co.ricoh.cotos.commonlib.common.entity.EstimationApprovalRouteNode;
-import jp.co.ricoh.cotos.commonlib.common.exception.ErrorCheckException;
-import jp.co.ricoh.cotos.commonlib.common.master.KjbMaster;
-import jp.co.ricoh.cotos.commonlib.common.repository.EstimationApprovalRouteNodeRepository;
-import jp.co.ricoh.cotos.commonlib.common.repository.EstimationRepository;
-import jp.co.ricoh.cotos.commonlib.util.DBUtil;
+import jp.co.ricoh.cotos.commonlib.db.DBUtil;
+import jp.co.ricoh.cotos.commonlib.entity.estimation.Estimation;
+import jp.co.ricoh.cotos.commonlib.entity.estimation.Estimation.Status;
+import jp.co.ricoh.cotos.commonlib.entity.estimation.EstimationApprovalRouteNode;
+import jp.co.ricoh.cotos.commonlib.entity.master.KjbMaster;
+import jp.co.ricoh.cotos.commonlib.exception.ErrorCheckException;
+import jp.co.ricoh.cotos.commonlib.logic.check.FunctionCheckEstimation;
+import jp.co.ricoh.cotos.commonlib.repository.estimation.EstimationApprovalRouteNodeRepository;
+import jp.co.ricoh.cotos.commonlib.repository.estimation.EstimationRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

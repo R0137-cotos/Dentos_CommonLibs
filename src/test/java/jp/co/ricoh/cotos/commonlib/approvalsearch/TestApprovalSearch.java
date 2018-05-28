@@ -11,14 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import jp.co.ricoh.cotos.commonlib.common.approvalsearch.ApprovalSearch;
-import jp.co.ricoh.cotos.commonlib.common.entity.Contract;
-import jp.co.ricoh.cotos.commonlib.common.entity.Estimation;
-import jp.co.ricoh.cotos.commonlib.common.repository.ContractRepository;
-import jp.co.ricoh.cotos.commonlib.common.repository.EstimationRepository;
-import jp.co.ricoh.cotos.commonlib.common.result.ApprovalRouteMasterResult;
-import jp.co.ricoh.cotos.commonlib.common.result.RouteFormulaResult.RouteFormulaStatus;
-import jp.co.ricoh.cotos.commonlib.util.DBUtil;
+import jp.co.ricoh.cotos.commonlib.db.DBUtil;
+import jp.co.ricoh.cotos.commonlib.dto.result.ApprovalRouteMasterResult;
+import jp.co.ricoh.cotos.commonlib.dto.result.RouteFormulaResult.RouteFormulaStatus;
+import jp.co.ricoh.cotos.commonlib.entity.contract.Contract;
+import jp.co.ricoh.cotos.commonlib.entity.estimation.Estimation;
+import jp.co.ricoh.cotos.commonlib.logic.approvalsearch.ApprovalSearch;
+import jp.co.ricoh.cotos.commonlib.repository.contract.ContractRepository;
+import jp.co.ricoh.cotos.commonlib.repository.estimation.EstimationRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

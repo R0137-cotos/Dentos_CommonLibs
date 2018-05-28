@@ -13,13 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import jp.co.ricoh.cotos.commonlib.common.check.FunctionCheckArrangement;
-import jp.co.ricoh.cotos.commonlib.common.entity.ArrangementDetailMakeInfo;
-import jp.co.ricoh.cotos.commonlib.common.entity.ArrangementWork;
-import jp.co.ricoh.cotos.commonlib.common.exception.ErrorCheckException;
-import jp.co.ricoh.cotos.commonlib.common.master.ArrangementMaster;
-import jp.co.ricoh.cotos.commonlib.common.repository.ArrangementWorkRepository;
-import jp.co.ricoh.cotos.commonlib.util.DBUtil;
+import jp.co.ricoh.cotos.commonlib.db.DBUtil;
+import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangementDetailMakeInfo;
+import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangementWork;
+import jp.co.ricoh.cotos.commonlib.entity.master.ArrangementMaster;
+import jp.co.ricoh.cotos.commonlib.exception.ErrorCheckException;
+import jp.co.ricoh.cotos.commonlib.logic.check.FunctionCheckArrangement;
+import jp.co.ricoh.cotos.commonlib.repository.arrangement.ArrangementWorkRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

@@ -13,11 +13,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.ObjectError;
 
-import jp.co.ricoh.cotos.commonlib.common.check.CheckUtil;
-import jp.co.ricoh.cotos.commonlib.common.check.FunctionCheckCommunication;
-import jp.co.ricoh.cotos.commonlib.common.entity.Communication;
-import jp.co.ricoh.cotos.commonlib.common.exception.ErrorCheckException;
-import jp.co.ricoh.cotos.commonlib.util.DBUtil;
+import jp.co.ricoh.cotos.commonlib.db.DBUtil;
+import jp.co.ricoh.cotos.commonlib.entity.communication.Communication;
+import jp.co.ricoh.cotos.commonlib.exception.ErrorCheckException;
+import jp.co.ricoh.cotos.commonlib.logic.check.CheckUtil;
+import jp.co.ricoh.cotos.commonlib.logic.check.FunctionCheckCommunication;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

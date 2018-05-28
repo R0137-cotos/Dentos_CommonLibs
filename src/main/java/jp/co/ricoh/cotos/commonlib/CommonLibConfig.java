@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
-import jp.co.ricoh.cotos.commonlib.util.DBUtil;
+import jp.co.ricoh.cotos.commonlib.db.DBUtil;
 import lombok.extern.log4j.Log4j;
 
 @Configuration

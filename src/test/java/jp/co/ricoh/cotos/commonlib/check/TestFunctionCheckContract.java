@@ -17,14 +17,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.ObjectError;
 
-import jp.co.ricoh.cotos.commonlib.common.check.FunctionCheckContract;
-import jp.co.ricoh.cotos.commonlib.common.entity.BillingCustomerInfo;
-import jp.co.ricoh.cotos.commonlib.common.entity.Contract;
-import jp.co.ricoh.cotos.commonlib.common.entity.ContractApprovalRouteNode;
-import jp.co.ricoh.cotos.commonlib.common.exception.ErrorCheckException;
-import jp.co.ricoh.cotos.commonlib.common.repository.ContractApprovalRouteNodeRepository;
-import jp.co.ricoh.cotos.commonlib.common.repository.ContractRepository;
-import jp.co.ricoh.cotos.commonlib.util.DBUtil;
+import jp.co.ricoh.cotos.commonlib.db.DBUtil;
+import jp.co.ricoh.cotos.commonlib.dto.result.BillingCustomerInfo;
+import jp.co.ricoh.cotos.commonlib.entity.contract.Contract;
+import jp.co.ricoh.cotos.commonlib.entity.contract.ContractApprovalRouteNode;
+import jp.co.ricoh.cotos.commonlib.exception.ErrorCheckException;
+import jp.co.ricoh.cotos.commonlib.logic.check.FunctionCheckContract;
+import jp.co.ricoh.cotos.commonlib.repository.contract.ContractApprovalRouteNodeRepository;
+import jp.co.ricoh.cotos.commonlib.repository.contract.ContractRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
