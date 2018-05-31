@@ -17,6 +17,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -113,7 +114,7 @@ public class Communication extends EntityBase {
 	/**
 	 * コミュニケーションカテゴリー
 	 */
-	@NotEmpty(message = "{CommunicationCategory}{NotEmptyError}:{CommunicationCategory}{NotEmptyErrorMsg}")
+	@NotNull(message = "{CommunicationCategory}{NotEmptyError}:{CommunicationCategory}{NotEmptyErrorMsg}")
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	@ApiModelProperty(value = "コミュニケーションカテゴリー", required = true, position = 7)
@@ -122,7 +123,7 @@ public class Communication extends EntityBase {
 	/**
 	 * 処理カテゴリー
 	 */
-	@NotEmpty(message = "{ProcessCategory}{NotEmptyError}:{ProcessCategory}{NotEmptyErrorMsg}")
+	@NotNull(message = "{ProcessCategory}{NotEmptyError}:{ProcessCategory}{NotEmptyErrorMsg}")
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	@ApiModelProperty(value = "処理カテゴリー", required = true, position = 8)
@@ -150,7 +151,7 @@ public class Communication extends EntityBase {
 	/**
 	 * ステータス
 	 */
-	@NotEmpty(message = "{CommunicationStatus}{NotEmptyError}:{CommunicationStatus}{NotEmptyErrorMsg}")
+	@NotNull(message = "{CommunicationStatus}{NotEmptyError}:{CommunicationStatus}{NotEmptyErrorMsg}")
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	@ApiModelProperty(value = "ステータス", required = true, position = 9)
