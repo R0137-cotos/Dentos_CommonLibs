@@ -1,11 +1,15 @@
 package jp.co.ricoh.cotos.commonlib.entity.master;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -47,6 +51,14 @@ public class ItemMaster {
 	@ManyToOne
 	@ApiModelProperty(value = "商品マスタ", required = false, position = 4)
 	private Product product;
+
+	/**
+	 * 手配マスタ(品種・手配業務紐付けマスタ)
+	 */
+	@ManyToMany
+	@JoinTable(name = "itemArrangementLinkMaster", joinColumns = @JoinColumn(name = "itemMasterId", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "arrangementMasterId", referencedColumnName = "id"))
+	@ApiModelProperty(value = "手配マスター", required = false, position = 5)
+	private List<ArrangementMaster> arrangementMasterList;
 
 	// 以下、COTOSエンティティー共通項目
 	@Temporal(TemporalType.TIMESTAMP)

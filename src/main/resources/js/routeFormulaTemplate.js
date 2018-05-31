@@ -1,8 +1,9 @@
 // 結果取得用クラスをインポート
 load("nashorn:mozilla_compat.js");
-importClass(Packages.jp.co.ricoh.cotos.commonlib.dto.result.RouteFormulaResult);
+importPackage(Packages.jp.co.ricoh.cotos.commonlib.dto.result.RouteFormulaResult);
 
 var ArrayList = Java.type('java.util.ArrayList');
+var RouteFormulaResult = Java.type("jp.co.ricoh.cotos.commonlib.dto.result.RouteFormulaResult");
 var resultEnum = Java.type("jp.co.ricoh.cotos.commonlib.dto.result.RouteFormulaResult.RouteFormulaStatus");
 
 
