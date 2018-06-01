@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.swagger.annotations.ApiModelProperty;
-import jp.co.ricoh.cotos.commonlib.converter.ApprovalProcessCategoryDivConverter;
+import jp.co.ricoh.cotos.commonlib.converter.ApprovalProcessCategoryDivConverterContract;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -67,7 +67,7 @@ public class ContractApprovalResult extends EntityBase {
 	/**
 	 * 承認処理カテゴリー
 	 */
-	@Convert(converter = ApprovalProcessCategoryDivConverter.class)
+	@Convert(converter = ApprovalProcessCategoryDivConverterContract.class)
 	@ApiModelProperty(value = "承認処理カテゴリー", required = true, position = 2)
 	private ApprovalProcessCategory approvalProcessCategory;
 
