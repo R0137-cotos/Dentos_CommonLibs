@@ -1,0 +1,32 @@
+cotos:
+  auth:
+    authentications:
+      鍵: APIを呼ぶことが出来るアプリケーション名
+      鍵2: 別のアプリケーション
+    throughURIs: /dummy, /swagger-ui.html, /dummy2
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@dev-db.cotos.ricoh.co.jp:1521/pdb1
+    username: cotos_ci
+    password: cotos_ci
+    driverClassName: oracle.jdbc.OracleDriver
+  jpa:
+    database-platform: org.hibernate.dialect.Oracle12cDialect
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        show_sql: true
+        use_sql_comments: true
+        format_sql: true
+        default_schema: 
+        proc:
+          param_null_passing: true
+        enable_lazy_load_no_trans: true
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+remote:
+  momauthority:
+    url: http://165.96.254.183:10110/jmo/services/KengenService
+    relatedid: JMR
