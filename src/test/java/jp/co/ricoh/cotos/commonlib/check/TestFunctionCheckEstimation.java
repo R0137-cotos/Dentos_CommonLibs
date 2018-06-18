@@ -573,11 +573,11 @@ public class TestFunctionCheckEstimation {
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "Wrong Not Error EstimationStatus", ece.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "見積ステータスに承認済み以外が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "見積ステータスに承認依頼中以外が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 見積ID、MoM社員ID共にTBLに存在し、見積ステータスが正常
 		try {
-			functionCheckEstimation.checkEstimationLastApproval(3L, "00623070");
+			functionCheckEstimation.checkEstimationLastApproval(4L, "00623070");
 		} catch (ErrorCheckException ece) {
 			Assert.fail("異常終了してしまった");
 		}
