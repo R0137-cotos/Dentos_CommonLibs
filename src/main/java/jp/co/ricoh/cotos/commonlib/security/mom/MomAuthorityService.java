@@ -194,7 +194,7 @@ public class MomAuthorityService {
 			Map<String, Object> queryParams = new HashMap<>();
 			queryParams.put("approverSingleUserId", approver.getSingleUserId());
 			queryParams.put("requesterSingleUserId", requester.getSingleUserId());
-			long result = dbUtil.loadCountFromSQLFile("sql/approverAcceptAuthority/approverAcceptAuthority_authority" + authLevel.toValue() + ".sql", queryParams);
+			long result = dbUtil.loadCountFromSQLFile("sql/security/approverAuthority/approverAuthority_authority" + authLevel.toValue() + ".sql", queryParams);
 			return 0 != result;
 		case すべて:
 			return true;
@@ -212,7 +212,7 @@ public class MomAuthorityService {
 		queryParams.put("orgId", rootOrgId);
 		queryParams.put("hierarchyLevel", rootOrgHierarchyLevel);
 
-		List<StringResult> orgIdList = dbUtil.loadFromSQLFile("sql/editorAcceptAuthority/getLowerOrgs.sql", StringResult.class, queryParams);
+		List<StringResult> orgIdList = dbUtil.loadFromSQLFile("sql/security/editorAuthority/getLowerOrgs.sql", StringResult.class, queryParams);
 
 		if (orgIdList != null) {
 			if (orgIdList.stream().anyMatch(orgId -> targetOrgId.equals(orgId.getResult()))) {
@@ -234,7 +234,7 @@ public class MomAuthorityService {
 		queryParams.put("editorSingleUserId", editorSingleUserId);
 		queryParams.put("targetSingleUserId", targetSingleUserId);
 
-		long result = dbUtil.loadCountFromSQLFile("sql/editorAcceptAuthority/isRelatedOrg.sql", queryParams);
+		long result = dbUtil.loadCountFromSQLFile("sql/security/editorAuthority/isRelatedOrg.sql", queryParams);
 
 		return result > 0;
 	}

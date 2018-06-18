@@ -146,7 +146,7 @@ public class BusinessCheck {
 
 	/**
 	 * 見積_代理承認者に承認権限があるか確認
-	 * 
+	 * TODO:認証認可の共通処理で実施するよう修正
 	 * @param approvalRequesterMomEmployeeId
 	 *            承認依頼者MoM社員ID
 	 * @param estimationApprovalRouteNodeList
@@ -276,7 +276,7 @@ public class BusinessCheck {
 
 	/**
 	 * 契約_代理承認者に承認権限があるか確認
-	 * 
+	 *　TODO:認証認可の共通処理で実施するよう修正
 	 * @param approvalRequesterMomEmployeeId
 	 *            承認依頼者MoM社員ID
 	 * @param contractApprovalRouteNodeList
