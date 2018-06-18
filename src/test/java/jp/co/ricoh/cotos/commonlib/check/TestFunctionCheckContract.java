@@ -13,6 +13,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.ObjectError;
@@ -45,9 +46,26 @@ public class TestFunctionCheckContract {
 	@Autowired
 	ContractApprovalRouteNodeRepository contractApprovalRouteNodeRepository;
 
+	static ConfigurableApplicationContext context;
+
+	@Autowired
+	public void injectContext(ConfigurableApplicationContext injectContext) {
+		context = injectContext;
+	}
+
+	private static boolean isH2() {
+		return "org.h2.Driver".equals(context.getEnvironment().getProperty("spring.datasource.driverClassName"));
+	}
+	
 	@Test
 	@Transactional
 	public void 契約情報作成チェック確認() {
+		
+		// h2以外ならスルー
+		if (!isH2()) {
+			return;
+		}
+		
 		見積データ作成();
 
 		// 見積IDがNull
@@ -101,6 +119,12 @@ public class TestFunctionCheckContract {
 	@Test
 	@Transactional
 	public void 契約情報取得チェック確認() {
+		
+		// h2以外ならスルー
+		if (!isH2()) {
+			return;
+		}
+		
 		契約データ作成();
 
 		// 契約IDがNull
@@ -130,6 +154,12 @@ public class TestFunctionCheckContract {
 	@Test
 	@Transactional
 	public void 契約情報更新チェック確認() {
+		
+		// h2以外ならスルー
+		if (!isH2()) {
+			return;
+		}
+		
 		契約データ作成();
 
 		Calendar calDate = Calendar.getInstance();
@@ -203,6 +233,12 @@ public class TestFunctionCheckContract {
 	@Test
 	@Transactional
 	public void 契約情報承認ルート取得チェック確認() {
+		
+		// h2以外ならスルー
+		if (!isH2()) {
+			return;
+		}
+		
 		契約データ作成();
 
 		// 契約IDがNull
@@ -248,6 +284,12 @@ public class TestFunctionCheckContract {
 	@Test
 	@Transactional
 	public void 契約情報代理承認者設定チェック確認() {
+		
+		// h2以外ならスルー
+		if (!isH2()) {
+			return;
+		}
+		
 		契約データ作成();
 
 		ContractApprovalRouteNode contractApprovalRouteNode = new ContractApprovalRouteNode();
@@ -304,6 +346,12 @@ public class TestFunctionCheckContract {
 	@Test
 	@Transactional
 	public void 契約情報承認依頼チェック確認() {
+		
+		// h2以外ならスルー
+		if (!isH2()) {
+			return;
+		}
+		
 		契約データ作成();
 
 		Contract contract = new Contract();
@@ -447,6 +495,12 @@ public class TestFunctionCheckContract {
 	@Test
 	@Transactional
 	public void 契約情報承認依頼差戻チェック確認() {
+		
+		// h2以外ならスルー
+		if (!isH2()) {
+			return;
+		}
+		
 		契約データ作成();
 
 		// 契約IDがNull
@@ -508,6 +562,12 @@ public class TestFunctionCheckContract {
 	@Test
 	@Transactional
 	public void 契約情報承認チェック確認() {
+		
+		// h2以外ならスルー
+		if (!isH2()) {
+			return;
+		}
+		
 		契約データ作成();
 
 		// 契約IDがNull
@@ -569,6 +629,12 @@ public class TestFunctionCheckContract {
 	@Test
 	@Transactional
 	public void 契約情報解約手続きチェック確認() {
+		
+		// h2以外ならスルー
+		if (!isH2()) {
+			return;
+		}
+		
 		契約データ作成();
 
 		Calendar calDate = Calendar.getInstance();
@@ -677,6 +743,12 @@ public class TestFunctionCheckContract {
 	@Test
 	@Transactional
 	public void 契約情報情報変更チェック確認() {
+		
+		// h2以外ならスルー
+		if (!isH2()) {
+			return;
+		}
+		
 		契約データ作成();
 
 		Calendar calDate = Calendar.getInstance();
@@ -759,6 +831,12 @@ public class TestFunctionCheckContract {
 	@Test
 	@Transactional
 	public void 契約情報プラン変更チェック確認() {
+		
+		// h2以外ならスルー
+		if (!isH2()) {
+			return;
+		}
+		
 		契約データ作成();
 
 		// 契約IDがNull
@@ -820,6 +898,12 @@ public class TestFunctionCheckContract {
 	@Test
 	@Transactional
 	public void 得意先情報取得チェック確認() {
+		
+		// h2以外ならスルー
+		if (!isH2()) {
+			return;
+		}
+		
 		dbUtil.execute("sql/check/testBillingCustomerInfoMasterInsert.sql", new HashMap<>());
 
 		// 得意先コードがNull

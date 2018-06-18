@@ -83,12 +83,6 @@ public class CotosSecurityTests {
 		return "org.h2.Driver".equals(context.getEnvironment().getProperty("spring.datasource.driverClassName"));
 	}
 
-	// @BeforeClass
-	// public static void start() {
-	// System.setProperty("server.port", PORT);
-	// context = SpringApplication.run(TestApplication.class);
-	// }
-
 	@AfterClass
 	public static void stopAPServer() throws InterruptedException {
 		context.stop();

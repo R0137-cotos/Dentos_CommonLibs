@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import jp.co.ricoh.cotos.commonlib.db.DBUtil;
@@ -33,9 +34,26 @@ public class TestApprovalSearch {
 	@Autowired
 	ContractRepository contractRepository;
 
+	static ConfigurableApplicationContext context;
+
+	@Autowired
+	public void injectContext(ConfigurableApplicationContext injectContext) {
+		context = injectContext;
+	}
+
+	private static boolean isH2() {
+		return "org.h2.Driver".equals(context.getEnvironment().getProperty("spring.datasource.driverClassName"));
+	}
+
 	@Test
 	@Transactional
 	public void 見積承認ルート取得確認() {
+
+		// h2以外ならスルー
+		if (!isH2()) {
+			return;
+		}
+
 		見積データ作成();
 
 		// 正常
@@ -63,6 +81,12 @@ public class TestApprovalSearch {
 	@Test
 	@Transactional
 	public void 契約承認ルート取得確認() {
+
+		// h2以外ならスルー
+		if (!isH2()) {
+			return;
+		}
+
 		契約データ作成();
 
 		// 正常
