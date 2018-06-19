@@ -1,0 +1,34 @@
+cotos:
+  auth:
+    authentications:
+      鍵: APIを呼ぶことが出来るアプリケーション名
+      鍵2: 別のアプリケーション
+    throughURIs: /dummy, /swagger-ui.html, /dummy2
+spring:
+  datasource:
+    url: jdbc:h2:mem:example;MODE=Oracle;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    platform: h2
+    username: sa
+    password:
+    driverClassName: org.h2.Driver
+    sqlScriptEncoding: UTF-8
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        use_sql_comments: true
+        format_sql: true
+        default_schema: 
+        proc:
+          param_null_passing: true
+        enable_lazy_load_no_trans: true
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+remote:
+  momauthority:
+    url: http://165.96.254.183:10110/jmo/services/KengenService
+    relatedid: JMR

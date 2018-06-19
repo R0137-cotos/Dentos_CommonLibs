@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.ObjectError;
@@ -30,9 +31,26 @@ public class TestFunctionCheckCommunication {
 	@Autowired
 	FunctionCheckCommunication functionCheckCommunication;
 
+	static ConfigurableApplicationContext context;
+
+	@Autowired
+	public void injectContext(ConfigurableApplicationContext injectContext) {
+		context = injectContext;
+	}
+
+	private static boolean isH2() {
+		return "org.h2.Driver".equals(context.getEnvironment().getProperty("spring.datasource.driverClassName"));
+	}
+
 	@Test
 	@Transactional
 	public void コミュニケーション情報作成チェック確認() {
+
+		// h2以外ならスルー
+		if (!isH2()) {
+			return;
+		}
+
 		Communication communication = new Communication();
 		BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(communication, "communication");
 
@@ -66,6 +84,12 @@ public class TestFunctionCheckCommunication {
 	@Test
 	@Transactional
 	public void コミュニケーション情報更新チェック確認() {
+
+		// h2以外ならスルー
+		if (!isH2()) {
+			return;
+		}
+
 		Communication communication = new Communication();
 		BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(communication, "communication");
 
@@ -99,6 +123,12 @@ public class TestFunctionCheckCommunication {
 	@Test
 	@Transactional
 	public void TOP画面処理中タスク一覧取得チェック確認() {
+
+		// h2以外ならスルー
+		if (!isH2()) {
+			return;
+		}
+
 		社員マスタデータ作成();
 
 		// MoM社員IDがNull
@@ -128,6 +158,12 @@ public class TestFunctionCheckCommunication {
 	@Test
 	@Transactional
 	public void コミュニケーション情報更新メール送信チェック確認() {
+
+		// h2以外ならスルー
+		if (!isH2()) {
+			return;
+		}
+
 		社員マスタデータ作成();
 
 		Communication communication = new Communication();
@@ -205,6 +241,11 @@ public class TestFunctionCheckCommunication {
 	@Test
 	@Transactional
 	public void 再承認依頼時コミュニケーション情報ステータス更新チェック確認() {
+
+		// h2以外ならスルー
+		if (!isH2()) {
+			return;
+		}
 
 		// 対象文書キーがNull
 		try {

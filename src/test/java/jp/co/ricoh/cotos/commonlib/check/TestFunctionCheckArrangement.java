@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import jp.co.ricoh.cotos.commonlib.db.DBUtil;
@@ -32,9 +33,26 @@ public class TestFunctionCheckArrangement {
 	@Autowired
 	ArrangementWorkRepository arrangementWorkRepository;
 
+	static ConfigurableApplicationContext context;
+
+	@Autowired
+	public void injectContext(ConfigurableApplicationContext injectContext) {
+		context = injectContext;
+	}
+
+	private static boolean isH2() {
+		return "org.h2.Driver".equals(context.getEnvironment().getProperty("spring.datasource.driverClassName"));
+	}
+
 	@Test
 	@Transactional
 	public void 手配情報作成チェック確認() {
+
+		// h2以外ならスルー
+		if (!isH2()) {
+			return;
+		}
+
 		契約データ作成();
 
 		// 契約IDがNull
@@ -106,6 +124,12 @@ public class TestFunctionCheckArrangement {
 	@Test
 	@Transactional
 	public void 手配情報取得チェック確認() {
+		
+		// h2以外ならスルー
+		if (!isH2()) {
+			return;
+		}
+		
 		手配データ作成();
 
 		// 手配IDがNull
@@ -135,6 +159,12 @@ public class TestFunctionCheckArrangement {
 	@Test
 	@Transactional
 	public void 手配業務情報取得チェック確認() {
+		
+		// h2以外ならスルー
+		if (!isH2()) {
+			return;
+		}
+		
 		手配データ作成();
 
 		// 手配業務IDがNull
@@ -164,6 +194,12 @@ public class TestFunctionCheckArrangement {
 	@Test
 	@Transactional
 	public void 手配業務受付チェック確認() {
+		
+		// h2以外ならスルー
+		if (!isH2()) {
+			return;
+		}
+		
 		手配データ作成();
 
 		// 手配業務IDリストがNull
@@ -234,6 +270,12 @@ public class TestFunctionCheckArrangement {
 	@Test
 	@Transactional
 	public void 手配担当者設定チェック確認() {
+		
+		// h2以外ならスルー
+		if (!isH2()) {
+			return;
+		}
+		
 		手配データ作成();
 
 		// 手配業務IDリストがNull
@@ -294,6 +336,12 @@ public class TestFunctionCheckArrangement {
 	@Test
 	@Transactional
 	public void 手配不受理チェック確認() {
+		
+		// h2以外ならスルー
+		if (!isH2()) {
+			return;
+		}
+		
 		手配データ作成();
 
 		// 手配業務IDリストがNull
@@ -364,6 +412,12 @@ public class TestFunctionCheckArrangement {
 	@Test
 	@Transactional
 	public void 手配完了取消チェック確認() {
+		
+		// h2以外ならスルー
+		if (!isH2()) {
+			return;
+		}
+		
 		手配データ作成();
 
 		// 手配業務IDリストがNull
@@ -417,6 +471,12 @@ public class TestFunctionCheckArrangement {
 	@Test
 	@Transactional
 	public void 手配完了チェック確認() {
+		
+		// h2以外ならスルー
+		if (!isH2()) {
+			return;
+		}
+		
 		手配データ作成();
 
 		// 手配業務IDリストがNull
