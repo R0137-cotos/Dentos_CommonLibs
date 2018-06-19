@@ -183,6 +183,24 @@ public class CotosSecurityTests {
 
 		Mockito.reset(momAuthorityService);
 	}
+	
+	@Test
+	@Transactional
+	public void 正常_MoM権限_編集_東西() throws Exception {
+
+		if (isH2())
+			return;
+
+		Mockito.doReturn(AuthLevel.東西).when(momAuthorityService).searchMomAuthority(Mockito.anyString(), Mockito.any(), Mockito.any());
+
+		AuthorityJudgeParameter authParam = new AuthorityJudgeParameter();
+		authParam.setActorEmployeeMaster(new EmployeeMaster());
+
+		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.新規作成3, AccessType.編集);
+		Assert.assertTrue("対象の権限があること", result);
+
+		Mockito.reset(momAuthorityService);
+	}
 
 	@Test
 	@Transactional
@@ -370,6 +388,24 @@ public class CotosSecurityTests {
 			return;
 
 		Mockito.doReturn(AuthLevel.すべて).when(momAuthorityService).searchMomAuthority(Mockito.anyString(), Mockito.any(), Mockito.any());
+
+		AuthorityJudgeParameter authParam = new AuthorityJudgeParameter();
+		authParam.setActorEmployeeMaster(new EmployeeMaster());
+
+		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.新規作成3, AccessType.承認);
+		Assert.assertTrue("対象の権限があること", result);
+
+		Mockito.reset(momAuthorityService);
+	}
+	
+	@Test
+	@Transactional
+	public void 正常_MoM権限_承認_東西() throws Exception {
+
+		if (isH2())
+			return;
+
+		Mockito.doReturn(AuthLevel.東西).when(momAuthorityService).searchMomAuthority(Mockito.anyString(), Mockito.any(), Mockito.any());
 
 		AuthorityJudgeParameter authParam = new AuthorityJudgeParameter();
 		authParam.setActorEmployeeMaster(new EmployeeMaster());

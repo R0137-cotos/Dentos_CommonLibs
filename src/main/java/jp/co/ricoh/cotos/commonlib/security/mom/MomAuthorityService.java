@@ -76,7 +76,7 @@ public class MomAuthorityService {
 	}
 
 	public enum AuthLevel {
-		不可("00"), 自顧客("10"), 配下("30"), 自社("50"), 地域("70"), すべて("90");
+		不可("00"), 自顧客("10"), 配下("30"), 自社("50"), 地域("70"), 東西("80"), すべて("90");
 
 		private final String value;
 
@@ -171,6 +171,7 @@ public class MomAuthorityService {
 		case 地域:
 			// 担当SA、追加編集者、担当CE、担当SEの販社と関連販社であるか確認
 			return targetEmployeeMasterList.stream().anyMatch(targetEmployeeMaster -> this.isRelatedOrg(targetEmployeeMaster.getSingleUserId(), editor.getSingleUserId()));
+		case 東西:
 		case すべて:
 			return true;
 		default:
@@ -196,6 +197,7 @@ public class MomAuthorityService {
 			queryParams.put("requesterSingleUserId", requester.getSingleUserId());
 			long result = dbUtil.loadCountFromSQLFile("sql/security/approverAuthority/approverAuthority_authority" + authLevel.toValue() + ".sql", queryParams);
 			return 0 != result;
+		case 東西:
 		case すべて:
 			return true;
 		default:

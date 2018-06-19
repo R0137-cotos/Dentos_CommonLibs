@@ -40,9 +40,9 @@ public class AuthDivConverter implements AttributeConverter<AuthDiv, String> {
 		case "0390":
 			return AuthDiv.発注承認;
 		case "0690":
-			return AuthDiv.役務手配;
-		case "0455":
 			return AuthDiv.FFM商品原価情報;
+		case "0455":
+			return AuthDiv.役務手配;
 		default:
 			throw new IllegalArgumentException("Unknown value: " + value);
 		}

@@ -47,7 +47,7 @@ public class TestWebSecurityConfig extends WebSecurityConfigurerAdapter {
 				// 認証処理用のフィルターを追加
 				.addFilter(preAuthenticatedProcessingFilter()).exceptionHandling().authenticationEntryPoint(new Http401AuthenticationEntryPoint("Bearer error=\"invalid_token\""))
 				// 成功・失敗処理のハンドラーを追加
-				.and().formLogin()//.successHandler(new AuthenticatedSuccessHandler()).failureHandler(new AuthenticatedFailureHandler())
+				.and().formLogin()
 				.and().logout().logoutSuccessHandler(new SimpleUrlLogoutSuccessHandler())
 				// 認可処理用のインスタンスを追加
 				.and().authorizeRequests().anyRequest().authenticated().accessDecisionManager(createAccessDecisionManager())
@@ -62,9 +62,6 @@ public class TestWebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public AbstractPreAuthenticatedProcessingFilter preAuthenticatedProcessingFilter() throws Exception {
 		PreAuthenticationFilter filter = new PreAuthenticationFilter();
 		filter.setAuthenticationManager(authenticationManager());
-//		// filter.setContinueFilterChainOnUnsuccessfulAuthentication(false);
-//		// filter.setAuthenticationFailureHandler(new AuthenticatedFailureHandler());
-//		filter.setAuthenticationSuccessHandler(new AuthenticatedSuccessHandler());
 		return filter;
 	}
 
