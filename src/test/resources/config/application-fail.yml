@@ -1,0 +1,6 @@
+spring:
+  mail:
+    host: shipyard.cotos.ricoh.co.jpa
+    port: 1025
+    username: koike.shinichi
+    password: koike.shinichia

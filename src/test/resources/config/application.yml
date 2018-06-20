@@ -28,6 +28,11 @@ spring:
   jackson:
     serialization:
       fail-on-empty-beans: false
+  mail:
+    host: shipyard.cotos.ricoh.co.jp
+    port: 1025
+    username: koike.shinichi
+    password: koike.shinichi
 remote:
   momauthority:
     url: http://165.96.254.183:10110/jmo/services/KengenService
