@@ -3,6 +3,7 @@ package jp.co.ricoh.cotos.commonlib.logic.mail;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import javax.mail.MessagingException;
@@ -108,7 +109,8 @@ public class SendMail {
 	@Async
 	private void sendMail(List<String> emailToList, List<String> emailCcList, MailTemplateMaster mailTemplateMaster, List<String> mailSubjectRepalceValueList, List<String> mailTextRepalceValueList, String uploadFile) throws MessagingException {
 		MimeMessage attachedMsg = javaMailSender.createMimeMessage();
-		MimeMessageHelper attachedHelper = new MimeMessageHelper(attachedMsg, true);
+		attachedMsg.setHeader("Content-Transfer-Encoding", "base64");
+		MimeMessageHelper attachedHelper = new MimeMessageHelper(attachedMsg, true, StandardCharsets.UTF_8.name());
 
 		String sendFromMailAddress = mailTemplateMaster.getSendFromMailAddress();
 		Writer writerMailSubject = createMailSubject(mailTemplateMaster, mailSubjectRepalceValueList);
@@ -209,8 +211,8 @@ public class SendMail {
 		sendMailHistory.setId(0);
 		sendMailHistory.setMailTemplateMaster(mailTemplateMaster);
 		sendMailHistory.setSendFromMailAddress(sendFromMailAddress);
-		sendMailHistory.setToFromMailAddress(toFromMailAddress);
-		sendMailHistory.setCcFromMailAddress(ccFromMailAddress);
+		sendMailHistory.setToMailAddress(toFromMailAddress);
+		sendMailHistory.setCcMailAddress(ccFromMailAddress);
 		sendMailHistory.setMailSubject(mailSubject);
 		sendMailHistory.setMailBody(mailBody);
 		sendMailHistory.setErrorFlg(errorFlg);

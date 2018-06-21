@@ -29,6 +29,7 @@ spring:
     serialization:
       fail-on-empty-beans: false
   mail:
+    default-encoding: UTF-8
     host: shipyard.cotos.ricoh.co.jp
     port: 1025
     username: koike.shinichi

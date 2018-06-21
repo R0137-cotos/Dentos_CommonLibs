@@ -24,21 +24,6 @@ import lombok.Data;
 @Table(name = "alert_mail_control_master")
 public class AlertMailControlMaster {
 
-	public enum ServiceCategory {
-
-		見積, 契約, 手配;
-
-		@JsonValue
-		public String toValue() {
-			return this.name();
-		}
-
-		@JsonCreator
-		public static Enum<ServiceCategory> fromValue(String name) {
-			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
-		}
-	}
-
 	public enum ContractUpdateDiv {
 
 		手動更新, 自動更新, 全て;
@@ -99,21 +84,6 @@ public class AlertMailControlMaster {
 		}
 	}
 
-	public enum ReForwardingDeltaDiv {
-
-		再送する, 再送しない;
-
-		@JsonValue
-		public String toValue() {
-			return this.name();
-		}
-
-		@JsonCreator
-		public static Enum<ReForwardingDeltaDiv> fromValue(String name) {
-			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
-		}
-	}
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "alert_mail_control_master_seq")
 	@SequenceGenerator(name = "alert_mail_control_master_seq", sequenceName = "alert_mail_control_master_seq", allocationSize = 1)
@@ -124,12 +94,6 @@ public class AlertMailControlMaster {
 	 */
 	@ManyToOne
 	private Product product;
-
-	/**
-	 * サービスカテゴリー
-	 */
-	@Enumerated(EnumType.STRING)
-	private ServiceCategory serviceCategory;
 
 	/**
 	 * 通知判定未実施フラグ
@@ -201,8 +165,8 @@ public class AlertMailControlMaster {
 	private Integer autoDeliveryFailAlertDateDelta;
 
 	/**
-	 * 再送要否区分
+	 * 再送要否フラグ
 	 */
-	@Enumerated(EnumType.STRING)
-	private ReForwardingDeltaDiv reForwardingDeltaDiv;
+	@Column(length = 1)
+	private boolean reForwardingDeltaFlg;
 }

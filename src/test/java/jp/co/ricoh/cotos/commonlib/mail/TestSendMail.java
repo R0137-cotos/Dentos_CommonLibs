@@ -135,6 +135,26 @@ public class TestSendMail {
 		メール送信履歴確認置換リストNull値あり();
 	}
 
+	@Test
+	@Transactional
+	public void メール送信環境依存文字あり() throws MessagingException {
+
+		// h2以外ならスルー
+		if (!isH2()) {
+			return;
+		}
+
+		テストデータ作成();
+
+		List<String> emailToList = 送信先TOメールアドレスリスト作成();
+		List<String> emailCcList = 送信先CCメールアドレスリスト作成();
+		List<String> mailSubjectRepalceValueList = メール件名置換リスト作成();
+		List<String> mailTextRepalceValueList = メール本文置換リスト作成();
+		sendMail.findMailTemplateMasterAndSendMail(10L, emailToList, emailCcList, mailSubjectRepalceValueList, mailTextRepalceValueList, null);
+
+		メール送信履歴環境依存文字あり();
+	}
+
 	private void テストデータ作成() {
 		dbUtil.execute("sql/mail/testProductInsert.sql", new HashMap<>());
 		dbUtil.execute("sql/mail/testMailTemplateMasterInset.sql", new HashMap<>());
@@ -179,10 +199,10 @@ public class TestSendMail {
 		SendMailHistory sendMailHistory = sendMailHistoryRepository.findOne(!isApiExce ? 1L : 2L);
 		Assert.assertEquals("メールテンプレートマスタIDが設定されていること", !isApiExce ? 1L : 2L, sendMailHistory.getMailTemplateMaster().getId());
 		Assert.assertEquals("送信元メールアドレスが設定されていること", "oshirase_shindenryoku@example.com", sendMailHistory.getSendFromMailAddress());
-		Assert.assertEquals("送信先TOメールアドレスが設定されていること", "send_mail_to1@softcomm.co.jp", sendMailHistory.getToFromMailAddress()[0]);
-		Assert.assertEquals("送信先TOメールアドレスが設定されていること", "send_mail_to2@softcomm.co.jp", sendMailHistory.getToFromMailAddress()[1]);
-		Assert.assertEquals("送信先CCメールアドレスが設定されていること", "send_mail_cc1@softcomm.co.jp", sendMailHistory.getCcFromMailAddress()[0]);
-		Assert.assertEquals("送信先CCメールアドレスが設定されていること", "send_mail_cc2@softcomm.co.jp", sendMailHistory.getCcFromMailAddress()[1]);
+		Assert.assertEquals("送信先TOメールアドレスが設定されていること", "send_mail_to1@softcomm.co.jp", sendMailHistory.getToMailAddress()[0]);
+		Assert.assertEquals("送信先TOメールアドレスが設定されていること", "send_mail_to2@softcomm.co.jp", sendMailHistory.getToMailAddress()[1]);
+		Assert.assertEquals("送信先CCメールアドレスが設定されていること", "send_mail_cc1@softcomm.co.jp", sendMailHistory.getCcMailAddress()[0]);
+		Assert.assertEquals("送信先CCメールアドレスが設定されていること", "send_mail_cc2@softcomm.co.jp", sendMailHistory.getCcMailAddress()[1]);
 		Assert.assertEquals("件名が設定されていること", !isApiExce ? "【test_subject1】見積承認依頼メール" : "【test_subject1】見積承認完了メール", sendMailHistory.getMailSubject());
 		Assert.assertNotNull("本文が設定されていること", sendMailHistory.getMailBody());
 		Assert.assertEquals("エラーフラグに「0」が設定されていること", false, sendMailHistory.isErrorFlg());
@@ -198,10 +218,10 @@ public class TestSendMail {
 		SendMailHistory sendMailHistory = sendMailHistoryRepository.findOne(3L);
 		Assert.assertEquals("メールテンプレートマスタIDが設定されていること", 3L, sendMailHistory.getMailTemplateMaster().getId());
 		Assert.assertEquals("送信元メールアドレスが設定されていること", "oshirase_shindenryoku@example.com", sendMailHistory.getSendFromMailAddress());
-		Assert.assertEquals("送信先TOメールアドレスが設定されていること", "send_mail_to1@softcomm.co.jp", sendMailHistory.getToFromMailAddress()[0]);
-		Assert.assertEquals("送信先TOメールアドレスが設定されていること", "send_mail_to2@softcomm.co.jp", sendMailHistory.getToFromMailAddress()[1]);
-		Assert.assertEquals("送信先CCメールアドレスが設定されていること", "send_mail_cc1@softcomm.co.jp", sendMailHistory.getCcFromMailAddress()[0]);
-		Assert.assertEquals("送信先CCメールアドレスが設定されていること", "send_mail_cc2@softcomm.co.jp", sendMailHistory.getCcFromMailAddress()[1]);
+		Assert.assertEquals("送信先TOメールアドレスが設定されていること", "send_mail_to1@softcomm.co.jp", sendMailHistory.getToMailAddress()[0]);
+		Assert.assertEquals("送信先TOメールアドレスが設定されていること", "send_mail_to2@softcomm.co.jp", sendMailHistory.getToMailAddress()[1]);
+		Assert.assertEquals("送信先CCメールアドレスが設定されていること", "send_mail_cc1@softcomm.co.jp", sendMailHistory.getCcMailAddress()[0]);
+		Assert.assertEquals("送信先CCメールアドレスが設定されていること", "send_mail_cc2@softcomm.co.jp", sendMailHistory.getCcMailAddress()[1]);
 		Assert.assertEquals("件名が設定されていること", "【test_subject1】見積承認依頼差戻メール", sendMailHistory.getMailSubject());
 		Assert.assertNotNull("本文が設定されていること", sendMailHistory.getMailBody());
 		Assert.assertEquals("エラーフラグに「0」が設定されていること", false, sendMailHistory.isErrorFlg());
@@ -218,12 +238,31 @@ public class TestSendMail {
 		SendMailHistory sendMailHistory = sendMailHistoryRepository.findOne(4L);
 		Assert.assertEquals("メールテンプレートマスタIDが設定されていること", 6L, sendMailHistory.getMailTemplateMaster().getId());
 		Assert.assertEquals("送信元メールアドレスが設定されていること", "oshirase_shindenryoku@example.com", sendMailHistory.getSendFromMailAddress());
-		Assert.assertEquals("送信先TOメールアドレスが設定されていること", "send_mail_to1@softcomm.co.jp", sendMailHistory.getToFromMailAddress()[0]);
-		Assert.assertEquals("送信先TOメールアドレスが設定されていること", "send_mail_to2@softcomm.co.jp", sendMailHistory.getToFromMailAddress()[1]);
-		Assert.assertEquals("送信先CCメールアドレスが設定されていること", "send_mail_cc1@softcomm.co.jp", sendMailHistory.getCcFromMailAddress()[0]);
-		Assert.assertEquals("送信先CCメールアドレスが設定されていること", "send_mail_cc2@softcomm.co.jp", sendMailHistory.getCcFromMailAddress()[1]);
+		Assert.assertEquals("送信先TOメールアドレスが設定されていること", "send_mail_to1@softcomm.co.jp", sendMailHistory.getToMailAddress()[0]);
+		Assert.assertEquals("送信先TOメールアドレスが設定されていること", "send_mail_to2@softcomm.co.jp", sendMailHistory.getToMailAddress()[1]);
+		Assert.assertEquals("送信先CCメールアドレスが設定されていること", "send_mail_cc1@softcomm.co.jp", sendMailHistory.getCcMailAddress()[0]);
+		Assert.assertEquals("送信先CCメールアドレスが設定されていること", "send_mail_cc2@softcomm.co.jp", sendMailHistory.getCcMailAddress()[1]);
 		Assert.assertEquals("件名が設定されていること", "【】契約承認依頼差戻メール", sendMailHistory.getMailSubject());
 		Assert.assertNotNull("本文が設定されていること", sendMailHistory.getMailBody());
+		Assert.assertEquals("エラーフラグに「0」が設定されていること", false, sendMailHistory.isErrorFlg());
+		Assert.assertNull("エラー内容が設定されていないこと", sendMailHistory.getErrorContent());
+		Assert.assertEquals("再送フラグに「0」が設定されていること", false, sendMailHistory.isReForwardingFlg());
+	}
+
+	/**
+	 * メール送信履歴確認環境依存文字あり
+	 */
+	private void メール送信履歴環境依存文字あり() {
+		SendMailHistoryRepository sendMailHistoryRepository = context.getBean(SendMailHistoryRepository.class);
+		SendMailHistory sendMailHistory = sendMailHistoryRepository.findOne(5L);
+		Assert.assertEquals("メールテンプレートマスタIDが設定されていること", 10L, sendMailHistory.getMailTemplateMaster().getId());
+		Assert.assertEquals("送信元メールアドレスが設定されていること", "oshirase_shindenryoku@example.com", sendMailHistory.getSendFromMailAddress());
+		Assert.assertEquals("送信先TOメールアドレスが設定されていること", "send_mail_to1@softcomm.co.jp", sendMailHistory.getToMailAddress()[0]);
+		Assert.assertEquals("送信先TOメールアドレスが設定されていること", "send_mail_to2@softcomm.co.jp", sendMailHistory.getToMailAddress()[1]);
+		Assert.assertEquals("送信先CCメールアドレスが設定されていること", "send_mail_cc1@softcomm.co.jp", sendMailHistory.getCcMailAddress()[0]);
+		Assert.assertEquals("送信先CCメールアドレスが設定されていること", "send_mail_cc2@softcomm.co.jp", sendMailHistory.getCcMailAddress()[1]);
+		Assert.assertEquals("件名が設定されていること", "①", sendMailHistory.getMailSubject());
+		Assert.assertEquals("本文が設定されていること", "㍻", sendMailHistory.getMailBody());
 		Assert.assertEquals("エラーフラグに「0」が設定されていること", false, sendMailHistory.isErrorFlg());
 		Assert.assertNull("エラー内容が設定されていないこと", sendMailHistory.getErrorContent());
 		Assert.assertEquals("再送フラグに「0」が設定されていること", false, sendMailHistory.isReForwardingFlg());

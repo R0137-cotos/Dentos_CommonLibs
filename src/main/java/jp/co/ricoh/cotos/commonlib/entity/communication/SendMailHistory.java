@@ -74,12 +74,12 @@ public class SendMailHistory extends EntityBase {
 	/**
 	 * 送信先メールアドレス(To)
 	 */
-	private String[] toFromMailAddress;
+	private String[] toMailAddress;
 
 	/**
 	 * 送信先メールアドレス(Cc)
 	 */
-	private String[] ccFromMailAddress;
+	private String[] ccMailAddress;
 
 	/**
 	 * メール件名
