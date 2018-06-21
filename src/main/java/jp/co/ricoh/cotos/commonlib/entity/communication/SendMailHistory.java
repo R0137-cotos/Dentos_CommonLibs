@@ -20,7 +20,6 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import jp.co.ricoh.cotos.commonlib.entity.master.AlertMailControlMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.MailTemplateMaster;
@@ -51,41 +50,71 @@ public class SendMailHistory extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "send_mail_history_seq")
 	@SequenceGenerator(name = "send_mail_history_seq", sequenceName = "send_mail_history_seq", allocationSize = 1)
-	@ApiModelProperty(value = "メール送信履歴ID", required = true, position = 1)
 	private long id;
 
+	/**
+	 * 通知メール制御マスタ
+	 */
 	@ManyToOne
 	@JoinColumn(name = "alertMailControlMasterId")
-	@ApiModelProperty(value = "通知メール制御マスタ", required = false, position = 2)
 	private AlertMailControlMaster alertMailControlMaster;
 
+	/**
+	 * メールテンプレートマスタ
+	 */
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "mailTemplateMasterId")
-	@ApiModelProperty(value = "メールテンプレートマスタ", required = false, position = 3)
 	private MailTemplateMaster mailTemplateMaster;
 
+	/**
+	 * 送信元メールアドレス
+	 */
 	private String sendFromMailAddress;
 
+	/**
+	 * 送信先メールアドレス(To)
+	 */
 	private String[] toFromMailAddress;
 
+	/**
+	 * 送信先メールアドレス(Cc)
+	 */
 	private String[] ccFromMailAddress;
 
+	/**
+	 * メール件名
+	 */
 	private String mailSubject;
 
+	/**
+	 * メール本文
+	 */
 	@Lob
 	@Basic(fetch = FetchType.EAGER)
 	private String mailBody;
 
+	/**
+	 * 添付ファイル
+	 */
 	@Lob
 	@Basic(fetch = FetchType.EAGER)
 	private String attachedFile;
 
+	/**
+	 * エラーフラグ
+	 */
 	@Column(length = 1)
 	private boolean errorFlg;
 
+	/**
+	 * エラー内容
+	 */
 	@Enumerated(EnumType.STRING)
 	private ErrorContent errorContent;
 
+	/**
+	 * 再送フラグ
+	 */
 	@Column(length = 1)
 	private boolean reForwardingFlg;
 }

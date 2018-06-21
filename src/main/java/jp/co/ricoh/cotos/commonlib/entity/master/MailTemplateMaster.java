@@ -60,6 +60,9 @@ public class MailTemplateMaster {
 	@SequenceGenerator(name = "mail_template_master_seq", sequenceName = "mail_template_master_seq", allocationSize = 1)
 	private long id;
 
+	/**
+	 * 商品マスタ
+	 */
 	@ManyToOne
 	private Product product;
 

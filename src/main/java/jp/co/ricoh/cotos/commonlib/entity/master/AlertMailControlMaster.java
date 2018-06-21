@@ -119,45 +119,90 @@ public class AlertMailControlMaster {
 	@SequenceGenerator(name = "alert_mail_control_master_seq", sequenceName = "alert_mail_control_master_seq", allocationSize = 1)
 	private long id;
 
+	/**
+	 * 商品マスタ
+	 */
 	@ManyToOne
 	private Product product;
 
+	/**
+	 * サービスカテゴリー
+	 */
 	@Enumerated(EnumType.STRING)
 	private ServiceCategory serviceCategory;
 
+	/**
+	 * 通知判定未実施フラグ
+	 */
 	@Column(length = 1)
-	private boolean alertOpinionNotOperationFlg;
+	private boolean alertDetermineNotOperationFlg;
 
-	private String initialDateOpinionColumn;
+	/**
+	 * 起算日判定項目
+	 */
+	private String initialDateDetermineColumn;
 
+	/**
+	 * 通知日差分
+	 */
 	private Integer alertDateDelta;
 
+	/**
+	 * 通知時間
+	 */
 	private Integer alertTime;
 
+	/**
+	 * メールテンプレートマスタ
+	 */
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "mailTemplateMasterId")
 	private MailTemplateMaster mailTemplateMaster;
 
+	/**
+	 * 契約更新方式区分
+	 */
 	@Enumerated(EnumType.STRING)
 	private ContractUpdateDiv contractUpdateDiv;
 
+	/**
+	 * 送信先区分(To)
+	 */
 	@Enumerated(EnumType.STRING)
 	private DestinationDiv destinationDivSendTo;
 
+	/**
+	 * 送信先区分(CC)
+	 */
 	@Enumerated(EnumType.STRING)
 	private DestinationDiv destinationDivSendCc;
 
+	/**
+	 * 自動配信不可時対応区分
+	 */
 	@Enumerated(EnumType.STRING)
 	private AutoDeliveryFailHandlingDiv autoDeliveryFailHandlingDiv;
 
+	/**
+	 * 自動配信不可時送信先区分(To)
+	 */
 	@Enumerated(EnumType.STRING)
 	private AutoDeliveryFailDestinationDiv autoDeliveryFailDestinationDivSendTo;
 
+	/**
+	 * 自動配信不可時送信先区分(CC)
+	 */
 	@Enumerated(EnumType.STRING)
 	private AutoDeliveryFailDestinationDiv autoDeliveryFailDestinationDivSendCc;
 
+	/**
+	 * 自動配信不可時通知日差分
+	 */
 	private Integer autoDeliveryFailAlertDateDelta;
 
+	/**
+	 * 再送要否区分
+	 */
 	@Enumerated(EnumType.STRING)
 	private ReForwardingDeltaDiv reForwardingDeltaDiv;
 }
