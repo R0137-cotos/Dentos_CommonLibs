@@ -115,6 +115,26 @@ public class TestSendMail {
 		メール送信履歴確認添付ファイルあり();
 	}
 
+	@Test
+	@Transactional
+	public void メール送信置換リストNull値あり() throws MessagingException {
+
+		// h2以外ならスルー
+		if (!isH2()) {
+			return;
+		}
+
+		テストデータ作成();
+
+		List<String> emailToList = 送信先TOメールアドレスリスト作成();
+		List<String> emailCcList = 送信先CCメールアドレスリスト作成();
+		List<String> mailSubjectRepalceValueList = メール件名置換リスト作成Null値あり();
+		List<String> mailTextRepalceValueList = メール本文置換リスト作成Null値あり();
+		sendMail.findMailTemplateMasterAndSendMail(ServiceCategory.契約, CommunicationCategory.承認依頼差戻, emailToList, emailCcList, mailSubjectRepalceValueList, mailTextRepalceValueList, null);
+
+		メール送信履歴確認置換リストNull値あり();
+	}
+
 	private void テストデータ作成() {
 		dbUtil.execute("sql/mail/testProductInsert.sql", new HashMap<>());
 		dbUtil.execute("sql/mail/testMailTemplateMasterInset.sql", new HashMap<>());
@@ -134,6 +154,18 @@ public class TestSendMail {
 
 	private List<String> メール本文置換リスト作成() {
 		return IntStream.rangeClosed(1, 11).mapToObj(i -> "test_text" + i).collect(Collectors.toList());
+	}
+
+	private List<String> メール件名置換リスト作成Null値あり() {
+		List<String> list = IntStream.rangeClosed(2, 3).mapToObj(i -> "test_subject" + i).collect(Collectors.toList());
+		list.add(0, null);
+		return list;
+	}
+
+	private List<String> メール本文置換リスト作成Null値あり() {
+		List<String> list = IntStream.rangeClosed(2, 3).mapToObj(i -> "test_text" + i).collect(Collectors.toList());
+		list.add(0, null);
+		return list;
 	}
 
 	/**
@@ -176,5 +208,24 @@ public class TestSendMail {
 		Assert.assertNull("エラー内容が設定されていないこと", sendMailHistory.getErrorContent());
 		Assert.assertEquals("再送フラグに「0」が設定されていること", false, sendMailHistory.isReForwardingFlg());
 		Assert.assertNotNull("添付ファイルが設定されていること", sendMailHistory.getAttachedFile());
+	}
+
+	/**
+	 * メール送信履歴確認置換リストNull値あり
+	 */
+	private void メール送信履歴確認置換リストNull値あり() {
+		SendMailHistoryRepository sendMailHistoryRepository = context.getBean(SendMailHistoryRepository.class);
+		SendMailHistory sendMailHistory = sendMailHistoryRepository.findOne(4L);
+		Assert.assertEquals("メールテンプレートマスタIDが設定されていること", 6L, sendMailHistory.getMailTemplateMaster().getId());
+		Assert.assertEquals("送信元メールアドレスが設定されていること", "oshirase_shindenryoku@example.com", sendMailHistory.getSendFromMailAddress());
+		Assert.assertEquals("送信先TOメールアドレスが設定されていること", "send_mail_to1@softcomm.co.jp", sendMailHistory.getToFromMailAddress()[0]);
+		Assert.assertEquals("送信先TOメールアドレスが設定されていること", "send_mail_to2@softcomm.co.jp", sendMailHistory.getToFromMailAddress()[1]);
+		Assert.assertEquals("送信先CCメールアドレスが設定されていること", "send_mail_cc1@softcomm.co.jp", sendMailHistory.getCcFromMailAddress()[0]);
+		Assert.assertEquals("送信先CCメールアドレスが設定されていること", "send_mail_cc2@softcomm.co.jp", sendMailHistory.getCcFromMailAddress()[1]);
+		Assert.assertEquals("件名が設定されていること", "【】契約承認依頼差戻メール", sendMailHistory.getMailSubject());
+		Assert.assertNotNull("本文が設定されていること", sendMailHistory.getMailBody());
+		Assert.assertEquals("エラーフラグに「0」が設定されていること", false, sendMailHistory.isErrorFlg());
+		Assert.assertNull("エラー内容が設定されていないこと", sendMailHistory.getErrorContent());
+		Assert.assertEquals("再送フラグに「0」が設定されていること", false, sendMailHistory.isReForwardingFlg());
 	}
 }
