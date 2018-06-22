@@ -33,7 +33,7 @@ import jp.co.ricoh.cotos.commonlib.repository.master.MailTemplateMasterRepositor
  * メール送信共通クラス
  */
 @Component
-public class SendMail {
+public class CommonSendMail {
 
 	@Autowired
 	MailTemplateMasterRepository mailTemplateMasterRepository;

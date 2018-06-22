@@ -22,7 +22,7 @@ import jp.co.ricoh.cotos.commonlib.db.DBUtil;
 import jp.co.ricoh.cotos.commonlib.entity.communication.SendMailHistory;
 import jp.co.ricoh.cotos.commonlib.entity.master.MailTemplateMaster.CommunicationCategory;
 import jp.co.ricoh.cotos.commonlib.entity.master.MailTemplateMaster.ServiceCategory;
-import jp.co.ricoh.cotos.commonlib.logic.mail.SendMail;
+import jp.co.ricoh.cotos.commonlib.logic.mail.CommonSendMail;
 import jp.co.ricoh.cotos.commonlib.repository.communication.SendMailHistoryRepository;
 
 @RunWith(SpringRunner.class)
@@ -32,7 +32,7 @@ public class TestSendMail {
 	@Autowired
 	DBUtil dbUtil;
 	@Autowired
-	SendMail sendMail;
+	CommonSendMail commonSendMail;
 
 	static ConfigurableApplicationContext context;
 
@@ -68,7 +68,7 @@ public class TestSendMail {
 		List<String> emailCcList = 送信先CCメールアドレスリスト作成();
 		List<String> mailSubjectRepalceValueList = メール件名置換リスト作成();
 		List<String> mailTextRepalceValueList = メール本文置換リスト作成();
-		sendMail.findMailTemplateMasterAndSendMail(ServiceCategory.見積, CommunicationCategory.承認依頼, emailToList, emailCcList, mailSubjectRepalceValueList, mailTextRepalceValueList, null);
+		commonSendMail.findMailTemplateMasterAndSendMail(ServiceCategory.見積, CommunicationCategory.承認依頼, emailToList, emailCcList, mailSubjectRepalceValueList, mailTextRepalceValueList, null);
 
 		メール送信履歴確認(false);
 	}
@@ -88,7 +88,7 @@ public class TestSendMail {
 		List<String> emailCcList = 送信先CCメールアドレスリスト作成();
 		List<String> mailSubjectRepalceValueList = メール件名置換リスト作成();
 		List<String> mailTextRepalceValueList = メール本文置換リスト作成();
-		sendMail.findMailTemplateMasterAndSendMail(2L, emailToList, emailCcList, mailSubjectRepalceValueList, mailTextRepalceValueList, null);
+		commonSendMail.findMailTemplateMasterAndSendMail(2L, emailToList, emailCcList, mailSubjectRepalceValueList, mailTextRepalceValueList, null);
 
 		メール送信履歴確認(true);
 	}
@@ -110,7 +110,7 @@ public class TestSendMail {
 		List<String> mailTextRepalceValueList = メール本文置換リスト作成();
 		String path = new File(".").getAbsoluteFile().getParent();
 		String uploadFile = path + "/src/test/resources/dummyFile/10130102146_201712.zip";
-		sendMail.findMailTemplateMasterAndSendMail(3L, emailToList, emailCcList, mailSubjectRepalceValueList, mailTextRepalceValueList, uploadFile);
+		commonSendMail.findMailTemplateMasterAndSendMail(3L, emailToList, emailCcList, mailSubjectRepalceValueList, mailTextRepalceValueList, uploadFile);
 
 		メール送信履歴確認添付ファイルあり();
 	}
@@ -130,7 +130,7 @@ public class TestSendMail {
 		List<String> emailCcList = 送信先CCメールアドレスリスト作成();
 		List<String> mailSubjectRepalceValueList = メール件名置換リスト作成Null値あり();
 		List<String> mailTextRepalceValueList = メール本文置換リスト作成Null値あり();
-		sendMail.findMailTemplateMasterAndSendMail(ServiceCategory.契約, CommunicationCategory.承認依頼差戻, emailToList, emailCcList, mailSubjectRepalceValueList, mailTextRepalceValueList, null);
+		commonSendMail.findMailTemplateMasterAndSendMail(ServiceCategory.契約, CommunicationCategory.承認依頼差戻, emailToList, emailCcList, mailSubjectRepalceValueList, mailTextRepalceValueList, null);
 
 		メール送信履歴確認置換リストNull値あり();
 	}
@@ -150,7 +150,7 @@ public class TestSendMail {
 		List<String> emailCcList = 送信先CCメールアドレスリスト作成();
 		List<String> mailSubjectRepalceValueList = メール件名置換リスト作成();
 		List<String> mailTextRepalceValueList = メール本文置換リスト作成();
-		sendMail.findMailTemplateMasterAndSendMail(10L, emailToList, emailCcList, mailSubjectRepalceValueList, mailTextRepalceValueList, null);
+		commonSendMail.findMailTemplateMasterAndSendMail(10L, emailToList, emailCcList, mailSubjectRepalceValueList, mailTextRepalceValueList, null);
 
 		メール送信履歴環境依存文字あり();
 	}
