@@ -24,7 +24,7 @@ import jp.co.ricoh.cotos.commonlib.entity.communication.SendMailHistory;
 import jp.co.ricoh.cotos.commonlib.entity.communication.SendMailHistory.ErrorContent;
 import jp.co.ricoh.cotos.commonlib.entity.master.MailTemplateMaster.CommunicationCategory;
 import jp.co.ricoh.cotos.commonlib.entity.master.MailTemplateMaster.ServiceCategory;
-import jp.co.ricoh.cotos.commonlib.logic.mail.CommonSendMail;
+import jp.co.ricoh.cotos.commonlib.logic.mail.SendMail;
 import jp.co.ricoh.cotos.commonlib.repository.communication.SendMailHistoryRepository;
 
 @RunWith(SpringRunner.class)
@@ -35,7 +35,7 @@ public class TestSendMailFail {
 	@Autowired
 	DBUtil dbUtil;
 	@Autowired
-	CommonSendMail commonSendMail;
+	SendMail sendMail;
 
 	static ConfigurableApplicationContext context;
 
@@ -71,7 +71,7 @@ public class TestSendMailFail {
 		List<String> emailCcList = 送信先CCメールアドレスリスト作成();
 		List<String> mailSubjectRepalceValueList = メール件名置換リスト作成();
 		List<String> mailTextRepalceValueList = メール本文置換リスト作成();
-		commonSendMail.findMailTemplateMasterAndSendMail(ServiceCategory.見積, CommunicationCategory.承認依頼, emailToList, emailCcList, mailSubjectRepalceValueList, mailTextRepalceValueList, null);
+		sendMail.findMailTemplateMasterAndSendMail(ServiceCategory.見積, CommunicationCategory.承認依頼, emailToList, emailCcList, mailSubjectRepalceValueList, mailTextRepalceValueList, null);
 
 		メール送信履歴確認(false);
 	}
@@ -91,7 +91,7 @@ public class TestSendMailFail {
 		List<String> emailCcList = 送信先CCメールアドレスリスト作成();
 		List<String> mailSubjectRepalceValueList = メール件名置換リスト作成();
 		List<String> mailTextRepalceValueList = メール本文置換リスト作成();
-		commonSendMail.findMailTemplateMasterAndSendMail(2L, emailToList, emailCcList, mailSubjectRepalceValueList, mailTextRepalceValueList, null);
+		sendMail.findMailTemplateMasterAndSendMail(2L, emailToList, emailCcList, mailSubjectRepalceValueList, mailTextRepalceValueList, null);
 
 		メール送信履歴確認(true);
 	}
@@ -113,7 +113,7 @@ public class TestSendMailFail {
 		List<String> mailTextRepalceValueList = メール本文置換リスト作成();
 		String path = new File(".").getAbsoluteFile().getParent();
 		String uploadFile = path + "/src/test/resources/dummyFile/10130102146_201712.zip";
-		commonSendMail.findMailTemplateMasterAndSendMail(3L, emailToList, emailCcList, mailSubjectRepalceValueList, mailTextRepalceValueList, uploadFile);
+		sendMail.findMailTemplateMasterAndSendMail(3L, emailToList, emailCcList, mailSubjectRepalceValueList, mailTextRepalceValueList, uploadFile);
 
 		メール送信履歴確認添付ファイルあり();
 	}
