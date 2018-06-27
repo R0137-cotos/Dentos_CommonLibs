@@ -1,12 +1,10 @@
 package jp.co.ricoh.cotos.commonlib.dto.parameter;
 
 import java.util.Map;
-
-import javax.validation.constraints.NotNull;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import org.apache.commons.lang3.reflect.FieldUtils;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -177,7 +175,7 @@ public class EstimationSearchParameter {
 	/**
 	 * ソート項目
 	 */
-	@NotNull(message = "{SortColumn}{NotEmptyError}:{SortColumn}{NotEmptyErrorMsg}")
+	@NotEmpty(message = "{SortColumn}{NotEmptyError}:{SortColumn}{NotEmptyErrorMsg}")
 	@ApiParam(value = "ソート項目", required = false)
 	private int sortColumn;
 

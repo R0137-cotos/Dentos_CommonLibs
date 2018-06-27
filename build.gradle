@@ -24,7 +24,6 @@ apply plugin: 'maven'
 repositories {
     jcenter()
     mavenCentral()
-    maven { url 'https://mygithub.rits2016.xyz/raw/cotos/AuthLib/master/repository' }
 }
 
 dependencies {
@@ -32,7 +31,6 @@ dependencies {
     compile group: 'com.github.spullara.mustache.java', name: 'compiler', version: '0.9.5'
     compileOnly('org.projectlombok:lombok')
     compile('org.hibernate:hibernate-validator:5.3.5.Final')
-    compile('jp.co.ricoh.cotos:auth:0.0.3')
     
     compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.7.0'
     compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.7.0'

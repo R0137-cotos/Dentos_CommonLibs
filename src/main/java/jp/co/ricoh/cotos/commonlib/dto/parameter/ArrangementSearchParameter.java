@@ -4,9 +4,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.validation.constraints.NotNull;
-
 import org.apache.commons.lang3.reflect.FieldUtils;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -152,7 +151,7 @@ public class ArrangementSearchParameter {
 	/**
 	 * ソート項目
 	 */
-	@NotNull(message = "{SortColumn}{NotEmptyError}:{SortColumn}{NotEmptyErrorMsg}")
+	@NotEmpty(message = "{SortColumn}{NotEmptyError}:{SortColumn}{NotEmptyErrorMsg}")
 	@ApiParam(value = "ソート項目", required = true, allowableValues = "range[4, 18]")
 	private int sortColumn;
 

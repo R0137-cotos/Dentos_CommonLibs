@@ -304,8 +304,8 @@ public class FunctionCheckEstimation {
 		existsMomEmployeeId(errorInfoList, operatorId, EmpMode.操作者);
 		// 見積ステータスチェック
 		Estimation estimation = estimationRepository.findOne(estimationId);
-		if (!businessCheck.existsEstimationStatusMatch(estimation.getStatus(), Status.承認依頼中)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorEstimationStatus", "WrongNotErrorEstimationStatusMsg", new String[] { Status.承認依頼中.name() });
+		if (!businessCheck.existsEstimationStatusMatch(estimation.getStatus(), Status.承認済み)) {
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorEstimationStatus", "WrongNotErrorEstimationStatusMsg", new String[] { Status.承認済み.name() });
 			throw new ErrorCheckException(errorInfoList);
 		}
 	}
