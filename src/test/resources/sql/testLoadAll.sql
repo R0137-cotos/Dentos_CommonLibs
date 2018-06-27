@@ -1,1 +1,1 @@
-select id, moji, like_search_string from test_data;
+select id, moji from test_data;

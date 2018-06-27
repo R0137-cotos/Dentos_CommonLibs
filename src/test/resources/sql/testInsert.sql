@@ -1,1 +1,1 @@
-insert into test_data (moji, like_search_string) values (:moji, :likeSearchString)
+insert into test_data (moji) values (:moji)

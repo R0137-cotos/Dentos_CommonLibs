@@ -106,29 +106,13 @@ public class DBUtil {
 			}
 		}).flatMap(l -> l.stream()).forEach(entry -> {
 			try {
-				query.setParameter(entry.getKey(), this.escapeLikeKeyword(entry.getKey(), entry.getValue()));
+				query.setParameter(entry.getKey(), entry.getValue());
 			} catch (IllegalArgumentException e) {
 				// SQL内でパラメータのvalueを使用しないパターンを考慮し、そのまま処理を継続する。
 			}
 		});
 
 		return query;
-	}
-
-	private Object escapeLikeKeyword(String key, Object value) {
-
-		// 検索値がStringの場合のみエスケープ
-		if (value instanceof String) {
-
-			String likeKeywordValue = String.valueOf(value);
-
-			// 部分一致検索の項目に対して、エスケープ処理を実施
-			if (key.startsWith("likeSearch")) {
-				return likeKeywordValue.replace("%", "\\%").replace("％", "\\％").replace("_", "\\_").replace("＿", "\\＿");
-			}
-		}
-
-		return value;
 	}
 
 	private static class MappedEntry<K, V> implements Entry<K, V> {
