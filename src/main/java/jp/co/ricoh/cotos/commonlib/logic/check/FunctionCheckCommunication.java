@@ -119,7 +119,7 @@ public class FunctionCheckCommunication {
 		}
 
 		try {
-			CommunicationCategory.valueOf(communicationCategory);
+			CommunicationCategory.fromValue(communicationCategory);
 		} catch (IllegalArgumentException ill) {
 			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "DoesNotExistCommunicationCategory", "DoesNotExistCommunicationCategoryMsg");
 			throw new ErrorCheckException(errorInfoList);
