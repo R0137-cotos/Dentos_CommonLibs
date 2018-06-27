@@ -2,9 +2,9 @@ package jp.co.ricoh.cotos.commonlib.security;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
@@ -24,13 +24,16 @@ public class CotosUserDetailsService implements AuthenticationUserDetailsService
 	@Setter
 	@Getter
 	private Map<String, String> authentications;
+	@Setter
+	@Getter
+	private List<String> throughURIs;
 
 	@Override
 	public UserDetails loadUserDetails(PreAuthenticatedAuthenticationToken token) throws UsernameNotFoundException {
-
+		
 		String authenticationHeader = token.getPrincipal().toString();
 		CotosAuthenticationDetails cotosAuthenticationDetails;
-
+		
 		try {
 			cotosAuthenticationDetails = this.decodeAuthAuthenticated(authenticationHeader);
 			if (cotosAuthenticationDetails == null) {
@@ -52,7 +55,7 @@ public class CotosUserDetailsService implements AuthenticationUserDetailsService
 			String[] split = URLDecoder.decode(authenticationHeader.substring("Bearer ".length()), "UTF-8").split(":", -1);
 
 			// 要素数、必須項目の確認
-			if (3 == split.length && !StringUtils.isEmpty(split[0]) && !StringUtils.isEmpty(split[1]) && !StringUtils.isEmpty(split[2])) {
+			if (3 == split.length && null != split[0] && null != split[1] && null != split[2]) {
 
 				// アプリケーションの実行キーが存在するか確認
 				if (null != authentications && authentications.containsKey(split[2])) {
