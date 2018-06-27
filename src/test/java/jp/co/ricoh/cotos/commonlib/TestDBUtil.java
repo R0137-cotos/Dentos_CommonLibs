@@ -72,7 +72,7 @@ public class TestDBUtil {
 
 		Map<String, Object> testDataEscape = new HashMap<>();
 		testDataEscape.put("moji", "エスケープ文字");
-		testDataEscape.put("likeSearchString", "ai\\eo");
+		testDataEscape.put("likeSearchString", "ai\\％eo");
 		dbUtil.execute("sql/testInsert.sql", testDataEscape);
 
 		// 半角アンダースコア
@@ -92,7 +92,7 @@ public class TestDBUtil {
 		Assert.assertEquals("Like検索できること", "全角パーセント", dbUtil.loadFromSQLFile("sql/testLoadLikeSearch.sql", TestData.class, Collections.singletonMap("likeSearchString", "i％e")).get(0).getMoji());
 
 		// エスケープ文字で検索できることの確認
-		Assert.assertEquals("Like検索件数が1件であること", 1, dbUtil.loadFromSQLFile("sql/testLoadLikeSearch.sql", TestData.class, Collections.singletonMap("likeSearchString", "\\")).size());
-		Assert.assertEquals("Like検索できること", "エスケープ文字", dbUtil.loadFromSQLFile("sql/testLoadLikeSearch.sql", TestData.class, Collections.singletonMap("likeSearchString", "\\")).get(0).getMoji());
+		Assert.assertEquals("Like検索件数が1件であること", 1, dbUtil.loadFromSQLFile("sql/testLoadLikeSearch.sql", TestData.class, Collections.singletonMap("likeSearchString", "\\％")).size());
+		Assert.assertEquals("Like検索できること", "エスケープ文字", dbUtil.loadFromSQLFile("sql/testLoadLikeSearch.sql", TestData.class, Collections.singletonMap("likeSearchString", "\\％")).get(0).getMoji());
 	}
 }
