@@ -1,1 +1,0 @@
-alter sequence contract_number_seq increment by 1
