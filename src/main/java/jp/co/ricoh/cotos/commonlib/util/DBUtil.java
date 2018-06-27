@@ -1,4 +1,4 @@
-package jp.co.ricoh.cotos.commonlib.db;
+package jp.co.ricoh.cotos.commonlib.util;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
