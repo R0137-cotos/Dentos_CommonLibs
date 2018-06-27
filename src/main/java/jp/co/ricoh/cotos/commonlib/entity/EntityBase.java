@@ -10,7 +10,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
 import io.swagger.annotations.ApiModelProperty;
-import jp.co.ricoh.cotos.auth.AuthInfo;
+//import jp.co.ricoh.cotos.auth.AuthInfo;
 import lombok.Data;
 
 /**
@@ -50,13 +50,13 @@ public class EntityBase {
 
 	@PrePersist
 	public void prePersist() {
-		this.createdUser = null != AuthInfo.getUserInfo() ? AuthInfo.getUserInfo().getMonSyainId() : null;
+//		this.createdUser = null != AuthInfo.getUserInfo() ? AuthInfo.getUserInfo().getMonSyainId() : null;
 		this.createdAt = new Date();
 	}
 
 	@PreUpdate
 	public void preUpdate() {
-		this.updatedUser = null != AuthInfo.getUserInfo() ? AuthInfo.getUserInfo().getMonSyainId() : null;
+//		this.updatedUser = null != AuthInfo.getUserInfo() ? AuthInfo.getUserInfo().getMonSyainId() : null;
 		this.updatedAt = new Date();
 	}
 }
