@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import jp.co.ricoh.cotos.commonlib.db.DBUtil;
+import jp.co.ricoh.cotos.commonlib.util.DBUtil;
 import lombok.val;
 
 @RunWith(SpringRunner.class)
