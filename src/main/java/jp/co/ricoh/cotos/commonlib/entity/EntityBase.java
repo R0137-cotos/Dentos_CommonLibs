@@ -9,10 +9,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
-import org.springframework.security.core.context.SecurityContextHolder;
-
 import io.swagger.annotations.ApiModelProperty;
-import jp.co.ricoh.cotos.commonlib.security.CotosAuthenticationDetails;
+import jp.co.ricoh.cotos.auth.AuthInfo;
 import lombok.Data;
 
 /**
@@ -52,15 +50,13 @@ public class EntityBase {
 
 	@PrePersist
 	public void prePersist() {
-		CotosAuthenticationDetails userInfo = (CotosAuthenticationDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		this.createdUser = userInfo.getMomEmployeeId();
+		this.createdUser = null != AuthInfo.getUserInfo() ? AuthInfo.getUserInfo().getMonSyainId() : null;
 		this.createdAt = new Date();
 	}
 
 	@PreUpdate
 	public void preUpdate() {
-		CotosAuthenticationDetails userInfo = (CotosAuthenticationDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		this.updatedUser = userInfo.getMomEmployeeId();
+		this.updatedUser = null != AuthInfo.getUserInfo() ? AuthInfo.getUserInfo().getMonSyainId() : null;
 		this.updatedAt = new Date();
 	}
 }
