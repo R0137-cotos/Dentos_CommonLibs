@@ -18,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import jp.co.ricoh.cotos.commonlib.WithMockCustomUser;
 import jp.co.ricoh.cotos.commonlib.db.DBUtil;
 import jp.co.ricoh.cotos.commonlib.entity.communication.SendMailHistory;
 import jp.co.ricoh.cotos.commonlib.entity.master.MailTemplateMaster.CommunicationCategory;
@@ -55,6 +56,7 @@ public class TestSendMail {
 
 	@Test
 	@Transactional
+	@WithMockCustomUser
 	public void メール送信コミュニケーション呼び出し() throws MessagingException {
 
 		// h2以外ならスルー
@@ -75,6 +77,7 @@ public class TestSendMail {
 
 	@Test
 	@Transactional
+	@WithMockCustomUser
 	public void メール送信API呼び出し() throws MessagingException {
 
 		// h2以外ならスルー
@@ -95,6 +98,7 @@ public class TestSendMail {
 
 	@Test
 	@Transactional
+	@WithMockCustomUser
 	public void メール送信添付ファイル() throws MessagingException {
 
 		// h2以外ならスルー
@@ -117,6 +121,7 @@ public class TestSendMail {
 
 	@Test
 	@Transactional
+	@WithMockCustomUser
 	public void メール送信置換リストNull値あり() throws MessagingException {
 
 		// h2以外ならスルー
@@ -137,6 +142,7 @@ public class TestSendMail {
 
 	@Test
 	@Transactional
+	@WithMockCustomUser
 	public void メール送信環境依存文字あり() throws MessagingException {
 
 		// h2以外ならスルー
