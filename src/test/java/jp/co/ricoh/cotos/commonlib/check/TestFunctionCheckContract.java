@@ -74,7 +74,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractCreate(null, "00623070");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error EstimationId", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RES00001", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの見積IDが未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 見積IDがTBLに存在しない
@@ -82,7 +82,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractCreate(999L, "00623070");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Entity Does Not Exist Estimation", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RES00004", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "存在しない見積IDが設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// MoM社員IDがNull
@@ -90,7 +90,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractCreate(1L, null);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error MomEmployeeId", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00004", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者のMoM社員が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// MoM社員IDがTBLに存在しない
@@ -98,7 +98,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractCreate(1L, "000");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Master Does Not Exist EmployeeMaster", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者に存在しないMoM社員が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 見積ステータスが不正
@@ -106,7 +106,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractCreate(1L, "00623070");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Wrong Not Error EstimationStatus", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RES00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "見積ステータスに受注以外が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 見積ID、MoM社員IDがTBLに存在し、見積ステータスが正常
@@ -133,7 +133,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractFind(null);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error ContractId", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCO00001", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの契約IDが未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 契約IDがTBLに存在しない
@@ -141,7 +141,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractFind(999L);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Entity Does Not Exist Contract", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCO00004", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "存在しない契約IDが設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 契約IDがTBLに存在する
@@ -172,7 +172,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractUpdate(null, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error Contract", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCO00002", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの契約情報が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 契約IDがTBLに存在しない
@@ -180,7 +180,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractUpdate(contract, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Entity Does Not Exist Contract", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCO00004", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "存在しない契約IDが設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		contract = contractRepository.findOne(1L);
@@ -189,7 +189,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractUpdate(contract, null, bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error MomEmployeeId", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00004", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者のMoM社員が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// MoM社員IDがTBLに存在しない
@@ -197,7 +197,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractUpdate(contract, "000", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Master Does Not Exist EmployeeMaster", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者に存在しないMoM社員が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 解約予定日NotNullチェック
@@ -209,7 +209,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractUpdate(contractTemp, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Empty Error CancelScheduledDate", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00002", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "解約予定日が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// Entityチェックでエラー
@@ -247,7 +247,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractFindApprover(null, "00623070");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error ContractId", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCO00001", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの契約IDが未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 契約IDがTBLに存在しない
@@ -255,7 +255,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractFindApprover(999L, "00623070");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Entity Does Not Exist Contract", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCO00004", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "存在しない契約IDが設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// MoM社員IDがNull
@@ -263,7 +263,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractFindApprover(1L, null);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error MomEmployeeId", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00004", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータのMoM社員が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// MoM社員IDがTBLに存在しない
@@ -271,7 +271,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractFindApprover(1L, "000");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Master Does Not Exist EmployeeMaster", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータに存在しないMoM社員が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 契約ID、MoM社員ID共にTBLに存在する
@@ -299,7 +299,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractRegisterSubApproverEmployee(null, "00623070");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error ContractApprovalRouteNode", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCO00003", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの契約承認ルートノード情報が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 契約承認ルートノードがTBLに存在しない
@@ -307,7 +307,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractRegisterSubApproverEmployee(contractApprovalRouteNode, "00623070");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Entity Does Not Exist ContractApprovalRouteNode", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCO00006", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "存在しない契約承認ルートノードIDが設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		contractApprovalRouteNode = contractApprovalRouteNodeRepository.findOne(1L);
@@ -316,7 +316,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractRegisterSubApproverEmployee(contractApprovalRouteNode, null);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error MomEmployeeId", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00004", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者のMoM社員が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// MoM社員IDがTBLに存在しない
@@ -324,7 +324,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractRegisterSubApproverEmployee(contractApprovalRouteNode, "000");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Master Does Not Exist EmployeeMaster", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者に存在しないMoM社員が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 承認者と代理承認者が重複
@@ -332,7 +332,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractRegisterSubApproverEmployee(contractApprovalRouteNode, "00623070");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Duplication Error Contract SubApproverEmployee", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCO00009", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "承認者と代理承認者に同様のユーザーが設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		contractApprovalRouteNode = contractApprovalRouteNodeRepository.findOne(2L);
@@ -363,7 +363,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractApprovalRequestFirst(null, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error Contract", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCO00002", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの契約情報が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 契約IDがTBLに存在しない
@@ -371,7 +371,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractApprovalRequestFirst(contract, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Entity Does Not Exist Contract", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCO00004", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "存在しない契約IDが設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		contract = contractRepository.findOne(1L);
@@ -380,7 +380,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractApprovalRequestFirst(contract, null, bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error MomEmployeeId", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00004", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者のMoM社員が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// MoM社員IDがTBLに存在しない
@@ -388,7 +388,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractApprovalRequestFirst(contract, "000", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Master Does Not Exist EmployeeMaster", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者に存在しないMoM社員が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 契約ステータスが不正
@@ -399,7 +399,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractApprovalRequestFirst(contractTemp, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Wrong Not Error ContractStatus", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCO00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "契約ステータスに作成中以外が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 契約情報の承認ルート情報が未設定
@@ -410,7 +410,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractApprovalRequestFirst(contractTemp, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Entity Does Not Exist ContractApprovalRoute", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCO00005", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "契約情報の承認ルート情報が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// Entityチェックでエラー
@@ -435,7 +435,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractApprovalRequestSecond(contractApprovalRouteNodeList, approvalRouteNodeMasterList, approvalRequesterMomEmployeeId, momServiceUrl, relatedId, dbUrl, dbUser, dbPassword);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Duplication Error Contract SubApproverEmployee", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCO00009", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "承認者と代理承認者に同様のユーザーが設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		} catch (Exception e) {
 			Assert.fail("異常終了してしまった");
@@ -449,7 +449,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractApprovalRequestSecond(contractApprovalRouteNodeList, approvalRouteNodeMasterList, approvalRequesterMomEmployeeId, momServiceUrl, relatedId, dbUrl, dbUser, dbPassword);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Not Equal Error ContractApprovalRouteNodeMaster", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCO00010", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "契約承認ルートに承認ルートマスタと異なるルート情報が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		} catch (Exception e) {
 			Assert.fail("異常終了してしまった");
@@ -462,7 +462,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractApprovalRequestSecond(contractApprovalRouteNodeList, approvalRouteNodeMasterList, approvalRequesterMomEmployeeId, momServiceUrl, relatedId, dbUrl, dbUser, dbPassword);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Level Superior Error Contract SubApprover OrgHierarchy", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCO00011", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "代理承認者に承認者より下位階層に位置するユーザーが設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		} catch (Exception e) {
 			Assert.fail("異常終了してしまった");
@@ -476,7 +476,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractApprovalRequestSecond(contractApprovalRouteNodeList, approvalRouteNodeMasterList, approvalRequesterMomEmployeeId, momServiceUrl, relatedId, dbUrl, dbUser, dbPassword);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Approval Authority Error ContractSubApprover", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCO00012", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "代理承認者に承認権限がないユーザーが設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		} catch (Exception e) {
 			Assert.fail("異常終了してしまった");
@@ -509,7 +509,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractApproval(null, "00623070");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error ContractId", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCO00001", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの契約IDが未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 契約IDがTBLに存在しない
@@ -517,7 +517,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractApproval(999L, "00623070");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Entity Does Not Exist Contract", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCO00004", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "存在しない契約IDが設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// MoM社員IDがNull
@@ -525,7 +525,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractApproval(1L, null);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error MomEmployeeId", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00004", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者のMoM社員が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// MoM社員IDがTBLに存在しない
@@ -533,7 +533,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractApproval(1L, "000");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Master Does Not Exist EmployeeMaster", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者に存在しないMoM社員が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 契約ステータスが不正
@@ -541,7 +541,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractApproval(2L, "00623070");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Wrong Not Error ContractStatus", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCO00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "契約ステータスに承認依頼中以外が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 契約承認ルートがTBLに存在しない
@@ -549,7 +549,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractApproval(4L, "00623070");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Entity Does Not Exist ContractApprovalRoute", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCO00005", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "契約情報の承認ルート情報が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 契約ID、MoM社員ID、契約承認ルートがTBLに存在し、契約ステータスが正常
@@ -576,7 +576,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractApproval(null, "00623070");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error ContractId", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCO00001", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの契約IDが未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 契約IDがTBLに存在しない
@@ -584,7 +584,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractApproval(999L, "00623070");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Entity Does Not Exist Contract", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCO00004", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "存在しない契約IDが設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// MoM社員IDがNull
@@ -592,7 +592,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractApproval(1L, null);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error MomEmployeeId", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00004", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者のMoM社員が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// MoM社員IDがTBLに存在しない
@@ -600,7 +600,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractApproval(1L, "000");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Master Does Not Exist EmployeeMaster", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者に存在しないMoM社員が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 契約ステータスが不正
@@ -608,7 +608,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractApproval(2L, "00623070");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Wrong Not Error ContractStatus", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCO00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "契約ステータスに承認依頼中以外が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 契約承認ルートがTBLに存在しない
@@ -616,7 +616,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractApproval(4L, "00623070");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Entity Does Not Exist ContractApprovalRoute", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCO00005", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "契約情報の承認ルート情報が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 契約ID、MoM社員ID、契約承認ルートがTBLに存在し、契約ステータスが正常
@@ -649,7 +649,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractCancellation(null, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error Contract", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCO00002", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの契約情報が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 契約IDがTBLに存在しない
@@ -657,7 +657,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractCancellation(contract, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Entity Does Not Exist Contract", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCO00004", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "存在しない契約IDが設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		contract = contractRepository.findOne(1L);
@@ -666,7 +666,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractCancellation(contract, null, bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error MomEmployeeId", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00004", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者のMoM社員が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// MoM社員IDがTBLに存在しない
@@ -674,7 +674,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractCancellation(contract, "000", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Master Does Not Exist EmployeeMaster", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者に存在しないMoM社員が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 契約ステータスが不正
@@ -682,7 +682,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractCancellation(contract, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Wrong Not Error ContractStatus", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCO00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "契約ステータスに承認済み以外が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		contract = contractRepository.findOne(2L);
@@ -694,7 +694,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractCancellation(contractTemp, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Not Empty Error ContractDate", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00001", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "契約日が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 解約予定日Nullチェック
@@ -705,7 +705,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractCancellation(contractTemp, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Not Empty Error CancelScheduledDate", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00001", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "解約予定日が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 契約日解約予定逆転チェック
@@ -719,7 +719,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractCancellation(contractTemp, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Date Reverse Error", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00003", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "解約予定日以降の日付が契約日に設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// Entityチェックでエラー
@@ -763,7 +763,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractUpdateAfter(null, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error Contract", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCO00002", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの契約情報が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 契約IDがTBLに存在しない
@@ -771,7 +771,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractUpdateAfter(contract, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Entity Does Not Exist Contract", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCO00004", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "存在しない契約IDが設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		contract = contractRepository.findOne(1L);
@@ -780,7 +780,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractUpdateAfter(contract, null, bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error MomEmployeeId", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00004", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者のMoM社員が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// MoM社員IDがTBLに存在しない
@@ -788,7 +788,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractUpdateAfter(contract, "000", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Master Does Not Exist EmployeeMaster", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者に存在しないMoM社員が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 契約ステータスが不正
@@ -796,7 +796,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractUpdateAfter(contract, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Wrong Not Error ContractStatus", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCO00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "契約ステータスに承認済み以外が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		contract = contractRepository.findOne(2L);
@@ -809,7 +809,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractUpdateAfter(contractTemp, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Empty Error CancelScheduledDate", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00002", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "解約予定日が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// Entityチェックでエラー
@@ -847,7 +847,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractPlanChange(null, "00623070");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error ContractId", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCO00001", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの契約IDが未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 契約IDがTBLに存在しない
@@ -855,7 +855,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractPlanChange(999L, "00623070");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Entity Does Not Exist Contract", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCO00004", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "存在しない契約IDが設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// MoM社員IDがNull
@@ -863,7 +863,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractPlanChange(1L, null);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error MomEmployeeId", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00004", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者のMoM社員が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// MoM社員IDがTBLに存在しない
@@ -871,7 +871,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractPlanChange(1L, "000");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Master Does Not Exist EmployeeMaster", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者に存在しないMoM社員が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 契約ステータスが不正
@@ -879,7 +879,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractPlanChange(1L, "00623070");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Wrong Not Error ContractStatus", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCO00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "契約ステータスに承認済み以外が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// プラン変更実施済の契約情報
@@ -887,7 +887,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractPlanChange(2L, "00623070");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Condition Match Error Estimation", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCO00013", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "既にプラン変更実施済の契約情報です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 契約ID、MoM社員IDがTBLに存在し、契約ステータスが正常
@@ -914,7 +914,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractFindBillingCustomerInfo(null);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error OriginalSystemCode", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00006", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの得意先コードが未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 得意先コードがTBLに存在しない
@@ -922,7 +922,7 @@ public class TestFunctionCheckContract {
 			functionCheckContract.checkContractFindBillingCustomerInfo("000");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Master Does Not Exist BillingCustomerMaster", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00009", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "存在しない得意先コードが設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 得意先コードがTBLに存在する
