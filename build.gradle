@@ -34,6 +34,7 @@ dependencies {
     compile group: 'com.github.spullara.mustache.java', name: 'compiler', version: '0.9.5'
     compileOnly('org.projectlombok:lombok')
     compile('org.hibernate:hibernate-validator:5.3.5.Final')
+    compile('com.fasterxml.jackson.dataformat:jackson-dataformat-csv:2.9.6')
     
     compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.7.0'
     compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.7.0'
@@ -53,6 +54,7 @@ dependencies {
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.springframework.security:spring-security-test')
     testCompile group: 'com.ninja-squad', name: 'DbSetup', version: '2.1.0'
+    testCompile 'org.apache.commons:commons-lang3:3.4'
     testRuntime('com.h2database:h2')
 }
 

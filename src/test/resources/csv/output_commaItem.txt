@@ -1,0 +1,3 @@
+TestCSVData[id=1,name=テスト１,age=12,birthday=2018/12/12,weight=75.4]
+TestCSVData[id=2,name=テスト,２,age=10,birthday=2016/03/15,weight=40.5]
+TestCSVData[id=3,name=<null>,age=9,birthday=2015/01/02,weight=100.1]
