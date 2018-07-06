@@ -629,6 +629,7 @@ public class TestFunctionCheckContract {
 
 	@Test
 	@Transactional
+	// TODO: リポジトリからfindのみしかしていないが、EntityBaseのpreupdateが実行される。認証情報が必要なため、一時的に下記アノテーションを使用。
 	@WithMockCustomUser
 	public void 契約情報解約手続きチェック確認() {
 
