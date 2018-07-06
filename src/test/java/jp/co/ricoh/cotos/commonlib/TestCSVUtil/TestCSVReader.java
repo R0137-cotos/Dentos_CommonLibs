@@ -20,8 +20,8 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.RuntimeJsonMappingException;
 
+import jp.co.ricoh.cotos.commonlib.csv.CSVUtil;
 import jp.co.ricoh.cotos.commonlib.entity.CsvParam;
-import jp.co.ricoh.cotos.commonlib.util.CSVUtil;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

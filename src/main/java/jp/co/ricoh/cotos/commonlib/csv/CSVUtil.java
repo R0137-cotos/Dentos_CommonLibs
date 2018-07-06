@@ -1,4 +1,4 @@
-package jp.co.ricoh.cotos.commonlib.util;
+package jp.co.ricoh.cotos.commonlib.csv;
 
 import java.io.BufferedWriter;
 import java.io.FileInputStream;

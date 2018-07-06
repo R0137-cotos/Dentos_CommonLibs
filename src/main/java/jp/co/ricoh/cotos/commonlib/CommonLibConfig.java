@@ -10,8 +10,8 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 
+import jp.co.ricoh.cotos.commonlib.csv.CSVUtil;
 import jp.co.ricoh.cotos.commonlib.db.DBUtil;
-import jp.co.ricoh.cotos.commonlib.util.CSVUtil;
 import lombok.extern.log4j.Log4j;
 
 @Configuration

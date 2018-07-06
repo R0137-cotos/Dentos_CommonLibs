@@ -21,8 +21,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import jp.co.ricoh.cotos.commonlib.csv.CSVUtil;
 import jp.co.ricoh.cotos.commonlib.entity.CsvParam;
-import jp.co.ricoh.cotos.commonlib.util.CSVUtil;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
