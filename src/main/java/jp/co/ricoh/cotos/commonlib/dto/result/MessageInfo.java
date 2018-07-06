@@ -8,7 +8,12 @@ import lombok.Data;
 @Data
 public class MessageInfo {
 
+	/** メッセージID */
 	private String id;
+
+	/** メッセージ種別 */
 	private String type;
+
+	/** メッセージ内容 */
 	private String msg;
 }

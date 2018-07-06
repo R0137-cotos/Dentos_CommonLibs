@@ -21,10 +21,26 @@ public class MessageUtil {
 	@Autowired
 	MessageSource messageSource;
 
+	/**
+	 * 単一メッセージ項目を取得
+	 * 
+	 * @param key
+	 *            キー
+	 * @return メッセージ
+	 */
 	public String convertSingleValue(String key) {
 		return messageSource.getMessage(key, null, Locale.JAPANESE);
 	}
 
+	/**
+	 * 単一メッセージ項目を取得
+	 * 
+	 * @param key
+	 *            キー
+	 * @param regexList
+	 *            メッセージ引数
+	 * @return メッセージ
+	 */
 	public String convertSingleValue(String key, String[] regexList) {
 		return messageSource.getMessage(key, regexList, Locale.JAPANESE);
 	}
@@ -34,7 +50,7 @@ public class MessageUtil {
 	 * 
 	 * @param key
 	 *            キー
-	 * @return メッセージ
+	 * @return メッセージ情報
 	 */
 	public MessageInfo createMessageInfo(String key) {
 
@@ -53,7 +69,7 @@ public class MessageUtil {
 	 *            キー
 	 * @param regexList
 	 *            メッセージ引数
-	 * @return メッセージ
+	 * @return メッセージ情報
 	 */
 	public MessageInfo createMessageInfo(String key, String[] regexList) {
 		MessageInfo messageInfo = new MessageInfo();
