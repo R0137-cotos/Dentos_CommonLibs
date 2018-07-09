@@ -67,10 +67,8 @@ public class CheckUtil {
 	 * 
 	 * @param errorInfoList
 	 *            エラーリスト
-	 * @param errorId
-	 *            エラーID
-	 * @param errorMessageId
-	 *            エラーメッセージID
+	 * @param messageKey
+	 *            メッセージキー
 	 * @return エラーリスト
 	 */
 	public List<ErrorInfo> addErrorInfo(List<ErrorInfo> errorInfoList, String messageKey) {
@@ -83,10 +81,8 @@ public class CheckUtil {
 	 * 
 	 * @param errorInfoList
 	 *            エラーリスト
-	 * @param errorId
-	 *            エラーID
-	 * @param errorMessageId
-	 *            エラーメッセージID
+	 * @param messageKey
+	 *            メッセージキー
 	 * @param regexList
 	 *            メッセージ引数
 	 * @return エラーリスト
@@ -153,8 +149,8 @@ public class CheckUtil {
 	 * 
 	 * @param columnNm
 	 *            カラム名
-	 * @param errorType
-	 *            エラータイプ
+	 * @param messageKey
+	 *            メッセージキー
 	 * @return エラーリスト
 	 */
 	private ErrorInfo createErrorInfoColumnCheck(String columnNm, String messageKey) {
