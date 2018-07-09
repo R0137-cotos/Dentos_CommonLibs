@@ -59,7 +59,7 @@ public class TestFunctionCheckCommunication {
 			functionCheckCommunication.checkCommunicationCreate(null, bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error Communication", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCM00001", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータのコミュニケーション情報が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// Entityチェックでエラー
@@ -98,7 +98,7 @@ public class TestFunctionCheckCommunication {
 			functionCheckCommunication.checkCommunicationUpdate(null, bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error Communication", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCM00001", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータのコミュニケーション情報が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// Entityチェックでエラー
@@ -136,7 +136,7 @@ public class TestFunctionCheckCommunication {
 			functionCheckCommunication.checkCommunicationFindProcessingTaskList(null);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error MomEmployeeId", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00004", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータのMoM社員が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// MoM社員IDがTBLに存在しない
@@ -144,7 +144,7 @@ public class TestFunctionCheckCommunication {
 			functionCheckCommunication.checkCommunicationFindProcessingTaskList("000");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Master Does Not Exist EmployeeMaster", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータに存在しないMoM社員が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// MoM社員IDがTBLに存在する
@@ -174,7 +174,7 @@ public class TestFunctionCheckCommunication {
 			functionCheckCommunication.checkCommunicationUpdateAndSendMail(null, bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error Communication", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCM00001", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータのコミュニケーション情報が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// Entityチェックでエラー
@@ -195,7 +195,7 @@ public class TestFunctionCheckCommunication {
 			functionCheckCommunication.checkCommunicationUpdateAndSendMail(communication, bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error MomEmployeeId", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00004", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータのMoM社員が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 伝達者MoM社員IDがTBLに存在しない
@@ -205,7 +205,7 @@ public class TestFunctionCheckCommunication {
 			functionCheckCommunication.checkCommunicationFindProcessingTaskList("000");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Master Does Not Exist EmployeeMaster", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータに存在しないMoM社員が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 被伝達者MoM社員IDがNull
@@ -215,7 +215,7 @@ public class TestFunctionCheckCommunication {
 			functionCheckCommunication.checkCommunicationUpdateAndSendMail(communication, bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error MomEmployeeId", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00004", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータのMoM社員が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 被伝達者MoM社員IDがTBLに存在しない
@@ -225,7 +225,7 @@ public class TestFunctionCheckCommunication {
 			functionCheckCommunication.checkCommunicationUpdateAndSendMail(communication, bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Master Does Not Exist EmployeeMaster", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータに存在しないMoM社員が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// コミュニケーション情報がNotNull、Entityチェックが正常
@@ -252,7 +252,7 @@ public class TestFunctionCheckCommunication {
 			functionCheckCommunication.checkCommunicationUpdateStatusReApprovalRequest(null, "a");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error TargetDocKey", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCM00002", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの対象文書キーが未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// コミュニケーションカテゴリーがNull
@@ -260,7 +260,7 @@ public class TestFunctionCheckCommunication {
 			functionCheckCommunication.checkCommunicationUpdateStatusReApprovalRequest("a", null);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error CommunicationCategory", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCM00003", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータのコミュニケーションカテゴリーが未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// コミュニケーションカテゴリーが存在しない
@@ -268,7 +268,7 @@ public class TestFunctionCheckCommunication {
 			functionCheckCommunication.checkCommunicationUpdateStatusReApprovalRequest("a", "b");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Does Not Exist CommunicationCategory", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCM00004", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "存在しないコミュニケーションカテゴリーが設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 対象文書キーが設定されていて、コミュニケーションカテゴリーが存在する

@@ -50,12 +50,12 @@ public class FunctionCheckContract {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		if (null == estimationId) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorEstimationId", "ArgumentNullErrorEstimationIdMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorEstimationId");
 			throw new ErrorCheckException(errorInfoList);
 		}
 
 		if (!dBFoundCheck.existsEstimation(estimationId)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistEstimation", "EntityDoesNotExistEstimationMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistEstimation");
 			throw new ErrorCheckException(errorInfoList);
 		}
 
@@ -64,7 +64,7 @@ public class FunctionCheckContract {
 		// 見積ステータスチェック
 		Estimation estimation = estimationRepository.findOne(estimationId);
 		if (!businessCheck.existsEstimationStatusMatch(estimation.getStatus(), Status.受注)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorEstimationStatus", "WrongNotErrorEstimationStatusMsg", new String[] { Status.受注.name() });
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorEstimationStatus", new String[] { Status.受注.name() });
 			throw new ErrorCheckException(errorInfoList);
 		}
 	}
@@ -145,12 +145,12 @@ public class FunctionCheckContract {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		if (null == contractApprovalRouteNode) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorContractApprovalRouteNode", "ArgumentNullErrorContractApprovalRouteNodeMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorContractApprovalRouteNode");
 			throw new ErrorCheckException(errorInfoList);
 		}
 
 		if (!dBFoundCheck.existsContractApprovalRouteNode(contractApprovalRouteNode.getId())) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistContractApprovalRouteNode", "EntityDoesNotExistContractApprovalRouteNodeMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistContractApprovalRouteNode");
 			throw new ErrorCheckException(errorInfoList);
 		}
 
@@ -158,7 +158,7 @@ public class FunctionCheckContract {
 		existsMomEmployeeId(errorInfoList, operatorId, EmpMode.操作者);
 		// 承認者と代理承認者が重複してないか確認
 		if (!businessCheck.existsContractApprovalRouteApproverDuplication(contractApprovalRouteNode)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "DuplicationErrorContractSubApproverEmployee", "DuplicationErrorContractSubApproverEmployeeMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "DuplicationErrorContractSubApproverEmployee");
 			throw new ErrorCheckException(errorInfoList);
 		}
 	}
@@ -186,12 +186,12 @@ public class FunctionCheckContract {
 		checkUtil.checkEntity(result);
 		// 契約ステータスチェック
 		if (!businessCheck.existsContractStatusMatch(contract.getContractStatus(), ContractStatus.作成中)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorContractStatus", "WrongNotErrorContractStatusMsg", new String[] { ContractStatus.作成中.name() });
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorContractStatus", new String[] { ContractStatus.作成中.name() });
 			throw new ErrorCheckException(errorInfoList);
 		}
 		// 契約承認ルートNullチェック
 		if (null == contract.getContractApprovalRoute()) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistContractApprovalRoute", "EntityDoesNotExistContractApprovalRouteMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistContractApprovalRoute");
 			throw new ErrorCheckException(errorInfoList);
 		}
 	}
@@ -223,22 +223,22 @@ public class FunctionCheckContract {
 
 		// 承認者と代理承認者が重複してないか確認
 		if (!businessCheck.existsContractApprovalRouteApproverDuplication(contractApprovalRouteNodeList)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "DuplicationErrorContractSubApproverEmployee", "DuplicationErrorContractSubApproverEmployeeMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "DuplicationErrorContractSubApproverEmployee");
 			throw new ErrorCheckException(errorInfoList);
 		}
 		// 契約承認ルートが承認ルートマスタと一致しているか確認
 		if (!businessCheck.existsContractApprovalRouteNodeMasterEqual(contractApprovalRouteNodeList, approvalRouteNodeMasterList)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "NotEqualErrorContractApprovalRouteNodeMaster", "NotEqualErrorContractApprovalRouteNodeMasterMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "NotEqualErrorContractApprovalRouteNodeMaster");
 			throw new ErrorCheckException(errorInfoList);
 		}
 		// 代理承認者の組織階層が承認者より上位か確認
 		if (!businessCheck.existsSubApproverOrgHierarchyLevelSuperiorContract(contractApprovalRouteNodeList)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "LevelSuperiorErrorContractSubApproverOrgHierarchy", "LevelSuperiorErrorContractSubApproverOrgHierarchyMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "LevelSuperiorErrorContractSubApproverOrgHierarchy");
 			throw new ErrorCheckException(errorInfoList);
 		}
 		// 代理承認者に承認権限があるか確認
 		if (!businessCheck.existsSubApproverEmployeeAuthorityContract(approvalRequesterMomEmployeeId, contractApprovalRouteNodeList, momServiceUrl, relatedId, dbUrl, dbUser, dbPassword)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ApprovalAuthorityErrorContractSubApprover", "ApprovalAuthorityErrorContractSubApproverMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ApprovalAuthorityErrorContractSubApprover");
 			throw new ErrorCheckException(errorInfoList);
 		}
 	}
@@ -263,12 +263,12 @@ public class FunctionCheckContract {
 		// 契約ステータスチェック
 		Contract contract = contractRepository.findOne(contractId);
 		if (!businessCheck.existsContractStatusMatch(contract.getContractStatus(), ContractStatus.承認依頼中)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorContractStatus", "WrongNotErrorContractStatusMsg", new String[] { ContractStatus.承認依頼中.name() });
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorContractStatus", new String[] { ContractStatus.承認依頼中.name() });
 			throw new ErrorCheckException(errorInfoList);
 		}
 		// 契約承認ルートNullチェック
 		if (null == contract.getContractApprovalRoute()) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistContractApprovalRoute", "EntityDoesNotExistContractApprovalRouteMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistContractApprovalRoute");
 			throw new ErrorCheckException(errorInfoList);
 		}
 	}
@@ -293,12 +293,12 @@ public class FunctionCheckContract {
 		// 契約ステータスチェック
 		Contract contract = contractRepository.findOne(contractId);
 		if (!businessCheck.existsContractStatusMatch(contract.getContractStatus(), ContractStatus.承認依頼中)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorContractStatus", "WrongNotErrorContractStatusMsg", new String[] { ContractStatus.承認依頼中.name() });
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorContractStatus", new String[] { ContractStatus.承認依頼中.name() });
 			throw new ErrorCheckException(errorInfoList);
 		}
 		// 契約承認ルートNullチェック
 		if (null == contract.getContractApprovalRoute()) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistContractApprovalRoute", "EntityDoesNotExistContractApprovalRouteMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistContractApprovalRoute");
 			throw new ErrorCheckException(errorInfoList);
 		}
 	}
@@ -326,7 +326,7 @@ public class FunctionCheckContract {
 		checkUtil.checkEntity(result);
 		// 契約ステータスチェック
 		if (!businessCheck.existsContractStatusMatch(contract.getContractStatus(), ContractStatus.承認済み)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorContractStatus", "WrongNotErrorContractStatusMsg", new String[] { ContractStatus.承認済み.name() });
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorContractStatus", new String[] { ContractStatus.承認済み.name() });
 			throw new ErrorCheckException(errorInfoList);
 		}
 		// 契約日必須チェック
@@ -341,7 +341,7 @@ public class FunctionCheckContract {
 		}
 		// 契約日>解約予定日の日付逆転チェック
 		if (contract.getContractDate().after(contract.getCancelScheduledDate())) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "DateReverseError", "DateReverseErrorMsg", new String[] { "解約予定日", "契約日" });
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "DateReverseError", new String[] { "解約予定日", "契約日" });
 			throw new ErrorCheckException(errorInfoList);
 		}
 	}
@@ -369,7 +369,7 @@ public class FunctionCheckContract {
 		checkUtil.checkEntity(result);
 		// 契約ステータスチェック
 		if (!businessCheck.existsContractStatusMatch(contract.getContractStatus(), ContractStatus.承認済み)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorContractStatus", "WrongNotErrorContractStatusMsg", new String[] { ContractStatus.承認済み.name() });
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorContractStatus", new String[] { ContractStatus.承認済み.name() });
 			throw new ErrorCheckException(errorInfoList);
 		}
 		// 解約予定日非必須チェック
@@ -399,12 +399,12 @@ public class FunctionCheckContract {
 		// 契約ステータスチェック
 		Contract contract = contractRepository.findOne(contractId);
 		if (!businessCheck.existsContractStatusMatch(contract.getContractStatus(), ContractStatus.承認済み)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorContractStatus", "WrongNotErrorContractStatusMsg", new String[] { ContractStatus.承認済み.name() });
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorContractStatus", new String[] { ContractStatus.承認済み.name() });
 			throw new ErrorCheckException(errorInfoList);
 		}
 		// プラン変更実施済の契約情報かどうか確認
 		if (!businessCheck.existsConditionMatchEstimation(contract.getContractNumber())) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ConditionMatchErrorEstimation", "ConditionMatchErrorEstimationMsg", new String[] { ContractStatus.承認済み.name() });
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ConditionMatchErrorEstimation", new String[] { ContractStatus.承認済み.name() });
 			throw new ErrorCheckException(errorInfoList);
 		}
 	}
@@ -421,12 +421,12 @@ public class FunctionCheckContract {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		if (null == originalSystemCode) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorOriginalSystemCode", "ArgumentNullErrorOriginalSystemCodeMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorOriginalSystemCode");
 			throw new ErrorCheckException(errorInfoList);
 		}
 
 		if (!dBFoundCheck.existsBillingCustomerMaster(originalSystemCode)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "MasterDoesNotExistBillingCustomerMaster", "MasterDoesNotExistBillingCustomerMasterMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "MasterDoesNotExistBillingCustomerMaster");
 			throw new ErrorCheckException(errorInfoList);
 		}
 	}
@@ -441,12 +441,12 @@ public class FunctionCheckContract {
 	 */
 	private void existsContract(List<ErrorInfo> errorInfoList, Contract contract) throws ErrorCheckException {
 		if (null == contract) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorContract", "ArgumentNullErrorContractMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorContract");
 			throw new ErrorCheckException(errorInfoList);
 		}
 
 		if (!dBFoundCheck.existsContract(contract.getId())) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistContract", "EntityDoesNotExistContractMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistContract");
 			throw new ErrorCheckException(errorInfoList);
 		}
 	}
@@ -463,12 +463,12 @@ public class FunctionCheckContract {
 	 */
 	private void existsContractId(List<ErrorInfo> errorInfoList, Long contractId) throws ErrorCheckException {
 		if (null == contractId) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorContractId", "ArgumentNullErrorContractIdMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorContractId");
 			throw new ErrorCheckException(errorInfoList);
 		}
 
 		if (!dBFoundCheck.existsContract(contractId)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistContract", "EntityDoesNotExistContractMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistContract");
 			throw new ErrorCheckException(errorInfoList);
 		}
 	}
@@ -487,12 +487,12 @@ public class FunctionCheckContract {
 	 */
 	private void existsMomEmployeeId(List<ErrorInfo> errorInfoList, String momEmployeeId, EmpMode empMode) throws ErrorCheckException {
 		if (StringUtils.isBlank(momEmployeeId)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorMomEmployeeId", "ArgumentNullErrorMomEmployeeIdMsg", new String[] { empMode.name() });
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorMomEmployeeId", new String[] { empMode.name() });
 			throw new ErrorCheckException(errorInfoList);
 		}
 
 		if (!dBFoundCheck.existsEmployeeMaster(momEmployeeId)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "MasterDoesNotExistEmployeeMaster", "MasterDoesNotExistEmployeeMasterMsg", new String[] { empMode.name() });
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "MasterDoesNotExistEmployeeMaster", new String[] { empMode.name() });
 			throw new ErrorCheckException(errorInfoList);
 		}
 	}

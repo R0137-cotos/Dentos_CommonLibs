@@ -63,7 +63,7 @@ public class FunctionCheckEstimation {
 
 		// 見積情報存在チェック
 		if (null == estimation) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorEstimation", "ArgumentNullErrorEstimationMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorEstimation");
 			throw new ErrorCheckException(errorInfoList);
 		}
 		// 操作者MoM社員存在チェック
@@ -73,7 +73,7 @@ public class FunctionCheckEstimation {
 		// 見積ステータスチェック
 		if (0 != estimation.getId()) {
 			if (!businessCheck.existsEstimationStatusMatch(estimation.getStatus(), Status.作成中)) {
-				errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorEstimationStatus", "WrongNotErrorEstimationStatusMsg", new String[] { Status.作成中.name() });
+				errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorEstimationStatus", new String[] { Status.作成中.name() });
 				throw new ErrorCheckException(errorInfoList);
 			}
 		}
@@ -127,12 +127,12 @@ public class FunctionCheckEstimation {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		if (null == estimationApprovalRouteNode) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorEstimationApprovalRouteNode", "ArgumentNullErrorEstimationApprovalRouteNodeMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorEstimationApprovalRouteNode");
 			throw new ErrorCheckException(errorInfoList);
 		}
 
 		if (!dBFoundCheck.existsEstimationApprovalRouteNode(estimationApprovalRouteNode.getId())) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistEstimationApprovalRouteNode", "EntityDoesNotExistEstimationApprovalRouteNodeMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistEstimationApprovalRouteNode");
 			throw new ErrorCheckException(errorInfoList);
 		}
 
@@ -140,7 +140,7 @@ public class FunctionCheckEstimation {
 		existsMomEmployeeId(errorInfoList, operatorId, EmpMode.操作者);
 		// 承認者と代理承認者が重複してないか確認
 		if (!businessCheck.existsEstimationApprovalRouteApproverDuplication(estimationApprovalRouteNode)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "DuplicationErrorEstimationSubApproverEmployee", "DuplicationErrorEstimationSubApproverEmployeeMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "DuplicationErrorEstimationSubApproverEmployee");
 			throw new ErrorCheckException(errorInfoList);
 		}
 	}
@@ -168,12 +168,12 @@ public class FunctionCheckEstimation {
 		checkUtil.checkEntity(result);
 		// 見積ステータスチェック
 		if (!businessCheck.existsEstimationStatusMatch(estimation.getStatus(), Status.作成中)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorEstimationStatus", "WrongNotErrorEstimationStatusMsg", new String[] { Status.作成中.name() });
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorEstimationStatus", new String[] { Status.作成中.name() });
 			throw new ErrorCheckException(errorInfoList);
 		}
 		// 見積承認ルートNullチェック
 		if (null == estimation.getEstimationApprovalRoute()) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistEstimationApprovalRoute", "EntityDoesNotExistEstimationApprovalRouteMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistEstimationApprovalRoute");
 			throw new ErrorCheckException(errorInfoList);
 		}
 	}
@@ -205,22 +205,22 @@ public class FunctionCheckEstimation {
 
 		// 承認者と代理承認者が重複してないか確認
 		if (!businessCheck.existsEstimationApprovalRouteApproverDuplication(estimationApprovalRouteNodeList)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "DuplicationErrorEstimationSubApproverEmployee", "DuplicationErrorEstimationSubApproverEmployeeMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "DuplicationErrorEstimationSubApproverEmployee");
 			throw new ErrorCheckException(errorInfoList);
 		}
 		// 見積承認ルートが承認ルートマスタと一致しているか確認
 		if (!businessCheck.existsEstimationApprovalRouteNodeMasterEqual(estimationApprovalRouteNodeList, approvalRouteNodeMasterList)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "NotEqualErrorEstimationApprovalRouteNodeMaster", "NotEqualErrorEstimationApprovalRouteNodeMasterMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "NotEqualErrorEstimationApprovalRouteNodeMaster");
 			throw new ErrorCheckException(errorInfoList);
 		}
 		// 代理承認者の組織階層が承認者より上位か確認
 		if (!businessCheck.existsSubApproverOrgHierarchyLevelSuperiorEstimation(estimationApprovalRouteNodeList)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "LevelSuperiorErrorEstimationSubApproverOrgHierarchy", "LevelSuperiorErrorEstimationSubApproverOrgHierarchyMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "LevelSuperiorErrorEstimationSubApproverOrgHierarchy");
 			throw new ErrorCheckException(errorInfoList);
 		}
 		// 代理承認者に承認権限があるか確認
 		if (!businessCheck.existsSubApproverEmployeeAuthorityEstimation(approvalRequesterMomEmployeeId, estimationApprovalRouteNodeList, momServiceUrl, relatedId, dbUrl, dbUser, dbPassword)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ApprovalAuthorityErrorEstimationSubApprover", "ApprovalAuthorityErrorEstimationSubApproverMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ApprovalAuthorityErrorEstimationSubApprover");
 			throw new ErrorCheckException(errorInfoList);
 		}
 	}
@@ -245,12 +245,12 @@ public class FunctionCheckEstimation {
 		// 見積ステータスチェック
 		Estimation estimation = estimationRepository.findOne(estimationId);
 		if (!businessCheck.existsEstimationStatusMatch(estimation.getStatus(), Status.承認依頼中)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorEstimationStatus", "WrongNotErrorEstimationStatusMsg", new String[] { Status.承認依頼中.name() });
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorEstimationStatus", new String[] { Status.承認依頼中.name() });
 			throw new ErrorCheckException(errorInfoList);
 		}
 		// 見積承認ルートNullチェック
 		if (null == estimation.getEstimationApprovalRoute()) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistEstimationApprovalRoute", "EntityDoesNotExistEstimationApprovalRouteMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistEstimationApprovalRoute");
 			throw new ErrorCheckException(errorInfoList);
 		}
 	}
@@ -275,12 +275,12 @@ public class FunctionCheckEstimation {
 		// 見積ステータスチェック
 		Estimation estimation = estimationRepository.findOne(estimationId);
 		if (!businessCheck.existsEstimationStatusMatch(estimation.getStatus(), Status.承認依頼中)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorEstimationStatus", "WrongNotErrorEstimationStatusMsg", new String[] { Status.承認依頼中.name() });
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorEstimationStatus", new String[] { Status.承認依頼中.name() });
 			throw new ErrorCheckException(errorInfoList);
 		}
 		// 見積承認ルートNullチェック
 		if (null == estimation.getEstimationApprovalRoute()) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistEstimationApprovalRoute", "EntityDoesNotExistEstimationApprovalRouteMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistEstimationApprovalRoute");
 			throw new ErrorCheckException(errorInfoList);
 		}
 	}
@@ -305,7 +305,7 @@ public class FunctionCheckEstimation {
 		// 見積ステータスチェック
 		Estimation estimation = estimationRepository.findOne(estimationId);
 		if (!businessCheck.existsEstimationStatusMatch(estimation.getStatus(), Status.承認依頼中)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorEstimationStatus", "WrongNotErrorEstimationStatusMsg", new String[] { Status.承認依頼中.name() });
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorEstimationStatus", new String[] { Status.承認依頼中.name() });
 			throw new ErrorCheckException(errorInfoList);
 		}
 	}
@@ -330,7 +330,7 @@ public class FunctionCheckEstimation {
 		// 見積ステータスチェック
 		Estimation estimation = estimationRepository.findOne(estimationId);
 		if (!businessCheck.existsEstimationStatusMatch(estimation.getStatus(), Status.承認済み)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorEstimationStatus", "WrongNotErrorEstimationStatusMsg", new String[] { Status.承認済み.name() });
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorEstimationStatus", new String[] { Status.承認済み.name() });
 			throw new ErrorCheckException(errorInfoList);
 		}
 	}
@@ -355,7 +355,7 @@ public class FunctionCheckEstimation {
 		// 見積ステータスチェック
 		Estimation estimation = estimationRepository.findOne(estimationId);
 		if (businessCheck.existsEstimationStatusMatch(estimation.getStatus(), Status.受注)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongErrorEstimationStatus", "WrongErrorEstimationStatusMsg", new String[] { Status.受注.name() });
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongErrorEstimationStatus", new String[] { Status.受注.name() });
 			throw new ErrorCheckException(errorInfoList);
 		}
 	}
@@ -372,12 +372,12 @@ public class FunctionCheckEstimation {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		if (null == mclMomKjbId) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorMclMomKjbId", "ArgumentNullErrorMclMomKjbIdMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorMclMomKjbId");
 			throw new ErrorCheckException(errorInfoList);
 		}
 
 		if (!dBFoundCheck.existsKjbMaster(mclMomKjbId)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "MasterDoesNotExistKjbMaster", "MasterDoesNotExistKjbMasterMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "MasterDoesNotExistKjbMaster");
 			throw new ErrorCheckException(errorInfoList);
 		}
 	}
@@ -394,12 +394,12 @@ public class FunctionCheckEstimation {
 	 */
 	private void existsEstimation(List<ErrorInfo> errorInfoList, Estimation estimation) throws ErrorCheckException {
 		if (null == estimation) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorEstimation", "ArgumentNullErrorEstimationMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorEstimation");
 			throw new ErrorCheckException(errorInfoList);
 		}
 
 		if (!dBFoundCheck.existsEstimation(estimation.getId())) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistEstimation", "EntityDoesNotExistEstimationMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistEstimation");
 			throw new ErrorCheckException(errorInfoList);
 		}
 	}
@@ -416,12 +416,12 @@ public class FunctionCheckEstimation {
 	 */
 	private void existsEstimationId(List<ErrorInfo> errorInfoList, Long estimationId) throws ErrorCheckException {
 		if (null == estimationId) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorEstimationId", "ArgumentNullErrorEstimationIdMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorEstimationId");
 			throw new ErrorCheckException(errorInfoList);
 		}
 
 		if (!dBFoundCheck.existsEstimation(estimationId)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistEstimation", "EntityDoesNotExistEstimationMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistEstimation");
 			throw new ErrorCheckException(errorInfoList);
 		}
 	}
@@ -440,12 +440,12 @@ public class FunctionCheckEstimation {
 	 */
 	private void existsMomEmployeeId(List<ErrorInfo> errorInfoList, String momEmployeeId, EmpMode empMode) throws ErrorCheckException {
 		if (StringUtils.isBlank(momEmployeeId)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorMomEmployeeId", "ArgumentNullErrorMomEmployeeIdMsg", new String[] { empMode.name() });
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorMomEmployeeId", new String[] { empMode.name() });
 			throw new ErrorCheckException(errorInfoList);
 		}
 
 		if (!dBFoundCheck.existsEmployeeMaster(momEmployeeId)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "MasterDoesNotExistEmployeeMaster", "MasterDoesNotExistEmployeeMasterMsg", new String[] { empMode.name() });
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "MasterDoesNotExistEmployeeMaster", new String[] { empMode.name() });
 			throw new ErrorCheckException(errorInfoList);
 		}
 	}

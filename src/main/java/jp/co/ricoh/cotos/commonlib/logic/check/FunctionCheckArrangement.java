@@ -46,12 +46,12 @@ public class FunctionCheckArrangement {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		if (null == contractId) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorContractId", "ArgumentNullErrorContractIdMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorContractId");
 			throw new ErrorCheckException(errorInfoList);
 		}
 
 		if (!dBFoundCheck.existsContract(contractId)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistContract", "EntityDoesNotExistContractMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistContract");
 			throw new ErrorCheckException(errorInfoList);
 		}
 		// 操作者MoM社員存在チェック
@@ -73,12 +73,12 @@ public class FunctionCheckArrangement {
 
 		// 手配業務単位にサマリーした手配マスタ存在チェック
 		if (CollectionUtils.isEmpty(summaryArrangementMasterList)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "NotFoundErrorSummaryArrangementMasterList", "NotFoundErrorSummaryArrangementMasterListMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "NotFoundErrorSummaryArrangementMasterList");
 			throw new ErrorCheckException(errorInfoList);
 		}
 		// 手配業務に紐づく手配明細存在チェック
 		if (CollectionUtils.isEmpty(arrangementDetailMakeInfoList)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "NotFoundErrorSummaryArrangementDetailMakeInfoList", "NotFoundErrorSummaryArrangementDetailMakeInfoListMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "NotFoundErrorSummaryArrangementDetailMakeInfoList");
 			throw new ErrorCheckException(errorInfoList);
 		}
 	}
@@ -95,12 +95,12 @@ public class FunctionCheckArrangement {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		if (null == arrangementId) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorArrangementId", "ArgumentNullErrorArrangementIdMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorArrangementId");
 			throw new ErrorCheckException(errorInfoList);
 		}
 
 		if (!dBFoundCheck.existsArrangement(arrangementId)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistArrangement", "EntityDoesNotExistArrangementMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistArrangement");
 			throw new ErrorCheckException(errorInfoList);
 		}
 	}
@@ -152,7 +152,7 @@ public class FunctionCheckArrangement {
 
 		// 手配業務ステータスチェック
 		if (businessCheck.existsArrangementWorkStatusMatch(arrangementWork.getArrangementWorkStatus(), ArrangementWorkStatus.受付済み) || businessCheck.existsArrangementWorkStatusMatch(arrangementWork.getArrangementWorkStatus(), ArrangementWorkStatus.対応済み)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongErrorArrangementWorkStatus", "WrongErrorArrangementWorkStatusMsg", new String[] { ArrangementWorkStatus.受付済み.name() + "または" + ArrangementWorkStatus.対応済み.name() });
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongErrorArrangementWorkStatus", new String[] { ArrangementWorkStatus.受付済み.name() + "または" + ArrangementWorkStatus.対応済み.name() });
 			throw new ErrorCheckException(errorInfoList);
 		}
 	}
@@ -208,7 +208,7 @@ public class FunctionCheckArrangement {
 
 		// 手配業務ステータスチェック
 		if (!businessCheck.existsArrangementWorkStatusMatch(arrangementWork.getArrangementWorkStatus(), ArrangementWorkStatus.受付済み)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorArrangementWorkStatus", "WrongNotErrorArrangementWorkStatusMsg", new String[] { ArrangementWorkStatus.受付済み.name() });
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorArrangementWorkStatus", new String[] { ArrangementWorkStatus.受付済み.name() });
 			throw new ErrorCheckException(errorInfoList);
 		}
 	}
@@ -233,7 +233,7 @@ public class FunctionCheckArrangement {
 		// 手配業務ステータスチェック
 		ArrangementWork arrangementWork = arrangementWorkRepository.findOne(arrangementWorkId);
 		if (!businessCheck.existsArrangementWorkStatusMatch(arrangementWork.getArrangementWorkStatus(), ArrangementWorkStatus.対応済み)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorArrangementWorkStatus", "WrongNotErrorArrangementWorkStatusMsg", new String[] { ArrangementWorkStatus.対応済み.name() });
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorArrangementWorkStatus", new String[] { ArrangementWorkStatus.対応済み.name() });
 			throw new ErrorCheckException(errorInfoList);
 		}
 	}
@@ -258,7 +258,7 @@ public class FunctionCheckArrangement {
 		// 手配業務ステータスチェック
 		ArrangementWork arrangementWork = arrangementWorkRepository.findOne(arrangementWorkId);
 		if (!businessCheck.existsArrangementWorkStatusMatch(arrangementWork.getArrangementWorkStatus(), ArrangementWorkStatus.受付済み)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorArrangementWorkStatus", "WrongNotErrorArrangementWorkStatusMsg", new String[] { ArrangementWorkStatus.受付済み.name() });
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorArrangementWorkStatus", new String[] { ArrangementWorkStatus.受付済み.name() });
 			throw new ErrorCheckException(errorInfoList);
 		}
 	}
@@ -277,17 +277,17 @@ public class FunctionCheckArrangement {
 	private void existsArrangementWorkIdList(List<ErrorInfo> errorInfoList, List<Long> arrangementWorkIdList) throws ErrorCheckException {
 		// 手配業務IDリストNullチェック
 		if (CollectionUtils.isEmpty(arrangementWorkIdList)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorArrangementWorkIdList", "ArgumentNullErrorArrangementWorkIdListMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorArrangementWorkIdList");
 			throw new ErrorCheckException(errorInfoList);
 		}
 		// 手配業務IDリスト項目Nullチェック
 		if (arrangementWorkIdList.contains(null)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "LackingParameterErrorArrangementWorkIdList", "LackingParameterErrorArrangementWorkIdListMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "LackingParameterErrorArrangementWorkIdList");
 			throw new ErrorCheckException(errorInfoList);
 		}
 		// 手配業務ID存在チェック
 		if (!businessCheck.existsArrangementWork(arrangementWorkIdList)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistArrangementWork", "EntityDoesNotExistArrangementWorkMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistArrangementWork");
 			throw new ErrorCheckException(errorInfoList);
 		}
 	}
@@ -305,12 +305,12 @@ public class FunctionCheckArrangement {
 	 */
 	private void existsArrangementWorkId(List<ErrorInfo> errorInfoList, Long arrangementWorkId) throws ErrorCheckException {
 		if (null == arrangementWorkId) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorArrangementWorkId", "ArgumentNullErrorArrangementWorkIdMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorArrangementWorkId");
 			throw new ErrorCheckException(errorInfoList);
 		}
 
 		if (!dBFoundCheck.existsArrangementWork(arrangementWorkId)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistArrangementWork", "EntityDoesNotExistArrangementWorkMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistArrangementWork");
 			throw new ErrorCheckException(errorInfoList);
 		}
 	}
@@ -329,12 +329,12 @@ public class FunctionCheckArrangement {
 	 */
 	private void existsMomEmployeeId(List<ErrorInfo> errorInfoList, String momEmployeeId, EmpMode empMode) throws ErrorCheckException {
 		if (StringUtils.isBlank(momEmployeeId)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorMomEmployeeId", "ArgumentNullErrorMomEmployeeIdMsg", new String[] { empMode.name() });
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorMomEmployeeId", new String[] { empMode.name() });
 			throw new ErrorCheckException(errorInfoList);
 		}
 
 		if (!dBFoundCheck.existsEmployeeMaster(momEmployeeId)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "MasterDoesNotExistEmployeeMaster", "MasterDoesNotExistEmployeeMasterMsg", new String[] { empMode.name() });
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "MasterDoesNotExistEmployeeMaster", new String[] { empMode.name() });
 			throw new ErrorCheckException(errorInfoList);
 		}
 	}

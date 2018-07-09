@@ -109,19 +109,19 @@ public class FunctionCheckCommunication {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		if (StringUtils.isBlank(targetDocKey)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorTargetDocKey", "ArgumentNullErrorTargetDocKeyMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorTargetDocKey");
 			throw new ErrorCheckException(errorInfoList);
 		}
 
 		if (StringUtils.isBlank(communicationCategory)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorCommunicationCategory", "ArgumentNullErrorCommunicationCategoryMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorCommunicationCategory");
 			throw new ErrorCheckException(errorInfoList);
 		}
 
 		try {
 			CommunicationCategory.valueOf(communicationCategory);
 		} catch (IllegalArgumentException ill) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "DoesNotExistCommunicationCategory", "DoesNotExistCommunicationCategoryMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "DoesNotExistCommunicationCategory");
 			throw new ErrorCheckException(errorInfoList);
 		}
 	}
@@ -138,7 +138,7 @@ public class FunctionCheckCommunication {
 	 */
 	private void entityCheckCommunication(List<ErrorInfo> errorInfoList, Communication communication, BindingResult result) throws ErrorCheckException {
 		if (null == communication) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorCommunication", "ArgumentNullErrorCommunicationMsg");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorCommunication");
 			throw new ErrorCheckException(errorInfoList);
 		}
 
@@ -158,12 +158,12 @@ public class FunctionCheckCommunication {
 	 */
 	private void existsMomEmployeeId(List<ErrorInfo> errorInfoList, String momEmployeeId) throws ErrorCheckException {
 		if (StringUtils.isBlank(momEmployeeId)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorMomEmployeeId", "ArgumentNullErrorMomEmployeeIdMsg", new String[] { EmpMode.パラメータ.name() });
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorMomEmployeeId", new String[] { EmpMode.パラメータ.name() });
 			throw new ErrorCheckException(errorInfoList);
 		}
 
 		if (!dBFoundCheck.existsEmployeeMaster(momEmployeeId)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "MasterDoesNotExistEmployeeMaster", "MasterDoesNotExistEmployeeMasterMsg", new String[] { EmpMode.パラメータ.name() });
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "MasterDoesNotExistEmployeeMaster", new String[] { EmpMode.パラメータ.name() });
 			throw new ErrorCheckException(errorInfoList);
 		}
 	}

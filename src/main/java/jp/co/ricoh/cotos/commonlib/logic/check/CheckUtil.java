@@ -2,17 +2,17 @@ package jp.co.ricoh.cotos.commonlib.logic.check;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
+import jp.co.ricoh.cotos.commonlib.dto.result.MessageInfo;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorCheckException;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorInfo;
+import jp.co.ricoh.cotos.commonlib.logic.message.MessageUtil;
 
 /**
  * チェック共通クラス
@@ -21,7 +21,7 @@ import jp.co.ricoh.cotos.commonlib.exception.ErrorInfo;
 public class CheckUtil {
 
 	@Autowired
-	MessageSource messageSource;
+	MessageUtil messageUtil;
 
 	/**
 	 * 社員モード(パラメータ,操作者)
@@ -67,14 +67,12 @@ public class CheckUtil {
 	 * 
 	 * @param errorInfoList
 	 *            エラーリスト
-	 * @param errorId
-	 *            エラーID
-	 * @param errorMessageId
-	 *            エラーメッセージID
+	 * @param messageKey
+	 *            メッセージキー
 	 * @return エラーリスト
 	 */
-	public List<ErrorInfo> addErrorInfo(List<ErrorInfo> errorInfoList, String errorId, String errorMessageId) {
-		errorInfoList.add(createErrorInfo(errorId, errorMessageId));
+	public List<ErrorInfo> addErrorInfo(List<ErrorInfo> errorInfoList, String messageKey) {
+		errorInfoList.add(createErrorInfo(messageKey));
 		return errorInfoList;
 	}
 
@@ -83,16 +81,14 @@ public class CheckUtil {
 	 * 
 	 * @param errorInfoList
 	 *            エラーリスト
-	 * @param errorId
-	 *            エラーID
-	 * @param errorMessageId
-	 *            エラーメッセージID
+	 * @param messageKey
+	 *            メッセージキー
 	 * @param regexList
 	 *            メッセージ引数
 	 * @return エラーリスト
 	 */
-	public List<ErrorInfo> addErrorInfo(List<ErrorInfo> errorInfoList, String errorId, String errorMessageId, String[] regexList) {
-		errorInfoList.add(createErrorInfo(errorId, errorMessageId, regexList));
+	public List<ErrorInfo> addErrorInfo(List<ErrorInfo> errorInfoList, String messageKey, String[] regexList) {
+		errorInfoList.add(createErrorInfo(messageKey, regexList));
 		return errorInfoList;
 	}
 
@@ -115,34 +111,36 @@ public class CheckUtil {
 	/**
 	 * エラー情報生成
 	 * 
-	 * @param errorId
-	 *            エラーID
-	 * @param errorMessageId
-	 *            エラーメッセージID
+	 * @param messageKey
+	 *            メッセージキー
 	 * @return エラーリスト
 	 */
-	private ErrorInfo createErrorInfo(String errorId, String errorMessageId) {
+	private ErrorInfo createErrorInfo(String messageKey) {
+
+		MessageInfo messageInfo = messageUtil.createMessageInfo(messageKey);
+
 		ErrorInfo errorInfo = new ErrorInfo();
-		errorInfo.setErrorId(convertMessage(errorId));
-		errorInfo.setErrorMessage(convertMessage(errorMessageId));
+		errorInfo.setErrorId(messageInfo.getId());
+		errorInfo.setErrorMessage(messageInfo.getMsg());
 		return errorInfo;
 	}
 
 	/**
 	 * エラー情報生成
 	 * 
-	 * @param errorId
-	 *            エラーID
-	 * @param errorMessageId
-	 *            エラーメッセージID
+	 * @param messageKey
+	 *            メッセージキー
 	 * @param regexList
 	 *            メッセージ引数
 	 * @return エラーリスト
 	 */
-	private ErrorInfo createErrorInfo(String errorId, String errorMessageId, String[] regexList) {
+	private ErrorInfo createErrorInfo(String messageKey, String[] regexList) {
+
+		MessageInfo messageInfo = messageUtil.createMessageInfo(messageKey, regexList);
+
 		ErrorInfo errorInfo = new ErrorInfo();
-		errorInfo.setErrorId(convertMessage(errorId));
-		errorInfo.setErrorMessage(convertMessage(errorMessageId, regexList));
+		errorInfo.setErrorId(messageInfo.getId());
+		errorInfo.setErrorMessage(messageInfo.getMsg());
 		return errorInfo;
 	}
 
@@ -151,38 +149,17 @@ public class CheckUtil {
 	 * 
 	 * @param columnNm
 	 *            カラム名
-	 * @param errorType
-	 *            エラータイプ
+	 * @param messageKey
+	 *            メッセージキー
 	 * @return エラーリスト
 	 */
-	private ErrorInfo createErrorInfoColumnCheck(String columnNm, String errorType) {
+	private ErrorInfo createErrorInfoColumnCheck(String columnNm, String messageKey) {
+
+		MessageInfo messageInfo = messageUtil.createMessageInfo(messageKey);
+
 		ErrorInfo errorInfo = new ErrorInfo();
-		errorInfo.setErrorId(convertMessage(errorType) + " " + columnNm);
-		errorInfo.setErrorMessage(convertMessage(columnNm) + convertMessage(errorType + "Msg"));
+		errorInfo.setErrorId(messageInfo.getId());
+		errorInfo.setErrorMessage(messageUtil.convertSingleValue(columnNm) + messageInfo.getMsg());
 		return errorInfo;
-	}
-
-	/**
-	 * メッセージ生成
-	 * 
-	 * @param id
-	 *            ID
-	 * @return メッセージ
-	 */
-	private String convertMessage(String id) {
-		return messageSource.getMessage(id, null, Locale.JAPANESE);
-	}
-
-	/**
-	 * メッセージ生成
-	 * 
-	 * @param id
-	 *            ID
-	 * @param regexList
-	 *            メッセージ引数
-	 * @return メッセージ
-	 */
-	private String convertMessage(String id, String[] regexList) {
-		return messageSource.getMessage(id, regexList, Locale.JAPANESE);
 	}
 }
