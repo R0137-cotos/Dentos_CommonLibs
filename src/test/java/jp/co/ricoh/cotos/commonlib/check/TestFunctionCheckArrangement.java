@@ -60,7 +60,7 @@ public class TestFunctionCheckArrangement {
 			functionCheckArrangement.checkArrangementCreateFirst(null, "00623070");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error ContractId", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCO00001", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの契約IDが未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 契約IDがTBLに存在しない
@@ -68,7 +68,7 @@ public class TestFunctionCheckArrangement {
 			functionCheckArrangement.checkArrangementCreateFirst(999L, "00623070");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Entity Does Not Exist Contract", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RCO00004", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "存在しない契約IDが設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// MoM社員IDがNull
@@ -76,7 +76,7 @@ public class TestFunctionCheckArrangement {
 			functionCheckArrangement.checkArrangementCreateFirst(1L, null);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error MomEmployeeId", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00004", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者のMoM社員が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// MoM社員IDがTBLに存在しない
@@ -84,7 +84,7 @@ public class TestFunctionCheckArrangement {
 			functionCheckArrangement.checkArrangementCreateFirst(1L, "000");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Master Does Not Exist EmployeeMaster", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者に存在しないMoM社員が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 手配業務単位にサマリーした手配マスタがTBLに存在しない
@@ -95,7 +95,7 @@ public class TestFunctionCheckArrangement {
 			functionCheckArrangement.checkArrangementCreateSecond(summaryArrangementMasterList, arrangementDetailMakeInfoList);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Not Found Error SummaryArrangementMasterList", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00008", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "手配業務に紐づく手配マスタが存在しません。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 手配業務に紐づく手配明細がTBLに存在しない
@@ -106,7 +106,7 @@ public class TestFunctionCheckArrangement {
 			functionCheckArrangement.checkArrangementCreateSecond(summaryArrangementMasterList, arrangementDetailMakeInfoList);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Not Found Error SummaryArrangementDetailMakeInfoList", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00009", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "手配業務に紐づく手配明細が存在しません。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 手配業務ID、MoM社員ID、手配業務単位にサマリーした手配マスタ、手配業務に紐づく手配明細がTBLに存在する
@@ -137,7 +137,7 @@ public class TestFunctionCheckArrangement {
 			functionCheckArrangement.checkArrangementFind(null);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error ArrangementId", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00001", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの手配IDが未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 手配IDがTBLに存在しない
@@ -145,7 +145,7 @@ public class TestFunctionCheckArrangement {
 			functionCheckArrangement.checkArrangementFind(999L);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Entity Does Not Exist Arrangement", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00004", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "存在しない手配IDが設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 手配IDがTBLに存在する
@@ -172,7 +172,7 @@ public class TestFunctionCheckArrangement {
 			functionCheckArrangement.checkArrangementWorkFind(null);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error ArrangementWorkId", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00002", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの手配業務IDが未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 手配業務IDがTBLに存在しない
@@ -180,7 +180,7 @@ public class TestFunctionCheckArrangement {
 			functionCheckArrangement.checkArrangementWorkFind(999L);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Entity Does Not Exist ArrangementWork", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00005", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "存在しない手配業務IDが設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 手配業務IDがTBLに存在する
@@ -207,7 +207,7 @@ public class TestFunctionCheckArrangement {
 			functionCheckArrangement.checkArrangementAcceptWorkFirst(null, "00623070");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error ArrangementWorkIdList", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00003", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの手配業務IDリストが未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 手配業務IDリストにNull行がある
@@ -218,7 +218,7 @@ public class TestFunctionCheckArrangement {
 			functionCheckArrangement.checkArrangementAcceptWorkFirst(arrangementWorkIdList, "00623070");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Lacking Parameter Error ArrangementWorkIdList", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00010", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの手配業務IDリストに手配業務IDが未設定の行があります。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 手配業務IDがTBLに存在しない
@@ -228,7 +228,7 @@ public class TestFunctionCheckArrangement {
 			functionCheckArrangement.checkArrangementAcceptWorkFirst(arrangementWorkIdList, "00623070");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Entity Does Not Exist ArrangementWork", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00005", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "存在しない手配業務IDが設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		List<Long> arrangementWorkIdList = new ArrayList<Long>();
@@ -238,7 +238,7 @@ public class TestFunctionCheckArrangement {
 			functionCheckArrangement.checkArrangementAcceptWorkFirst(arrangementWorkIdList, null);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error MomEmployeeId", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00004", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者のMoM社員が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// MoM社員IDがTBLに存在しない
@@ -246,7 +246,7 @@ public class TestFunctionCheckArrangement {
 			functionCheckArrangement.checkArrangementAcceptWorkFirst(arrangementWorkIdList, "000");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Master Does Not Exist EmployeeMaster", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者に存在しないMoM社員が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 手配業務ステータスが不正
@@ -255,7 +255,7 @@ public class TestFunctionCheckArrangement {
 			functionCheckArrangement.checkArrangementAcceptWorkSecond(arrangementWork);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Wrong Error ArrangementWorkStatus", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "手配業務ステータスに受付済みまたは対応済みが設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 手配業務ID、MoM社員IDがTBLに存在し、手配業務ステータスが正常
@@ -283,7 +283,7 @@ public class TestFunctionCheckArrangement {
 			functionCheckArrangement.checkArrangementAssignWorker(null, "00623070");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error ArrangementWorkIdList", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00003", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの手配業務IDリストが未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 手配業務IDリストにNull行がある
@@ -294,7 +294,7 @@ public class TestFunctionCheckArrangement {
 			functionCheckArrangement.checkArrangementAssignWorker(arrangementWorkIdList, "00623070");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Lacking Parameter Error ArrangementWorkIdList", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00010", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの手配業務IDリストに手配業務IDが未設定の行があります。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 手配業務IDがTBLに存在しない
@@ -304,7 +304,7 @@ public class TestFunctionCheckArrangement {
 			functionCheckArrangement.checkArrangementAssignWorker(arrangementWorkIdList, "00623070");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Entity Does Not Exist ArrangementWork", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00005", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "存在しない手配業務IDが設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		List<Long> arrangementWorkIdList = new ArrayList<Long>();
@@ -314,7 +314,7 @@ public class TestFunctionCheckArrangement {
 			functionCheckArrangement.checkArrangementAssignWorker(arrangementWorkIdList, null);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error MomEmployeeId", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00004", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータのMoM社員が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// MoM社員IDがTBLに存在しない
@@ -322,7 +322,7 @@ public class TestFunctionCheckArrangement {
 			functionCheckArrangement.checkArrangementAssignWorker(arrangementWorkIdList, "000");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Master Does Not Exist EmployeeMaster", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータに存在しないMoM社員が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 手配業務ID、MoM社員IDがTBLに存在する
@@ -349,7 +349,7 @@ public class TestFunctionCheckArrangement {
 			functionCheckArrangement.checkArrangementRefuseWorkFirst(null, "00623070");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error ArrangementWorkIdList", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00003", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの手配業務IDリストが未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 手配業務IDリストにNull行がある
@@ -360,7 +360,7 @@ public class TestFunctionCheckArrangement {
 			functionCheckArrangement.checkArrangementRefuseWorkFirst(arrangementWorkIdList, "00623070");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Lacking Parameter Error ArrangementWorkIdList", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00010", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの手配業務IDリストに手配業務IDが未設定の行があります。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 手配業務IDがTBLに存在しない
@@ -370,7 +370,7 @@ public class TestFunctionCheckArrangement {
 			functionCheckArrangement.checkArrangementRefuseWorkFirst(arrangementWorkIdList, "00623070");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Entity Does Not Exist ArrangementWork", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00005", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "存在しない手配業務IDが設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		List<Long> arrangementWorkIdList = new ArrayList<Long>();
@@ -380,7 +380,7 @@ public class TestFunctionCheckArrangement {
 			functionCheckArrangement.checkArrangementRefuseWorkFirst(arrangementWorkIdList, null);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error MomEmployeeId", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00004", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者のMoM社員が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// MoM社員IDがTBLに存在しない
@@ -388,7 +388,7 @@ public class TestFunctionCheckArrangement {
 			functionCheckArrangement.checkArrangementRefuseWorkFirst(arrangementWorkIdList, "000");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Master Does Not Exist EmployeeMaster", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者に存在しないMoM社員が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 手配業務ステータスが不正
@@ -397,7 +397,7 @@ public class TestFunctionCheckArrangement {
 			functionCheckArrangement.checkArrangementRefuseWorkSecond(arrangementWork);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Wrong Not Error ArrangementWorkStatus", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00006", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "手配業務ステータスに受付済み以外が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 手配業務ID、MoM社員IDがTBLに存在し、手配業務ステータスが正常
@@ -425,7 +425,7 @@ public class TestFunctionCheckArrangement {
 			functionCheckArrangement.checkArrangementCancelCompleteWork(null, "00623070");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error ArrangementWorkId", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00002", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの手配業務IDが未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 手配業務IDがTBLに存在しない
@@ -433,7 +433,7 @@ public class TestFunctionCheckArrangement {
 			functionCheckArrangement.checkArrangementCancelCompleteWork(999L, "00623070");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Entity Does Not Exist ArrangementWork", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00005", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "存在しない手配業務IDが設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// MoM社員IDがNull
@@ -441,7 +441,7 @@ public class TestFunctionCheckArrangement {
 			functionCheckArrangement.checkArrangementCancelCompleteWork(1L, null);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error MomEmployeeId", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00004", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者のMoM社員が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// MoM社員IDがTBLに存在しない
@@ -449,7 +449,7 @@ public class TestFunctionCheckArrangement {
 			functionCheckArrangement.checkArrangementCancelCompleteWork(1L, "000");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Master Does Not Exist EmployeeMaster", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者に存在しないMoM社員が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 手配業務ステータスが不正
@@ -457,7 +457,7 @@ public class TestFunctionCheckArrangement {
 			functionCheckArrangement.checkArrangementCancelCompleteWork(2L, "00623070");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Wrong Not Error ArrangementWorkStatus", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00006", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "手配業務ステータスに対応済み以外が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 手配業務ID、MoM社員IDがTBLに存在し、手配業務ステータスが正常
@@ -484,7 +484,7 @@ public class TestFunctionCheckArrangement {
 			functionCheckArrangement.checkArrangementCompleteWork(null, "00623070");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error ArrangementWorkId", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00002", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの手配業務IDが未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 手配業務IDがTBLに存在しない
@@ -492,7 +492,7 @@ public class TestFunctionCheckArrangement {
 			functionCheckArrangement.checkArrangementCompleteWork(999L, "00623070");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Entity Does Not Exist ArrangementWork", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00005", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "存在しない手配業務IDが設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// MoM社員IDがNull
@@ -500,7 +500,7 @@ public class TestFunctionCheckArrangement {
 			functionCheckArrangement.checkArrangementCompleteWork(1L, null);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Argument Null Error MomEmployeeId", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00004", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者のMoM社員が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// MoM社員IDがTBLに存在しない
@@ -508,7 +508,7 @@ public class TestFunctionCheckArrangement {
 			functionCheckArrangement.checkArrangementCompleteWork(1L, "000");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Master Does Not Exist EmployeeMaster", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者に存在しないMoM社員が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 手配業務ステータスが不正
@@ -516,7 +516,7 @@ public class TestFunctionCheckArrangement {
 			functionCheckArrangement.checkArrangementCompleteWork(3L, "00623070");
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "Wrong Not Error ArrangementWorkStatus", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00006", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "手配業務ステータスに受付済み以外が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 手配業務ID、MoM社員IDがTBLに存在し、手配業務ステータスが正常
