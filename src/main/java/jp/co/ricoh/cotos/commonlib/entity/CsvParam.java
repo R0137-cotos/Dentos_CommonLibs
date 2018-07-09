@@ -4,10 +4,8 @@ import java.nio.charset.Charset;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.Value;
 
 @Builder
-@Value
 @Data
 public class CsvParam {
 

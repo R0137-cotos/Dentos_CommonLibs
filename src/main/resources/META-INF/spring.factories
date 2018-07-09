@@ -1,3 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 jp.co.ricoh.cotos.commonlib.CommonLibConfig
-jp.co.ricoh.cotos.commonlib.CommonLibCsvConfig

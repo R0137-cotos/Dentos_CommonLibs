@@ -6,12 +6,15 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Spliterators;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -90,15 +93,28 @@ public class CSVUtil {
 		dsp.setNullValueSerializer(new NullValueSerializer(prm.getNullValueString()));
 		mapper.setSerializerProvider(dsp);
 
+		// アペンドモードすでにファイルが存在する場合は元のCSVファイルをバックアップ
+		Path randomFilePathForNotDuplicate = Paths.get(Paths.get(filePath).getParent().toString(), UUID.randomUUID().toString());
+		if (Optional.of(Paths.get(filePath)).filter(s -> prm.isAppendMode()).map(s -> Files.exists(s)).orElse(false)) {
+			Files.copy(Paths.get(filePath), randomFilePathForNotDuplicate);
+		}
+
 		// CSV書き込み
 		Files.createDirectories(Paths.get(filePath).getParent());
 		try {
 			try (BufferedWriter out = Files.newBufferedWriter(Paths.get(filePath), param.getCharset(), StandardOpenOption.CREATE, option)) {
 				mapper.writer(schema).writeValues(out).writeAll(writeClass);
 			}
-		} catch (Exception e) {
-			Files.deleteIfExists(Paths.get(filePath));
+		} catch (IOException e) {
+			// CSVファイルをバックアップから復元する
+			if (Optional.of(randomFilePathForNotDuplicate).map(s -> Files.exists(s)).get()) {
+				Files.copy(randomFilePathForNotDuplicate, Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING);
+				Files.delete(randomFilePathForNotDuplicate);
+			}
+			throw e;
 		}
+
+		Files.deleteIfExists(randomFilePathForNotDuplicate);
 	}
 
 	/**
