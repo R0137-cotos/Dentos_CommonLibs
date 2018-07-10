@@ -301,18 +301,12 @@ public class TestCSVWriter {
 		} catch (ErrorCheckException e) {
 			file.setWritable(true);
 
-			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00102", e.getErrorInfoList().get(e.getErrorInfoList().size() - 1).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", file.getAbsolutePath() + "の書き込みに失敗しました。", e.getErrorInfoList().get(e.getErrorInfoList().size() - 1).getErrorMessage());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00107", e.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", file.getAbsolutePath() + "は読み取り専用ファイルです。", e.getErrorInfoList().get(0).getErrorMessage());
 
 			List<String> actual = Files.readAllLines(Paths.get("output/output.csv"), StandardCharsets.UTF_8);
 			List<String> expected = Files.readAllLines(Paths.get("src/test/resources/csv/input_default.csv"), StandardCharsets.UTF_8);
 			Assert.assertEquals("2回目の書き込み処理が反映されないこと", expected, actual);
 		}
-
-		List<Path> fileList = Files.list(Paths.get("output/output.csv").getParent()).filter(s -> !s.toString().endsWith("output.csv") && !s.toString().endsWith(".gitignore")).collect(Collectors.toList());
-		fileList.forEach(s -> {
-			s.toFile().setWritable(true);
-			s.toFile().delete();
-		});
 	}
 }

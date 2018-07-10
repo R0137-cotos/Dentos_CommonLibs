@@ -87,14 +87,11 @@ public class CSVUtil {
 			it = mapper.reader(schema).forType(entityClass).readValues(new InputStreamReader(new FileInputStream(filePath), prm.getCharset()));
 			entityList = StreamSupport.stream(Spliterators.spliteratorUnknownSize(it, 0), false).collect(Collectors.toCollection(ArrayList::new));
 		} catch (JsonProcessingException | RuntimeJsonMappingException e) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "FileFormatError", new String[] { inputFile.getAbsolutePath() });
-			throw new ErrorCheckException(errorInfoList);
+			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "FileFormatError", new String[] { inputFile.getAbsolutePath() }));
 		} catch (FileNotFoundException e) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "FileNotFoundError", new String[] { inputFile.getAbsolutePath() });
-			throw new ErrorCheckException(errorInfoList);
+			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "FileNotFoundError", new String[] { inputFile.getAbsolutePath() }));
 		} catch (IOException e) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "FileReadFailed", new String[] { inputFile.getAbsolutePath() });
-			throw new ErrorCheckException(errorInfoList);
+			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "FileReadFailed", new String[] { inputFile.getAbsolutePath() }));
 		}
 		return entityList;
 	}
@@ -141,11 +138,17 @@ public class CSVUtil {
 		File outputFile = new File(filePath);
 		Path randomFilePathForNotDuplicate = Paths.get(outputFile.toPath().getParent().toString(), UUID.randomUUID().toString());
 		if (Optional.of(outputFile.toPath()).filter(s -> prm.isAppendMode()).map(s -> Files.exists(s)).orElse(false)) {
+
+			// 読み取り専用ファイルの場合、WindowsとLinuxで上書きコピーと削除の挙動が変わるのでエラーとする
+			if (!outputFile.canWrite()) {
+				throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "FileReadOnlyError", new String[] { outputFile.getAbsolutePath() }));
+			}
+
+			// バックアップ
 			try {
 				Files.copy(outputFile.toPath(), randomFilePathForNotDuplicate);
 			} catch (IOException e) {
-				errorInfoList = checkUtil.addErrorInfo(errorInfoList, "FileCopyFailed", new String[] { outputFile.getAbsolutePath() });
-				throw new ErrorCheckException(errorInfoList);
+				throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "FileCopyFailed", new String[] { outputFile.getAbsolutePath() }));
 			}
 		}
 
@@ -170,15 +173,13 @@ public class CSVUtil {
 					errorInfoList = checkUtil.addErrorInfo(errorInfoList, "FileDeleteFailed", new String[] { randomFilePathForNotDuplicate.toFile().getAbsolutePath() });
 				}
 			}
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "FileWriteFailed", new String[] { outputFile.getAbsolutePath() });
-			throw new ErrorCheckException(errorInfoList);
+			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "FileWriteFailed", new String[] { outputFile.getAbsolutePath() }));
 		}
 
 		try {
 			Files.deleteIfExists(randomFilePathForNotDuplicate);
 		} catch (IOException e) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "FileDeleteFailed", new String[] { randomFilePathForNotDuplicate.toFile().getAbsolutePath() });
-			throw new ErrorCheckException(errorInfoList);
+			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "FileDeleteFailed", new String[] { randomFilePathForNotDuplicate.toFile().getAbsolutePath() }));
 		}
 	}
 
