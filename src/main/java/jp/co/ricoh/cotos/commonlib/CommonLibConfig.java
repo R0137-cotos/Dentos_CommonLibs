@@ -8,9 +8,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
-import com.fasterxml.jackson.dataformat.csv.CsvMapper;
-
-import jp.co.ricoh.cotos.commonlib.csv.CSVUtil;
 import jp.co.ricoh.cotos.commonlib.db.DBUtil;
 import lombok.extern.log4j.Log4j;
 
@@ -38,10 +35,5 @@ public class CommonLibConfig {
 		bean.setBasename("classpath:Messages");
 		bean.setDefaultEncoding("UTF-8");
 		return bean;
-	}
-
-	@Bean
-	public CSVUtil loadCSVUtil(ConfigurableApplicationContext context) {
-		return new CSVUtil(new CsvMapper());
 	}
 }

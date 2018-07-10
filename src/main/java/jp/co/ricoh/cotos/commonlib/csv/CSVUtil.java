@@ -1,6 +1,7 @@
 package jp.co.ricoh.cotos.commonlib.csv;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -18,10 +19,14 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.MappingIterator;
+import com.fasterxml.jackson.databind.RuntimeJsonMappingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.DefaultSerializerProvider;
 import com.fasterxml.jackson.dataformat.csv.CsvGenerator;
@@ -29,15 +34,21 @@ import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 
 import jp.co.ricoh.cotos.commonlib.entity.CsvParam;
+import jp.co.ricoh.cotos.commonlib.exception.ErrorCheckException;
+import jp.co.ricoh.cotos.commonlib.exception.ErrorInfo;
+import jp.co.ricoh.cotos.commonlib.logic.check.CheckUtil;
 import lombok.AllArgsConstructor;
 
 /**
  * CSV Reader/Writer ユーティリティー
  */
-@AllArgsConstructor
+@Component
 public class CSVUtil {
 
-	CsvMapper mapper;
+	CsvMapper mapper = new CsvMapper();
+
+	@Autowired
+	CheckUtil checkUtil;
 
 	/**
 	 * CSVファイルを読み込んでオブジェクトに展開します。
@@ -50,9 +61,19 @@ public class CSVUtil {
 	 * @throws FileNotFoundException
 	 * @throws JsonProcessingException
 	 */
-	public <T> List<T> readCsvFile(String filePath, Class<T> resultClass, CsvParam param) throws JsonProcessingException, FileNotFoundException, IOException {
-		// 各種パラメーター設定
+	public <T> List<T> readCsvFile(String filePath, Class<T> resultClass, CsvParam param) throws ErrorCheckException {
+		List<ErrorInfo> errorInfoList = new ArrayList<>();
+
+		// 引数チェック
+		Optional.ofNullable(filePath).orElseThrow(() -> {
+			throw new ErrorCheckException(checkUtil.addErrorInfoColumnCheck(new ArrayList<ErrorInfo>(), "filePath", "NotEmptyError"));
+		});
+		Optional.ofNullable(resultClass).orElseThrow(() -> {
+			throw new ErrorCheckException(checkUtil.addErrorInfoColumnCheck(new ArrayList<ErrorInfo>(), "entityClass", "NotEmptyError"));
+		});
 		CsvParam prm = Optional.ofNullable(param).orElse(CsvParam.builder().build());
+
+		// 各種パラメーター設定
 		CsvSchema schema = mapper.typedSchemaFor(resultClass) //
 				.withUseHeader(prm.isHeader()) //
 				.withColumnSeparator(prm.getSeparator()) //
@@ -60,19 +81,43 @@ public class CSVUtil {
 				.withNullValue(prm.getNullValueString()); //
 
 		// CSV読み込み
-		MappingIterator<T> it = mapper.reader(schema).forType(resultClass).readValues(new InputStreamReader(new FileInputStream(filePath), prm.getCharset()));
-		return StreamSupport.stream(Spliterators.spliteratorUnknownSize(it, 0), false).collect(Collectors.toCollection(ArrayList::new));
+		MappingIterator<T> it;
+		List<T> entityList = null;
+		File inputFile = new File(filePath);
+		try {
+			it = mapper.reader(schema).forType(resultClass).readValues(new InputStreamReader(new FileInputStream(filePath), prm.getCharset()));
+			entityList = StreamSupport.stream(Spliterators.spliteratorUnknownSize(it, 0), false).collect(Collectors.toCollection(ArrayList::new));
+		} catch (JsonProcessingException | RuntimeJsonMappingException e) {
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "FileFormatError", new String[] { inputFile.getAbsolutePath() });
+			throw new ErrorCheckException(errorInfoList);
+		} catch (FileNotFoundException e) {
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "FileNotFoundError", new String[] { inputFile.getAbsolutePath() });
+			throw new ErrorCheckException(errorInfoList);
+		} catch (IOException e) {
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "FileReadFailed", new String[] { inputFile.getAbsolutePath() });
+			throw new ErrorCheckException(errorInfoList);
+		}
+		return entityList;
 	}
 
 	/**
 	 * CSVファイルを出力します。
 	 *
 	 * @param filePath 出力先CSVファイルパス
-	 * @param writeClass 展開元エンティティ（CSVの出力項目および出力順に影響）
+	 * @param entityList 展開元エンティティ（CSVの出力項目および出力順に影響）
 	 * @param param CSV出力パラメーター
 	 * @throws IOException
 	 */
-	public <T> void writeCsvFile(String filePath, List<T> writeClass, CsvParam param) throws IOException {
+	public <T> void writeCsvFile(String filePath, List<T> entityList, CsvParam param) throws ErrorCheckException {
+		List<ErrorInfo> errorInfoList = new ArrayList<>();
+
+		// 引数チェック
+		Optional.ofNullable(filePath).orElseThrow(() -> {
+			throw new ErrorCheckException(checkUtil.addErrorInfoColumnCheck(new ArrayList<ErrorInfo>(), "filePath", "NotEmptyError"));
+		});
+		Optional.ofNullable(entityList).orElseThrow(() -> {
+			throw new ErrorCheckException(checkUtil.addErrorInfoColumnCheck(new ArrayList<ErrorInfo>(), "entityList", "NotEmptyError"));
+		});
 		CsvParam prm = Optional.ofNullable(param).orElse(CsvParam.builder().build());
 
 		// アペンドモード判定
@@ -82,7 +127,7 @@ public class CSVUtil {
 		boolean isHeader = Optional.of(filePath).filter(s -> prm.isAppendMode() && Files.exists(Paths.get(s))).map(s -> false).orElse(prm.isHeader());
 
 		// 各種パラメーター設定
-		CsvSchema schema = mapper.typedSchemaFor(writeClass.get(0).getClass()) //
+		CsvSchema schema = mapper.typedSchemaFor(entityList.get(0).getClass()) //
 				.withUseHeader(isHeader) //
 				.withColumnSeparator(prm.getSeparator()) //
 				.withLineSeparator(prm.getLineSeparator()); //
@@ -94,27 +139,48 @@ public class CSVUtil {
 		mapper.setSerializerProvider(dsp);
 
 		// アペンドモードすでにファイルが存在する場合は元のCSVファイルをバックアップ
-		Path randomFilePathForNotDuplicate = Paths.get(Paths.get(filePath).getParent().toString(), UUID.randomUUID().toString());
-		if (Optional.of(Paths.get(filePath)).filter(s -> prm.isAppendMode()).map(s -> Files.exists(s)).orElse(false)) {
-			Files.copy(Paths.get(filePath), randomFilePathForNotDuplicate);
+		File outputFile = new File(filePath);
+		Path randomFilePathForNotDuplicate = Paths.get(outputFile.toPath().getParent().toString(), UUID.randomUUID().toString());
+		if (Optional.of(outputFile.toPath()).filter(s -> prm.isAppendMode()).map(s -> Files.exists(s)).orElse(false)) {
+			try {
+				Files.copy(outputFile.toPath(), randomFilePathForNotDuplicate);
+			} catch (IOException e) {
+				errorInfoList = checkUtil.addErrorInfo(errorInfoList, "FileCopyFailed", new String[] { outputFile.getAbsolutePath() });
+				throw new ErrorCheckException(errorInfoList);
+			}
 		}
 
 		// CSV書き込み
-		Files.createDirectories(Paths.get(filePath).getParent());
 		try {
-			try (BufferedWriter out = Files.newBufferedWriter(Paths.get(filePath), param.getCharset(), StandardOpenOption.CREATE, option)) {
-				mapper.writer(schema).writeValues(out).writeAll(writeClass);
+			Files.createDirectories(outputFile.toPath().getParent());
+			try (BufferedWriter out = Files.newBufferedWriter(outputFile.toPath(), prm.getCharset(), StandardOpenOption.CREATE, option)) {
+				mapper.writer(schema).writeValues(out).writeAll(entityList);
 			}
 		} catch (IOException e) {
 			// CSVファイルをバックアップから復元する
 			if (Optional.of(randomFilePathForNotDuplicate).map(s -> Files.exists(s)).get()) {
-				Files.copy(randomFilePathForNotDuplicate, Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING);
-				Files.delete(randomFilePathForNotDuplicate);
+				try {
+					Files.copy(randomFilePathForNotDuplicate, outputFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+				} catch (IOException ex) {
+					errorInfoList = checkUtil.addErrorInfo(errorInfoList, "FileRestoreFailed", new String[] { outputFile.getAbsolutePath() });
+				}
+
+				try {
+					Files.delete(randomFilePathForNotDuplicate);
+				} catch (IOException ex) {
+					errorInfoList = checkUtil.addErrorInfo(errorInfoList, "FileDeleteFailed", new String[] { randomFilePathForNotDuplicate.toFile().getAbsolutePath() });
+				}
 			}
-			throw e;
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "FileWriteFailed", new String[] { outputFile.getAbsolutePath() });
+			throw new ErrorCheckException(errorInfoList);
 		}
 
-		Files.deleteIfExists(randomFilePathForNotDuplicate);
+		try {
+			Files.deleteIfExists(randomFilePathForNotDuplicate);
+		} catch (IOException e) {
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "FileDeleteFailed", new String[] { randomFilePathForNotDuplicate.toFile().getAbsolutePath() });
+			throw new ErrorCheckException(errorInfoList);
+		}
 	}
 
 	/**
