@@ -301,6 +301,10 @@ public class TestCSVWriter {
 		} catch (ErrorCheckException e) {
 			file.setWritable(true);
 
+			e.getErrorInfoList().stream().forEach(s -> {
+				System.out.println(s.getErrorId() + ":" + s.getErrorMessage());
+			});
+
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00106", e.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", file.getAbsolutePath() + "の復元に失敗しました。", e.getErrorInfoList().get(0).getErrorMessage());
 
