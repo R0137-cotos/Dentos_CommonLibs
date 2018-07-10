@@ -65,10 +65,10 @@ public class CSVUtil {
 
 		// 引数チェック
 		if (Strings.isNullOrEmpty(filePath)) {
-			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "ParameterEmptyError", new String[] { "filePath" }));
+			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "ParameterEmptyError", new String[] { "filePath" }));
 		}
 		if (entityClass == null) {
-			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "ParameterEmptyError", new String[] { "entityClass" }));
+			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "ParameterEmptyError", new String[] { "entityClass" }));
 		}
 		CsvParam prm = Optional.ofNullable(param).orElse(CsvParam.builder().build());
 
@@ -109,10 +109,10 @@ public class CSVUtil {
 
 		// 引数チェック
 		if (Strings.isNullOrEmpty(filePath)) {
-			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "ParameterEmptyError", new String[] { "filePath" }));
+			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "ParameterEmptyError", new String[] { "filePath" }));
 		}
 		if (entityList == null) {
-			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "ParameterEmptyError", new String[] { "entityList" }));
+			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "ParameterEmptyError", new String[] { "entityList" }));
 		}
 		CsvParam prm = Optional.ofNullable(param).orElse(CsvParam.builder().build());
 
