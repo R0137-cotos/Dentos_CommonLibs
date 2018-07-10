@@ -62,20 +62,20 @@ public class CSVUtil {
 	 * @throws FileNotFoundException
 	 * @throws JsonProcessingException
 	 */
-	public <T> List<T> readCsvFile(String filePath, Class<T> resultClass, CsvParam param) throws ErrorCheckException {
+	public <T> List<T> readCsvFile(String filePath, Class<T> entityClass, CsvParam param) throws ErrorCheckException {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		// 引数チェック
 		if (Strings.isNullOrEmpty(filePath)) {
 			throw new ErrorCheckException(checkUtil.addErrorInfoColumnCheck(new ArrayList<ErrorInfo>(), "filePath", "NotEmptyError"));
 		}
-		if (resultClass == null) {
+		if (entityClass == null) {
 			throw new ErrorCheckException(checkUtil.addErrorInfoColumnCheck(new ArrayList<ErrorInfo>(), "entityClass", "NotEmptyError"));
 		}
 		CsvParam prm = Optional.ofNullable(param).orElse(CsvParam.builder().build());
 
 		// 各種パラメーター設定
-		CsvSchema schema = mapper.typedSchemaFor(resultClass) //
+		CsvSchema schema = mapper.typedSchemaFor(entityClass) //
 				.withUseHeader(prm.isHeader()) //
 				.withColumnSeparator(prm.getSeparator()) //
 				.withLineSeparator(prm.getLineSeparator()) //
@@ -86,7 +86,7 @@ public class CSVUtil {
 		List<T> entityList = null;
 		File inputFile = new File(filePath);
 		try {
-			it = mapper.reader(schema).forType(resultClass).readValues(new InputStreamReader(new FileInputStream(filePath), prm.getCharset()));
+			it = mapper.reader(schema).forType(entityClass).readValues(new InputStreamReader(new FileInputStream(filePath), prm.getCharset()));
 			entityList = StreamSupport.stream(Spliterators.spliteratorUnknownSize(it, 0), false).collect(Collectors.toCollection(ArrayList::new));
 		} catch (JsonProcessingException | RuntimeJsonMappingException e) {
 			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "FileFormatError", new String[] { inputFile.getAbsolutePath() });
