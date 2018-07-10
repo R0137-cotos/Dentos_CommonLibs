@@ -26,7 +26,7 @@ public class CommonLibConfig {
 
 	/**
 	 * ValidationのメッセージをUTF-8で管理します。
-	 * 
+	 *
 	 * @return
 	 */
 	@Bean(name = "messageSource")
