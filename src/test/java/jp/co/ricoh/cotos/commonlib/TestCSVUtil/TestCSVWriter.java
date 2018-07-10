@@ -301,17 +301,8 @@ public class TestCSVWriter {
 		} catch (ErrorCheckException e) {
 			file.setWritable(true);
 
-			Assert.assertEquals("エラーリストの数が期待結果通りであること", 3, e.getErrorInfoList().size());
-
-			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00106", e.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", file.getAbsolutePath() + "の復元に失敗しました。", e.getErrorInfoList().get(0).getErrorMessage());
-
-			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00105", e.getErrorInfoList().get(1).getErrorId());
-			File backupFile = Files.list(Paths.get("output/output.csv").getParent()).filter(s -> !s.toString().endsWith("output.csv") && !s.toString().endsWith(".gitignore")).collect(Collectors.toList()).get(0).toFile();
-			Assert.assertEquals("エラーメッセージが正しく設定されること", backupFile.getAbsolutePath() + "の削除に失敗しました。", e.getErrorInfoList().get(1).getErrorMessage());
-
-			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00102", e.getErrorInfoList().get(2).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", file.getAbsolutePath() + "の書き込みに失敗しました。", e.getErrorInfoList().get(2).getErrorMessage());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00102", e.getErrorInfoList().get(e.getErrorInfoList().size() - 1).getErrorId());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", file.getAbsolutePath() + "の書き込みに失敗しました。", e.getErrorInfoList().get(e.getErrorInfoList().size() - 1).getErrorMessage());
 
 			List<String> actual = Files.readAllLines(Paths.get("output/output.csv"), StandardCharsets.UTF_8);
 			List<String> expected = Files.readAllLines(Paths.get("src/test/resources/csv/input_default.csv"), StandardCharsets.UTF_8);
