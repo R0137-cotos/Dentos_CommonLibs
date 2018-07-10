@@ -55,22 +55,20 @@ public class CSVUtil {
 	 * CSVファイルを読み込んでオブジェクトに展開します。
 	 *
 	 * @param filePath 読み込み元CSVファイルパス
-	 * @param resultClass 展開先エンティティクラス型
-	 * @param CSV読み込みパラメーター
-	 * @return 展開エンティティ配列
-	 * @throws IOException
-	 * @throws FileNotFoundException
-	 * @throws JsonProcessingException
+	 * @param entityClass 展開先エンティティクラス型
+	 * @param param CSV読み込みパラメーター
+	 * @return 展開先エンティティ配列
+	 * @throws ErrorCheckException
 	 */
 	public <T> List<T> readCsvFile(String filePath, Class<T> entityClass, CsvParam param) throws ErrorCheckException {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		// 引数チェック
 		if (Strings.isNullOrEmpty(filePath)) {
-			throw new ErrorCheckException(checkUtil.addErrorInfoColumnCheck(new ArrayList<ErrorInfo>(), "filePath", "NotEmptyError"));
+			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "ParameterEmptyError", new String[] { "filePath" }));
 		}
 		if (entityClass == null) {
-			throw new ErrorCheckException(checkUtil.addErrorInfoColumnCheck(new ArrayList<ErrorInfo>(), "entityClass", "NotEmptyError"));
+			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "ParameterEmptyError", new String[] { "entityClass" }));
 		}
 		CsvParam prm = Optional.ofNullable(param).orElse(CsvParam.builder().build());
 
@@ -105,19 +103,19 @@ public class CSVUtil {
 	 * CSVファイルを出力します。
 	 *
 	 * @param filePath 出力先CSVファイルパス
-	 * @param entityList 展開元エンティティ（CSVの出力項目および出力順に影響）
+	 * @param entityList 展開元エンティティ配列
 	 * @param param CSV出力パラメーター
-	 * @throws IOException
+	 * @throws ErrorCheckException
 	 */
 	public <T> void writeCsvFile(String filePath, List<T> entityList, CsvParam param) throws ErrorCheckException {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		// 引数チェック
 		if (Strings.isNullOrEmpty(filePath)) {
-			throw new ErrorCheckException(checkUtil.addErrorInfoColumnCheck(new ArrayList<ErrorInfo>(), "filePath", "NotEmptyError"));
+			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "ParameterEmptyError", new String[] { "filePath" }));
 		}
 		if (entityList == null) {
-			throw new ErrorCheckException(checkUtil.addErrorInfoColumnCheck(new ArrayList<ErrorInfo>(), "entityList", "NotEmptyError"));
+			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "ParameterEmptyError", new String[] { "entityList" }));
 		}
 		CsvParam prm = Optional.ofNullable(param).orElse(CsvParam.builder().build());
 

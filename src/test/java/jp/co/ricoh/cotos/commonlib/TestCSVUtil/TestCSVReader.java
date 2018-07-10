@@ -167,8 +167,8 @@ public class TestCSVReader {
 			Assert.fail("正常終了した");
 		} catch (ErrorCheckException e) {
 			Assert.assertTrue("結果が格納されないこと", null == list);
-			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00001", e.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "ファイルパスが未設定です。", e.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00200", e.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメーターfilePathが未設定です。", e.getErrorInfoList().get(0).getErrorMessage());
 		}
 	}
 
@@ -181,8 +181,8 @@ public class TestCSVReader {
 			Assert.fail("正常終了した");
 		} catch (ErrorCheckException e) {
 			Assert.assertTrue("結果が格納されないこと", null == list);
-			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00001", e.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "エンティティクラスが未設定です。", e.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00200", e.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメーターentityClassが未設定です。", e.getErrorInfoList().get(0).getErrorMessage());
 		}
 	}
 
@@ -195,7 +195,7 @@ public class TestCSVReader {
 			Assert.fail("正常終了した");
 		} catch (ErrorCheckException e) {
 			Assert.assertTrue("結果が格納されないこと", null == list);
-			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00011", e.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00101", e.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", (new File("src/test/resources/csv/input_default.csv")).getAbsolutePath() + "のフォーマットが不正です。", e.getErrorInfoList().get(0).getErrorMessage());
 		}
 	}
@@ -209,7 +209,7 @@ public class TestCSVReader {
 			Assert.fail("正常終了した");
 		} catch (ErrorCheckException e) {
 			Assert.assertTrue("結果が格納されないこと", null == list);
-			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00011", e.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00101", e.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", (new File("src/test/resources/csv/input_default.csv")).getAbsolutePath() + "のフォーマットが不正です。", e.getErrorInfoList().get(0).getErrorMessage());
 		}
 	}
@@ -223,7 +223,7 @@ public class TestCSVReader {
 			Assert.fail("正常終了した");
 		} catch (ErrorCheckException e) {
 			Assert.assertTrue("結果が格納されないこと", null == list);
-			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00010", e.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00100", e.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", (new File("dummy.csv")).getAbsolutePath() + "が存在しません。", e.getErrorInfoList().get(0).getErrorMessage());
 		}
 	}
