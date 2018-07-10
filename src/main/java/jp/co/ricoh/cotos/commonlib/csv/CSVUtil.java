@@ -32,6 +32,7 @@ import com.fasterxml.jackson.databind.ser.DefaultSerializerProvider;
 import com.fasterxml.jackson.dataformat.csv.CsvGenerator;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
+import com.google.common.base.Strings;
 
 import jp.co.ricoh.cotos.commonlib.entity.CsvParam;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorCheckException;
@@ -65,12 +66,12 @@ public class CSVUtil {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		// 引数チェック
-		Optional.ofNullable(filePath).orElseThrow(() -> {
+		if (Strings.isNullOrEmpty(filePath)) {
 			throw new ErrorCheckException(checkUtil.addErrorInfoColumnCheck(new ArrayList<ErrorInfo>(), "filePath", "NotEmptyError"));
-		});
-		Optional.ofNullable(resultClass).orElseThrow(() -> {
+		}
+		if (resultClass == null) {
 			throw new ErrorCheckException(checkUtil.addErrorInfoColumnCheck(new ArrayList<ErrorInfo>(), "entityClass", "NotEmptyError"));
-		});
+		}
 		CsvParam prm = Optional.ofNullable(param).orElse(CsvParam.builder().build());
 
 		// 各種パラメーター設定
@@ -112,12 +113,12 @@ public class CSVUtil {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		// 引数チェック
-		Optional.ofNullable(filePath).orElseThrow(() -> {
+		if (Strings.isNullOrEmpty(filePath)) {
 			throw new ErrorCheckException(checkUtil.addErrorInfoColumnCheck(new ArrayList<ErrorInfo>(), "filePath", "NotEmptyError"));
-		});
-		Optional.ofNullable(entityList).orElseThrow(() -> {
+		}
+		if (entityList == null) {
 			throw new ErrorCheckException(checkUtil.addErrorInfoColumnCheck(new ArrayList<ErrorInfo>(), "entityList", "NotEmptyError"));
-		});
+		}
 		CsvParam prm = Optional.ofNullable(param).orElse(CsvParam.builder().build());
 
 		// アペンドモード判定
