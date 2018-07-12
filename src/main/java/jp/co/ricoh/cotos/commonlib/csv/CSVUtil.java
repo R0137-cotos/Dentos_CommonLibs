@@ -2,7 +2,9 @@ package jp.co.ricoh.cotos.commonlib.csv;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -108,7 +110,7 @@ public class CSVUtil {
 			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "ParameterEmptyError", new String[] { "filePath" }));
 		}
 		File inputFile = new File(filePath);
-		if (Files.notExists(Paths.get(filePath))) {
+		if (!inputFile.exists()) {
 			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "FileNotFoundError", new String[] { inputFile.getAbsolutePath() }));
 		}
 		if (entityClass == null) {
@@ -127,7 +129,7 @@ public class CSVUtil {
 		MappingIterator<T> it;
 		List<T> entityList = null;
 		try {
-			it = mapper.reader(schema).forType(entityClass).readValues(new String(Files.readAllBytes(Paths.get(filePath)), prm.getCharset()));
+			it = mapper.reader(schema).forType(entityClass).readValues((new InputStreamReader(new FileInputStream(filePath), prm.getCharset())));
 			entityList = StreamSupport.stream(Spliterators.spliteratorUnknownSize(it, 0), false).collect(Collectors.toCollection(ArrayList::new));
 		} catch (JsonProcessingException | RuntimeJsonMappingException e) {
 			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "FileFormatError", new String[] { "CSVデータ" }));
