@@ -1,10 +1,8 @@
 package jp.co.ricoh.cotos.commonlib.csv;
 
 import java.io.BufferedWriter;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -83,7 +81,6 @@ public class CSVUtil {
 		List<T> entityList = null;
 		try {
 			it = mapper.reader(schema).forType(entityClass).readValues(new String(csvData.getBytes(prm.getCharset())));
-			it = mapper.reader(schema).forType(entityClass).readValues(new InputStreamReader(new ByteArrayInputStream(csvData.getBytes(prm.getCharset()))));
 			entityList = StreamSupport.stream(Spliterators.spliteratorUnknownSize(it, 0), false).collect(Collectors.toCollection(ArrayList::new));
 		} catch (JsonProcessingException | RuntimeJsonMappingException e) {
 			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "FileFormatError", new String[] { "CSVデータ" }));
