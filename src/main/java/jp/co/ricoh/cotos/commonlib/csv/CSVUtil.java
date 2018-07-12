@@ -155,7 +155,7 @@ public class CSVUtil {
 		if (Strings.isNullOrEmpty(filePath)) {
 			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "ParameterEmptyError", new String[] { "filePath" }));
 		}
-		if (entityList == null) {
+		if (entityList == null || entityList.size() == 0) {
 			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "ParameterEmptyError", new String[] { "entityList" }));
 		}
 		CsvParam prm = Optional.ofNullable(param).orElse(CsvParam.builder().build());
