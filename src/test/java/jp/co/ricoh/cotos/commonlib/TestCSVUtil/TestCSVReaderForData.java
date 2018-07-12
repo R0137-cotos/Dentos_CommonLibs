@@ -158,16 +158,30 @@ public class TestCSVReaderForData {
 	}
 
 	@Test
-	public void 異常系_CSVデータ読み込みテスト_ファイルパスにNULLを与える() throws ErrorCheckException {
+	public void 異常系_CSVデータ読み込みテスト_CSVデータにNULLを与える() throws ErrorCheckException {
 		CsvParam param = CsvParam.builder().header(false).build();
 		List<TestCSVData> list = null;
 		try {
-			list = csvUtil.readCsvFile(null, TestCSVData.class, param);
+			list = csvUtil.readCsvData(null, TestCSVData.class, param);
 			Assert.fail("正常終了した");
 		} catch (ErrorCheckException e) {
 			Assert.assertTrue("結果が格納されないこと", null == list);
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00200", e.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメーターfilePathが未設定です。", e.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメーターcsvDataが未設定です。", e.getErrorInfoList().get(0).getErrorMessage());
+		}
+	}
+
+	@Test
+	public void 異常系_CSVデータ読み込みテスト_CSVデータに空文字を与える() throws ErrorCheckException {
+		CsvParam param = CsvParam.builder().header(false).build();
+		List<TestCSVData> list = null;
+		try {
+			list = csvUtil.readCsvData("", TestCSVData.class, param);
+			Assert.fail("正常終了した");
+		} catch (ErrorCheckException e) {
+			Assert.assertTrue("結果が格納されないこと", null == list);
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00200", e.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメーターcsvDataが未設定です。", e.getErrorInfoList().get(0).getErrorMessage());
 		}
 	}
 
