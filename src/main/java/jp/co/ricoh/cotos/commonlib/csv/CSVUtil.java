@@ -129,7 +129,7 @@ public class CSVUtil {
 		MappingIterator<T> it;
 		List<T> entityList = null;
 		try {
-			it = mapper.reader(schema).forType(entityClass).readValues((new InputStreamReader(new FileInputStream(filePath), prm.getCharset())));
+			it = mapper.reader(schema).forType(entityClass).readValues(new InputStreamReader(new FileInputStream(filePath), prm.getCharset()));
 			entityList = StreamSupport.stream(Spliterators.spliteratorUnknownSize(it, 0), false).collect(Collectors.toCollection(ArrayList::new));
 		} catch (JsonProcessingException | RuntimeJsonMappingException e) {
 			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "FileFormatError", new String[] { "CSVデータ" }));
