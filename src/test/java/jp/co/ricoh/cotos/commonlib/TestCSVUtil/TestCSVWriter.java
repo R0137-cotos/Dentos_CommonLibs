@@ -282,6 +282,19 @@ public class TestCSVWriter {
 	}
 
 	@Test
+	public void 異常系_CSVファイル書き込みテスト_エンティティパラメーターにサイズゼロのリストを与える() throws ErrorCheckException, IOException, ParseException {
+		CsvParam param = CsvParam.builder().build();
+
+		try {
+			csvUtil.writeCsvFile("output/output.csv", new ArrayList<TestCSVData>(), param);
+			Assert.fail("正常終了した");
+		} catch (ErrorCheckException e) {
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00200", e.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメーターentityListが未設定です。", e.getErrorInfoList().get(0).getErrorMessage());
+		}
+	}
+
+	@Test
 	public void 異常系_CSVファイル書き込みテスト_読み取り専用ファイルにアペンドしようとする() throws ErrorCheckException, IOException, ParseException {
 		CsvParam param = CsvParam.builder().appendMode(true).build();
 
