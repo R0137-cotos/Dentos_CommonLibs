@@ -29,6 +29,7 @@ import jp.co.ricoh.cotos.commonlib.dto.parameter.FileUploadParameter;
 import jp.co.ricoh.cotos.commonlib.entity.estimation.AttachedFile;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorCheckException;
 import jp.co.ricoh.cotos.commonlib.logic.fileupdownload.FileUpDownload;
+import jp.co.ricoh.cotos.commonlib.util.AppProperties;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -40,6 +41,9 @@ public class TestFileUpDownloadFail {
 
 	@Autowired
 	FileUpDownload fileUpDownload;
+
+	@Autowired
+	AppProperties appProperties;
 
 	static ConfigurableApplicationContext context;
 
@@ -136,7 +140,7 @@ public class TestFileUpDownloadFail {
 			fileUpDownload.downloadFile(10L);
 			Assert.fail("正常終了した");
 		} catch (ErrorCheckException e) {
-			File file = new File("C:/prj/CommonLibs/./build/testTemp/1_output_default_.txt");
+			File file = new File(appProperties.getFileProperties().getUploadFileDir() + "/1_output_default_.txt");
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00100", e.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", file.getAbsolutePath() + "が存在しません。", e.getErrorInfoList().get(0).getErrorMessage());
 		}
@@ -169,7 +173,7 @@ public class TestFileUpDownloadFail {
 			fileUpDownload.deleteFile(attachedFileIdList);
 			Assert.fail("正常終了した");
 		} catch (ErrorCheckException e) {
-			File file = new File("C:/prj/CommonLibs/./build/testTemp/1_output_default_.txt");
+			File file = new File(appProperties.getFileProperties().getUploadFileDir() + "/1_output_default_.txt");
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00100", e.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", file.getAbsolutePath() + "が存在しません。", e.getErrorInfoList().get(0).getErrorMessage());
 		}
