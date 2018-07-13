@@ -7,11 +7,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -188,14 +186,12 @@ public class FileUpDownload {
 	 * @return チェック結果
 	 */
 	private boolean existsMatchExtension(MultipartFile multipartFile) {
-		String extension = appProperties.getFileProperties().getExtension();
-		if (StringUtils.isEmpty(extension)) {
+		List<String> extensionList = appProperties.getFileProperties().getExtension();
+		if (extensionList.isEmpty()) {
 			return true;
 		}
 
 		String fileExtension = findExtension(multipartFile.getName());
-		List<String> extensionList = Arrays.asList(extension.replaceAll(" ", "").split(","));
-
 		return extensionList.stream().filter(ext -> ext.equals(fileExtension)).collect(Collectors.toList()).size() > 0;
 	}
 

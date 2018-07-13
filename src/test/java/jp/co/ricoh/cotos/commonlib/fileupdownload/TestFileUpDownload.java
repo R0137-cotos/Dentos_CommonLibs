@@ -102,7 +102,9 @@ public class TestFileUpDownload {
 		// ファイルコピー
 		String path = new File(".").getAbsoluteFile().getParent();
 		File copyFile = new File(path + "/src/test/resources/attachmentFiles/testFile1.xlsx");
-		File file = new File(appProperties.getFileProperties().getUploadFileDir() + "/1_testFile1_delete.xlsx");
+		File baseDir = new File(appProperties.getFileProperties().getUploadFileDir());
+		Files.createDirectories(baseDir.toPath());
+		File file = new File(baseDir, "1_testFile1_delete.xlsx");
 		try (OutputStream out = Files.newOutputStream(file.toPath())) {
 			StreamUtils.copy(Files.newInputStream(copyFile.toPath()), out);
 		}
@@ -135,12 +137,14 @@ public class TestFileUpDownload {
 		// ファイルコピー
 		String path = new File(".").getAbsoluteFile().getParent();
 		File copyFile1 = new File(path + "/src/test/resources/attachmentFiles/testFile1.xlsx");
-		File file1 = new File(appProperties.getFileProperties().getUploadFileDir() + "/2_testFile2_delete.txt");
+		File baseDir = new File(appProperties.getFileProperties().getUploadFileDir());
+		Files.createDirectories(baseDir.toPath());
+		File file1 = new File(baseDir, "2_testFile2_delete.txt");
 		try (OutputStream out = Files.newOutputStream(file1.toPath())) {
 			StreamUtils.copy(Files.newInputStream(copyFile1.toPath()), out);
 		}
 		File copyFile2 = new File(path + "/src/test/resources/attachmentFiles/testFile3.csv");
-		File file2 = new File(appProperties.getFileProperties().getUploadFileDir() + "/3_testFile3_delete.csv");
+		File file2 = new File(baseDir, "3_testFile3_delete.csv");
 		try (OutputStream out = Files.newOutputStream(file2.toPath())) {
 			StreamUtils.copy(Files.newInputStream(copyFile2.toPath()), out);
 		}
@@ -176,7 +180,9 @@ public class TestFileUpDownload {
 		// ファイルコピー
 		String path = new File(".").getAbsoluteFile().getParent();
 		File copyFile = new File(path + "/src/test/resources/attachmentFiles/testFile1.xlsx");
-		File file = new File(appProperties.getFileProperties().getUploadFileDir() + "/1_testFile1_copy.xlsx");
+		File baseDir = new File(appProperties.getFileProperties().getUploadFileDir());
+		Files.createDirectories(baseDir.toPath());
+		File file = new File(baseDir, "1_testFile1_copy.xlsx");
 		try (OutputStream out = Files.newOutputStream(file.toPath())) {
 			StreamUtils.copy(Files.newInputStream(copyFile.toPath()), out);
 		}
@@ -279,7 +285,9 @@ public class TestFileUpDownload {
 
 	private void アップロードディレクトリファイル削除() {
 		File dir = new File(appProperties.getFileProperties().getUploadFileDir());
-		List<File> fileList = Arrays.asList(dir.listFiles());
-		fileList.stream().forEach(file -> file.delete());
+		if (null != dir.listFiles()) {
+			List<File> fileList = Arrays.asList(dir.listFiles());
+			fileList.stream().forEach(file -> file.delete());
+		}
 	}
 }

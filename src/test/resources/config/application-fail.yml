@@ -10,4 +10,8 @@ cotos:
     uploadFileDir: ./build/testTemp
     fileMaxSize: 122
     fileNmMaxSize: 14
-    extension: xls, csv, txt, docx
+    extension:
+       - xls
+       - csv
+       - txt
+       - docx

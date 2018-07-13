@@ -1,5 +1,7 @@
 package jp.co.ricoh.cotos.commonlib.util;
 
+import java.util.List;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -27,7 +29,7 @@ public class FileProperties {
 	/**
 	 * 設定可能拡張子
 	 */
-	String extension;
+	List<String> extension;
 
 	/**
 	 * ファイル名最大サイズ
