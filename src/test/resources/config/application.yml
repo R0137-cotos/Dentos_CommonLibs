@@ -4,6 +4,11 @@ cotos:
       鍵: APIを呼ぶことが出来るアプリケーション名
       鍵2: 別のアプリケーション
     throughURIs: /dummy, /swagger-ui.html, /dummy2
+  file:
+    uploadFileDir: ./build/testTemp
+    fileMaxSize: 19166
+    fileNmMaxSize: 15
+    extension:
 spring:
   datasource:
     url: jdbc:h2:mem:example;MODE=Oracle;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
