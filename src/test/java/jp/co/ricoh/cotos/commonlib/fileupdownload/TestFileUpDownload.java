@@ -99,16 +99,7 @@ public class TestFileUpDownload {
 		テストデータ作成();
 		アップロードディレクトリファイル削除();
 
-		// ファイルコピー
-		String path = new File(".").getAbsoluteFile().getParent();
-		File copyFile = new File(path + "/src/test/resources/attachmentFiles/testFile1.xlsx");
-		File baseDir = new File(appProperties.getFileProperties().getUploadFileDir());
-		Files.createDirectories(baseDir.toPath());
-		File file = new File(baseDir, "1_testFile1_delete.xlsx");
-		try (OutputStream out = Files.newOutputStream(file.toPath())) {
-			StreamUtils.copy(Files.newInputStream(copyFile.toPath()), out);
-		}
-		Assert.assertTrue("ファイルが存在すること", file.exists());
+		File file = ファイルコピー("/src/test/resources/attachmentFiles/testFile1.xlsx", "1_testFile1_delete.xlsx");
 
 		String fileNm = "testFile2.txt";
 		String userComment = "テストコメント2";
@@ -134,22 +125,8 @@ public class TestFileUpDownload {
 		テストデータ作成();
 		アップロードディレクトリファイル削除();
 
-		// ファイルコピー
-		String path = new File(".").getAbsoluteFile().getParent();
-		File copyFile1 = new File(path + "/src/test/resources/attachmentFiles/testFile1.xlsx");
-		File baseDir = new File(appProperties.getFileProperties().getUploadFileDir());
-		Files.createDirectories(baseDir.toPath());
-		File file1 = new File(baseDir, "2_testFile2_delete.txt");
-		try (OutputStream out = Files.newOutputStream(file1.toPath())) {
-			StreamUtils.copy(Files.newInputStream(copyFile1.toPath()), out);
-		}
-		File copyFile2 = new File(path + "/src/test/resources/attachmentFiles/testFile3.csv");
-		File file2 = new File(baseDir, "3_testFile3_delete.csv");
-		try (OutputStream out = Files.newOutputStream(file2.toPath())) {
-			StreamUtils.copy(Files.newInputStream(copyFile2.toPath()), out);
-		}
-		Assert.assertTrue("ファイルが存在すること", file1.exists());
-		Assert.assertTrue("ファイルが存在すること", file2.exists());
+		File file1 = ファイルコピー("/src/test/resources/attachmentFiles/testFile1.xlsx", "2_testFile2_delete.txt");
+		File file2 = ファイルコピー("/src/test/resources/attachmentFiles/testFile3.csv", "3_testFile3_delete.csv");
 
 		String fileNm1 = "testFile3.csv";
 		String fileNm2 = "testFile4.docx";
@@ -177,16 +154,7 @@ public class TestFileUpDownload {
 		テストデータ作成();
 		アップロードディレクトリファイル削除();
 
-		// ファイルコピー
-		String path = new File(".").getAbsoluteFile().getParent();
-		File copyFile = new File(path + "/src/test/resources/attachmentFiles/testFile1.xlsx");
-		File baseDir = new File(appProperties.getFileProperties().getUploadFileDir());
-		Files.createDirectories(baseDir.toPath());
-		File file = new File(baseDir, "1_testFile1_copy.xlsx");
-		try (OutputStream out = Files.newOutputStream(file.toPath())) {
-			StreamUtils.copy(Files.newInputStream(copyFile.toPath()), out);
-		}
-		Assert.assertTrue("ファイルが存在すること", file.exists());
+		File file = ファイルコピー("/src/test/resources/attachmentFiles/testFile1.xlsx", "1_testFile1_copy.xlsx");
 
 		List<Long> attachedFileIdList = Arrays.asList(14L);
 		fileUpDownload.deleteFile(attachedFileIdList);
@@ -249,7 +217,7 @@ public class TestFileUpDownload {
 		File compareFile = new File(path + "/src/test/resources/attachmentFiles/" + compareFileNm);
 		try {
 			InputStream stream = fileUpDownload.downloadFile(attachedFileId).getBody();
-			File file = new File(appProperties.getFileProperties().getUploadFileDir() + "/" + attachedFileId + "_output." + findExtension(compareFileNm));
+			File file = new File(appProperties.getFileProperties().getUploadFileDir() + "/" + attachedFileId + "_output." + ファイル拡張子取得(compareFileNm));
 			try (OutputStream out = Files.newOutputStream(file.toPath())) {
 				StreamUtils.copy(stream, out);
 			}
@@ -273,7 +241,7 @@ public class TestFileUpDownload {
 	 *            ファイル名
 	 * @return 拡張子
 	 */
-	private String findExtension(String fileName) {
+	private String ファイル拡張子取得(String fileName) {
 		if (null != fileName) {
 			int point = fileName.lastIndexOf(".");
 			if (point != -1) {
@@ -289,5 +257,28 @@ public class TestFileUpDownload {
 			List<File> fileList = Arrays.asList(dir.listFiles());
 			fileList.stream().forEach(file -> file.delete());
 		}
+	}
+
+	/**
+	 * ファイルコピー
+	 * 
+	 * @param copyFileNm
+	 *            コピー元ファイル
+	 * @param fileNm
+	 *            ファイル名
+	 * @return ファイル
+	 * @throws Exception
+	 */
+	private File ファイルコピー(String copyFileNm, String fileNm) throws Exception {
+		String path = new File(".").getAbsoluteFile().getParent();
+		File copyFile = new File(path + copyFileNm);
+		File baseDir = new File(appProperties.getFileProperties().getUploadFileDir());
+		Files.createDirectories(baseDir.toPath());
+		File file = new File(baseDir, fileNm);
+		try (OutputStream out = Files.newOutputStream(file.toPath())) {
+			StreamUtils.copy(Files.newInputStream(copyFile.toPath()), out);
+		}
+		Assert.assertTrue("ファイルが存在すること", file.exists());
+		return file;
 	}
 }
