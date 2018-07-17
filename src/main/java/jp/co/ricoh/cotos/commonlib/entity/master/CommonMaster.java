@@ -2,6 +2,7 @@ package jp.co.ricoh.cotos.commonlib.entity.master;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,9 +27,15 @@ public class CommonMaster {
 	private long id;
 
 	/**
+	 * マスタID
+	 */
+	@Column(nullable = false)
+	private String itemId;
+
+	/**
 	 * マスタ名称
 	 */
-	private String name;
+	private String itemName;
 
 	/**
 	 * マスタ説明

@@ -8,8 +8,13 @@ import org.springframework.stereotype.Component;
 
 import jp.co.ricoh.cotos.commonlib.entity.master.CommonMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.CommonMasterDetail;
+import jp.co.ricoh.cotos.commonlib.entity.master.MomCommonMasterDetail;
+import jp.co.ricoh.cotos.commonlib.entity.master.MomCommonMasterDetail.Id;
+import jp.co.ricoh.cotos.commonlib.entity.master.MomCommonMaster;
 import jp.co.ricoh.cotos.commonlib.repository.master.CommonMasterDetailRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.CommonMasterRepository;
+import jp.co.ricoh.cotos.commonlib.repository.master.MomCommonMasterDetailRepository;
+import jp.co.ricoh.cotos.commonlib.repository.master.MomCommonMasterRepository;
 
 /**
  * 汎用マスタ取得共通クラス
@@ -21,21 +26,25 @@ public class FindCommonMaster {
 	CommonMasterRepository commonMasterRepository;
 	@Autowired
 	CommonMasterDetailRepository commonMasterDetailRepository;
+	@Autowired
+	MomCommonMasterRepository momCommonMasterRepository;
+	@Autowired
+	MomCommonMasterDetailRepository momCommonMasterDetailRepository;
 
 	/**
 	 * 汎用マスタ取得
 	 * 
-	 * @param commonMasterIdList
+	 * @param commonItemIdList
 	 *            汎用マスタIDリスト
 	 * @param isAddBlankRow
 	 *            空行追加するか
 	 * @return 汎用マスタリスト
 	 */
-	public List<CommonMaster> findCommonMaster(List<Long> commonMasterIdList, boolean isAddBlankRow) {
+	public List<CommonMaster> findCommonMaster(List<String> commonItemIdList, boolean isAddBlankRow) {
 		List<CommonMaster> list = new ArrayList<>();
 
-		commonMasterIdList.stream().forEach(id -> {
-			CommonMaster commonMaster = commonMasterRepository.findOne(id);
+		commonItemIdList.stream().forEach(itemId -> {
+			CommonMaster commonMaster = commonMasterRepository.findByItemId(itemId);
 			if (null != commonMaster) {
 				commonMaster.setCommonMasterDetailList(commonMasterDetailRepository.findByCommonMasterId(commonMaster.getId()));
 				if (isAddBlankRow && !commonMaster.getCommonMasterDetailList().isEmpty()) {
@@ -45,6 +54,40 @@ public class FindCommonMaster {
 					detailList.add(0, commonMasterDetail);
 				}
 				list.add(commonMaster);
+			}
+		});
+
+		return list;
+	}
+
+	/**
+	 * MoM汎用マスタ取得
+	 * 
+	 * @param commonItemIdList
+	 *            汎用マスタIDリスト
+	 * @param isAddBlankRow
+	 *            空行追加するか
+	 * @return 汎用マスタリスト
+	 */
+	public List<MomCommonMaster> findMomCommonMaster(List<String> commonItemIdList, boolean isAddBlankRow) {
+		List<MomCommonMaster> list = new ArrayList<>();
+
+		commonItemIdList.stream().forEach(itemId -> {
+			MomCommonMaster momCommonMaster = momCommonMasterRepository.findByItemId(itemId);
+			if (null != momCommonMaster) {
+				momCommonMaster.setMomCommonDetailMasterList(momCommonMasterDetailRepository.findByItemId(itemId));
+				if (isAddBlankRow && !momCommonMaster.getMomCommonDetailMasterList().isEmpty()) {
+					List<MomCommonMasterDetail> detailList = momCommonMaster.getMomCommonDetailMasterList();
+					MomCommonMasterDetail momCommonMasterDetail = new MomCommonMasterDetail();
+					Id id = new Id();
+					id.setItemId(itemId);
+					id.setCdVal("-1");
+					momCommonMasterDetail.setId(id);
+					momCommonMasterDetail.setSortNumber(-1);
+					momCommonMasterDetail.setDelFlg("0");
+					detailList.add(0, momCommonMasterDetail);
+				}
+				list.add(momCommonMaster);
 			}
 		});
 

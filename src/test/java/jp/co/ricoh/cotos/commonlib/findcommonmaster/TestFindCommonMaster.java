@@ -1,6 +1,6 @@
 package jp.co.ricoh.cotos.commonlib.findcommonmaster;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -11,15 +11,17 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import jp.co.ricoh.cotos.commonlib.db.DBUtil;
 import jp.co.ricoh.cotos.commonlib.entity.master.CommonMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.MomCommonMaster;
 import jp.co.ricoh.cotos.commonlib.logic.findcommonmaster.FindCommonMaster;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class TestFindCommonMaster {
 
 	@Autowired
@@ -49,9 +51,8 @@ public class TestFindCommonMaster {
 
 		汎用マスタデータ作成();
 
-		List<Long> commonMasterIdList = new ArrayList<>();
-		commonMasterIdList.add(1L);
-		List<CommonMaster> commonList = findCommonMaster.findCommonMaster(commonMasterIdList, false);
+		List<String> commonItemIdList = Arrays.asList("001");
+		List<CommonMaster> commonList = findCommonMaster.findCommonMaster(commonItemIdList, false);
 		汎用マスタ結果確認(commonList, false, false);
 	}
 
@@ -66,9 +67,8 @@ public class TestFindCommonMaster {
 
 		汎用マスタデータ作成();
 
-		List<Long> commonMasterIdList = new ArrayList<>();
-		commonMasterIdList.add(1L);
-		List<CommonMaster> commonList = findCommonMaster.findCommonMaster(commonMasterIdList, true);
+		List<String> commonItemIdList = Arrays.asList("001");
+		List<CommonMaster> commonList = findCommonMaster.findCommonMaster(commonItemIdList, true);
 		汎用マスタ結果確認(commonList, true, false);
 	}
 
@@ -83,10 +83,8 @@ public class TestFindCommonMaster {
 
 		汎用マスタデータ作成();
 
-		List<Long> commonMasterIdList = new ArrayList<>();
-		commonMasterIdList.add(1L);
-		commonMasterIdList.add(2L);
-		List<CommonMaster> commonList = findCommonMaster.findCommonMaster(commonMasterIdList, false);
+		List<String> commonItemIdList = Arrays.asList("001", "002");
+		List<CommonMaster> commonList = findCommonMaster.findCommonMaster(commonItemIdList, false);
 		汎用マスタ結果確認(commonList, false, true);
 	}
 
@@ -101,9 +99,8 @@ public class TestFindCommonMaster {
 
 		汎用マスタデータ作成();
 
-		List<Long> commonMasterIdList = new ArrayList<>();
-		commonMasterIdList.add(4L);
-		List<CommonMaster> commonList = findCommonMaster.findCommonMaster(commonMasterIdList, false);
+		List<String> commonItemIdList = Arrays.asList("004");
+		List<CommonMaster> commonList = findCommonMaster.findCommonMaster(commonItemIdList, false);
 		Assert.assertEquals("汎用マスタ取得件数が正しいこと", 0, commonList.size());
 	}
 
@@ -117,6 +114,10 @@ public class TestFindCommonMaster {
 		}
 
 		MoM汎用マスタデータ作成();
+
+		List<String> commonItemIdList = Arrays.asList("001");
+		List<MomCommonMaster> commonList = findCommonMaster.findMomCommonMaster(commonItemIdList, false);
+		MoM汎用マスタ結果確認(commonList, false, false);
 	}
 
 	@Test
@@ -129,6 +130,10 @@ public class TestFindCommonMaster {
 		}
 
 		MoM汎用マスタデータ作成();
+
+		List<String> commonItemIdList = Arrays.asList("001");
+		List<MomCommonMaster> commonList = findCommonMaster.findMomCommonMaster(commonItemIdList, true);
+		MoM汎用マスタ結果確認(commonList, true, false);
 	}
 
 	@Test
@@ -141,6 +146,26 @@ public class TestFindCommonMaster {
 		}
 
 		MoM汎用マスタデータ作成();
+
+		List<String> commonItemIdList = Arrays.asList("001", "002");
+		List<MomCommonMaster> commonList = findCommonMaster.findMomCommonMaster(commonItemIdList, false);
+		MoM汎用マスタ結果確認(commonList, false, true);
+	}
+
+	@Test
+	@Transactional
+	public void MoM汎用マスタ取得一致データなし削除データ指定() {
+
+		// h2以外ならスルー
+		if (!isH2()) {
+			return;
+		}
+
+		MoM汎用マスタデータ作成();
+
+		List<String> commonItemIdList = Arrays.asList("003");
+		List<MomCommonMaster> commonList = findCommonMaster.findMomCommonMaster(commonItemIdList, false);
+		Assert.assertEquals("MoM汎用マスタ取得件数が正しいこと", 0, commonList.size());
 	}
 
 	@Test
@@ -153,6 +178,10 @@ public class TestFindCommonMaster {
 		}
 
 		MoM汎用マスタデータ作成();
+
+		List<String> commonItemIdList = Arrays.asList("004");
+		List<MomCommonMaster> commonList = findCommonMaster.findMomCommonMaster(commonItemIdList, false);
+		Assert.assertEquals("MoM汎用マスタ取得件数が正しいこと", 0, commonList.size());
 	}
 
 	private void 汎用マスタデータ作成() {
@@ -161,13 +190,14 @@ public class TestFindCommonMaster {
 	}
 
 	private void MoM汎用マスタデータ作成() {
-
+		dbUtil.execute("sql/findcommonmaster/testMomCommonMasterInsert.sql", new HashMap<>());
+		dbUtil.execute("sql/findcommonmaster/testMomCommonMasterDetailInsert.sql", new HashMap<>());
 	}
 
 	private void 汎用マスタ結果確認(List<CommonMaster> commonList, boolean isAddBlankRow, boolean isPlural) {
 		Assert.assertEquals("汎用マスタ取得件数が正しいこと", !isPlural ? 1 : 2, commonList.size());
-		Assert.assertEquals("汎用マスタIDが正しく設定されること", 1L, commonList.get(0).getId());
-		Assert.assertEquals("汎用マスタ名称が正しく設定されること", "テストマスタ1", commonList.get(0).getName());
+		Assert.assertEquals("汎用マスタIDが正しく設定されること", "001", commonList.get(0).getItemId());
+		Assert.assertEquals("汎用マスタ名称が正しく設定されること", "テストマスタ1", commonList.get(0).getItemName());
 		Assert.assertEquals("汎用マスタ説明が正しく設定されること", "テスト1", commonList.get(0).getDescription());
 
 		int index1 = 0;
@@ -178,16 +208,40 @@ public class TestFindCommonMaster {
 			Assert.assertEquals("汎用マスタ明細取得件数が正しいこと", 3, commonList.get(0).getCommonMasterDetailList().size());
 			Assert.assertEquals("汎用マスタ明細IDが正しく設定されること", 0L, commonList.get(0).getCommonMasterDetailList().get(0).getId());
 			Assert.assertEquals("汎用マスタ明細値が正しく設定されること", null, commonList.get(0).getCommonMasterDetailList().get(0).getCode());
-			Assert.assertEquals("汎用マスタ明細表示値が正しく設定されること", null, commonList.get(0).getCommonMasterDetailList().get(0).getColumn1());
+			Assert.assertEquals("汎用マスタ明細表示値が正しく設定されること", null, commonList.get(0).getCommonMasterDetailList().get(0).getName());
 		} else {
 			Assert.assertEquals("汎用マスタ明細取得件数が正しいこと", 2, commonList.get(0).getCommonMasterDetailList().size());
 		}
 
 		Assert.assertEquals("汎用マスタ明細IDが正しく設定されること", 5L, commonList.get(0).getCommonMasterDetailList().get(index1).getId());
 		Assert.assertEquals("汎用マスタ明細値が正しく設定されること", "1", commonList.get(0).getCommonMasterDetailList().get(index1).getCode());
-		Assert.assertEquals("汎用マスタ明細表示値が正しく設定されること", "項目1", commonList.get(0).getCommonMasterDetailList().get(index1).getColumn1());
+		Assert.assertEquals("汎用マスタ明細表示値が正しく設定されること", "項目1", commonList.get(0).getCommonMasterDetailList().get(index1).getName());
 		Assert.assertEquals("汎用マスタ明細IDが正しく設定されること", 1L, commonList.get(0).getCommonMasterDetailList().get(index2).getId());
 		Assert.assertEquals("汎用マスタ明細値が正しく設定されること", "5", commonList.get(0).getCommonMasterDetailList().get(index2).getCode());
-		Assert.assertEquals("汎用マスタ明細表示値が正しく設定されること", "項目5", commonList.get(0).getCommonMasterDetailList().get(index2).getColumn1());
+		Assert.assertEquals("汎用マスタ明細表示値が正しく設定されること", "項目5", commonList.get(0).getCommonMasterDetailList().get(index2).getName());
+	}
+
+	private void MoM汎用マスタ結果確認(List<MomCommonMaster> commonList, boolean isAddBlankRow, boolean isPlural) {
+		Assert.assertEquals("汎用マスタ取得件数が正しいこと", !isPlural ? 1 : 2, commonList.size());
+		Assert.assertEquals("汎用マスタIDが正しく設定されること", "001", commonList.get(0).getItemId());
+		Assert.assertEquals("汎用マスタ名称が正しく設定されること", "MoMテストマスタ1", commonList.get(0).getItemName());
+		Assert.assertEquals("汎用マスタ説明が正しく設定されること", "MoMテスト1", commonList.get(0).getItemNote());
+
+		int index1 = 0;
+		int index2 = 1;
+		if (isAddBlankRow) {
+			index1++;
+			index2++;
+			Assert.assertEquals("汎用マスタ明細取得件数が正しいこと", 3, commonList.get(0).getMomCommonDetailMasterList().size());
+			Assert.assertEquals("汎用マスタ明細値が正しく設定されること", "-1", commonList.get(0).getMomCommonDetailMasterList().get(0).getId().getCdVal());
+			Assert.assertEquals("汎用マスタ明細表示値が正しく設定されること", null, commonList.get(0).getMomCommonDetailMasterList().get(0).getDecdVal());
+		} else {
+			Assert.assertEquals("汎用マスタ明細取得件数が正しいこと", 2, commonList.get(0).getMomCommonDetailMasterList().size());
+		}
+
+		Assert.assertEquals("汎用マスタ明細値が正しく設定されること", "03", commonList.get(0).getMomCommonDetailMasterList().get(index1).getId().getCdVal());
+		Assert.assertEquals("汎用マスタ明細表示値が正しく設定されること", "MoM項目1", commonList.get(0).getMomCommonDetailMasterList().get(index1).getDecdVal());
+		Assert.assertEquals("汎用マスタ明細値が正しく設定されること", "01", commonList.get(0).getMomCommonDetailMasterList().get(index2).getId().getCdVal());
+		Assert.assertEquals("汎用マスタ明細表示値が正しく設定されること", "MoM項目3", commonList.get(0).getMomCommonDetailMasterList().get(index2).getDecdVal());
 	}
 }

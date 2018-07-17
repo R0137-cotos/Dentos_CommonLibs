@@ -40,7 +40,13 @@ public class CommonMasterDetail {
 	/**
 	 * コード値
 	 */
+	@Column(nullable = false)
 	private String code;
+
+	/**
+	 * コード内容値
+	 */
+	private String name;
 
 	/**
 	 * 設定値1
