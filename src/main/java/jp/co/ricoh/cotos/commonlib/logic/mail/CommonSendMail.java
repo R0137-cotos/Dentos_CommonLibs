@@ -24,7 +24,7 @@ import com.github.mustachejava.MustacheFactory;
 import jp.co.ricoh.cotos.commonlib.entity.communication.SendMailHistory;
 import jp.co.ricoh.cotos.commonlib.entity.communication.SendMailHistory.ErrorContent;
 import jp.co.ricoh.cotos.commonlib.entity.master.MailTemplateMaster;
-import jp.co.ricoh.cotos.commonlib.entity.master.MailTemplateMaster.CommunicationCategory;
+import jp.co.ricoh.cotos.commonlib.entity.master.MailTemplateMaster.ProcessCategory;
 import jp.co.ricoh.cotos.commonlib.entity.master.MailTemplateMaster.ServiceCategory;
 import jp.co.ricoh.cotos.commonlib.repository.communication.SendMailHistoryRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MailTemplateMasterRepository;
@@ -52,8 +52,8 @@ public class CommonSendMail {
 	 *            CCメールアドレスリスト
 	 * @param serviceCategory
 	 *            サービスカテゴリー
-	 * @param communicationCategory
-	 *            コミュニケーションカテゴリー
+	 * @param processCategory
+	 *            処理カテゴリー
 	 * @param mailSubjectRepalceValueList
 	 *            メール件名置換リスト(最大5個まで)
 	 * @param mailTextRepalceValueList
@@ -62,8 +62,8 @@ public class CommonSendMail {
 	 *            添付ファイル
 	 * @throws MessagingException
 	 */
-	public void findMailTemplateMasterAndSendMail(ServiceCategory serviceCategory, CommunicationCategory communicationCategory, List<String> emailToList, List<String> emailCcList, List<String> mailSubjectRepalceValueList, List<String> mailTextRepalceValueList, String uploadFile) throws MessagingException {
-		MailTemplateMaster mailTemplateMaster = mailTemplateMasterRepository.findByServiceCategoryAndCommunicationCategory(serviceCategory, communicationCategory);
+	public void findMailTemplateMasterAndSendMail(ServiceCategory serviceCategory, ProcessCategory processCategory, List<String> emailToList, List<String> emailCcList, List<String> mailSubjectRepalceValueList, List<String> mailTextRepalceValueList, String uploadFile) throws MessagingException {
+		MailTemplateMaster mailTemplateMaster = mailTemplateMasterRepository.findByServiceCategoryAndProcessCategory(serviceCategory, processCategory);
 		sendMail(emailToList, emailCcList, mailTemplateMaster, mailSubjectRepalceValueList, mailTextRepalceValueList, uploadFile);
 	}
 
