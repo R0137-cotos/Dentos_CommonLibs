@@ -23,7 +23,7 @@ import jp.co.ricoh.cotos.commonlib.WithMockCustomUser;
 import jp.co.ricoh.cotos.commonlib.db.DBUtil;
 import jp.co.ricoh.cotos.commonlib.entity.communication.SendMailHistory;
 import jp.co.ricoh.cotos.commonlib.entity.communication.SendMailHistory.ErrorContent;
-import jp.co.ricoh.cotos.commonlib.entity.master.MailTemplateMaster.CommunicationCategory;
+import jp.co.ricoh.cotos.commonlib.entity.master.MailTemplateMaster.ProcessCategory;
 import jp.co.ricoh.cotos.commonlib.entity.master.MailTemplateMaster.ServiceCategory;
 import jp.co.ricoh.cotos.commonlib.logic.mail.CommonSendMail;
 import jp.co.ricoh.cotos.commonlib.repository.communication.SendMailHistoryRepository;
@@ -73,7 +73,7 @@ public class TestSendMailFail {
 		List<String> emailCcList = 送信先CCメールアドレスリスト作成();
 		List<String> mailSubjectRepalceValueList = メール件名置換リスト作成();
 		List<String> mailTextRepalceValueList = メール本文置換リスト作成();
-		commonSendMail.findMailTemplateMasterAndSendMail(ServiceCategory.見積, CommunicationCategory.承認依頼, emailToList, emailCcList, mailSubjectRepalceValueList, mailTextRepalceValueList, null);
+		commonSendMail.findMailTemplateMasterAndSendMail(ServiceCategory.見積, ProcessCategory.承認依頼, emailToList, emailCcList, mailSubjectRepalceValueList, mailTextRepalceValueList, null);
 
 		メール送信履歴確認(false);
 	}
