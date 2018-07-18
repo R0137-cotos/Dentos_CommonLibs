@@ -42,19 +42,21 @@ public class FindCommonMaster {
 	public List<CommonMaster> findCommonMaster(CommonMasterSearchParameter parameter) {
 		List<CommonMaster> list = new ArrayList<>();
 
-		parameter.getCommonItemIdList().stream().forEach(itemId -> {
-			CommonMaster commonMaster = commonMasterRepository.findByItemId(itemId);
-			if (null != commonMaster) {
-				commonMaster.setCommonMasterDetailList(commonMasterDetailRepository.findByCommonMasterId(commonMaster.getId()));
-				if (parameter.isAddBlankRowFlg() && !commonMaster.getCommonMasterDetailList().isEmpty()) {
-					List<CommonMasterDetail> detailList = commonMaster.getCommonMasterDetailList();
-					CommonMasterDetail commonMasterDetail = new CommonMasterDetail();
-					commonMasterDetail.setId(0);
-					detailList.add(0, commonMasterDetail);
+		if (null != parameter.getCommonItemIdList()) {
+			parameter.getCommonItemIdList().stream().forEach(itemId -> {
+				CommonMaster commonMaster = commonMasterRepository.findByItemId(itemId);
+				if (null != commonMaster) {
+					commonMaster.setCommonMasterDetailList(commonMasterDetailRepository.findByCommonMasterId(commonMaster.getId()));
+					if (parameter.isAddBlankRowFlg() && !commonMaster.getCommonMasterDetailList().isEmpty()) {
+						List<CommonMasterDetail> detailList = commonMaster.getCommonMasterDetailList();
+						CommonMasterDetail commonMasterDetail = new CommonMasterDetail();
+						commonMasterDetail.setId(0);
+						detailList.add(0, commonMasterDetail);
+					}
+					list.add(commonMaster);
 				}
-				list.add(commonMaster);
-			}
-		});
+			});
+		}
 
 		return list;
 	}
@@ -69,24 +71,26 @@ public class FindCommonMaster {
 	public List<MomCommonMaster> findMomCommonMaster(CommonMasterSearchParameter parameter) {
 		List<MomCommonMaster> list = new ArrayList<>();
 
-		parameter.getCommonItemIdList().stream().forEach(itemId -> {
-			MomCommonMaster momCommonMaster = momCommonMasterRepository.findByItemId(itemId);
-			if (null != momCommonMaster) {
-				momCommonMaster.setMomCommonDetailMasterList(momCommonMasterDetailRepository.findByItemId(itemId));
-				if (parameter.isAddBlankRowFlg() && !momCommonMaster.getMomCommonDetailMasterList().isEmpty()) {
-					List<MomCommonMasterDetail> detailList = momCommonMaster.getMomCommonDetailMasterList();
-					MomCommonMasterDetail momCommonMasterDetail = new MomCommonMasterDetail();
-					Id id = new Id();
-					id.setItemId(itemId);
-					id.setCdVal("-1");
-					momCommonMasterDetail.setId(id);
-					momCommonMasterDetail.setSortNumber(-1);
-					momCommonMasterDetail.setDelFlg("0");
-					detailList.add(0, momCommonMasterDetail);
+		if (null != parameter.getCommonItemIdList()) {
+			parameter.getCommonItemIdList().stream().forEach(itemId -> {
+				MomCommonMaster momCommonMaster = momCommonMasterRepository.findByItemId(itemId);
+				if (null != momCommonMaster) {
+					momCommonMaster.setMomCommonDetailMasterList(momCommonMasterDetailRepository.findByItemId(itemId));
+					if (parameter.isAddBlankRowFlg() && !momCommonMaster.getMomCommonDetailMasterList().isEmpty()) {
+						List<MomCommonMasterDetail> detailList = momCommonMaster.getMomCommonDetailMasterList();
+						MomCommonMasterDetail momCommonMasterDetail = new MomCommonMasterDetail();
+						Id id = new Id();
+						id.setItemId(itemId);
+						id.setCdVal("-1");
+						momCommonMasterDetail.setId(id);
+						momCommonMasterDetail.setSortNumber(-1);
+						momCommonMasterDetail.setDelFlg("0");
+						detailList.add(0, momCommonMasterDetail);
+					}
+					list.add(momCommonMaster);
 				}
-				list.add(momCommonMaster);
-			}
-		});
+			});
+		}
 
 		return list;
 	}
