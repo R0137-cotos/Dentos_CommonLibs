@@ -256,18 +256,18 @@ public class TestFindCommonMaster {
 			index2++;
 			Assert.assertEquals("汎用マスタ明細取得件数が正しいこと", 3, commonList.get(0).getCommonMasterDetailList().size());
 			Assert.assertEquals("汎用マスタ明細IDが正しく設定されること", 0L, commonList.get(0).getCommonMasterDetailList().get(0).getId());
-			Assert.assertEquals("汎用マスタ明細値が正しく設定されること", null, commonList.get(0).getCommonMasterDetailList().get(0).getCode());
-			Assert.assertEquals("汎用マスタ明細表示値が正しく設定されること", null, commonList.get(0).getCommonMasterDetailList().get(0).getName());
+			Assert.assertEquals("汎用マスタ明細値が正しく設定されること", null, commonList.get(0).getCommonMasterDetailList().get(0).getCdVal());
+			Assert.assertEquals("汎用マスタ明細表示値が正しく設定されること", null, commonList.get(0).getCommonMasterDetailList().get(0).getDecdVal());
 		} else {
 			Assert.assertEquals("汎用マスタ明細取得件数が正しいこと", 2, commonList.get(0).getCommonMasterDetailList().size());
 		}
 
 		Assert.assertEquals("汎用マスタ明細IDが正しく設定されること", 5L, commonList.get(0).getCommonMasterDetailList().get(index1).getId());
-		Assert.assertEquals("汎用マスタ明細値が正しく設定されること", "1", commonList.get(0).getCommonMasterDetailList().get(index1).getCode());
-		Assert.assertEquals("汎用マスタ明細表示値が正しく設定されること", "項目1", commonList.get(0).getCommonMasterDetailList().get(index1).getName());
+		Assert.assertEquals("汎用マスタ明細値が正しく設定されること", "1", commonList.get(0).getCommonMasterDetailList().get(index1).getCdVal());
+		Assert.assertEquals("汎用マスタ明細表示値が正しく設定されること", "項目1", commonList.get(0).getCommonMasterDetailList().get(index1).getDecdVal());
 		Assert.assertEquals("汎用マスタ明細IDが正しく設定されること", 1L, commonList.get(0).getCommonMasterDetailList().get(index2).getId());
-		Assert.assertEquals("汎用マスタ明細値が正しく設定されること", "5", commonList.get(0).getCommonMasterDetailList().get(index2).getCode());
-		Assert.assertEquals("汎用マスタ明細表示値が正しく設定されること", "項目5", commonList.get(0).getCommonMasterDetailList().get(index2).getName());
+		Assert.assertEquals("汎用マスタ明細値が正しく設定されること", "5", commonList.get(0).getCommonMasterDetailList().get(index2).getCdVal());
+		Assert.assertEquals("汎用マスタ明細表示値が正しく設定されること", "項目5", commonList.get(0).getCommonMasterDetailList().get(index2).getDecdVal());
 	}
 
 	private void MoM汎用マスタ結果確認(List<MomCommonMaster> commonList, boolean isAddBlankRow, boolean isPlural) {
