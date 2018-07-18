@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import jp.co.ricoh.cotos.commonlib.dto.parameter.CommonMasterSearchParameter;
 import jp.co.ricoh.cotos.commonlib.entity.master.CommonMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.CommonMasterDetail;
 import jp.co.ricoh.cotos.commonlib.entity.master.MomCommonMasterDetail;
@@ -34,20 +35,18 @@ public class FindCommonMaster {
 	/**
 	 * 汎用マスタ取得
 	 * 
-	 * @param commonItemIdList
-	 *            汎用マスタIDリスト
-	 * @param isAddBlankRow
-	 *            空行追加するか
+	 * @param parameter
+	 *            汎用マスタ取得パラメータ
 	 * @return 汎用マスタリスト
 	 */
-	public List<CommonMaster> findCommonMaster(List<String> commonItemIdList, boolean isAddBlankRow) {
+	public List<CommonMaster> findCommonMaster(CommonMasterSearchParameter parameter) {
 		List<CommonMaster> list = new ArrayList<>();
 
-		commonItemIdList.stream().forEach(itemId -> {
+		parameter.getCommonItemIdList().stream().forEach(itemId -> {
 			CommonMaster commonMaster = commonMasterRepository.findByItemId(itemId);
 			if (null != commonMaster) {
 				commonMaster.setCommonMasterDetailList(commonMasterDetailRepository.findByCommonMasterId(commonMaster.getId()));
-				if (isAddBlankRow && !commonMaster.getCommonMasterDetailList().isEmpty()) {
+				if (parameter.isAddBlankRowFlg() && !commonMaster.getCommonMasterDetailList().isEmpty()) {
 					List<CommonMasterDetail> detailList = commonMaster.getCommonMasterDetailList();
 					CommonMasterDetail commonMasterDetail = new CommonMasterDetail();
 					commonMasterDetail.setId(0);
@@ -63,20 +62,18 @@ public class FindCommonMaster {
 	/**
 	 * MoM汎用マスタ取得
 	 * 
-	 * @param commonItemIdList
-	 *            汎用マスタIDリスト
-	 * @param isAddBlankRow
-	 *            空行追加するか
-	 * @return 汎用マスタリスト
+	 * @param parameter
+	 *            汎用マスタ取得パラメータ
+	 * @return MoM汎用マスタリスト
 	 */
-	public List<MomCommonMaster> findMomCommonMaster(List<String> commonItemIdList, boolean isAddBlankRow) {
+	public List<MomCommonMaster> findMomCommonMaster(CommonMasterSearchParameter parameter) {
 		List<MomCommonMaster> list = new ArrayList<>();
 
-		commonItemIdList.stream().forEach(itemId -> {
+		parameter.getCommonItemIdList().stream().forEach(itemId -> {
 			MomCommonMaster momCommonMaster = momCommonMasterRepository.findByItemId(itemId);
 			if (null != momCommonMaster) {
 				momCommonMaster.setMomCommonDetailMasterList(momCommonMasterDetailRepository.findByItemId(itemId));
-				if (isAddBlankRow && !momCommonMaster.getMomCommonDetailMasterList().isEmpty()) {
+				if (parameter.isAddBlankRowFlg() && !momCommonMaster.getMomCommonDetailMasterList().isEmpty()) {
 					List<MomCommonMasterDetail> detailList = momCommonMaster.getMomCommonDetailMasterList();
 					MomCommonMasterDetail momCommonMasterDetail = new MomCommonMasterDetail();
 					Id id = new Id();

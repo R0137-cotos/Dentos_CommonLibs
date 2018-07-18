@@ -11,6 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -24,27 +25,32 @@ public class CommonMaster {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "common_master_seq")
 	@SequenceGenerator(name = "common_master_seq", sequenceName = "common_master_seq", allocationSize = 1)
+	@ApiModelProperty(value = "汎用マスタID", required = true, position = 1)
 	private long id;
 
 	/**
 	 * マスタID
 	 */
 	@Column(nullable = false)
+	@ApiModelProperty(value = "マスタID", required = true, position = 2, allowableValues = "range[0,255]")
 	private String itemId;
 
 	/**
 	 * マスタ名称
 	 */
+	@ApiModelProperty(value = "マスタ名称", required = false, position = 3, allowableValues = "range[0,255]")
 	private String itemName;
 
 	/**
 	 * マスタ説明
 	 */
+	@ApiModelProperty(value = "マスタ説明", required = false, position = 4, allowableValues = "range[0,255]")
 	private String description;
 
 	/**
 	 * 汎用マスタ明細リスト
 	 */
 	@OneToMany(mappedBy = "commonMaster")
+	@ApiModelProperty(value = "汎用マスタ明細", required = false, position = 5)
 	private List<CommonMasterDetail> commonMasterDetailList;
 }
