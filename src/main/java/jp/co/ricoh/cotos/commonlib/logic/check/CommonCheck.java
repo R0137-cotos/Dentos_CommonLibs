@@ -26,13 +26,15 @@ public class CommonCheck {
 
 	@Transactional
 	// 検索上限チェック
-	public void LimitSizeCheck(Map<String, Object> queryPrams, String path){
+	public void LimitSizeCheck(Map<String, Object> queryPrams, String path) {
+
 		// application.ymlより取得
 		int limitSize = searchPropaties.getLimitSize();
-		
-		if(dbUtil.loadCountFromSQLFile(path, queryPrams) >= limitSize) {
+
+		if (dbUtil.loadCountFromSQLFile(path, queryPrams) >= limitSize) {
+
 			List<ErrorInfo> errorInfoList = new ArrayList<>();
-			
+
 			// Message.propatiesにlimitSizeを代入
 			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "LimitOverSearchResult", new String[] { String.valueOf(limitSize) });
 			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "LimitOverSearchResult"));
