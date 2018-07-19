@@ -127,6 +127,21 @@ public class TestFindCommonMaster {
 
 	@Test
 	@Transactional
+	public void 汎用マスタ取得パラメータNull() {
+
+		// h2以外ならスルー
+		if (!isH2()) {
+			return;
+		}
+
+		汎用マスタデータ作成();
+
+		List<CommonMaster> commonList = findCommonMaster.findCommonMaster(null);
+		Assert.assertEquals("汎用マスタ取得件数が正しいこと", 0, commonList.size());
+	}
+
+	@Test
+	@Transactional
 	public void MoM汎用マスタ取得単一空行なし() {
 
 		// h2以外ならスルー
@@ -223,6 +238,21 @@ public class TestFindCommonMaster {
 
 		CommonMasterSearchParameter parameter = 汎用マスタ検索パラメータ作成(null, false);
 		List<MomCommonMaster> commonList = findCommonMaster.findMomCommonMaster(parameter);
+		Assert.assertEquals("汎用マスタ取得件数が正しいこと", 0, commonList.size());
+	}
+
+	@Test
+	@Transactional
+	public void MoM汎用マスタ取得パラメータNull() {
+
+		// h2以外ならスルー
+		if (!isH2()) {
+			return;
+		}
+
+		汎用マスタデータ作成();
+
+		List<MomCommonMaster> commonList = findCommonMaster.findMomCommonMaster(null);
 		Assert.assertEquals("汎用マスタ取得件数が正しいこと", 0, commonList.size());
 	}
 

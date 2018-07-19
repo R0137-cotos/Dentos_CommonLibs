@@ -42,17 +42,17 @@ public class FindCommonMaster {
 	public List<CommonMaster> findCommonMaster(CommonMasterSearchParameter parameter) {
 		List<CommonMaster> list = new ArrayList<>();
 
-		if (null != parameter.getCommonItemIdList()) {
+		if (null != parameter && null != parameter.getCommonItemIdList()) {
 			parameter.getCommonItemIdList().stream().forEach(itemId -> {
 				CommonMaster commonMaster = commonMasterRepository.findByItemId(itemId);
 				if (null != commonMaster) {
-					commonMaster.setCommonMasterDetailList(commonMasterDetailRepository.findByCommonMasterId(commonMaster.getId()));
-					if (parameter.isAddBlankRowFlg() && !commonMaster.getCommonMasterDetailList().isEmpty()) {
-						List<CommonMasterDetail> detailList = commonMaster.getCommonMasterDetailList();
+					List<CommonMasterDetail> detailList = commonMasterDetailRepository.findByCommonMasterId(commonMaster.getId());
+					if (parameter.isAddBlankRowFlg() && !detailList.isEmpty()) {
 						CommonMasterDetail commonMasterDetail = new CommonMasterDetail();
 						commonMasterDetail.setId(0);
 						detailList.add(0, commonMasterDetail);
 					}
+					commonMaster.setCommonMasterDetailList(detailList);
 					list.add(commonMaster);
 				}
 			});
@@ -71,13 +71,12 @@ public class FindCommonMaster {
 	public List<MomCommonMaster> findMomCommonMaster(CommonMasterSearchParameter parameter) {
 		List<MomCommonMaster> list = new ArrayList<>();
 
-		if (null != parameter.getCommonItemIdList()) {
+		if (null != parameter && null != parameter.getCommonItemIdList()) {
 			parameter.getCommonItemIdList().stream().forEach(itemId -> {
 				MomCommonMaster momCommonMaster = momCommonMasterRepository.findByItemId(itemId);
 				if (null != momCommonMaster) {
-					momCommonMaster.setMomCommonDetailMasterList(momCommonMasterDetailRepository.findByItemId(itemId));
-					if (parameter.isAddBlankRowFlg() && !momCommonMaster.getMomCommonDetailMasterList().isEmpty()) {
-						List<MomCommonMasterDetail> detailList = momCommonMaster.getMomCommonDetailMasterList();
+					List<MomCommonMasterDetail> detailList = momCommonMasterDetailRepository.findByItemId(itemId);
+					if (parameter.isAddBlankRowFlg() && !detailList.isEmpty()) {
 						MomCommonMasterDetail momCommonMasterDetail = new MomCommonMasterDetail();
 						Id id = new Id();
 						id.setItemId(itemId);
@@ -87,6 +86,7 @@ public class FindCommonMaster {
 						momCommonMasterDetail.setDelFlg("0");
 						detailList.add(0, momCommonMasterDetail);
 					}
+					momCommonMaster.setMomCommonDetailMasterList(detailList);
 					list.add(momCommonMaster);
 				}
 			});

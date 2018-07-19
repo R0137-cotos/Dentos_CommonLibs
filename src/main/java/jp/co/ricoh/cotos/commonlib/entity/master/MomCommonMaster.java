@@ -52,7 +52,7 @@ public class MomCommonMaster {
 	 * コード値最大桁数
 	 */
 	@ApiModelProperty(value = "コード値最大桁数", required = false, position = 5)
-	private Integer cdCalMaxlength;
+	private Integer cdValMaxlength;
 
 	/**
 	 * 削除フラグ
