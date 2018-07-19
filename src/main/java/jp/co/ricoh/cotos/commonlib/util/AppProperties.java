@@ -11,4 +11,7 @@ public class AppProperties {
 
 	@Autowired
 	FileProperties fileProperties;
+	
+	@Autowired
+	SearchPropaties searchpropaties;
 }
