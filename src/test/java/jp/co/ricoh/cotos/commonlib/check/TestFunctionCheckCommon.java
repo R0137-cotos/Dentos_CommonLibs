@@ -59,19 +59,17 @@ public class TestFunctionCheckCommon {
 		try {
 
 			functionCheckCommon.checkLimitSize(queryParams, path);
+			Assert.fail("正常終了してしまった");
 
 		} catch (ErrorCheckException e) {
 
-			if (dbUtil.loadCountFromSQLFile(path, queryParams) == searchProperties.getLimitSize() + 1) {
-				Assert.assertTrue("検索結果が検索上限を1件超過したときに正しく表示されないこと", true);
-			}
-
+			Assert.assertEquals("検索結果が検索上限を1件超過したときに正しく表示されないこと", dbUtil.loadCountFromSQLFile(path, queryParams), searchProperties.getLimitSize() + 1);
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00010", e.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "検索結果が上限数" + searchProperties.getLimitSize() + "件を超えました。さらに条件を絞って検索してください。", e.getErrorInfoList().get(0).getErrorMessage());
 		}
 
 	}
-	
+
 	@Test
 	@Transactional
 	public void 検索件数上限確認_正常() {
@@ -88,15 +86,10 @@ public class TestFunctionCheckCommon {
 		try {
 
 			functionCheckCommon.checkLimitSize(queryParams, path);
-
-			if (dbUtil.loadCountFromSQLFile(path, queryParams) == searchProperties.getLimitSize()) {
-				Assert.assertTrue("検索上限と検索結果の件数が等しいときに正しく結果が出力されること", true);
-			}
+			Assert.assertEquals("検索上限と検索結果の件数が等しいときに正しく結果が出力されること", dbUtil.loadCountFromSQLFile(path, queryParams), searchProperties.getLimitSize());
 
 		} catch (ErrorCheckException e) {
-
-			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00010", e.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "検索結果が上限数" + searchProperties.getLimitSize() + "件を超えました。さらに条件を絞って検索してください。", e.getErrorInfoList().get(0).getErrorMessage());
+			Assert.fail("正常終了してしまった");
 		}
 
 	}
