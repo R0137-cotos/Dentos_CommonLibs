@@ -8,7 +8,9 @@ cotos:
     uploadFileDir: ./build/testTemp
     fileMaxSize: 19166
     fileNmMaxSize: 15
-    extension:
+    extension: 
+  search:
+    limitSize: 5
 spring:
   datasource:
     url: jdbc:h2:mem:example;MODE=Oracle;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
