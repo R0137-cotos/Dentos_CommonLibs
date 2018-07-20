@@ -28,7 +28,7 @@ public class FunctionCheckCommon {
 	 * 検索上限チェック
 	 */
 	@Transactional
-	public void CheckLimitSize(Map<String, Object> queryParams, String path) {
+	public void checkLimitSize(Map<String, Object> queryParams, String path) {
 
 		if (dbUtil.loadCountFromSQLFile(path, queryParams) > searchProperties.getLimitSize()) {
 
