@@ -89,7 +89,7 @@ public class TestFunctionCheckCommon {
 			Assert.assertEquals("検索上限と検索結果の件数が等しいときに正しく結果が出力されること", dbUtil.loadCountFromSQLFile(path, queryParams), searchProperties.getLimitSize());
 
 		} catch (ErrorCheckException e) {
-			Assert.fail("正常終了してしまった");
+			Assert.fail("異常終了してしまった");
 		}
 
 	}
