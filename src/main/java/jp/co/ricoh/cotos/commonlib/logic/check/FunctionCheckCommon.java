@@ -12,31 +12,28 @@ import org.springframework.stereotype.Component;
 import jp.co.ricoh.cotos.commonlib.db.DBUtil;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorCheckException;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorInfo;
-import jp.co.ricoh.cotos.commonlib.util.SearchPropaties;
+import jp.co.ricoh.cotos.commonlib.util.SearchProperties;
 
 @Component
-public class CommonCheck {
+public class FunctionCheckCommon {
 
 	@Autowired
 	DBUtil dbUtil;
 	@Autowired
 	CheckUtil checkUtil;
 	@Autowired
-	SearchPropaties searchPropaties;
+	SearchProperties searchProperties;
 
+	/*
+	 * 検索上限チェック
+	 */
 	@Transactional
-	// 検索上限チェック
-	public void LimitSizeCheck(Map<String, Object> queryPrams, String path) {
+	public void CheckLimitSize(Map<String, Object> queryParams, String path) {
 
-		// application.ymlより取得
-		int limitSize = searchPropaties.getLimitSize();
+		if (dbUtil.loadCountFromSQLFile(path, queryParams) > searchProperties.getLimitSize()) {
 
-		if (dbUtil.loadCountFromSQLFile(path, queryPrams) >= limitSize) {
-
-			List<ErrorInfo> errorInfoList = new ArrayList<>();
-
-			// Message.propatiesにlimitSizeを代入
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "LimitOverSearchResult", new String[] { String.valueOf(limitSize) });
+			// Message.propertiesにlimitSizeを格納
+			List<ErrorInfo> errorInfoList = checkUtil.addErrorInfo(new ArrayList<>(), "LimitOverSearchResult", new String[] { String.valueOf(searchProperties.getLimitSize()) });
 			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "LimitOverSearchResult"));
 		}
 	}

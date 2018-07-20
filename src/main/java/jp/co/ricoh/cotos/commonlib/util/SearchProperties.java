@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 @EnableConfigurationProperties
 @ConfigurationProperties(prefix = "cotos.search")
-public class SearchPropaties {
+public class SearchProperties {
 
 	int limitSize;
 }
