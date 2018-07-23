@@ -222,7 +222,7 @@ public class TestExcelUtil {
 			excelUtil.OutputExcelReports("src/test/resources/excel/template/template.xls", entity, "output/output.xls");
 		} catch (ErrorCheckException e) {
 			// Check
-			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00108", e.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00114", e.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", (new File("output/output.xls")).getAbsolutePath() + "は既に存在します。", e.getErrorInfoList().get(0).getErrorMessage());
 		}
 	}
