@@ -27,14 +27,13 @@ public class FunctionCheckCommon {
 	/*
 	 * 検索上限チェック
 	 */
-	@Transactional
 	public void checkLimitSize(Map<String, Object> queryParams, String path) {
 
 		if (dbUtil.loadCountFromSQLFile(path, queryParams) > searchProperties.getLimitSize()) {
 
 			// Message.propertiesにlimitSizeを格納
 			List<ErrorInfo> errorInfoList = checkUtil.addErrorInfo(new ArrayList<>(), "LimitOverSearchResult", new String[] { String.valueOf(searchProperties.getLimitSize()) });
-			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "LimitOverSearchResult"));
+			throw new ErrorCheckException(errorInfoList);
 		}
 	}
 }
