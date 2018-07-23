@@ -40,7 +40,7 @@ public class MailTemplateMaster {
 		}
 	}
 
-	public enum CommunicationCategory {
+	public enum ProcessCategory {
 
 		承認依頼, 承認依頼差戻, 承認, 作業依頼, 作業依頼差戻, 作業完了, お知らせeメールアドレス登録申請完了連絡, 業務連絡, 契約業務依頼, 契約業務依頼差戻, 契約業務回答, 契約期間満了事前通知, 見積有効期限通知, サービス開始案内通知, 更新可否回答期限通知, 解約期限通知, 解約手続き漏れ防止通知, 変更結果通知, 契約自動更新通知;
 
@@ -50,7 +50,7 @@ public class MailTemplateMaster {
 		}
 
 		@JsonCreator
-		public static Enum<CommunicationCategory> fromValue(String name) {
+		public static Enum<ProcessCategory> fromValue(String name) {
 			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
 		}
 	}
@@ -85,10 +85,10 @@ public class MailTemplateMaster {
 	private ServiceCategory serviceCategory;
 
 	/**
-	 * コミュニケーションカテゴリー
+	 * 処理カテゴリー
 	 */
 	@Enumerated(EnumType.STRING)
-	private CommunicationCategory communicationCategory;
+	private ProcessCategory processCategory;
 
 	/**
 	 * 送信元メールアドレス

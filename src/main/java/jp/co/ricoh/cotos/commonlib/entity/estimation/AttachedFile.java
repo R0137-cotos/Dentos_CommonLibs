@@ -5,6 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Transient;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -29,11 +32,14 @@ public class AttachedFile extends EntityBase {
 
 	private String fileName;
 
-	private String userComment;
+	private String filePhysicsName;
 
-	private String type;
+	private String userComment;
 
 	private long fileSize;
 
 	private String contentType;
+
+	@Transient
+	private MultipartFile multipartFile;
 }
