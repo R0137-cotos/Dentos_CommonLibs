@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Optional;
+import java.util.stream.Stream;
 
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -46,10 +46,15 @@ public class TestExcelUtil {
 
 	@Before
 	public void init() throws IOException {
-		Optional.of(Paths.get("output/output.xls").toFile()).filter(s -> s.exists()).ifPresent(s -> s.setWritable(true));
-		Files.deleteIfExists(Paths.get("output/output.xls"));
-		Optional.of(Paths.get("output/output.xlsx").toFile()).filter(s -> s.exists()).ifPresent(s -> s.setWritable(true));
-		Files.deleteIfExists(Paths.get("output/output.xlsx"));
+		Files.createDirectories(Paths.get("output/"));
+		Stream.of(Paths.get("output/").toFile().listFiles()).forEach(s -> {
+			s.setWritable(true);
+			try {
+				Files.delete(s.toPath());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		});
 	}
 
 	// ============================================

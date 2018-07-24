@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -34,9 +35,19 @@ public class TestCSVWriter {
 
 	@Before
 	public void beforeProcess() throws IOException {
+		Files.createDirectories(Paths.get("output/"));
+
 		Files.deleteIfExists(Paths.get("output/dir/output.csv"));
 		Files.deleteIfExists(Paths.get("output/dir"));
-		Files.deleteIfExists(Paths.get("output/output.csv"));
+
+		Stream.of(Paths.get("output/").toFile().listFiles()).forEach(s -> {
+			s.setWritable(true);
+			try {
+				Files.delete(s.toPath());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		});
 	}
 
 	@Test
