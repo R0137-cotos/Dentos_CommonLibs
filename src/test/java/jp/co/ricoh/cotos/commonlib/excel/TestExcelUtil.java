@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Optional;
 
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -45,7 +46,9 @@ public class TestExcelUtil {
 
 	@Before
 	public void init() throws IOException {
+		Optional.of(Paths.get("output/output.xls").toFile()).filter(s -> s.exists()).ifPresent(s -> s.setWritable(true));
 		Files.deleteIfExists(Paths.get("output/output.xls"));
+		Optional.of(Paths.get("output/output.xlsx").toFile()).filter(s -> s.exists()).ifPresent(s -> s.setWritable(true));
 		Files.deleteIfExists(Paths.get("output/output.xlsx"));
 	}
 
@@ -336,6 +339,21 @@ public class TestExcelUtil {
 			// Check
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00100", e.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", (new File("dummy.xlsx")).getAbsolutePath() + "が存在しません。", e.getErrorInfoList().get(0).getErrorMessage());
+		}
+	}
+
+	@Test
+	public void 異常系_入出力エクセル帳票ファイルが読み取り専用() throws Exception {
+		// Prepare
+		Files.copy(Paths.get("src/test/resources/excel/input/input_readOnly.xlsx"), Paths.get("output/output.xlsx"));
+
+		try {
+			// Action
+			excelUtil.DeleteExcelSheet("output/output.xlsx", Arrays.asList("Sheet1", "Sheet2"));
+		} catch (ErrorCheckException e) {
+			// Check
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00107", e.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", (new File("output/output.xlsx")).getAbsolutePath() + "は読み取り専用ファイルです。", e.getErrorInfoList().get(0).getErrorMessage());
 		}
 	}
 
