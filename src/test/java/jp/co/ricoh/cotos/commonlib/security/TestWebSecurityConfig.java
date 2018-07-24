@@ -29,6 +29,9 @@ public class TestWebSecurityConfig extends WebSecurityConfigurerAdapter {
 	TestVoter testVoter;
 
 	@Autowired
+	AccessLogOutputFilter accessLogOutputFilter;
+
+	@Autowired
 	MultipleReadEnableFilter multipleReadEnableFilter;
 
 	@Override
@@ -40,15 +43,15 @@ public class TestWebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.addFilterAfter(multipleReadEnableFilter, PreAuthenticationFilter.class);
+		http.addFilterAfter(accessLogOutputFilter, PreAuthenticationFilter.class);
+		http.addFilterAfter(multipleReadEnableFilter, AccessLogOutputFilter.class);
 
 		http.csrf().disable()
 
 				// 認証処理用のフィルターを追加
 				.addFilter(preAuthenticatedProcessingFilter()).exceptionHandling().authenticationEntryPoint(new Http401AuthenticationEntryPoint("Bearer error=\"invalid_token\""))
 				// 成功・失敗処理のハンドラーを追加
-				.and().formLogin()
-				.and().logout().logoutSuccessHandler(new SimpleUrlLogoutSuccessHandler())
+				.and().formLogin().and().logout().logoutSuccessHandler(new SimpleUrlLogoutSuccessHandler())
 				// 認可処理用のインスタンスを追加
 				.and().authorizeRequests().anyRequest().authenticated().accessDecisionManager(createAccessDecisionManager())
 				// 認証情報を取得できなければ、401エラー
