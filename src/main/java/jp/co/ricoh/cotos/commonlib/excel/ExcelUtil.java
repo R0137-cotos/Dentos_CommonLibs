@@ -43,7 +43,7 @@ public class ExcelUtil {
 	 * @param entity
 	 * @param outputFilePath
 	 */
-	public <T> void OutputExcelReports(String templateFilePath, T entity, String outputFilePath) throws ErrorCheckException {
+	public <T> void outputExcelReports(String templateFilePath, T entity, String outputFilePath) throws ErrorCheckException {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		// 引数チェック
@@ -96,7 +96,7 @@ public class ExcelUtil {
 	 * @param filePath 入出力エクセル帳票ファイル
 	 * @param sheetNameList シート名配列
 	 */
-	public void DeleteExcelSheet(String filePath, List<String> sheetNameList) throws ErrorCheckException {
+	public void deleteExcelSheet(String filePath, List<String> sheetNameList) throws ErrorCheckException {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		//引数チェック
