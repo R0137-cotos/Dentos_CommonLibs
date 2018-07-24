@@ -8,11 +8,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -36,9 +33,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
-import jp.co.ricoh.cotos.commonlib.excel.seishiki.Application;
 import jp.co.ricoh.cotos.commonlib.excel.seishiki.InputEntity;
-import jp.co.ricoh.cotos.commonlib.excel.seishiki.ItemInfo;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorCheckException;
 
 @RunWith(SpringRunner.class)
@@ -54,57 +49,70 @@ public class TestExcelUtil {
 		Files.deleteIfExists(Paths.get("output/output.xlsx"));
 	}
 
+	// ============================================
+	// OutputExcelReports
+	// ============================================
 	@Test
-	public void 正常系_単一シート出力テンプレート() throws ErrorCheckException, ParseException, IOException {
-		excelUtil.OutputExcelReports("src/test/resources/excel/template/single.xls", convertYaml2List("src/test/resources/excel/entityData/single.yml"), "output/output.xls");
-	}
-
-	@Test
-	public void 正常系_複数シート出力テンプレート() throws ErrorCheckException, ParseException, IOException {
-		excelUtil.OutputExcelReports("src/test/resources/excel/template/multi.xls", convertYaml2List("src/test/resources/excel/entityData/single.yml"), "output/output.xls");
-	}
-
-	@Test
-	public void 正常系_単一および複数シート出力テンプレート() throws ErrorCheckException, ParseException, IOException {
-		excelUtil.OutputExcelReports("src/test/resources/excel/template/both.xls", convertYaml2List("src/test/resources/excel/entityData/single.yml"), "output/output.xls");
-	}
-
-	@Test
-	public void 正常系_単一および複数シート出力テンプレート2() throws ErrorCheckException, ParseException, IOException {
-		excelUtil.OutputExcelReports("src/test/resources/excel/template/single2sheet.xls", convertYaml2List("src/test/resources/excel/entityData/single.yml"), "output/output.xls");
-	}
-
-	@Test
-	public void 正常系_エクセル帳票出力およびシート削除組み合わせテスト() throws Exception {
-		// Prepare
-		TestExcelEntity entity = new TestExcelEntity();
-		entity.setSimpleData(createSimpleData());
-		entity.setPersonData(createPersonData());
-		entity.setMultiSheetPersonData(createMultiPersonData());
-		entity.setMultiSheetPersonDataSheetNames(entity.getMultiSheetPersonData().stream().map(s -> s.getSheetName()).collect(Collectors.toList()));
-
-		// Action
-		excelUtil.OutputExcelReports("src/test/resources/excel/template/template.xls", entity, "output/output.xls");
-		excelUtil.DeleteExcelSheet("output/output.xls", Arrays.asList("複数シートテンプレート", "不要シート"));
-
-		// Check
-		String resultExcelFilePath = "output/test_out/output.xls";
-		String referenceExcelFilePath = "src/test/resources/excel/reference/output.xls";
+	public void 正常系_単一シート出力テンプレート() throws Exception {
+		// XLSX形式
+		excelUtil.OutputExcelReports("src/test/resources/excel/template/single.xlsx", convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), "output/output.xlsx");
+		String resultExcelFilePath = "output/output.xlsx";
+		String referenceExcelFilePath = "src/test/resources/excel/reference/output_single.xlsx";
 		compareEXCEL(referenceExcelFilePath, resultExcelFilePath);
+
+		// XLS形式
+		excelUtil.OutputExcelReports("src/test/resources/excel/template/single.xlsx", convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), "output/output.xls");
+		String resultExcelFilePathForXls = "output/output.xls";
+		compareEXCEL(referenceExcelFilePath, resultExcelFilePathForXls);
 	}
 
 	@Test
-	public void 異常系_テンプレートファイルパスNULL() throws ParseException {
-		// Prepare
-		TestExcelEntity entity = new TestExcelEntity();
-		entity.setSimpleData(createSimpleData());
-		entity.setPersonData(createPersonData());
-		entity.setMultiSheetPersonData(createMultiPersonData());
-		entity.setMultiSheetPersonDataSheetNames(entity.getMultiSheetPersonData().stream().map(s -> s.getSheetName()).collect(Collectors.toList()));
+	public void 正常系_複数シート出力テンプレート() throws Exception {
+		// XLSX形式
+		excelUtil.OutputExcelReports("src/test/resources/excel/template/multi.xlsx", convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), "output/output.xlsx");
+		String resultExcelFilePath = "output/output.xlsx";
+		String referenceExcelFilePath = "src/test/resources/excel/reference/output_multi.xlsx";
+		compareEXCEL(referenceExcelFilePath, resultExcelFilePath);
 
+		// XLS形式
+		excelUtil.OutputExcelReports("src/test/resources/excel/template/multi.xlsx", convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), "output/output.xls");
+		String resultExcelFilePathForXls = "output/output.xls";
+		compareEXCEL(referenceExcelFilePath, resultExcelFilePathForXls);
+	}
+
+	@Test
+	public void 正常系_単一および複数シート出力テンプレート() throws Exception {
+		// XLSX形式
+		excelUtil.OutputExcelReports("src/test/resources/excel/template/both.xlsx", convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), "output/output.xlsx");
+		String resultExcelFilePath = "output/output.xlsx";
+		String referenceExcelFilePath = "src/test/resources/excel/reference/output_both.xlsx";
+		compareEXCEL(referenceExcelFilePath, resultExcelFilePath);
+
+		// XLS形式
+		excelUtil.OutputExcelReports("src/test/resources/excel/template/both.xlsx", convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), "output/output.xls");
+		String resultExcelFilePathForXls = "output/output.xls";
+		compareEXCEL(referenceExcelFilePath, resultExcelFilePathForXls);
+	}
+
+	@Test
+	public void 正常系_単数シート出力テンプレート２シート() throws Exception {
+		// XLSX形式
+		excelUtil.OutputExcelReports("src/test/resources/excel/template/single2sheet.xlsx", convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), "output/output.xlsx");
+		String resultExcelFilePath = "output/output.xlsx";
+		String referenceExcelFilePath = "src/test/resources/excel/reference/output_single2sheet.xlsx";
+		compareEXCEL(referenceExcelFilePath, resultExcelFilePath);
+
+		// XLS形式
+		excelUtil.OutputExcelReports("src/test/resources/excel/template/single2sheet.xlsx", convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), "output/output.xls");
+		String resultExcelFilePathForXls = "output/output.xls";
+		compareEXCEL(referenceExcelFilePath, resultExcelFilePathForXls);
+	}
+
+	@Test
+	public void 異常系_テンプレートファイルパスNULL() throws ParseException, JsonParseException, JsonMappingException, IOException {
 		try {
 			// Action
-			excelUtil.OutputExcelReports(null, entity, "output/output.xls");
+			excelUtil.OutputExcelReports(null, convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), "output/output.xlsx");
 		} catch (ErrorCheckException e) {
 			// Check
 			Assert.assertTrue("エクセル帳票が出力されないこと", Files.notExists(Paths.get("output/output.xls")));
@@ -114,17 +122,10 @@ public class TestExcelUtil {
 	}
 
 	@Test
-	public void 異常系_テンプレートファイルパスが空文字() throws ParseException {
-		// Prepare
-		TestExcelEntity entity = new TestExcelEntity();
-		entity.setSimpleData(createSimpleData());
-		entity.setPersonData(createPersonData());
-		entity.setMultiSheetPersonData(createMultiPersonData());
-		entity.setMultiSheetPersonDataSheetNames(entity.getMultiSheetPersonData().stream().map(s -> s.getSheetName()).collect(Collectors.toList()));
-
+	public void 異常系_テンプレートファイルパスが空文字() throws ParseException, JsonParseException, JsonMappingException, IOException {
 		try {
 			// Action
-			excelUtil.OutputExcelReports("", entity, "output/output.xls");
+			excelUtil.OutputExcelReports("", convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), "output/output.xlsx");
 		} catch (ErrorCheckException e) {
 			// Check
 			Assert.assertTrue("エクセル帳票が出力されないこと", Files.notExists(Paths.get("output/output.xls")));
@@ -137,7 +138,7 @@ public class TestExcelUtil {
 	public void 異常系_マッピング用エンティティNULL() throws ParseException {
 		try {
 			// Action
-			excelUtil.OutputExcelReports("src/test/resources/excel/template/template.xls", null, "output/output.xls");
+			excelUtil.OutputExcelReports("src/test/resources/excel/template/single.xlsx", null, "output/output.xlsx");
 		} catch (ErrorCheckException e) {
 			// Check
 			Assert.assertTrue("エクセル帳票が出力されないこと", Files.notExists(Paths.get("output/output.xls")));
@@ -147,17 +148,10 @@ public class TestExcelUtil {
 	}
 
 	@Test
-	public void 異常系_出力エクセル帳票ファイルパスNULL() throws ParseException {
-		// Prepare
-		TestExcelEntity entity = new TestExcelEntity();
-		entity.setSimpleData(createSimpleData());
-		entity.setPersonData(createPersonData());
-		entity.setMultiSheetPersonData(createMultiPersonData());
-		entity.setMultiSheetPersonDataSheetNames(entity.getMultiSheetPersonData().stream().map(s -> s.getSheetName()).collect(Collectors.toList()));
-
+	public void 異常系_出力エクセル帳票ファイルパスNULL() throws ParseException, JsonParseException, JsonMappingException, IOException {
 		try {
 			// Action
-			excelUtil.OutputExcelReports("src/test/resources/excel/template/template.xls", entity, null);
+			excelUtil.OutputExcelReports("src/test/resources/excel/template/template.xls", convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), null);
 		} catch (ErrorCheckException e) {
 			// Check
 			Assert.assertTrue("エクセル帳票が出力されないこと", Files.notExists(Paths.get("output/output.xls")));
@@ -167,17 +161,10 @@ public class TestExcelUtil {
 	}
 
 	@Test
-	public void 異常系_出力エクセル帳票ファイルパスが空文字() throws ParseException {
-		// Prepare
-		TestExcelEntity entity = new TestExcelEntity();
-		entity.setSimpleData(createSimpleData());
-		entity.setPersonData(createPersonData());
-		entity.setMultiSheetPersonData(createMultiPersonData());
-		entity.setMultiSheetPersonDataSheetNames(entity.getMultiSheetPersonData().stream().map(s -> s.getSheetName()).collect(Collectors.toList()));
-
+	public void 異常系_出力エクセル帳票ファイルパスが空文字() throws ParseException, JsonParseException, JsonMappingException, IOException {
 		try {
 			// Action
-			excelUtil.OutputExcelReports("src/test/resources/excel/template/template.xls", entity, "");
+			excelUtil.OutputExcelReports("src/test/resources/excel/template/single.xlsx", convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), "");
 		} catch (ErrorCheckException e) {
 			// Check
 			Assert.assertTrue("エクセル帳票が出力されないこと", Files.notExists(Paths.get("output/output.xls")));
@@ -187,17 +174,10 @@ public class TestExcelUtil {
 	}
 
 	@Test
-	public void 異常系_テンプレートファイルが存在しない() throws ParseException {
-		// Prepare
-		TestExcelEntity entity = new TestExcelEntity();
-		entity.setSimpleData(createSimpleData());
-		entity.setPersonData(createPersonData());
-		entity.setMultiSheetPersonData(createMultiPersonData());
-		entity.setMultiSheetPersonDataSheetNames(entity.getMultiSheetPersonData().stream().map(s -> s.getSheetName()).collect(Collectors.toList()));
-
+	public void 異常系_テンプレートファイルが存在しない() throws ParseException, JsonParseException, JsonMappingException, IOException {
 		try {
 			// Action
-			excelUtil.OutputExcelReports("dummy.xls", entity, "output/output.xls");
+			excelUtil.OutputExcelReports("dummy.xls", convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), "output/output.xlsx");
 		} catch (ErrorCheckException e) {
 			// Check
 			Assert.assertTrue("エクセル帳票が出力されないこと", Files.notExists(Paths.get("output/output.xls")));
@@ -209,17 +189,11 @@ public class TestExcelUtil {
 	@Test
 	public void 異常系_エクセル帳票ファイルが既に存在する() throws ParseException, IOException {
 		// Prepare
-		TestExcelEntity entity = new TestExcelEntity();
-		entity.setSimpleData(createSimpleData());
-		entity.setPersonData(createPersonData());
-		entity.setMultiSheetPersonData(createMultiPersonData());
-		entity.setMultiSheetPersonDataSheetNames(entity.getMultiSheetPersonData().stream().map(s -> s.getSheetName()).collect(Collectors.toList()));
-
 		Files.createFile(Paths.get("output/output.xls"));
 
 		try {
 			// Action
-			excelUtil.OutputExcelReports("src/test/resources/excel/template/template.xls", entity, "output/output.xls");
+			excelUtil.OutputExcelReports("src/test/resources/excel/template/single.xlsx", convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), "output/output.xlsx");
 		} catch (ErrorCheckException e) {
 			// Check
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00114", e.getErrorInfoList().get(0).getErrorId());
@@ -227,6 +201,9 @@ public class TestExcelUtil {
 		}
 	}
 
+	// ============================================
+	// DeleteExcelSheet
+	// ============================================
 	@Test
 	public void 正常系_存在するシートを複数削除() throws Exception {
 		// Prepare
@@ -362,71 +339,9 @@ public class TestExcelUtil {
 		}
 	}
 
-	/**
-	 * シンプルテンプレート用データ生成
-	 * @return
-	 */
-	private TestExcelSimpleData createSimpleData() {
-		TestExcelSimpleData data = new TestExcelSimpleData();
-		data.setMessage("テスト");
-		data.setNumber(11);
-		return data;
-	}
-
-	/**
-	 * 繰り返しテンプレート用データ生成
-	 * @return
-	 * @throws ParseException
-	 */
-	private TestExcelPersonData createPersonData() throws ParseException {
-		TestExcelPersonData person = new TestExcelPersonData();
-		person.setTitle("リスト");
-		List<TestExcelPersonDataRow> dataList = new ArrayList<>();
-		dataList.add(new TestExcelPersonDataRow("テスト１", 25, new SimpleDateFormat("yyyy/MM/dd").parse("2018/12/12"), 78.5));
-		dataList.add(new TestExcelPersonDataRow("テスト２", 19, new SimpleDateFormat("yyyy/MM/dd").parse("2018/05/05"), 40.2));
-		dataList.add(new TestExcelPersonDataRow("テスト３", 2, new SimpleDateFormat("yyyy/MM/dd").parse("2018/01/02"), 10.7));
-		person.setDataList(dataList);
-		return person;
-	}
-
-	/**
-	 * 複数シートテンプレート用データ生成
-	 * @return
-	 * @throws ParseException
-	 */
-	private List<TestExcelPersonData> createMultiPersonData() throws ParseException {
-		List<TestExcelPersonData> sheetList = new ArrayList<>();
-
-		TestExcelPersonData p1 = new TestExcelPersonData();
-		p1.setTitle("リスト");
-		p1.setSheetName("シート１");
-		List<TestExcelPersonDataRow> d1 = new ArrayList<>();
-		d1.add(new TestExcelPersonDataRow("テスト１", 25, new SimpleDateFormat("yyyy/MM/dd").parse("2018/12/12"), 78.5));
-		p1.setDataList(d1);
-		sheetList.add(p1);
-
-		TestExcelPersonData p2 = new TestExcelPersonData();
-		p2.setTitle("リスト");
-		p2.setSheetName("シート２");
-		List<TestExcelPersonDataRow> d2 = new ArrayList<>();
-		d2.add(new TestExcelPersonDataRow("テスト１", 25, new SimpleDateFormat("yyyy/MM/dd").parse("2018/12/12"), 78.5));
-		d2.add(new TestExcelPersonDataRow("テスト２", 19, new SimpleDateFormat("yyyy/MM/dd").parse("2018/05/05"), 40.2));
-		p2.setDataList(d2);
-		sheetList.add(p2);
-
-		TestExcelPersonData p3 = new TestExcelPersonData();
-		p3.setTitle("リスト");
-		p3.setSheetName("シート３");
-		List<TestExcelPersonDataRow> d3 = new ArrayList<>();
-		d3.add(new TestExcelPersonDataRow("テスト１", 25, new SimpleDateFormat("yyyy/MM/dd").parse("2018/12/12"), 78.5));
-		d3.add(new TestExcelPersonDataRow("テスト２", 19, new SimpleDateFormat("yyyy/MM/dd").parse("2018/05/05"), 40.2));
-		d3.add(new TestExcelPersonDataRow("テスト３", 2, new SimpleDateFormat("yyyy/MM/dd").parse("2018/01/02"), 10.7));
-		p3.setDataList(d3);
-		sheetList.add(p3);
-
-		return sheetList;
-	}
-
+	// ============================================
+	// TestUtil
+	// ============================================
 	private void compareEXCEL(String seikai, String output) throws Exception {
 		Assert.assertEquals("エクセルファイルの内容が一致すること", getExcelContentsInfo(seikai), getExcelContentsInfo(output));
 	}
@@ -467,66 +382,11 @@ public class TestExcelUtil {
 		}
 	}
 
-	private InputEntity getInputEntity() throws IOException, ParseException {
-		InputEntity entity = new InputEntity();
-
-		// 申込書（単数）の設定
-		Application app = new Application();
-		app.setTitle("COTOS商材");
-		app.setText("テキスト");
-		app.setNumber(4);
-		List<ItemInfo> itemList = new ArrayList<>();
-		itemList.add(new ItemInfo("123456", "電力", new SimpleDateFormat("yyyy/MM/dd").parse("2018/04/01"), 100, 1));
-		itemList.add(new ItemInfo("234567", "月額DB", new SimpleDateFormat("yyyy/MM/dd").parse("2018/12/01"), 1850, 2));
-		itemList.add(new ItemInfo("345678", "IFS", new SimpleDateFormat("yyyy/MM/dd").parse("2019/02/01"), 1290, 3));
-		itemList.add(new ItemInfo("456789", "WWF", new SimpleDateFormat("yyyy/MM/dd").parse("2019/04/01"), 1980, 5));
-		app.setItemList(itemList);
-		entity.setApp(app);
-
-		// 申込書（複数）の設定
-		List<Application> appList = new ArrayList<>();
-		{
-			Application app1 = new Application();
-			app1.setTitle("COTOS商材");
-			app1.setText("テキスト");
-			app1.setNumber(4);
-			List<ItemInfo> itemList1 = new ArrayList<>();
-			itemList1.add(new ItemInfo("123456", "電力", new SimpleDateFormat("yyyy/MM/dd").parse("2018/04/01"), 100, 1));
-			itemList1.add(new ItemInfo("234567", "月額DB", new SimpleDateFormat("yyyy/MM/dd").parse("2018/12/01"), 1850, 2));
-			itemList1.add(new ItemInfo("345678", "IFS", new SimpleDateFormat("yyyy/MM/dd").parse("2019/02/01"), 1290, 3));
-			itemList1.add(new ItemInfo("456789", "WWF", new SimpleDateFormat("yyyy/MM/dd").parse("2019/04/01"), 1980, 5));
-			app1.setItemList(itemList1);
-
-			Application app2 = new Application();
-			app2.setTitle("COTOS商材");
-			app2.setText("テキスト");
-			app2.setNumber(4);
-			List<ItemInfo> itemList2 = new ArrayList<>();
-			itemList2.add(new ItemInfo("123456", "電力", new SimpleDateFormat("yyyy/MM/dd").parse("2018/04/01"), 100, 1));
-			itemList2.add(new ItemInfo("234567", "月額DB", new SimpleDateFormat("yyyy/MM/dd").parse("2018/12/01"), 1850, 2));
-			itemList2.add(new ItemInfo("345678", "IFS", new SimpleDateFormat("yyyy/MM/dd").parse("2019/02/01"), 1290, 3));
-			itemList2.add(new ItemInfo("456789", "WWF", new SimpleDateFormat("yyyy/MM/dd").parse("2019/04/01"), 1980, 5));
-			app2.setItemList(itemList2);
-
-			appList.add(app1);
-			appList.add(app2);
-		}
-		entity.setAppList(appList);
-
-		// 申込書（複数）のシート名設定
-		entity.setAppTitleList(entity.getAppList().stream().map(s -> s.getTitle()).collect(Collectors.toList()));
-
-		convertList2YamlFile("single.yml", entity);
-		InputEntity ent = convertYaml2List("single.yml");
-
-		return entity;
-	}
-
-	private InputEntity convertYaml2List(String filePath) throws JsonParseException, JsonMappingException, IOException {
+	private InputEntity convertYaml2Entity(String filePath) throws JsonParseException, JsonMappingException, IOException {
 		return new ObjectMapper(new YAMLFactory()).readValue(Files.newInputStream(Paths.get(filePath)), InputEntity.class);
 	}
 
-	private void convertList2YamlFile(String filePath, InputEntity entity) throws IOException {
+	private void convertEntity2YamlFile(String filePath, InputEntity entity) throws IOException {
 		String str = new ObjectMapper(new YAMLFactory()).writeValueAsString(entity);
 		Files.write(Paths.get(filePath), str.getBytes(StandardCharsets.UTF_8));
 	}
