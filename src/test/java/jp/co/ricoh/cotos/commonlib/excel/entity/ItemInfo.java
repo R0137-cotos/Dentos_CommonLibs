@@ -1,4 +1,4 @@
-package jp.co.ricoh.cotos.commonlib.excel.seishiki;
+package jp.co.ricoh.cotos.commonlib.excel.entity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

@@ -34,7 +34,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
-import jp.co.ricoh.cotos.commonlib.excel.seishiki.InputEntity;
+import jp.co.ricoh.cotos.commonlib.excel.entity.InputEntity;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorCheckException;
 
 @RunWith(SpringRunner.class)
