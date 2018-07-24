@@ -78,12 +78,7 @@ public class CotosLogTests {
 			rest.setInterceptors(Stream.concat(rest.getInterceptors().stream(), Arrays.asList(new ClientHttpRequestInterceptor() {
 				@Override
 				public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
-					System.out.println("initRest Start");
-					System.out.println(request.getURI());
-					System.out.println(request.getMethod());
 					request.getHeaders().add("Authentication", "Bearer " + new URLEncoder().encode(header, Charset.forName("UTF-8")));
-					System.out.println(request.getHeaders());
-					System.out.println("initRest End");
 					return execution.execute(request, body);
 				}
 			}).stream()).collect(Collectors.toList()));

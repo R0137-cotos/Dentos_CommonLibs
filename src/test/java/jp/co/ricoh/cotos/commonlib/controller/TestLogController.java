@@ -11,11 +11,8 @@ import lombok.Data;
 @RequestMapping("/test/api")
 public class TestLogController {
 
-	private String swaggerBody = "swagger";
-
 	@RequestMapping(method = RequestMethod.GET, path = "/log")
 	public String get() {
-
 		return "test";
 	}
 }
