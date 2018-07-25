@@ -46,8 +46,8 @@ public class TestExcelUtil {
 
 	@Before
 	public void init() throws IOException {
-		Files.createDirectories(Paths.get("output/"));
-		Stream.of(Paths.get("output/").toFile().listFiles()).forEach(s -> {
+		Files.createDirectories(Paths.get("outputExcel/"));
+		Stream.of(Paths.get("outputExcel/").toFile().listFiles()).forEach(s -> {
 			s.setWritable(true);
 			try {
 				Files.delete(s.toPath());
@@ -63,56 +63,56 @@ public class TestExcelUtil {
 	@Test
 	public void 正常系_単一シート出力テンプレート() throws Exception {
 		// XLSX形式
-		excelUtil.outputExcelReports("src/test/resources/excel/template/single.xlsx", convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), "output/output.xlsx");
-		String resultExcelFilePath = "output/output.xlsx";
+		excelUtil.outputExcelReports("src/test/resources/excel/template/single.xlsx", convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), "outputExcel/output.xlsx");
+		String resultExcelFilePath = "outputExcel/output.xlsx";
 		String referenceExcelFilePath = "src/test/resources/excel/reference/output_single.xlsx";
 		compareEXCEL(referenceExcelFilePath, resultExcelFilePath);
 
 		// XLS形式
-		excelUtil.outputExcelReports("src/test/resources/excel/template/single.xlsx", convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), "output/output.xls");
-		String resultExcelFilePathForXls = "output/output.xls";
+		excelUtil.outputExcelReports("src/test/resources/excel/template/single.xlsx", convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), "outputExcel/output.xls");
+		String resultExcelFilePathForXls = "outputExcel/output.xls";
 		compareEXCEL(referenceExcelFilePath, resultExcelFilePathForXls);
 	}
 
 	@Test
 	public void 正常系_複数シート出力テンプレート() throws Exception {
 		// XLSX形式
-		excelUtil.outputExcelReports("src/test/resources/excel/template/multi.xlsx", convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), "output/output.xlsx");
-		String resultExcelFilePath = "output/output.xlsx";
+		excelUtil.outputExcelReports("src/test/resources/excel/template/multi.xlsx", convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), "outputExcel/output.xlsx");
+		String resultExcelFilePath = "outputExcel/output.xlsx";
 		String referenceExcelFilePath = "src/test/resources/excel/reference/output_multi.xlsx";
 		compareEXCEL(referenceExcelFilePath, resultExcelFilePath);
 
 		// XLS形式
-		excelUtil.outputExcelReports("src/test/resources/excel/template/multi.xlsx", convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), "output/output.xls");
-		String resultExcelFilePathForXls = "output/output.xls";
+		excelUtil.outputExcelReports("src/test/resources/excel/template/multi.xlsx", convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), "outputExcel/output.xls");
+		String resultExcelFilePathForXls = "outputExcel/output.xls";
 		compareEXCEL(referenceExcelFilePath, resultExcelFilePathForXls);
 	}
 
 	@Test
 	public void 正常系_単一および複数シート出力テンプレート() throws Exception {
 		// XLSX形式
-		excelUtil.outputExcelReports("src/test/resources/excel/template/both.xlsx", convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), "output/output.xlsx");
-		String resultExcelFilePath = "output/output.xlsx";
+		excelUtil.outputExcelReports("src/test/resources/excel/template/both.xlsx", convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), "outputExcel/output.xlsx");
+		String resultExcelFilePath = "outputExcel/output.xlsx";
 		String referenceExcelFilePath = "src/test/resources/excel/reference/output_both.xlsx";
 		compareEXCEL(referenceExcelFilePath, resultExcelFilePath);
 
 		// XLS形式
-		excelUtil.outputExcelReports("src/test/resources/excel/template/both.xlsx", convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), "output/output.xls");
-		String resultExcelFilePathForXls = "output/output.xls";
+		excelUtil.outputExcelReports("src/test/resources/excel/template/both.xlsx", convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), "outputExcel/output.xls");
+		String resultExcelFilePathForXls = "outputExcel/output.xls";
 		compareEXCEL(referenceExcelFilePath, resultExcelFilePathForXls);
 	}
 
 	@Test
 	public void 正常系_単数シート出力テンプレート２シート() throws Exception {
 		// XLSX形式
-		excelUtil.outputExcelReports("src/test/resources/excel/template/single2sheet.xlsx", convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), "output/output.xlsx");
-		String resultExcelFilePath = "output/output.xlsx";
+		excelUtil.outputExcelReports("src/test/resources/excel/template/single2sheet.xlsx", convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), "outputExcel/output.xlsx");
+		String resultExcelFilePath = "outputExcel/output.xlsx";
 		String referenceExcelFilePath = "src/test/resources/excel/reference/output_single2sheet.xlsx";
 		compareEXCEL(referenceExcelFilePath, resultExcelFilePath);
 
 		// XLS形式
-		excelUtil.outputExcelReports("src/test/resources/excel/template/single2sheet.xlsx", convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), "output/output.xls");
-		String resultExcelFilePathForXls = "output/output.xls";
+		excelUtil.outputExcelReports("src/test/resources/excel/template/single2sheet.xlsx", convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), "outputExcel/output.xls");
+		String resultExcelFilePathForXls = "outputExcel/output.xls";
 		compareEXCEL(referenceExcelFilePath, resultExcelFilePathForXls);
 	}
 
@@ -120,12 +120,12 @@ public class TestExcelUtil {
 	public void 異常系_テンプレートファイルパスNULL() throws ParseException, JsonParseException, JsonMappingException, IOException {
 		try {
 			// Action
-			excelUtil.outputExcelReports(null, convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), "output/output.xlsx");
+			excelUtil.outputExcelReports(null, convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), "outputExcel/output.xlsx");
 		} catch (ErrorCheckException e) {
 			// Check
-			Assert.assertTrue("エクセル帳票が出力されないこと", Files.notExists(Paths.get("output/output.xls")));
+			Assert.assertTrue("エクセル帳票が出力されないこと", Files.notExists(Paths.get("outputExcel/output.xls")));
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00200", e.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメーターtemplateFilePathが未設定です。", e.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメーター入力テンプレートエクセルファイルパスが未設定です。", e.getErrorInfoList().get(0).getErrorMessage());
 		}
 	}
 
@@ -133,12 +133,12 @@ public class TestExcelUtil {
 	public void 異常系_テンプレートファイルパスが空文字() throws ParseException, JsonParseException, JsonMappingException, IOException {
 		try {
 			// Action
-			excelUtil.outputExcelReports("", convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), "output/output.xlsx");
+			excelUtil.outputExcelReports("", convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), "outputExcel/output.xlsx");
 		} catch (ErrorCheckException e) {
 			// Check
-			Assert.assertTrue("エクセル帳票が出力されないこと", Files.notExists(Paths.get("output/output.xls")));
+			Assert.assertTrue("エクセル帳票が出力されないこと", Files.notExists(Paths.get("outputExcel/output.xls")));
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00200", e.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメーターtemplateFilePathが未設定です。", e.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメーター入力テンプレートエクセルファイルパスが未設定です。", e.getErrorInfoList().get(0).getErrorMessage());
 		}
 	}
 
@@ -146,12 +146,12 @@ public class TestExcelUtil {
 	public void 異常系_マッピング用エンティティNULL() throws ParseException {
 		try {
 			// Action
-			excelUtil.outputExcelReports("src/test/resources/excel/template/single.xlsx", null, "output/output.xlsx");
+			excelUtil.outputExcelReports("src/test/resources/excel/template/single.xlsx", null, "outputExcel/output.xlsx");
 		} catch (ErrorCheckException e) {
 			// Check
-			Assert.assertTrue("エクセル帳票が出力されないこと", Files.notExists(Paths.get("output/output.xls")));
+			Assert.assertTrue("エクセル帳票が出力されないこと", Files.notExists(Paths.get("outputExcel/output.xls")));
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00200", e.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメーターentityが未設定です。", e.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメーターマッピング用エンティティクラスが未設定です。", e.getErrorInfoList().get(0).getErrorMessage());
 		}
 	}
 
@@ -162,9 +162,9 @@ public class TestExcelUtil {
 			excelUtil.outputExcelReports("src/test/resources/excel/template/template.xls", convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), null);
 		} catch (ErrorCheckException e) {
 			// Check
-			Assert.assertTrue("エクセル帳票が出力されないこと", Files.notExists(Paths.get("output/output.xls")));
+			Assert.assertTrue("エクセル帳票が出力されないこと", Files.notExists(Paths.get("outputExcel/output.xls")));
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00200", e.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメーターoutputFilePathが未設定です。", e.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメーター出力エクセル帳票ファイルパスが未設定です。", e.getErrorInfoList().get(0).getErrorMessage());
 		}
 	}
 
@@ -175,9 +175,9 @@ public class TestExcelUtil {
 			excelUtil.outputExcelReports("src/test/resources/excel/template/single.xlsx", convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), "");
 		} catch (ErrorCheckException e) {
 			// Check
-			Assert.assertTrue("エクセル帳票が出力されないこと", Files.notExists(Paths.get("output/output.xls")));
+			Assert.assertTrue("エクセル帳票が出力されないこと", Files.notExists(Paths.get("outputExcel/output.xls")));
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00200", e.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメーターoutputFilePathが未設定です。", e.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメーター出力エクセル帳票ファイルパスが未設定です。", e.getErrorInfoList().get(0).getErrorMessage());
 		}
 	}
 
@@ -185,10 +185,10 @@ public class TestExcelUtil {
 	public void 異常系_テンプレートファイルが存在しない() throws ParseException, JsonParseException, JsonMappingException, IOException {
 		try {
 			// Action
-			excelUtil.outputExcelReports("dummy.xls", convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), "output/output.xlsx");
+			excelUtil.outputExcelReports("dummy.xls", convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), "outputExcel/output.xlsx");
 		} catch (ErrorCheckException e) {
 			// Check
-			Assert.assertTrue("エクセル帳票が出力されないこと", Files.notExists(Paths.get("output/output.xls")));
+			Assert.assertTrue("エクセル帳票が出力されないこと", Files.notExists(Paths.get("outputExcel/output.xls")));
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00100", e.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", (new File("dummy.xls")).getAbsolutePath() + "が存在しません。", e.getErrorInfoList().get(0).getErrorMessage());
 		}
@@ -197,15 +197,15 @@ public class TestExcelUtil {
 	@Test
 	public void 異常系_エクセル帳票ファイルが既に存在する() throws ParseException, IOException {
 		// Prepare
-		Files.createFile(Paths.get("output/output.xls"));
+		Files.createFile(Paths.get("outputExcel/output.xls"));
 
 		try {
 			// Action
-			excelUtil.outputExcelReports("src/test/resources/excel/template/single.xlsx", convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), "output/output.xlsx");
+			excelUtil.outputExcelReports("src/test/resources/excel/template/single.xlsx", convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), "outputExcel/output.xlsx");
 		} catch (ErrorCheckException e) {
 			// Check
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00114", e.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", (new File("output/output.xls")).getAbsolutePath() + "は既に存在します。", e.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", (new File("outputExcel/output.xls")).getAbsolutePath() + "は既に存在します。", e.getErrorInfoList().get(0).getErrorMessage());
 		}
 	}
 
@@ -215,13 +215,13 @@ public class TestExcelUtil {
 	@Test
 	public void 正常系_存在するシートを複数削除() throws Exception {
 		// Prepare
-		Files.copy(Paths.get("src/test/resources/excel/input/input.xlsx"), Paths.get("output/output.xlsx"));
+		Files.copy(Paths.get("src/test/resources/excel/input/input.xlsx"), Paths.get("outputExcel/output.xlsx"));
 
 		// Action
-		excelUtil.deleteExcelSheet("output/output.xlsx", Arrays.asList("Sheet1", "Sheet2"));
+		excelUtil.deleteExcelSheet("outputExcel/output.xlsx", Arrays.asList("Sheet1", "Sheet2"));
 
 		// Check
-		String resultExcelFilePath = "output/output.xlsx";
+		String resultExcelFilePath = "outputExcel/output.xlsx";
 		String referenceExcelFilePath = "src/test/resources/excel/reference/output_delete1and2.xlsx";
 		compareEXCEL(referenceExcelFilePath, resultExcelFilePath);
 	}
@@ -229,13 +229,13 @@ public class TestExcelUtil {
 	@Test
 	public void 正常系_存在しないシートを複数削除() throws Exception {
 		// Prepare
-		Files.copy(Paths.get("src/test/resources/excel/input/input.xlsx"), Paths.get("output/output.xlsx"));
+		Files.copy(Paths.get("src/test/resources/excel/input/input.xlsx"), Paths.get("outputExcel/output.xlsx"));
 
 		// Action
-		excelUtil.deleteExcelSheet("output/output.xlsx", Arrays.asList("Sheet4", "Sheet5"));
+		excelUtil.deleteExcelSheet("outputExcel/output.xlsx", Arrays.asList("Sheet4", "Sheet5"));
 
 		// Check
-		String resultExcelFilePath = "output/output.xlsx";
+		String resultExcelFilePath = "outputExcel/output.xlsx";
 		String referenceExcelFilePath = "src/test/resources/excel/input/input.xlsx";
 		compareEXCEL(referenceExcelFilePath, resultExcelFilePath);
 	}
@@ -243,13 +243,13 @@ public class TestExcelUtil {
 	@Test
 	public void 正常系_旧形式エクセルファイルを入力() throws Exception {
 		// Prepare
-		Files.copy(Paths.get("src/test/resources/excel/input/input.xls"), Paths.get("output/output.xls"));
+		Files.copy(Paths.get("src/test/resources/excel/input/input.xls"), Paths.get("outputExcel/output.xls"));
 
 		// Action
-		excelUtil.deleteExcelSheet("output/output.xls", Arrays.asList("Sheet1", "Sheet2"));
+		excelUtil.deleteExcelSheet("outputExcel/output.xls", Arrays.asList("Sheet1", "Sheet2"));
 
 		// Check
-		String resultExcelFilePath = "output/output.xls";
+		String resultExcelFilePath = "outputExcel/output.xls";
 		String referenceExcelFilePath = "src/test/resources/excel/reference/output_delete1and2.xlsx";
 		compareEXCEL(referenceExcelFilePath, resultExcelFilePath);
 	}
@@ -257,13 +257,13 @@ public class TestExcelUtil {
 	@Test
 	public void 正常系_存在するシートと存在しないシートを複数指定() throws Exception {
 		// Prepare
-		Files.copy(Paths.get("src/test/resources/excel/input/input.xlsx"), Paths.get("output/output.xlsx"));
+		Files.copy(Paths.get("src/test/resources/excel/input/input.xlsx"), Paths.get("outputExcel/output.xlsx"));
 
 		// Action
-		excelUtil.deleteExcelSheet("output/output.xlsx", Arrays.asList("Sheet1", "Sheet4", "Sheet2", "Sheet5"));
+		excelUtil.deleteExcelSheet("outputExcel/output.xlsx", Arrays.asList("Sheet1", "Sheet4", "Sheet2", "Sheet5"));
 
 		// Check
-		String resultExcelFilePath = "output/output.xlsx";
+		String resultExcelFilePath = "outputExcel/output.xlsx";
 		String referenceExcelFilePath = "src/test/resources/excel/reference/output_delete1and2.xlsx";
 		compareEXCEL(referenceExcelFilePath, resultExcelFilePath);
 	}
@@ -276,14 +276,14 @@ public class TestExcelUtil {
 		} catch (ErrorCheckException e) {
 			// Check
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00200", e.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメーターfilePathが未設定です。", e.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメーター入出力エクセル帳票ファイルパスが未設定です。", e.getErrorInfoList().get(0).getErrorMessage());
 		}
 	}
 
 	@Test
 	public void 異常系_入出力エクセル帳票ファイル空文字() throws Exception {
 		// Prepare
-		Files.copy(Paths.get("src/test/resources/excel/input/input.xlsx"), Paths.get("output/output.xlsx"));
+		Files.copy(Paths.get("src/test/resources/excel/input/input.xlsx"), Paths.get("outputExcel/output.xlsx"));
 
 		try {
 			// Action
@@ -291,25 +291,25 @@ public class TestExcelUtil {
 		} catch (ErrorCheckException e) {
 			// Check
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00200", e.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメーターfilePathが未設定です。", e.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメーター入出力エクセル帳票ファイルパスが未設定です。", e.getErrorInfoList().get(0).getErrorMessage());
 		}
 	}
 
 	@Test
 	public void 異常系_削除シート名配列NULL() throws Exception {
 		// Prepare
-		Files.copy(Paths.get("src/test/resources/excel/input/input.xlsx"), Paths.get("output/output.xlsx"));
+		Files.copy(Paths.get("src/test/resources/excel/input/input.xlsx"), Paths.get("outputExcel/output.xlsx"));
 
 		try {
 			// Action
-			excelUtil.deleteExcelSheet("output/output.xlsx", null);
+			excelUtil.deleteExcelSheet("outputExcel/output.xlsx", null);
 		} catch (ErrorCheckException e) {
 			// Check
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00200", e.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメーターsheetNameListが未設定です。", e.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメーター削除シート名配列が未設定です。", e.getErrorInfoList().get(0).getErrorMessage());
 
 			// ファイルが変わっていないこと
-			String resultExcelFilePath = "output/output.xlsx";
+			String resultExcelFilePath = "outputExcel/output.xlsx";
 			String referenceExcelFilePath = "src/test/resources/excel/input/input.xlsx";
 			compareEXCEL(referenceExcelFilePath, resultExcelFilePath);
 		}
@@ -318,18 +318,18 @@ public class TestExcelUtil {
 	@Test
 	public void 異常系_削除シート名配列サイズゼロ() throws Exception {
 		// Prepare
-		Files.copy(Paths.get("src/test/resources/excel/input/input.xlsx"), Paths.get("output/output.xlsx"));
+		Files.copy(Paths.get("src/test/resources/excel/input/input.xlsx"), Paths.get("outputExcel/output.xlsx"));
 
 		try {
 			// Action
-			excelUtil.deleteExcelSheet("output/output.xlsx", new ArrayList<String>());
+			excelUtil.deleteExcelSheet("outputExcel/output.xlsx", new ArrayList<String>());
 		} catch (ErrorCheckException e) {
 			// Check
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00200", e.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメーターsheetNameListが未設定です。", e.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメーター削除シート名配列が未設定です。", e.getErrorInfoList().get(0).getErrorMessage());
 
 			// ファイルが変わっていないこと
-			String resultExcelFilePath = "output/output.xlsx";
+			String resultExcelFilePath = "outputExcel/output.xlsx";
 			String referenceExcelFilePath = "src/test/resources/excel/input/input.xlsx";
 			compareEXCEL(referenceExcelFilePath, resultExcelFilePath);
 		}
@@ -350,15 +350,15 @@ public class TestExcelUtil {
 	@Test
 	public void 異常系_入出力エクセル帳票ファイルが読み取り専用() throws Exception {
 		// Prepare
-		Files.copy(Paths.get("src/test/resources/excel/input/input_readOnly.xlsx"), Paths.get("output/output.xlsx"));
+		Files.copy(Paths.get("src/test/resources/excel/input/input_readOnly.xlsx"), Paths.get("outputExcel/output.xlsx"));
 
 		try {
 			// Action
-			excelUtil.deleteExcelSheet("output/output.xlsx", Arrays.asList("Sheet1", "Sheet2"));
+			excelUtil.deleteExcelSheet("outputExcel/output.xlsx", Arrays.asList("Sheet1", "Sheet2"));
 		} catch (ErrorCheckException e) {
 			// Check
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00107", e.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", (new File("output/output.xlsx")).getAbsolutePath() + "は読み取り専用ファイルです。", e.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", (new File("outputExcel/output.xlsx")).getAbsolutePath() + "は読み取り専用ファイルです。", e.getErrorInfoList().get(0).getErrorMessage());
 		}
 	}
 
