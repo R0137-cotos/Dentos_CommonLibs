@@ -80,9 +80,9 @@ public class ExcelUtil {
 		}
 
 		// エクセル出力
-		try (InputStream in = new FileInputStream(new File(templateFilePath))) {
+		try (InputStream in = new FileInputStream(inputTemplateFile)) {
 			Files.createDirectories(outputFile.toPath().getParent());
-			try (OutputStream out = new FileOutputStream(new File(outputFilePath))) {
+			try (OutputStream out = new FileOutputStream(outputFile)) {
 				JxlsHelper.getInstance().setUseFastFormulaProcessor(false).setDeleteTemplateSheet(true).processTemplate(in, out, context);
 			}
 		} catch (FileNotFoundException e) {
