@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.ParseException;
@@ -407,10 +406,5 @@ public class TestExcelUtil {
 
 	private InputEntity convertYaml2Entity(String filePath) throws JsonParseException, JsonMappingException, IOException {
 		return new ObjectMapper(new YAMLFactory()).readValue(Files.newInputStream(Paths.get(filePath)), InputEntity.class);
-	}
-
-	private void convertEntity2YamlFile(String filePath, InputEntity entity) throws IOException {
-		String str = new ObjectMapper(new YAMLFactory()).writeValueAsString(entity);
-		Files.write(Paths.get(filePath), str.getBytes(StandardCharsets.UTF_8));
 	}
 }

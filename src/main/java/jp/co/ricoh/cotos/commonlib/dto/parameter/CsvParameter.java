@@ -1,4 +1,4 @@
-package jp.co.ricoh.cotos.commonlib.entity;
+package jp.co.ricoh.cotos.commonlib.dto.parameter;
 
 import java.nio.charset.Charset;
 
@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Builder
 @Data
-public class CsvParam {
+public class CsvParameter {
 
 	/**
 	 * ヘッダー行の有無

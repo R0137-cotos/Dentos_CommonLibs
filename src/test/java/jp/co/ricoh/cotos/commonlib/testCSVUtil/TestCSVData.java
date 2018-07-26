@@ -1,4 +1,4 @@
-package jp.co.ricoh.cotos.commonlib.TestCSVUtil;
+package jp.co.ricoh.cotos.commonlib.testCSVUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

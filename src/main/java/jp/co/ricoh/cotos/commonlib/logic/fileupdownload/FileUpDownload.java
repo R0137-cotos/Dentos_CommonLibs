@@ -83,7 +83,7 @@ public class FileUpDownload {
 			try (OutputStream out = Files.newOutputStream(uploadFile.toPath())) {
 				StreamUtils.copy(attachedFile.getMultipartFile().getInputStream(), out);
 			} catch (IOException e) {
-				throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "FileUploadFailed", new String[] { uploadFile.getAbsolutePath() }));
+				throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "FileUploadError", new String[] { uploadFile.getAbsolutePath() }));
 			}
 		});
 
@@ -92,7 +92,7 @@ public class FileUpDownload {
 
 	/**
 	 * ファイルダウンロード
-	 * 
+	 *
 	 * @param attachedFileId
 	 *            添付ファイルID
 	 * @return
@@ -121,7 +121,7 @@ public class FileUpDownload {
 		try {
 			stream = new FileInputStream(file);
 		} catch (IOException e) {
-			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "FileDownloadFailed", new String[] { file.getAbsolutePath() }));
+			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "FileDownloadError", new String[] { file.getAbsolutePath() }));
 		}
 
 		return new ResponseEntity<>(stream, header, HttpStatus.OK);
@@ -129,7 +129,7 @@ public class FileUpDownload {
 
 	/**
 	 * ファイル削除
-	 * 
+	 *
 	 * @param attachedFileIdList
 	 *            添付ファイルIDリスト
 	 * @throws ErrorCheckException
@@ -161,7 +161,7 @@ public class FileUpDownload {
 				try {
 					Files.delete(file.toPath());
 				} catch (IOException e) {
-					throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "FileDeleteFailed", new String[] { file.getAbsolutePath() }));
+					throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "FileDeleteError", new String[] { file.getAbsolutePath() }));
 				}
 			});
 		}
@@ -169,7 +169,7 @@ public class FileUpDownload {
 
 	/**
 	 * ファイルサイズが最大を超えていないか確認
-	 * 
+	 *
 	 * @param multipartFile
 	 *            ファイル情報
 	 * @return チェック結果
@@ -180,7 +180,7 @@ public class FileUpDownload {
 
 	/**
 	 * 拡張子が設定可能なものか確認
-	 * 
+	 *
 	 * @param multipartFile
 	 *            ファイル情報
 	 * @return チェック結果
@@ -197,7 +197,7 @@ public class FileUpDownload {
 
 	/**
 	 * ファイル名サイズが最大を超えていないか確認
-	 * 
+	 *
 	 * @param multipartFile
 	 *            ファイル情報
 	 * @return チェック結果
@@ -208,7 +208,7 @@ public class FileUpDownload {
 
 	/**
 	 * ファイル拡張子取得
-	 * 
+	 *
 	 * @param fileName
 	 *            ファイル名
 	 * @return 拡張子
@@ -225,7 +225,7 @@ public class FileUpDownload {
 
 	/**
 	 * 添付ファイル情報生成
-	 * 
+	 *
 	 * @param multipartFile
 	 *            ファイル情報
 	 * @param baseDir
