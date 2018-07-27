@@ -7,6 +7,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.BindingResult;
 
 import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangementDetailMakeInfo;
 import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangementWork;
@@ -121,117 +122,110 @@ public class FunctionCheckArrangement {
 	}
 
 	/**
-	 * 手配業務受付チェック処理第1弾
+	 * 手配業務受付チェック処理
 	 * 
-	 * @param arrangementWorkIdList
-	 *            手配業務IDリスト
+	 * @param arrangementWorkList
+	 *            手配業務リスト
 	 * @param operatorId
 	 *            操作者MoM社員ID
+	 * @param result
+	 *            Entityチェック結果
 	 * @throws ErrorCheckException
 	 *             エラーチェックException
 	 */
-	public void checkArrangementAcceptWorkFirst(List<Long> arrangementWorkIdList, String operatorId) throws ErrorCheckException {
+	public void checkArrangementAcceptWork(List<ArrangementWork> arrangementWorkList, String operatorId, BindingResult result) throws ErrorCheckException {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		// 手配業務情報存在チェック
-		existsArrangementWorkIdList(errorInfoList, arrangementWorkIdList);
+		existsArrangementWorkList(errorInfoList, arrangementWorkList);
 		// 操作者MoM社員存在チェック
 		existsMomEmployeeId(errorInfoList, operatorId, EmpMode.操作者);
-	}
-
-	/**
-	 * 手配業務受付チェック処理第2弾
-	 * 
-	 * @param arrangementWork
-	 *            手配業務
-	 * @throws ErrorCheckException
-	 *             エラーチェックException
-	 */
-	public void checkArrangementAcceptWorkSecond(ArrangementWork arrangementWork) throws ErrorCheckException {
-		List<ErrorInfo> errorInfoList = new ArrayList<>();
-
+		// Entityチェック
+		checkUtil.checkEntity(result);
 		// 手配業務ステータスチェック
-		if (businessCheck.existsArrangementWorkStatusMatch(arrangementWork.getArrangementWorkStatus(), ArrangementWorkStatus.受付済み) || businessCheck.existsArrangementWorkStatusMatch(arrangementWork.getArrangementWorkStatus(), ArrangementWorkStatus.対応済み)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongErrorArrangementWorkStatus", new String[] { ArrangementWorkStatus.受付済み.name() + "または" + ArrangementWorkStatus.対応済み.name() });
-			throw new ErrorCheckException(errorInfoList);
+		for (ArrangementWork arrangementWork : arrangementWorkList) {
+			if (businessCheck.existsArrangementWorkStatusMatch(arrangementWork.getArrangementWorkStatus(), ArrangementWorkStatus.受付済み) || businessCheck.existsArrangementWorkStatusMatch(arrangementWork.getArrangementWorkStatus(), ArrangementWorkStatus.対応済み)) {
+				errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongErrorArrangementWorkStatus", new String[] { ArrangementWorkStatus.受付済み.name() + "または" + ArrangementWorkStatus.対応済み.name() });
+				throw new ErrorCheckException(errorInfoList);
+			}
 		}
 	}
 
 	/**
 	 * 手配担当者設定チェック処理
 	 * 
-	 * @param arrangementWorkIdList
-	 *            手配業務IDリスト
+	 * @param arrangementWorkList
+	 *            手配業務リスト
 	 * @param employeeId
 	 *            MoM社員ID
+	 * @param result
+	 *            Entityチェック結果
 	 * @throws ErrorCheckException
 	 *             エラーチェックException
 	 */
-	public void checkArrangementAssignWorker(List<Long> arrangementWorkIdList, String employeeId) throws ErrorCheckException {
+	public void checkArrangementAssignWorker(List<ArrangementWork> arrangementWorkList, String employeeId, BindingResult result) throws ErrorCheckException {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		// 手配業務情報存在チェック
-		existsArrangementWorkIdList(errorInfoList, arrangementWorkIdList);
-		// MoM社員存在チェック
+		existsArrangementWorkList(errorInfoList, arrangementWorkList);
+		// 操作者MoM社員存在チェック
 		existsMomEmployeeId(errorInfoList, employeeId, EmpMode.パラメータ);
+		// Entityチェック
+		checkUtil.checkEntity(result);
 	}
 
 	/**
-	 * 手配不受理チェック処理第1弾
+	 * 手配不受理チェック処理
 	 * 
-	 * @param arrangementWorkIdList
-	 *            手配業務IDリスト
+	 * @param arrangementWorkList
+	 *            手配業務リスト
 	 * @param operatorId
 	 *            操作者MoM社員ID
+	 * @param result
+	 *            Entityチェック結果
 	 * @throws ErrorCheckException
 	 *             エラーチェックException
 	 */
-	public void checkArrangementRefuseWorkFirst(List<Long> arrangementWorkIdList, String operatorId) throws ErrorCheckException {
+	public void checkArrangementRefuseWork(List<ArrangementWork> arrangementWorkList, String operatorId, BindingResult result) throws ErrorCheckException {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		// 手配業務情報存在チェック
-		existsArrangementWorkIdList(errorInfoList, arrangementWorkIdList);
+		existsArrangementWorkList(errorInfoList, arrangementWorkList);
 		// 操作者MoM社員存在チェック
 		existsMomEmployeeId(errorInfoList, operatorId, EmpMode.操作者);
-	}
-
-	/**
-	 * 手配不受理チェック処理第2弾
-	 * 
-	 * @param arrangementWork
-	 *            手配業務
-	 * @throws ErrorCheckException
-	 *             エラーチェックException
-	 */
-	public void checkArrangementRefuseWorkSecond(ArrangementWork arrangementWork) throws ErrorCheckException {
-		List<ErrorInfo> errorInfoList = new ArrayList<>();
-
+		// Entityチェック
+		checkUtil.checkEntity(result);
 		// 手配業務ステータスチェック
-		if (!businessCheck.existsArrangementWorkStatusMatch(arrangementWork.getArrangementWorkStatus(), ArrangementWorkStatus.受付済み)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorArrangementWorkStatus", new String[] { ArrangementWorkStatus.受付済み.name() });
-			throw new ErrorCheckException(errorInfoList);
+		for (ArrangementWork arrangementWork : arrangementWorkList) {
+			if (!businessCheck.existsArrangementWorkStatusMatch(arrangementWork.getArrangementWorkStatus(), ArrangementWorkStatus.受付済み)) {
+				errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorArrangementWorkStatus", new String[] { ArrangementWorkStatus.受付済み.name() });
+				throw new ErrorCheckException(errorInfoList);
+			}
 		}
 	}
 
 	/**
 	 * 手配完了取消チェック処理
 	 * 
-	 * @param arrangementWorkId
-	 *            手配業務ID
+	 * @param arrangementWork
+	 *            手配業務情報
 	 * @param operatorId
 	 *            操作者MoM社員ID
+	 * @param result
+	 *            Entityチェック結果
 	 * @throws ErrorCheckException
 	 *             エラーチェックException
 	 */
-	public void checkArrangementCancelCompleteWork(Long arrangementWorkId, String operatorId) throws ErrorCheckException {
+	public void checkArrangementCancelCompleteWork(ArrangementWork arrangementWork, String operatorId, BindingResult result) throws ErrorCheckException {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		// 手配業務情報存在チェック
-		existsArrangementWorkId(errorInfoList, arrangementWorkId);
+		existsArrangementWork(errorInfoList, arrangementWork);
 		// 操作者MoM社員存在チェック
 		existsMomEmployeeId(errorInfoList, operatorId, EmpMode.操作者);
+		// Entityチェック
+		checkUtil.checkEntity(result);
 		// 手配業務ステータスチェック
-		ArrangementWork arrangementWork = arrangementWorkRepository.findOne(arrangementWorkId);
 		if (!businessCheck.existsArrangementWorkStatusMatch(arrangementWork.getArrangementWorkStatus(), ArrangementWorkStatus.対応済み)) {
 			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorArrangementWorkStatus", new String[] { ArrangementWorkStatus.対応済み.name() });
 			throw new ErrorCheckException(errorInfoList);
@@ -241,22 +235,25 @@ public class FunctionCheckArrangement {
 	/**
 	 * 手配完了チェック処理
 	 * 
-	 * @param arrangementWorkId
-	 *            手配業務ID
+	 * @param arrangementWork
+	 *            手配業務情報
 	 * @param operatorId
 	 *            操作者MoM社員ID
+	 * @param result
+	 *            Entityチェック結果
 	 * @throws ErrorCheckException
 	 *             エラーチェックException
 	 */
-	public void checkArrangementCompleteWork(Long arrangementWorkId, String operatorId) throws ErrorCheckException {
+	public void checkArrangementCompleteWork(ArrangementWork arrangementWork, String operatorId, BindingResult result) throws ErrorCheckException {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		// 手配業務情報存在チェック
-		existsArrangementWorkId(errorInfoList, arrangementWorkId);
+		existsArrangementWork(errorInfoList, arrangementWork);
 		// 操作者MoM社員存在チェック
 		existsMomEmployeeId(errorInfoList, operatorId, EmpMode.操作者);
+		// Entityチェック
+		checkUtil.checkEntity(result);
 		// 手配業務ステータスチェック
-		ArrangementWork arrangementWork = arrangementWorkRepository.findOne(arrangementWorkId);
 		if (!businessCheck.existsArrangementWorkStatusMatch(arrangementWork.getArrangementWorkStatus(), ArrangementWorkStatus.受付済み)) {
 			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorArrangementWorkStatus", new String[] { ArrangementWorkStatus.受付済み.name() });
 			throw new ErrorCheckException(errorInfoList);
@@ -274,19 +271,38 @@ public class FunctionCheckArrangement {
 	 * @throws ErrorCheckException
 	 *             エラーチェックException
 	 */
-	private void existsArrangementWorkIdList(List<ErrorInfo> errorInfoList, List<Long> arrangementWorkIdList) throws ErrorCheckException {
-		// 手配業務IDリストNullチェック
-		if (CollectionUtils.isEmpty(arrangementWorkIdList)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorArrangementWorkIdList");
+	private void existsArrangementWorkList(List<ErrorInfo> errorInfoList, List<ArrangementWork> arrangementWorkList) throws ErrorCheckException {
+		// 手配業務リストNullチェック
+		if (CollectionUtils.isEmpty(arrangementWorkList)) {
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorArrangementWorkList");
 			throw new ErrorCheckException(errorInfoList);
 		}
-		// 手配業務IDリスト項目Nullチェック
-		if (arrangementWorkIdList.contains(null)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "LackingParameterErrorArrangementWorkIdList");
+		// 手配業務リスト項目Nullチェック
+		if (arrangementWorkList.contains(null)) {
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "LackingParameterErrorArrangementWorkList");
 			throw new ErrorCheckException(errorInfoList);
 		}
 		// 手配業務ID存在チェック
-		if (!businessCheck.existsArrangementWork(arrangementWorkIdList)) {
+		for (ArrangementWork arrangementWork : arrangementWorkList) {
+			existsArrangementWork(errorInfoList, arrangementWork);
+		}
+	}
+
+	/**
+	 * 手配業務情報存在チェック
+	 * 
+	 * @param errorInfoList
+	 *            エラーリスト
+	 * @throws ErrorCheckException
+	 *             エラーチェックException
+	 */
+	private void existsArrangementWork(List<ErrorInfo> errorInfoList, ArrangementWork arrangementWork) throws ErrorCheckException {
+		if (null == arrangementWork) {
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorArrangementWork");
+			throw new ErrorCheckException(errorInfoList);
+		}
+
+		if (!dBFoundCheck.existsArrangementWork(arrangementWork.getId())) {
 			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistArrangementWork");
 			throw new ErrorCheckException(errorInfoList);
 		}
