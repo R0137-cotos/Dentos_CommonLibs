@@ -33,7 +33,7 @@ import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import com.google.common.base.Strings;
 
-import jp.co.ricoh.cotos.commonlib.entity.CsvParam;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.CsvParameter;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorCheckException;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorInfo;
 import jp.co.ricoh.cotos.commonlib.logic.check.CheckUtil;
@@ -43,7 +43,7 @@ import lombok.AllArgsConstructor;
  * CSV Reader/Writer ユーティリティー
  */
 @Component
-public class CSVUtil {
+public class CsvUtil {
 
 	CsvMapper mapper = new CsvMapper();
 
@@ -53,23 +53,23 @@ public class CSVUtil {
 	/**
 	 * CSVデータを読み込んでオブジェクトに展開します。
 	 *
-	 * @param filePath 読み込みCSVデータ
+	 * @param csvData 読み込みCSVデータ
 	 * @param entityClass 展開先エンティティクラス型
 	 * @param param CSV読み込みパラメーター
 	 * @return 展開先エンティティ配列
 	 * @throws ErrorCheckException
 	 */
-	public <T> List<T> readCsvData(String csvData, Class<T> entityClass, CsvParam param) throws ErrorCheckException {
+	public <T> List<T> readCsvData(String csvData, Class<T> entityClass, CsvParameter param) throws ErrorCheckException {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		// 引数チェック
 		if (Strings.isNullOrEmpty(csvData)) {
-			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "ParameterEmptyError", new String[] { "csvData" }));
+			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "ParameterEmptyError", new String[] { "読み込みCSVデータ" }));
 		}
 		if (entityClass == null) {
-			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "ParameterEmptyError", new String[] { "entityClass" }));
+			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "ParameterEmptyError", new String[] { "展開先エンティティクラス型" }));
 		}
-		CsvParam prm = Optional.ofNullable(param).orElse(CsvParam.builder().build());
+		CsvParameter prm = Optional.ofNullable(param).orElse(CsvParameter.builder().build());
 
 		// 各種パラメーター設定
 		CsvSchema schema = mapper.typedSchemaFor(entityClass) //
@@ -87,7 +87,7 @@ public class CSVUtil {
 		} catch (JsonProcessingException | RuntimeJsonMappingException e) {
 			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "FileFormatError", new String[] { "CSVデータ" }));
 		} catch (IOException e) {
-			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "FileReadFailed", new String[] { "CSVデータ" }));
+			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "FileReadError", new String[] { "CSVデータ" }));
 		}
 
 		return entityList;
@@ -102,21 +102,21 @@ public class CSVUtil {
 	 * @return 展開先エンティティ配列
 	 * @throws ErrorCheckException
 	 */
-	public <T> List<T> readCsvFile(String filePath, Class<T> entityClass, CsvParam param) throws ErrorCheckException {
+	public <T> List<T> readCsvFile(String filePath, Class<T> entityClass, CsvParameter param) throws ErrorCheckException {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		// 引数チェック
 		if (Strings.isNullOrEmpty(filePath)) {
-			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "ParameterEmptyError", new String[] { "filePath" }));
+			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "ParameterEmptyError", new String[] { "読み込み元CSVファイルパス" }));
 		}
 		File inputFile = new File(filePath);
 		if (!inputFile.exists()) {
 			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "FileNotFoundError", new String[] { inputFile.getAbsolutePath() }));
 		}
 		if (entityClass == null) {
-			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "ParameterEmptyError", new String[] { "entityClass" }));
+			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "ParameterEmptyError", new String[] { "展開先エンティティクラス型" }));
 		}
-		CsvParam prm = Optional.ofNullable(param).orElse(CsvParam.builder().build());
+		CsvParameter prm = Optional.ofNullable(param).orElse(CsvParameter.builder().build());
 
 		// 各種パラメーター設定
 		CsvSchema schema = mapper.typedSchemaFor(entityClass) //
@@ -134,7 +134,7 @@ public class CSVUtil {
 		} catch (JsonProcessingException | RuntimeJsonMappingException e) {
 			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "FileFormatError", new String[] { "CSVデータ" }));
 		} catch (IOException e) {
-			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "FileReadFailed", new String[] { "CSVデータ" }));
+			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "FileReadError", new String[] { "CSVデータ" }));
 		}
 
 		return entityList;
@@ -148,17 +148,17 @@ public class CSVUtil {
 	 * @param param CSV出力パラメーター
 	 * @throws ErrorCheckException
 	 */
-	public <T> void writeCsvFile(String filePath, List<T> entityList, CsvParam param) throws ErrorCheckException {
+	public <T> void writeCsvFile(String filePath, List<T> entityList, CsvParameter param) throws ErrorCheckException {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		// 引数チェック
 		if (Strings.isNullOrEmpty(filePath)) {
-			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "ParameterEmptyError", new String[] { "filePath" }));
+			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "ParameterEmptyError", new String[] { "出力先CSVファイルパス" }));
 		}
 		if (entityList == null || entityList.size() == 0) {
-			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "ParameterEmptyError", new String[] { "entityList" }));
+			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "ParameterEmptyError", new String[] { "展開元エンティティ配列" }));
 		}
-		CsvParam prm = Optional.ofNullable(param).orElse(CsvParam.builder().build());
+		CsvParameter prm = Optional.ofNullable(param).orElse(CsvParameter.builder().build());
 
 		// アペンドモード判定
 		StandardOpenOption option = Optional.of(prm.isAppendMode()).filter(s -> s == true).map(s -> StandardOpenOption.APPEND).orElse(StandardOpenOption.TRUNCATE_EXISTING);
@@ -192,7 +192,7 @@ public class CSVUtil {
 			try {
 				Files.copy(outputFile.toPath(), randomFilePathForNotDuplicate);
 			} catch (IOException e) {
-				throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "FileCopyFailed", new String[] { outputFile.getAbsolutePath() }));
+				throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "FileCopyError", new String[] { outputFile.getAbsolutePath() }));
 			}
 		}
 
@@ -208,22 +208,22 @@ public class CSVUtil {
 				try {
 					Files.copy(randomFilePathForNotDuplicate, outputFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 				} catch (IOException ex) {
-					errorInfoList = checkUtil.addErrorInfo(errorInfoList, "FileRestoreFailed", new String[] { outputFile.getAbsolutePath() });
+					errorInfoList = checkUtil.addErrorInfo(errorInfoList, "FileRestoreError", new String[] { outputFile.getAbsolutePath() });
 				}
 
 				try {
 					Files.delete(randomFilePathForNotDuplicate);
 				} catch (IOException ex) {
-					errorInfoList = checkUtil.addErrorInfo(errorInfoList, "FileDeleteFailed", new String[] { randomFilePathForNotDuplicate.toFile().getAbsolutePath() });
+					errorInfoList = checkUtil.addErrorInfo(errorInfoList, "FileDeleteError", new String[] { randomFilePathForNotDuplicate.toFile().getAbsolutePath() });
 				}
 			}
-			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "FileWriteFailed", new String[] { outputFile.getAbsolutePath() }));
+			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "FileWriteError", new String[] { outputFile.getAbsolutePath() }));
 		}
 
 		try {
 			Files.deleteIfExists(randomFilePathForNotDuplicate);
 		} catch (IOException e) {
-			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "FileDeleteFailed", new String[] { randomFilePathForNotDuplicate.toFile().getAbsolutePath() }));
+			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "FileDeleteError", new String[] { randomFilePathForNotDuplicate.toFile().getAbsolutePath() }));
 		}
 	}
 
