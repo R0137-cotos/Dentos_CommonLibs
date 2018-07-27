@@ -28,7 +28,6 @@ import org.springframework.stereotype.Component;
 import com.google.common.base.Strings;
 
 import jp.co.ricoh.cotos.commonlib.exception.ErrorCheckException;
-import jp.co.ricoh.cotos.commonlib.exception.ErrorFatalException;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorInfo;
 import jp.co.ricoh.cotos.commonlib.logic.check.CheckUtil;
 
@@ -44,7 +43,7 @@ public class ExcelUtil {
 	 * @param entity マッピング用エンティティクラス
 	 * @param outputFilePath 出力エクセル帳票ファイルパス
 	 */
-	public <T> void outputExcelReports(String templateFilePath, T entity, String outputFilePath) throws ErrorCheckException, ErrorFatalException {
+	public <T> void outputExcelReports(String templateFilePath, T entity, String outputFilePath) throws ErrorCheckException {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		// 引数チェック
@@ -75,7 +74,7 @@ public class ExcelUtil {
 			try {
 				context.putVar(field.getName(), field.get(entity));
 			} catch (IllegalArgumentException | IllegalAccessException e) {
-				throw new ErrorFatalException(checkUtil.addErrorInfo(errorInfoList, "FileMappingFailed", new String[] { "マッピング用エンティティクラス" }));
+				throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "FileMappingError", new String[] { "マッピング用エンティティクラス" }));
 			}
 		}
 
@@ -88,7 +87,7 @@ public class ExcelUtil {
 		} catch (FileNotFoundException e) {
 			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "FileNotFoundError", new String[] { inputTemplateFile.getAbsolutePath() }));
 		} catch (IOException e) {
-			throw new ErrorFatalException(checkUtil.addErrorInfo(errorInfoList, "FileOutputFailed", new String[] { outputFile.getAbsolutePath() }));
+			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "FileOutputError", new String[] { outputFile.getAbsolutePath() }));
 		}
 	}
 
@@ -97,7 +96,7 @@ public class ExcelUtil {
 	 * @param filePath 入出力エクセル帳票ファイル
 	 * @param sheetNameList 削除シート名配列
 	 */
-	public void deleteExcelSheet(String filePath, List<String> sheetNameList) throws ErrorCheckException, ErrorFatalException {
+	public void deleteExcelSheet(String filePath, List<String> sheetNameList) throws ErrorCheckException {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		//引数チェック
@@ -131,18 +130,18 @@ public class ExcelUtil {
 			try {
 				Files.copy(tempPath, inputFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 			} catch (IOException e) {
-				throw new ErrorFatalException(checkUtil.addErrorInfo(errorInfoList, "FileCopyFailed", new String[] { tempPath.toFile().getAbsolutePath() }));
+				throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "FileCopyError", new String[] { tempPath.toFile().getAbsolutePath() }));
 			}
 		} catch (FileNotFoundException e) {
 			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "FileNotFoundError", new String[] { inputFile.getAbsolutePath() }));
 		} catch (IOException | EncryptedDocumentException | InvalidFormatException e) {
-			throw new ErrorFatalException(checkUtil.addErrorInfo(errorInfoList, "FileOutputFailed", new String[] { inputFile.getAbsolutePath() }));
+			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "FileOutputError", new String[] { inputFile.getAbsolutePath() }));
 		} finally {
 			// テンポラリファイル削除
 			try {
 				Files.deleteIfExists(tempPath);
 			} catch (IOException e) {
-				throw new ErrorFatalException(checkUtil.addErrorInfo(errorInfoList, "FileDeleteFailed", new String[] { tempPath.toFile().getAbsolutePath() }));
+				throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "FileDeleteError", new String[] { tempPath.toFile().getAbsolutePath() }));
 			}
 		}
 	}
