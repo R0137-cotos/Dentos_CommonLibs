@@ -228,22 +228,25 @@ public class FunctionCheckEstimation {
 	/**
 	 * 見積情報承認依頼差戻チェック処理
 	 * 
-	 * @param estimationId
-	 *            見積ID
+	 * @param estimation
+	 *            見積情報
 	 * @param operatorId
 	 *            操作者MoM社員ID
+	 * @param result
+	 *            Entityチェック結果
 	 * @throws ErrorCheckException
 	 *             エラーチェックException
 	 */
-	public void checkEstimationApprovalRemand(Long estimationId, String operatorId) throws ErrorCheckException {
+	public void checkEstimationApprovalRemand(Estimation estimation, String operatorId, BindingResult result) throws ErrorCheckException {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		// 見積情報存在チェック
-		existsEstimationId(errorInfoList, estimationId);
+		existsEstimation(errorInfoList, estimation);
 		// 操作者MoM社員存在チェック
 		existsMomEmployeeId(errorInfoList, operatorId, EmpMode.操作者);
+		// Entityチェック
+		checkUtil.checkEntity(result);
 		// 見積ステータスチェック
-		Estimation estimation = estimationRepository.findOne(estimationId);
 		if (!businessCheck.existsEstimationStatusMatch(estimation.getStatus(), Status.承認依頼中)) {
 			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorEstimationStatus", new String[] { Status.承認依頼中.name() });
 			throw new ErrorCheckException(errorInfoList);
@@ -258,22 +261,25 @@ public class FunctionCheckEstimation {
 	/**
 	 * 見積情報承認チェック処理
 	 * 
-	 * @param estimationId
-	 *            見積ID
+	 * @param estimation
+	 *            見積情報
 	 * @param operatorId
 	 *            操作者MoM社員ID
+	 * @param result
+	 *            Entityチェック結果
 	 * @throws ErrorCheckException
 	 *             エラーチェックException
 	 */
-	public void checkEstimationApproval(Long estimationId, String operatorId) throws ErrorCheckException {
+	public void checkEstimationApproval(Estimation estimation, String operatorId, BindingResult result) throws ErrorCheckException {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		// 見積情報存在チェック
-		existsEstimationId(errorInfoList, estimationId);
+		existsEstimation(errorInfoList, estimation);
 		// 操作者MoM社員存在チェック
 		existsMomEmployeeId(errorInfoList, operatorId, EmpMode.操作者);
+		// Entityチェック
+		checkUtil.checkEntity(result);
 		// 見積ステータスチェック
-		Estimation estimation = estimationRepository.findOne(estimationId);
 		if (!businessCheck.existsEstimationStatusMatch(estimation.getStatus(), Status.承認依頼中)) {
 			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorEstimationStatus", new String[] { Status.承認依頼中.name() });
 			throw new ErrorCheckException(errorInfoList);
@@ -288,22 +294,25 @@ public class FunctionCheckEstimation {
 	/**
 	 * 見積情報最終承認チェック処理
 	 * 
-	 * @param estimationId
-	 *            見積ID
+	 * @param estimation
+	 *            見積情報
 	 * @param operatorId
 	 *            操作者MoM社員ID
+	 * @param result
+	 *            Entityチェック結果
 	 * @throws ErrorCheckException
 	 *             エラーチェックException
 	 */
-	public void checkEstimationLastApproval(Long estimationId, String operatorId) throws ErrorCheckException {
+	public void checkEstimationLastApproval(Estimation estimation, String operatorId, BindingResult result) throws ErrorCheckException {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		// 見積情報存在チェック
-		existsEstimationId(errorInfoList, estimationId);
+		existsEstimation(errorInfoList, estimation);
 		// 操作者MoM社員存在チェック
 		existsMomEmployeeId(errorInfoList, operatorId, EmpMode.操作者);
+		// Entityチェック
+		checkUtil.checkEntity(result);
 		// 見積ステータスチェック
-		Estimation estimation = estimationRepository.findOne(estimationId);
 		if (!businessCheck.existsEstimationStatusMatch(estimation.getStatus(), Status.承認依頼中)) {
 			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorEstimationStatus", new String[] { Status.承認依頼中.name() });
 			throw new ErrorCheckException(errorInfoList);
@@ -313,22 +322,25 @@ public class FunctionCheckEstimation {
 	/**
 	 * 見積情報受注チェック処理
 	 * 
-	 * @param estimationId
-	 *            見積ID
+	 * @param estimation
+	 *            見積情報
 	 * @param operatorId
 	 *            操作者MoM社員ID
+	 * @param result
+	 *            Entityチェック結果
 	 * @throws ErrorCheckException
 	 *             エラーチェックException
 	 */
-	public void checkEstimationAccept(Long estimationId, String operatorId) throws ErrorCheckException {
+	public void checkEstimationAccept(Estimation estimation, String operatorId, BindingResult result) throws ErrorCheckException {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		// 見積情報存在チェック
-		existsEstimationId(errorInfoList, estimationId);
+		existsEstimation(errorInfoList, estimation);
 		// 操作者MoM社員存在チェック
 		existsMomEmployeeId(errorInfoList, operatorId, EmpMode.操作者);
+		// Entityチェック
+		checkUtil.checkEntity(result);
 		// 見積ステータスチェック
-		Estimation estimation = estimationRepository.findOne(estimationId);
 		if (!businessCheck.existsEstimationStatusMatch(estimation.getStatus(), Status.承認済み)) {
 			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorEstimationStatus", new String[] { Status.承認済み.name() });
 			throw new ErrorCheckException(errorInfoList);
@@ -338,22 +350,25 @@ public class FunctionCheckEstimation {
 	/**
 	 * 見積情報失注チェック処理
 	 * 
-	 * @param estimationId
-	 *            見積ID
+	 * @param estimation
+	 *            見積情報
 	 * @param operatorId
 	 *            操作者MoM社員ID
+	 * @param result
+	 *            Entityチェック結果
 	 * @throws ErrorCheckException
 	 *             エラーチェックException
 	 */
-	public void checkEstimationCancel(Long estimationId, String operatorId) throws ErrorCheckException {
+	public void checkEstimationCancel(Estimation estimation, String operatorId, BindingResult result) throws ErrorCheckException {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		// 見積情報存在チェック
-		existsEstimationId(errorInfoList, estimationId);
+		existsEstimation(errorInfoList, estimation);
 		// 操作者MoM社員存在チェック
 		existsMomEmployeeId(errorInfoList, operatorId, EmpMode.操作者);
+		// Entityチェック
+		checkUtil.checkEntity(result);
 		// 見積ステータスチェック
-		Estimation estimation = estimationRepository.findOne(estimationId);
 		if (businessCheck.existsEstimationStatusMatch(estimation.getStatus(), Status.受注)) {
 			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongErrorEstimationStatus", new String[] { Status.受注.name() });
 			throw new ErrorCheckException(errorInfoList);

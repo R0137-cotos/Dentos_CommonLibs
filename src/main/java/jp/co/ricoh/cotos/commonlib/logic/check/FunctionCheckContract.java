@@ -246,22 +246,25 @@ public class FunctionCheckContract {
 	/**
 	 * 契約情報承認差戻チェック処理
 	 * 
-	 * @param contractId
-	 *            契約ID
+	 * @param contract
+	 *            契約情報
 	 * @param operatorId
 	 *            操作者MoM社員ID
+	 * @param result
+	 *            Entityチェック結果
 	 * @throws ErrorCheckException
 	 *             エラーチェックException
 	 */
-	public void checkContractApprovalRemand(Long contractId, String operatorId) throws ErrorCheckException {
+	public void checkContractApprovalRemand(Contract contract, String operatorId, BindingResult result) throws ErrorCheckException {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		// 契約情報存在チェック
-		existsContractId(errorInfoList, contractId);
+		existsContract(errorInfoList, contract);
 		// 操作者MoM社員存在チェック
 		existsMomEmployeeId(errorInfoList, operatorId, EmpMode.操作者);
+		// Entityチェック
+		checkUtil.checkEntity(result);
 		// 契約ステータスチェック
-		Contract contract = contractRepository.findOne(contractId);
 		if (!businessCheck.existsContractStatusMatch(contract.getContractStatus(), ContractStatus.承認依頼中)) {
 			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorContractStatus", new String[] { ContractStatus.承認依頼中.name() });
 			throw new ErrorCheckException(errorInfoList);
@@ -276,22 +279,25 @@ public class FunctionCheckContract {
 	/**
 	 * 契約情報承認チェック処理
 	 * 
-	 * @param contractId
-	 *            契約ID
+	 * @param contract
+	 *            契約情報
 	 * @param operatorId
 	 *            操作者MoM社員ID
+	 * @param result
+	 *            Entityチェック結果
 	 * @throws ErrorCheckException
 	 *             エラーチェックException
 	 */
-	public void checkContractApproval(Long contractId, String operatorId) throws ErrorCheckException {
+	public void checkContractApproval(Contract contract, String operatorId, BindingResult result) throws ErrorCheckException {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		// 契約情報存在チェック
-		existsContractId(errorInfoList, contractId);
+		existsContract(errorInfoList, contract);
 		// 操作者MoM社員存在チェック
 		existsMomEmployeeId(errorInfoList, operatorId, EmpMode.操作者);
+		// Entityチェック
+		checkUtil.checkEntity(result);
 		// 契約ステータスチェック
-		Contract contract = contractRepository.findOne(contractId);
 		if (!businessCheck.existsContractStatusMatch(contract.getContractStatus(), ContractStatus.承認依頼中)) {
 			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorContractStatus", new String[] { ContractStatus.承認依頼中.name() });
 			throw new ErrorCheckException(errorInfoList);
@@ -386,18 +392,21 @@ public class FunctionCheckContract {
 	 *            契約情報
 	 * @param operatorId
 	 *            操作者MoM社員ID
+	 * @param result
+	 *            Entityチェック結果
 	 * @throws ErrorCheckException
 	 *             エラーチェックException
 	 */
-	public void checkContractPlanChange(Long contractId, String operatorId) throws ErrorCheckException {
+	public void checkContractPlanChange(Contract contract, String operatorId, BindingResult result) throws ErrorCheckException {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		// 契約情報存在チェック
-		existsContractId(errorInfoList, contractId);
+		existsContract(errorInfoList, contract);
 		// 操作者MoM社員存在チェック
 		existsMomEmployeeId(errorInfoList, operatorId, EmpMode.操作者);
+		// Entityチェック
+		checkUtil.checkEntity(result);
 		// 契約ステータスチェック
-		Contract contract = contractRepository.findOne(contractId);
 		if (!businessCheck.existsContractStatusMatch(contract.getContractStatus(), ContractStatus.承認済み)) {
 			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "WrongNotErrorContractStatus", new String[] { ContractStatus.承認済み.name() });
 			throw new ErrorCheckException(errorInfoList);

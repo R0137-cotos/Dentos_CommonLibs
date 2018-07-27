@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.ObjectError;
 
 import jp.co.ricoh.cotos.commonlib.db.DBUtil;
 import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangementDetailMakeInfo;
@@ -124,12 +126,12 @@ public class TestFunctionCheckArrangement {
 	@Test
 	@Transactional
 	public void 手配情報取得チェック確認() {
-		
+
 		// h2以外ならスルー
 		if (!isH2()) {
 			return;
 		}
-		
+
 		手配データ作成();
 
 		// 手配IDがNull
@@ -159,12 +161,12 @@ public class TestFunctionCheckArrangement {
 	@Test
 	@Transactional
 	public void 手配業務情報取得チェック確認() {
-		
+
 		// h2以外ならスルー
 		if (!isH2()) {
 			return;
 		}
-		
+
 		手配データ作成();
 
 		// 手配業務IDがNull
@@ -194,48 +196,52 @@ public class TestFunctionCheckArrangement {
 	@Test
 	@Transactional
 	public void 手配業務受付チェック確認() {
-		
+
 		// h2以外ならスルー
 		if (!isH2()) {
 			return;
 		}
-		
+
 		手配データ作成();
+
+		BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(new ArrangementWork(), "arrangementWork");
 
 		// 手配業務IDリストがNull
 		try {
-			functionCheckArrangement.checkArrangementAcceptWorkFirst(null, "00623070");
+			functionCheckArrangement.checkArrangementAcceptWork(null, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00003", ece.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの手配業務IDリストが未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの手配業務リストが未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 手配業務IDリストにNull行がある
 		try {
-			List<Long> arrangementWorkIdList = new ArrayList<Long>();
-			arrangementWorkIdList.add(1L);
-			arrangementWorkIdList.add(null);
-			functionCheckArrangement.checkArrangementAcceptWorkFirst(arrangementWorkIdList, "00623070");
+			List<ArrangementWork> arrangementWorkList = new ArrayList<>();
+			arrangementWorkList.add(arrangementWorkRepository.findOne(1L));
+			arrangementWorkList.add(null);
+			functionCheckArrangement.checkArrangementAcceptWork(arrangementWorkList, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00010", ece.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの手配業務IDリストに手配業務IDが未設定の行があります。", ece.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの手配業務リストに手配業務情報が未設定の行があります。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 手配業務IDがTBLに存在しない
 		try {
-			List<Long> arrangementWorkIdList = new ArrayList<Long>();
-			arrangementWorkIdList.add(999L);
-			functionCheckArrangement.checkArrangementAcceptWorkFirst(arrangementWorkIdList, "00623070");
+			List<ArrangementWork> arrangementWorkList = new ArrayList<>();
+			ArrangementWork arrangementWork = new ArrangementWork();
+			arrangementWork.setId(999L);
+			arrangementWorkList.add(arrangementWork);
+			functionCheckArrangement.checkArrangementAcceptWork(arrangementWorkList, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00005", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "存在しない手配業務IDが設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
-		List<Long> arrangementWorkIdList = new ArrayList<Long>();
-		arrangementWorkIdList.add(1L);
+		List<ArrangementWork> arrangementWorkList = new ArrayList<>();
+		arrangementWorkList.add(arrangementWorkRepository.findOne(1L));
 		// MoM社員IDがNull
 		try {
-			functionCheckArrangement.checkArrangementAcceptWorkFirst(arrangementWorkIdList, null);
+			functionCheckArrangement.checkArrangementAcceptWork(arrangementWorkList, null, bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00004", ece.getErrorInfoList().get(0).getErrorId());
@@ -243,25 +249,38 @@ public class TestFunctionCheckArrangement {
 		}
 		// MoM社員IDがTBLに存在しない
 		try {
-			functionCheckArrangement.checkArrangementAcceptWorkFirst(arrangementWorkIdList, "000");
+			functionCheckArrangement.checkArrangementAcceptWork(arrangementWorkList, "000", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者に存在しないMoM社員が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
+		arrangementWorkList = new ArrayList<>();
+		arrangementWorkList.add(arrangementWorkRepository.findOne(2L));
 		// 手配業務ステータスが不正
 		try {
-			ArrangementWork arrangementWork = arrangementWorkRepository.findOne(2L);
-			functionCheckArrangement.checkArrangementAcceptWorkSecond(arrangementWork);
+			functionCheckArrangement.checkArrangementAcceptWork(arrangementWorkList, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "手配業務ステータスに受付済みまたは対応済みが設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
+		arrangementWorkList = new ArrayList<>();
+		arrangementWorkList.add(arrangementWorkRepository.findOne(1L));
+		// Entityチェックでエラー
+		try {
+			ObjectError error = new ObjectError("test", "テストID:テストメッセージ");
+			bindingResult.addError(error);
+			functionCheckArrangement.checkArrangementAcceptWork(arrangementWorkList, "00623070", bindingResult);
+			Assert.fail("正常終了してしまった");
+		} catch (ErrorCheckException ece) {
+			Assert.assertEquals("エラーIDが正しく設定されること", "テストID", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "テストメッセージ", ece.getErrorInfoList().get(0).getErrorMessage());
+		}
 		// 手配業務ID、MoM社員IDがTBLに存在し、手配業務ステータスが正常
 		try {
-			ArrangementWork arrangementWork = arrangementWorkRepository.findOne(1L);
-			functionCheckArrangement.checkArrangementAcceptWorkSecond(arrangementWork);
+			bindingResult = new BeanPropertyBindingResult(new ArrangementWork(), "arrangementWork");
+			functionCheckArrangement.checkArrangementAcceptWork(arrangementWorkList, "00623070", bindingResult);
 		} catch (ErrorCheckException ece) {
 			Assert.fail("異常終了してしまった");
 		}
@@ -270,48 +289,52 @@ public class TestFunctionCheckArrangement {
 	@Test
 	@Transactional
 	public void 手配担当者設定チェック確認() {
-		
+
 		// h2以外ならスルー
 		if (!isH2()) {
 			return;
 		}
-		
+
 		手配データ作成();
+
+		BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(new ArrangementWork(), "arrangementWork");
 
 		// 手配業務IDリストがNull
 		try {
-			functionCheckArrangement.checkArrangementAssignWorker(null, "00623070");
+			functionCheckArrangement.checkArrangementAssignWorker(null, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00003", ece.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの手配業務IDリストが未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの手配業務リストが未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 手配業務IDリストにNull行がある
 		try {
-			List<Long> arrangementWorkIdList = new ArrayList<Long>();
-			arrangementWorkIdList.add(1L);
-			arrangementWorkIdList.add(null);
-			functionCheckArrangement.checkArrangementAssignWorker(arrangementWorkIdList, "00623070");
+			List<ArrangementWork> arrangementWorkList = new ArrayList<>();
+			arrangementWorkList.add(arrangementWorkRepository.findOne(1L));
+			arrangementWorkList.add(null);
+			functionCheckArrangement.checkArrangementAssignWorker(arrangementWorkList, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00010", ece.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの手配業務IDリストに手配業務IDが未設定の行があります。", ece.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの手配業務リストに手配業務情報が未設定の行があります。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 手配業務IDがTBLに存在しない
 		try {
-			List<Long> arrangementWorkIdList = new ArrayList<Long>();
-			arrangementWorkIdList.add(999L);
-			functionCheckArrangement.checkArrangementAssignWorker(arrangementWorkIdList, "00623070");
+			List<ArrangementWork> arrangementWorkList = new ArrayList<>();
+			ArrangementWork arrangementWork = new ArrangementWork();
+			arrangementWork.setId(999L);
+			arrangementWorkList.add(arrangementWork);
+			functionCheckArrangement.checkArrangementAssignWorker(arrangementWorkList, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00005", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "存在しない手配業務IDが設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
-		List<Long> arrangementWorkIdList = new ArrayList<Long>();
-		arrangementWorkIdList.add(1L);
+		List<ArrangementWork> arrangementWorkList = new ArrayList<>();
+		arrangementWorkList.add(arrangementWorkRepository.findOne(1L));
 		// MoM社員IDがNull
 		try {
-			functionCheckArrangement.checkArrangementAssignWorker(arrangementWorkIdList, null);
+			functionCheckArrangement.checkArrangementAssignWorker(arrangementWorkList, null, bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00004", ece.getErrorInfoList().get(0).getErrorId());
@@ -319,15 +342,26 @@ public class TestFunctionCheckArrangement {
 		}
 		// MoM社員IDがTBLに存在しない
 		try {
-			functionCheckArrangement.checkArrangementAssignWorker(arrangementWorkIdList, "000");
+			functionCheckArrangement.checkArrangementAssignWorker(arrangementWorkList, "000", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータに存在しないMoM社員が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
+		// Entityチェックでエラー
+		try {
+			ObjectError error = new ObjectError("test", "テストID:テストメッセージ");
+			bindingResult.addError(error);
+			functionCheckArrangement.checkArrangementAssignWorker(arrangementWorkList, "00623070", bindingResult);
+			Assert.fail("正常終了してしまった");
+		} catch (ErrorCheckException ece) {
+			Assert.assertEquals("エラーIDが正しく設定されること", "テストID", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "テストメッセージ", ece.getErrorInfoList().get(0).getErrorMessage());
+		}
 		// 手配業務ID、MoM社員IDがTBLに存在する
 		try {
-			functionCheckArrangement.checkArrangementAssignWorker(arrangementWorkIdList, "00623070");
+			bindingResult = new BeanPropertyBindingResult(new ArrangementWork(), "arrangementWork");
+			functionCheckArrangement.checkArrangementAssignWorker(arrangementWorkList, "00623070", bindingResult);
 		} catch (ErrorCheckException ece) {
 			Assert.fail("異常終了してしまった");
 		}
@@ -336,48 +370,52 @@ public class TestFunctionCheckArrangement {
 	@Test
 	@Transactional
 	public void 手配不受理チェック確認() {
-		
+
 		// h2以外ならスルー
 		if (!isH2()) {
 			return;
 		}
-		
+
 		手配データ作成();
+
+		BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(new ArrangementWork(), "arrangementWork");
 
 		// 手配業務IDリストがNull
 		try {
-			functionCheckArrangement.checkArrangementRefuseWorkFirst(null, "00623070");
+			functionCheckArrangement.checkArrangementRefuseWork(null, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00003", ece.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの手配業務IDリストが未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの手配業務リストが未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 手配業務IDリストにNull行がある
 		try {
-			List<Long> arrangementWorkIdList = new ArrayList<Long>();
-			arrangementWorkIdList.add(1L);
-			arrangementWorkIdList.add(null);
-			functionCheckArrangement.checkArrangementRefuseWorkFirst(arrangementWorkIdList, "00623070");
+			List<ArrangementWork> arrangementWorkList = new ArrayList<>();
+			arrangementWorkList.add(arrangementWorkRepository.findOne(1L));
+			arrangementWorkList.add(null);
+			functionCheckArrangement.checkArrangementRefuseWork(arrangementWorkList, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00010", ece.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの手配業務IDリストに手配業務IDが未設定の行があります。", ece.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの手配業務リストに手配業務情報が未設定の行があります。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 手配業務IDがTBLに存在しない
 		try {
-			List<Long> arrangementWorkIdList = new ArrayList<Long>();
-			arrangementWorkIdList.add(999L);
-			functionCheckArrangement.checkArrangementRefuseWorkFirst(arrangementWorkIdList, "00623070");
+			List<ArrangementWork> arrangementWorkList = new ArrayList<>();
+			ArrangementWork arrangementWork = new ArrangementWork();
+			arrangementWork.setId(999L);
+			arrangementWorkList.add(arrangementWork);
+			functionCheckArrangement.checkArrangementRefuseWork(arrangementWorkList, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00005", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "存在しない手配業務IDが設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
-		List<Long> arrangementWorkIdList = new ArrayList<Long>();
-		arrangementWorkIdList.add(1L);
+		List<ArrangementWork> arrangementWorkList = new ArrayList<>();
+		arrangementWorkList.add(arrangementWorkRepository.findOne(1L));
 		// MoM社員IDがNull
 		try {
-			functionCheckArrangement.checkArrangementRefuseWorkFirst(arrangementWorkIdList, null);
+			functionCheckArrangement.checkArrangementRefuseWork(arrangementWorkList, null, bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00004", ece.getErrorInfoList().get(0).getErrorId());
@@ -385,25 +423,38 @@ public class TestFunctionCheckArrangement {
 		}
 		// MoM社員IDがTBLに存在しない
 		try {
-			functionCheckArrangement.checkArrangementRefuseWorkFirst(arrangementWorkIdList, "000");
+			functionCheckArrangement.checkArrangementRefuseWork(arrangementWorkList, "000", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者に存在しないMoM社員が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
+		arrangementWorkList = new ArrayList<>();
+		arrangementWorkList.add(arrangementWorkRepository.findOne(1L));
 		// 手配業務ステータスが不正
 		try {
-			ArrangementWork arrangementWork = arrangementWorkRepository.findOne(1L);
-			functionCheckArrangement.checkArrangementRefuseWorkSecond(arrangementWork);
+			functionCheckArrangement.checkArrangementRefuseWork(arrangementWorkList, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00006", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "手配業務ステータスに受付済み以外が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
+		arrangementWorkList = new ArrayList<>();
+		arrangementWorkList.add(arrangementWorkRepository.findOne(2L));
+		// Entityチェックでエラー
+		try {
+			ObjectError error = new ObjectError("test", "テストID:テストメッセージ");
+			bindingResult.addError(error);
+			functionCheckArrangement.checkArrangementRefuseWork(arrangementWorkList, "00623070", bindingResult);
+			Assert.fail("正常終了してしまった");
+		} catch (ErrorCheckException ece) {
+			Assert.assertEquals("エラーIDが正しく設定されること", "テストID", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "テストメッセージ", ece.getErrorInfoList().get(0).getErrorMessage());
+		}
 		// 手配業務ID、MoM社員IDがTBLに存在し、手配業務ステータスが正常
 		try {
-			ArrangementWork arrangementWork = arrangementWorkRepository.findOne(2L);
-			functionCheckArrangement.checkArrangementRefuseWorkSecond(arrangementWork);
+			bindingResult = new BeanPropertyBindingResult(new ArrangementWork(), "arrangementWork");
+			functionCheckArrangement.checkArrangementRefuseWork(arrangementWorkList, "00623070", bindingResult);
 		} catch (ErrorCheckException ece) {
 			Assert.fail("異常終了してしまった");
 		}
@@ -412,33 +463,37 @@ public class TestFunctionCheckArrangement {
 	@Test
 	@Transactional
 	public void 手配完了取消チェック確認() {
-		
+
 		// h2以外ならスルー
 		if (!isH2()) {
 			return;
 		}
-		
+
 		手配データ作成();
+
+		ArrangementWork arrangementWork = new ArrangementWork();
+		BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(arrangementWork, "arrangementWork");
 
 		// 手配業務IDリストがNull
 		try {
-			functionCheckArrangement.checkArrangementCancelCompleteWork(null, "00623070");
+			functionCheckArrangement.checkArrangementCancelCompleteWork(null, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00002", ece.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの手配業務IDが未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00011", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの手配業務情報が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 手配業務IDがTBLに存在しない
 		try {
-			functionCheckArrangement.checkArrangementCancelCompleteWork(999L, "00623070");
+			functionCheckArrangement.checkArrangementCancelCompleteWork(arrangementWork, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00005", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "存在しない手配業務IDが設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
+		arrangementWork = arrangementWorkRepository.findOne(1L);
 		// MoM社員IDがNull
 		try {
-			functionCheckArrangement.checkArrangementCancelCompleteWork(1L, null);
+			functionCheckArrangement.checkArrangementCancelCompleteWork(arrangementWork, null, bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00004", ece.getErrorInfoList().get(0).getErrorId());
@@ -446,23 +501,36 @@ public class TestFunctionCheckArrangement {
 		}
 		// MoM社員IDがTBLに存在しない
 		try {
-			functionCheckArrangement.checkArrangementCancelCompleteWork(1L, "000");
+			functionCheckArrangement.checkArrangementCancelCompleteWork(arrangementWork, "000", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者に存在しないMoM社員が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
+		arrangementWork = arrangementWorkRepository.findOne(2L);
 		// 手配業務ステータスが不正
 		try {
-			functionCheckArrangement.checkArrangementCancelCompleteWork(2L, "00623070");
+			functionCheckArrangement.checkArrangementCancelCompleteWork(arrangementWork, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00006", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "手配業務ステータスに対応済み以外が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
+		arrangementWork = arrangementWorkRepository.findOne(3L);
+		// Entityチェックでエラー
+		try {
+			ObjectError error = new ObjectError("test", "テストID:テストメッセージ");
+			bindingResult.addError(error);
+			functionCheckArrangement.checkArrangementCompleteWork(arrangementWork, "00623070", bindingResult);
+			Assert.fail("正常終了してしまった");
+		} catch (ErrorCheckException ece) {
+			Assert.assertEquals("エラーIDが正しく設定されること", "テストID", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "テストメッセージ", ece.getErrorInfoList().get(0).getErrorMessage());
+		}
 		// 手配業務ID、MoM社員IDがTBLに存在し、手配業務ステータスが正常
 		try {
-			functionCheckArrangement.checkArrangementCancelCompleteWork(3L, "00623070");
+			bindingResult = new BeanPropertyBindingResult(arrangementWork, "arrangementWork");
+			functionCheckArrangement.checkArrangementCancelCompleteWork(arrangementWork, "00623070", bindingResult);
 		} catch (ErrorCheckException ece) {
 			Assert.fail("異常終了してしまった");
 		}
@@ -471,33 +539,37 @@ public class TestFunctionCheckArrangement {
 	@Test
 	@Transactional
 	public void 手配完了チェック確認() {
-		
+
 		// h2以外ならスルー
 		if (!isH2()) {
 			return;
 		}
-		
+
 		手配データ作成();
+
+		ArrangementWork arrangementWork = new ArrangementWork();
+		BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(arrangementWork, "arrangementWork");
 
 		// 手配業務IDリストがNull
 		try {
-			functionCheckArrangement.checkArrangementCompleteWork(null, "00623070");
+			functionCheckArrangement.checkArrangementCompleteWork(null, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00002", ece.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの手配業務IDが未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00011", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの手配業務情報が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 手配業務IDがTBLに存在しない
 		try {
-			functionCheckArrangement.checkArrangementCompleteWork(999L, "00623070");
+			functionCheckArrangement.checkArrangementCompleteWork(arrangementWork, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00005", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "存在しない手配業務IDが設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
+		arrangementWork = arrangementWorkRepository.findOne(1L);
 		// MoM社員IDがNull
 		try {
-			functionCheckArrangement.checkArrangementCompleteWork(1L, null);
+			functionCheckArrangement.checkArrangementCompleteWork(arrangementWork, null, bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00004", ece.getErrorInfoList().get(0).getErrorId());
@@ -505,23 +577,36 @@ public class TestFunctionCheckArrangement {
 		}
 		// MoM社員IDがTBLに存在しない
 		try {
-			functionCheckArrangement.checkArrangementCompleteWork(1L, "000");
+			functionCheckArrangement.checkArrangementCompleteWork(arrangementWork, "000", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者に存在しないMoM社員が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
+		arrangementWork = arrangementWorkRepository.findOne(3L);
 		// 手配業務ステータスが不正
 		try {
-			functionCheckArrangement.checkArrangementCompleteWork(3L, "00623070");
+			functionCheckArrangement.checkArrangementCompleteWork(arrangementWork, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "RAR00006", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "手配業務ステータスに受付済み以外が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
+		arrangementWork = arrangementWorkRepository.findOne(2L);
+		// Entityチェックでエラー
+		try {
+			ObjectError error = new ObjectError("test", "テストID:テストメッセージ");
+			bindingResult.addError(error);
+			functionCheckArrangement.checkArrangementCompleteWork(arrangementWork, "00623070", bindingResult);
+			Assert.fail("正常終了してしまった");
+		} catch (ErrorCheckException ece) {
+			Assert.assertEquals("エラーIDが正しく設定されること", "テストID", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "テストメッセージ", ece.getErrorInfoList().get(0).getErrorMessage());
+		}
 		// 手配業務ID、MoM社員IDがTBLに存在し、手配業務ステータスが正常
 		try {
-			functionCheckArrangement.checkArrangementCompleteWork(2L, "00623070");
+			bindingResult = new BeanPropertyBindingResult(arrangementWork, "arrangementWork");
+			functionCheckArrangement.checkArrangementCompleteWork(arrangementWork, "00623070", bindingResult);
 		} catch (ErrorCheckException ece) {
 			Assert.fail("異常終了してしまった");
 		}

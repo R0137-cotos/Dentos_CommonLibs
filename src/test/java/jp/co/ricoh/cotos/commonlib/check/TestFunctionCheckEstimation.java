@@ -44,7 +44,7 @@ public class TestFunctionCheckEstimation {
 	EstimationRepository estimationRepository;
 	@Autowired
 	EstimationApprovalRouteNodeRepository estimationApprovalRouteNodeRepository;
-	
+
 	static ConfigurableApplicationContext context;
 
 	@Autowired
@@ -59,12 +59,12 @@ public class TestFunctionCheckEstimation {
 	@Test
 	@Transactional
 	public void 見積情報取得チェック確認() {
-		
+
 		// h2以外ならスルー
 		if (!isH2()) {
 			return;
 		}
-		
+
 		見積データ作成();
 
 		// 見積IDがNull
@@ -94,12 +94,12 @@ public class TestFunctionCheckEstimation {
 	@Test
 	@Transactional
 	public void 見積情報更新チェック確認() {
-		
+
 		// h2以外ならスルー
 		if (!isH2()) {
 			return;
 		}
-		
+
 		見積データ作成();
 
 		Estimation estimation = new Estimation();
@@ -162,12 +162,12 @@ public class TestFunctionCheckEstimation {
 	@Test
 	@Transactional
 	public void 見積情報帳票出力チェック確認() {
-		
+
 		// h2以外ならスルー
 		if (!isH2()) {
 			return;
 		}
-		
+
 		見積データ作成();
 
 		// 見積IDがNull
@@ -197,12 +197,12 @@ public class TestFunctionCheckEstimation {
 	@Test
 	@Transactional
 	public void 見積情報承認ルート取得チェック確認() {
-		
+
 		// h2以外ならスルー
 		if (!isH2()) {
 			return;
 		}
-		
+
 		見積データ作成();
 
 		// 見積IDがNull
@@ -248,12 +248,12 @@ public class TestFunctionCheckEstimation {
 	@Test
 	@Transactional
 	public void 見積情報代理承認者設定チェック確認() {
-		
+
 		// h2以外ならスルー
 		if (!isH2()) {
 			return;
 		}
-		
+
 		見積データ作成();
 
 		EstimationApprovalRouteNode estimationApprovalRouteNode = new EstimationApprovalRouteNode();
@@ -310,12 +310,12 @@ public class TestFunctionCheckEstimation {
 	@Test
 	@Transactional
 	public void 見積情報承認依頼チェック確認() {
-		
+
 		// h2以外ならスルー
 		if (!isH2()) {
 			return;
 		}
-		
+
 		見積データ作成();
 
 		Estimation estimation = new Estimation();
@@ -459,33 +459,37 @@ public class TestFunctionCheckEstimation {
 	@Test
 	@Transactional
 	public void 見積情報承認依頼差戻チェック確認() {
-		
+
 		// h2以外ならスルー
 		if (!isH2()) {
 			return;
 		}
-		
+
 		見積データ作成();
 
-		// 見積IDがNull
+		Estimation estimation = new Estimation();
+		BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(estimation, "estimation");
+
+		// 見積情報がNull
 		try {
-			functionCheckEstimation.checkEstimationApproval(null, "00623070");
+			functionCheckEstimation.checkEstimationApprovalRemand(null, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "RES00001", ece.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの見積IDが未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RES00002", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの見積情報が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 見積IDがTBLに存在しない
 		try {
-			functionCheckEstimation.checkEstimationApproval(999L, "00623070");
+			functionCheckEstimation.checkEstimationApprovalRemand(estimation, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "RES00004", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "存在しない見積IDが設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
+		estimation = estimationRepository.findOne(1L);
 		// MoM社員IDがNull
 		try {
-			functionCheckEstimation.checkEstimationApproval(1L, null);
+			functionCheckEstimation.checkEstimationApprovalRemand(estimation, null, bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00004", ece.getErrorInfoList().get(0).getErrorId());
@@ -493,31 +497,45 @@ public class TestFunctionCheckEstimation {
 		}
 		// MoM社員IDがTBLに存在しない
 		try {
-			functionCheckEstimation.checkEstimationApproval(1L, "000");
+			functionCheckEstimation.checkEstimationApprovalRemand(estimation, "000", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者に存在しないMoM社員が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
+		estimation = estimationRepository.findOne(2L);
 		// 見積ステータスが不正
 		try {
-			functionCheckEstimation.checkEstimationApproval(2L, "00623070");
+			functionCheckEstimation.checkEstimationApprovalRemand(estimation, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "RES00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "見積ステータスに承認依頼中以外が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
+		estimation = estimationRepository.findOne(4L);
 		// 見積承認ルートがTBLに存在しない
 		try {
-			functionCheckEstimation.checkEstimationApproval(4L, "00623070");
+			functionCheckEstimation.checkEstimationApprovalRemand(estimation, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "RES00005", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "見積情報の承認ルート情報が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
+		estimation = estimationRepository.findOne(5L);
+		// Entityチェックでエラー
+		try {
+			ObjectError error = new ObjectError("test", "テストID:テストメッセージ");
+			bindingResult.addError(error);
+			functionCheckEstimation.checkEstimationApprovalRemand(estimation, "00623070", bindingResult);
+			Assert.fail("正常終了してしまった");
+		} catch (ErrorCheckException ece) {
+			Assert.assertEquals("エラーIDが正しく設定されること", "テストID", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "テストメッセージ", ece.getErrorInfoList().get(0).getErrorMessage());
+		}
+		bindingResult = new BeanPropertyBindingResult(estimation, "estimation");
 		// 見積ID、MoM社員ID、見積承認ルートがTBLに存在し、見積ステータスが正常
 		try {
-			functionCheckEstimation.checkEstimationApproval(5L, "00623070");
+			functionCheckEstimation.checkEstimationApprovalRemand(estimation, "00623070", bindingResult);
 		} catch (ErrorCheckException ece) {
 			Assert.fail("異常終了してしまった");
 		}
@@ -526,33 +544,37 @@ public class TestFunctionCheckEstimation {
 	@Test
 	@Transactional
 	public void 見積情報承認チェック確認() {
-		
+
 		// h2以外ならスルー
 		if (!isH2()) {
 			return;
 		}
-		
+
 		見積データ作成();
 
-		// 見積IDがNull
+		Estimation estimation = new Estimation();
+		BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(estimation, "estimation");
+
+		// 見積情報がNull
 		try {
-			functionCheckEstimation.checkEstimationApproval(null, "00623070");
+			functionCheckEstimation.checkEstimationApproval(null, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "RES00001", ece.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの見積IDが未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RES00002", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの見積情報が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 見積IDがTBLに存在しない
 		try {
-			functionCheckEstimation.checkEstimationApproval(999L, "00623070");
+			functionCheckEstimation.checkEstimationApproval(estimation, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "RES00004", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "存在しない見積IDが設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
+		estimation = estimationRepository.findOne(1L);
 		// MoM社員IDがNull
 		try {
-			functionCheckEstimation.checkEstimationApproval(1L, null);
+			functionCheckEstimation.checkEstimationApproval(estimation, null, bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00004", ece.getErrorInfoList().get(0).getErrorId());
@@ -560,31 +582,45 @@ public class TestFunctionCheckEstimation {
 		}
 		// MoM社員IDがTBLに存在しない
 		try {
-			functionCheckEstimation.checkEstimationApproval(1L, "000");
+			functionCheckEstimation.checkEstimationApproval(estimation, "000", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者に存在しないMoM社員が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
+		estimation = estimationRepository.findOne(2L);
 		// 見積ステータスが不正
 		try {
-			functionCheckEstimation.checkEstimationApproval(2L, "00623070");
+			functionCheckEstimation.checkEstimationApproval(estimation, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "RES00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "見積ステータスに承認依頼中以外が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
+		estimation = estimationRepository.findOne(4L);
 		// 見積承認ルートがTBLに存在しない
 		try {
-			functionCheckEstimation.checkEstimationApproval(4L, "00623070");
+			functionCheckEstimation.checkEstimationApproval(estimation, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "RES00005", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "見積情報の承認ルート情報が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
+		estimation = estimationRepository.findOne(5L);
+		// Entityチェックでエラー
+		try {
+			ObjectError error = new ObjectError("test", "テストID:テストメッセージ");
+			bindingResult.addError(error);
+			functionCheckEstimation.checkEstimationApproval(estimation, "00623070", bindingResult);
+			Assert.fail("正常終了してしまった");
+		} catch (ErrorCheckException ece) {
+			Assert.assertEquals("エラーIDが正しく設定されること", "テストID", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "テストメッセージ", ece.getErrorInfoList().get(0).getErrorMessage());
+		}
+		bindingResult = new BeanPropertyBindingResult(estimation, "estimation");
 		// 見積ID、MoM社員ID、見積承認ルートがTBLに存在し、見積ステータスが正常
 		try {
-			functionCheckEstimation.checkEstimationApproval(5L, "00623070");
+			functionCheckEstimation.checkEstimationApproval(estimation, "00623070", bindingResult);
 		} catch (ErrorCheckException ece) {
 			Assert.fail("異常終了してしまった");
 		}
@@ -593,33 +629,37 @@ public class TestFunctionCheckEstimation {
 	@Test
 	@Transactional
 	public void 見積情報最終承認チェック確認() {
-		
+
 		// h2以外ならスルー
 		if (!isH2()) {
 			return;
 		}
-		
+
 		見積データ作成();
 
-		// 見積IDがNull
+		Estimation estimation = new Estimation();
+		BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(estimation, "estimation");
+
+		// 見積情報がNull
 		try {
-			functionCheckEstimation.checkEstimationLastApproval(null, "00623070");
+			functionCheckEstimation.checkEstimationLastApproval(null, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "RES00001", ece.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの見積IDが未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RES00002", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの見積情報が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 見積IDがTBLに存在しない
 		try {
-			functionCheckEstimation.checkEstimationLastApproval(999L, "00623070");
+			functionCheckEstimation.checkEstimationLastApproval(estimation, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "RES00004", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "存在しない見積IDが設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
+		estimation = estimationRepository.findOne(1L);
 		// MoM社員IDがNull
 		try {
-			functionCheckEstimation.checkEstimationLastApproval(1L, null);
+			functionCheckEstimation.checkEstimationLastApproval(estimation, null, bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00004", ece.getErrorInfoList().get(0).getErrorId());
@@ -627,23 +667,36 @@ public class TestFunctionCheckEstimation {
 		}
 		// MoM社員IDがTBLに存在しない
 		try {
-			functionCheckEstimation.checkEstimationLastApproval(1L, "000");
+			functionCheckEstimation.checkEstimationLastApproval(estimation, "000", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者に存在しないMoM社員が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
+		estimation = estimationRepository.findOne(2L);
 		// 見積ステータスが不正
 		try {
-			functionCheckEstimation.checkEstimationLastApproval(2L, "00623070");
+			functionCheckEstimation.checkEstimationLastApproval(estimation, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "RES00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "見積ステータスに承認依頼中以外が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
-		// 見積ID、MoM社員ID共にTBLに存在し、見積ステータスが正常
+		estimation = estimationRepository.findOne(4L);
+		// Entityチェックでエラー
 		try {
-			functionCheckEstimation.checkEstimationLastApproval(4L, "00623070");
+			ObjectError error = new ObjectError("test", "テストID:テストメッセージ");
+			bindingResult.addError(error);
+			functionCheckEstimation.checkEstimationLastApproval(estimation, "00623070", bindingResult);
+			Assert.fail("正常終了してしまった");
+		} catch (ErrorCheckException ece) {
+			Assert.assertEquals("エラーIDが正しく設定されること", "テストID", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "テストメッセージ", ece.getErrorInfoList().get(0).getErrorMessage());
+		}
+		bindingResult = new BeanPropertyBindingResult(estimation, "estimation");
+		// 見積ID、MoM社員ID、見積承認ルートがTBLに存在し、見積ステータスが正常
+		try {
+			functionCheckEstimation.checkEstimationLastApproval(estimation, "00623070", bindingResult);
 		} catch (ErrorCheckException ece) {
 			Assert.fail("異常終了してしまった");
 		}
@@ -652,33 +705,37 @@ public class TestFunctionCheckEstimation {
 	@Test
 	@Transactional
 	public void 見積情報受注チェック確認() {
-		
+
 		// h2以外ならスルー
 		if (!isH2()) {
 			return;
 		}
-		
+
 		見積データ作成();
 
-		// 見積IDがNull
+		Estimation estimation = new Estimation();
+		BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(estimation, "estimation");
+
+		// 見積情報がNull
 		try {
-			functionCheckEstimation.checkEstimationAccept(null, "00623070");
+			functionCheckEstimation.checkEstimationAccept(null, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "RES00001", ece.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの見積IDが未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RES00002", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの見積情報が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 見積IDがTBLに存在しない
 		try {
-			functionCheckEstimation.checkEstimationAccept(999L, "00623070");
+			functionCheckEstimation.checkEstimationAccept(estimation, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "RES00004", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "存在しない見積IDが設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
+		estimation = estimationRepository.findOne(1L);
 		// MoM社員IDがNull
 		try {
-			functionCheckEstimation.checkEstimationAccept(1L, null);
+			functionCheckEstimation.checkEstimationAccept(estimation, null, bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00004", ece.getErrorInfoList().get(0).getErrorId());
@@ -686,23 +743,36 @@ public class TestFunctionCheckEstimation {
 		}
 		// MoM社員IDがTBLに存在しない
 		try {
-			functionCheckEstimation.checkEstimationAccept(1L, "000");
+			functionCheckEstimation.checkEstimationAccept(estimation, "000", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者に存在しないMoM社員が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
+		estimation = estimationRepository.findOne(2L);
 		// 見積ステータスが不正
 		try {
-			functionCheckEstimation.checkEstimationAccept(2L, "00623070");
+			functionCheckEstimation.checkEstimationAccept(estimation, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "RES00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "見積ステータスに承認済み以外が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
-		// 見積ID、MoM社員ID共にTBLに存在する
+		estimation = estimationRepository.findOne(3L);
+		// Entityチェックでエラー
 		try {
-			functionCheckEstimation.checkEstimationAccept(3L, "00623070");
+			ObjectError error = new ObjectError("test", "テストID:テストメッセージ");
+			bindingResult.addError(error);
+			functionCheckEstimation.checkEstimationAccept(estimation, "00623070", bindingResult);
+			Assert.fail("正常終了してしまった");
+		} catch (ErrorCheckException ece) {
+			Assert.assertEquals("エラーIDが正しく設定されること", "テストID", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "テストメッセージ", ece.getErrorInfoList().get(0).getErrorMessage());
+		}
+		bindingResult = new BeanPropertyBindingResult(estimation, "estimation");
+		// 見積ID、MoM社員ID、見積承認ルートがTBLに存在し、見積ステータスが正常
+		try {
+			functionCheckEstimation.checkEstimationAccept(estimation, "00623070", bindingResult);
 		} catch (ErrorCheckException ece) {
 			Assert.fail("異常終了してしまった");
 		}
@@ -711,33 +781,37 @@ public class TestFunctionCheckEstimation {
 	@Test
 	@Transactional
 	public void 見積情報失注チェック確認() {
-		
+
 		// h2以外ならスルー
 		if (!isH2()) {
 			return;
 		}
-		
+
 		見積データ作成();
 
-		// 見積IDがNull
+		Estimation estimation = new Estimation();
+		BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(estimation, "estimation");
+
+		// 見積情報がNull
 		try {
-			functionCheckEstimation.checkEstimationCancel(null, "00623070");
+			functionCheckEstimation.checkEstimationCancel(null, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "RES00001", ece.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの見積IDが未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーIDが正しく設定されること", "RES00002", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの見積情報が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
 		// 見積IDがTBLに存在しない
 		try {
-			functionCheckEstimation.checkEstimationCancel(999L, "00623070");
+			functionCheckEstimation.checkEstimationCancel(estimation, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "RES00004", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "存在しない見積IDが設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
+		estimation = estimationRepository.findOne(1L);
 		// MoM社員IDがNull
 		try {
-			functionCheckEstimation.checkEstimationCancel(1L, null);
+			functionCheckEstimation.checkEstimationCancel(estimation, null, bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00004", ece.getErrorInfoList().get(0).getErrorId());
@@ -745,23 +819,36 @@ public class TestFunctionCheckEstimation {
 		}
 		// MoM社員IDがTBLに存在しない
 		try {
-			functionCheckEstimation.checkEstimationCancel(1L, "000");
+			functionCheckEstimation.checkEstimationCancel(estimation, "000", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者に存在しないMoM社員が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
+		estimation = estimationRepository.findOne(2L);
 		// 見積ステータスが不正
 		try {
-			functionCheckEstimation.checkEstimationCancel(2L, "00623070");
+			functionCheckEstimation.checkEstimationCancel(estimation, "00623070", bindingResult);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException ece) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "RES00008", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "見積ステータスに受注が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
-		// 見積ID、MoM社員ID共にTBLに存在する
+		estimation = estimationRepository.findOne(1L);
+		// Entityチェックでエラー
 		try {
-			functionCheckEstimation.checkEstimationCancel(1L, "00623070");
+			ObjectError error = new ObjectError("test", "テストID:テストメッセージ");
+			bindingResult.addError(error);
+			functionCheckEstimation.checkEstimationCancel(estimation, "00623070", bindingResult);
+			Assert.fail("正常終了してしまった");
+		} catch (ErrorCheckException ece) {
+			Assert.assertEquals("エラーIDが正しく設定されること", "テストID", ece.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "テストメッセージ", ece.getErrorInfoList().get(0).getErrorMessage());
+		}
+		bindingResult = new BeanPropertyBindingResult(estimation, "estimation");
+		// 見積ID、MoM社員ID、見積承認ルートがTBLに存在し、見積ステータスが正常
+		try {
+			functionCheckEstimation.checkEstimationCancel(estimation, "00623070", bindingResult);
 		} catch (ErrorCheckException ece) {
 			Assert.fail("異常終了してしまった");
 		}
@@ -770,12 +857,12 @@ public class TestFunctionCheckEstimation {
 	@Test
 	@Transactional
 	public void 企事部情報取得チェック確認() {
-		
+
 		// h2以外ならスルー
 		if (!isH2()) {
 			return;
 		}
-		
+
 		dbUtil.execute("sql/check/testKjbMasterInsert.sql", new HashMap<>());
 
 		// 企事部IDがNull
