@@ -1,4 +1,4 @@
-package jp.co.ricoh.cotos.commonlib.testCSVUtil;
+package jp.co.ricoh.cotos.commonlib.testcsvutil;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -15,23 +15,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import jp.co.ricoh.cotos.commonlib.csv.CSVUtil;
+import jp.co.ricoh.cotos.commonlib.csv.CsvUtil;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.CsvParameter;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorCheckException;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class TestCSVReaderForData {
+public class TestCsvReaderForData {
 
 	@Autowired
-	CSVUtil csvUtil;
+	CsvUtil csvUtil;
 
 	@Test
 	public void 正常系_CSVデータ読み込みテスト_デフォルトパラメーター() throws ErrorCheckException, IOException {
 		CsvParameter param = CsvParameter.builder().build();
 
 		String csvData = new String(Files.readAllBytes(Paths.get("src/test/resources/csv/input_default.csv")), StandardCharsets.UTF_8);
-		List<TestCSVData> list = csvUtil.readCsvData(csvData, TestCSVData.class, param);
+		List<TestCsvData> list = csvUtil.readCsvData(csvData, TestCsvData.class, param);
 
 		List<String> actual = list.stream().map(s -> s.toString()).collect(Collectors.toList());
 		List<String> expected = Files.readAllLines(Paths.get("src/test/resources/csv/output_default.txt"), StandardCharsets.UTF_8);
@@ -41,7 +41,7 @@ public class TestCSVReaderForData {
 	@Test
 	public void 正常系_CSVデータ読み込みテスト_デフォルトパラメーターNULL() throws ErrorCheckException, IOException {
 		String csvData = new String(Files.readAllBytes(Paths.get("src/test/resources/csv/input_default.csv")), StandardCharsets.UTF_8);
-		List<TestCSVData> list = csvUtil.readCsvData(csvData, TestCSVData.class, null);
+		List<TestCsvData> list = csvUtil.readCsvData(csvData, TestCsvData.class, null);
 
 		List<String> actual = list.stream().map(s -> s.toString()).collect(Collectors.toList());
 		List<String> expected = Files.readAllLines(Paths.get("src/test/resources/csv/output_default.txt"), StandardCharsets.UTF_8);
@@ -53,7 +53,7 @@ public class TestCSVReaderForData {
 		CsvParameter param = CsvParameter.builder().header(false).build();
 
 		String csvData = new String(Files.readAllBytes(Paths.get("src/test/resources/csv/input_withoutHeader.csv")), StandardCharsets.UTF_8);
-		List<TestCSVData> list = csvUtil.readCsvData(csvData, TestCSVData.class, param);
+		List<TestCsvData> list = csvUtil.readCsvData(csvData, TestCsvData.class, param);
 
 		List<String> actual = list.stream().map(s -> s.toString()).collect(Collectors.toList());
 		List<String> expected = Files.readAllLines(Paths.get("src/test/resources/csv/output_default.txt"), StandardCharsets.UTF_8);
@@ -65,7 +65,7 @@ public class TestCSVReaderForData {
 		CsvParameter param = CsvParameter.builder().build();
 
 		String csvData = new String(Files.readAllBytes(Paths.get("src/test/resources/csv/input_columnnameJapanese.csv")), StandardCharsets.UTF_8);
-		List<TestCSVDataHeaderJapanese> list = csvUtil.readCsvData(csvData, TestCSVDataHeaderJapanese.class, param);
+		List<TestCsvDataHeaderJapanese> list = csvUtil.readCsvData(csvData, TestCsvDataHeaderJapanese.class, param);
 
 		List<String> actual = list.stream().map(s -> s.toString()).collect(Collectors.toList());
 		List<String> expected = Files.readAllLines(Paths.get("src/test/resources/csv/output_columnnameJapanese.txt"), StandardCharsets.UTF_8);
@@ -77,7 +77,7 @@ public class TestCSVReaderForData {
 		CsvParameter param = CsvParameter.builder().separator('\t').build();
 
 		String csvData = new String(Files.readAllBytes(Paths.get("src/test/resources/csv/input_seperatorTab.csv")), StandardCharsets.UTF_8);
-		List<TestCSVData> list = csvUtil.readCsvData(csvData, TestCSVData.class, param);
+		List<TestCsvData> list = csvUtil.readCsvData(csvData, TestCsvData.class, param);
 
 		List<String> actual = list.stream().map(s -> s.toString()).collect(Collectors.toList());
 		List<String> expected = Files.readAllLines(Paths.get("src/test/resources/csv/output_default.txt"), StandardCharsets.UTF_8);
@@ -90,7 +90,7 @@ public class TestCSVReaderForData {
 		CsvParameter param = CsvParameter.builder().build();
 
 		String csvData = new String(Files.readAllBytes(Paths.get("src/test/resources/csv/input_bom.csv")), StandardCharsets.UTF_8);
-		List<TestCSVData> list = csvUtil.readCsvData(csvData, TestCSVData.class, param);
+		List<TestCsvData> list = csvUtil.readCsvData(csvData, TestCsvData.class, param);
 
 		List<String> actual = list.stream().map(s -> s.toString()).collect(Collectors.toList());
 		List<String> expected = Files.readAllLines(Paths.get("src/test/resources/csv/output_default.txt"), StandardCharsets.UTF_8);
@@ -102,7 +102,7 @@ public class TestCSVReaderForData {
 		CsvParameter param = CsvParameter.builder().charset(Charset.forName("Shift-JIS")).build();
 
 		String csvData = new String(Files.readAllBytes(Paths.get("src/test/resources/csv/input_default.csv")), StandardCharsets.UTF_8);
-		List<TestCSVData> list = csvUtil.readCsvData(csvData, TestCSVData.class, param);
+		List<TestCsvData> list = csvUtil.readCsvData(csvData, TestCsvData.class, param);
 		Assert.assertTrue("結果が格納されること", null != list);
 	}
 
@@ -112,7 +112,7 @@ public class TestCSVReaderForData {
 		CsvParameter param = CsvParameter.builder().build();
 
 		String csvData = new String(Files.readAllBytes(Paths.get("src/test/resources/csv/input_crlf.csv")), StandardCharsets.UTF_8);
-		List<TestCSVData> list = csvUtil.readCsvData(csvData, TestCSVData.class, param);
+		List<TestCsvData> list = csvUtil.readCsvData(csvData, TestCsvData.class, param);
 
 		List<String> actual = list.stream().map(s -> s.toString()).collect(Collectors.toList());
 		List<String> expected = Files.readAllLines(Paths.get("src/test/resources/csv/output_default.txt"), StandardCharsets.UTF_8);
@@ -125,7 +125,7 @@ public class TestCSVReaderForData {
 		CsvParameter param = CsvParameter.builder().build();
 
 		String csvData = new String(Files.readAllBytes(Paths.get("src/test/resources/csv/input_withoutQuote.csv")), StandardCharsets.UTF_8);
-		List<TestCSVData> list = csvUtil.readCsvData(csvData, TestCSVData.class, param);
+		List<TestCsvData> list = csvUtil.readCsvData(csvData, TestCsvData.class, param);
 
 		List<String> actual = list.stream().map(s -> s.toString()).collect(Collectors.toList());
 		List<String> expected = Files.readAllLines(Paths.get("src/test/resources/csv/output_default.txt"), StandardCharsets.UTF_8);
@@ -138,7 +138,7 @@ public class TestCSVReaderForData {
 		CsvParameter param = CsvParameter.builder().build();
 
 		String csvData = new String(Files.readAllBytes(Paths.get("src/test/resources/csv/input_commaItem.csv")), StandardCharsets.UTF_8);
-		List<TestCSVData> list = csvUtil.readCsvData(csvData, TestCSVData.class, param);
+		List<TestCsvData> list = csvUtil.readCsvData(csvData, TestCsvData.class, param);
 
 		List<String> actual = list.stream().map(s -> s.toString()).collect(Collectors.toList());
 		List<String> expected = Files.readAllLines(Paths.get("src/test/resources/csv/output_commaItem.txt"), StandardCharsets.UTF_8);
@@ -150,7 +150,7 @@ public class TestCSVReaderForData {
 		CsvParameter param = CsvParameter.builder().nullValueString("テスト２").build();
 
 		String csvData = new String(Files.readAllBytes(Paths.get("src/test/resources/csv/input_default.csv")), StandardCharsets.UTF_8);
-		List<TestCSVData> list = csvUtil.readCsvData(csvData, TestCSVData.class, param);
+		List<TestCsvData> list = csvUtil.readCsvData(csvData, TestCsvData.class, param);
 
 		List<String> actual = list.stream().map(s -> s.toString()).collect(Collectors.toList());
 		List<String> expected = Files.readAllLines(Paths.get("src/test/resources/csv/output_nullValue.txt"), StandardCharsets.UTF_8);
@@ -160,9 +160,9 @@ public class TestCSVReaderForData {
 	@Test
 	public void 異常系_CSVデータ読み込みテスト_CSVデータにNULLを与える() throws ErrorCheckException {
 		CsvParameter param = CsvParameter.builder().header(false).build();
-		List<TestCSVData> list = null;
+		List<TestCsvData> list = null;
 		try {
-			list = csvUtil.readCsvData(null, TestCSVData.class, param);
+			list = csvUtil.readCsvData(null, TestCsvData.class, param);
 			Assert.fail("正常終了した");
 		} catch (ErrorCheckException e) {
 			Assert.assertTrue("結果が格納されないこと", null == list);
@@ -174,9 +174,9 @@ public class TestCSVReaderForData {
 	@Test
 	public void 異常系_CSVデータ読み込みテスト_CSVデータに空文字を与える() throws ErrorCheckException {
 		CsvParameter param = CsvParameter.builder().header(false).build();
-		List<TestCSVData> list = null;
+		List<TestCsvData> list = null;
 		try {
-			list = csvUtil.readCsvData("", TestCSVData.class, param);
+			list = csvUtil.readCsvData("", TestCsvData.class, param);
 			Assert.fail("正常終了した");
 		} catch (ErrorCheckException e) {
 			Assert.assertTrue("結果が格納されないこと", null == list);
@@ -188,7 +188,7 @@ public class TestCSVReaderForData {
 	@Test
 	public void 異常系_CSVデータ読み込みテスト_エンティティクラスにNULLを与える() throws ErrorCheckException, IOException {
 		CsvParameter param = CsvParameter.builder().header(false).build();
-		List<TestCSVData> list = null;
+		List<TestCsvData> list = null;
 		try {
 			String csvData = new String(Files.readAllBytes(Paths.get("src/test/resources/csv/input_default.csv")), StandardCharsets.UTF_8);
 			list = csvUtil.readCsvData(csvData, null, param);
@@ -203,10 +203,10 @@ public class TestCSVReaderForData {
 	@Test
 	public void 異常系_CSVデータ読み込みテスト_ヘッダー設定不一致() throws ErrorCheckException, IOException {
 		CsvParameter param = CsvParameter.builder().header(false).build();
-		List<TestCSVData> list = null;
+		List<TestCsvData> list = null;
 		try {
 			String csvData = new String(Files.readAllBytes(Paths.get("src/test/resources/csv/input_default.csv")), StandardCharsets.UTF_8);
-			list = csvUtil.readCsvData(csvData, TestCSVData.class, param);
+			list = csvUtil.readCsvData(csvData, TestCsvData.class, param);
 			Assert.fail("正常終了した");
 		} catch (ErrorCheckException e) {
 			Assert.assertTrue("結果が格納されないこと", null == list);
@@ -218,10 +218,10 @@ public class TestCSVReaderForData {
 	@Test
 	public void 異常系_CSVデータ読み込みテスト_セパレーター設定不一致() throws ErrorCheckException, IOException {
 		CsvParameter param = CsvParameter.builder().separator('\"').build();
-		List<TestCSVData> list = null;
+		List<TestCsvData> list = null;
 		try {
 			String csvData = new String(Files.readAllBytes(Paths.get("src/test/resources/csv/input_default.csv")), StandardCharsets.UTF_8);
-			list = csvUtil.readCsvData(csvData, TestCSVData.class, param);
+			list = csvUtil.readCsvData(csvData, TestCsvData.class, param);
 			Assert.fail("正常終了した");
 		} catch (ErrorCheckException e) {
 			Assert.assertTrue("結果が格納されないこと", null == list);

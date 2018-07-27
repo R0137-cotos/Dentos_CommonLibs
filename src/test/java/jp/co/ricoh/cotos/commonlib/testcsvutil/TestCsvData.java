@@ -1,4 +1,4 @@
-package jp.co.ricoh.cotos.commonlib.testCSVUtil;
+package jp.co.ricoh.cotos.commonlib.testcsvutil;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,7 +16,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 @JsonPropertyOrder({ "id", "name", "age", "birthday", "weight" })
-public class TestCSVData {
+public class TestCsvData {
 	@JsonProperty("id")
 	private long id;
 

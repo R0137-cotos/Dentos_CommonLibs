@@ -1,4 +1,4 @@
-package jp.co.ricoh.cotos.commonlib.testCSVUtil;
+package jp.co.ricoh.cotos.commonlib.testcsvutil;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,16 +22,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import jp.co.ricoh.cotos.commonlib.csv.CSVUtil;
+import jp.co.ricoh.cotos.commonlib.csv.CsvUtil;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.CsvParameter;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorCheckException;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class TestCSVWriter {
+public class TestCsvWriter {
 
 	@Autowired
-	CSVUtil csvUtil;
+	CsvUtil csvUtil;
 
 	@Before
 	public void beforeProcess() throws IOException {
@@ -54,10 +54,10 @@ public class TestCSVWriter {
 	public void 正常系_CSVファイル書き込みテスト_デフォルトパラメーター() throws ErrorCheckException, IOException, ParseException {
 		CsvParameter param = CsvParameter.builder().build();
 
-		List<TestCSVData> list = new ArrayList<>();
-		list.add(new TestCSVData(1, "テスト１", 12, new SimpleDateFormat("yyyy/MM/dd").parse("2018/12/12"), 75.4));
-		list.add(new TestCSVData(2, "テスト２", 10, new SimpleDateFormat("yyyy/MM/dd").parse("2016/03/15"), 40.5));
-		list.add(new TestCSVData(3, null, 9, new SimpleDateFormat("yyyy/MM/dd").parse("2015/01/02"), 100.1));
+		List<TestCsvData> list = new ArrayList<>();
+		list.add(new TestCsvData(1, "テスト１", 12, new SimpleDateFormat("yyyy/MM/dd").parse("2018/12/12"), 75.4));
+		list.add(new TestCsvData(2, "テスト２", 10, new SimpleDateFormat("yyyy/MM/dd").parse("2016/03/15"), 40.5));
+		list.add(new TestCsvData(3, null, 9, new SimpleDateFormat("yyyy/MM/dd").parse("2015/01/02"), 100.1));
 
 		csvUtil.writeCsvFile("output/output.csv", list, param);
 
@@ -68,10 +68,10 @@ public class TestCSVWriter {
 
 	@Test
 	public void 正常系_CSVファイル書き込みテスト_デフォルトパラメーターNULL() throws ErrorCheckException, IOException, ParseException {
-		List<TestCSVData> list = new ArrayList<>();
-		list.add(new TestCSVData(1, "テスト１", 12, new SimpleDateFormat("yyyy/MM/dd").parse("2018/12/12"), 75.4));
-		list.add(new TestCSVData(2, "テスト２", 10, new SimpleDateFormat("yyyy/MM/dd").parse("2016/03/15"), 40.5));
-		list.add(new TestCSVData(3, null, 9, new SimpleDateFormat("yyyy/MM/dd").parse("2015/01/02"), 100.1));
+		List<TestCsvData> list = new ArrayList<>();
+		list.add(new TestCsvData(1, "テスト１", 12, new SimpleDateFormat("yyyy/MM/dd").parse("2018/12/12"), 75.4));
+		list.add(new TestCsvData(2, "テスト２", 10, new SimpleDateFormat("yyyy/MM/dd").parse("2016/03/15"), 40.5));
+		list.add(new TestCsvData(3, null, 9, new SimpleDateFormat("yyyy/MM/dd").parse("2015/01/02"), 100.1));
 
 		csvUtil.writeCsvFile("output/output.csv", list, null);
 
@@ -84,10 +84,10 @@ public class TestCSVWriter {
 	public void 正常系_CSVファイル書き込みテスト_ヘッダーなし() throws ErrorCheckException, IOException, ParseException {
 		CsvParameter param = CsvParameter.builder().header(false).build();
 
-		List<TestCSVData> list = new ArrayList<>();
-		list.add(new TestCSVData(1, "テスト１", 12, new SimpleDateFormat("yyyy/MM/dd").parse("2018/12/12"), 75.4));
-		list.add(new TestCSVData(2, "テスト２", 10, new SimpleDateFormat("yyyy/MM/dd").parse("2016/03/15"), 40.5));
-		list.add(new TestCSVData(3, null, 9, new SimpleDateFormat("yyyy/MM/dd").parse("2015/01/02"), 100.1));
+		List<TestCsvData> list = new ArrayList<>();
+		list.add(new TestCsvData(1, "テスト１", 12, new SimpleDateFormat("yyyy/MM/dd").parse("2018/12/12"), 75.4));
+		list.add(new TestCsvData(2, "テスト２", 10, new SimpleDateFormat("yyyy/MM/dd").parse("2016/03/15"), 40.5));
+		list.add(new TestCsvData(3, null, 9, new SimpleDateFormat("yyyy/MM/dd").parse("2015/01/02"), 100.1));
 
 		csvUtil.writeCsvFile("output/output.csv", list, param);
 
@@ -100,10 +100,10 @@ public class TestCSVWriter {
 	public void 正常系_CSVファイル書き込みテスト_ヘッダー2バイト文字() throws ErrorCheckException, IOException, ParseException {
 		CsvParameter param = CsvParameter.builder().build();
 
-		List<TestCSVDataHeaderJapanese> list = new ArrayList<>();
-		list.add(new TestCSVDataHeaderJapanese(1, "テスト１", 12, new SimpleDateFormat("yyyy/MM/dd").parse("2018/12/12"), 75.4));
-		list.add(new TestCSVDataHeaderJapanese(2, "テスト２", 10, new SimpleDateFormat("yyyy/MM/dd").parse("2016/03/15"), 40.5));
-		list.add(new TestCSVDataHeaderJapanese(3, null, 9, new SimpleDateFormat("yyyy/MM/dd").parse("2015/01/02"), 100.1));
+		List<TestCsvDataHeaderJapanese> list = new ArrayList<>();
+		list.add(new TestCsvDataHeaderJapanese(1, "テスト１", 12, new SimpleDateFormat("yyyy/MM/dd").parse("2018/12/12"), 75.4));
+		list.add(new TestCsvDataHeaderJapanese(2, "テスト２", 10, new SimpleDateFormat("yyyy/MM/dd").parse("2016/03/15"), 40.5));
+		list.add(new TestCsvDataHeaderJapanese(3, null, 9, new SimpleDateFormat("yyyy/MM/dd").parse("2015/01/02"), 100.1));
 
 		csvUtil.writeCsvFile("output/output.csv", list, param);
 
@@ -116,10 +116,10 @@ public class TestCSVWriter {
 	public void 正常系_CSVファイル書き込みテスト_セパレータータブ() throws ErrorCheckException, IOException, ParseException {
 		CsvParameter param = CsvParameter.builder().separator('\t').build();
 
-		List<TestCSVData> list = new ArrayList<>();
-		list.add(new TestCSVData(1, "テスト１", 12, new SimpleDateFormat("yyyy/MM/dd").parse("2018/12/12"), 75.4));
-		list.add(new TestCSVData(2, "テスト２", 10, new SimpleDateFormat("yyyy/MM/dd").parse("2016/03/15"), 40.5));
-		list.add(new TestCSVData(3, null, 9, new SimpleDateFormat("yyyy/MM/dd").parse("2015/01/02"), 100.1));
+		List<TestCsvData> list = new ArrayList<>();
+		list.add(new TestCsvData(1, "テスト１", 12, new SimpleDateFormat("yyyy/MM/dd").parse("2018/12/12"), 75.4));
+		list.add(new TestCsvData(2, "テスト２", 10, new SimpleDateFormat("yyyy/MM/dd").parse("2016/03/15"), 40.5));
+		list.add(new TestCsvData(3, null, 9, new SimpleDateFormat("yyyy/MM/dd").parse("2015/01/02"), 100.1));
 
 		csvUtil.writeCsvFile("output/output.csv", list, param);
 
@@ -132,10 +132,10 @@ public class TestCSVWriter {
 	public void 正常系_CSVファイル書き込みテスト_SJISのCSVファイル() throws ErrorCheckException, IOException, ParseException {
 		CsvParameter param = CsvParameter.builder().charset(Charset.forName("Shift-JIS")).build();
 
-		List<TestCSVData> list = new ArrayList<>();
-		list.add(new TestCSVData(1, "テスト１", 12, new SimpleDateFormat("yyyy/MM/dd").parse("2018/12/12"), 75.4));
-		list.add(new TestCSVData(2, "テスト２", 10, new SimpleDateFormat("yyyy/MM/dd").parse("2016/03/15"), 40.5));
-		list.add(new TestCSVData(3, null, 9, new SimpleDateFormat("yyyy/MM/dd").parse("2015/01/02"), 100.1));
+		List<TestCsvData> list = new ArrayList<>();
+		list.add(new TestCsvData(1, "テスト１", 12, new SimpleDateFormat("yyyy/MM/dd").parse("2018/12/12"), 75.4));
+		list.add(new TestCsvData(2, "テスト２", 10, new SimpleDateFormat("yyyy/MM/dd").parse("2016/03/15"), 40.5));
+		list.add(new TestCsvData(3, null, 9, new SimpleDateFormat("yyyy/MM/dd").parse("2015/01/02"), 100.1));
 
 		csvUtil.writeCsvFile("output/output.csv", list, param);
 
@@ -148,10 +148,10 @@ public class TestCSVWriter {
 	public void 正常系_CSVファイル書き込みテスト_改行コードCRLF() throws ErrorCheckException, IOException, ParseException {
 		CsvParameter param = CsvParameter.builder().lineSeparator("\r\n").build();
 
-		List<TestCSVData> list = new ArrayList<>();
-		list.add(new TestCSVData(1, "テスト１", 12, new SimpleDateFormat("yyyy/MM/dd").parse("2018/12/12"), 75.4));
-		list.add(new TestCSVData(2, "テスト２", 10, new SimpleDateFormat("yyyy/MM/dd").parse("2016/03/15"), 40.5));
-		list.add(new TestCSVData(3, null, 9, new SimpleDateFormat("yyyy/MM/dd").parse("2015/01/02"), 100.1));
+		List<TestCsvData> list = new ArrayList<>();
+		list.add(new TestCsvData(1, "テスト１", 12, new SimpleDateFormat("yyyy/MM/dd").parse("2018/12/12"), 75.4));
+		list.add(new TestCsvData(2, "テスト２", 10, new SimpleDateFormat("yyyy/MM/dd").parse("2016/03/15"), 40.5));
+		list.add(new TestCsvData(3, null, 9, new SimpleDateFormat("yyyy/MM/dd").parse("2015/01/02"), 100.1));
 
 		csvUtil.writeCsvFile("output/output.csv", list, param);
 
@@ -164,10 +164,10 @@ public class TestCSVWriter {
 	public void 正常系_CSVファイル書き込みテスト_囲み文字なし() throws ErrorCheckException, IOException, ParseException {
 		CsvParameter param = CsvParameter.builder().quote(false).build();
 
-		List<TestCSVData> list = new ArrayList<>();
-		list.add(new TestCSVData(1, "テスト１", 12, new SimpleDateFormat("yyyy/MM/dd").parse("2018/12/12"), 75.4));
-		list.add(new TestCSVData(2, "テスト２", 10, new SimpleDateFormat("yyyy/MM/dd").parse("2016/03/15"), 40.5));
-		list.add(new TestCSVData(3, null, 9, new SimpleDateFormat("yyyy/MM/dd").parse("2015/01/02"), 100.1));
+		List<TestCsvData> list = new ArrayList<>();
+		list.add(new TestCsvData(1, "テスト１", 12, new SimpleDateFormat("yyyy/MM/dd").parse("2018/12/12"), 75.4));
+		list.add(new TestCsvData(2, "テスト２", 10, new SimpleDateFormat("yyyy/MM/dd").parse("2016/03/15"), 40.5));
+		list.add(new TestCsvData(3, null, 9, new SimpleDateFormat("yyyy/MM/dd").parse("2015/01/02"), 100.1));
 
 		csvUtil.writeCsvFile("output/output.csv", list, param);
 
@@ -180,10 +180,10 @@ public class TestCSVWriter {
 	public void 正常系_CSVファイル書き込みテスト_文字列にカンマが含まれるがダブルクォートで囲みなし指定() throws ErrorCheckException, IOException, ParseException {
 		CsvParameter param = CsvParameter.builder().quote(false).build();
 
-		List<TestCSVData> list = new ArrayList<>();
-		list.add(new TestCSVData(1, "テスト１", 12, new SimpleDateFormat("yyyy/MM/dd").parse("2018/12/12"), 75.4));
-		list.add(new TestCSVData(2, "テスト,２", 10, new SimpleDateFormat("yyyy/MM/dd").parse("2016/03/15"), 40.5));
-		list.add(new TestCSVData(3, null, 9, new SimpleDateFormat("yyyy/MM/dd").parse("2015/01/02"), 100.1));
+		List<TestCsvData> list = new ArrayList<>();
+		list.add(new TestCsvData(1, "テスト１", 12, new SimpleDateFormat("yyyy/MM/dd").parse("2018/12/12"), 75.4));
+		list.add(new TestCsvData(2, "テスト,２", 10, new SimpleDateFormat("yyyy/MM/dd").parse("2016/03/15"), 40.5));
+		list.add(new TestCsvData(3, null, 9, new SimpleDateFormat("yyyy/MM/dd").parse("2015/01/02"), 100.1));
 
 		csvUtil.writeCsvFile("output/output.csv", list, param);
 
@@ -196,10 +196,10 @@ public class TestCSVWriter {
 	public void 正常系_CSVファイル書き込みテスト_NULL文字列変更() throws ErrorCheckException, IOException, ParseException {
 		CsvParameter param = CsvParameter.builder().nullValueString("").build();
 
-		List<TestCSVData> list = new ArrayList<>();
-		list.add(new TestCSVData(1, "テスト１", 12, new SimpleDateFormat("yyyy/MM/dd").parse("2018/12/12"), 75.4));
-		list.add(new TestCSVData(2, "テスト２", 10, new SimpleDateFormat("yyyy/MM/dd").parse("2016/03/15"), 40.5));
-		list.add(new TestCSVData(3, null, 9, new SimpleDateFormat("yyyy/MM/dd").parse("2015/01/02"), 100.1));
+		List<TestCsvData> list = new ArrayList<>();
+		list.add(new TestCsvData(1, "テスト１", 12, new SimpleDateFormat("yyyy/MM/dd").parse("2018/12/12"), 75.4));
+		list.add(new TestCsvData(2, "テスト２", 10, new SimpleDateFormat("yyyy/MM/dd").parse("2016/03/15"), 40.5));
+		list.add(new TestCsvData(3, null, 9, new SimpleDateFormat("yyyy/MM/dd").parse("2015/01/02"), 100.1));
 
 		csvUtil.writeCsvFile("output/output.csv", list, param);
 
@@ -212,10 +212,10 @@ public class TestCSVWriter {
 	public void 正常系_CSVファイル書き込みテスト_アペンドモードOFF() throws ErrorCheckException, IOException, ParseException {
 		CsvParameter param = CsvParameter.builder().build();
 
-		List<TestCSVData> list = new ArrayList<>();
-		list.add(new TestCSVData(1, "テスト１", 12, new SimpleDateFormat("yyyy/MM/dd").parse("2018/12/12"), 75.4));
-		list.add(new TestCSVData(2, "テスト２", 10, new SimpleDateFormat("yyyy/MM/dd").parse("2016/03/15"), 40.5));
-		list.add(new TestCSVData(3, null, 9, new SimpleDateFormat("yyyy/MM/dd").parse("2015/01/02"), 100.1));
+		List<TestCsvData> list = new ArrayList<>();
+		list.add(new TestCsvData(1, "テスト１", 12, new SimpleDateFormat("yyyy/MM/dd").parse("2018/12/12"), 75.4));
+		list.add(new TestCsvData(2, "テスト２", 10, new SimpleDateFormat("yyyy/MM/dd").parse("2016/03/15"), 40.5));
+		list.add(new TestCsvData(3, null, 9, new SimpleDateFormat("yyyy/MM/dd").parse("2015/01/02"), 100.1));
 
 		csvUtil.writeCsvFile("output/output.csv", list, param);
 		csvUtil.writeCsvFile("output/output.csv", list, param);
@@ -229,10 +229,10 @@ public class TestCSVWriter {
 	public void 正常系_CSVファイル書き込みテスト_アペンドモードON() throws ErrorCheckException, IOException, ParseException {
 		CsvParameter param = CsvParameter.builder().appendMode(true).build();
 
-		List<TestCSVData> list = new ArrayList<>();
-		list.add(new TestCSVData(1, "テスト１", 12, new SimpleDateFormat("yyyy/MM/dd").parse("2018/12/12"), 75.4));
-		list.add(new TestCSVData(2, "テスト２", 10, new SimpleDateFormat("yyyy/MM/dd").parse("2016/03/15"), 40.5));
-		list.add(new TestCSVData(3, null, 9, new SimpleDateFormat("yyyy/MM/dd").parse("2015/01/02"), 100.1));
+		List<TestCsvData> list = new ArrayList<>();
+		list.add(new TestCsvData(1, "テスト１", 12, new SimpleDateFormat("yyyy/MM/dd").parse("2018/12/12"), 75.4));
+		list.add(new TestCsvData(2, "テスト２", 10, new SimpleDateFormat("yyyy/MM/dd").parse("2016/03/15"), 40.5));
+		list.add(new TestCsvData(3, null, 9, new SimpleDateFormat("yyyy/MM/dd").parse("2015/01/02"), 100.1));
 
 		csvUtil.writeCsvFile("output/output.csv", list, param);
 		csvUtil.writeCsvFile("output/output.csv", list, param);
@@ -249,10 +249,10 @@ public class TestCSVWriter {
 	public void 正常系_CSVファイル書き込みテスト_ディレクトリが存在しない場合でも作成される() throws ErrorCheckException, IOException, ParseException {
 		CsvParameter param = CsvParameter.builder().build();
 
-		List<TestCSVData> list = new ArrayList<>();
-		list.add(new TestCSVData(1, "テスト１", 12, new SimpleDateFormat("yyyy/MM/dd").parse("2018/12/12"), 75.4));
-		list.add(new TestCSVData(2, "テスト２", 10, new SimpleDateFormat("yyyy/MM/dd").parse("2016/03/15"), 40.5));
-		list.add(new TestCSVData(3, null, 9, new SimpleDateFormat("yyyy/MM/dd").parse("2015/01/02"), 100.1));
+		List<TestCsvData> list = new ArrayList<>();
+		list.add(new TestCsvData(1, "テスト１", 12, new SimpleDateFormat("yyyy/MM/dd").parse("2018/12/12"), 75.4));
+		list.add(new TestCsvData(2, "テスト２", 10, new SimpleDateFormat("yyyy/MM/dd").parse("2016/03/15"), 40.5));
+		list.add(new TestCsvData(3, null, 9, new SimpleDateFormat("yyyy/MM/dd").parse("2015/01/02"), 100.1));
 
 		csvUtil.writeCsvFile("output/dir/output.csv", list, param);
 
@@ -265,10 +265,10 @@ public class TestCSVWriter {
 	public void 異常系_CSVファイル書き込みテスト_ファイルパスにNULLを与える() throws ErrorCheckException, IOException, ParseException {
 		CsvParameter param = CsvParameter.builder().build();
 
-		List<TestCSVData> list = new ArrayList<>();
-		list.add(new TestCSVData(1, "テスト１", 12, new SimpleDateFormat("yyyy/MM/dd").parse("2018/12/12"), 75.4));
-		list.add(new TestCSVData(2, "テスト２", 10, new SimpleDateFormat("yyyy/MM/dd").parse("2016/03/15"), 40.5));
-		list.add(new TestCSVData(3, null, 9, new SimpleDateFormat("yyyy/MM/dd").parse("2015/01/02"), 100.1));
+		List<TestCsvData> list = new ArrayList<>();
+		list.add(new TestCsvData(1, "テスト１", 12, new SimpleDateFormat("yyyy/MM/dd").parse("2018/12/12"), 75.4));
+		list.add(new TestCsvData(2, "テスト２", 10, new SimpleDateFormat("yyyy/MM/dd").parse("2016/03/15"), 40.5));
+		list.add(new TestCsvData(3, null, 9, new SimpleDateFormat("yyyy/MM/dd").parse("2015/01/02"), 100.1));
 
 		try {
 			csvUtil.writeCsvFile(null, list, param);
@@ -297,7 +297,7 @@ public class TestCSVWriter {
 		CsvParameter param = CsvParameter.builder().build();
 
 		try {
-			csvUtil.writeCsvFile("output/output.csv", new ArrayList<TestCSVData>(), param);
+			csvUtil.writeCsvFile("output/output.csv", new ArrayList<TestCsvData>(), param);
 			Assert.fail("正常終了した");
 		} catch (ErrorCheckException e) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00200", e.getErrorInfoList().get(0).getErrorId());
@@ -309,10 +309,10 @@ public class TestCSVWriter {
 	public void 異常系_CSVファイル書き込みテスト_読み取り専用ファイルにアペンドしようとする() throws ErrorCheckException, IOException, ParseException {
 		CsvParameter param = CsvParameter.builder().appendMode(true).build();
 
-		List<TestCSVData> list = new ArrayList<>();
-		list.add(new TestCSVData(1, "テスト１", 12, new SimpleDateFormat("yyyy/MM/dd").parse("2018/12/12"), 75.4));
-		list.add(new TestCSVData(2, "テスト２", 10, new SimpleDateFormat("yyyy/MM/dd").parse("2016/03/15"), 40.5));
-		list.add(new TestCSVData(3, null, 9, new SimpleDateFormat("yyyy/MM/dd").parse("2015/01/02"), 100.1));
+		List<TestCsvData> list = new ArrayList<>();
+		list.add(new TestCsvData(1, "テスト１", 12, new SimpleDateFormat("yyyy/MM/dd").parse("2018/12/12"), 75.4));
+		list.add(new TestCsvData(2, "テスト２", 10, new SimpleDateFormat("yyyy/MM/dd").parse("2016/03/15"), 40.5));
+		list.add(new TestCsvData(3, null, 9, new SimpleDateFormat("yyyy/MM/dd").parse("2015/01/02"), 100.1));
 
 		csvUtil.writeCsvFile("output/output.csv", list, param);
 

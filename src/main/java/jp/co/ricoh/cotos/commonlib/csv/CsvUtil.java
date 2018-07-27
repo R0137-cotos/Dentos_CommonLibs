@@ -43,7 +43,7 @@ import lombok.AllArgsConstructor;
  * CSV Reader/Writer ユーティリティー
  */
 @Component
-public class CSVUtil {
+public class CsvUtil {
 
 	CsvMapper mapper = new CsvMapper();
 
