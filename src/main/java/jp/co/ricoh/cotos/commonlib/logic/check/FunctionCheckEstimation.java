@@ -78,7 +78,7 @@ public class FunctionCheckEstimation {
 			}
 		}
 	}
-	
+
 	/**
 	 * 見積情報コピーチェック処理
 	 * 

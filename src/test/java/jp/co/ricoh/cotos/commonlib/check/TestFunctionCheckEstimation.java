@@ -110,9 +110,9 @@ public class TestFunctionCheckEstimation {
 			Assert.assertEquals("エラーIDが正しく設定されること", "RES00004", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "存在しない見積IDが設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
-		
+
 		Estimation estimation = estimationRepository.findOne(1L);
-		
+
 		// MoM社員IDがNull
 		try {
 			functionCheckEstimation.checkEstimationCopy(estimation.getId(), null);
@@ -121,7 +121,7 @@ public class TestFunctionCheckEstimation {
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00004", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者のMoM社員が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
-		
+
 		// MoM社員IDがTBLに存在しない
 		try {
 			functionCheckEstimation.checkEstimationCopy(estimation.getId(), "000");
@@ -130,7 +130,7 @@ public class TestFunctionCheckEstimation {
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者に存在しないMoM社員が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
-		
+
 		// 見積ID、MoM社員ID共にTBLに存在する
 		try {
 			functionCheckEstimation.checkEstimationCopy(estimation.getId(), "00623070");
@@ -138,7 +138,7 @@ public class TestFunctionCheckEstimation {
 			Assert.fail("異常終了してしまった");
 		}
 	}
-	
+
 	@Test
 	@Transactional
 	public void 見積情報更新チェック確認() {
@@ -161,9 +161,9 @@ public class TestFunctionCheckEstimation {
 			Assert.assertEquals("エラーIDが正しく設定されること", "RES00002", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータの見積情報が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
-		
+
 		estimation = estimationRepository.findOne(1L);
-		
+
 		// MoM社員IDがNull
 		try {
 			functionCheckEstimation.checkEstimationUpdate(estimation, null, bindingResult);
@@ -172,7 +172,7 @@ public class TestFunctionCheckEstimation {
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00004", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者のMoM社員が未設定です。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
-		
+
 		// MoM社員IDがTBLに存在しない
 		try {
 			functionCheckEstimation.checkEstimationUpdate(estimation, "000", bindingResult);
@@ -181,7 +181,7 @@ public class TestFunctionCheckEstimation {
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00007", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "操作者に存在しないMoM社員が設定されています。", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
-		
+
 		// Entityチェックでエラー
 		try {
 			ObjectError error = new ObjectError("test", "テストID:テストメッセージ");
@@ -192,9 +192,9 @@ public class TestFunctionCheckEstimation {
 			Assert.assertEquals("エラーIDが正しく設定されること", "テストID", ece.getErrorInfoList().get(0).getErrorId());
 			Assert.assertEquals("エラーメッセージが正しく設定されること", "テストメッセージ", ece.getErrorInfoList().get(0).getErrorMessage());
 		}
-		
+
 		bindingResult = new BeanPropertyBindingResult(estimation, "estimation");
-		
+
 		// 見積ID、MoM社員ID共にTBLに存在する
 		try {
 			bindingResult = new BeanPropertyBindingResult(estimation, "estimation");
