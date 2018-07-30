@@ -89,12 +89,12 @@ public class FunctionCheckEstimation {
 	 * @throws ErrorCheckException
 	 *             エラーチェックException
 	 */
-	public void checkEstimationCopy(Long id, String operatorId) throws ErrorCheckException {
+	public void checkEstimationCopy(long id, String operatorId) throws ErrorCheckException {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		// 見積情報存在チェック
 		if (null == estimationRepository.findOne(id)) {
-			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "ArgumentNullErrorEstimation");
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistEstimation");
 			throw new ErrorCheckException(errorInfoList);
 		}
 		// 操作者MoM社員存在チェック
