@@ -12,7 +12,7 @@ public class CommonMasterSearchParameter {
 	 * 汎用マスタIDリスト
 	 */
 	@ApiParam(value = "汎用マスタIDリスト", required = false)
-	private List<String> commonItemIdList;
+	private List<String> commonArticleCdList;
 
 	/**
 	 * 空行追加フラグ

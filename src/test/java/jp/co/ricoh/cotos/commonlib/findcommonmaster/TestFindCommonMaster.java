@@ -51,8 +51,8 @@ public class TestFindCommonMaster {
 
 		汎用マスタデータ作成();
 
-		List<String> commonItemIdList = Arrays.asList("001");
-		CommonMasterSearchParameter parameter = 汎用マスタ検索パラメータ作成(commonItemIdList, false);
+		List<String> commonArticleCdList = Arrays.asList("001");
+		CommonMasterSearchParameter parameter = 汎用マスタ検索パラメータ作成(commonArticleCdList, false);
 		List<CommonMasterResult> commonList = findCommonMaster.findCommonMaster(parameter);
 		汎用マスタ結果確認(commonList, false, false);
 	}
@@ -68,8 +68,8 @@ public class TestFindCommonMaster {
 
 		汎用マスタデータ作成();
 
-		List<String> commonItemIdList = Arrays.asList("001");
-		CommonMasterSearchParameter parameter = 汎用マスタ検索パラメータ作成(commonItemIdList, true);
+		List<String> commonArticleCdList = Arrays.asList("001");
+		CommonMasterSearchParameter parameter = 汎用マスタ検索パラメータ作成(commonArticleCdList, true);
 		List<CommonMasterResult> commonList = findCommonMaster.findCommonMaster(parameter);
 		汎用マスタ結果確認(commonList, true, false);
 	}
@@ -85,8 +85,8 @@ public class TestFindCommonMaster {
 
 		汎用マスタデータ作成();
 
-		List<String> commonItemIdList = Arrays.asList("001", "002");
-		CommonMasterSearchParameter parameter = 汎用マスタ検索パラメータ作成(commonItemIdList, false);
+		List<String> commonArticleCdList = Arrays.asList("001", "002");
+		CommonMasterSearchParameter parameter = 汎用マスタ検索パラメータ作成(commonArticleCdList, false);
 		List<CommonMasterResult> commonList = findCommonMaster.findCommonMaster(parameter);
 		汎用マスタ結果確認(commonList, false, true);
 	}
@@ -102,8 +102,8 @@ public class TestFindCommonMaster {
 
 		汎用マスタデータ作成();
 
-		List<String> commonItemIdList = Arrays.asList("004");
-		CommonMasterSearchParameter parameter = 汎用マスタ検索パラメータ作成(commonItemIdList, false);
+		List<String> commonArticleCdList = Arrays.asList("004");
+		CommonMasterSearchParameter parameter = 汎用マスタ検索パラメータ作成(commonArticleCdList, false);
 		List<CommonMasterResult> commonList = findCommonMaster.findCommonMaster(parameter);
 		Assert.assertEquals("汎用マスタ取得件数が正しいこと", 0, commonList.size());
 	}
@@ -119,8 +119,8 @@ public class TestFindCommonMaster {
 
 		MoM汎用マスタデータ作成();
 
-		List<String> commonItemIdList = Arrays.asList("003");
-		CommonMasterSearchParameter parameter = 汎用マスタ検索パラメータ作成(commonItemIdList, false);
+		List<String> commonArticleCdList = Arrays.asList("003");
+		CommonMasterSearchParameter parameter = 汎用マスタ検索パラメータ作成(commonArticleCdList, false);
 		List<CommonMasterResult> commonList = findCommonMaster.findCommonMaster(parameter);
 		Assert.assertEquals("汎用マスタ取得件数が正しいこと", 0, commonList.size());
 	}
@@ -167,8 +167,8 @@ public class TestFindCommonMaster {
 
 		MoM汎用マスタデータ作成();
 
-		List<String> commonItemIdList = Arrays.asList("001");
-		CommonMasterSearchParameter parameter = 汎用マスタ検索パラメータ作成(commonItemIdList, false);
+		List<String> commonArticleCdList = Arrays.asList("001");
+		CommonMasterSearchParameter parameter = 汎用マスタ検索パラメータ作成(commonArticleCdList, false);
 		List<CommonMasterResult> commonList = findCommonMaster.findMomCommonMaster(parameter);
 		MoM汎用マスタ結果確認(commonList, false, false);
 	}
@@ -184,8 +184,8 @@ public class TestFindCommonMaster {
 
 		MoM汎用マスタデータ作成();
 
-		List<String> commonItemIdList = Arrays.asList("001");
-		CommonMasterSearchParameter parameter = 汎用マスタ検索パラメータ作成(commonItemIdList, true);
+		List<String> commonArticleCdList = Arrays.asList("001");
+		CommonMasterSearchParameter parameter = 汎用マスタ検索パラメータ作成(commonArticleCdList, true);
 		List<CommonMasterResult> commonList = findCommonMaster.findMomCommonMaster(parameter);
 		MoM汎用マスタ結果確認(commonList, true, false);
 	}
@@ -201,8 +201,8 @@ public class TestFindCommonMaster {
 
 		MoM汎用マスタデータ作成();
 
-		List<String> commonItemIdList = Arrays.asList("001", "002");
-		CommonMasterSearchParameter parameter = 汎用マスタ検索パラメータ作成(commonItemIdList, false);
+		List<String> commonArticleCdList = Arrays.asList("001", "002");
+		CommonMasterSearchParameter parameter = 汎用マスタ検索パラメータ作成(commonArticleCdList, false);
 		List<CommonMasterResult> commonList = findCommonMaster.findMomCommonMaster(parameter);
 		MoM汎用マスタ結果確認(commonList, false, true);
 	}
@@ -218,8 +218,8 @@ public class TestFindCommonMaster {
 
 		MoM汎用マスタデータ作成();
 
-		List<String> commonItemIdList = Arrays.asList("003");
-		CommonMasterSearchParameter parameter = 汎用マスタ検索パラメータ作成(commonItemIdList, false);
+		List<String> commonArticleCdList = Arrays.asList("003");
+		CommonMasterSearchParameter parameter = 汎用マスタ検索パラメータ作成(commonArticleCdList, false);
 		List<CommonMasterResult> commonList = findCommonMaster.findMomCommonMaster(parameter);
 		Assert.assertEquals("MoM汎用マスタ取得件数が正しいこと", 0, commonList.size());
 	}
@@ -235,8 +235,8 @@ public class TestFindCommonMaster {
 
 		MoM汎用マスタデータ作成();
 
-		List<String> commonItemIdList = Arrays.asList("004");
-		CommonMasterSearchParameter parameter = 汎用マスタ検索パラメータ作成(commonItemIdList, false);
+		List<String> commonArticleCdList = Arrays.asList("004");
+		CommonMasterSearchParameter parameter = 汎用マスタ検索パラメータ作成(commonArticleCdList, false);
 		List<CommonMasterResult> commonList = findCommonMaster.findMomCommonMaster(parameter);
 		Assert.assertEquals("MoM汎用マスタ取得件数が正しいこと", 0, commonList.size());
 	}
@@ -282,9 +282,9 @@ public class TestFindCommonMaster {
 		dbUtil.execute("sql/findcommonmaster/testMomCommonMasterDetailInsert.sql", new HashMap<>());
 	}
 
-	private CommonMasterSearchParameter 汎用マスタ検索パラメータ作成(List<String> commonItemIdList, boolean addBlankRowFlg) {
+	private CommonMasterSearchParameter 汎用マスタ検索パラメータ作成(List<String> commonArticleCdList, boolean addBlankRowFlg) {
 		CommonMasterSearchParameter parameter = new CommonMasterSearchParameter();
-		parameter.setCommonItemIdList(commonItemIdList);
+		parameter.setCommonArticleCdList(commonArticleCdList);
 		parameter.setAddBlankRowFlg(addBlankRowFlg);
 		return parameter;
 	}

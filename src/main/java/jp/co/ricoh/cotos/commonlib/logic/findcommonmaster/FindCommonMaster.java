@@ -43,11 +43,13 @@ public class FindCommonMaster {
 	public List<CommonMasterResult> findCommonMaster(CommonMasterSearchParameter parameter) {
 		List<CommonMasterResult> list = new ArrayList<>();
 
-		if (null != parameter && null != parameter.getCommonItemIdList()) {
-			parameter.getCommonItemIdList().stream().forEach(articleCd -> {
+		if (null != parameter && null != parameter.getCommonArticleCdList()) {
+			parameter.getCommonArticleCdList().stream().forEach(articleCd -> {
 				CommonMaster commonMaster = commonMasterRepository.findByArticleCd(articleCd);
 				if (null != commonMaster) {
-					CommonMasterResult result = createCommonMasterResult(commonMaster);
+					CommonMasterResult result = new CommonMasterResult();
+					result.setArticleCd(commonMaster.getArticleCd());
+					result.setArticleName(commonMaster.getArticleName());
 					List<CommonMasterDetailResult> detailResultList = createCommonMasterDetailResult(commonMasterDetailRepository.findByCommonMasterId(commonMaster.getId()));
 					if (parameter.isAddBlankRowFlg() && !detailResultList.isEmpty()) {
 						detailResultList.add(0, addBlankRow());
@@ -71,11 +73,13 @@ public class FindCommonMaster {
 	public List<CommonMasterResult> findMomCommonMaster(CommonMasterSearchParameter parameter) {
 		List<CommonMasterResult> list = new ArrayList<>();
 
-		if (null != parameter && null != parameter.getCommonItemIdList()) {
-			parameter.getCommonItemIdList().stream().forEach(articleCd -> {
+		if (null != parameter && null != parameter.getCommonArticleCdList()) {
+			parameter.getCommonArticleCdList().stream().forEach(articleCd -> {
 				MomCommonMaster momCommonMaster = momCommonMasterRepository.findByItemId(articleCd);
 				if (null != momCommonMaster) {
-					CommonMasterResult result = createCommonMasterResultMom(momCommonMaster);
+					CommonMasterResult result = new CommonMasterResult();
+					result.setArticleCd(momCommonMaster.getItemId());
+					result.setArticleName(momCommonMaster.getItemName());
 					List<CommonMasterDetailResult> detailResultList = createCommonMasterDetailResultMom(momCommonMasterDetailRepository.findByItemId(articleCd));
 					if (parameter.isAddBlankRowFlg() && !detailResultList.isEmpty()) {
 						detailResultList.add(0, addBlankRow());
@@ -87,34 +91,6 @@ public class FindCommonMaster {
 		}
 
 		return list;
-	}
-
-	/**
-	 * 汎用マスタ結果生成
-	 * 
-	 * @param master
-	 *            COTOS汎用マスタ
-	 * @return 汎用マスタ結果
-	 */
-	private CommonMasterResult createCommonMasterResult(CommonMaster master) {
-		CommonMasterResult result = new CommonMasterResult();
-		result.setArticleCd(master.getArticleCd());
-		result.setArticleName(master.getArticleName());
-		return result;
-	}
-
-	/**
-	 * 汎用マスタ結果生成
-	 * 
-	 * @param master
-	 *            MoM汎用マスタ
-	 * @return 汎用マスタ結果
-	 */
-	private CommonMasterResult createCommonMasterResultMom(MomCommonMaster master) {
-		CommonMasterResult result = new CommonMasterResult();
-		result.setArticleCd(master.getItemId());
-		result.setArticleName(master.getItemName());
-		return result;
 	}
 
 	/**
