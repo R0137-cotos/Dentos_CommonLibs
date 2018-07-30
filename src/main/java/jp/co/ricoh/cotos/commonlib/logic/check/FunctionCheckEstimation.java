@@ -80,6 +80,28 @@ public class FunctionCheckEstimation {
 	}
 
 	/**
+	 * 見積情報コピーチェック処理
+	 * 
+	 * @param id
+	 *            見積ID
+	 * @param operatorId
+	 *            操作者MoM社員ID
+	 * @throws ErrorCheckException
+	 *             エラーチェックException
+	 */
+	public void checkEstimationCopy(long id, String operatorId) throws ErrorCheckException {
+		List<ErrorInfo> errorInfoList = new ArrayList<>();
+
+		// 見積情報存在チェック
+		if (null == estimationRepository.findOne(id)) {
+			errorInfoList = checkUtil.addErrorInfo(errorInfoList, "EntityDoesNotExistEstimation");
+			throw new ErrorCheckException(errorInfoList);
+		}
+		// 操作者MoM社員存在チェック
+		existsMomEmployeeId(errorInfoList, operatorId, EmpMode.操作者);
+	}
+
+	/**
 	 * 見積情報帳票出力チェック処理
 	 * 
 	 * @param estimationId
