@@ -12,15 +12,18 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModelProperty;
+import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 汎用マスタ
  */
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "common_master")
-public class CommonMaster {
+public class CommonMaster extends EntityBaseMaster {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "common_master_seq")
@@ -33,13 +36,13 @@ public class CommonMaster {
 	 */
 	@Column(nullable = false)
 	@ApiModelProperty(value = "マスタID", required = true, position = 2, allowableValues = "range[0,255]")
-	private String itemId;
+	private String articleCd;
 
 	/**
 	 * マスタ名称
 	 */
 	@ApiModelProperty(value = "マスタ名称", required = false, position = 3, allowableValues = "range[0,255]")
-	private String itemName;
+	private String articleName;
 
 	/**
 	 * マスタ説明
