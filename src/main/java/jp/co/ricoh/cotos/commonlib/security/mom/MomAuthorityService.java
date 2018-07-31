@@ -61,8 +61,7 @@ public class MomAuthorityService {
 	}
 
 	public enum AuthDiv {
-		// TODO: 権限情報は後日設定
-		新規作成1("0001"), 新規作成3("0110"), 発注承認("0390"), FFM商品原価情報("0690"), 役務手配("0455");
+		見積_契約_手配("2200"), 請求_計上_本部("2210"), システム管理("2220");
 
 		private final String value;
 

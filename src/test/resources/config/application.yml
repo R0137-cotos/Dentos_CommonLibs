@@ -44,4 +44,4 @@ spring:
 remote:
   momauthority:
     url: http://165.96.254.183:10110/jmo/services/KengenService
-    relatedid: JMR
+    relatedid: CSP
