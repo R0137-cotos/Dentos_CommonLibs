@@ -15,11 +15,9 @@ public class AuthDivConverter implements AttributeConverter<AuthDiv, String> {
 			return null;
 
 		switch (authDiv) {
-		case 新規作成1:
-		case 新規作成3:
-		case 発注承認:
-		case 役務手配:
-		case FFM商品原価情報:
+		case 見積_契約_手配:
+		case 請求_計上_本部:
+		case システム管理:
 			return authDiv.toValue();
 		default:
 			throw new IllegalArgumentException("Unknown value: " + authDiv);
@@ -33,16 +31,12 @@ public class AuthDivConverter implements AttributeConverter<AuthDiv, String> {
 			return null;
 
 		switch (value) {
-		case "0001":
-			return AuthDiv.新規作成1;
-		case "0110":
-			return AuthDiv.新規作成3;
-		case "0390":
-			return AuthDiv.発注承認;
-		case "0690":
-			return AuthDiv.FFM商品原価情報;
-		case "0455":
-			return AuthDiv.役務手配;
+		case "2200":
+			return AuthDiv.見積_契約_手配;
+		case "2210":
+			return AuthDiv.請求_計上_本部;
+		case "2220":
+			return AuthDiv.システム管理;
 		default:
 			throw new IllegalArgumentException("Unknown value: " + value);
 		}

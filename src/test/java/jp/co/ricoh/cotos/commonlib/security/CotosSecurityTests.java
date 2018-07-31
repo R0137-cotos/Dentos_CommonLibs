@@ -178,12 +178,12 @@ public class CotosSecurityTests {
 		AuthorityJudgeParameter authParam = new AuthorityJudgeParameter();
 		authParam.setActorEmployeeMaster(new EmployeeMaster());
 
-		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.新規作成3, AccessType.編集);
+		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.見積_契約_手配, AccessType.編集);
 		Assert.assertTrue("対象の権限があること", result);
 
 		Mockito.reset(momAuthorityService);
 	}
-	
+
 	@Test
 	@Transactional
 	public void 正常_MoM権限_編集_東西() throws Exception {
@@ -196,7 +196,7 @@ public class CotosSecurityTests {
 		AuthorityJudgeParameter authParam = new AuthorityJudgeParameter();
 		authParam.setActorEmployeeMaster(new EmployeeMaster());
 
-		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.新規作成3, AccessType.編集);
+		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.見積_契約_手配, AccessType.編集);
 		Assert.assertTrue("対象の権限があること", result);
 
 		Mockito.reset(momAuthorityService);
@@ -216,7 +216,7 @@ public class CotosSecurityTests {
 		authParam.setEmployeeMasterList(new ArrayList<EmployeeMaster>());
 		authParam.getEmployeeMasterList().add(employeeMasterRepository.findOne("00229692"));
 
-		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.新規作成3, AccessType.編集);
+		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.見積_契約_手配, AccessType.編集);
 		Assert.assertTrue("対象の権限があること", result);
 
 		Mockito.reset(momAuthorityService);
@@ -236,7 +236,7 @@ public class CotosSecurityTests {
 		authParam.setEmployeeMasterList(new ArrayList<EmployeeMaster>());
 		authParam.getEmployeeMasterList().add(employeeMasterRepository.findOne("00229692"));
 
-		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.新規作成3, AccessType.編集);
+		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.見積_契約_手配, AccessType.編集);
 		Assert.assertTrue("対象の権限があること", result);
 
 		Mockito.reset(momAuthorityService);
@@ -256,7 +256,7 @@ public class CotosSecurityTests {
 		authParam.setEmployeeMasterList(new ArrayList<EmployeeMaster>());
 		authParam.getEmployeeMasterList().add(employeeMasterRepository.findOne("00220309"));
 
-		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.新規作成3, AccessType.編集);
+		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.見積_契約_手配, AccessType.編集);
 		Assert.assertTrue("対象の権限があること", result);
 
 		Mockito.reset(momAuthorityService);
@@ -276,7 +276,7 @@ public class CotosSecurityTests {
 		authParam.setEmployeeMasterList(new ArrayList<EmployeeMaster>());
 		authParam.getEmployeeMasterList().add(employeeMasterRepository.findOne("00229692"));
 
-		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.新規作成3, AccessType.編集);
+		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.見積_契約_手配, AccessType.編集);
 		Assert.assertTrue("対象の権限があること", result);
 
 		Mockito.reset(momAuthorityService);
@@ -296,7 +296,7 @@ public class CotosSecurityTests {
 		authParam.setEmployeeMasterList(new ArrayList<EmployeeMaster>());
 		authParam.getEmployeeMasterList().add(employeeMasterRepository.findOne("00220309"));
 
-		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.新規作成3, AccessType.編集);
+		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.見積_契約_手配, AccessType.編集);
 		Assert.assertFalse("対象の権限がないこと", result);
 
 		Mockito.reset(momAuthorityService);
@@ -316,7 +316,7 @@ public class CotosSecurityTests {
 		authParam.setEmployeeMasterList(new ArrayList<EmployeeMaster>());
 		authParam.getEmployeeMasterList().add(employeeMasterRepository.findOne("00220552"));
 
-		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.新規作成3, AccessType.編集);
+		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.見積_契約_手配, AccessType.編集);
 		Assert.assertFalse("対象の権限が無いこと", result);
 
 		Mockito.reset(momAuthorityService);
@@ -336,7 +336,7 @@ public class CotosSecurityTests {
 		authParam.setEmployeeMasterList(new ArrayList<EmployeeMaster>());
 		authParam.getEmployeeMasterList().add(employeeMasterRepository.findOne("00623100"));
 
-		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.新規作成3, AccessType.編集);
+		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.見積_契約_手配, AccessType.編集);
 		Assert.assertFalse("対象の権限が無いこと", result);
 
 		Mockito.reset(momAuthorityService);
@@ -356,7 +356,7 @@ public class CotosSecurityTests {
 		authParam.setEmployeeMasterList(new ArrayList<EmployeeMaster>());
 		authParam.getEmployeeMasterList().add(employeeMasterRepository.findOne("00623100"));
 
-		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.新規作成3, AccessType.編集);
+		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.見積_契約_手配, AccessType.編集);
 		Assert.assertFalse("対象の権限が無いこと", result);
 
 		Mockito.reset(momAuthorityService);
@@ -374,7 +374,7 @@ public class CotosSecurityTests {
 		AuthorityJudgeParameter authParam = new AuthorityJudgeParameter();
 		authParam.setActorEmployeeMaster(new EmployeeMaster());
 
-		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.新規作成3, AccessType.編集);
+		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.見積_契約_手配, AccessType.編集);
 		Assert.assertFalse("対象の権限がないこと", result);
 
 		Mockito.reset(momAuthorityService);
@@ -392,12 +392,12 @@ public class CotosSecurityTests {
 		AuthorityJudgeParameter authParam = new AuthorityJudgeParameter();
 		authParam.setActorEmployeeMaster(new EmployeeMaster());
 
-		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.新規作成3, AccessType.承認);
+		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.見積_契約_手配, AccessType.承認);
 		Assert.assertTrue("対象の権限があること", result);
 
 		Mockito.reset(momAuthorityService);
 	}
-	
+
 	@Test
 	@Transactional
 	public void 正常_MoM権限_承認_東西() throws Exception {
@@ -410,7 +410,7 @@ public class CotosSecurityTests {
 		AuthorityJudgeParameter authParam = new AuthorityJudgeParameter();
 		authParam.setActorEmployeeMaster(new EmployeeMaster());
 
-		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.新規作成3, AccessType.承認);
+		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.見積_契約_手配, AccessType.承認);
 		Assert.assertTrue("対象の権限があること", result);
 
 		Mockito.reset(momAuthorityService);
@@ -429,7 +429,7 @@ public class CotosSecurityTests {
 		authParam.setActorEmployeeMaster(employeeMasterRepository.findOne("00220552"));
 		authParam.setRequesterEmployeeMaster(employeeMasterRepository.findOne("00229692"));
 
-		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.新規作成3, AccessType.承認);
+		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.見積_契約_手配, AccessType.承認);
 		Assert.assertTrue("対象の権限があること", result);
 
 		Mockito.reset(momAuthorityService);
@@ -448,7 +448,7 @@ public class CotosSecurityTests {
 		authParam.setActorEmployeeMaster(employeeMasterRepository.findOne("00220552"));
 		authParam.setRequesterEmployeeMaster(employeeMasterRepository.findOne("00229692"));
 
-		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.新規作成3, AccessType.承認);
+		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.見積_契約_手配, AccessType.承認);
 		Assert.assertTrue("対象の権限があること", result);
 
 		Mockito.reset(momAuthorityService);
@@ -467,7 +467,7 @@ public class CotosSecurityTests {
 		authParam.setActorEmployeeMaster(employeeMasterRepository.findOne("00220552"));
 		authParam.setRequesterEmployeeMaster(employeeMasterRepository.findOne("00229692"));
 
-		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.新規作成3, AccessType.承認);
+		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.見積_契約_手配, AccessType.承認);
 		Assert.assertTrue("対象の権限があること", result);
 
 		Mockito.reset(momAuthorityService);
@@ -485,7 +485,7 @@ public class CotosSecurityTests {
 		AuthorityJudgeParameter authParam = new AuthorityJudgeParameter();
 		authParam.setActorEmployeeMaster(new EmployeeMaster());
 
-		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.新規作成3, AccessType.承認);
+		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.見積_契約_手配, AccessType.承認);
 		Assert.assertFalse("対象の権限がないこと", result);
 
 		Mockito.reset(momAuthorityService);
@@ -503,7 +503,7 @@ public class CotosSecurityTests {
 		AuthorityJudgeParameter authParam = new AuthorityJudgeParameter();
 		authParam.setActorEmployeeMaster(new EmployeeMaster());
 
-		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.新規作成3, AccessType.承認);
+		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.見積_契約_手配, AccessType.承認);
 		Assert.assertFalse("対象の権限がないこと", result);
 
 		Mockito.reset(momAuthorityService);
@@ -522,7 +522,7 @@ public class CotosSecurityTests {
 		authParam.setActorEmployeeMaster(employeeMasterRepository.findOne("00220309"));
 		authParam.setRequesterEmployeeMaster(employeeMasterRepository.findOne("00229692"));
 
-		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.新規作成3, AccessType.承認);
+		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.見積_契約_手配, AccessType.承認);
 		Assert.assertFalse("対象の権限がないこと", result);
 
 		Mockito.reset(momAuthorityService);
@@ -541,7 +541,7 @@ public class CotosSecurityTests {
 		authParam.setActorEmployeeMaster(employeeMasterRepository.findOne("00623100"));
 		authParam.setRequesterEmployeeMaster(employeeMasterRepository.findOne("00229692"));
 
-		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.新規作成3, AccessType.承認);
+		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.見積_契約_手配, AccessType.承認);
 		Assert.assertFalse("対象の権限がないこと", result);
 
 		Mockito.reset(momAuthorityService);
@@ -560,7 +560,7 @@ public class CotosSecurityTests {
 		authParam.setActorEmployeeMaster(employeeMasterRepository.findOne("00623100"));
 		authParam.setRequesterEmployeeMaster(employeeMasterRepository.findOne("00229692"));
 
-		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.新規作成3, AccessType.承認);
+		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.見積_契約_手配, AccessType.承認);
 		Assert.assertFalse("対象の権限がないこと", result);
 
 		Mockito.reset(momAuthorityService);
@@ -573,7 +573,7 @@ public class CotosSecurityTests {
 		if (isH2())
 			return;
 
-		AuthLevel result = momAuthorityService.searchMomAuthority("u0200757", ActionDiv.更新, AuthDiv.新規作成3);
+		AuthLevel result = momAuthorityService.searchMomAuthority("u0200757", ActionDiv.更新, AuthDiv.見積_契約_手配);
 		Assert.assertEquals("正常にMoM権限情報を取得できること", AuthLevel.自社, result);
 	}
 
