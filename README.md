@@ -31,7 +31,7 @@
 |25|汎用マスタリファレンス実装　カラム名変更対応|
 |26|見積情報コピーチェック処理追加|
 |27|COTOS用の権限分類を反映|
-|28|@JsonIdentityInfoを追加|
+|28|Customerの中のEstimationに@JsonIdentityInfo,@JsonIdentityReferenceを追加|
 
 
 # バージョン採番方法
