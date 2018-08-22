@@ -49,7 +49,7 @@ public class Customer extends EntityBase {
 
 	@OneToOne(optional = false)
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = true)
+	@JsonIdentityReference(alwaysAsId = true)
 	private Estimation estimation;
 
 	/**
