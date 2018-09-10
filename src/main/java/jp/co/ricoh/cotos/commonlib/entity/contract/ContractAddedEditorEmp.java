@@ -28,7 +28,8 @@ public class ContractAddedEditorEmp extends EntityBase {
 	/**
 	 * RJ社員情報マスタ
 	 */
-	@ManyToOne(optional = true)
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "mom_employee_id", referencedColumnName = "momEmpId")
 	@ApiModelProperty(value = "RJ社員情報マスタ", required = false, position = 2)
 	private MvEmployeeMaster mvEmployeeMaster;
 
@@ -107,7 +108,7 @@ public class ContractAddedEditorEmp extends EntityBase {
 	/**
 	 * 契約
 	 */
-	@ManyToOne(optional = true)
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "contract_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "契約", required = false, position = 15)
 	private Contract contract;

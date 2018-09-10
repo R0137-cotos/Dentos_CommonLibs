@@ -116,7 +116,7 @@ public class Contract extends EntityBase {
 	 * 商品マスタ
 	 */
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "product_master_Id")
+	@JoinColumn(name = "product_master_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "商品マスタ", required = true, position = 5)
 	private Product product;
 

@@ -30,8 +30,8 @@ public class DealerCon extends EntityBase {
 	/**
 	 * MoM企事部
 	 */
-	@ManyToOne
-	@JoinColumn(name = "mom_kjb_system_id")
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "mom_kjb_system_id", referencedColumnName = "mclMomRelId")
 	@ApiModelProperty(value = "MoM企事部", required = false, position = 2)
 	private KjbMaster kjbMaster;
 
@@ -87,7 +87,7 @@ public class DealerCon extends EntityBase {
 	 * 契約
 	 */
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "contract_id")
+	@JoinColumn(name = "contract_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "契約", required = true, position = 11)
 	private Contract contract;
 

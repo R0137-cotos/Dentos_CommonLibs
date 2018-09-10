@@ -30,7 +30,8 @@ public class ItemCon extends EntityBase {
 	/**
 	 * 品種マスタ
 	 */
-	@ManyToOne
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "item_master_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "品種マスタ", required = true, position = 2)
 	private ItemMaster itemMaster;
 
@@ -49,7 +50,7 @@ public class ItemCon extends EntityBase {
 	/**
 	 * 契約明細
 	 */
-	@OneToOne
+	@OneToOne(optional = false)
 	@JoinColumn(name = "contract_detail_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "契約明細", required = true, position = 5)
 	private ContractDetail contrantDetail;

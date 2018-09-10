@@ -26,7 +26,7 @@ public class ContractAttachedFile extends EntityBase {
 	/**
 	 * 契約
 	 */
-	@ManyToOne
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "contract_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "契約", required = true, position = 2)
 	private Contract contract;

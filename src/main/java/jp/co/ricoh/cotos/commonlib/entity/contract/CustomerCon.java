@@ -31,8 +31,8 @@ public class CustomerCon extends EntityBase {
 	/**
 	 * 企事部マスタ
 	 */
-	@ManyToOne
-	@JoinColumn(name = "mom_kjb_system_id")
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "mom_kjb_system_id", referencedColumnName = "mclMomRelId")
 	@ApiModelProperty(value = "企事部マスタ", required = true, position = 2)
 	private KjbMaster kjbMaster;
 
@@ -165,8 +165,8 @@ public class CustomerCon extends EntityBase {
 	/**
 	 * 契約
 	 */
-	@OneToOne
-	@JoinColumn(name = "contract_id")
+	@OneToOne(optional = false)
+	@JoinColumn(name = "contract_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "契約", required = false, position = 24)
 	private Contract contract;
 }
