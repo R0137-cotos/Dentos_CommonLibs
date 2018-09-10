@@ -6,15 +6,11 @@ import java.util.Date;
 import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.PrePersist;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import io.swagger.annotations.ApiModelProperty;
-import jp.co.ricoh.cotos.commonlib.entity.arrangement.Arrangement.ArrangementStatus;
-import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangementWork.ArrangementWorkStatus;
 import lombok.Data;
 
 /**
@@ -131,9 +127,10 @@ public class ArrangementListInfo {
 	/**
 	 * 手配ステータス
 	 */
-	@Enumerated(EnumType.STRING)
-	@ApiModelProperty(value = "手配ステータス", required = false, position = 15)
-	private ArrangementStatus arrangementStatus;
+	// TODO Arrangementクラスで定義しているWorkflowStatusを参照する
+	// @Enumerated(EnumType.STRING)
+	// @ApiModelProperty(value = "手配ステータス", required = false, position = 15)
+	// private ArrangementStatus arrangementStatus;
 
 	/**
 	 * 手配業務
@@ -150,9 +147,10 @@ public class ArrangementListInfo {
 	/**
 	 * 手配業務ステータス
 	 */
-	@Enumerated(EnumType.STRING)
-	@ApiModelProperty(value = "手配業務ステータス", required = false, position = 18)
-	private ArrangementWorkStatus arrangementWorkStatus;
+	// TODO ArrangementWorkクラスで定義しているWorkflowStatusを参照する
+	// @Enumerated(EnumType.STRING)
+	// @ApiModelProperty(value = "手配業務ステータス", required = false, position = 18)
+	// private ArrangementWorkStatus arrangementWorkStatus;
 
 	@PrePersist
 	public void prePersist() {
