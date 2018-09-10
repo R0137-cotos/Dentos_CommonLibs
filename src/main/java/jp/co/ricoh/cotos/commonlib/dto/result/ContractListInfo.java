@@ -11,7 +11,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import io.swagger.annotations.ApiModelProperty;
-import jp.co.ricoh.cotos.commonlib.entity.contract.Contract.ContractStatus;
 import jp.co.ricoh.cotos.commonlib.entity.contract.Contract.ContractType;
 import lombok.Data;
 
@@ -47,12 +46,13 @@ public class ContractListInfo {
 	@ApiModelProperty(value = "契約種別", required = false, position = 4)
 	private ContractType contractType;
 
-	/**
-	 * 契約ステータス
-	 */
-	@Enumerated(EnumType.STRING)
-	@ApiModelProperty(value = "契約ステータス", required = false, position = 5)
-	private ContractStatus contractStatus;
+// TODO ライフサイクル状態とワークフロー状態に変更、契約の検索API担当者が修正
+//	/**
+//	 * 契約ステータス
+//	 */
+//	@Enumerated(EnumType.STRING)
+//	@ApiModelProperty(value = "契約ステータス", required = false, position = 5)
+//	private ContractStatus contractStatus;
 
 	/**
 	 * 見積番号

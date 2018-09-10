@@ -8,8 +8,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
@@ -37,6 +40,10 @@ public class EmployeeCon extends EntityBase {
 	@JoinColumn(name = "mom_employee_id")
 	@ApiModelProperty(value = "社員マスタ", required = false, position = 2)
 	private EmployeeMaster employeeMaster;
+
+	@OneToOne
+	@JsonIgnore
+	private Contract contract;
 
 	/**
 	 * 所属組織MoM組織ID
