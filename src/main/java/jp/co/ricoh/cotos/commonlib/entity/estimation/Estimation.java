@@ -42,9 +42,9 @@ import lombok.EqualsAndHashCode;
 @Table(name = "estimation")
 public class Estimation extends EntityBase {
 
-	public enum Status {
+	public enum lifecycleStatus {
 
-		作成中, 承認依頼中, 承認済み, 受注, 失注;
+		作成中, 作成完了, 受注, 破棄, 失注;
 
 		@JsonValue
 		public String toValue() {
@@ -52,10 +52,26 @@ public class Estimation extends EntityBase {
 		}
 
 		@JsonCreator
-		public static Enum<Status> fromValue(String name) {
+		public static Enum<lifecycleStatus> fromValue(String name) {
 			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
 		}
 	}
+	
+	public enum workflowStatus {
+
+		作成中, 業務依頼中, 業務処理完了, 承認中, 承認済, 顧客提示済;
+
+		@JsonValue
+		public String toValue() {
+			return this.name();
+		}
+
+		@JsonCreator
+		public static Enum<workflowStatus> fromValue(String name) {
+			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
+		}
+	}
+	
 
 	public enum EstimationDiv {
 
@@ -112,7 +128,7 @@ public class Estimation extends EntityBase {
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	@ApiModelProperty(value = "見積ステータス", required = false, position = 4)
-	private Status status;
+	private lifecycleStatus status;
 
 	/**
 	 * 見積種別
