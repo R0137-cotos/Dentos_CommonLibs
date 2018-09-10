@@ -6,6 +6,11 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
@@ -85,6 +90,7 @@ public class Contract extends EntityBase {
 		}
 	}
 
+	@Id
 	@ApiModelProperty(value = "契約ID", required = true, position = 1, allowableValues = "range[0,99999999999999999999999999999]")
 	private long id;
 
@@ -109,6 +115,8 @@ public class Contract extends EntityBase {
 	/**
 	 * 商品マスタ
 	 */
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "productMasterId")
 	@ApiModelProperty(value = "商品マスタ", required = true, position = 5)
 	private Product product;
 
@@ -255,54 +263,63 @@ public class Contract extends EntityBase {
 	/**
 	 * 契約明細
 	 */
+	@OneToMany(mappedBy = "contract")
 	@ApiModelProperty(value = "契約明細", required = true, position = 29)
 	private List<ContractDetail> detailList;
 
 	/**
 	 * 契約チェック結果
 	 */
-	@ApiModelProperty(value = "契約明細", required = false, position = 30)
+	@OneToMany(mappedBy = "contract")
+	@ApiModelProperty(value = "契約チェック結果", required = false, position = 30)
 	private List<ContractCheckResult> chechResultList;
 
 	/**
 	 * 契約承認ルート
 	 */
+	@OneToMany(mappedBy = "contract")
 	@ApiModelProperty(value = "契約承認ルート", required = false, position = 31)
 	private List<ContractApprovalRoute> approvalRouteList;
 
 	/**
 	 * 契約添付ファイル
 	 */
+	@OneToMany(mappedBy = "contract")
 	@ApiModelProperty(value = "契約添付ファイル", required = false, position = 32)
 	private List<ContractAttachedFile> attachedFileList;
 
 	/**
 	 * 契約担当SA社員
 	 */
+	@OneToOne(mappedBy = "contract")
 	@ApiModelProperty(value = "契約担当SA社員", required = true, position = 33)
 	private EmployeeCon employeeList;
 
 	/**
 	 * 契約追加編集者社員
 	 */
+	@OneToMany(mappedBy = "contract")
 	@ApiModelProperty(value = "契約追加編集者社員", required = false, position = 34)
 	private List<EmployeeCon> addedEmpoyeeList;
 
 	/**
 	 * 販売店(契約用)
 	 */
+	@OneToMany(mappedBy = "contract")
 	@ApiModelProperty(value = "販売店(契約用)", required = false, position = 35)
 	private List<DealerCon> dealerList;
 
 	/**
 	 * 顧客(契約用)
 	 */
+	@OneToOne(mappedBy = "contract")
 	@ApiModelProperty(value = "顧客(契約用)", required = true, position = 36)
 	private CustomerCon customer;
 
 	/**
 	 * 契約操作履歴
 	 */
+	@OneToMany(mappedBy = "contract")
 	@ApiModelProperty(value = "契約操作履歴", required = true, position = 37)
 	private List<OperationLogCon> operationLogList;
 }
