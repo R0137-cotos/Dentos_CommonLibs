@@ -33,6 +33,7 @@
 |27|COTOS用の権限分類を反映|
 |28|Customerの中のEstimationに@JsonIdentityInfo,@JsonIdentityReferenceを追加|
 |29|契約エンティティのERD反映|
+|30|手配ドメインのエンティティを最新化|
 
 # バージョン採番方法
 
