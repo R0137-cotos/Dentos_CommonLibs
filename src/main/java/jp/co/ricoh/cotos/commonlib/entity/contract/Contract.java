@@ -14,7 +14,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
-import jp.co.ricoh.cotos.commonlib.entity.estimation.Estimation;
 import jp.co.ricoh.cotos.commonlib.entity.master.Product;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -92,25 +91,25 @@ public class Contract extends EntityBase {
 	/**
 	 * 契約種別
 	 */
-	@ApiModelProperty(value = "契約種別", required = false, position = 2)
+	@ApiModelProperty(value = "契約種別", required = true, position = 2)
 	private ContractType contractType;
 
 	/**
 	 * ライフサイクル状態
 	 */
-	@ApiModelProperty(value = "ライフサイクル状態", required = false, position = 3)
+	@ApiModelProperty(value = "ライフサイクル状態", required = true, position = 3)
 	private LifecycleStatus lifecycleStatus;
 
 	/**
 	 * ワークフロー状態
 	 */
-	@ApiModelProperty(value = "ワークフロー状態", required = false, position = 4)
+	@ApiModelProperty(value = "ワークフロー状態", required = true, position = 4)
 	private WorkflowStatus workflowStatus;
 
 	/**
 	 * 商品マスタ
 	 */
-	@ApiModelProperty(value = "商品マスタ", required = false, position = 5)
+	@ApiModelProperty(value = "商品マスタ", required = true, position = 5)
 	private Product product;
 
 	/**
@@ -126,190 +125,184 @@ public class Contract extends EntityBase {
 	private String caseTitle;
 
 	/**
-	 * 見積
-	 */
-	@ApiModelProperty(value = "見積", required = false, position = 8)
-	private Estimation estimation;
-
-	/**
 	 * 契約番号
 	 */
-	@ApiModelProperty(value = "契約番号", required = true, position = 9, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "契約番号", required = true, position = 8, allowableValues = "range[0,255]")
 	@Pattern(regexp = "CAYYYYMMDDNNNNN")
 	private String contractNumber;
 
 	/**
 	 * 契約番号枝番
 	 */
-	@ApiModelProperty(value = "契約番号枝番", required = true, position = 10, allowableValues = "range[0,99]")
+	@ApiModelProperty(value = "契約番号枝番", required = true, position = 9, allowableValues = "range[0,99]")
 	private Integer contractBranchNumber;
 
 	/**
 	 * 契約件名
 	 */
-	@ApiModelProperty(value = "契約件名", required = true, position = 11, allowableValues = "range[0,999]")
+	@ApiModelProperty(value = "契約件名", required = false, position = 10, allowableValues = "range[0,255]")
 	private String contractTitle;
 
 	/**
 	 * 変更元契約番号
 	 */
-	@ApiModelProperty(value = "変更元契約番号", required = false, position = 12, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "変更元契約番号", required = false, position = 11, allowableValues = "range[0,255]")
 	private String originContractNumber;
 
 	/**
 	 * 変更元契約番号枝番
 	 */
-	@ApiModelProperty(value = "変更元契約番号枝番", required = false, position = 13, allowableValues = "range[0,999]")
+	@ApiModelProperty(value = "変更元契約番号枝番", required = false, position = 12, allowableValues = "range[0,99]")
 	private String originContractBranchNumber;
 
 	/**
 	 * 変更元契約ID
 	 */
-	@ApiModelProperty(value = "変更元契約ID", required = false, position = 14, allowableValues = "range[0,99999999999999999999999999999]")
+	@ApiModelProperty(value = "変更元契約ID", required = false, position = 13, allowableValues = "range[0,99999999999999999999999999999]")
 	private Long originContractId;
 
 	/**
 	 * サービス識別番号
 	 */
-	@ApiModelProperty(value = "サービス識別番号", required = false, position = 15, allowableValues = "range[0,15]")
+	@ApiModelProperty(value = "サービス識別番号", required = false, position = 14, allowableValues = "range[0,15]")
 	@Pattern(regexp = "CSYYYYMMDDNNNNN")
 	private String serviceIdentificationNumber;
 
 	/**
 	 * 導入希望日
 	 */
-	@ApiModelProperty(value = "導入希望日", required = false, position = 16)
+	@ApiModelProperty(value = "導入希望日", required = false, position = 15)
 	private Date introductionPreferredDate;
 
 	/**
 	 * 変更希望日
 	 */
-	@ApiModelProperty(value = "変更希望日", required = false, position = 17)
+	@ApiModelProperty(value = "変更希望日", required = false, position = 16)
 	private Date changePreferredDate;
 
 	/**
 	 * 契約日
 	 */
-	@ApiModelProperty(value = "契約日", required = false, position = 18)
+	@ApiModelProperty(value = "契約日", required = false, position = 17)
 	private Date contractDate;
 
 	/**
 	 * 請求開始日
 	 */
-	@ApiModelProperty(value = "請求開始日", required = false, position = 19)
+	@ApiModelProperty(value = "請求開始日", required = false, position = 18)
 	private Date billingDate;
 
 	/**
 	 * サービス開始日
 	 */
-	@ApiModelProperty(value = "サービス開始日", required = false, position = 20)
+	@ApiModelProperty(value = "サービス開始日", required = false, position = 19)
 	private Date serviceTermStart;
 
 	/**
 	 * サービス終了日
 	 */
-	@ApiModelProperty(value = "サービス終了日", required = false, position = 21)
+	@ApiModelProperty(value = "サービス終了日", required = false, position = 20)
 	private Date serviceTermEnd;
 
 	/**
 	 * 解約予定日
 	 */
-	@ApiModelProperty(value = "解約予定日", required = false, position = 22)
+	@ApiModelProperty(value = "解約予定日", required = false, position = 21)
 	private Date cancelScheduledDate;
 
 	/**
 	 * 見積番号
 	 */
-	@ApiModelProperty(value = "見積番号", required = true, position = 23, allowableValues = "range[0,18]")
+	@ApiModelProperty(value = "見積番号", required = true, position = 22, allowableValues = "range[0,18]")
 	private String estimateNumber;
 
 	/**
 	 * 見積件名
 	 */
-	@ApiModelProperty(value = "見積件名", required = false, position = 24, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "見積件名", required = false, position = 23, allowableValues = "range[0,255]")
 	private String estimationTitle;
 
 	/**
 	 * 商流区分
 	 */
-	@ApiModelProperty(value = "商流区分", required = false, position = 25)
+	@ApiModelProperty(value = "商流区分", required = false, position = 24)
 	private CommercialFlowDiv commercialFlowDiv;
 
 	/**
 	 * 発行書式
 	 */
-	@ApiModelProperty(value = "発行書式", required = false, position = 26, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "発行書式", required = false, position = 25, allowableValues = "range[0,255]")
 	private String issueFormat;
 
 	/**
 	 * 得意先コード
 	 */
-	@ApiModelProperty(value = "得意先コード", required = false, position = 27, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "得意先コード", required = false, position = 26, allowableValues = "range[0,255]")
 	private String issueEstimationTitle;
 
 	/**
-	 * 得意先名
+	 * 得意先宛先名
 	 */
-	@ApiModelProperty(value = "得意先名", required = false, position = 28, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "得意先宛先名", required = false, position = 27, allowableValues = "range[0,255]")
 	private String issueCustomerCorpName;
 
 	/**
 	 * 拡張項目
 	 */
-	@ApiModelProperty(value = "拡張項目", required = false, position = 29, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "拡張項目", required = false, position = 28)
 	private String extendsParameter;
 
 	/**
 	 * 契約明細
 	 */
-	@ApiModelProperty(value = "契約明細", required = true, position = 30)
+	@ApiModelProperty(value = "契約明細", required = true, position = 29)
 	private List<ContractDetail> detailList;
 
 	/**
 	 * 契約チェック結果
 	 */
-	@ApiModelProperty(value = "契約明細", required = false, position = 31)
+	@ApiModelProperty(value = "契約明細", required = false, position = 30)
 	private List<ContractCheckResult> chechResultList;
 
 	/**
 	 * 契約承認ルート
 	 */
-	@ApiModelProperty(value = "契約承認ルート", required = false, position = 32)
+	@ApiModelProperty(value = "契約承認ルート", required = false, position = 31)
 	private List<ContractApprovalRoute> approvalRouteList;
 
 	/**
 	 * 契約添付ファイル
 	 */
-	@ApiModelProperty(value = "契約添付ファイル", required = false, position = 33)
+	@ApiModelProperty(value = "契約添付ファイル", required = false, position = 32)
 	private List<ContractAttachedFile> attachedFileList;
 
 	/**
 	 * 契約担当SA社員
 	 */
-	@ApiModelProperty(value = "契約担当SA社員", required = true, position = 34)
+	@ApiModelProperty(value = "契約担当SA社員", required = true, position = 33)
 	private EmployeeCon employeeList;
 
 	/**
 	 * 契約追加編集者社員
 	 */
-	@ApiModelProperty(value = "契約追加編集者社員", required = false, position = 35)
+	@ApiModelProperty(value = "契約追加編集者社員", required = false, position = 34)
 	private List<EmployeeCon> addedEmpoyeeList;
 
 	/**
 	 * 販売店(契約用)
 	 */
-	@ApiModelProperty(value = "販売店(契約用)", required = false, position = 36)
+	@ApiModelProperty(value = "販売店(契約用)", required = false, position = 35)
 	private List<DealerCon> dealerList;
 
 	/**
 	 * 顧客(契約用)
 	 */
-	@ApiModelProperty(value = "顧客(契約用)", required = true, position = 37)
+	@ApiModelProperty(value = "顧客(契約用)", required = true, position = 36)
 	private CustomerCon customer;
 
 	/**
 	 * 契約操作履歴
 	 */
-	@ApiModelProperty(value = "契約操作履歴", required = true, position = 38)
+	@ApiModelProperty(value = "契約操作履歴", required = true, position = 37)
 	private List<OperationLogCon> operationLogList;
 }
