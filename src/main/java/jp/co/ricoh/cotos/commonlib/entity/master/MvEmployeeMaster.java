@@ -19,18 +19,18 @@ public class MvEmployeeMaster {
 	 * MoM社員ID
 	 */
 	@Id
-	@ApiModelProperty(value = "MoM社員ID", required = true, position = 2, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "MoM社員ID", required = true, position = 1, allowableValues = "range[0,255]")
 	private String momEmpId;
 
 	/**
 	 * MoM会社ID
 	 */
-	@ApiModelProperty(value = "MoM会社ID", required = true, position = 3, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "MoM会社ID", required = true, position = 2, allowableValues = "range[0,255]")
 	private String momCompanyId;
 
 	/**
 	 * SINGLE_USER_ID
 	 */
-	@ApiModelProperty(value = "SINGLE_USER_ID", required = true, position = 4, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "SINGLE_USER_ID", required = true, position = 3, allowableValues = "range[0,255]")
 	private String singleUserId;
 }

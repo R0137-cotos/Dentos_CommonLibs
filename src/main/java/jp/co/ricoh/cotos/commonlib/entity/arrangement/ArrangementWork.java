@@ -64,7 +64,7 @@ public class ArrangementWork extends EntityBase {
 	/**
 	 * ワークフロー状態
 	 */
-	@ApiModelProperty(value = "手配業務ステータス", required = true, position = 4)
+	@ApiModelProperty(value = "ワークフロー状態", required = true, position = 4)
 	private WorkflowStatus workflowStatus;
 
 	/**

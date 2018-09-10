@@ -6,8 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
@@ -20,7 +18,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Table(name = "arrangement_work_operation_log")
+@Table(name = "arrange_work_operation_log")
 public class ArrangeWorkOperationLog extends EntityBase {
 
 	@Id
@@ -44,25 +42,24 @@ public class ArrangeWorkOperationLog extends EntityBase {
 	 * 操作者MoM社員ID
 	 */
 	@ApiModelProperty(value = "操作者MoM社員ID", required = true, position = 4, allowableValues = "range[0,255]")
-	private String opetatorEmpId;
+	private String operatorEmpId;
 
 	/**
 	 * 操作者氏名
 	 */
 	@ApiModelProperty(value = "操作者氏名", required = true, position = 5, allowableValues = "range[0,255]")
-	private String opetatorName;
+	private String operatorName;
 
 	/**
 	 * 操作者組織名
 	 */
 	@ApiModelProperty(value = "操作者組織名", required = false, position = 6, allowableValues = "range[0,255]")
-	private String opetatorOrgName;
+	private String operatorOrgName;
 
 	/**
 	 * 実施日時
 	 */
 	@ApiModelProperty(value = "実施日時", required = true, position = 7)
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date operatedAt;
 
 }

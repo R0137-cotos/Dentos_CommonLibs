@@ -20,14 +20,14 @@ import lombok.EqualsAndHashCode;
 public class ArrangeWkApprovalRouteNode extends EntityBase {
 
 	@Id
-	@ApiModelProperty(value = "手配業務ルートノードID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "手配業務承認ルートノードID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
 	/**
 	 * 手配業務承認ルート
 	 */
 	@ManyToOne
-	@ApiModelProperty(value = "手配業務ルート", required = true, position = 2)
+	@ApiModelProperty(value = "手配業務承認ルート", required = true, position = 2)
 	private ArrangementWorkApprovalRoute arrangementWorkApprovalRoute;
 
 	/**
@@ -40,7 +40,7 @@ public class ArrangeWkApprovalRouteNode extends EntityBase {
 	 * 承認者組織階層レベル
 	 */
 	@ApiModelProperty(value = "承認者組織階層レベル", required = false, position = 4, allowableValues = "range[0,9]")
-	private long approverOrgLevel;
+	private Integer approverOrgLevel;
 
 	/**
 	 * 承認者MoM社員ID

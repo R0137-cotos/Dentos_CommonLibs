@@ -4,8 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -54,14 +52,13 @@ public class Arrangement extends EntityBase {
 	/**
 	 * 解約フラグ
 	 */
-	@ApiModelProperty(value = "契約ID", required = true, position = 3, allowableValues = "range[0,9]")
-	private long disengagementFlg;
+	@ApiModelProperty(value = "解約フラグ", required = true, position = 3, allowableValues = "range[0,9]")
+	private int disengagementFlg;
 
 	/**
 	 * ワークフロー状態
 	 */
-	@Enumerated(EnumType.STRING)
-	@ApiModelProperty(value = "手配ステータス", required = true, position = 4)
+	@ApiModelProperty(value = "ワークフロー状態", required = true, position = 4)
 	private WorkflowStatus workflowStatus;
 
 	/**

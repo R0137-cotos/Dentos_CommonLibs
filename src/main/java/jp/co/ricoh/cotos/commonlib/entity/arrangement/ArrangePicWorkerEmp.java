@@ -29,7 +29,7 @@ public class ArrangePicWorkerEmp extends EntityBase {
 	 * RJ社員情報マスタ
 	 */
 	@ManyToOne(optional = true)
-	@ApiModelProperty(value = "RJ社員情報マスタ", required = true, position = 2)
+	@ApiModelProperty(value = "RJ社員情報マスタ", required = false, position = 2)
 	private MvEmployeeMaster mvEmployeeMaster;
 
 	/**

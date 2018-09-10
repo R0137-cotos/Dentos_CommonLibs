@@ -6,8 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
@@ -44,13 +42,13 @@ public class ArrangeWorkCheckResult extends EntityBase {
 	 * チェック事項文面
 	 */
 	@ApiModelProperty(value = "チェック事項文面", required = true, position = 4, allowableValues = "range[0,255]")
-	private String check_matter_text;
+	private String checkMatterText;
 
 	/**
 	 * 表示順
 	 */
 	@ApiModelProperty(value = "表示順", required = true, position = 5, allowableValues = "range[0,999]")
-	private long displayOrder;
+	private int displayOrder;
 
 	/**
 	 * チェック実施者
@@ -74,7 +72,6 @@ public class ArrangeWorkCheckResult extends EntityBase {
 	 * チェック実施日時
 	 */
 	@ApiModelProperty(value = "チェック実施日時", required = false, position = 9)
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date checkedAt;
 
 }
