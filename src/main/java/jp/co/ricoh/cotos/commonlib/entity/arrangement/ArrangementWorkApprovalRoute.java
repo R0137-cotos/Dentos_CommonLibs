@@ -1,0 +1,68 @@
+package jp.co.ricoh.cotos.commonlib.entity.arrangement;
+
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import io.swagger.annotations.ApiModelProperty;
+import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+/**
+ * 手配業務に設定される承認ルートを表すEntity
+ */
+@Entity
+@EqualsAndHashCode(callSuper = true)
+@Data
+@Table(name = "arrangement_work_approval_route")
+public class ArrangementWorkApprovalRoute extends EntityBase {
+
+	@Id
+	@ApiModelProperty(value = "手配業務承認ルートID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	private long id;
+
+	/**
+	 * 手配業務
+	 */
+	@OneToOne(optional = true)
+	@ApiModelProperty(value = "手配業務", required = true, position = 2)
+	private ArrangementWork arrangementWork;
+
+	/**
+	 * 承認依頼者MoM社員ID
+	 */
+	@ApiModelProperty(value = "承認依頼者MoM社員ID", required = true, position = 3, allowableValues = "range[0,255]")
+	private String approvalRequesterEmpId;
+
+	/**
+	 * 承認依頼者氏名
+	 */
+	@ApiModelProperty(value = "承認依頼者氏名", required = true, position = 4, allowableValues = "range[0,255]")
+	private String approvalRequesterName;
+
+	/**
+	 * 承認依頼者組織名
+	 */
+	@ApiModelProperty(value = "承認依頼者組織名", required = false, position = 5, allowableValues = "range[0,255]")
+	private String approvalRequesterOrgName;
+
+	/**
+	 * 手配業務承認実績
+	 */
+	@OneToMany(mappedBy = "arrangementWorkApprovalRoute")
+	@ApiModelProperty(value = "手配業務承認実績", required = false, position = 6, allowableValues = "range[0,255]")
+	private List<ArrangeWorkApprovalResult> arrangeWorkApprovalResultList;
+
+	/**
+	 * 手配業務承認ルートノード
+	 */
+	@OneToMany(mappedBy = "arrangementWorkApprovalRoute")
+	@ApiModelProperty(value = "手配業務承認ルートノード", required = true, position = 7)
+	private List<ArrangeWkApprovalRouteNode> arrangeWkApprovalRouteNodeList;
+
+}
