@@ -20,7 +20,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Table(name = "contract_operation_log")
-public class OperationLogCon extends EntityBase {
+public class ContractOperationLog extends EntityBase {
 	@Id
 	@ApiModelProperty(value = "操作履歴ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
