@@ -116,7 +116,7 @@ public class Contract extends EntityBase {
 	 * 商品マスタ
 	 */
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "productMasterId")
+	@JoinColumn(name = "product_master_Id")
 	@ApiModelProperty(value = "商品マスタ", required = true, position = 5)
 	private Product product;
 
@@ -143,7 +143,7 @@ public class Contract extends EntityBase {
 	 * 契約番号枝番
 	 */
 	@ApiModelProperty(value = "契約番号枝番", required = true, position = 9, allowableValues = "range[0,99]")
-	private Integer contractBranchNumber;
+	private int contractBranchNumber;
 
 	/**
 	 * 契約件名

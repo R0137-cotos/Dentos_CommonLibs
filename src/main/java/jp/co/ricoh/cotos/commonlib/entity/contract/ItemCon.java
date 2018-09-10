@@ -2,11 +2,10 @@ package jp.co.ricoh.cotos.commonlib.entity.contract;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.OneToOne;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
@@ -25,24 +24,33 @@ import lombok.EqualsAndHashCode;
 public class ItemCon extends EntityBase {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "item_seq")
-	@SequenceGenerator(name = "item_seq", sequenceName = "item_seq", allocationSize = 1)
-	@ApiModelProperty(value = "品種ID", required = true, position = 1)
+	@ApiModelProperty(value = "ID", required = true, position = 1, allowableValues = "range[0,99999999999999999999999999999]")
 	private long id;
+
+	/**
+	 * 品種マスタ
+	 */
+	@ManyToOne
+	@ApiModelProperty(value = "品種マスタ", required = true, position = 2)
+	private ItemMaster itemMaster;
 
 	/**
 	 * 品種名
 	 */
-	@ApiModelProperty(value = "品種名", required = false, position = 2, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "品種名", required = false, position = 3, allowableValues = "range[0,255]")
 	private String name;
 
 	/**
-	 * 品種コード
+	 * リコー品種コード
 	 */
-	@ApiModelProperty(value = "品種コード", required = false, position = 3, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "リコー品種コード", required = false, position = 4, allowableValues = "range[0,255]")
 	private String itemCode;
 
-	@ManyToOne
-	@ApiModelProperty(value = "品種マスタ", required = false, position = 4)
-	private ItemMaster itemMaster;
+	/**
+	 * 契約明細
+	 */
+	@OneToOne
+	@JoinColumn(name = "contract_detail_id", referencedColumnName = "id")
+	@ApiModelProperty(value = "契約明細", required = true, position = 5)
+	private ContractDetail contrantDetail;
 }
