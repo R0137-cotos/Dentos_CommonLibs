@@ -108,7 +108,7 @@ public class ArrangePicWorkerEmp extends EntityBase {
 	 * 手配業務
 	 */
 	@OneToOne(mappedBy = "arrangement", optional = true)
-	@ApiModelProperty(value = "手配業務", required = true, position = 15)
+	@ApiModelProperty(value = "手配業務", required = false, position = 15)
 	private ArrangementWork arrangementWork;
 
 }
