@@ -1,28 +1,16 @@
 package jp.co.ricoh.cotos.commonlib.entity.arrangement;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -40,9 +28,9 @@ import lombok.EqualsAndHashCode;
 @Table(name = "arrangement_work")
 public class ArrangementWork extends EntityBase {
 
-	public enum ArrangementWorkStatus {
+	public enum WorkflowStatus {
 
-		受付待ち, 受付済み, 対応済み, 不受理;
+		受付待ち, 作業中, 作業完了報告, 承認中, 作業完了;
 
 		@JsonValue
 		public String toValue() {
@@ -50,71 +38,73 @@ public class ArrangementWork extends EntityBase {
 		}
 
 		@JsonCreator
-		public static Enum<ArrangementWorkStatus> fromValue(String name) {
+		public static Enum<WorkflowStatus> fromValue(String name) {
 			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
 		}
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "arrangement_work_seq")
-	@SequenceGenerator(name = "arrangement_work_seq", sequenceName = "arrangement_work_seq", allocationSize = 1)
-	@ApiModelProperty(value = "手配業務ID", required = true, position = 1)
+	@ApiModelProperty(value = "手配業務ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
-
-	/**
-	 * 契約ID
-	 */
-	@ApiModelProperty(value = "契約ID", required = false, position = 2)
-	private long contractId;
-
-	/**
-	 * 手配業務ステータス
-	 */
-	@Column(nullable = false)
-	@Enumerated(EnumType.STRING)
-	@ApiModelProperty(value = "手配業務ステータス", required = false, position = 3)
-	private ArrangementWorkStatus arrangementWorkStatus;
-
-	/**
-	 * 担当作業者
-	 */
-	@ManyToMany
-	@JoinTable(name = "arrangementWorkUser", joinColumns = @JoinColumn(name = "arrangementWorkId", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "employeeId", referencedColumnName = "id"))
-	@ApiModelProperty(value = "担当作業者", required = false, position = 4)
-	private List<EmployeeArrange> arrangementWorkUserList;
-
-	/**
-	 * 担当作業日時
-	 */
-	@Temporal(TemporalType.TIMESTAMP)
-	@ApiModelProperty(value = "担当作業日時", required = false, position = 5)
-	private Date workAt;
-
-	/**
-	 * メモ
-	 */
-	@ApiModelProperty(value = "メモ", required = false, position = 6, allowableValues = "range[0,255]")
-	private String memo;
 
 	/**
 	 * 手配
 	 */
 	@ManyToOne(optional = false)
-	@JsonIgnore
-	@ApiModelProperty(value = "手配ID", required = false, position = 7)
+	@ApiModelProperty(value = "手配", required = true, position = 2)
 	private Arrangement arrangement;
 
 	/**
-	 * 手配明細
+	 * 手配業務タイプマスタ
 	 */
-	@OneToMany(mappedBy = "arrangementWork")
-	@ApiModelProperty(value = "手配明細", required = false, position = 8)
-	private List<ArrangementDetail> arrangementDetailList;
+	@ManyToOne(optional = true)
+	@ApiModelProperty(value = "手配業務タイプマスタ", required = true, position = 3)
+	private ArrangementMaster arrangeWorkTypeMaster;
 
 	/**
-	 * 手配マスタ
+	 * ワークフロー状態
 	 */
-	@ManyToOne(optional = false)
-	@ApiModelProperty(value = "手配マスタID", required = false, position = 9)
-	private ArrangementMaster arrangementMaster;
+	@ApiModelProperty(value = "手配業務ステータス", required = true, position = 4)
+	private WorkflowStatus workflowStatus;
+
+	/**
+	 * メモ
+	 */
+	@ApiModelProperty(value = "メモ", required = false, position = 5, allowableValues = "range[0,4000]")
+	private String memo;
+
+	/**
+	 * 手配業務承認ルート
+	 */
+	@OneToOne(mappedBy = "arrangementWork")
+	@ApiModelProperty(value = "手配業務承認ルート", required = false, position = 6)
+	private ArrangementWorkApprovalRoute arrangementWorkApprovalRoute;
+
+	/**
+	 * 担当作業者社員
+	 */
+	@OneToOne(mappedBy = "arrangementWork")
+	@ApiModelProperty(value = "担当作業者社員", required = false, position = 7)
+	private ArrangePicWorkerEmp arrangementPicWorkerEmp;
+
+	/**
+	 * 手配業務操作履歴
+	 */
+	@OneToMany(mappedBy = "arrangementWork")
+	@ApiModelProperty(value = "手配業務操作履歴", required = false, position = 8)
+	private List<ArrangeWorkOperationLog> arrangeWorkOperationLogList;
+
+	/**
+	 * 手配業務添付ファイル
+	 */
+	@OneToMany(mappedBy = "arrangementWork")
+	@ApiModelProperty(value = "手配業務添付ファイル", required = false, position = 9)
+	private List<WorkAttachedFile> workAttachedFileList;
+
+	/**
+	 * 手配業務チェック結果
+	 */
+	@OneToMany(mappedBy = "arrangementWork")
+	private List<ArrangeWorkCheckResult> arrangeWorkCheckResultList;
+
 }

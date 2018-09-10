@@ -32,6 +32,7 @@
 |26|見積情報コピーチェック処理追加|
 |27|COTOS用の権限分類を反映|
 |28|Customerの中のEstimationに@JsonIdentityInfo,@JsonIdentityReferenceを追加|
+|31|手配ドメインのエンティティを最新化|
 
 
 # バージョン採番方法
