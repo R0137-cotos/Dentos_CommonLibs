@@ -50,7 +50,7 @@ public class DealerCon extends EntityBase {
 	/**
 	 * 住所
 	 */
-	@ApiModelProperty(value = "住所", required = false, position = 5, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "住所", required = false, position = 5, allowableValues = "range[0,1000]")
 	private String address;
 
 	/**

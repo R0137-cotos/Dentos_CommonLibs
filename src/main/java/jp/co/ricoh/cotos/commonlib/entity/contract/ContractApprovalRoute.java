@@ -21,7 +21,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Table(name = "contract_approval_rooute")
+@Table(name = "contract_approval_route")
 public class ContractApprovalRoute extends EntityBase {
 
 	@Id
@@ -61,16 +61,22 @@ public class ContractApprovalRoute extends EntityBase {
 	private String approvalRequesterOrgName;
 
 	/**
+	 * 特価承認対象フラグ
+	 */
+	@ApiModelProperty(value = "特価承認対象フラグ", required = true, position = 7, allowableValues = "range[0,9]")
+	private int specialPriceApprovalFlg;
+
+	/**
 	 * 契約承認実績
 	 */
 	@OneToMany(mappedBy = "contractApprovalRoute")
-	@ApiModelProperty(value = "契約承認実績", required = false, position = 7)
+	@ApiModelProperty(value = "契約承認実績", required = false, position = 8)
 	private List<ContractApprovalResult> contractApprovalResult;
 
 	/**
 	 * 契約承認ルートノード
 	 */
 	@OneToMany(mappedBy = "contractApprovalRoute")
-	@ApiModelProperty(value = "契約承認ルートノード", required = true, position = 8)
+	@ApiModelProperty(value = "契約承認ルートノード", required = true, position = 9)
 	private List<ContractApprovalRouteNode> contractApprovalRouteNode;
 }

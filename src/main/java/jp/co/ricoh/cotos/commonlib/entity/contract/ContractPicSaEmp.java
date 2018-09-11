@@ -31,7 +31,7 @@ public class ContractPicSaEmp extends EntityBase {
 	 */
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "mom_employee_id", referencedColumnName = "momEmpId")
-	@ApiModelProperty(value = "RJ社員情報マスタ", required = false, position = 2)
+	@ApiModelProperty(value = "RJ社員情報マスタ", required = true, position = 2)
 	private MvEmployeeMaster mvEmployeeMaster;
 
 	/**
@@ -43,8 +43,8 @@ public class ContractPicSaEmp extends EntityBase {
 	/**
 	 * 所属組織階層レベル
 	 */
-	@ApiModelProperty(value = "所属組織階層レベル", required = false, position = 4, allowableValues = "range[0,255]")
-	private String orgHierarchyLevel;
+	@ApiModelProperty(value = "所属組織階層レベル", required = false, position = 4, allowableValues = "range[0,9]")
+	private int orgHierarchyLevel;
 
 	/**
 	 * 所属組織名
@@ -111,6 +111,6 @@ public class ContractPicSaEmp extends EntityBase {
 	 */
 	@OneToOne(optional = false)
 	@JoinColumn(name = "contract_id", referencedColumnName = "id")
-	@ApiModelProperty(value = "契約", required = false, position = 15)
+	@ApiModelProperty(value = "契約", required = true, position = 15)
 	private Contract contract;
 }

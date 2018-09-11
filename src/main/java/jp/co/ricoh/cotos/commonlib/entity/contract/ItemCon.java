@@ -1,7 +1,6 @@
 package jp.co.ricoh.cotos.commonlib.entity.contract;
 
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -19,7 +18,6 @@ import lombok.EqualsAndHashCode;
 
 @Entity
 @EqualsAndHashCode(callSuper = true)
-@EntityListeners(ItemConListener.class)
 @Data
 public class ItemCon extends EntityBase {
 
@@ -45,7 +43,7 @@ public class ItemCon extends EntityBase {
 	 * リコー品種コード
 	 */
 	@ApiModelProperty(value = "リコー品種コード", required = false, position = 4, allowableValues = "range[0,255]")
-	private String itemCode;
+	private String ricohItemCode;
 
 	/**
 	 * 契約明細

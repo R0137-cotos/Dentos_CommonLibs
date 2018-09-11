@@ -167,6 +167,6 @@ public class CustomerCon extends EntityBase {
 	 */
 	@OneToOne(optional = false)
 	@JoinColumn(name = "contract_id", referencedColumnName = "id")
-	@ApiModelProperty(value = "契約", required = false, position = 24)
+	@ApiModelProperty(value = "契約", required = true, position = 24)
 	private Contract contract;
 }
