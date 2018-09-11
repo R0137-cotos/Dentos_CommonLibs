@@ -11,13 +11,16 @@ import javax.persistence.Table;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+/**
+ * 見積チェック結果を表すEntity
+ */
 @Entity
 @Data
 @Table(name = "estimation_check_result")
 public class EstimationCheckResult {
 
 	@Id
-	@ApiModelProperty(value = "見積チェック結果ID", required = true, position = 1, allowableValues = "range[0,99999999999999999999999999999]")
+	@ApiModelProperty(value = "見積チェック結果ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
 	/**
@@ -49,19 +52,19 @@ public class EstimationCheckResult {
 	/**
 	 * チェック実施者
 	 */
-	@ApiModelProperty(value = "チェック実施者", required = false, position = 6)
+	@ApiModelProperty(value = "チェック実施者", required = false, position = 6, allowableValues = "range[0,255]")
 	private String checkedUser;
 
 	/**
 	 * チェック実施者氏名
 	 */
-	@ApiModelProperty(value = "チェック実施者氏名", required = false, position = 7)
+	@ApiModelProperty(value = "チェック実施者氏名", required = false, position = 7, allowableValues = "range[0,255]")
 	private String checkedUserName;
 
 	/**
 	 * チェック実施者組織名
 	 */
-	@ApiModelProperty(value = "チェック実施者組織名", required = false, position = 8)
+	@ApiModelProperty(value = "チェック実施者組織名", required = false, position = 8, allowableValues = "range[0,255]")
 	private String checkedOrgName;
 
 	/**

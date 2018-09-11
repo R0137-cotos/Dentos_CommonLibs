@@ -14,6 +14,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+/**
+ * 見積情報の添付ファイルを表すEntity
+ */
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)

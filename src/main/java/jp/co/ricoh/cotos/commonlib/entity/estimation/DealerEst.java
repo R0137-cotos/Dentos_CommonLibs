@@ -32,7 +32,7 @@ public class DealerEst extends EntityBase {
 	 */
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "mom_kjb_system_id", referencedColumnName = "mclMomRelId")
-	@ApiModelProperty(value = "MoMマスタ", required = false, position = 2)
+	@ApiModelProperty(value = "企事部マスタ", required = true, position = 2)
 	private KjbMaster kjbMaster;
 
 	/**
@@ -50,7 +50,7 @@ public class DealerEst extends EntityBase {
 	/**
 	 * 住所
 	 */
-	@ApiModelProperty(value = "住所", required = false, position = 5, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "住所", required = false, position = 5, allowableValues = "range[0,1000]")
 	private String address;
 
 	/**

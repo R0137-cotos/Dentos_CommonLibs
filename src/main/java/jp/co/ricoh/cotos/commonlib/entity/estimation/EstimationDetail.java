@@ -40,7 +40,7 @@ public class EstimationDetail extends EntityBase {
 	}
 
 	@Id
-	@ApiModelProperty(value = "契約明細ID", required = true, position = 1)
+	@ApiModelProperty(value = "見積明細ID", required = true, position = 1)
 	private long id;
 
 	/**
@@ -60,8 +60,8 @@ public class EstimationDetail extends EntityBase {
 	/**
 	 * イニシャル見積金額
 	 */
-	@ApiModelProperty(value = "イニシャル見積金額", required = false, position = 4, allowableValues = "range[0.00,99999999999999999999999999999.99]")
-	@Pattern(regexp = "99999999999999999999999999999.99")
+	@ApiModelProperty(value = "イニシャル見積金額", required = false, position = 4, allowableValues = "range[0.00,9999999999999999999.99]")
+	@Pattern(regexp = "9999999999999999999.99")
 	private BigDecimal initialAmountSummary;
 
 	/**
@@ -80,8 +80,8 @@ public class EstimationDetail extends EntityBase {
 	/**
 	 * ランニングサマリ見積金額
 	 */
-	@ApiModelProperty(value = "ランニングサマリ見積金額", required = false, position = 7, allowableValues = "range[0.00,99999999999999999999999999999.99]")
-	@Pattern(regexp = "99999999999999999999999999999.99")
+	@ApiModelProperty(value = "ランニングサマリ見積金額", required = false, position = 7, allowableValues = "range[0.00,9999999999999999999.99]")
+	@Pattern(regexp = "9999999999999999999.99")
 	private BigDecimal runningAmountSummary;
 
 	/**
@@ -103,7 +103,7 @@ public class EstimationDetail extends EntityBase {
 	@ApiModelProperty(value = "拡張項目", required = false, position = 10)
 	private String extendsParameter;
 
-	@OneToOne
+	@OneToOne(optional = false)
 	@ApiModelProperty(value = "品種(見積用)", required = true, position = 11)
 	private ItemEst itemEst;
 

@@ -34,7 +34,7 @@ import lombok.EqualsAndHashCode;
 @Table(name = "estimation")
 public class Estimation extends EntityBase {
 
-	public enum lifecycleStatus {
+	public enum LifecycleStatus {
 
 		作成中, 作成完了, 受注, 破棄, 失注;
 
@@ -44,12 +44,12 @@ public class Estimation extends EntityBase {
 		}
 
 		@JsonCreator
-		public static Enum<lifecycleStatus> fromValue(String name) {
+		public static Enum<LifecycleStatus> fromValue(String name) {
 			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
 		}
 	}
 
-	public enum workflowStatus {
+	public enum WorkflowStatus {
 
 		作成中, 業務依頼中, 業務処理完了, 承認中, 承認済, 顧客提示済;
 
@@ -59,7 +59,7 @@ public class Estimation extends EntityBase {
 		}
 
 		@JsonCreator
-		public static Enum<workflowStatus> fromValue(String name) {
+		public static Enum<WorkflowStatus> fromValue(String name) {
 			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
 		}
 	}
@@ -102,13 +102,13 @@ public class Estimation extends EntityBase {
 	 * ライフサイクル状態
 	 */
 	@ApiModelProperty(value = "ライフサイクル状態", required = true, position = 2)
-	private lifecycleStatus lifecycleStatus;
+	private LifecycleStatus lifecycleStatus;
 
 	/**
 	 * ワークフロー状態
 	 */
 	@ApiModelProperty(value = "ワークフロー状態", required = true, position = 3)
-	private workflowStatus workflowStatus;
+	private WorkflowStatus workflowStatus;
 
 	/**
 	 * 商品マスタ
@@ -339,7 +339,7 @@ public class Estimation extends EntityBase {
 	 * 競合先基本料金
 	 */
 	@ApiModelProperty(value = "競合先基本料金", required = false, position = 41, allowableValues = "range[0.00,9999999999999999999.99]")
-	@Pattern(regexp = "99999999999999999999999999999.99")
+	@Pattern(regexp = "9999999999999999999.99")
 	private BigDecimal competitionAmount;
 
 	/**

@@ -15,6 +15,9 @@ import jp.co.ricoh.cotos.commonlib.entity.master.KjbMaster.KjbSetDiv;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * 見積情報の顧客を表すEntity
+ */
 @Entity
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -73,37 +76,37 @@ public class CustomerEst extends EntityBase {
 	/**
 	 * 事業所名
 	 */
-	@ApiModelProperty(value = "事業所名", required = false, position = 10, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "事業所名", required = false, position = 9, allowableValues = "range[0,255]")
 	private String officeName;
 
 	/**
 	 * 部門名
 	 */
-	@ApiModelProperty(value = "部門名", required = false, position = 11, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "部門名", required = false, position = 10, allowableValues = "range[0,255]")
 	private String departmentName;
 
 	/**
 	 * 郵便番号
 	 */
-	@ApiModelProperty(value = "郵便番号", required = false, position = 12, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "郵便番号", required = false, position = 11, allowableValues = "range[0,255]")
 	private String postNumber;
 
 	/**
 	 * 住所
 	 */
-	@ApiModelProperty(value = "住所", required = false, position = 13, allowableValues = "range[0,1000]")
+	@ApiModelProperty(value = "住所", required = false, position = 12, allowableValues = "range[0,1000]")
 	private String address;
 
 	/**
 	 * 電話番号
 	 */
-	@ApiModelProperty(value = "電話番号", required = false, position = 14, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "電話番号", required = false, position = 13, allowableValues = "range[0,255]")
 	private String phoneNumber;
 
 	/**
 	 * FAX番号
 	 */
-	@ApiModelProperty(value = "FAX番号", required = false, position = 15, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "FAX番号", required = false, position = 14, allowableValues = "range[0,255]")
 	private String faxNumber;
 
 	/**
@@ -111,7 +114,7 @@ public class CustomerEst extends EntityBase {
 	 */
 	@OneToOne(optional = false)
 	@JoinColumn(name = "estimation_id", referencedColumnName = "id")
-	@ApiModelProperty(value = "見積", required = true, position = 24)
+	@ApiModelProperty(value = "見積", required = true, position = 15)
 	private Estimation estimation;
 
 }
