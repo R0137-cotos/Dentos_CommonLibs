@@ -19,7 +19,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Table(name = "communication")
-public class Communication extends EntityBase {
+public class CommunicationHistory extends EntityBase {
 
 	public enum CommunicationCategory {
 
@@ -67,7 +67,7 @@ public class Communication extends EntityBase {
 	}
 
 	@Id
-	@ApiModelProperty(value = "ID", required = true, position = 1, allowableValues = "range[0,99999999999999999999999999999]")
+	@ApiModelProperty(value = "ID", required = true, position = 1)
 	private long id;
 
 	/**
