@@ -3,8 +3,8 @@ package jp.co.ricoh.cotos.commonlib.repository.contract;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import jp.co.ricoh.cotos.commonlib.entity.contract.EmployeeCon;
+import jp.co.ricoh.cotos.commonlib.entity.contract.ContractPicSaEmp;
 
 @Repository
-public interface EmployeeConRepository extends CrudRepository<EmployeeCon, Long> {
+public interface EmployeeConRepository extends CrudRepository<ContractPicSaEmp, Long> {
 }

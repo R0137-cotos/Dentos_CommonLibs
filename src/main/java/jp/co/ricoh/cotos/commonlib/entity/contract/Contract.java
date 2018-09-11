@@ -116,7 +116,7 @@ public class Contract extends EntityBase {
 	 * 商品マスタ
 	 */
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "productMasterId")
+	@JoinColumn(name = "product_master_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "商品マスタ", required = true, position = 5)
 	private Product product;
 
@@ -143,7 +143,7 @@ public class Contract extends EntityBase {
 	 * 契約番号枝番
 	 */
 	@ApiModelProperty(value = "契約番号枝番", required = true, position = 9, allowableValues = "range[0,99]")
-	private Integer contractBranchNumber;
+	private int contractBranchNumber;
 
 	/**
 	 * 契約件名
@@ -293,14 +293,14 @@ public class Contract extends EntityBase {
 	 */
 	@OneToOne(mappedBy = "contract")
 	@ApiModelProperty(value = "契約担当SA社員", required = true, position = 33)
-	private EmployeeCon employeeList;
+	private ContractPicSaEmp picSaEmpList;
 
 	/**
 	 * 契約追加編集者社員
 	 */
 	@OneToMany(mappedBy = "contract")
 	@ApiModelProperty(value = "契約追加編集者社員", required = false, position = 34)
-	private List<EmployeeCon> addedEmpoyeeList;
+	private List<ContractAddedEditorEmp> addedEditorEmpList;
 
 	/**
 	 * 販売店(契約用)
@@ -321,5 +321,5 @@ public class Contract extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "contract")
 	@ApiModelProperty(value = "契約操作履歴", required = true, position = 37)
-	private List<OperationLogCon> operationLogList;
+	private List<ContractOperationLog> operationLogList;
 }
