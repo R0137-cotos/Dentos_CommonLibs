@@ -1,22 +1,19 @@
 package jp.co.ricoh.cotos.commonlib.entity.master;
 
-import java.util.Date;
+import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.validation.constraints.Pattern;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -30,60 +27,93 @@ import lombok.Data;
 @Table(name = "item_master")
 public class ItemMaster {
 
+	public enum ProductType {
+
+		基本, オプション;
+
+		@JsonValue
+		public String toValue() {
+			return this.name();
+		}
+
+		@JsonCreator
+		public static Enum<ProductType> fromValue(String name) {
+			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
+		}
+	}
+
+	public enum CostType {
+
+		初期費, 月額, 年額;
+
+		@JsonValue
+		public String toValue() {
+			return this.name();
+		}
+
+		@JsonCreator
+		public static Enum<CostType> fromValue(String name) {
+			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
+		}
+	}
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "item_master_seq")
-	@SequenceGenerator(name = "item_master_seq", sequenceName = "item_master_seq", allocationSize = 1)
-	@ApiModelProperty(value = "品種マスタID", required = true, position = 1)
+	@ApiModelProperty(value = "品種マスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
 	/**
 	 * 品種名
 	 */
-	@ApiModelProperty(value = "品種名", required = false, position = 2, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "品種名", required = true, position = 2, allowableValues = "range[0,255]")
 	private String name;
 
 	/**
-	 * 品種コード
+	 * リコー品種コード
 	 */
-	@ApiModelProperty(value = "品種コード", required = false, position = 3, allowableValues = "range[0,255]")
-	private String itemCode;
+	@ApiModelProperty(value = "リコー品種コード", required = true, position = 3, allowableValues = "range[0,255]")
+	private String ricohItemCode;
 
-	@ManyToOne
-	@ApiModelProperty(value = "商品マスタ", required = false, position = 4)
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "product_id", referencedColumnName = "id")
+	@ApiModelProperty(value = "商品マスタ", required = true, position = 4)
 	private Product product;
 
 	/**
-	 * 手配マスタ(品種・手配業務紐付けマスタ)
+	 * 手配業務構成マスタ
 	 */
-	@ManyToMany
-	@JoinTable(name = "itemArrangementLinkMaster", joinColumns = @JoinColumn(name = "itemMasterId", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "arrangementMasterId", referencedColumnName = "id"))
-	@ApiModelProperty(value = "手配マスター", required = false, position = 5)
-	private List<ArrangementMaster> arrangementMasterList;
+	@OneToMany(mappedBy = "itemMaster")
+	@ApiModelProperty(value = "手配業務構成マスタ", required = false, position = 5)
+	private List<ArrangeWorkCompMaster> arrangeWorkCompMasterList;
 
-	// 以下、COTOSエンティティー共通項目
-	@Temporal(TemporalType.TIMESTAMP)
-	@ApiModelProperty(value = "登録日時", required = false)
-	private Date createdAt;
-	@ApiModelProperty(value = "登録者", required = false, allowableValues = "range[0,255]")
-	private String createdUser;
-	@Temporal(TemporalType.TIMESTAMP)
-	@ApiModelProperty(value = "更新日時", required = false)
-	private Date updatedAt;
-	@ApiModelProperty(value = "更新者", required = false, allowableValues = "range[0,255]")
-	private String updatedUser;
-	@Temporal(TemporalType.TIMESTAMP)
-	@ApiModelProperty(value = "削除日時", required = false)
-	private Date deletedAt;
-	@ApiModelProperty(value = "削除者", required = false, allowableValues = "range[0,255]")
-	private String deletedUser;
+	/**
+	 * 商品区分
+	 */
+	@ApiModelProperty(value = "商品区分", required = true, position = 6)
+	private ProductType productType;
 
-	@PrePersist
-	public void prePersist() {
-		this.createdAt = new Date();
-	}
+	/**
+	 * 費用種別
+	 */
+	@ApiModelProperty(value = "費用種別", required = true, position = 7)
+	private CostType costType;
 
-	@PreUpdate
-	public void preUpdate() {
-		this.updatedAt = new Date();
-	}
+	/**
+	 * 仕切価格
+	 */
+	@ApiModelProperty(value = "仕切価格", required = true, position = 8, allowableValues = "range[0.00,9999999999999999999.99]")
+	private BigDecimal partitionPrice;
+
+	/**
+	 * 積上げ可能期間（開始日）
+	 */
+	@ApiModelProperty(value = "積上げ可能期間（開始日）", required = true, position = 9, allowableValues = "range[0,19]")
+	@Pattern(regexp = "YYYY-MM-DD HH:mm:ss")
+	private String effectiveFrom;
+
+	/**
+	 * 積上げ可能期間（終了日）
+	 */
+	@ApiModelProperty(value = "積上げ可能期間（終了日）", required = true, position = 10, allowableValues = "range[0,19]")
+	@Pattern(regexp = "YYYY-MM-DD HH:mm:ss")
+	private String effectiveTo;
 }
