@@ -43,7 +43,7 @@ public class ContractAddedEditorEmp extends EntityBase {
 	 * 所属組織階層レベル
 	 */
 	@ApiModelProperty(value = "所属組織階層レベル", required = false, position = 4, allowableValues = "range[0,9]")
-	private int orgHierarchyLevel;
+	private Integer orgHierarchyLevel;
 
 	/**
 	 * 所属組織名
