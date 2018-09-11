@@ -18,7 +18,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Table(name = "communication")
+@Table(name = "communication_history")
 public class CommunicationHistory extends EntityBase {
 
 	public enum CommunicationCategory {

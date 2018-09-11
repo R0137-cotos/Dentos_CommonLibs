@@ -19,7 +19,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Table(name = "contact")
+@Table(name = "contact_to")
 public class ContactTo extends EntityBase {
 	public enum SendType {
 
@@ -43,7 +43,7 @@ public class ContactTo extends EntityBase {
 	/**
 	 * 問い合わせ
 	 */
-	@ManyToOne
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "contact_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "問い合わせ", required = true, position = 2)
 	private Contact contact;

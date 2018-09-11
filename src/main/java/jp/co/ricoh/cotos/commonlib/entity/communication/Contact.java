@@ -96,7 +96,7 @@ public class Contact extends EntityBase {
 	/**
 	 * 子問い合わせ
 	 */
-	@OneToOne
-	@ApiModelProperty(value = "子問い合わせ", required = false, position = 3)
+	@OneToOne()
+	@ApiModelProperty(value = "子問い合わせ", required = false, position = 10)
 	private Contact child;
 }
