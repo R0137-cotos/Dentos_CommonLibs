@@ -24,10 +24,10 @@ public class EstimationApprovalRouteNode extends EntityBase {
 	private long id;
 
 	/**
-	 * 契約承認ルート
+	 * 見積承認ルート
 	 */
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "contract_approval_route_id", referencedColumnName = "id")
+	@JoinColumn(name = "estimatiom_approval_route_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "見積承認ルート", required = true, position = 2)
 	private EstimationApprovalRoute estimationApprovalRoute;
 

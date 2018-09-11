@@ -13,19 +13,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
-import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangeWorkOperationLog;
-import jp.co.ricoh.cotos.commonlib.entity.arrangement.WorkAttachedFile;
-import jp.co.ricoh.cotos.commonlib.entity.contract.ContractCheckResult;
-import jp.co.ricoh.cotos.commonlib.entity.contract.ContractDetail;
-import jp.co.ricoh.cotos.commonlib.entity.contract.CustomerCon;
-import jp.co.ricoh.cotos.commonlib.entity.contract.DealerCon;
-import jp.co.ricoh.cotos.commonlib.entity.contract.EmployeeCon;
 import jp.co.ricoh.cotos.commonlib.entity.master.Product;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -120,9 +114,9 @@ public class Estimation extends EntityBase {
 	 * 商品マスタ
 	 */
 	@ManyToOne
-	@JoinColumn(name = "product_id")
+	@JoinColumn(name = "product_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "商品マスタ", required = true, position = 4)
-	private Product productMaster;
+	private Product product;
 
 	/**
 	 * 案件番号
@@ -140,13 +134,14 @@ public class Estimation extends EntityBase {
 	 * 見積番号
 	 */
 	@ApiModelProperty(value = "見積番号", required = true, position = 7, allowableValues = "range[0,255]")
+	@Pattern(regexp = "CEYYYYMMDDNNNNN")
 	private String estimateNumber;
 
 	/**
 	 * 見積番号枝番
 	 */
-	@ApiModelProperty(value = "見積番号枝番", required = true, position = 8, allowableValues = "range[0,999]")
-	private long estimateBranchNumber;
+	@ApiModelProperty(value = "見積番号枝番", required = true, position = 8, allowableValues = "range[0,99]")
+	private int estimateBranchNumber;
 
 	/**
 	 * 見積件名
@@ -182,8 +177,8 @@ public class Estimation extends EntityBase {
 	/**
 	 * 変更元契約番号枝番
 	 */
-	@ApiModelProperty(value = "変更元契約番号枝番", required = false, position = 14, allowableValues = "range[0,999]")
-	private long originContractBranchNumber;
+	@ApiModelProperty(value = "変更元契約番号枝番", required = false, position = 14, allowableValues = "range[0,99]")
+	private int originContractBranchNumber;
 
 	/**
 	 * 変更元契約ID
@@ -239,7 +234,9 @@ public class Estimation extends EntityBase {
 	@ApiModelProperty(value = "見積鑑用見積件名", required = false, position = 23, allowableValues = "range[0,255]")
 	private String coverEstimationSubject;
 
-	/** 見積鑑用支払条件 */
+	/**
+	 * 見積鑑用支払条件
+	 */
 	@ApiModelProperty(value = "見積鑑用支払条件", required = false, position = 24, allowableValues = "range[0,255]")
 	private String coverPaymentTerms;
 
@@ -247,72 +244,107 @@ public class Estimation extends EntityBase {
 	@ApiModelProperty(value = "見積鑑用納期", required = false, position = 25)
 	private Date coverDeliveryDate;
 
-	/** 見積鑑用有効期限 */
+	/**
+	 * 見積鑑用有効期限
+	 */
 	@ApiModelProperty(value = "見積鑑用有効期限", required = false, position = 26)
 	private Date coverExpirationDate;
 
-	/** 見積鑑用備考 */
+	/**
+	 * 見積鑑用備考
+	 */
 	@ApiModelProperty(value = "見積鑑用備考", required = false, position = 27, allowableValues = "range[0,255]")
 	private String coverRemarks;
 
-	/** 見積鑑用見積提示日 */
+	/**
+	 * 見積鑑用見積提示日
+	 */
 	@ApiModelProperty(value = "見積鑑用見積提示日", required = false, position = 28)
 	private Date coverPresentationDate;
 
-	/** 見積発行元会社名 */
+	/**
+	 * 見積発行元会社名
+	 */
 	@ApiModelProperty(value = "見積発行元会社名", required = false, position = 29, allowableValues = "range[0,255]")
 	private String publishCompany;
 
-	/** 見積発行元所属 */
+	/**
+	 * 見積発行元所属
+	 */
 	@ApiModelProperty(value = "見積発行元所属", required = false, position = 30, allowableValues = "range[0,255]")
 	private String publishDepartment;
 
-	/** 見積発行元郵便番号 */
+	/**
+	 * 見積発行元郵便番号
+	 */
 	@ApiModelProperty(value = "見積発行元郵便番号", required = false, position = 31, allowableValues = "range[0,255]")
 	private String publishPostNumber;
 
-	/** 見積発行元住所 */
+	/**
+	 * 見積発行元住所
+	 */
 	@ApiModelProperty(value = "見積発行元住所", required = false, position = 32, allowableValues = "range[0,1000]")
 	private String publishAddress;
 
-	/** 見積発行元電話番号 */
+	/**
+	 * 見積発行元電話番号
+	 */
 	@ApiModelProperty(value = "見積発行元電話番号", required = false, position = 33, allowableValues = "range[0,255]")
 	private String publishTel;
 
-	/** 見積発行元FAX番号 */
+	/**
+	 * 見積発行元FAX番号
+	 */
 	@ApiModelProperty(value = "見積発行元FAX番号", required = false, position = 34, allowableValues = "range[0,255]")
 	private String publishFax;
 
-	/** 見積発行元担当者名 */
+	/**
+	 * 見積発行元担当者名
+	 */
 	@ApiModelProperty(value = "見積発行元担当者名", required = false, position = 35, allowableValues = "range[0,255]")
 	private String publishEmployee;
 
-	/** 特価希望理由 */
+	/**
+	 * 特価希望理由
+	 */
 	@ApiModelProperty(value = "特価希望理由", required = false, position = 36, allowableValues = "range[0,255]")
 	private String spPriceApplyReason;
 
-	/** 特価希望理由テキスト */
+	/**
+	 * 特価希望理由テキスト
+	 */
 	@ApiModelProperty(value = "特価希望理由テキスト", required = false, position = 37, allowableValues = "range[0,255]")
 	private String spPriceApplyReasonText;
 
-	/** 主競合先名称 */
+	/**
+	 * 主競合先名称
+	 */
 	@ApiModelProperty(value = "主競合先名称", required = false, position = 38, allowableValues = "range[0,255]")
 	private String mainCompetitorName;
 
-	/** 競合情報 */
+	/**
+	 * 競合情報
+	 */
 	@ApiModelProperty(value = "競合情報", required = false, position = 39, allowableValues = "range[0,255]")
 	private String competitionInfo;
 
-	/** 競合先契約種別 */
+	/**
+	 * 競合先契約種別
+	 */
 	// TODO 区分値不明
 	@ApiModelProperty(value = "競合先契約種別", required = false, position = 40, allowableValues = "range[0,255]")
 	private String competitionContractDiv;
 
-	/** 競合先基本料金 */
-	@ApiModelProperty(value = "競合先基本料金", required = false, position = 41, allowableValues = "range[0,9999999999999999999]")
+	/**
+	 * 競合先基本料金
+	 */
+	@ApiModelProperty(value = "競合先基本料金", required = false, position = 41, allowableValues = "range[0.00,9999999999999999999.99]")
+	@Pattern(regexp = "99999999999999999999999999999.99")
 	private BigDecimal competitionAmount;
 
-	/** 拡張項目 */
+	/**
+	 * 拡張項目
+	 */
 	@ApiModelProperty(value = "拡張項目", required = false, position = 42)
 	private String extendsParameter;
 
@@ -349,7 +381,7 @@ public class Estimation extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "estimation")
 	@ApiModelProperty(value = "見積追加編集者社員", required = false, position = 47)
-	private List<EstimationAddedEditorEmp> estimationAddedEditorEmp;
+	private List<EstimationAddedEditorEmp> estimationAddedEditorEmpList;
 
 	/**
 	 * 販売店（見積用）

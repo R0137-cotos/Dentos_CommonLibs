@@ -13,6 +13,9 @@ import jp.co.ricoh.cotos.commonlib.entity.master.MvEmployeeMaster;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * 見積情報の中で保持する担当SA社員を表すEntity
+ */
 @Entity
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -28,7 +31,7 @@ public class EstimationPicSaEmp extends EntityBase {
 	 */
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "mom_employee_id", referencedColumnName = "momEmpId")
-	@ApiModelProperty(value = "RJ社員情報マスタ", required = false, position = 2)
+	@ApiModelProperty(value = "RJ社員情報マスタ", required = true, position = 2)
 	private MvEmployeeMaster mvEmployeeMaster;
 
 	/**
@@ -108,7 +111,7 @@ public class EstimationPicSaEmp extends EntityBase {
 	 */
 	@OneToOne(optional = false)
 	@JoinColumn(name = "estimation_id", referencedColumnName = "id")
-	@ApiModelProperty(value = "見積", required = false, position = 15)
+	@ApiModelProperty(value = "見積", required = true, position = 15)
 	private Estimation estimation;
 
 }

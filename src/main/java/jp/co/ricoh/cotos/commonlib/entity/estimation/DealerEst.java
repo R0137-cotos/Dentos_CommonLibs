@@ -1,6 +1,7 @@
 package jp.co.ricoh.cotos.commonlib.entity.estimation;
 
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -12,8 +13,12 @@ import jp.co.ricoh.cotos.commonlib.entity.master.KjbMaster;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * 見積情報の中で保持する販売店情報を表すEntity
+ */
 @Entity
 @EqualsAndHashCode(callSuper = true)
+@EntityListeners(DealerEstListener.class)
 @Data
 @Table(name = "dealer_est")
 public class DealerEst extends EntityBase {

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -19,31 +20,42 @@ import lombok.EqualsAndHashCode;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Table
+@Table(name = "estimation_approval_route")
 public class EstimationApprovalRoute extends EntityBase {
 
 	@Id
 	@ApiModelProperty(value = "見積承認ルートID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
-	/** 見積 */
+	/**
+	 * 見積
+	 */
 	@OneToOne
 	@ApiModelProperty(value = "見積", required = true, position = 2)
+	@JoinColumn(name = "estimation_id", referencedColumnName = "id")
 	private Estimation estimation;
 
-	/** 承認依頼者MoM社員ID */
+	/**
+	 * 承認依頼者MoM社員ID
+	 */
 	@ApiModelProperty(value = "承認依頼者MoM社員ID", required = true, position = 3, allowableValues = "range[0,255]")
 	private String approvalRequesterEmpId;
 
-	/** 承認依頼者氏名 */
+	/**
+	 * 承認依頼者氏名
+	 */
 	@ApiModelProperty(value = "承認依頼者氏名", required = true, position = 4, allowableValues = "range[0,255]")
 	private String approvalRequesterName;
 
-	/** 承認依頼者組織名 */
+	/**
+	 * 承認依頼者組織名
+	 */
 	@ApiModelProperty(value = "承認依頼者組織名", required = false, position = 5, allowableValues = "range[0,255]")
 	private String approvalRequesterOrgName;
 
-	/** 特価承認対象フラグ */
+	/**
+	 * 特価承認対象フラグ
+	 */
 	@ApiModelProperty(value = "特価承認対象フラグ", required = true, position = 6, allowableValues = "range[0,9]")
 	private int specialPriceApprovalFlg;
 

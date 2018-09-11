@@ -1,6 +1,7 @@
 package jp.co.ricoh.cotos.commonlib.entity.estimation;
 
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -17,6 +18,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 @Data
+@EntityListeners(CustomerEstListener.class)
 @Table(name = "customer_est")
 public class CustomerEst extends EntityBase {
 
@@ -109,7 +111,7 @@ public class CustomerEst extends EntityBase {
 	 */
 	@OneToOne(optional = false)
 	@JoinColumn(name = "estimation_id", referencedColumnName = "id")
-	@ApiModelProperty(value = "見積", required = false, position = 24)
+	@ApiModelProperty(value = "見積", required = true, position = 24)
 	private Estimation estimation;
 
 }
