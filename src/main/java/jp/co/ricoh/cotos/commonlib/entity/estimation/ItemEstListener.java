@@ -28,7 +28,7 @@ public class ItemEstListener {
 	@PrePersist
 	@Transactional
 	public void appendsEstimationItemFields(ItemEst item) {
-		ItemMaster itemMaster = itemMasterRepository.findByItemCode(item.getRicohItemCode());
+		ItemMaster itemMaster = itemMasterRepository.findByRicohItemCode(item.getRicohItemCode());
 		item.setItemMaster(itemMaster);
 		BeanUtils.copyProperties(itemMaster, item, "id");
 	}

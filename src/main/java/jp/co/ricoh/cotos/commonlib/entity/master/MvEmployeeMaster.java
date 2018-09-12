@@ -8,7 +8,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
- * MoM社員マテビューを表すEntity
+ * RJ社員情報マスタ
  */
 @Entity
 @Data

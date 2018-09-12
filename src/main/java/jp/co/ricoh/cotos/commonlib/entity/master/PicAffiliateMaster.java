@@ -1,32 +1,48 @@
 package jp.co.ricoh.cotos.commonlib.entity.master;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
- * 担当支社を保持するエンティティ
+ * RJ人事組織マスタ
  */
 @Entity
 @Data
 @Table(name = "v_pic_affiliate_master")
 public class PicAffiliateMaster {
 
+	/**
+	 * MoM組織ID
+	 */
 	@Id
-	@Column(length = 21)
+	@ApiModelProperty(value = "MoM組織ID", required = true, position = 1, allowableValues = "range[0,7]")
 	private String orgId;
 
-	@Column(length = 3000)
+	/**
+	 * MoM組織名称
+	 */
+	@ApiModelProperty(value = "MoM組織名称", required = false, position = 2, allowableValues = "range[0,1000]")
 	private String orgName;
-	
+
+	/**
+	 * 組織階層レベル
+	 */
+	@ApiModelProperty(value = "組織階層レベル", required = false, position = 3, allowableValues = "range[0,9999999999]")
 	private Integer orgHierarchyLevel;
-	
-	@Column(length = 21)
+
+	/**
+	 * 上位MoM組織ID
+	 */
+	@ApiModelProperty(value = "上位MoM組織ID", required = false, position = 4, allowableValues = "range[0,7]")
 	private String highOrgId;
-	
-	@Column(length = 3000)
+
+	/**
+	 * 上位MoM組織名称
+	 */
+	@ApiModelProperty(value = "上位MoM組織名称", required = false, position = 5, allowableValues = "range[0,1000]")
 	private String highOrgName;
 }

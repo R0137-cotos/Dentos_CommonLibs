@@ -27,7 +27,7 @@ public class ArrangeChecklistCompMaster {
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "arrange_work_type_master_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "手配業務タイプマスタ", required = true, position = 2)
-	private ApprovalRouteGrpMaster approvalRouteGrpMaster;
+	private ArrangeWorkTypeMaster arrangeWorkTypeMaster;
 
 	/**
 	 * 汎用チェック事項マスタ

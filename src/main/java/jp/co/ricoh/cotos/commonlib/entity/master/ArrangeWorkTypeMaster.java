@@ -15,7 +15,6 @@ import lombok.Data;
 /**
  * 手配業務タイプマスタを表すEntity
  */
-
 @Entity
 @Data
 @Table(name = "arrange_work_type_master")

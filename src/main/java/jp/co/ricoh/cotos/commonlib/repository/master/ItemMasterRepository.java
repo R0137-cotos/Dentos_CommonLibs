@@ -7,5 +7,5 @@ import jp.co.ricoh.cotos.commonlib.entity.master.ItemMaster;
 
 @Repository
 public interface ItemMasterRepository extends CrudRepository<ItemMaster, Long> {
-	public ItemMaster findByItemCode(String code);
+	public ItemMaster findByRicohItemCode(String code);
 }

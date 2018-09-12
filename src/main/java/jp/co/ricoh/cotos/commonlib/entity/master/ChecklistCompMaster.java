@@ -67,13 +67,17 @@ public class ChecklistCompMaster {
 	/**
 	 * 対象契約種別
 	 */
-	@ApiModelProperty(value = "対象契約種別", required = true, position = 3)
+	@ApiModelProperty(value = "対象契約種別<br /> "//
+			+ "見積ドメイン→共通/新規/プラン変更<br /> "//
+			+ "契約ドメイン→共通/新規/プラン変更/情報変更", required = true, position = 3)
 	private TargetContractType targetContractType;
 
 	/**
 	 * 対象ライフサイクル状態
 	 */
-	@ApiModelProperty(value = "対象ライフサイクル状態", required = true, position = 4)
+	@ApiModelProperty(value = "対象ライフサイクル状態<br /> "//
+			+ "見積ドメイン→作成中<br /> "//
+			+ "契約ドメイン→作成中/キャンセル手続き中/解約手続き中", required = true, position = 4)
 	private TargetLifecycleStatus targetLifecycleStatus;
 
 	/**

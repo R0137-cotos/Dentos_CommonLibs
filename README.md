@@ -38,6 +38,8 @@
 |32|見積エンティティのERD反映|
 |33|契約エンティティのERD反映修正|
 
+|35|マスタエンティティのERD反映修正|
+
 # バージョン採番方法
 
 build.gradleファイルのリビジョン番号(pom.version)を＋1して「gradle uploadArchives」コマンドを実行し、

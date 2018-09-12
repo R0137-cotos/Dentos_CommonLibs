@@ -21,7 +21,6 @@ import lombok.Data;
 /**
  * 品種を表すEntity
  */
-
 @Entity
 @Data
 @Table(name = "item_master")
@@ -116,4 +115,12 @@ public class ItemMaster {
 	@ApiModelProperty(value = "積上げ可能期間（終了日）", required = true, position = 10, allowableValues = "range[0,19]")
 	@Pattern(regexp = "YYYY-MM-DD HH:mm:ss")
 	private String effectiveTo;
+
+	/**
+	 * 計上分解構成マスタ
+	 */
+	@OneToMany(mappedBy = "itemMaster")
+	@ApiModelProperty(value = "計上分解構成マスタ", required = false, position = 11)
+	private List<RecordDecomposeCompMaster> recordDecomposeCompMasterList;
+
 }

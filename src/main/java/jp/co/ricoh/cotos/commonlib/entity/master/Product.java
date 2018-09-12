@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -13,7 +14,6 @@ import lombok.Data;
 /**
  * 商材を表すMaster
  */
-
 @Entity
 @Data
 @Table(name = "product")
@@ -59,6 +59,20 @@ public class Product {
 	 */
 	@OneToMany(mappedBy = "product")
 	@ApiModelProperty(value = "チェックリスト構成マスタ", required = false, position = 7)
-	private ChecklistCompMaster checklistCompMaster;
+	private List<ChecklistCompMaster> checklistCompMasterList;
+
+	/**
+	 * 積上げ可能期間（開始日）
+	 */
+	@ApiModelProperty(value = "積上げ可能期間（開始日）", required = true, position = 8, allowableValues = "range[0,19]")
+	@Pattern(regexp = "YYYY-MM-DD HH:mm:ss")
+	private String effectiveFrom;
+
+	/**
+	 * 積上げ可能期間（終了日）
+	 */
+	@ApiModelProperty(value = "積上げ可能期間（終了日）", required = true, position = 9, allowableValues = "range[0,19]")
+	@Pattern(regexp = "YYYY-MM-DD HH:mm:ss")
+	private String effectiveTo;
 
 }

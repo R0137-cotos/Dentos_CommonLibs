@@ -15,12 +15,12 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
- * 手配業務構成マスタを表すEntity
+ * 計上分解構成マスタを表すEntity
  */
 @Entity
 @Data
-@Table(name = "arrange_work_comp_master")
-public class ArrangeWorkCompMaster {
+@Table(name = "record_decompose_comp_master")
+public class RecordDecomposeCompMaster {
 
 	public enum TargetContractType {
 
@@ -38,7 +38,7 @@ public class ArrangeWorkCompMaster {
 	}
 
 	@Id
-	@ApiModelProperty(value = "手配業務マスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "計上分解構成マスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
 	/**
@@ -62,12 +62,12 @@ public class ArrangeWorkCompMaster {
 	private int disengagementFlg;
 
 	/**
-	 * 手配業務タイプマスタ
+	 * 計上分解マスタ
 	 */
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "arrange_work_type_master_id", referencedColumnName = "id")
-	@ApiModelProperty(value = "手配業務タイプマスタ", required = true, position = 5)
-	private ArrangeWorkTypeMaster arrangeWorkTypeMaster;
+	@JoinColumn(name = "record_decompose_master_id", referencedColumnName = "id")
+	@ApiModelProperty(value = "計上分解マスタ", required = true, position = 5)
+	private RecordDecomposeMaster recordDecomposeMaster;
 
 	/**
 	 * 明細番号
