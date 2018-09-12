@@ -1,6 +1,7 @@
 package jp.co.ricoh.cotos.commonlib.entity.communication;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -18,6 +19,9 @@ import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * 問い合わせを表すEntity
+ */
 @Entity
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -39,7 +43,7 @@ public class Contact extends EntityBase {
 	}
 
 	@Id
-	@ApiModelProperty(value = "問い合わせID", required = true, position = 1, allowableValues = "range[0,99999999999999999999999999999]")
+	@ApiModelProperty(value = "問い合わせID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
 	/**
@@ -63,13 +67,6 @@ public class Contact extends EntityBase {
 	private String contactFromEmpId;
 
 	/**
-	 * 宛先ID
-	 */
-	@OneToMany(mappedBy = "contact")
-	@ApiModelProperty(value = "宛先ID", required = true, position = 5)
-	private List<ContactTo> contactTo;
-
-	/**
 	 * ドメイン
 	 */
 	@ApiModelProperty(value = "ドメイン", required = false, position = 6)
@@ -91,7 +88,7 @@ public class Contact extends EntityBase {
 	 * 送信日時
 	 */
 	@ApiModelProperty(value = "送信日時", required = true, position = 9)
-	private int sendAt;
+	private Date sendAt;
 
 	/**
 	 * 子問い合わせ
@@ -99,4 +96,11 @@ public class Contact extends EntityBase {
 	@OneToOne()
 	@ApiModelProperty(value = "子問い合わせ", required = false, position = 10)
 	private Contact child;
+
+	/**
+	 * 宛先
+	 */
+	@OneToMany(mappedBy = "contact")
+	@ApiModelProperty(value = "宛先", required = true, position = 5)
+	private List<ContactTo> contactToList;
 }

@@ -16,6 +16,9 @@ import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * 問い合わせ宛先を表すEntity
+ */
 @Entity
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -37,7 +40,7 @@ public class ContactTo extends EntityBase {
 	}
 
 	@Id
-	@ApiModelProperty(value = "宛先ID", required = true, position = 1, allowableValues = "range[0,99999999999999999999999999999]")
+	@ApiModelProperty(value = "宛先ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
 	/**

@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -15,10 +16,13 @@ import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * コミュニケーション履歴を表すEntity
+ */
 @Entity
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Table(name = "communication_history")
+@Table(name = "communication")
 public class CommunicationHistory extends EntityBase {
 
 	public enum CommunicationCategory {
@@ -66,8 +70,23 @@ public class CommunicationHistory extends EntityBase {
 		}
 	}
 
+	public enum ApprovalTargetType {
+
+		新規, 情報変更, プラン変更, キャンセル, 解約, 作業完了報告, 非承認;
+
+		@JsonValue
+		public String toValue() {
+			return this.name();
+		}
+
+		@JsonCreator
+		public static Enum<ApprovalTargetType> fromValue(String name) {
+			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
+		}
+	}
+
 	@Id
-	@ApiModelProperty(value = "ID", required = true, position = 1)
+	@ApiModelProperty(value = "ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
 	/**
@@ -103,7 +122,7 @@ public class CommunicationHistory extends EntityBase {
 	@ApiModelProperty(value = "承認対象種別<br />" //
 			+ "承認フロー⇒新規/情報変更/プラン変更/キャンセル/解約/作業完了報告<br />" //
 			+ "タスクフロー⇒非承認", required = true, position = 6) //
-	private WorkflowType approvalTargetType;
+	private ApprovalTargetType approvalTargetType;
 
 	/**
 	 * 対象文書画面URL
@@ -148,6 +167,7 @@ public class CommunicationHistory extends EntityBase {
 	@ApiModelProperty(value = "対象文書番号<br />" //
 			+ "見積⇒見積番号を設定<br />" //
 			+ "契約/手配⇒契約番号を設定", required = true, position = 12, allowableValues = "range[0,255]") //
+	@Pattern(regexp = "CAYYYYMMDDNNNNN")
 	private String targetDocNumber;
 
 	/**
