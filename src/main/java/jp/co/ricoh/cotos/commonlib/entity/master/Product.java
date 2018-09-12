@@ -27,13 +27,13 @@ public class Product {
 	 * 見積承認ルートグループID
 	 */
 	@ApiModelProperty(value = "見積承認ルートグループID", required = false, position = 2, allowableValues = "range[0,9999999999999999999]")
-	private long estimationApprovalRouteGrpId;
+	private Long estimationApprovalRouteGrpId;
 
 	/**
 	 * 契約承認ルートグループID
 	 */
 	@ApiModelProperty(value = "契約承認ルートグループID", required = false, position = 3, allowableValues = "range[0,9999999999999999999]")
-	private long contractApprovalRouteGrpId;
+	private Long contractApprovalRouteGrpId;
 
 	/**
 	 * 商品名
@@ -48,31 +48,31 @@ public class Product {
 	private long repItemMasterId;
 
 	/**
-	 * 品種マスタ
-	 */
-	@OneToMany(mappedBy = "product")
-	@ApiModelProperty(value = "品種マスタ", required = true, position = 6)
-	private List<ItemMaster> itemMasterList;
-
-	/**
-	 * チェックリスト構成マスタ
-	 */
-	@OneToMany(mappedBy = "product")
-	@ApiModelProperty(value = "チェックリスト構成マスタ", required = false, position = 7)
-	private List<ChecklistCompMaster> checklistCompMasterList;
-
-	/**
 	 * 積上げ可能期間（開始日）
 	 */
-	@ApiModelProperty(value = "積上げ可能期間（開始日）", required = true, position = 8, allowableValues = "range[0,19]")
+	@ApiModelProperty(value = "積上げ可能期間（開始日）", required = true, position = 6, allowableValues = "range[0,19]")
 	@Pattern(regexp = "YYYY-MM-DD HH:mm:ss")
 	private String effectiveFrom;
 
 	/**
 	 * 積上げ可能期間（終了日）
 	 */
-	@ApiModelProperty(value = "積上げ可能期間（終了日）", required = true, position = 9, allowableValues = "range[0,19]")
+	@ApiModelProperty(value = "積上げ可能期間（終了日）", required = true, position = 7, allowableValues = "range[0,19]")
 	@Pattern(regexp = "YYYY-MM-DD HH:mm:ss")
 	private String effectiveTo;
+
+	/**
+	 * 品種マスタ
+	 */
+	@OneToMany(mappedBy = "product")
+	@ApiModelProperty(value = "品種マスタ", required = true, position = 8)
+	private List<ItemMaster> itemMasterList;
+
+	/**
+	 * チェックリスト構成マスタ
+	 */
+	@OneToMany(mappedBy = "product")
+	@ApiModelProperty(value = "チェックリスト構成マスタ", required = false, position = 9)
+	private List<ChecklistCompMaster> checklistCompMasterList;
 
 }

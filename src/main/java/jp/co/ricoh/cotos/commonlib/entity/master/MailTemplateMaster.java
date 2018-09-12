@@ -58,15 +58,15 @@ public class MailTemplateMaster {
 	private long productMasterId;
 
 	/**
-	 * サービスカテゴリー
+	 * サービスカテゴリ
 	 */
-	@ApiModelProperty(value = "サービスカテゴリー", required = true, position = 3)
+	@ApiModelProperty(value = "サービスカテゴリ", required = true, position = 3)
 	private ServiceCategory serviceCategory;
 
 	/**
-	 * 処理カテゴリー
+	 * 処理カテゴリ
 	 */
-	@ApiModelProperty(value = "処理カテゴリー", required = true, position = 4)
+	@ApiModelProperty(value = "処理カテゴリ", required = true, position = 4)
 	private ProcessCategory processCategory;
 
 	/**

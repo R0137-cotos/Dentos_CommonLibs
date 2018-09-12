@@ -33,8 +33,8 @@ public class ArrangeWorkTypeMaster {
 	/**
 	 * 説明
 	 */
-	@ApiModelProperty(value = "説明", required = false, position = 3)
-	private int description;
+	@ApiModelProperty(value = "説明", required = false, position = 3, allowableValues = "range[0,255]")
+	private String description;
 
 	/**
 	 * 手配承認ルートグループ

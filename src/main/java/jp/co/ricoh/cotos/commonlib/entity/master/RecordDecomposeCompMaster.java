@@ -37,6 +37,21 @@ public class RecordDecomposeCompMaster {
 		}
 	}
 
+	public enum DisengagementFlg {
+
+		通常時("0"), 解約時("1");
+
+		private String value;
+
+		DisengagementFlg(final String value) {
+			this.value = value;
+		}
+
+		public String toValue() {
+			return this.value;
+		}
+	}
+
 	@Id
 	@ApiModelProperty(value = "計上分解構成マスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
@@ -59,7 +74,7 @@ public class RecordDecomposeCompMaster {
 	 * 解約フラグ
 	 */
 	@ApiModelProperty(value = "解約フラグ", required = true, position = 4)
-	private int disengagementFlg;
+	private DisengagementFlg disengagementFlg;
 
 	/**
 	 * 計上分解マスタ

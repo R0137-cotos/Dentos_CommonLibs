@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -76,6 +77,7 @@ public class RecordDecomposeMaster {
 	 * 対象金額
 	 */
 	@ApiModelProperty(value = "対象金額", required = true, position = 7, allowableValues = "range[0.00,9999999999999999999.99]")
+	@Pattern(regexp = "9999999999999999999.99")
 	private BigDecimal amount;
 
 	/**

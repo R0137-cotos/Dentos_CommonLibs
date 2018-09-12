@@ -80,7 +80,7 @@ public class ApprovalRouteNodeMaster {
 	/**
 	 * 組織階層レベル
 	 */
-	@ApiModelProperty(value = "承認順", required = false, position = 6, allowableValues = "range[0,9]")
+	@ApiModelProperty(value = "組織階層レベル", required = false, position = 6, allowableValues = "range[0,9]")
 	private Integer hierarchyLevel;
 
 	/**

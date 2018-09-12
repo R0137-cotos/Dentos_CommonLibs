@@ -58,7 +58,7 @@ public class ArrangeWorkCompMaster {
 	/**
 	 * 解約フラグ
 	 */
-	@ApiModelProperty(value = "解約フラグ", required = true, position = 4)
+	@ApiModelProperty(value = "解約フラグ", required = true, position = 4, allowableValues = "range[0,9]")
 	private int disengagementFlg;
 
 	/**
@@ -72,7 +72,7 @@ public class ArrangeWorkCompMaster {
 	/**
 	 * 明細番号
 	 */
-	@ApiModelProperty(value = "明細番号", required = true, position = 6)
+	@ApiModelProperty(value = "明細番号", required = true, position = 6, allowableValues = "range[0,999]")
 	private int seqNumber;
 
 }
