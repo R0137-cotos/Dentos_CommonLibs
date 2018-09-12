@@ -12,13 +12,16 @@ import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.contract.Contract.LifecycleStatus;
 import lombok.Data;
 
+/**
+ * 契約チェック結果を表すEntity
+ */
 @Entity
 @Data
 @Table(name = "contract_check_result")
 public class ContractCheckResult {
 
 	@Id
-	@ApiModelProperty(value = "契約チェック結果ID", required = true, position = 1, allowableValues = "range[0,99999999999999999999999999999]")
+	@ApiModelProperty(value = "契約チェック結果ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
 	/**
