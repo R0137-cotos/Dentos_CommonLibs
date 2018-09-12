@@ -1,19 +1,12 @@
 package jp.co.ricoh.cotos.commonlib.entity.master;
 
-import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import jp.co.ricoh.cotos.commonlib.converter.ApproverDeriveMethodDivConverter;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -24,13 +17,28 @@ import lombok.Data;
 @Table(name = "approval_route_node_master")
 public class ApprovalRouteNodeMaster {
 
-	public enum ApproverDeriveMethodDiv {
+	public enum AuthorizerClass {
+
+		メイン承認者("1"), 代理承認者("2");
+
+		private String value;
+
+		AuthorizerClass(final String value) {
+			this.value = value;
+		}
+
+		public String toValue() {
+			return this.value;
+		}
+	}
+
+	public enum AuthorizerDeriveMethodDiv {
 
 		直属上司指定("1"), 組織絶対階層指定("2"), 組織直接指定("3"), ユーザー直接指定("4");
 
 		private String value;
 
-		ApproverDeriveMethodDiv(final String value) {
+		AuthorizerDeriveMethodDiv(final String value) {
 			this.value = value;
 		}
 
@@ -40,45 +48,51 @@ public class ApprovalRouteNodeMaster {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "approval_route_node_master_seq")
-	@SequenceGenerator(name = "approval_route_node_master_seq", sequenceName = "approval_route_node_master_seq", allocationSize = 1)
+	@ApiModelProperty(value = "承認ルートノードマスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
+
+	/**
+	 * 承認ルートマスタ
+	 */
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "approval_route_id", referencedColumnName = "id")
+	@ApiModelProperty(value = "承認ルートマスタ", required = true, position = 2)
+	private ApprovalRouteMaster approvalRouteMaster;
 
 	/**
 	 * 承認順
 	 */
-	private long approvalOrder;
+	@ApiModelProperty(value = "承認順", required = true, position = 3, allowableValues = "range[0,999]")
+	private int approvalOrder;
+
+	/**
+	 * 承認者種別
+	 */
+	@ApiModelProperty(value = "承認者種別", required = true, position = 4)
+	private AuthorizerClass authorizerClass;
 
 	/**
 	 * 承認者導出方式区分
 	 */
-	@Convert(converter = ApproverDeriveMethodDivConverter.class)
-	@Column(length = 1, nullable = false)
-	private ApproverDeriveMethodDiv approverDeriveMethodDiv;
+	@ApiModelProperty(value = "承認者導出方式区分", required = true, position = 5)
+	private AuthorizerDeriveMethodDiv approverDeriveMethodDiv;
 
 	/**
 	 * 組織階層レベル
 	 */
+	@ApiModelProperty(value = "組織階層レベル", required = false, position = 6, allowableValues = "range[0,9]")
 	private Integer hierarchyLevel;
 
 	/**
 	 * MoM組織ID
 	 */
-	@Column(length = 255)
+	@ApiModelProperty(value = "MoM組織ID", required = false, position = 7, allowableValues = "range[0,255]")
 	private String momOrgId;
 
 	/**
 	 * MoM社員ID
 	 */
-	@Column(length = 255)
+	@ApiModelProperty(value = "MoM社員ID", required = false, position = 8, allowableValues = "range[0,255]")
 	private String momEmpId;
-
-	/**
-	 * 承認ルートマスタ
-	 */
-	@ManyToOne
-	@JoinColumn(name = "approval_route_id")
-	@JsonIgnore
-	private ApprovalRouteMaster approvalRouteMaster;
 
 }

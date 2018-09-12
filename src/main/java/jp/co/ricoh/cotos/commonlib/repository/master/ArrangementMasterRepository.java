@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import jp.co.ricoh.cotos.commonlib.entity.master.ArrangementMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.ArrangeWorkTypeMaster;
 
 @Repository
-public interface ArrangementMasterRepository extends CrudRepository<ArrangementMaster, String> {
-	public List<ArrangementMaster> findAllByOrderByIdAsc();
+public interface ArrangementMasterRepository extends CrudRepository<ArrangeWorkTypeMaster, String> {
+	public List<ArrangeWorkTypeMaster> findAllByOrderByIdAsc();
 }

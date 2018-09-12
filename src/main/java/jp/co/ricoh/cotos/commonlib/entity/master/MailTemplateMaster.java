@@ -2,22 +2,14 @@ package jp.co.ricoh.cotos.commonlib.entity.master;
 
 import java.util.Arrays;
 
-import javax.persistence.Basic;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Entity
@@ -42,7 +34,7 @@ public class MailTemplateMaster {
 
 	public enum ProcessCategory {
 
-		承認依頼, 承認依頼差戻, 承認, 作業依頼, 作業依頼差戻, 作業完了, お知らせeメールアドレス登録申請完了連絡, 業務連絡, 契約業務依頼, 契約業務依頼差戻, 契約業務回答, 契約期間満了事前通知, 見積有効期限通知, サービス開始案内通知, 更新可否回答期限通知, 解約期限通知, 解約手続き漏れ防止通知, 変更結果通知, 契約自動更新通知;
+		承認依頼, 承認依頼差戻, 承認, 作業依頼, 作業依頼差戻, 作業完了;
 
 		@JsonValue
 		public String toValue() {
@@ -56,42 +48,37 @@ public class MailTemplateMaster {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mail_template_master_seq")
-	@SequenceGenerator(name = "mail_template_master_seq", sequenceName = "mail_template_master_seq", allocationSize = 1)
+	@ApiModelProperty(value = "メールテンプレートID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
 	/**
 	 * 商品マスタ
 	 */
-	@ManyToOne
-	private Product product;
+	@ApiModelProperty(value = "商品マスタID", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
+	private long productMasterId;
+
+	/**
+	 * サービスカテゴリ
+	 */
+	@ApiModelProperty(value = "サービスカテゴリ", required = true, position = 3)
+	private ServiceCategory serviceCategory;
+
+	/**
+	 * 処理カテゴリ
+	 */
+	@ApiModelProperty(value = "処理カテゴリ", required = true, position = 4)
+	private ProcessCategory processCategory;
 
 	/**
 	 * メール件名
 	 */
+	@ApiModelProperty(value = "メール件名", required = true, position = 5, allowableValues = "range[0,255]")
 	private String mailSubject;
 
 	/**
 	 * メール本文
 	 */
-	@Lob
-	@Basic(fetch = FetchType.EAGER)
+	@ApiModelProperty(value = "メール本文", required = true, position = 6)
 	private String mailBody;
 
-	/**
-	 * サービスカテゴリー
-	 */
-	@Enumerated(EnumType.STRING)
-	private ServiceCategory serviceCategory;
-
-	/**
-	 * 処理カテゴリー
-	 */
-	@Enumerated(EnumType.STRING)
-	private ProcessCategory processCategory;
-
-	/**
-	 * 送信元メールアドレス
-	 */
-	private String sendFromMailAddress;
 }

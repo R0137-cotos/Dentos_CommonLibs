@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
-import jp.co.ricoh.cotos.commonlib.entity.master.ArrangementMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.ArrangeWorkTypeMaster;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -76,5 +76,5 @@ public class ArrangementDetail extends EntityBase {
 	 */
 	@ManyToOne(optional = false)
 	@ApiModelProperty(value = "手配マスタ", required = false, position = 8)
-	private ArrangementMaster arrangementMaster;
+	private ArrangeWorkTypeMaster arrangementMaster;
 }

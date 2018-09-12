@@ -2,17 +2,12 @@ package jp.co.ricoh.cotos.commonlib.entity.master;
 
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -24,27 +19,26 @@ import lombok.Data;
 public class ApprovalRouteGrpMaster {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "approval_route_grp_master_seq")
-	@SequenceGenerator(name = "approval_route_grp_master_seq", sequenceName = "approval_route_grp_master_seq", allocationSize = 1)
+	@ApiModelProperty(value = "承認ルートグループマスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
 	/**
 	 * 承認ルートグループ名
 	 */
-	@Column(length = 255, nullable = false)
+	@ApiModelProperty(value = "承認ルートグループ名", required = true, position = 2, allowableValues = "range[0,255]")
 	private String approvalRouteGrpName;
 
 	/**
 	 * 説明
 	 */
-	@Column(length = 255)
+	@ApiModelProperty(value = "説明", required = false, position = 3, allowableValues = "range[0,255]")
 	private String description;
 
 	/**
-	 * 承認ルートマスタリスト
+	 * 承認ルートマスタ
 	 */
-	@OneToMany(mappedBy = "approvalRouteGrpMaster", fetch = FetchType.EAGER)
-	@OrderBy("condDetermineOrder ASC")
+	@OneToMany(mappedBy = "approvalRouteGrpMaster")
+	@ApiModelProperty(value = "承認ルートマスタ", required = true, position = 4, allowableValues = "range[0,255]")
 	private List<ApprovalRouteMaster> approvalRouteMasterList;
 
 }
