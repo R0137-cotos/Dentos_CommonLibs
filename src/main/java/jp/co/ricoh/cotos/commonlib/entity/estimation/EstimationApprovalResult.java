@@ -3,25 +3,16 @@ package jp.co.ricoh.cotos.commonlib.entity.estimation;
 import java.util.Arrays;
 import java.util.Date;
 
-import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.PrePersist;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.swagger.annotations.ApiModelProperty;
-import jp.co.ricoh.cotos.commonlib.converter.ApprovalProcessCategoryDivConverter;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -32,7 +23,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Table
+@Table(name = "estimation_approval_result")
 public class EstimationApprovalResult extends EntityBase {
 
 	public enum ApprovalProcessCategory {
@@ -51,8 +42,6 @@ public class EstimationApprovalResult extends EntityBase {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "estimation_approval_result_seq")
-	@SequenceGenerator(name = "estimation_approval_result_seq", sequenceName = "estimation_approval_result_seq", allocationSize = 1)
 	@ApiModelProperty(value = "見積承認実績ID", required = true, position = 1)
 	private long id;
 
@@ -60,50 +49,44 @@ public class EstimationApprovalResult extends EntityBase {
 	 * 見積承認ルート
 	 */
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "approvalRouteId")
-	@JsonIgnore
+	@JoinColumn(name = "approval_route_id", referencedColumnName = "id")
+	@ApiModelProperty(value = "見積承認ルート", required = true, position = 2)
 	private EstimationApprovalRoute estimationApprovalRoute;
 
 	/**
 	 * 承認処理カテゴリー
 	 */
-	@Convert(converter = ApprovalProcessCategoryDivConverter.class)
-	@ApiModelProperty(value = "承認処理カテゴリー", required = true, position = 2)
+	@ApiModelProperty(value = "承認処理カテゴリー", required = true, position = 3)
 	private ApprovalProcessCategory approvalProcessCategory;
 
 	/**
 	 * 処理実施者MoM社員ID
 	 */
-	@ApiModelProperty(value = "処理実施者MoM社員ID", required = true, position = 3, allowableValues = "range[0,255]")
-	private String actualEmptxId;
+	@ApiModelProperty(value = "処理実施者MoM社員ID", required = true, position = 4, allowableValues = "range[0,255]")
+	private String actualEmpId;
 
 	/**
 	 * 処理実施者社員名
 	 */
-	@ApiModelProperty(value = "処理実施者社員名", required = false, position = 4, allowableValues = "range[0,255]")
-	private String actualEmptxName;
+	@ApiModelProperty(value = "処理実施者社員名", required = true, position = 5, allowableValues = "range[0,255]")
+	private String actualUserName;
 
 	/**
-	 * 処理実施者部署名
+	 * 処理実施者組織名
 	 */
-	@ApiModelProperty(value = "処理実施者部署名", required = true, position = 5, allowableValues = "range[0,255]")
-	private String actualEmptxDepartmentName;
+	@ApiModelProperty(value = "処理実施者組織名", required = false, position = 6, allowableValues = "range[0,255]")
+	private String actualOrgName;
 
 	/**
 	 * コメント
 	 */
-	@ApiModelProperty(value = "コメント", required = true, position = 6, allowableValues = "range[0,255]")
-	private String approvalComment;
+	@ApiModelProperty(value = "コメント", required = false, position = 7, allowableValues = "range[0,255]")
+	private String requestComment;
 
 	/**
 	 * 実施日時
 	 */
-	@Temporal(TemporalType.TIMESTAMP)
-	@ApiModelProperty(value = "実施日時", required = true, position = 7)
+	@ApiModelProperty(value = "実施日時", required = true, position = 8)
 	private Date processedAt;
 
-	@PrePersist
-	public void prePersist() {
-		this.processedAt = new Date();
-	}
 }

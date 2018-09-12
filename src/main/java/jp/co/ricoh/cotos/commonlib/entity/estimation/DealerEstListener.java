@@ -11,13 +11,13 @@ import jp.co.ricoh.cotos.commonlib.entity.master.KjbMaster;
 import jp.co.ricoh.cotos.commonlib.repository.master.KjbMasterRepository;
 
 @Component
-public class DealerListener {
+public class DealerEstListener {
 
 	private static KjbMasterRepository kjbMasterRepository;
 
 	@Autowired
 	public void setKjbMasterRepository(KjbMasterRepository kjbMasterRepository) {
-		DealerListener.kjbMasterRepository = kjbMasterRepository;
+		DealerEstListener.kjbMasterRepository = kjbMasterRepository;
 	}
 
 	/**
@@ -27,7 +27,7 @@ public class DealerListener {
 	 */
 	@PrePersist
 	@Transactional
-	public void appendsEstimationDealerFields(Dealer dealer) {
+	public void appendsEstimationDealerFields(DealerEst dealer) {
 		KjbMaster kjbMaster = kjbMasterRepository.findByMclMomRelId(dealer.getKjbMaster().getMclMomRelId());
 
 		if (kjbMaster == null) {

@@ -12,7 +12,6 @@ import javax.persistence.TemporalType;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.estimation.Estimation.EstimationDiv;
-import jp.co.ricoh.cotos.commonlib.entity.estimation.Estimation.Status;
 import lombok.Data;
 
 /**
@@ -75,9 +74,10 @@ public class EstimationListInfo {
 	/**
 	 * 見積ステータス
 	 */
-	@Enumerated(EnumType.STRING)
-	@ApiModelProperty(value = "見積ステータス", required = false, position = 9)
-	private Status status;
+	// TODO ライフサイクル状態とワークフロー状態に変更、契約の検索API担当者が修正
+	// @Enumerated(EnumType.STRING)
+	// @ApiModelProperty(value = "見積ステータス", required = false, position = 9)
+	// private Status status;
 
 	/**
 	 * 事業所名
