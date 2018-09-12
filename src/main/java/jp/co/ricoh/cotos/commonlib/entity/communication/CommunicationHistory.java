@@ -17,13 +17,13 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * コミュニケーションを表すEntity
+ * コミュニケーション履歴を表すEntity
  */
 @Entity
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Table(name = "communication")
-public class Communication extends EntityBase {
+public class CommunicationHistory extends EntityBase {
 
 	public enum CommunicationCategory {
 
