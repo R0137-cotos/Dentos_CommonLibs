@@ -23,6 +23,9 @@ import jp.co.ricoh.cotos.commonlib.entity.master.Product;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * 契約鑑を表すEntity
+ */
 @Entity
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -91,7 +94,7 @@ public class Contract extends EntityBase {
 	}
 
 	@Id
-	@ApiModelProperty(value = "契約ID", required = true, position = 1, allowableValues = "range[0,99999999999999999999999999999]")
+	@ApiModelProperty(value = "契約ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
 	/**
@@ -166,7 +169,7 @@ public class Contract extends EntityBase {
 	/**
 	 * 変更元契約ID
 	 */
-	@ApiModelProperty(value = "変更元契約ID", required = false, position = 13, allowableValues = "range[0,99999999999999999999999999999]")
+	@ApiModelProperty(value = "変更元契約ID", required = false, position = 13, allowableValues = "range[0,9999999999999999999]")
 	private Long originContractId;
 
 	/**
