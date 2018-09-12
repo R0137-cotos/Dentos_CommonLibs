@@ -13,6 +13,9 @@ import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * 契約添付ファイルを表すEntity
+ */
 @Entity
 @EqualsAndHashCode(callSuper = true)
 @Data

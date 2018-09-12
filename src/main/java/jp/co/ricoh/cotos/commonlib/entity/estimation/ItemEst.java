@@ -1,6 +1,7 @@
-package jp.co.ricoh.cotos.commonlib.entity.contract;
+package jp.co.ricoh.cotos.commonlib.entity.estimation;
 
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,11 +19,12 @@ import lombok.EqualsAndHashCode;
 
 @Entity
 @EqualsAndHashCode(callSuper = true)
+@EntityListeners(ItemEstListener.class)
 @Data
-public class ItemCon extends EntityBase {
+public class ItemEst extends EntityBase {
 
 	@Id
-	@ApiModelProperty(value = "ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "ID", required = true, position = 1, allowableValues = "range[0,99999999999999999999999999999]")
 	private long id;
 
 	/**
@@ -46,10 +48,11 @@ public class ItemCon extends EntityBase {
 	private String ricohItemCode;
 
 	/**
-	 * 契約明細
+	 * 見積明細
 	 */
 	@OneToOne(optional = false)
-	@JoinColumn(name = "contract_detail_id", referencedColumnName = "id")
-	@ApiModelProperty(value = "契約明細", required = true, position = 5)
-	private ContractDetail contrantDetail;
+	@JoinColumn(name = "estimation_detail_id", referencedColumnName = "id")
+	@ApiModelProperty(value = "見積明細", required = true, position = 5)
+	private EstimationDetail estimationDetail;
+
 }

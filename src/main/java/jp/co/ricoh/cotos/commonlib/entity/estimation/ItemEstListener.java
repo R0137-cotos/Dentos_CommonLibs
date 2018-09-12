@@ -11,13 +11,13 @@ import jp.co.ricoh.cotos.commonlib.entity.master.ItemMaster;
 import jp.co.ricoh.cotos.commonlib.repository.master.ItemMasterRepository;
 
 @Component
-public class ItemListener {
+public class ItemEstListener {
 
 	private static ItemMasterRepository itemMasterRepository;
 
 	@Autowired
 	public void setItemMasterRepository(ItemMasterRepository itemMasterRepository) {
-		ItemListener.itemMasterRepository = itemMasterRepository;
+		ItemEstListener.itemMasterRepository = itemMasterRepository;
 	}
 
 	/**
@@ -27,8 +27,8 @@ public class ItemListener {
 	 */
 	@PrePersist
 	@Transactional
-	public void appendsEstimationItemFields(Item item) {
-		ItemMaster itemMaster = itemMasterRepository.findByItemCode(item.getItemCode());
+	public void appendsEstimationItemFields(ItemEst item) {
+		ItemMaster itemMaster = itemMasterRepository.findByItemCode(item.getRicohItemCode());
 		item.setItemMaster(itemMaster);
 		BeanUtils.copyProperties(itemMaster, item, "id");
 	}

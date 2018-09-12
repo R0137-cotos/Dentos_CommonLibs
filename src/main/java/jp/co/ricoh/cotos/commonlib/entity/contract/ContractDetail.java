@@ -19,6 +19,9 @@ import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * 契約明細を表すEntity
+ */
 @Entity
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -60,8 +63,8 @@ public class ContractDetail extends EntityBase {
 	/**
 	 * イニシャル見積金額
 	 */
-	@ApiModelProperty(value = "イニシャル見積金額", required = false, position = 4, allowableValues = "range[0.00,99999999999999999999999999999.99]")
-	@Pattern(regexp = "99999999999999999999999999999.99")
+	@ApiModelProperty(value = "イニシャル見積金額", required = false, position = 4, allowableValues = "range[0.00,9999999999999999999.99]")
+	@Pattern(regexp = "9999999999999999999.99")
 	private BigDecimal initialAmountSummary;
 
 	/**
@@ -80,8 +83,8 @@ public class ContractDetail extends EntityBase {
 	/**
 	 * ランニングサマリ見積金額
 	 */
-	@ApiModelProperty(value = "ランニングサマリ見積金額", required = false, position = 7, allowableValues = "range[0.00,99999999999999999999999999999.99]")
-	@Pattern(regexp = "99999999999999999999999999999.99")
+	@ApiModelProperty(value = "ランニングサマリ見積金額", required = false, position = 7, allowableValues = "range[0.00,9999999999999999999.99]")
+	@Pattern(regexp = "9999999999999999999.99")
 	private BigDecimal runningAmountSummary;
 
 	/**

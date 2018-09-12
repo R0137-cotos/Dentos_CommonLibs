@@ -12,13 +12,13 @@ import jp.co.ricoh.cotos.commonlib.entity.master.KjbMaster.KjbSetDiv;
 import jp.co.ricoh.cotos.commonlib.repository.master.KjbMasterRepository;
 
 @Component
-public class CustomerListener {
+public class CustomerEstListener {
 
 	private static KjbMasterRepository kjbMasterRepository;
 
 	@Autowired
 	public void setKjbMasterRepository(KjbMasterRepository kjbMasterRepository) {
-		CustomerListener.kjbMasterRepository = kjbMasterRepository;
+		CustomerEstListener.kjbMasterRepository = kjbMasterRepository;
 	}
 
 	/**
@@ -28,7 +28,7 @@ public class CustomerListener {
 	 */
 	@PrePersist
 	@Transactional
-	public void appendsEstimationCustomerFields(Customer customer) {
+	public void appendsEstimationCustomerFields(CustomerEst customer) {
 		KjbMaster kjbMaster = kjbMasterRepository.findByMclMomRelId(customer.getKjbMaster().getMclMomRelId());
 
 		if (kjbMaster == null) {
