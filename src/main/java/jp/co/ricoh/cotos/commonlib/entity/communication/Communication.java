@@ -167,7 +167,7 @@ public class Communication extends EntityBase {
 	@ApiModelProperty(value = "対象文書番号<br />" //
 			+ "見積⇒見積番号を設定<br />" //
 			+ "契約/手配⇒契約番号を設定", required = true, position = 12, allowableValues = "range[0,255]") //
-	@Pattern(regexp = "CAYYYYMMDDNNNNN")
+	@Pattern(regexp = "見積:CEYYYYMMDDNNNNN、契約/手配:CAYYYYMMDDNNNNN")
 	private String targetDocNumber;
 
 	/**
