@@ -33,7 +33,7 @@ public class EntityBaseMaster {
 	private String updatedUser;
 
 	@Version
-	@ApiModelProperty(value = "バージョン", required = true, position = 105, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "version", required = true, position = 105, allowableValues = "range[0,9999999999999999999]")
 	private long version;
 
 	@PrePersist
