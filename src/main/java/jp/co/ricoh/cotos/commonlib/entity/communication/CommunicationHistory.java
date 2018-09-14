@@ -86,7 +86,7 @@ public class CommunicationHistory extends EntityBase {
 	}
 
 	@Id
-	@ApiModelProperty(value = "ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
 	private long id;
 
 	/**
@@ -209,6 +209,6 @@ public class CommunicationHistory extends EntityBase {
 	/**
 	 * 伝達日時
 	 */
-	@ApiModelProperty(value = "伝達日時", required = true, position = 18)
+	@ApiModelProperty(value = "伝達日時", required = true, position = 18, readOnly = true)
 	private Date communicatedAt;
 }
