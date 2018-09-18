@@ -43,7 +43,7 @@ public class Contact extends EntityBase {
 	}
 
 	@Id
-	@ApiModelProperty(value = "問い合わせID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "問い合わせID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
 	private long id;
 
 	/**
@@ -69,38 +69,31 @@ public class Contact extends EntityBase {
 	/**
 	 * ドメイン
 	 */
-	@ApiModelProperty(value = "ドメイン", required = false, position = 6)
+	@ApiModelProperty(value = "ドメイン", required = false, position = 5)
 	private DomainType domain;
 
 	/**
 	 * タイトル
 	 */
-	@ApiModelProperty(value = "タイトル", required = false, position = 7, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "タイトル", required = false, position = 6, allowableValues = "range[0,255]")
 	private String titile;
 
 	/**
 	 * 内容
 	 */
-	@ApiModelProperty(value = "内容", required = false, position = 8)
+	@ApiModelProperty(value = "内容", required = false, position = 7)
 	private String content;
 
 	/**
 	 * 送信日時
 	 */
-	@ApiModelProperty(value = "送信日時", required = true, position = 9)
+	@ApiModelProperty(value = "送信日時", required = true, position = 8, readOnly = true)
 	private Date sendAt;
-
-	/**
-	 * 子問い合わせ
-	 */
-	@OneToOne
-	@ApiModelProperty(value = "子問い合わせ", required = false, position = 10)
-	private Contact child;
 
 	/**
 	 * 宛先
 	 */
 	@OneToMany(mappedBy = "contact")
-	@ApiModelProperty(value = "宛先", required = true, position = 5)
+	@ApiModelProperty(value = "宛先", required = true, position = 9)
 	private List<ContactTo> contactToList;
 }

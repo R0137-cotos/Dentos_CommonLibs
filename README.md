@@ -40,6 +40,11 @@
 |34|コミュニケーションドメインのERD反映|
 |35|マスタエンティティのERD反映修正|
 
+
+
+
+|40|問い合わせエンティティのreadOnly設定付与
+
 # バージョン採番方法
 
 build.gradleファイルのリビジョン番号(pom.version)を＋1して「gradle uploadArchives」コマンドを実行し、
