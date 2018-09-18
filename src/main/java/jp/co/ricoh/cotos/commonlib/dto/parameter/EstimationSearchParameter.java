@@ -60,7 +60,9 @@ public class EstimationSearchParameter {
 	 * 見積件名
 	 */
 	@ApiParam(value = "見積件名:部分一致", required = false)
-	@ApiModelProperty(value = "見積件名:部分一致", required = false, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "見積件名:部分一致<br />" //
+			+ "条件入力時、最低2文字以上の入力とする。", //
+			required = false, allowableValues = "range[2,255]") //
 	private String likeSearchEstimationTitle;
 
 	/**
@@ -74,7 +76,9 @@ public class EstimationSearchParameter {
 	 * 案件名
 	 */
 	@ApiParam(value = "案件名:部分一致", required = false)
-	@ApiModelProperty(value = "案件名:部分一致", required = false, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "案件名:部分一致<br />" //
+			+ "条件入力時、最低2文字以上の入力とする。", //
+			required = false, allowableValues = "range[2,255]") //
 	private String likeSearchCaseTitle;
 
 	/**
@@ -110,7 +114,7 @@ public class EstimationSearchParameter {
 	 */
 	@ApiParam(value = "第1階層", required = false)
 	@ApiModelProperty(value = "第1階層<br />" //
-			+ "第1階層は担当支社を表す。", //
+			+ "設定値はMoM組織ID。", //
 			required = false, allowableValues = "range[0,255]") //
 	private String picAffiliateId;
 
@@ -119,7 +123,7 @@ public class EstimationSearchParameter {
 	 */
 	@ApiParam(value = "第2階層", required = false)
 	@ApiModelProperty(value = "第2階層<br />" //
-			+ "第2階層は担当部門を表す。", //
+			+ "設定値はMoM組織ID。", //
 			required = false, allowableValues = "range[0,255]") //
 	private String picDepartmentId;
 
@@ -128,7 +132,7 @@ public class EstimationSearchParameter {
 	 */
 	@ApiParam(value = "第3階層", required = false)
 	@ApiModelProperty(value = "第3階層<br />" //
-			+ "第3階層は担当課所を表す。", //
+			+ "設定値はMoM組織ID。", //
 			required = false, allowableValues = "range[0,255]") //
 	private String picDivisionId;
 
@@ -162,9 +166,9 @@ public class EstimationSearchParameter {
 	/**
 	 * 企業ID
 	 */
-	@ApiParam(value = "企業ID", required = false)
-	@ApiModelProperty(value = "企業ID<br />" //
-			+ "企業IDにはMoM企事部IDを指定する。", //
+	@ApiParam(value = "企事部ID", required = false)
+	@ApiModelProperty(value = "企事部ID<br />" //
+			+ "企事部IDにはMoM企事部IDを指定する。", //
 			required = false, allowableValues = "range[0,255]") //
 	private String customerId;
 
@@ -172,49 +176,63 @@ public class EstimationSearchParameter {
 	 * 企業名
 	 */
 	@ApiParam(value = "企業名:部分一致", required = false)
-	@ApiModelProperty(value = "企業名:部分一致", required = false, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "企業名:部分一致<br />" //
+			+ "条件入力時、最低2文字以上の入力とする。", //
+			required = false, allowableValues = "range[2,255]") //
 	private String likeSearchCustomerName;
 
 	/**
 	 * 事業所名
 	 */
 	@ApiParam(value = "事業所名:部分一致", required = false)
-	@ApiModelProperty(value = "事業所名:部分一致", required = false, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "事業所名:部分一致<br />" //
+			+ "条件入力時、最低2文字以上の入力とする。", //
+			required = false, allowableValues = "range[2,255]") //
 	private String likeSearchOfficeName;
 
 	/**
 	 * 部門名
 	 */
 	@ApiParam(value = "部門名:部分一致", required = false)
-	@ApiModelProperty(value = "部門名:部分一致", required = false, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "部門名:部分一致<br />" //
+			+ "条件入力時、最低2文字以上の入力とする。", //
+			required = false, allowableValues = "range[2,255]") //
 	private String likeSearchDepartmentName;
 
 	/**
 	 * 見積更新日(前)
 	 */
 	@ApiParam(value = "見積更新日(前)", required = false)
-	@ApiModelProperty(value = "見積更新日(前)", required = false)
+	@ApiModelProperty(value = "見積更新日(前)<br />" //
+			+ "日付フォーマット:yyyy/MM/dd", //
+			required = false) //
 	private Date estimationUpdatedFrom;
 
 	/**
 	 * 見積更新日(後)
 	 */
 	@ApiParam(value = "見積更新日(後)", required = false)
-	@ApiModelProperty(value = "見積更新日(後)", required = false)
+	@ApiModelProperty(value = "見積更新日(後)<br />" //
+			+ "日付フォーマット:yyyy/MM/dd", //
+			required = false) //
 	private Date estimationUpdatedTo;
 
 	/**
 	 * 掲示日(前)
 	 */
 	@ApiParam(value = "掲示日(前)", required = false)
-	@ApiModelProperty(value = "掲示日(前)", required = false)
+	@ApiModelProperty(value = "掲示日(前)<br />" //
+			+ "日付フォーマット:yyyy/MM/dd", //
+			required = false) //
 	private Date presentationDateFrom;
 
 	/**
 	 * 掲示日(後)
 	 */
 	@ApiParam(value = "掲示日(後)", required = false)
-	@ApiModelProperty(value = "掲示日(後)", required = false)
+	@ApiModelProperty(value = "掲示日(後)<br />" //
+			+ "日付フォーマット:yyyy/MM/dd", //
+			required = false) //
 	private Date presentationDateTo;
 
 	/**
@@ -249,15 +267,29 @@ public class EstimationSearchParameter {
 	 */
 	@NotNull(message = "{SortColumn}{NotEmptyError}:{SortColumn}{NotEmptyErrorMsg}")
 	@ApiParam(value = "ソート項目", required = true)
-	@ApiModelProperty(value = "ソート項目", required = true, allowableValues = "range[0,11]")
+	@ApiModelProperty(value = "ソート項目<br />" //
+			+ "ソート項目のint値は以下の通り各項目とマッピングされる。<br />" //
+			+ "0:見積番号<br />" //
+			+ "1:見積種別<br />" //
+			+ "2:見積件名<br />" //
+			+ "3:見積ステータス<br />" //
+			+ "4:案件番号<br />" //
+			+ "5:事業所名<br />" //
+			+ "6:企業名<br />" //
+			+ "7:部門名<br />" //
+			+ "8:担当営業<br />" //
+			+ "9:商品名称<br />" //
+			+ "10:提示日<br />" //
+			+ "11:担当支社", //
+			required = true, allowableValues = "range[0,11]")
 	private int sortColumn;
 
 	/**
 	 * ソート順
 	 */
 	@Enumerated(EnumType.STRING)
-	@ApiParam(value = "ソート順", required = true, allowableValues = "昇順, 降順")
-	@ApiModelProperty(value = "ソート順", required = true, allowableValues = "昇順, 降順")
+	@ApiParam(value = "ソート順", required = true)
+	@ApiModelProperty(value = "ソート順", required = true)
 	private SortOrder sortOrder;
 
 	/**
