@@ -47,10 +47,10 @@ public class Contact extends EntityBase {
 	private long id;
 
 	/**
-	 * 見積番号
+	 * 見積ID
 	 */
-	@ApiModelProperty(value = "見積番号", required = true, position = 2, allowableValues = "range[0,255]")
-	private String estimateNumber;
+	@ApiModelProperty(value = "見積ID", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
+	private String estimateId;
 
 	/**
 	 * 親問い合わせ
