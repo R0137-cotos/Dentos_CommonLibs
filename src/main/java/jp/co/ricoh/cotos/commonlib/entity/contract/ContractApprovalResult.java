@@ -42,7 +42,7 @@ public class ContractApprovalResult extends EntityBase {
 	}
 
 	@Id
-	@ApiModelProperty(value = "契約承認実績ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "契約承認実績ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
 	private long id;
 
 	/**
@@ -86,6 +86,6 @@ public class ContractApprovalResult extends EntityBase {
 	/**
 	 * 実施日時
 	 */
-	@ApiModelProperty(value = "実施日時", required = true, position = 8)
+	@ApiModelProperty(value = "実施日時", required = true, position = 8, readOnly = true)
 	private Date processedAt;
 }

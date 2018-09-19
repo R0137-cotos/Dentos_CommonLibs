@@ -21,7 +21,7 @@ import lombok.Data;
 public class ContractCheckResult {
 
 	@Id
-	@ApiModelProperty(value = "契約チェック結果ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "契約チェック結果ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
 	private long id;
 
 	/**
@@ -77,6 +77,6 @@ public class ContractCheckResult {
 	/**
 	 * チェック実施者日時
 	 */
-	@ApiModelProperty(value = "チェック実施者日時", required = false, position = 10)
+	@ApiModelProperty(value = "チェック実施者日時", required = false, position = 10, readOnly = true)
 	private Date checkedAt;
 }
