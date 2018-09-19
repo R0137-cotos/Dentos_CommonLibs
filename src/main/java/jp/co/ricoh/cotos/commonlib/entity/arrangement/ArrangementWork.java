@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -58,6 +59,7 @@ public class ArrangementWork extends EntityBase {
 	 * 手配業務タイプマスタ
 	 */
 	@ManyToOne(optional = true)
+	@JoinColumn(name = "arrange_work_type_master_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "手配業務タイプマスタ", required = true, position = 3)
 	private ArrangeWorkTypeMaster arrangeWorkTypeMaster;
 

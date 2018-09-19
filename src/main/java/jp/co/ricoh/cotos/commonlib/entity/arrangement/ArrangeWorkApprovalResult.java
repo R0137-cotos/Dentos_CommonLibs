@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -48,6 +49,7 @@ public class ArrangeWorkApprovalResult extends EntityBase {
 	 * 手配業務承認ルート
 	 */
 	@ManyToOne(optional = true)
+	@JoinColumn(name = "arrange_work_approval_route_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "手配業務承認ルート", required = true, position = 2)
 	private ArrangementWorkApprovalRoute arrangementWorkApprovalRoute;
 

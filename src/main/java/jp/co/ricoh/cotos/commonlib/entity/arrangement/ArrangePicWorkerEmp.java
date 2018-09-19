@@ -2,6 +2,7 @@ package jp.co.ricoh.cotos.commonlib.entity.arrangement;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -29,6 +30,7 @@ public class ArrangePicWorkerEmp extends EntityBase {
 	 * RJ社員情報マスタ
 	 */
 	@ManyToOne(optional = true)
+	@JoinColumn(name = "mom_employee_id", referencedColumnName = "momEmpId")
 	@ApiModelProperty(value = "RJ社員情報マスタ", required = false, position = 2)
 	private MvEmployeeMaster mvEmployeeMaster;
 
@@ -108,6 +110,7 @@ public class ArrangePicWorkerEmp extends EntityBase {
 	 * 手配業務
 	 */
 	@OneToOne(mappedBy = "arrangement", optional = true)
+	@JoinColumn(name = "arrangement_work_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "手配業務", required = false, position = 15)
 	private ArrangementWork arrangementWork;
 
