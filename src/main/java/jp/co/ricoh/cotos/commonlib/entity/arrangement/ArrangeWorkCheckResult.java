@@ -22,7 +22,7 @@ import lombok.EqualsAndHashCode;
 public class ArrangeWorkCheckResult extends EntityBase {
 
 	@Id
-	@ApiModelProperty(value = "手配業務チェック結果ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "手配業務チェック結果ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
 	private long id;
 
 	/**
@@ -71,7 +71,7 @@ public class ArrangeWorkCheckResult extends EntityBase {
 	/**
 	 * チェック実施日時
 	 */
-	@ApiModelProperty(value = "チェック実施日時", required = false, position = 9)
+	@ApiModelProperty(value = "チェック実施日時", required = false, position = 9, readOnly = true)
 	private Date checkedAt;
 
 }

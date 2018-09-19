@@ -24,7 +24,7 @@ import lombok.EqualsAndHashCode;
 public class WorkAttachedFile extends EntityBase {
 
 	@Id
-	@ApiModelProperty(value = "手配業務添付ファイルID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "手配業務添付ファイルID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
 	private long id;
 
 	/**
@@ -73,7 +73,7 @@ public class WorkAttachedFile extends EntityBase {
 	/**
 	 * 添付日時
 	 */
-	@ApiModelProperty(value = "添付日時", required = true, position = 9)
+	@ApiModelProperty(value = "添付日時", required = true, position = 9, readOnly = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date attachedAt;
 

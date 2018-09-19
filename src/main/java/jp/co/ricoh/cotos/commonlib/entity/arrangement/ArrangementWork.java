@@ -44,7 +44,7 @@ public class ArrangementWork extends EntityBase {
 	}
 
 	@Id
-	@ApiModelProperty(value = "手配業務ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "手配業務ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
 	private long id;
 
 	/**
@@ -91,7 +91,7 @@ public class ArrangementWork extends EntityBase {
 	 * 手配業務操作履歴
 	 */
 	@OneToMany(mappedBy = "arrangementWork")
-	@ApiModelProperty(value = "手配業務操作履歴", required = false, position = 8)
+	@ApiModelProperty(value = "手配業務操作履歴", required = false, position = 8, readOnly = true)
 	private List<ArrangeWorkOperationLog> arrangeWorkOperationLogList;
 
 	/**

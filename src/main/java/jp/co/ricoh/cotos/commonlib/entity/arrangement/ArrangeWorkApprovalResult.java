@@ -41,7 +41,7 @@ public class ArrangeWorkApprovalResult extends EntityBase {
 	}
 
 	@Id
-	@ApiModelProperty(value = "手配業務承認実績ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "手配業務承認実績ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
 	private long id;
 
 	/**
@@ -84,7 +84,7 @@ public class ArrangeWorkApprovalResult extends EntityBase {
 	/**
 	 * 実施日時
 	 */
-	@ApiModelProperty(value = "実施日時", required = true, position = 8)
+	@ApiModelProperty(value = "実施日時", required = true, position = 8, readOnly = true)
 	private Date processedAt;
 
 }
