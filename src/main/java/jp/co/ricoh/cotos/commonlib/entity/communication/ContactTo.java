@@ -66,6 +66,6 @@ public class ContactTo extends EntityBase {
 	/**
 	 * 宛先メールアドレス
 	 */
-	@ApiModelProperty(value = "宛先メールアドレス", required = false, position = 5, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "宛先メールアドレス", required = false, position = 5, allowableValues = "range[0,255]", readOnly = true)
 	private String contactToEmail;
 }
