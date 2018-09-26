@@ -44,6 +44,11 @@
 
 |39|見積・契約・手配ドメインの検索DTOを最新化|
 
+
+
+
+|44|汎用チェックリスト生成用のメソッドのSwagger記載を追加|
+
 # バージョン採番方法
 
 build.gradleファイルのリビジョン番号(pom.version)を＋1して「gradle uploadArchives」コマンドを実行し、
