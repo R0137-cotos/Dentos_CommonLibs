@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -22,13 +23,14 @@ import lombok.EqualsAndHashCode;
 public class ArrangeWorkOperationLog extends EntityBase {
 
 	@Id
-	@ApiModelProperty(value = "手配業務操作履歴ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "手配業務操作履歴ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
 	private long id;
 
 	/**
 	 * 手配業務
 	 */
 	@ManyToOne
+	@JoinColumn(name = "arrangement_work_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "手配業務", required = true, position = 2)
 	private ArrangementWork arrangementWork;
 
@@ -59,7 +61,7 @@ public class ArrangeWorkOperationLog extends EntityBase {
 	/**
 	 * 実施日時
 	 */
-	@ApiModelProperty(value = "実施日時", required = true, position = 7)
+	@ApiModelProperty(value = "実施日時", required = true, position = 7, readOnly = true)
 	private Date operatedAt;
 
 }

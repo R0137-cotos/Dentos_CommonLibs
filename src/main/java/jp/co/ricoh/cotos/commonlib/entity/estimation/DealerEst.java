@@ -22,7 +22,7 @@ import lombok.EqualsAndHashCode;
 public class DealerEst extends EntityBase {
 
 	@Id
-	@ApiModelProperty(value = "ID", required = true, position = 1)
+	@ApiModelProperty(value = "ID", required = true, position = 1, readOnly = true)
 	private long id;
 
 	/**

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -23,13 +24,14 @@ import lombok.EqualsAndHashCode;
 public class ArrangementWorkApprovalRoute extends EntityBase {
 
 	@Id
-	@ApiModelProperty(value = "手配業務承認ルートID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "手配業務承認ルートID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
 	private long id;
 
 	/**
 	 * 手配業務
 	 */
 	@OneToOne(optional = true)
+	@JoinColumn(name = "arrange_work_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "手配業務", required = true, position = 2)
 	private ArrangementWork arrangementWork;
 

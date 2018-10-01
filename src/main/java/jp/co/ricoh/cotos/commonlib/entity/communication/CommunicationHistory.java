@@ -86,7 +86,7 @@ public class CommunicationHistory extends EntityBase {
 	}
 
 	@Id
-	@ApiModelProperty(value = "ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
 	private long id;
 
 	/**
@@ -167,7 +167,7 @@ public class CommunicationHistory extends EntityBase {
 	@ApiModelProperty(value = "対象文書番号<br />" //
 			+ "見積⇒見積番号を設定<br />" //
 			+ "契約/手配⇒契約番号を設定", required = true, position = 12, allowableValues = "range[0,255]") //
-	@Pattern(regexp = "CAYYYYMMDDNNNNN")
+	@Pattern(regexp = "見積:CEYYYYMMDDNNNNN、契約/手配:CAYYYYMMDDNNNNN")
 	private String targetDocNumber;
 
 	/**
@@ -209,6 +209,6 @@ public class CommunicationHistory extends EntityBase {
 	/**
 	 * 伝達日時
 	 */
-	@ApiModelProperty(value = "伝達日時", required = true, position = 18)
+	@ApiModelProperty(value = "伝達日時", required = true, position = 18, readOnly = true)
 	private Date communicatedAt;
 }

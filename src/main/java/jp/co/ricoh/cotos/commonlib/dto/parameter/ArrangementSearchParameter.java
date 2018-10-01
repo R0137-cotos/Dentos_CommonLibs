@@ -87,7 +87,7 @@ public class ArrangementSearchParameter {
 			required = false) //
 	private Date desiredDeliveryDateTo;
 
-//=========================== 以下、契約ドメインと同一(希望納期を除く)
+	// =========================== 以下、契約ドメインと同一(希望納期を除く)
 	/**
 	 * 契約番号
 	 */
@@ -326,7 +326,7 @@ public class ArrangementSearchParameter {
 	@ApiModelProperty(value = "商品名称", required = false, allowableValues = "range[0,255]")
 	private String productName;
 
-//===========================
+	// ===========================
 
 	/**
 	 * ソート項目

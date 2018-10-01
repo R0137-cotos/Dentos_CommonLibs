@@ -94,7 +94,7 @@ public class Contract extends EntityBase {
 	}
 
 	@Id
-	@ApiModelProperty(value = "契約ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "契約ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
 	private long id;
 
 	/**
@@ -138,14 +138,14 @@ public class Contract extends EntityBase {
 	/**
 	 * 契約番号
 	 */
-	@ApiModelProperty(value = "契約番号", required = true, position = 8, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "契約番号", required = true, position = 8, allowableValues = "range[0,255]", readOnly = true)
 	@Pattern(regexp = "CAYYYYMMDDNNNNN")
 	private String contractNumber;
 
 	/**
 	 * 契約番号枝番
 	 */
-	@ApiModelProperty(value = "契約番号枝番", required = true, position = 9, allowableValues = "range[0,99]")
+	@ApiModelProperty(value = "契約番号枝番", required = true, position = 9, allowableValues = "range[0,99]", readOnly = true)
 	private int contractBranchNumber;
 
 	/**
@@ -323,6 +323,6 @@ public class Contract extends EntityBase {
 	 * 契約操作履歴
 	 */
 	@OneToMany(mappedBy = "contract")
-	@ApiModelProperty(value = "契約操作履歴", required = true, position = 37)
+	@ApiModelProperty(value = "契約操作履歴", required = true, position = 37, readOnly = true)
 	private List<ContractOperationLog> operationLogList;
 }

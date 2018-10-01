@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -44,7 +45,7 @@ public class ArrangementWork extends EntityBase {
 	}
 
 	@Id
-	@ApiModelProperty(value = "手配業務ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "手配業務ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
 	private long id;
 
 	/**
@@ -58,6 +59,7 @@ public class ArrangementWork extends EntityBase {
 	 * 手配業務タイプマスタ
 	 */
 	@ManyToOne(optional = true)
+	@JoinColumn(name = "arrange_work_type_master_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "手配業務タイプマスタ", required = true, position = 3)
 	private ArrangeWorkTypeMaster arrangeWorkTypeMaster;
 
@@ -91,7 +93,7 @@ public class ArrangementWork extends EntityBase {
 	 * 手配業務操作履歴
 	 */
 	@OneToMany(mappedBy = "arrangementWork")
-	@ApiModelProperty(value = "手配業務操作履歴", required = false, position = 8)
+	@ApiModelProperty(value = "手配業務操作履歴", required = false, position = 8, readOnly = true)
 	private List<ArrangeWorkOperationLog> arrangeWorkOperationLogList;
 
 	/**

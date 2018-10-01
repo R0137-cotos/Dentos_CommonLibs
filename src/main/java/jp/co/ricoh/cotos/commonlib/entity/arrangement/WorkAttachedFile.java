@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -24,13 +25,14 @@ import lombok.EqualsAndHashCode;
 public class WorkAttachedFile extends EntityBase {
 
 	@Id
-	@ApiModelProperty(value = "手配業務添付ファイルID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "手配業務添付ファイルID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
 	private long id;
 
 	/**
 	 * 手配業務
 	 */
 	@ManyToOne
+	@JoinColumn(name = "arrangement_work_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "手配業務", required = true, position = 2)
 	private ArrangementWork arrangementWork;
 
@@ -73,7 +75,7 @@ public class WorkAttachedFile extends EntityBase {
 	/**
 	 * 添付日時
 	 */
-	@ApiModelProperty(value = "添付日時", required = true, position = 9)
+	@ApiModelProperty(value = "添付日時", required = true, position = 9, readOnly = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date attachedAt;
 

@@ -30,7 +30,7 @@ public class EmployeeArrange extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "employee_arrange_seq")
 	@SequenceGenerator(name = "employee_arrange_seq", sequenceName = "employee_arrange_seq", allocationSize = 1)
-	@ApiModelProperty(value = "手配担当社員ID", required = true, position = 1)
+	@ApiModelProperty(value = "手配担当社員ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
 	private long id;
 
 	/**

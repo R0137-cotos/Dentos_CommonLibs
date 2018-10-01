@@ -2,6 +2,7 @@ package jp.co.ricoh.cotos.commonlib.entity.arrangement;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -20,13 +21,14 @@ import lombok.EqualsAndHashCode;
 public class ArrangeWkApprovalRouteNode extends EntityBase {
 
 	@Id
-	@ApiModelProperty(value = "手配業務承認ルートノードID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "手配業務承認ルートノードID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
 	private long id;
 
 	/**
 	 * 手配業務承認ルート
 	 */
 	@ManyToOne
+	@JoinColumn(name = "arrange_work_approval_route_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "手配業務承認ルート", required = true, position = 2)
 	private ArrangementWorkApprovalRoute arrangementWorkApprovalRoute;
 

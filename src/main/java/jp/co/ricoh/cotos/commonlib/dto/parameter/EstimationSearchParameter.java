@@ -1,14 +1,14 @@
 package jp.co.ricoh.cotos.commonlib.dto.parameter;
 
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
 import org.apache.commons.lang3.reflect.FieldUtils;
 
 import com.fasterxml.jackson.annotation.JsonCreator;

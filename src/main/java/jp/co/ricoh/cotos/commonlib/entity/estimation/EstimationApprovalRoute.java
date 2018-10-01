@@ -24,7 +24,7 @@ import lombok.EqualsAndHashCode;
 public class EstimationApprovalRoute extends EntityBase {
 
 	@Id
-	@ApiModelProperty(value = "見積承認ルートID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "見積承認ルートID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
 	private long id;
 
 	/**
