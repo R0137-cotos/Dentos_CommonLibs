@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -41,13 +42,14 @@ public class ArrangeWorkApprovalResult extends EntityBase {
 	}
 
 	@Id
-	@ApiModelProperty(value = "手配業務承認実績ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "手配業務承認実績ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
 	private long id;
 
 	/**
 	 * 手配業務承認ルート
 	 */
 	@ManyToOne(optional = true)
+	@JoinColumn(name = "arrange_work_approval_route_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "手配業務承認ルート", required = true, position = 2)
 	private ArrangementWorkApprovalRoute arrangementWorkApprovalRoute;
 
@@ -84,7 +86,7 @@ public class ArrangeWorkApprovalResult extends EntityBase {
 	/**
 	 * 実施日時
 	 */
-	@ApiModelProperty(value = "実施日時", required = true, position = 8)
+	@ApiModelProperty(value = "実施日時", required = true, position = 8, readOnly = true)
 	private Date processedAt;
 
 }
