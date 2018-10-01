@@ -22,7 +22,7 @@ import lombok.EqualsAndHashCode;
 @Table(name = "contract_operation_log")
 public class ContractOperationLog extends EntityBase {
 	@Id
-	@ApiModelProperty(value = "操作履歴ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "操作履歴ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
 	private long id;
 
 	/**
@@ -60,6 +60,6 @@ public class ContractOperationLog extends EntityBase {
 	/**
 	 * 実施日時
 	 */
-	@ApiModelProperty(value = "実施日時", required = true, position = 7)
+	@ApiModelProperty(value = "実施日時", required = true, position = 7, readOnly = true)
 	private Date operatedAt;
 }

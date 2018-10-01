@@ -20,7 +20,7 @@ import lombok.Data;
 public class EstimationCheckResult {
 
 	@Id
-	@ApiModelProperty(value = "見積チェック結果ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "見積チェック結果ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
 	private long id;
 
 	/**
@@ -70,7 +70,7 @@ public class EstimationCheckResult {
 	/**
 	 * チェック実施者日時
 	 */
-	@ApiModelProperty(value = "チェック実施者日時", required = false, position = 9)
+	@ApiModelProperty(value = "チェック実施者日時", required = false, position = 9, readOnly = true)
 	private Date checkedAt;
 
 }
