@@ -47,6 +47,8 @@
 |41|契約エンティティにreadOnly属性付与|
 |42|手配エンティティのreadOnly属性付与|
 
+|44|汎用チェックリスト生成メソッドにJavadoc記載|
+
 # バージョン採番方法
 
 build.gradleファイルのリビジョン番号(pom.version)を＋1して「gradle uploadArchives」コマンドを実行し、
