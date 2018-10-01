@@ -1,25 +1,17 @@
 package jp.co.ricoh.cotos.commonlib.dto.parameter;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiParam;
-import jp.co.ricoh.cotos.commonlib.entity.contract.Contract.ContractType;
-import jp.co.ricoh.cotos.commonlib.entity.contract.Contract.LifecycleStatus;
-import jp.co.ricoh.cotos.commonlib.entity.contract.Contract.WorkflowStatus;
 import lombok.Data;
 
 /**
@@ -44,321 +36,130 @@ public class ArrangementSearchParameter {
 	}
 
 	/**
-	 * 手配業務
-	 */
-	@ApiParam(value = "手配業務", required = false)
-	@ApiModelProperty(value = "手配業務", required = false, allowableValues = "range[0,255]")
-	private String arrangementName;
-
-	/**
-	 * 手配業務ステータス
-	 */
-	@Enumerated(EnumType.STRING)
-	@ApiParam(value = "手配業務ステータス", required = false)
-	@ApiModelProperty(value = "手配業務ステータス<br />" //
-			+ "状態遷移上のワークフロー状態を表す。", //
-			required = false) //
-	private jp.co.ricoh.cotos.commonlib.entity.arrangement.Arrangement.WorkflowStatus arrangementWorkStatus;
-
-	/**
-	 * 手配業務担当者
-	 */
-	@ApiParam(value = "手配業務担当者：MoM社員IDを指定", required = false)
-	@ApiModelProperty(value = "手配業務担当者<br />" //
-			+ "手配業務担当者にはMoM社員IDを指定する。", //
-			required = false, allowableValues = "range[0,255]") //
-	private String workUserEmptxId;
-
-	/**
-	 * 希望納期(前)
-	 */
-	@ApiParam(value = "希望納期(前)", required = false)
-	@ApiModelProperty(value = "希望納期(前)<br />" //
-			+ "日付フォーマット：yyyy/MM/dd", //
-			required = false) //
-	private Date desiredDeliveryDateFrom;
-
-	/**
-	 * 希望納期(後)
-	 */
-	@ApiParam(value = "希望納期(後)", required = false)
-	@ApiModelProperty(value = "希望納期(後)<br />" //
-			+ "日付フォーマット:yyyy/MM/dd", //
-			required = false) //
-	private Date desiredDeliveryDateTo;
-
-//=========================== 以下、契約ドメインと同一(希望納期を除く)
-	/**
 	 * 契約番号
 	 */
 	@ApiParam(value = "契約番号", required = false)
-	@ApiModelProperty(value = "契約番号", required = false, allowableValues = "range[0,15]")
 	private String contractNumber;
-
-	/**
-	 * 契約番号枝番
-	 */
-	@ApiParam(value = "契約番号枝番", required = false)
-	@ApiModelProperty(value = "契約番号枝番", required = false, allowableValues = "range[0,2]")
-	private String contractBranchNumber;
 
 	/**
 	 * サービス識別番号
 	 */
 	@ApiParam(value = "サービス識別番号", required = false)
-	@ApiModelProperty(value = "サービス識別番号", required = false, allowableValues = "range[0,18]")
 	private String serviceIdentificationNumber;
-
-	/**
-	 * 見積書番号
-	 */
-	@ApiParam(value = "見積番号", required = false)
-	@ApiModelProperty(value = "見積番号", required = false, allowableValues = "range[0,15]")
-	private String estimateNumber;
-
-	/**
-	 * 見積書番号
-	 */
-	@ApiParam(value = "見積番号枝番", required = false)
-	@ApiModelProperty(value = "見積番号枝番", required = false, allowableValues = "range[0,2]")
-	private String estimateBranchNumber;
-
-	/**
-	 * 見積件名
-	 */
-	@ApiParam(value = "見積件名:部分一致", required = false)
-	@ApiModelProperty(value = "見積件名:部分一致<br />" //
-			+ "条件入力時、最低2文字以上の入力とする。", //
-			required = false, allowableValues = "range[2,255]") //
-	private String likeSearchEstimationTitle;
-
-	/**
-	 * 案件番号
-	 */
-	@ApiParam(value = "案件番号", required = false)
-	@ApiModelProperty(value = "案件番号", required = false, allowableValues = "range[0,255]")
-	private String caseNumber;
-
-	/**
-	 * 案件名
-	 */
-	@ApiParam(value = "案件名:部分一致", required = false)
-	@ApiModelProperty(value = "案件名:部分一致", required = false, allowableValues = "range[0,255]")
-	private String likeSearchCaseTitle;
-
-	/**
-	 * 契約状態
-	 */
-	@ApiParam(value = "契約状態", required = false)
-	@Enumerated(EnumType.STRING)
-	@ApiModelProperty(value = "契約状態<br />" //
-			+ "状態遷移上のワークフローステータスを表す。", //
-			required = false) //
-	private WorkflowStatus contractCondition;
-
-	/**
-	 * サービス開始日(前)
-	 */
-	@ApiParam(value = "サービス開始日(前)", required = false)
-	@ApiModelProperty(value = "サービス開始日(前)<br />" //
-			+ "日付フォーマット:yyyy/MM/dd", //
-			required = false) //
-	private Date serviceTermStartFrom;
-
-	/**
-	 * サービス開始日(後)
-	 */
-	@ApiParam(value = "サービス開始日(後)", required = false)
-	@ApiModelProperty(value = "サービス開始日(後)<br />" //
-			+ "日付フォーマット:yyyy/MM/dd", //
-			required = false) //
-	private Date serviceTermStartTo;
-
-	/**
-	 * サービス終了日(前)
-	 */
-	@ApiParam(value = "サービス終了日(前)", required = false)
-	@ApiModelProperty(value = "サービス終了日(前)<br />" //
-			+ "日付フォーマット:yyyy/MM/dd", //
-			required = false) //
-	private Date serviceTermEndFrom;
-
-	/**
-	 * サービス終了日(後)
-	 */
-	@ApiParam(value = "サービス終了日(後)", required = false)
-	@ApiModelProperty(value = "サービス終了日(後)<br />" //
-			+ "日付フォーマット:yyyy/MM/dd", //
-			required = false) //
-	private Date serviceTermEndTo;
-
-	/**
-	 * お客様企業ID
-	 */
-	@ApiParam(value = "企事部ID", required = false)
-	@ApiModelProperty(value = "企事部ID<br />" //
-			+ "企事部IDにはMoM企事部IDを指定する。", //
-			required = false, allowableValues = "range[0,255]") //
-	private String customerId;
-
-	/**
-	 * お客様企業名
-	 */
-	@ApiParam(value = "お客様企業名:部分一致", required = false)
-	@ApiModelProperty(value = "お客様企業名:部分一致<br />" //
-			+ "条件入力時、最低2文字以上の入力とする。", //
-			required = false, allowableValues = "range[2,255]") //
-	private String likeSearchCustomerName;
-
-	/**
-	 * 事業所名
-	 */
-	@ApiParam(value = "お客様事業所名:部分一致", required = false)
-	@ApiModelProperty(value = "お客様事業所名:部分一致<br />" //
-			+ "条件入力時、最低2文字以上の入力とする。", //
-			required = false, allowableValues = "range[2,255]") //
-	private String likeSearchOfficeName;
-
-	/**
-	 * 部門名
-	 */
-	@ApiParam(value = "お客様部門名:部分一致", required = false)
-	@ApiModelProperty(value = "お客様部門名:部分一致<br />" //
-			+ "条件入力時、最低2文字以上の入力とする。", //
-			required = false, allowableValues = "range[2,255]") //
-	private String likeSearchDepartmentName;
-
-	/**
-	 * 得意先コード
-	 */
-	@ApiParam(value = "得意先コード", required = false)
-	@ApiModelProperty(value = "得意先コード", required = false, allowableValues = "range[0,255]")
-	private String billingCustomerSpCode;
-
-	/**
-	 * 担当支社
-	 */
-	@ApiParam(value = "第1階層", required = false)
-	@ApiModelProperty(value = "第1階層<br />" //
-			+ "設定値はMoM組織ID。", //
-			required = false, allowableValues = "range[0,255]") //
-	private String picAffiliateId;
-
-	/**
-	 * 担当部門
-	 */
-	@ApiParam(value = "第2階層", required = false)
-	@ApiModelProperty(value = "第2階層<br />" //
-			+ "設定値はMoM組織ID。", //
-			required = false, allowableValues = "range[0,255]") //
-	private String picDepartmentId;
-
-	/**
-	 * 担当課所
-	 */
-	@ApiParam(value = "第3階層", required = false)
-	@ApiModelProperty(value = "第3階層<br />" //
-			+ "設定値はMoM組織ID。", //
-			required = false, allowableValues = "range[0,255]") //
-	private String picDivisionId;
-
-	/**
-	 * 担当者
-	 */
-	@ApiParam(value = "担当者：MoM社員IDを指定", required = false)
-	@ApiModelProperty(value = "担当者<br />" //
-			+ "担当者にはMoM社員IDを指定する。", //
-			required = false, allowableValues = "range[0,255]") //
-	private String picEmptxId;
-
-	/**
-	 * 審査／承認者
-	 */
-	@ApiParam(value = "審査／承認者：MoM社員IDを指定", required = false)
-	@ApiModelProperty(value = "審査／承認者<br />" //
-			+ "審査／承認者にはMoM社員IDを指定する。", //
-			required = false, allowableValues = "range[0,255]") //
-	private String approvalEmptxId;
-
-	/**
-	 * 協力者
-	 */
-	@ApiParam(value = "協力者：MoM社員IDを指定", required = false)
-	@ApiModelProperty(value = "協力者<br />" //
-			+ "協力者にはMoM社員IDを指定する。", //
-			required = false, allowableValues = "range[0,255]") //
-	private String collaborationEmptxId;
-
-	/**
-	 * 請求開始月
-	 */
-	@ApiParam(value = "請求開始月", required = false)
-	@ApiModelProperty(value = "請求開始月<br />" //
-			+ "日付フォーマット:yyyy/MM", //
-			required = false) //
-	@Pattern(regexp = "yyyy/MM")
-	private String billingMonth;
-
-	/**
-	 * 契約ステータス
-	 */
-	@ApiParam(value = "契約ステータス", required = false)
-	@Enumerated(EnumType.STRING)
-	@ApiModelProperty(value = "契約ステータス<br />" //
-			+ "状態遷移上のライフサイクル状態を表す。", //
-			required = false) //
-	private LifecycleStatus contractStatus;
 
 	/**
 	 * 契約種別
 	 */
 	@ApiParam(value = "契約種別", required = false)
-	@Enumerated(EnumType.STRING)
-	@ApiModelProperty(value = "契約種別<br />" //
-			+ "新規, プラン変更, 解約などの契約種別を表す。", //
-			required = false)
-	private ContractType contractType;
+	private String contractType;
 
 	/**
-	 * 商品名称
+	 * サービス開始日(前)
 	 */
-	@ApiParam(value = "商品名称", required = false)
-	@ApiModelProperty(value = "商品名称", required = false, allowableValues = "range[0,255]")
-	private String productName;
+	@ApiParam(value = "サービス開始日(前)", required = false)
+	private String serviceTermStartFrom;
 
-//===========================
+	/**
+	 * サービス開始日(後)
+	 */
+	@ApiParam(value = "サービス開始日(後)", required = false)
+	private String serviceTermStartTo;
+
+	/**
+	 * サービス終了日(前)
+	 */
+	@ApiParam(value = "サービス開始日(前)", required = false)
+	private String serviceTermEndFrom;
+
+	/**
+	 * サービス終了日(後)
+	 */
+	@ApiParam(value = "サービス開始日(後)", required = false)
+	private String serviceTermEndTo;
+
+	/**
+	 * 商品ID
+	 */
+	@ApiParam(value = "商品ID", required = false)
+	private String productId;
+
+	/**
+	 * 得意先コード
+	 */
+	@ApiParam(value = "得意先コード", required = false)
+	private String billingCustomerSpCode;
+
+	/**
+	 * 見積書番号
+	 */
+	@ApiParam(value = "見積書番号", required = false)
+	private String estimateNumber;
+
+	/**
+	 * 担当支社
+	 */
+	@ApiParam(value = "担当支社：会社IDを指定", required = false)
+	private String picAffiliateId;
+
+	/**
+	 * 担当営業
+	 */
+	@ApiParam(value = "担当営業：MoM社員IDを指定", required = false)
+	private String picEmptxId;
+
+	/**
+	 * 協力者
+	 */
+	@ApiParam(value = "協力者：MoM社員IDを指定", required = false)
+	private String collaborationEmptxId;
+
+	/**
+	 * お客様企業名
+	 */
+	@ApiParam(value = "お客様企業名： 部分一致", required = false)
+	private String likeSearchCustomerName;
+
+	/**
+	 * 事業所名
+	 */
+	@ApiParam(value = "お客様事業所名： 部分一致", required = false)
+	private String likeSearchOfficeName;
+
+	/**
+	 * 手配マスタID
+	 */
+	@ApiParam(value = "手配マスタID", required = false)
+	private String arrangementMasterId;
+
+	/**
+	 * 手配業務担当者
+	 */
+	@ApiParam(value = "手配業務担当者：MoM社員IDを指定", required = false)
+	private String workUserEmptxId;
+
+	/**
+	 * 手配ステータス
+	 */
+	@ApiParam(value = "手配ステータス", required = false)
+	private String arrangementStatus;
+
+	/**
+	 * 手配業務ステータス
+	 */
+	@ApiParam(value = "手配業務ステータス", required = false)
+	private String arrangementWorkStatus;
 
 	/**
 	 * ソート項目
 	 */
 	@NotNull(message = "{SortColumn}{NotEmptyError}:{SortColumn}{NotEmptyErrorMsg}")
-	@ApiParam(value = "ソート項目", required = true)
-	@ApiModelProperty(value = "ソート項目<br />" //
-			+ "ソート項目のint値は以下の通り各項目とマッピングされる。<br />" //
-			+ "0:契約番号<br />" //
-			+ "1:サービス識別番号<br />" //
-			+ "2:契約状態<br />" //
-			+ "3:契約種別<br />" //
-			+ "4:お客様企業名<br />" //
-			+ "5:商品名称<br />" //
-			+ "6:希望納期<br />" //
-			+ "7:手配業務<br />" //
-			+ "8:手配作成日<br />" //
-			+ "9:業務担当者<br />" //
-			+ "10:業務ステータス<br />" //
-			+ "11:見積番号<br />" //
-			+ "12:担当営業/支社<br />" //
-			+ "13:サービス開始日<br />" //
-			+ "14:サービス終了日<br />", //
-			required = true, allowableValues = "range[0,14]") //
+	@ApiParam(value = "ソート項目", required = true, allowableValues = "range[4, 18]")
 	private int sortColumn;
 
 	/**
 	 * ソート順
 	 */
 	@ApiParam(value = "ソート順", required = true)
-	@Enumerated(EnumType.STRING)
-	@ApiModelProperty(value = "ソート順", required = true)
 	private SortOrder sortOrder;
 
 	/**
