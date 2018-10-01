@@ -95,7 +95,7 @@ public class Estimation extends EntityBase {
 	}
 
 	@Id
-	@ApiModelProperty(value = "見積ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "見積ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
 	private long id;
 
 	/**
@@ -133,14 +133,14 @@ public class Estimation extends EntityBase {
 	/**
 	 * 見積番号
 	 */
-	@ApiModelProperty(value = "見積番号", required = true, position = 7, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "見積番号", required = true, position = 7, allowableValues = "range[0,255]", readOnly = true)
 	@Pattern(regexp = "CEYYYYMMDDNNNNN")
 	private String estimateNumber;
 
 	/**
 	 * 見積番号枝番
 	 */
-	@ApiModelProperty(value = "見積番号枝番", required = true, position = 8, allowableValues = "range[0,99]")
+	@ApiModelProperty(value = "見積番号枝番", required = true, position = 8, allowableValues = "range[0,99]", readOnly = true)
 	private int estimateBranchNumber;
 
 	/**
@@ -359,7 +359,7 @@ public class Estimation extends EntityBase {
 	 * 見積操作履歴
 	 */
 	@OneToMany(mappedBy = "estimation")
-	@ApiModelProperty(value = "見積操作履歴", required = false, position = 44)
+	@ApiModelProperty(value = "見積操作履歴", required = false, position = 44, readOnly = true)
 	private List<OperationLog> operationLogList;
 
 	/**
