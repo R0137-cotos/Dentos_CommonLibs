@@ -19,7 +19,7 @@ public class EstimationDetailRegisterParameter {
 	/**
 	 * 品種コード
 	 */
-	@ApiParam(value = "品種コード", allowableValues = "range[0,9999999999999999999]", required = true)
+	@ApiParam(value = "品種コード", allowableValues = "range[0,255]", required = true)
 	private String ricohItemCode;
 
 	/**
