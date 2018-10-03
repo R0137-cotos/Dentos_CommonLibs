@@ -25,7 +25,7 @@ import lombok.EqualsAndHashCode;
 public class ContractApprovalRoute extends EntityBase {
 
 	@Id
-	@ApiModelProperty(value = "契約承認ルートID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
+	@ApiModelProperty(value = "契約承認ルートID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
 	/**
@@ -70,7 +70,7 @@ public class ContractApprovalRoute extends EntityBase {
 	 * 契約承認実績
 	 */
 	@OneToMany(mappedBy = "contractApprovalRoute")
-	@ApiModelProperty(value = "契約承認実績", required = false, position = 8)
+	@ApiModelProperty(value = "契約承認実績", required = false, position = 8, readOnly = true)
 	private List<ContractApprovalResult> contractApprovalResult;
 
 	/**

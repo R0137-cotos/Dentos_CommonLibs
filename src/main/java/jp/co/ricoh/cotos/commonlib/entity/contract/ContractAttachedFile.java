@@ -23,7 +23,7 @@ import lombok.EqualsAndHashCode;
 public class ContractAttachedFile extends EntityBase {
 
 	@Id
-	@ApiModelProperty(value = "契約添付ファイルID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
+	@ApiModelProperty(value = "契約添付ファイルID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
 	/**

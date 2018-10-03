@@ -24,7 +24,7 @@ import lombok.EqualsAndHashCode;
 public class CustomerEst extends EntityBase {
 
 	@Id
-	@ApiModelProperty(value = "ID", required = true, position = 1, readOnly = true)
+	@ApiModelProperty(value = "ID", required = true, position = 1)
 	private long id;
 
 	/**
