@@ -2,22 +2,22 @@ package jp.co.ricoh.cotos.commonlib.dto.parameter;
 
 import java.util.List;
 
-import jp.co.ricoh.cotos.commonlib.entity.master.EmployeeMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.KjbMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.MvEmployeeMaster;
 import lombok.Data;
 
 @Data
 public class AuthorityJudgeParameter {
 
 	/** アクター用社員マスター */
-	private EmployeeMaster actorEmployeeMaster;
-	
+	private MvEmployeeMaster actorMvEmployeeMaster;
+
 	/** 社員マスター */
-	private List<EmployeeMaster> employeeMasterList;
-	
+	private List<MvEmployeeMaster> mvEmployeeMasterList;
+
 	/** 承認依頼者社員マスター */
-	private EmployeeMaster requesterEmployeeMaster;
-	
+	private MvEmployeeMaster requesterMvEmployeeMaster;
+
 	/** 企事部マスター */
 	private KjbMaster kjbMaster;
 }

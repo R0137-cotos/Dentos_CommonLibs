@@ -18,8 +18,8 @@ import org.springframework.stereotype.Component;
 import jp.co.ricoh.cotos.commonlib.db.DBUtil;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.AuthorityJudgeParameter;
 import jp.co.ricoh.cotos.commonlib.dto.result.StringResult;
-import jp.co.ricoh.cotos.commonlib.entity.master.EmployeeMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.KjbMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.MvEmployeeMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.AccessType;
 import jp.co.ricoh.jmo.cache.AuthoritySearch;
 import jp.co.ricoh.jmo.dto.cache.AuthorityInfoActionDto;
@@ -133,17 +133,17 @@ public class MomAuthorityService {
 	 */
 	public boolean hasAuthority(AuthorityJudgeParameter authParam, ActionDiv actionDiv, AuthDiv authDiv, AccessType accessType) throws Exception {
 
-		AuthLevel authLevel = this.searchMomAuthority(authParam.getActorEmployeeMaster().getSingleUserId(), actionDiv, authDiv);
+		AuthLevel authLevel = this.searchMomAuthority(authParam.getActorMvEmployeeMaster().getSingleUserId(), actionDiv, authDiv);
 
 		// 参照・編集処理、承認処理により認可処理を分岐
 		if (AccessType.参照.equals(accessType) || AccessType.編集.equals(accessType)) {
 
 			// 参照・編集処理用の認可処理を実施
-			return this.hasEditAuthority(authLevel, authParam.getActorEmployeeMaster(), authParam.getKjbMaster(), authParam.getEmployeeMasterList());
+			return this.hasEditAuthority(authLevel, authParam.getActorMvEmployeeMaster(), authParam.getKjbMaster(), authParam.getMvEmployeeMasterList());
 		} else if (AccessType.承認.equals(accessType)) {
 
 			// 承認処理用の認可処理を実施
-			return this.hasApproveAuthority(authLevel, authParam.getActorEmployeeMaster(), authParam.getRequesterEmployeeMaster());
+			return this.hasApproveAuthority(authLevel, authParam.getActorMvEmployeeMaster(), authParam.getRequesterMvEmployeeMaster());
 		} else {
 			return false;
 		}
@@ -152,7 +152,7 @@ public class MomAuthorityService {
 	/**
 	 * 参照・編集権限が存在するか判定する
 	 */
-	private boolean hasEditAuthority(AuthLevel authLevel, EmployeeMaster editor, KjbMaster customer, List<EmployeeMaster> targetEmployeeMasterList) {
+	private boolean hasEditAuthority(AuthLevel authLevel, MvEmployeeMaster editor, KjbMaster customer, List<MvEmployeeMaster> targetEmployeeMasterList) {
 
 		// 権限レベルによる認可処理を実施
 		switch (authLevel) {
@@ -181,7 +181,7 @@ public class MomAuthorityService {
 	/**
 	 * 承認権限があるか判定する
 	 */
-	private boolean hasApproveAuthority(AuthLevel authLevel, EmployeeMaster approver, EmployeeMaster requester) {
+	private boolean hasApproveAuthority(AuthLevel authLevel, MvEmployeeMaster approver, MvEmployeeMaster requester) {
 
 		// 権限レベルによる認可処理を実施
 		switch (authLevel) {

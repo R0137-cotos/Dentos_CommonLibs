@@ -30,7 +30,7 @@ public class ContractPicSaEmp extends EntityBase {
 	 * RJ社員情報マスタ
 	 */
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "mom_employee_id", referencedColumnName = "momEmpId")
+	@JoinColumn(name = "momEmployeeId")
 	@ApiModelProperty(value = "RJ社員情報マスタ", required = true, position = 2)
 	private MvEmployeeMaster mvEmployeeMaster;
 
