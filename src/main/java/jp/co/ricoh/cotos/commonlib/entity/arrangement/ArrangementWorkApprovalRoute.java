@@ -24,7 +24,7 @@ import lombok.EqualsAndHashCode;
 public class ArrangementWorkApprovalRoute extends EntityBase {
 
 	@Id
-	@ApiModelProperty(value = "手配業務承認ルートID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
+	@ApiModelProperty(value = "手配業務承認ルートID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
 	/**
@@ -57,7 +57,7 @@ public class ArrangementWorkApprovalRoute extends EntityBase {
 	 * 手配業務承認実績
 	 */
 	@OneToMany(mappedBy = "arrangementWorkApprovalRoute")
-	@ApiModelProperty(value = "手配業務承認実績", required = false, position = 6, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "手配業務承認実績", required = false, position = 6, allowableValues = "range[0,255]", readOnly = true)
 	private List<ArrangeWorkApprovalResult> arrangeWorkApprovalResultList;
 
 	/**

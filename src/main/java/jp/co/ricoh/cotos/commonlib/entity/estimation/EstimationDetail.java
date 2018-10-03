@@ -40,7 +40,7 @@ public class EstimationDetail extends EntityBase {
 	}
 
 	@Id
-	@ApiModelProperty(value = "見積明細ID", required = true, position = 1, readOnly = true)
+	@ApiModelProperty(value = "見積明細ID", required = true, position = 1)
 	private long id;
 
 	/**

@@ -94,7 +94,7 @@ public class Contract extends EntityBase {
 	}
 
 	@Id
-	@ApiModelProperty(value = "契約ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
+	@ApiModelProperty(value = "契約ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
 	/**
