@@ -13,22 +13,20 @@ cotos:
     limitSize: 5
 spring:
   datasource:
-    url: jdbc:h2:mem:example;MODE=Oracle;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    platform: h2
-    username: sa
-    password:
-    driverClassName: org.h2.Driver
-    sqlScriptEncoding: UTF-8
+    url: jdbc:oracle:thin:@dev-db.cotos.ricoh.co.jp:1521/pdb1
+    username: cotos_onsite
+    password: cotos_onsite
+    driverClassName: oracle.jdbc.OracleDriver
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.Oracle12cDialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     properties:
       hibernate:
         show_sql: true
         use_sql_comments: true
         format_sql: true
-        default_schema: 
+        default_schema: cotos_onsite
         proc:
           param_null_passing: true
         enable_lazy_load_no_trans: true
