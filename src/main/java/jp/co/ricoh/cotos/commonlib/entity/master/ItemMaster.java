@@ -66,7 +66,7 @@ public class ItemMaster {
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "product_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "商品マスタ", required = true, position = 2)
-	private Product product;
+	private ProductMaster productMaster;
 
 	/**
 	 * 品種名
@@ -125,6 +125,6 @@ public class ItemMaster {
 	 */
 	@OneToMany(mappedBy = "itemMaster")
 	@ApiModelProperty(value = "手配業務構成マスタ", required = false, position = 11)
-	private List<ArrangeWorkCompMaster> arrangeWorkCompMasterList;
+	private List<ArrangementWorkCompMaster> arrangeWorkCompMasterList;
 
 }

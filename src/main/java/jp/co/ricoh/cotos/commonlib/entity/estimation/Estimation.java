@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
-import jp.co.ricoh.cotos.commonlib.entity.master.Product;
+import jp.co.ricoh.cotos.commonlib.entity.master.ProductMaster;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -116,7 +116,7 @@ public class Estimation extends EntityBase {
 	@ManyToOne
 	@JoinColumn(name = "product_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "商品マスタ", required = true, position = 4)
-	private Product product;
+	private ProductMaster productMaster;
 
 	/**
 	 * 案件番号
@@ -388,14 +388,14 @@ public class Estimation extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "estimation")
 	@ApiModelProperty(value = "販売店(見積用)", required = false, position = 48)
-	private List<DealerEst> dealerEstList;
+	private List<DealerEstimation> dealerEstList;
 
 	/**
 	 * 顧客（見積用）
 	 */
 	@OneToOne(mappedBy = "estimation")
 	@ApiModelProperty(value = "顧客(見積用)", required = true, position = 49)
-	private CustomerEst customerEst;
+	private CustomerEstimation customerEstimation;
 
 	/**
 	 * 見積チェック結果

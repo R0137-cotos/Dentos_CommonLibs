@@ -2,6 +2,7 @@ package jp.co.ricoh.cotos.commonlib.entity.master;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import lombok.Data;
 
@@ -11,6 +12,7 @@ import lombok.Data;
 
 @Entity
 @Data
+@Table(name = "super_user_master")
 public class SuperUserMaster {
 
 	/**

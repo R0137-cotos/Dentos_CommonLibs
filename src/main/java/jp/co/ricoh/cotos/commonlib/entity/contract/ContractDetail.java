@@ -108,5 +108,5 @@ public class ContractDetail extends EntityBase {
 
 	@OneToOne
 	@ApiModelProperty(value = "品種(契約用)", required = false, position = 11)
-	private ItemCon itemCon;
+	private ItemContract itemContract;
 }

@@ -22,7 +22,7 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table
+@Table(name = "disp_url_auth_master")
 public class UrlAuthMaster {
 
 	public enum Domain {

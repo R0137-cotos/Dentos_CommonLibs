@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
-import jp.co.ricoh.cotos.commonlib.entity.master.ArrangeWorkTypeMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.ArrangementWorkTypeMaster;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -61,7 +61,7 @@ public class ArrangementWork extends EntityBase {
 	@ManyToOne(optional = true)
 	@JoinColumn(name = "arrange_work_type_master_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "手配業務タイプマスタ", required = true, position = 3)
-	private ArrangeWorkTypeMaster arrangeWorkTypeMaster;
+	private ArrangementWorkTypeMaster arrangementWorkTypeMaster;
 
 	/**
 	 * ワークフロー状態
@@ -87,26 +87,26 @@ public class ArrangementWork extends EntityBase {
 	 */
 	@OneToOne(mappedBy = "arrangementWork")
 	@ApiModelProperty(value = "担当作業者社員", required = false, position = 7)
-	private ArrangePicWorkerEmp arrangementPicWorkerEmp;
+	private ArrangementPicWorkerEmp arrangementPicWorkerEmp;
 
 	/**
 	 * 手配業務操作履歴
 	 */
 	@OneToMany(mappedBy = "arrangementWork")
 	@ApiModelProperty(value = "手配業務操作履歴", required = false, position = 8, readOnly = true)
-	private List<ArrangeWorkOperationLog> arrangeWorkOperationLogList;
+	private List<ArrangementWorkOperationLog> arrangementWorkOperationLogList;
 
 	/**
 	 * 手配業務添付ファイル
 	 */
 	@OneToMany(mappedBy = "arrangementWork")
 	@ApiModelProperty(value = "手配業務添付ファイル", required = false, position = 9)
-	private List<WorkAttachedFile> workAttachedFileList;
+	private List<ArrangementWorkAttachedFile> workAttachedFileList;
 
 	/**
 	 * 手配業務チェック結果
 	 */
 	@OneToMany(mappedBy = "arrangementWork")
-	private List<ArrangeWorkCheckResult> arrangeWorkCheckResultList;
+	private List<ArrangementWorkCheckResult> arrangeWorkCheckResultList;
 
 }
