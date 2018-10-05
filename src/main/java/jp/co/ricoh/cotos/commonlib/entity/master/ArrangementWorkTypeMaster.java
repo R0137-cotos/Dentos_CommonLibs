@@ -47,15 +47,15 @@ public class ArrangementWorkTypeMaster {
 	/**
 	 * 手配業務構成マスタ
 	 */
-	@OneToMany(mappedBy = "arrangeWorkTypeMaster")
+	@OneToMany(mappedBy = "arrangementWorkTypeMaster")
 	@ApiModelProperty(value = "手配業務タイプマスタ", required = false, position = 5)
-	private List<ArrangementWorkCompMaster> arrangeWorkCompMasterList;
+	private List<ArrangementWorkCompMaster> arrangementWorkCompMasterList;
 
 	/**
 	 * 手配チェックリスト構成マスタ
 	 */
-	@OneToMany(mappedBy = "arrangeWorkTypeMaster")
+	@OneToMany(mappedBy = "arrangementWorkTypeMaster")
 	@ApiModelProperty(value = "手配チェックリスト構成マスタ", required = false, position = 6)
-	private List<ArrangementChecklistCompMaster> arrangeChecklistCompMasterList;
+	private List<ArrangementChecklistCompMaster> arrangementChecklistCompMasterList;
 
 }

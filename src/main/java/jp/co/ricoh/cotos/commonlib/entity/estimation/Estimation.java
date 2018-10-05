@@ -388,7 +388,7 @@ public class Estimation extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "estimation")
 	@ApiModelProperty(value = "販売店(見積用)", required = false, position = 48)
-	private List<DealerEstimation> dealerEstList;
+	private List<DealerEstimation> dealerEstimationList;
 
 	/**
 	 * 顧客（見積用）
@@ -402,7 +402,7 @@ public class Estimation extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "estimation")
 	@ApiModelProperty(value = "見積チェック結果", required = false, position = 50)
-	private List<EstimationCheckResult> chechResultList;
+	private List<EstimationCheckResult> estimationChechResultList;
 
 	/**
 	 * 見積明細

@@ -310,14 +310,14 @@ public class Contract extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "contract")
 	@ApiModelProperty(value = "販売店(契約用)", required = false, position = 35)
-	private List<DealerContract> dealerList;
+	private List<DealerContract> dealerContractList;
 
 	/**
 	 * 顧客(契約用)
 	 */
 	@OneToOne(mappedBy = "contract")
 	@ApiModelProperty(value = "顧客(契約用)", required = true, position = 36)
-	private CustomerContract customer;
+	private CustomerContract contractCustomer;
 
 	/**
 	 * 契約操作履歴

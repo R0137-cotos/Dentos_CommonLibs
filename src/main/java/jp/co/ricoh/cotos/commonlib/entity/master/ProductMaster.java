@@ -64,21 +64,21 @@ public class ProductMaster {
 	/**
 	 * 品種マスタ
 	 */
-	@OneToMany(mappedBy = "product")
+	@OneToMany(mappedBy = "productMaster")
 	@ApiModelProperty(value = "品種マスタ", required = true, position = 8)
 	private List<ItemMaster> itemMasterList;
 
 	/**
 	 * 見積チェックリスト構成マスタ
 	 */
-	@OneToMany(mappedBy = "product")
+	@OneToMany(mappedBy = "productMaster")
 	@ApiModelProperty(value = "チェックリスト構成マスタ", required = false, position = 9)
 	private List<EstimationChecklistCompMaster> estimationChecklistCompMasterList;
 	
 	/**
 	 * 契約チェックリスト構成マスタ
 	 */
-	@OneToMany(mappedBy = "product")
+	@OneToMany(mappedBy = "productMaster")
 	@ApiModelProperty(value = "チェックリスト構成マスタ", required = false, position = 9)
 	private List<ContractChecklistCompMaster> contractChecklistCompMasterList;
 

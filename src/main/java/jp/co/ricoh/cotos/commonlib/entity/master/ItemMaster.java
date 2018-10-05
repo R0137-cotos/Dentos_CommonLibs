@@ -125,6 +125,6 @@ public class ItemMaster {
 	 */
 	@OneToMany(mappedBy = "itemMaster")
 	@ApiModelProperty(value = "手配業務構成マスタ", required = false, position = 11)
-	private List<ArrangementWorkCompMaster> arrangeWorkCompMasterList;
+	private List<ArrangementWorkCompMaster> arrangementWorkCompMasterList;
 
 }

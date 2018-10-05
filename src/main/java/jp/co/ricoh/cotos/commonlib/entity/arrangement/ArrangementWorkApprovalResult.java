@@ -24,7 +24,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Table(name = "arrangement_work_approval_result")
-public class ArrangeWorkApprovalResult extends EntityBase {
+public class ArrangementWorkApprovalResult extends EntityBase {
 
 	public enum ApprovalProcessCategory {
 

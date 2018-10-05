@@ -40,7 +40,7 @@ public class GpCheckMatterMaster {
 	 */
 	@OneToMany(mappedBy = "gpCheckMatterMaster")
 	@ApiModelProperty(value = "手配チェックリスト構成マスタ", required = false, position = 4)
-	private List<ArrangementChecklistCompMaster> arrangeWorkCompMasterList;
+	private List<ArrangementChecklistCompMaster> arrangementWorkCompMasterList;
 
 	/**
 	 * 見積チェックリスト構成マスタ

@@ -59,7 +59,7 @@ public class ArrangementWork extends EntityBase {
 	 * 手配業務タイプマスタ
 	 */
 	@ManyToOne(optional = true)
-	@JoinColumn(name = "arrange_work_type_master_id", referencedColumnName = "id")
+	@JoinColumn(name = "arrangement_work_type_master_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "手配業務タイプマスタ", required = true, position = 3)
 	private ArrangementWorkTypeMaster arrangementWorkTypeMaster;
 
@@ -107,6 +107,6 @@ public class ArrangementWork extends EntityBase {
 	 * 手配業務チェック結果
 	 */
 	@OneToMany(mappedBy = "arrangementWork")
-	private List<ArrangementWorkCheckResult> arrangeWorkCheckResultList;
+	private List<ArrangementWorkCheckResult> arrangementWorkCheckResultList;
 
 }

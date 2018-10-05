@@ -109,7 +109,7 @@ public class ArrangementPicWorkerEmp extends EntityBase {
 	/**
 	 * 手配業務
 	 */
-	@OneToOne(mappedBy = "arrangement", optional = true)
+	@OneToOne(optional = true)
 	@JoinColumn(name = "arrangement_work_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "手配業務", required = false, position = 15)
 	private ArrangementWork arrangementWork;
