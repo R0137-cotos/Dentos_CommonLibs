@@ -11,12 +11,12 @@ import jp.co.ricoh.cotos.commonlib.dto.result.CommonMasterDetailResult;
 import jp.co.ricoh.cotos.commonlib.dto.result.CommonMasterResult;
 import jp.co.ricoh.cotos.commonlib.entity.master.CommonMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.CommonMasterDetail;
-import jp.co.ricoh.cotos.commonlib.entity.master.MomCommonMaster;
-import jp.co.ricoh.cotos.commonlib.entity.master.MomCommonMasterDetail;
+import jp.co.ricoh.cotos.commonlib.entity.master.MvTjmmb010UtlItem;
+import jp.co.ricoh.cotos.commonlib.entity.master.MvTjmmb020UtlCd;
 import jp.co.ricoh.cotos.commonlib.repository.master.CommonMasterDetailRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.CommonMasterRepository;
-import jp.co.ricoh.cotos.commonlib.repository.master.MomCommonMasterDetailRepository;
-import jp.co.ricoh.cotos.commonlib.repository.master.MomCommonMasterRepository;
+import jp.co.ricoh.cotos.commonlib.repository.master.MvTjmmb020UtlCdRepository;
+import jp.co.ricoh.cotos.commonlib.repository.master.MvTjmmb010UtlItemRepository;
 
 /**
  * 汎用マスタ取得共通クラス
@@ -29,9 +29,9 @@ public class FindCommonMaster {
 	@Autowired
 	CommonMasterDetailRepository commonMasterDetailRepository;
 	@Autowired
-	MomCommonMasterRepository momCommonMasterRepository;
+	MvTjmmb010UtlItemRepository mvTjmmb010UtlItemRepository;
 	@Autowired
-	MomCommonMasterDetailRepository momCommonMasterDetailRepository;
+	MvTjmmb020UtlCdRepository mvTjmmb020UtlCdRepository;
 
 	/**
 	 * 汎用マスタ取得
@@ -75,12 +75,12 @@ public class FindCommonMaster {
 
 		if (null != parameter && null != parameter.getCommonArticleCdList()) {
 			parameter.getCommonArticleCdList().stream().forEach(articleCd -> {
-				MomCommonMaster momCommonMaster = momCommonMasterRepository.findByItemId(articleCd);
-				if (null != momCommonMaster) {
+				MvTjmmb010UtlItem mvTjmmb010UtlItem = mvTjmmb010UtlItemRepository.findByItemId(articleCd);
+				if (null != mvTjmmb010UtlItem) {
 					CommonMasterResult result = new CommonMasterResult();
-					result.setArticleCd(momCommonMaster.getItemId());
-					result.setArticleName(momCommonMaster.getItemName());
-					List<CommonMasterDetailResult> detailResultList = createCommonMasterDetailResultMom(momCommonMasterDetailRepository.findByItemId(articleCd));
+					result.setArticleCd(mvTjmmb010UtlItem.getItemId());
+					result.setArticleName(mvTjmmb010UtlItem.getItemName());
+					List<CommonMasterDetailResult> detailResultList = createCommonMasterDetailResultMom(mvTjmmb020UtlCdRepository.findByItemId(articleCd));
 					if (parameter.isAddBlankRowFlg() && !detailResultList.isEmpty()) {
 						detailResultList.add(0, addBlankRow());
 					}
@@ -124,7 +124,7 @@ public class FindCommonMaster {
 	 *            COTOS汎用マスタ明細リスト
 	 * @return 汎用マスタ明細結果リスト
 	 */
-	private List<CommonMasterDetailResult> createCommonMasterDetailResultMom(List<MomCommonMasterDetail> detailList) {
+	private List<CommonMasterDetailResult> createCommonMasterDetailResultMom(List<MvTjmmb020UtlCd> detailList) {
 		List<CommonMasterDetailResult> list = new ArrayList<>();
 		detailList.stream().forEach(detail -> {
 			CommonMasterDetailResult detailResult = new CommonMasterDetailResult();

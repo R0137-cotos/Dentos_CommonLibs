@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
-import jp.co.ricoh.cotos.commonlib.entity.master.Product;
+import jp.co.ricoh.cotos.commonlib.entity.master.ProductMaster;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -126,7 +126,7 @@ public class Contract extends EntityBase {
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "product_master_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "商品マスタ", required = true, position = 5)
-	private Product product;
+	private ProductMaster productMaster;
 
 	/**
 	 * 案件番号
@@ -321,14 +321,14 @@ public class Contract extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "contract")
 	@ApiModelProperty(value = "販売店(契約用)", required = false, position = 35)
-	private List<DealerCon> dealerList;
+	private List<DealerContract> dealerContractList;
 
 	/**
 	 * 顧客(契約用)
 	 */
 	@OneToOne(mappedBy = "contract")
 	@ApiModelProperty(value = "顧客(契約用)", required = true, position = 36)
-	private CustomerCon customer;
+	private CustomerContract contractCustomer;
 
 	/**
 	 * 契約操作履歴

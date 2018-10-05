@@ -2,7 +2,7 @@ package jp.co.ricoh.cotos.commonlib.dto.parameter;
 
 import java.util.List;
 
-import jp.co.ricoh.cotos.commonlib.entity.master.KjbMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.VKbMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvEmployeeMaster;
 import lombok.Data;
 
@@ -19,5 +19,5 @@ public class AuthorityJudgeParameter {
 	private MvEmployeeMaster requesterMvEmployeeMaster;
 
 	/** 企事部マスター */
-	private KjbMaster kjbMaster;
+	private VKbMaster vKbMaster;
 }

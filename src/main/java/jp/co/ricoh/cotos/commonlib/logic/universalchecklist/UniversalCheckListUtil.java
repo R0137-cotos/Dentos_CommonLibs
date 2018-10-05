@@ -2,7 +2,7 @@ package jp.co.ricoh.cotos.commonlib.logic.universalchecklist;
 
 import java.util.List;
 
-import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangeWorkCheckResult;
+import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangementWorkCheckResult;
 import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangementWork;
 
 public class UniversalCheckListUtil {
@@ -61,10 +61,10 @@ public class UniversalCheckListUtil {
 	 * 5-5.返却用リストに手配チェック結果を追加する。<br />
 	 *
 	 * @param parameter 手配業務エンティティ<br />
-	 * @return List<ArrangeWorkCheckResult> 手配業務チェック結果のリスト<br />
+	 * @return List<ArrangementWorkCheckResult> 手配業務チェック結果のリスト<br />
 	 *         手配業務IDは、それを知っている呼び出し元で設定する必要がある。<br />
 	 */
-	public List<ArrangeWorkCheckResult> createCheckListForArrangementWork(ArrangementWork parameter) {
+	public List<ArrangementWorkCheckResult> createCheckListForArrangementWork(ArrangementWork parameter) {
 		return null;
 	}
 }
