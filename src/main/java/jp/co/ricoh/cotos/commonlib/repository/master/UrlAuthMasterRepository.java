@@ -7,10 +7,10 @@ import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Repository;
 
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster;
-import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.Domain;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.Id;
+import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.ServiceCategory;
 
 @Repository
 public interface UrlAuthMasterRepository extends CrudRepository<UrlAuthMaster, Id> {
-	public List<UrlAuthMaster> findByIdMethodAndIdDomainOrderByIdUrlPatternAsc(HttpMethod method, Domain domain);
+	public List<UrlAuthMaster> findByIdMethodAndIdServiceCategoryOrderByIdUrlPatternAsc(HttpMethod method, ServiceCategory serviceCategory);
 }

@@ -39,7 +39,7 @@ public class StoredProcedureUtil {
 		query.registerStoredProcedureParameter("ref_leader_", void.class, ParameterMode.REF_CURSOR);
 
 		// パラメーター値設定
-		query.setParameter("processing_type_", processingType.toValue());
+		query.setParameter("processing_type_", processingType.toString());
 		query.setParameter("mom_id_", momId);
 		query.setParameter("mom_corp_id_", momCorpId);
 		query.setParameter("hierarchy_level_", hierarchyLevel);
