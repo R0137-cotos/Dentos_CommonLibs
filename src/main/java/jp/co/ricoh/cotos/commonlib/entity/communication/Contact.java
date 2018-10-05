@@ -1,6 +1,5 @@
 package jp.co.ricoh.cotos.commonlib.entity.communication;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -11,11 +10,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
+import jp.co.ricoh.cotos.commonlib.entity.EnumType.ServiceCategory;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -27,20 +24,6 @@ import lombok.EqualsAndHashCode;
 @Data
 @Table(name = "contact")
 public class Contact extends EntityBase {
-	public enum DomainType {
-
-		見積, 契約, 手配;
-
-		@JsonValue
-		public String toValue() {
-			return this.name();
-		}
-
-		@JsonCreator
-		public static Enum<DomainType> fromValue(String name) {
-			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
-		}
-	}
 
 	@Id
 	@ApiModelProperty(value = "問い合わせID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
@@ -67,10 +50,10 @@ public class Contact extends EntityBase {
 	private String contactFromEmpId;
 
 	/**
-	 * ドメイン
+	 * サービスカテゴリ
 	 */
-	@ApiModelProperty(value = "ドメイン", required = false, position = 5)
-	private DomainType domain;
+	@ApiModelProperty(value = "サービスカテゴリ", required = false, position = 5)
+	private ServiceCategory serviceCategory;
 
 	/**
 	 * タイトル

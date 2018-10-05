@@ -8,9 +8,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import lombok.Data;
@@ -24,18 +21,24 @@ import lombok.EqualsAndHashCode;
 @Data
 @Table(name = "contact_to")
 public class ContactTo extends EntityBase {
+
 	public enum SendType {
 
-		TO, CC;
+		TO("1"), CC("2");
 
-		@JsonValue
-		public String toValue() {
-			return this.name();
+		private final String text;
+
+		private SendType(final String text) {
+			this.text = text;
 		}
 
-		@JsonCreator
-		public static Enum<SendType> fromValue(String name) {
-			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
+		@Override
+		public String toString() {
+			return this.text;
+		}
+
+		public static SendType fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
 

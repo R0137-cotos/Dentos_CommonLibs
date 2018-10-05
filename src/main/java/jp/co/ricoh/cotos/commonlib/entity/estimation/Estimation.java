@@ -66,16 +66,21 @@ public class Estimation extends EntityBase {
 
 	public enum EstimationDiv {
 
-		新規, 再見積, プラン変更;
+		新規("1"), プラン変更("2");
 
-		@JsonValue
-		public String toValue() {
-			return this.name();
+		private final String text;
+
+		private EstimationDiv(final String text) {
+			this.text = text;
 		}
 
-		@JsonCreator
-		public static Enum<EstimationDiv> fromValue(String name) {
-			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
+		@Override
+		public String toString() {
+			return this.text;
+		}
+
+		public static EstimationDiv fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
 

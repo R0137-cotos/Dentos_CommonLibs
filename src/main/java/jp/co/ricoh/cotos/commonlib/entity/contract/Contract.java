@@ -35,16 +35,21 @@ public class Contract extends EntityBase {
 
 	public enum ContractType {
 
-		新規, プラン変更, 情報変更, 解約, キャンセル手続き中;
+		新規("1"), プラン変更("2"), 情報変更("3");
 
-		@JsonValue
-		public String toValue() {
-			return this.name();
+		private final String text;
+
+		private ContractType(final String text) {
+			this.text = text;
 		}
 
-		@JsonCreator
-		public static Enum<ContractType> fromValue(String name) {
-			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
+		@Override
+		public String toString() {
+			return this.text;
+		}
+
+		public static ContractType fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
 
@@ -196,6 +201,12 @@ public class Contract extends EntityBase {
 	 */
 	@ApiModelProperty(value = "契約日", required = false, position = 17)
 	private Date contractDate;
+
+	/**
+	 * 売上計上フラグ
+	 */
+	@ApiModelProperty(value = "売上計上フラグ", required = true, position = 18)
+	private int accountSalesFlag;
 
 	/**
 	 * 請求開始日

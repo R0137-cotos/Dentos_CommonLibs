@@ -1,17 +1,13 @@
 package jp.co.ricoh.cotos.commonlib.entity.master;
 
-import java.util.Arrays;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-
 import io.swagger.annotations.ApiModelProperty;
+import jp.co.ricoh.cotos.commonlib.entity.EnumType.TargetContractType;
 import lombok.Data;
 
 /**
@@ -21,21 +17,6 @@ import lombok.Data;
 @Data
 @Table(name = "arrange_work_comp_master")
 public class ArrangeWorkCompMaster {
-
-	public enum TargetContractType {
-
-		共通, 新規, プラン変更, 情報変更;
-
-		@JsonValue
-		public String toValue() {
-			return this.name();
-		}
-
-		@JsonCreator
-		public static Enum<TargetContractType> fromValue(String name) {
-			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
-		}
-	}
 
 	@Id
 	@ApiModelProperty(value = "手配業務マスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")

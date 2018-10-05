@@ -1,6 +1,7 @@
 package jp.co.ricoh.cotos.commonlib.entity.master;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -26,15 +27,65 @@ import lombok.Data;
 public class UrlAuthMaster {
 
 	public enum Domain {
-		estimation, contract, arrangement, communication;
+		estimation, contract, arrangement, communication, master;
+	}
+
+	public enum ServiceCategory {
+
+		見積("1"), 契約("2"), 手配("3"), コミュニケーション("4"), マスタ("5");
+
+		private final String text;
+
+		private ServiceCategory(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		public String toString() {
+			return this.text;
+		}
+
+		public static ServiceCategory fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+		}
 	}
 
 	public enum ParameterType {
-		path, query, json;
+		path("1"), query("2"), json("3");
+
+		private final String text;
+
+		private ParameterType(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		public String toString() {
+			return this.text;
+		}
+
+		public static ParameterType fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+		}
 	}
 
 	public enum AccessType {
-		参照, 編集, 承認;
+		参照("1"), 編集("2"), 承認("3");
+
+		private final String text;
+
+		private AccessType(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		public String toString() {
+			return this.text;
+		}
+
+		public static AccessType fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+		}
 	}
 
 	@Embeddable
@@ -60,11 +111,9 @@ public class UrlAuthMaster {
 		private HttpMethod method;
 
 		/**
-		 * アプリケーション
+		 * サービスカテゴリ
 		 */
-		@Column(nullable = false)
-		@Enumerated(EnumType.STRING)
-		private Domain domain;
+		private ServiceCategory serviceCategory;
 	}
 
 	@EmbeddedId
@@ -74,7 +123,7 @@ public class UrlAuthMaster {
 	 * 認可処理実施要否
 	 */
 	@Column(nullable = false)
-	private boolean requireAuthorize;
+	private int requireAuthorize;
 
 	/**
 	 * 外部参照ドメイン
@@ -87,7 +136,7 @@ public class UrlAuthMaster {
 	 * DBデータ存在有無
 	 */
 	@Column(nullable = false)
-	private boolean existsDb;
+	private int existsDb;
 
 	/**
 	 * パラメータータイプ
