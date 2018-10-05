@@ -105,6 +105,6 @@ public class EstimationDetail extends EntityBase {
 
 	@OneToOne(optional = false)
 	@ApiModelProperty(value = "品種(見積用)", required = true, position = 11)
-	private ItemEst itemEst;
+	private ItemEstimation itemEstimation;
 
 }

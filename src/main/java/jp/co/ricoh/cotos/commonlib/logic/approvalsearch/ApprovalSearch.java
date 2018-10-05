@@ -49,9 +49,9 @@ public class ApprovalSearch {
 		// 承認ルートグループIDから承認ルートグループを特定
 		long approvalRouteGrpId = 0L;
 		if (null != estimation) {
-			approvalRouteGrpId = estimation.getProduct().getEstimationApprovalRouteGrpId();
+			approvalRouteGrpId = estimation.getProductMaster().getEstimationApprovalRouteGrpId();
 		} else {
-			approvalRouteGrpId = contract.getProduct().getContractApprovalRouteGrpId();
+			approvalRouteGrpId = contract.getProductMaster().getContractApprovalRouteGrpId();
 		}
 		ApprovalRouteGrpMaster approvalRouteGrpMaster = approvalRouteGrpMasterRepository.findOne(approvalRouteGrpId);
 

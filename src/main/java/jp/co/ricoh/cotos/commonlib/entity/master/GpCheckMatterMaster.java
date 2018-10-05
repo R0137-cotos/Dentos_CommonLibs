@@ -40,13 +40,20 @@ public class GpCheckMatterMaster {
 	 */
 	@OneToMany(mappedBy = "gpCheckMatterMaster")
 	@ApiModelProperty(value = "手配チェックリスト構成マスタ", required = false, position = 4)
-	private List<ArrangeChecklistCompMaster> arrangeWorkCompMasterList;
+	private List<ArrangementChecklistCompMaster> arrangementWorkCompMasterList;
 
 	/**
-	 * チェックリスト構成マスタ
+	 * 見積チェックリスト構成マスタ
 	 */
 	@OneToMany(mappedBy = "gpCheckMatterMaster")
 	@ApiModelProperty(value = "チェックリスト構成マスタ", required = false, position = 5)
-	private List<ChecklistCompMaster> checklistCompMasterList;
+	private List<EstimationChecklistCompMaster> estimationChecklistCompMasterList;
+	
+	/**
+	 * 契約チェックリスト構成マスタ
+	 */
+	@OneToMany(mappedBy = "gpCheckMatterMaster")
+	@ApiModelProperty(value = "チェックリスト構成マスタ", required = false, position = 5)
+	private List<ContractChecklistCompMaster> contractChecklistCompMasterList;
 
 }

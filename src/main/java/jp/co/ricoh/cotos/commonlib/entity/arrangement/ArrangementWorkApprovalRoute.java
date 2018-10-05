@@ -58,13 +58,13 @@ public class ArrangementWorkApprovalRoute extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "arrangementWorkApprovalRoute")
 	@ApiModelProperty(value = "手配業務承認実績", required = false, position = 6, allowableValues = "range[0,255]", readOnly = true)
-	private List<ArrangeWorkApprovalResult> arrangeWorkApprovalResultList;
+	private List<ArrangementWorkApprovalResult> arrangementWorkApprovalResultList;
 
 	/**
 	 * 手配業務承認ルートノード
 	 */
 	@OneToMany(mappedBy = "arrangementWorkApprovalRoute")
 	@ApiModelProperty(value = "手配業務承認ルートノード", required = true, position = 7)
-	private List<ArrangeWkApprovalRouteNode> arrangeWkApprovalRouteNodeList;
+	private List<ArrangementWorkApprovalRouteNode> arrangementWorkApprovalRouteNodeList;
 
 }
