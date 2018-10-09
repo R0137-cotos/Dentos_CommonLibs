@@ -55,6 +55,8 @@
 |49|MvEmployeeMasterRepositoryを追加|
 |50|ERDに合わせてエンティティ名を修正
 
+|52|EntityBase,EntityBaseMaster継承関係追加|
+
 # バージョン採番方法
 
 build.gradleファイルのリビジョン番号(pom.version)を＋1して「gradle uploadArchives」コマンドを実行し、
