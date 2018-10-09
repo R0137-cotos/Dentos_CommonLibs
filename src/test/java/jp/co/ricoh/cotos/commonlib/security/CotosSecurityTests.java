@@ -600,9 +600,6 @@ public class CotosSecurityTests {
 		urlAuthMaster.setActionDiv(ActionDiv.照会);
 		urlAuthMasterRepository.save(urlAuthMaster);
 
-		// TODO 実装時に正しくセットするようにする
-		urlAuthMaster.setVersion(1);
-
 		// データ取得
 		List<UrlAuthMaster> result = urlAuthMasterRepository.findByIdMethodAndIdDomainOrderByIdUrlPatternAsc(urlAuthMasterId.getMethod(), urlAuthMasterId.getDomain());
 
