@@ -10,12 +10,13 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.swagger.annotations.ApiModelProperty;
+import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import lombok.Data;
 
 @Entity
 @Data
 @Table(name = "mail_template_master")
-public class MailTemplateMaster {
+public class MailTemplateMaster extends EntityBaseMaster {
 
 	public enum ServiceCategory {
 

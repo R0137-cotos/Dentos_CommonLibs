@@ -9,6 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModelProperty;
+import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import jp.co.ricoh.cotos.commonlib.entity.contract.Contract.LifecycleStatus;
 import lombok.Data;
 
@@ -18,7 +19,7 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "contract_check_result")
-public class ContractCheckResult {
+public class ContractCheckResult extends EntityBase {
 
 	@Id
 	@ApiModelProperty(value = "契約チェック結果ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")

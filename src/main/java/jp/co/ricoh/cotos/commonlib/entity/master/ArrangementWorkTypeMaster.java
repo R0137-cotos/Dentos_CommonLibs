@@ -10,6 +10,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModelProperty;
+import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import lombok.Data;
 
 /**
@@ -18,7 +19,7 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "arrangement_work_type_master")
-public class ArrangementWorkTypeMaster {
+public class ArrangementWorkTypeMaster extends EntityBaseMaster {
 
 	@Id
 	@ApiModelProperty(value = "手配業務タイプマスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")

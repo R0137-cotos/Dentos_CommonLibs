@@ -14,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.swagger.annotations.ApiModelProperty;
+import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import lombok.Data;
 
 /**
@@ -22,7 +23,7 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "record_decompose_master")
-public class RecordDecomposeMaster {
+public class RecordDecomposeMaster extends EntityBaseMaster {
 
 	public enum RecordType {
 

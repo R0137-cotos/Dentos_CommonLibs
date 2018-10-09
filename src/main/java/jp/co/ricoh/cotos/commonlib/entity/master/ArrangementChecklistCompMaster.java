@@ -7,6 +7,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModelProperty;
+import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import lombok.Data;
 
 /**
@@ -15,7 +16,7 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "arrangement_checklist_comp_master")
-public class ArrangementChecklistCompMaster {
+public class ArrangementChecklistCompMaster extends EntityBaseMaster {
 
 	@Id
 	@ApiModelProperty(value = "手配チェックリスト構成マスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")

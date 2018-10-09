@@ -8,6 +8,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModelProperty;
+import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import lombok.Data;
 
 /**
@@ -17,7 +18,7 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "gp_check_matter_master")
-public class GpCheckMatterMaster {
+public class GpCheckMatterMaster extends EntityBaseMaster {
 
 	@Id
 	@ApiModelProperty(value = "汎用チェック事項マスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")

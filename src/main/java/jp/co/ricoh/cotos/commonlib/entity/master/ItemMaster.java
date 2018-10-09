@@ -16,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.swagger.annotations.ApiModelProperty;
+import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import lombok.Data;
 
 /**
@@ -24,7 +25,7 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "item_master")
-public class ItemMaster {
+public class ItemMaster extends EntityBaseMaster {
 
 	public enum ProductType {
 

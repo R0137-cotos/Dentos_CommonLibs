@@ -9,6 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModelProperty;
+import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import lombok.Data;
 
 /**
@@ -17,7 +18,7 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "estimation_check_result")
-public class EstimationCheckResult {
+public class EstimationCheckResult extends EntityBase {
 
 	@Id
 	@ApiModelProperty(value = "見積チェック結果ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")

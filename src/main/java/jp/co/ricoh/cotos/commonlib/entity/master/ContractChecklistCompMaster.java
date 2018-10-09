@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.swagger.annotations.ApiModelProperty;
+import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import lombok.Data;
 
 /**
@@ -20,7 +21,7 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "contract_checklist_comp_master")
-public class ContractChecklistCompMaster {
+public class ContractChecklistCompMaster extends EntityBaseMaster {
 
 	public enum TargetContractType {
 

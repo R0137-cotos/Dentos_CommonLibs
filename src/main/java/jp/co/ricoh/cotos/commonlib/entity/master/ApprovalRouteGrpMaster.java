@@ -8,6 +8,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModelProperty;
+import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import lombok.Data;
 
 /**
@@ -16,7 +17,7 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "approval_route_grp_master")
-public class ApprovalRouteGrpMaster {
+public class ApprovalRouteGrpMaster extends EntityBaseMaster {
 
 	@Id
 	@ApiModelProperty(value = "承認ルートグループマスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
