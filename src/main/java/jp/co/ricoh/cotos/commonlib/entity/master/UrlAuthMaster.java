@@ -1,6 +1,7 @@
 package jp.co.ricoh.cotos.commonlib.entity.master;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -12,8 +13,6 @@ import javax.persistence.Table;
 
 import org.springframework.http.HttpMethod;
 
-import jp.co.ricoh.cotos.commonlib.security.mom.MomAuthorityService.ActionDiv;
-import jp.co.ricoh.cotos.commonlib.security.mom.MomAuthorityService.AuthDiv;
 import lombok.Data;
 
 /**
@@ -31,6 +30,44 @@ public class UrlAuthMaster {
 
 	public enum ParameterType {
 		path, query, json;
+	}
+
+	public enum ActionDiv {
+		なし("00"), 照会("01"), 登録("02"), 更新("03"), 削除("04"), 印刷("05"), ダウンロード("06"), 集計("07");
+
+		private final String text;
+
+		private ActionDiv(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		public String toString() {
+			return this.text;
+		}
+
+		public static ActionDiv fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+		}
+	}
+
+	public enum AuthDiv {
+		なし("0"), 見積_契約_手配("2200"), 請求_計上_本部("2210"), システム管理("2220");
+
+		private final String text;
+
+		private AuthDiv(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		public String toString() {
+			return this.text;
+		}
+
+		public static AuthDiv fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+		}
 	}
 
 	public enum AccessType {

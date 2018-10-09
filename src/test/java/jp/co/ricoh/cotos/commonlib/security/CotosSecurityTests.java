@@ -37,6 +37,8 @@ import jp.co.ricoh.cotos.commonlib.entity.master.MvEmployeeMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.SuperUserMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.AccessType;
+import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.ActionDiv;
+import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.AuthDiv;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.Domain;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.Id;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.ParameterType;
@@ -44,8 +46,6 @@ import jp.co.ricoh.cotos.commonlib.repository.master.MvEmployeeMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.SuperUserMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.UrlAuthMasterRepository;
 import jp.co.ricoh.cotos.commonlib.security.mom.MomAuthorityService;
-import jp.co.ricoh.cotos.commonlib.security.mom.MomAuthorityService.ActionDiv;
-import jp.co.ricoh.cotos.commonlib.security.mom.MomAuthorityService.AuthDiv;
 import jp.co.ricoh.cotos.commonlib.security.mom.MomAuthorityService.AuthLevel;
 import lombok.val;
 
