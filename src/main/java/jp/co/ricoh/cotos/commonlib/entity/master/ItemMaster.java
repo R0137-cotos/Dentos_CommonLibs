@@ -1,6 +1,7 @@
 package jp.co.ricoh.cotos.commonlib.entity.master;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -24,6 +25,46 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "item_master")
 public class ItemMaster extends EntityBaseMaster {
+
+	public enum ItemType {
+
+		なし("1"), 基本("2"), オプション("3");
+
+		private final String text;
+
+		private ItemType(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		public String toString() {
+			return this.text;
+		}
+
+		public static ItemType fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+		}
+	}
+
+	public enum CostType {
+
+		初期費("1"), 月額("2"), 年額("3");
+
+		private final String text;
+
+		private CostType(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		public String toString() {
+			return this.text;
+		}
+
+		public static CostType fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+		}
+	}
 
 	@Id
 	@ApiModelProperty(value = "品種マスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
@@ -50,16 +91,16 @@ public class ItemMaster extends EntityBaseMaster {
 	private String ricohItemCode;
 
 	/**
-	 * 商品区分
+	 * 品種区分
 	 */
-	@ApiModelProperty(value = "商品区分", required = true, position = 5, allowableValues = "range[0,255]")
-	private String productType;
+	@ApiModelProperty(value = "品種区分", required = true, position = 5)
+	private ItemType itemType;
 
 	/**
 	 * 費用種別
 	 */
-	@ApiModelProperty(value = "費用種別", required = true, position = 6, allowableValues = "range[0,255]")
-	private String costType;
+	@ApiModelProperty(value = "費用種別", required = true, position = 6)
+	private CostType costType;
 
 	/**
 	 * 仕切価格

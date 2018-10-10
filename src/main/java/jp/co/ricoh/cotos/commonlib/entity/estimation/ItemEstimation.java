@@ -11,6 +11,8 @@ import javax.persistence.Table;
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import jp.co.ricoh.cotos.commonlib.entity.master.ItemMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.ItemMaster.CostType;
+import jp.co.ricoh.cotos.commonlib.entity.master.ItemMaster.ItemType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -52,14 +54,14 @@ public class ItemEstimation extends EntityBase {
 	/**
 	 * 品種区分
 	 */
-	@ApiModelProperty(value = "品種区分", required = false, position = 5, allowableValues = "range[0,255]")
-	private String itemType;
+	@ApiModelProperty(value = "品種区分", required = false, position = 5)
+	private ItemType itemType;
 
 	/**
 	 * 費用種別
 	 */
-	@ApiModelProperty(value = "費用種別", required = false, position = 6, allowableValues = "range[0,255]")
-	private String costType;
+	@ApiModelProperty(value = "費用種別", required = false, position = 6)
+	private CostType costType;
 
 	/**
 	 * 見積明細
