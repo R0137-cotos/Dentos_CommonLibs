@@ -1,7 +1,6 @@
 package jp.co.ricoh.cotos.commonlib.entity.master;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -11,9 +10,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -25,36 +21,6 @@ import lombok.Data;
 @Data
 @Table(name = "item_master")
 public class ItemMaster {
-
-	public enum ProductType {
-
-		基本, オプション;
-
-		@JsonValue
-		public String toValue() {
-			return this.name();
-		}
-
-		@JsonCreator
-		public static Enum<ProductType> fromValue(String name) {
-			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
-		}
-	}
-
-	public enum CostType {
-
-		初期費, 月額, 年額;
-
-		@JsonValue
-		public String toValue() {
-			return this.name();
-		}
-
-		@JsonCreator
-		public static Enum<CostType> fromValue(String name) {
-			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
-		}
-	}
 
 	@Id
 	@ApiModelProperty(value = "品種マスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
@@ -83,14 +49,14 @@ public class ItemMaster {
 	/**
 	 * 商品区分
 	 */
-	@ApiModelProperty(value = "商品区分", required = true, position = 5)
-	private ProductType productType;
+	@ApiModelProperty(value = "商品区分", required = true, position = 5, allowableValues = "range[0,255]")
+	private String productType;
 
 	/**
 	 * 費用種別
 	 */
-	@ApiModelProperty(value = "費用種別", required = true, position = 6)
-	private CostType costType;
+	@ApiModelProperty(value = "費用種別", required = true, position = 6, allowableValues = "range[0,255]")
+	private String costType;
 
 	/**
 	 * 仕切価格

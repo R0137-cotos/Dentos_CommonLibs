@@ -48,6 +48,18 @@ public class ItemContract extends EntityBase {
 	private String ricohItemCode;
 
 	/**
+	 * 品種区分
+	 */
+	@ApiModelProperty(value = "品種区分", required = false, position = 5, allowableValues = "range[0,255]")
+	private String itemType;
+
+	/**
+	 * 費用種別
+	 */
+	@ApiModelProperty(value = "費用種別", required = false, position = 6, allowableValues = "range[0,255]")
+	private String costType;
+
+	/**
 	 * 契約明細
 	 */
 	@OneToOne(optional = false)

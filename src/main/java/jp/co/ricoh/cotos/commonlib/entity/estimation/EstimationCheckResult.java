@@ -9,6 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModelProperty;
+import jp.co.ricoh.cotos.commonlib.entity.estimation.Estimation.LifecycleStatus;
 import lombok.Data;
 
 /**
@@ -30,6 +31,12 @@ public class EstimationCheckResult {
 	@JoinColumn(name = "estimation_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "見積", required = true, position = 2)
 	private Estimation estimation;
+
+	/**
+	 * 対象ライフサイクル状態
+	 */
+	@ApiModelProperty(value = "対象ライフサイクル状態", required = true, position = 3)
+	private LifecycleStatus targetLifecycleStatus;
 
 	/**
 	 * チェック事項コード
