@@ -9,15 +9,18 @@ import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
 import io.swagger.annotations.ApiModelProperty;
+import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 商材を表すMaster
  */
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "product_master")
-public class ProductMaster {
+public class ProductMaster extends EntityBaseMaster {
 
 	@Id
 	@ApiModelProperty(value = "商品マスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
@@ -74,7 +77,7 @@ public class ProductMaster {
 	@OneToMany(mappedBy = "productMaster")
 	@ApiModelProperty(value = "チェックリスト構成マスタ", required = false, position = 9)
 	private List<EstimationChecklistCompMaster> estimationChecklistCompMasterList;
-	
+
 	/**
 	 * 契約チェックリスト構成マスタ
 	 */

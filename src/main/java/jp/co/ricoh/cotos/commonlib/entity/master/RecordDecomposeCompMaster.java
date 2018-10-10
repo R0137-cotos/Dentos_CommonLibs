@@ -7,16 +7,19 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModelProperty;
+import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import jp.co.ricoh.cotos.commonlib.entity.EnumType.TargetContractType;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 計上分解構成マスタを表すEntity
  */
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "record_decompose_comp_master")
-public class RecordDecomposeCompMaster {
+public class RecordDecomposeCompMaster extends EntityBaseMaster {
 
 	@Id
 	@ApiModelProperty(value = "計上分解構成マスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")

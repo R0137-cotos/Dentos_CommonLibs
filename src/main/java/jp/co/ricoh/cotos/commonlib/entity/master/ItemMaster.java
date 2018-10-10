@@ -12,15 +12,18 @@ import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
 import io.swagger.annotations.ApiModelProperty;
+import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 品種を表すEntity
  */
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "item_master")
-public class ItemMaster {
+public class ItemMaster extends EntityBaseMaster {
 
 	@Id
 	@ApiModelProperty(value = "品種マスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")

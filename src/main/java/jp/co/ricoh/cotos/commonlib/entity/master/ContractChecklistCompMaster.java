@@ -9,15 +9,18 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModelProperty;
+import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 契約チェックリスト構成マスタを表すEntity
  */
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "contract_checklist_comp_master")
-public class ContractChecklistCompMaster {
+public class ContractChecklistCompMaster extends EntityBaseMaster {
 
 	public enum TargetContractType {
 

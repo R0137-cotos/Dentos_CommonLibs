@@ -13,9 +13,11 @@ import javax.persistence.Table;
 
 import org.springframework.http.HttpMethod;
 
+import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import jp.co.ricoh.cotos.commonlib.security.mom.MomAuthorityService.ActionDiv;
 import jp.co.ricoh.cotos.commonlib.security.mom.MomAuthorityService.AuthDiv;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * URL毎の権限種別を表したマスター
@@ -23,8 +25,9 @@ import lombok.Data;
 
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "url_auth_master")
-public class UrlAuthMaster {
+public class UrlAuthMaster extends EntityBaseMaster {
 
 	public enum Domain {
 		estimation, contract, arrangement, communication, master;

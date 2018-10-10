@@ -606,6 +606,8 @@ public class CotosSecurityTests {
 		Assert.assertEquals("正常に取得できること", 1, result.size());
 	}
 
+	// TODO 実装時にテストするようにする
+	@Ignore
 	@Test
 	@Transactional
 	public void 正常_スーパーユーザーマスターを取得できること() throws Exception {
