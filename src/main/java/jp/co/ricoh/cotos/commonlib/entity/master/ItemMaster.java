@@ -16,15 +16,18 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.swagger.annotations.ApiModelProperty;
+import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 品種を表すEntity
  */
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "item_master")
-public class ItemMaster {
+public class ItemMaster extends EntityBaseMaster {
 
 	public enum ProductType {
 

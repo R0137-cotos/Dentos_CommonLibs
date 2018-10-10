@@ -11,15 +11,18 @@ import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
 import io.swagger.annotations.ApiModelProperty;
+import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 計上分解マスタを表すEntity
  */
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "record_decompose_master")
-public class RecordDecomposeMaster {
+public class RecordDecomposeMaster extends EntityBaseMaster {
 
 	public enum RecordType {
 

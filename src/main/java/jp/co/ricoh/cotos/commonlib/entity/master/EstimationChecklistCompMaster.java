@@ -12,15 +12,18 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.swagger.annotations.ApiModelProperty;
+import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 見積チェックリスト構成マスタを表すEntity
  */
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "estimation_checklist_comp_master")
-public class EstimationChecklistCompMaster {
+public class EstimationChecklistCompMaster extends EntityBaseMaster {
 
 	public enum TargetEstimationType {
 
