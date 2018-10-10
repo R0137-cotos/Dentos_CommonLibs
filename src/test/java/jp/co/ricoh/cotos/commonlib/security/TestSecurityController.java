@@ -22,7 +22,7 @@ public class TestSecurityController {
 	public String get() {
 		CotosAuthenticationDetails userInfo = (CotosAuthenticationDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-		return userInfo.getSingleUserId() + "," + userInfo.getMomEmployeeId() + "," + userInfo.getApplicationKey();
+		return userInfo.getSingleUserId() + "," + userInfo.getMomEmployeeId() + "," + userInfo.getOrigin();
 	}
 
 	@RequestMapping(method = RequestMethod.POST, path = "/test")
@@ -30,7 +30,7 @@ public class TestSecurityController {
 	public String post() {
 		CotosAuthenticationDetails userInfo = (CotosAuthenticationDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-		return userInfo.getSingleUserId() + "," + userInfo.getMomEmployeeId() + "," + userInfo.getApplicationKey();
+		return userInfo.getSingleUserId() + "," + userInfo.getMomEmployeeId() + "," + userInfo.getOrigin();
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, path = "/test")
@@ -38,7 +38,7 @@ public class TestSecurityController {
 	public String put() {
 		CotosAuthenticationDetails userInfo = (CotosAuthenticationDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-		return userInfo.getSingleUserId() + "," + userInfo.getMomEmployeeId() + "," + userInfo.getApplicationKey();
+		return userInfo.getSingleUserId() + "," + userInfo.getMomEmployeeId() + "," + userInfo.getOrigin();
 	}
 
 	@GetMapping(path = "/swagger-ui.html")
