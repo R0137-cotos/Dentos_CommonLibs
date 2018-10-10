@@ -10,8 +10,17 @@ import lombok.Data;
 public class AppProperties {
 
 	@Autowired
-	FileProperties fileProperties;
-	
+	DatasourceProperties datasourceProperties;
+
 	@Autowired
-	SearchProperties searchproperties;
+	FileProperties fileProperties;
+
+	@Autowired
+	SearchProperties searchProperties;
+
+	@Autowired
+	AuthProperties authProperties;
+
+	@Autowired
+	RemoteMomProperties remoteMomProperties;
 }
