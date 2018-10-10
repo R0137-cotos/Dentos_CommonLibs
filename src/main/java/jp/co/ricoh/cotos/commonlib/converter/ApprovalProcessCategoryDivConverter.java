@@ -3,7 +3,7 @@ package jp.co.ricoh.cotos.commonlib.converter;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
-import jp.co.ricoh.cotos.commonlib.entity.estimation.EstimationApprovalResult.ApprovalProcessCategory;
+import jp.co.ricoh.cotos.commonlib.entity.EnumType.ApprovalProcessCategory;
 
 @Converter(autoApply = true)
 public class ApprovalProcessCategoryDivConverter implements AttributeConverter<ApprovalProcessCategory, String> {
@@ -14,7 +14,7 @@ public class ApprovalProcessCategoryDivConverter implements AttributeConverter<A
 		case 承認依頼:
 		case 承認依頼差戻:
 		case 承認:
-			return approverProcessCategory.toValue();
+			return approverProcessCategory.toString();
 		default:
 			throw new IllegalArgumentException("Unknown value: " + approverProcessCategory);
 		}

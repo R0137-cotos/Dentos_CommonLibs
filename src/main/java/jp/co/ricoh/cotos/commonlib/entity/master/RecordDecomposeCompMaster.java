@@ -1,18 +1,14 @@
 package jp.co.ricoh.cotos.commonlib.entity.master;
 
-import java.util.Arrays;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
+import jp.co.ricoh.cotos.commonlib.entity.EnumType.TargetContractType;
 import lombok.Data;
 
 /**
@@ -22,36 +18,6 @@ import lombok.Data;
 @Data
 @Table(name = "record_decompose_comp_master")
 public class RecordDecomposeCompMaster extends EntityBaseMaster {
-
-	public enum TargetContractType {
-
-		共通, 新規, プラン変更, 情報変更;
-
-		@JsonValue
-		public String toValue() {
-			return this.name();
-		}
-
-		@JsonCreator
-		public static Enum<TargetContractType> fromValue(String name) {
-			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
-		}
-	}
-
-	public enum DisengagementFlg {
-
-		通常時("0"), 解約時("1");
-
-		private String value;
-
-		DisengagementFlg(final String value) {
-			this.value = value;
-		}
-
-		public String toValue() {
-			return this.value;
-		}
-	}
 
 	@Id
 	@ApiModelProperty(value = "計上分解構成マスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
@@ -75,7 +41,7 @@ public class RecordDecomposeCompMaster extends EntityBaseMaster {
 	 * 解約フラグ
 	 */
 	@ApiModelProperty(value = "解約フラグ", required = true, position = 4)
-	private DisengagementFlg disengagementFlg;
+	private int disengagementFlg;
 
 	/**
 	 * 計上分解マスタ

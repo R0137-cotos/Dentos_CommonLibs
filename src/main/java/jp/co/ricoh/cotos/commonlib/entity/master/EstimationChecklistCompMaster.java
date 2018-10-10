@@ -25,16 +25,21 @@ public class EstimationChecklistCompMaster extends EntityBaseMaster {
 
 	public enum TargetEstimationType {
 
-		共通, 新規, プラン変更;
+		共通("1"), 新規("2"), プラン変更("3");
 
-		@JsonValue
-		public String toValue() {
-			return this.name();
+		private final String text;
+
+		private TargetEstimationType(final String text) {
+			this.text = text;
 		}
 
-		@JsonCreator
-		public static Enum<TargetEstimationType> fromValue(String name) {
-			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
+		@Override
+		public String toString() {
+			return this.text;
+		}
+
+		public static TargetEstimationType fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
 

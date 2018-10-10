@@ -16,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
+import jp.co.ricoh.cotos.commonlib.entity.EnumType.DetailStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -50,6 +51,12 @@ public class EstimationDetail extends EntityBase {
 	@JoinColumn(name = "estimation_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "見積", required = true, position = 2)
 	private Estimation estimation;
+
+	/**
+	 * 状態
+	 */
+	@ApiModelProperty(value = "状態", required = true, position = 3)
+	private DetailStatus status;
 
 	/**
 	 * 数量
