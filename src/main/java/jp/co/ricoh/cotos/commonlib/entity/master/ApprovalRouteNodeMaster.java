@@ -1,5 +1,7 @@
 package jp.co.ricoh.cotos.commonlib.entity.master;
 
+import java.util.Arrays;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -7,28 +9,36 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModelProperty;
+import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 承認ルートノードマスタ
  */
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "approval_route_node_master")
-public class ApprovalRouteNodeMaster {
+public class ApprovalRouteNodeMaster extends EntityBaseMaster {
 
 	public enum AuthorizerClass {
 
 		メイン承認者("1"), 代理承認者("2");
 
-		private String value;
+		private final String text;
 
-		AuthorizerClass(final String value) {
-			this.value = value;
+		private AuthorizerClass(final String text) {
+			this.text = text;
 		}
 
-		public String toValue() {
-			return this.value;
+		@Override
+		public String toString() {
+			return this.text;
+		}
+
+		public static AuthorizerClass fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
 
@@ -36,14 +46,19 @@ public class ApprovalRouteNodeMaster {
 
 		直属上司指定("1"), 組織絶対階層指定("2"), 組織直接指定("3"), ユーザー直接指定("4");
 
-		private String value;
+		private final String text;
 
-		AuthorizerDeriveMethodDiv(final String value) {
-			this.value = value;
+		private AuthorizerDeriveMethodDiv(final String text) {
+			this.text = text;
 		}
 
-		public String toValue() {
-			return this.value;
+		@Override
+		public String toString() {
+			return this.text;
+		}
+
+		public static AuthorizerDeriveMethodDiv fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
 

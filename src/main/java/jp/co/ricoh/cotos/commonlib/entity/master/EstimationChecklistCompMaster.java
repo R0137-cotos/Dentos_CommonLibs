@@ -12,28 +12,36 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.swagger.annotations.ApiModelProperty;
+import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 見積チェックリスト構成マスタを表すEntity
  */
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "estimation_checklist_comp_master")
-public class EstimationChecklistCompMaster {
+public class EstimationChecklistCompMaster extends EntityBaseMaster {
 
 	public enum TargetEstimationType {
 
-		共通, 新規, プラン変更;
+		共通("1"), 新規("2"), プラン変更("3");
 
-		@JsonValue
-		public String toValue() {
-			return this.name();
+		private final String text;
+
+		private TargetEstimationType(final String text) {
+			this.text = text;
 		}
 
-		@JsonCreator
-		public static Enum<TargetEstimationType> fromValue(String name) {
-			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
+		@Override
+		public String toString() {
+			return this.text;
+		}
+
+		public static TargetEstimationType fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
 

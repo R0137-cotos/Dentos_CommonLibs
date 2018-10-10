@@ -53,7 +53,11 @@
 |47|認証・認可・ユーザー権限取得のエンティティ・リポジトリーを追加|
 |48|各エンティティの一意IdからreadOnly属性削除および承認実績にreadOnly属性付与|
 |49|MvEmployeeMasterRepositoryを追加|
-|50|ERDに合わせてエンティティ名を修正
+|50|ERDに合わせてエンティティ名を修正|
+|51|ENUM定義見直し|
+|52|EntityBase,EntityBaseMaster継承関係追加|
+
+|54|ENUM定義見直し チケット1967||
 
 # バージョン採番方法
 

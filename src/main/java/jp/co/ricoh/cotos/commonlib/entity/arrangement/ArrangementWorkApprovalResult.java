@@ -1,6 +1,5 @@
 package jp.co.ricoh.cotos.commonlib.entity.arrangement;
 
-import java.util.Arrays;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -9,11 +8,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
+import jp.co.ricoh.cotos.commonlib.entity.EnumType.ApprovalProcessCategory;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -25,21 +22,6 @@ import lombok.EqualsAndHashCode;
 @Data
 @Table(name = "arrangement_work_approval_result")
 public class ArrangementWorkApprovalResult extends EntityBase {
-
-	public enum ApprovalProcessCategory {
-
-		承認依頼, 承認依頼差戻, 承認;
-
-		@JsonValue
-		public String toValue() {
-			return this.name();
-		}
-
-		@JsonCreator
-		public static Enum<ApprovalProcessCategory> fromValue(String name) {
-			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
-		}
-	}
 
 	@Id
 	@ApiModelProperty(value = "手配業務承認実績ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")

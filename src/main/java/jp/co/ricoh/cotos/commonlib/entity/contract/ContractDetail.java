@@ -16,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
+import jp.co.ricoh.cotos.commonlib.entity.EnumType.DetailStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -53,6 +54,12 @@ public class ContractDetail extends EntityBase {
 	@JoinColumn(name = "contract_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "契約", required = true, position = 2)
 	private Contract contract;
+
+	/**
+	 * 状態
+	 */
+	@ApiModelProperty(value = "状態", required = true, position = 3)
+	private DetailStatus status;
 
 	/**
 	 * 数量

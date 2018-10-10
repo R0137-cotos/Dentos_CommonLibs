@@ -3,6 +3,8 @@ package jp.co.ricoh.cotos.commonlib.entity.contract;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,6 +23,11 @@ import lombok.EqualsAndHashCode;
 @Data
 @Table(name = "contract_operation_log")
 public class ContractOperationLog extends EntityBase {
+
+	public enum OperationLogType {
+		売上開始指示, 売上計上開始, 売上計上停止, キャンセル手続き, キャンセル中止, 解約手続き, 解約手続き中止, 変更キャンセル, 変更確定, 新規作成, プラン変更, 確定, 情報変更, 新規作成_情報変更, 更新, 業務依頼, 業務処理完了,
+	}
+
 	@Id
 	@ApiModelProperty(value = "操作履歴ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
@@ -37,7 +44,8 @@ public class ContractOperationLog extends EntityBase {
 	 * 操作内容
 	 */
 	@ApiModelProperty(value = "操作内容", required = true, position = 3, allowableValues = "range[0,1000]")
-	private String operation;
+	@Enumerated(EnumType.STRING)
+	private OperationLogType operation;
 
 	/**
 	 * 操作者MoM社員ID

@@ -1,19 +1,19 @@
 package jp.co.ricoh.cotos.commonlib.entity.master;
 
-import java.io.Serializable;
 import java.util.Arrays;
 
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.springframework.http.HttpMethod;
 
+import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * URL毎の権限種別を表したマスター
@@ -21,15 +21,31 @@ import lombok.Data;
 
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "url_auth_master")
-public class UrlAuthMaster {
+public class UrlAuthMaster extends EntityBaseMaster {
 
 	public enum Domain {
-		estimation, contract, arrangement, communication;
+		estimation, contract, arrangement, communication, master;
 	}
 
 	public enum ParameterType {
-		path, query, json;
+		none("0"), path("1"), query("2"), json("3");
+
+		private final String text;
+
+		private ParameterType(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		public String toString() {
+			return this.text;
+		}
+
+		public static ParameterType fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+		}
 	}
 
 	public enum ActionDiv {
@@ -71,47 +87,55 @@ public class UrlAuthMaster {
 	}
 
 	public enum AccessType {
-		参照, 編集, 承認;
+		なし("0"), 参照("1"), 編集("2"), 承認("3");
+
+		private final String text;
+
+		private AccessType(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		public String toString() {
+			return this.text;
+		}
+
+		public static AccessType fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+		}
 	}
 
-	@Embeddable
-	@Data
-	public static class Id implements Serializable {
+	@Id
+	/**
+	 * URL権限マスタID
+	 */
+	private long id;
 
-		/**
-		 * シリアルバージョンID
-		 */
-		private static final long serialVersionUID = 1L;
+	/**
+	 * URLパターン
+	 */
+	@Column(nullable = false)
+	private String urlPattern;
 
-		/**
-		 * URLパターン
-		 */
-		@Column(nullable = false)
-		private String urlPattern;
+	/**
+	 * HTTPメソッド
+	 */
+	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
+	private HttpMethod method;
 
-		/**
-		 * HTTPメソッド
-		 */
-		@Column(nullable = false)
-		@Enumerated(EnumType.STRING)
-		private HttpMethod method;
-
-		/**
-		 * アプリケーション
-		 */
-		@Column(nullable = false)
-		@Enumerated(EnumType.STRING)
-		private Domain domain;
-	}
-
-	@EmbeddedId
-	private Id id;
+	/**
+	 * ドメイン
+	 */
+	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
+	private Domain domain;
 
 	/**
 	 * 認可処理実施要否
 	 */
 	@Column(nullable = false)
-	private boolean requireAuthorize;
+	private int requireAuthorize;
 
 	/**
 	 * 外部参照ドメイン
@@ -124,13 +148,12 @@ public class UrlAuthMaster {
 	 * DBデータ存在有無
 	 */
 	@Column(nullable = false)
-	private boolean existsDb;
+	private int existsDb;
 
 	/**
 	 * パラメータータイプ
 	 */
 	@Column(nullable = false)
-	@Enumerated(EnumType.STRING)
 	private ParameterType paramType;
 
 	/**
@@ -155,7 +178,6 @@ public class UrlAuthMaster {
 	 * 参照種別
 	 */
 	@Column(nullable = true)
-	@Enumerated(EnumType.STRING)
 	private AccessType accessType;
 
 	/**

@@ -1,51 +1,21 @@
 package jp.co.ricoh.cotos.commonlib.entity.master;
 
-import java.util.Arrays;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-
 import io.swagger.annotations.ApiModelProperty;
+import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
+import jp.co.ricoh.cotos.commonlib.entity.EnumType.ProcessCategory;
+import jp.co.ricoh.cotos.commonlib.entity.EnumType.ServiceCategory;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "mail_template_master")
-public class MailTemplateMaster {
-
-	public enum ServiceCategory {
-
-		見積, 契約, 手配;
-
-		@JsonValue
-		public String toValue() {
-			return this.name();
-		}
-
-		@JsonCreator
-		public static Enum<ServiceCategory> fromValue(String name) {
-			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
-		}
-	}
-
-	public enum ProcessCategory {
-
-		承認依頼, 承認依頼差戻, 承認, 作業依頼, 作業依頼差戻, 作業完了;
-
-		@JsonValue
-		public String toValue() {
-			return this.name();
-		}
-
-		@JsonCreator
-		public static Enum<ProcessCategory> fromValue(String name) {
-			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
-		}
-	}
+public class MailTemplateMaster extends EntityBaseMaster {
 
 	@Id
 	@ApiModelProperty(value = "メールテンプレートID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
