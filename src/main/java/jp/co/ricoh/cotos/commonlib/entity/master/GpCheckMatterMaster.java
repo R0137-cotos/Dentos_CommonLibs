@@ -10,6 +10,7 @@ import javax.persistence.Table;
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 汎用チェック事項マスタを表すEntity
@@ -17,6 +18,7 @@ import lombok.Data;
 
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "gp_check_matter_master")
 public class GpCheckMatterMaster extends EntityBaseMaster {
 
@@ -49,7 +51,7 @@ public class GpCheckMatterMaster extends EntityBaseMaster {
 	@OneToMany(mappedBy = "gpCheckMatterMaster")
 	@ApiModelProperty(value = "チェックリスト構成マスタ", required = false, position = 5)
 	private List<EstimationChecklistCompMaster> estimationChecklistCompMasterList;
-	
+
 	/**
 	 * 契約チェックリスト構成マスタ
 	 */

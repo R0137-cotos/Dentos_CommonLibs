@@ -10,12 +10,14 @@ import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import jp.co.ricoh.cotos.commonlib.entity.EnumType.TargetContractType;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 手配業務構成マスタを表すEntity
  */
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "arrangement_work_comp_master")
 public class ArrangementWorkCompMaster extends EntityBaseMaster {
 

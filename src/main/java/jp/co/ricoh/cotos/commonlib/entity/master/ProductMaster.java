@@ -11,12 +11,14 @@ import javax.validation.constraints.Pattern;
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 商材を表すMaster
  */
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "product_master")
 public class ProductMaster extends EntityBaseMaster {
 

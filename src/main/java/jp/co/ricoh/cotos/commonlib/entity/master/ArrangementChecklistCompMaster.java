@@ -9,12 +9,14 @@ import javax.persistence.Table;
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 手配チェックリスト構成マスタを表すEntity
  */
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "arrangement_checklist_comp_master")
 public class ArrangementChecklistCompMaster extends EntityBaseMaster {
 

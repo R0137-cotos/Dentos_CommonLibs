@@ -9,9 +9,11 @@ import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import jp.co.ricoh.cotos.commonlib.entity.EnumType.ProcessCategory;
 import jp.co.ricoh.cotos.commonlib.entity.EnumType.ServiceCategory;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "mail_template_master")
 public class MailTemplateMaster extends EntityBaseMaster {
 

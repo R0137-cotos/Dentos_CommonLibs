@@ -11,12 +11,14 @@ import javax.persistence.Table;
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 承認ルートノードマスタ
  */
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "approval_route_node_master")
 public class ApprovalRouteNodeMaster extends EntityBaseMaster {
 

@@ -12,12 +12,14 @@ import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import jp.co.ricoh.cotos.commonlib.entity.contract.Contract.LifecycleStatus;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 契約チェック結果を表すEntity
  */
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "contract_check_result")
 public class ContractCheckResult extends EntityBase {
 
