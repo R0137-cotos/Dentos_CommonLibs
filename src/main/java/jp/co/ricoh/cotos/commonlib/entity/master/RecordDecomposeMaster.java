@@ -10,9 +10,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -26,16 +23,21 @@ public class RecordDecomposeMaster {
 
 	public enum RecordType {
 
-		原価振替, 割戻;
+		原価振替("1"), 割戻("2");
 
-		@JsonValue
-		public String toValue() {
-			return this.name();
+		private final String text;
+
+		private RecordType(final String text) {
+			this.text = text;
 		}
 
-		@JsonCreator
-		public static Enum<RecordType> fromValue(String name) {
-			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
+		@Override
+		public String toString() {
+			return this.text;
+		}
+
+		public static RecordType fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
 

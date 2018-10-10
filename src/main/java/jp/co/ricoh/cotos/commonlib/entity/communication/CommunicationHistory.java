@@ -1,6 +1,5 @@
 package jp.co.ricoh.cotos.commonlib.entity.communication;
 
-import java.util.Arrays;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -8,11 +7,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
+import jp.co.ricoh.cotos.commonlib.entity.EnumType.ApprovalTargetType;
+import jp.co.ricoh.cotos.commonlib.entity.EnumType.ProcessCategory;
+import jp.co.ricoh.cotos.commonlib.entity.EnumType.ServiceCategory;
+import jp.co.ricoh.cotos.commonlib.entity.EnumType.WorkflowType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -25,75 +25,15 @@ import lombok.EqualsAndHashCode;
 @Table(name = "communication_history")
 public class CommunicationHistory extends EntityBase {
 
-	public enum CommunicationCategory {
-
-		見積, 契約, 手配;
-
-		@JsonValue
-		public String toValue() {
-			return this.name();
-		}
-
-		@JsonCreator
-		public static Enum<CommunicationCategory> fromValue(String name) {
-			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
-		}
-	}
-
-	public enum ProcessCategory {
-
-		承認依頼, 承認依頼取消, 承認依頼差戻, 承認, 作業依頼, 作業完了;
-
-		@JsonValue
-		public String toValue() {
-			return this.name();
-		}
-
-		@JsonCreator
-		public static Enum<ProcessCategory> fromValue(String name) {
-			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
-		}
-	}
-
-	public enum WorkflowType {
-
-		承認フロー, タスクフロー;
-
-		@JsonValue
-		public String toValue() {
-			return this.name();
-		}
-
-		@JsonCreator
-		public static Enum<WorkflowType> fromValue(String name) {
-			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
-		}
-	}
-
-	public enum ApprovalTargetType {
-
-		新規, 情報変更, プラン変更, キャンセル, 解約, 作業完了報告, 非承認;
-
-		@JsonValue
-		public String toValue() {
-			return this.name();
-		}
-
-		@JsonCreator
-		public static Enum<ApprovalTargetType> fromValue(String name) {
-			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
-		}
-	}
-
 	@Id
 	@ApiModelProperty(value = "ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
 	/**
-	 * コミュニケーションカテゴリー
+	 * サービスカテゴリ
 	 */
-	@ApiModelProperty(value = "コミュニケーションカテゴリー", required = true, position = 2)
-	private CommunicationCategory communicationCategory;
+	@ApiModelProperty(value = "サービスカテゴリ", required = true, position = 2)
+	private ServiceCategory communicationCategory;
 
 	/**
 	 * 処理カテゴリー

@@ -15,7 +15,7 @@ public class ApproverDeriveMethodDivConverter implements AttributeConverter<Auth
 		case 組織絶対階層指定:
 		case 組織直接指定:
 		case ユーザー直接指定:
-			return approverDeriveMethodDiv.toValue();
+			return approverDeriveMethodDiv.toString();
 		default:
 			throw new IllegalArgumentException("Unknown value: " + approverDeriveMethodDiv);
 		}
