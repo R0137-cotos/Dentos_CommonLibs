@@ -1,12 +1,14 @@
 package jp.co.ricoh.cotos.commonlib.entity.master;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.springframework.http.HttpMethod;
@@ -105,31 +107,38 @@ public class UrlAuthMaster extends EntityBaseMaster {
 		}
 	}
 
-	@Id
-	/**
-	 * URL権限マスタID
-	 */
-	private long id;
+	@Embeddable
+	@Data
+	public static class Id implements Serializable {
 
-	/**
-	 * URLパターン
-	 */
-	@Column(nullable = false)
-	private String urlPattern;
+		/**
+		 * シリアルバージョンID
+		 */
+		private static final long serialVersionUID = 1L;
 
-	/**
-	 * HTTPメソッド
-	 */
-	@Column(nullable = false)
-	@Enumerated(EnumType.STRING)
-	private HttpMethod method;
+		/**
+		 * URLパターン
+		 */
+		@Column(nullable = false)
+		private String urlPattern;
 
-	/**
-	 * ドメイン
-	 */
-	@Column(nullable = false)
-	@Enumerated(EnumType.STRING)
-	private Domain domain;
+		/**
+		 * HTTPメソッド
+		 */
+		@Column(nullable = false)
+		@Enumerated(EnumType.STRING)
+		private HttpMethod method;
+
+		/**
+		 * ドメイン
+		 */
+		@Column(nullable = false)
+		@Enumerated(EnumType.STRING)
+		private Domain domain;
+	}
+
+	@EmbeddedId
+	private Id id;
 
 	/**
 	 * 認可処理実施要否

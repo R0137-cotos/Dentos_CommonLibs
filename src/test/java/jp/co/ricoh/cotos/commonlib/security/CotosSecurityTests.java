@@ -38,15 +38,11 @@ import jp.co.ricoh.cotos.commonlib.entity.master.MvEmployeeMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.SuperUserMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.AccessType;
-<<<<<<< HEAD
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.ActionDiv;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.AuthDiv;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.Domain;
-=======
->>>>>>> feature/cotos-phase_2nd
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.Id;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.ParameterType;
-import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.ServiceCategory;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvEmployeeMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.SuperUserMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.UrlAuthMasterRepository;
@@ -594,7 +590,7 @@ public class CotosSecurityTests {
 		Id urlAuthMasterId = new Id();
 		urlAuthMasterId.setUrlPattern("/test");
 		urlAuthMasterId.setMethod(HttpMethod.GET);
-		urlAuthMasterId.setServiceCategory(ServiceCategory.見積);
+		urlAuthMasterId.setDomain(Domain.estimation);
 		urlAuthMaster.setId(urlAuthMasterId);
 
 		// 必須項目設定
@@ -605,7 +601,7 @@ public class CotosSecurityTests {
 		urlAuthMasterRepository.save(urlAuthMaster);
 
 		// データ取得
-		List<UrlAuthMaster> result = urlAuthMasterRepository.findByIdMethodAndIdServiceCategoryOrderByIdUrlPatternAsc(urlAuthMasterId.getMethod(), urlAuthMasterId.getServiceCategory());
+		List<UrlAuthMaster> result = urlAuthMasterRepository.findByIdMethodAndIdDomainOrderByIdUrlPatternAsc(urlAuthMasterId.getMethod(), urlAuthMasterId.getDomain());
 
 		Assert.assertEquals("正常に取得できること", 1, result.size());
 	}
