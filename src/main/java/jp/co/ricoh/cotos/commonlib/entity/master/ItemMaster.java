@@ -28,7 +28,7 @@ public class ItemMaster extends EntityBaseMaster {
 
 	public enum ItemType {
 
-		なし("1"), 基本("2"), オプション("3");
+		なし("0"), 基本("1"), オプション("2");
 
 		private final String text;
 
