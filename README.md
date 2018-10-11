@@ -57,7 +57,8 @@
 |51|ENUM定義見直し|
 |52|EntityBase,EntityBaseMaster継承関係追加|
 
-|54|ENUM定義見直し チケット1967||
+
+|55|ENUM定義見直し チケット1967|
 
 # バージョン採番方法
 
