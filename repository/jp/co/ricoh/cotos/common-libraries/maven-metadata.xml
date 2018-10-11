@@ -56,8 +56,15 @@
       <version>0.0.49</version>
       <version>0.0.50</version>
       <version>0.0.51</version>
+<<<<<<< HEAD
       <version>0.0.53</version>
     </versions>
     <lastUpdated>20181010083556</lastUpdated>
+=======
+      <version>0.0.52</version>
+      <version>0.0.53</version>
+    </versions>
+    <lastUpdated>20181010101142</lastUpdated>
+>>>>>>> feature/cotos-phase_2nd
   </versioning>
 </metadata>

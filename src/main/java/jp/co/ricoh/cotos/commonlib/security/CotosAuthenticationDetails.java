@@ -21,13 +21,13 @@ public class CotosAuthenticationDetails implements UserDetails {
 	private String singleUserId;
 
 	@Getter
-	private String applicationKey;
+	private String origin;
 
-	public CotosAuthenticationDetails(String momEmployeeId, String singleUserId, String applicationKey) {
+	public CotosAuthenticationDetails(String momEmployeeId, String singleUserId, String origin) {
 		super();
 		this.momEmployeeId = momEmployeeId;
 		this.singleUserId = singleUserId;
-		this.applicationKey = applicationKey;
+		this.origin = origin;
 	}
 
 	@Override
