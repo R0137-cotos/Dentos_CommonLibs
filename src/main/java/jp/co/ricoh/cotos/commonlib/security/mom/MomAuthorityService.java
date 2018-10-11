@@ -19,6 +19,8 @@ import jp.co.ricoh.cotos.commonlib.dto.parameter.AuthorityJudgeParameter;
 import jp.co.ricoh.cotos.commonlib.dto.result.StringResult;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvEmployeeMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.AccessType;
+import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.ActionDiv;
+import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.AuthDiv;
 import jp.co.ricoh.cotos.commonlib.entity.master.VKbMaster;
 import jp.co.ricoh.cotos.commonlib.util.DatasourceProperties;
 import jp.co.ricoh.cotos.commonlib.util.RemoteMomProperties;
@@ -41,34 +43,6 @@ public class MomAuthorityService {
 
 	@Autowired
 	DBUtil dbUtil;
-
-	public enum ActionDiv {
-		照会("01"), 登録("02"), 更新("03"), 削除("04"), 印刷("05"), ダウンロード("06"), 集計("07");
-
-		private final String value;
-
-		private ActionDiv(final String value) {
-			this.value = value;
-		}
-
-		public String toValue() {
-			return this.value;
-		}
-	}
-
-	public enum AuthDiv {
-		見積_契約_手配("2200"), 請求_計上_本部("2210"), システム管理("2220");
-
-		private final String value;
-
-		private AuthDiv(final String value) {
-			this.value = value;
-		}
-
-		public String toValue() {
-			return this.value;
-		}
-	}
 
 	public enum AuthLevel {
 		不可("00"), 自顧客("10"), 配下("30"), 自社("50"), 地域("70"), 東西("80"), すべて("90");
@@ -117,8 +91,8 @@ public class MomAuthorityService {
 
 		// 引数のアクション区分、権限情報からっ権限レベルを取得
 		List<AuthorityInfoActionDto> authorityInfoActionDtoList = Arrays.asList(authorityInfoActionDtos);
-		List<AuthorityInfoLevelDto> authorityInfoLevelDtoList = Arrays.asList(authorityInfoActionDtoList.stream().filter(authorityInfoActionDto -> actionDiv.toValue().equals(authorityInfoActionDto.getActionId())).findFirst().get().getLevelList());
-		String targetAuthLevel = authorityInfoLevelDtoList.stream().filter(authorityInfoLevelDto -> authDiv.value.equals(authorityInfoLevelDto.getInfoId())).findFirst().get().getLevelId();
+		List<AuthorityInfoLevelDto> authorityInfoLevelDtoList = Arrays.asList(authorityInfoActionDtoList.stream().filter(authorityInfoActionDto -> actionDiv.toString().equals(authorityInfoActionDto.getActionId())).findFirst().get().getLevelList());
+		String targetAuthLevel = authorityInfoLevelDtoList.stream().filter(authorityInfoLevelDto -> authDiv.toString().equals(authorityInfoLevelDto.getInfoId())).findFirst().get().getLevelId();
 
 		// 取得した権限レベルを返却する
 		return Arrays.asList(AuthLevel.values()).stream().filter(authLevel -> authLevel.value.equals(targetAuthLevel)).findFirst().get();

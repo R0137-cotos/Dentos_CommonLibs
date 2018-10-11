@@ -10,8 +10,8 @@ import javax.persistence.Table;
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.AccessType;
-import jp.co.ricoh.cotos.commonlib.security.mom.MomAuthorityService.ActionDiv;
-import jp.co.ricoh.cotos.commonlib.security.mom.MomAuthorityService.AuthDiv;
+import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.ActionDiv;
+import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.AuthDiv;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

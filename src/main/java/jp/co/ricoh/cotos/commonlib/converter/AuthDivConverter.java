@@ -3,7 +3,8 @@ package jp.co.ricoh.cotos.commonlib.converter;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
-import jp.co.ricoh.cotos.commonlib.security.mom.MomAuthorityService.AuthDiv;
+import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.AuthDiv;
+
 
 @Converter(autoApply = true)
 public class AuthDivConverter implements AttributeConverter<AuthDiv, String> {
@@ -15,10 +16,11 @@ public class AuthDivConverter implements AttributeConverter<AuthDiv, String> {
 			return null;
 
 		switch (authDiv) {
+		case なし:
 		case 見積_契約_手配:
 		case 請求_計上_本部:
 		case システム管理:
-			return authDiv.toValue();
+			return authDiv.toString();
 		default:
 			throw new IllegalArgumentException("Unknown value: " + authDiv);
 		}
@@ -31,6 +33,8 @@ public class AuthDivConverter implements AttributeConverter<AuthDiv, String> {
 			return null;
 
 		switch (value) {
+		case "0":
+			return AuthDiv.なし;
 		case "2200":
 			return AuthDiv.見積_契約_手配;
 		case "2210":

@@ -3,7 +3,7 @@ package jp.co.ricoh.cotos.commonlib.converter;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
-import jp.co.ricoh.cotos.commonlib.security.mom.MomAuthorityService.ActionDiv;
+import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.ActionDiv;
 
 @Converter(autoApply = true)
 public class ActionDivConverter implements AttributeConverter<ActionDiv, String> {
@@ -15,6 +15,7 @@ public class ActionDivConverter implements AttributeConverter<ActionDiv, String>
 			return null;
 
 		switch (actionDiv) {
+		case なし:
 		case 照会:
 		case 登録:
 		case 更新:
@@ -22,7 +23,7 @@ public class ActionDivConverter implements AttributeConverter<ActionDiv, String>
 		case 印刷:
 		case ダウンロード:
 		case 集計:
-			return actionDiv.toValue();
+			return actionDiv.toString();
 		default:
 			throw new IllegalArgumentException("Unknown value: " + actionDiv);
 		}
@@ -35,6 +36,8 @@ public class ActionDivConverter implements AttributeConverter<ActionDiv, String>
 			return null;
 
 		switch (value) {
+		case "00":
+			return ActionDiv.なし;
 		case "01":
 			return ActionDiv.照会;
 		case "02":

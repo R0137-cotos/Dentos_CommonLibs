@@ -14,8 +14,6 @@ import javax.persistence.Table;
 import org.springframework.http.HttpMethod;
 
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
-import jp.co.ricoh.cotos.commonlib.security.mom.MomAuthorityService.ActionDiv;
-import jp.co.ricoh.cotos.commonlib.security.mom.MomAuthorityService.AuthDiv;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -33,28 +31,8 @@ public class UrlAuthMaster extends EntityBaseMaster {
 		estimation, contract, arrangement, communication, master;
 	}
 
-	public enum ServiceCategory {
-
-		見積("1"), 契約("2"), 手配("3"), コミュニケーション("4"), マスタ("5");
-
-		private final String text;
-
-		private ServiceCategory(final String text) {
-			this.text = text;
-		}
-
-		@Override
-		public String toString() {
-			return this.text;
-		}
-
-		public static ServiceCategory fromString(String string) {
-			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
-		}
-	}
-
 	public enum ParameterType {
-		path("1"), query("2"), json("3");
+		none("0"), path("1"), query("2"), json("3");
 
 		private final String text;
 
@@ -72,8 +50,46 @@ public class UrlAuthMaster extends EntityBaseMaster {
 		}
 	}
 
+	public enum ActionDiv {
+		なし("00"), 照会("01"), 登録("02"), 更新("03"), 削除("04"), 印刷("05"), ダウンロード("06"), 集計("07");
+
+		private final String text;
+
+		private ActionDiv(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		public String toString() {
+			return this.text;
+		}
+
+		public static ActionDiv fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+		}
+	}
+
+	public enum AuthDiv {
+		なし("0"), 見積_契約_手配("2200"), 請求_計上_本部("2210"), システム管理("2220");
+
+		private final String text;
+
+		private AuthDiv(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		public String toString() {
+			return this.text;
+		}
+
+		public static AuthDiv fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+		}
+	}
+
 	public enum AccessType {
-		参照("1"), 編集("2"), 承認("3");
+		なし("0"), 参照("1"), 編集("2"), 承認("3");
 
 		private final String text;
 
@@ -114,9 +130,11 @@ public class UrlAuthMaster extends EntityBaseMaster {
 		private HttpMethod method;
 
 		/**
-		 * サービスカテゴリ
+		 * ドメイン
 		 */
-		private ServiceCategory serviceCategory;
+		@Column(nullable = false)
+		@Enumerated(EnumType.STRING)
+		private Domain domain;
 	}
 
 	@EmbeddedId
@@ -145,7 +163,6 @@ public class UrlAuthMaster extends EntityBaseMaster {
 	 * パラメータータイプ
 	 */
 	@Column(nullable = false)
-	@Enumerated(EnumType.STRING)
 	private ParameterType paramType;
 
 	/**
@@ -170,7 +187,6 @@ public class UrlAuthMaster extends EntityBaseMaster {
 	 * 参照種別
 	 */
 	@Column(nullable = true)
-	@Enumerated(EnumType.STRING)
 	private AccessType accessType;
 
 	/**
