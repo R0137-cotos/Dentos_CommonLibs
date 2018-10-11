@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import jp.co.ricoh.cotos.commonlib.db.DBUtil;
@@ -23,6 +22,8 @@ import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.AccessType;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.ActionDiv;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.AuthDiv;
 import jp.co.ricoh.cotos.commonlib.entity.master.VKbMaster;
+import jp.co.ricoh.cotos.commonlib.util.DatasourceProperties;
+import jp.co.ricoh.cotos.commonlib.util.RemoteMomProperties;
 import jp.co.ricoh.jmo.cache.AuthoritySearch;
 import jp.co.ricoh.jmo.dto.cache.AuthorityInfoActionDto;
 import jp.co.ricoh.jmo.dto.cache.AuthorityInfoLevelDto;
@@ -34,16 +35,11 @@ import jp.co.ricoh.jmo.service.KengenServiceServiceLocator;
 @Component
 public class MomAuthorityService {
 
-	@Value("${remote.momauthority.url}")
-	private String momServiceUrl;
-	@Value("${remote.momauthority.relatedid}")
-	private String momRelatedId;
-	@Value("${spring.datasource.url}")
-	private String dbUrl;
-	@Value("${spring.datasource.username}")
-	private String dbUser;
-	@Value("${spring.datasource.password}")
-	private String dbPassword;
+	@Autowired
+	RemoteMomProperties remoteMomProperties;
+
+	@Autowired
+	DatasourceProperties datasourceProperties;
 
 	@Autowired
 	DBUtil dbUtil;
@@ -68,14 +64,14 @@ public class MomAuthorityService {
 	public AuthLevel searchMomAuthority(String singleUserId, ActionDiv actionDiv, AuthDiv authDiv) throws Exception {
 
 		// MoM権限取得用のコネクションを作成
-		Connection connection = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+		Connection connection = DriverManager.getConnection(datasourceProperties.getUrl(), datasourceProperties.getUsername(), datasourceProperties.getPassword());
 
 		// 権限情報取得用サービスを初期化
 		KengenServiceServiceLocator kengenServiceLocator = new KengenServiceServiceLocator();
-		kengenServiceLocator.setKengenServiceEndpointAddress(momServiceUrl);
+		kengenServiceLocator.setKengenServiceEndpointAddress(remoteMomProperties.getUrl());
 
 		// MoM提供モジュールから社員情報の取得
-		EmployeeInfoDto[] employeeInfoDtos = kengenServiceLocator.getKengenService().getContactEmpFromSUID(singleUserId, Calendar.getInstance(), false, momRelatedId);
+		EmployeeInfoDto[] employeeInfoDtos = kengenServiceLocator.getKengenService().getContactEmpFromSUID(singleUserId, Calendar.getInstance(), false, remoteMomProperties.getRelatedid());
 		if (employeeInfoDtos.length != 1) {
 			return null;
 		}
@@ -88,7 +84,7 @@ public class MomAuthorityService {
 
 		// MoM提供モジュールから権限情報の取得
 		AuthoritySearch authoritySearch = new AuthoritySearch();
-		AuthorityInfoActionDto[] authorityInfoActionDtos = authoritySearch.getAuthSumFromEmpId((String[]) classify.toArray(new String[0]), momRelatedId, connection);
+		AuthorityInfoActionDto[] authorityInfoActionDtos = authoritySearch.getAuthSumFromEmpId((String[]) classify.toArray(new String[0]), remoteMomProperties.getRelatedid(), connection);
 		if (authorityInfoActionDtos == null || authorityInfoActionDtos.length == 0) {
 			return null;
 		}

@@ -15,9 +15,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import jp.co.ricoh.cotos.commonlib.entity.master.ProductMaster;
@@ -36,31 +33,41 @@ public class Estimation extends EntityBase {
 
 	public enum LifecycleStatus {
 
-		作成中, 作成完了, 受注, 破棄, 失注;
+		作成中("1"), 作成完了("2"), 受注("3"), 失注("4"), 破棄("5");
 
-		@JsonValue
-		public String toValue() {
-			return this.name();
+		private final String text;
+
+		private LifecycleStatus(final String text) {
+			this.text = text;
 		}
 
-		@JsonCreator
-		public static Enum<LifecycleStatus> fromValue(String name) {
-			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
+		@Override
+		public String toString() {
+			return this.text;
+		}
+
+		public static LifecycleStatus fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
 
 	public enum WorkflowStatus {
 
-		作成中, 業務依頼中, 業務処理完了, 承認中, 承認済, 顧客提示済;
+		作成中("1"), 業務依頼中("2"), 業務処理完了("3"), 承認依頼中("4"), 承認済("5"), 顧客提示済("6");
 
-		@JsonValue
-		public String toValue() {
-			return this.name();
+		private final String text;
+
+		private WorkflowStatus(final String text) {
+			this.text = text;
 		}
 
-		@JsonCreator
-		public static Enum<WorkflowStatus> fromValue(String name) {
-			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
+		@Override
+		public String toString() {
+			return this.text;
+		}
+
+		public static WorkflowStatus fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
 
@@ -81,21 +88,6 @@ public class Estimation extends EntityBase {
 
 		public static EstimationDiv fromString(String string) {
 			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
-		}
-	}
-
-	public enum CommercialFlowDiv {
-
-		直売, 代売_接点店, 代売_母店_接点店;// TODO ERD、汎用コード値資料に記載がないため正しいか確認
-
-		@JsonValue
-		public String toValue() {
-			return this.name();
-		}
-
-		@JsonCreator
-		public static Enum<CommercialFlowDiv> fromValue(String name) {
-			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
 		}
 	}
 
@@ -163,7 +155,6 @@ public class Estimation extends EntityBase {
 	/**
 	 * 見積作成元システム区分
 	 */
-	// TODO 区分値不明
 	@ApiModelProperty(value = "見積作成元システム区分", required = false, position = 11)
 	private String estimatedSystemDiv;
 
@@ -195,7 +186,7 @@ public class Estimation extends EntityBase {
 	 * 商流区分
 	 */
 	@ApiModelProperty(value = "商流区分", required = false, position = 16)
-	private CommercialFlowDiv commercialFlowDiv;
+	private String commercialFlowDiv;
 
 	/**
 	 * 発行書式

@@ -11,9 +11,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import jp.co.ricoh.cotos.commonlib.entity.master.ArrangementWorkTypeMaster;
@@ -31,16 +28,21 @@ public class ArrangementWork extends EntityBase {
 
 	public enum WorkflowStatus {
 
-		受付待ち, 作業中, 作業完了報告, 承認中, 作業完了;
+		受付待ち("1"), 作業中("2"), 作業完了報告("3"), 承認依頼中("4"), 作業完了("5");
 
-		@JsonValue
-		public String toValue() {
-			return this.name();
+		private final String text;
+
+		private WorkflowStatus(final String text) {
+			this.text = text;
 		}
 
-		@JsonCreator
-		public static Enum<WorkflowStatus> fromValue(String name) {
-			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
+		@Override
+		public String toString() {
+			return this.text;
+		}
+
+		public static WorkflowStatus fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
 
