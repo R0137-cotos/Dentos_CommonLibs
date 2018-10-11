@@ -12,9 +12,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import lombok.Data;
@@ -29,33 +26,43 @@ import lombok.EqualsAndHashCode;
 @Table(name = "item_master")
 public class ItemMaster extends EntityBaseMaster {
 
-	public enum ProductType {
+	public enum ItemType {
 
-		基本, オプション;
+		なし("0"), 基本("1"), オプション("2");
 
-		@JsonValue
-		public String toValue() {
-			return this.name();
+		private final String text;
+
+		private ItemType(final String text) {
+			this.text = text;
 		}
 
-		@JsonCreator
-		public static Enum<ProductType> fromValue(String name) {
-			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
+		@Override
+		public String toString() {
+			return this.text;
+		}
+
+		public static ItemType fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
 
 	public enum CostType {
 
-		初期費, 月額, 年額;
+		初期費("1"), 月額("2"), 年額("3");
 
-		@JsonValue
-		public String toValue() {
-			return this.name();
+		private final String text;
+
+		private CostType(final String text) {
+			this.text = text;
 		}
 
-		@JsonCreator
-		public static Enum<CostType> fromValue(String name) {
-			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
+		@Override
+		public String toString() {
+			return this.text;
+		}
+
+		public static CostType fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
 
@@ -84,10 +91,10 @@ public class ItemMaster extends EntityBaseMaster {
 	private String ricohItemCode;
 
 	/**
-	 * 商品区分
+	 * 品種区分
 	 */
-	@ApiModelProperty(value = "商品区分", required = true, position = 5)
-	private ProductType productType;
+	@ApiModelProperty(value = "品種区分", required = true, position = 5)
+	private ItemType itemType;
 
 	/**
 	 * 費用種別

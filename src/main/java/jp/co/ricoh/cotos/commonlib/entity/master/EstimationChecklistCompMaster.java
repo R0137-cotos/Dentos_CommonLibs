@@ -8,9 +8,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import lombok.Data;
@@ -47,16 +44,21 @@ public class EstimationChecklistCompMaster extends EntityBaseMaster {
 
 	public enum TargetLifecycleStatus {
 
-		作成中;
+		作成中("1");
 
-		@JsonValue
-		public String toValue() {
-			return this.name();
+		private final String text;
+
+		private TargetLifecycleStatus(final String text) {
+			this.text = text;
 		}
 
-		@JsonCreator
-		public static Enum<TargetLifecycleStatus> fromValue(String name) {
-			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
+		@Override
+		public String toString() {
+			return this.text;
+		}
+
+		public static TargetLifecycleStatus fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
 
