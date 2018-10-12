@@ -24,13 +24,13 @@ public class EntityBaseMaster {
 	private Date createdAt;
 
 	@ApiModelProperty(value = "登録者", required = true, position = 102, allowableValues = "range[0,255]", readOnly = true)
-	private String createdUser;
+	private String createdUserId;
 
 	@ApiModelProperty(value = "更新日時", required = true, position = 103, readOnly = true)
 	private Date updatedAt;
 
 	@ApiModelProperty(value = "更新者", required = true, position = 104, allowableValues = "range[0,255]", readOnly = true)
-	private String updatedUser;
+	private String updatedUserId;
 
 	@Version
 	@ApiModelProperty(value = "version", required = true, position = 105, allowableValues = "range[0,9999999999999999999]")
@@ -39,14 +39,14 @@ public class EntityBaseMaster {
 	@PrePersist
 	public void prePersist() {
 		CotosAuthenticationDetails userInfo = (CotosAuthenticationDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		this.createdUser = userInfo.getMomEmployeeId();
+		this.createdUserId = userInfo.getMomEmployeeId();
 		this.createdAt = new Date();
 	}
 
 	@PreUpdate
 	public void preUpdate() {
 		CotosAuthenticationDetails userInfo = (CotosAuthenticationDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		this.updatedUser = userInfo.getMomEmployeeId();
+		this.updatedUserId = userInfo.getMomEmployeeId();
 		this.updatedAt = new Date();
 	}
 }
