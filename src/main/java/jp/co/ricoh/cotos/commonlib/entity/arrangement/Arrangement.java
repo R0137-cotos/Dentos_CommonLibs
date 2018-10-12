@@ -8,9 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import lombok.Data;
@@ -26,16 +23,21 @@ import lombok.EqualsAndHashCode;
 public class Arrangement extends EntityBase {
 	public enum WorkflowStatus {
 
-		手配中, 手配完了;
+		手配中("1"), 手配完了("2");
 
-		@JsonValue
-		public String toValue() {
-			return this.name();
+		private final String text;
+
+		private WorkflowStatus(final String text) {
+			this.text = text;
 		}
 
-		@JsonCreator
-		public static Enum<WorkflowStatus> fromValue(String name) {
-			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
+		@Override
+		public String toString() {
+			return this.text;
+		}
+
+		public static WorkflowStatus fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
 

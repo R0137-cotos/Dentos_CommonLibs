@@ -14,9 +14,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import jp.co.ricoh.cotos.commonlib.entity.master.ProductMaster;
@@ -55,46 +52,41 @@ public class Contract extends EntityBase {
 
 	public enum LifecycleStatus {
 
-		作成中, 作成完了, キャンセル手続き中, 破棄, 予定日待ち, 締結中, 解約手続き中, 解約予定日待ち, 解約, 旧契約;
+		作成中("1"), 作成完了("2"), キャンセル手続き中("3"), 破棄("4"), 予定日待ち("5"), 締結中("6"), 解約手続き中("7"), 解約予定日待ち("8"), 解約("9"), 旧契約("10");
 
-		@JsonValue
-		public String toValue() {
-			return this.name();
+		private final String text;
+
+		private LifecycleStatus(final String text) {
+			this.text = text;
 		}
 
-		@JsonCreator
-		public static Enum<LifecycleStatus> fromValue(String name) {
-			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
+		@Override
+		public String toString() {
+			return this.text;
+		}
+
+		public static LifecycleStatus fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
 
 	public enum WorkflowStatus {
 
-		作成中, 承認中, 承認済, 業務依頼中, 業務処理完了, キャンセル申請中, 売上可能, 解約申請中;
+		作成中("1"), 承認依頼中("2"), 承認済("3"), 業務依頼中("4"), 業務処理完了("5"), キャンセル申請中("6"), 売上可能("7"), 解約申請中("8");
 
-		@JsonValue
-		public String toValue() {
-			return this.name();
+		private final String text;
+
+		private WorkflowStatus(final String text) {
+			this.text = text;
 		}
 
-		@JsonCreator
-		public static Enum<WorkflowStatus> fromValue(String name) {
-			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
-		}
-	}
-
-	public enum CommercialFlowDiv {
-
-		直売, 代売_接点店, 代売_母店_接点店; //TODO ERD、汎用コード値資料に記載がないため正しいか確認
-
-		@JsonValue
-		public String toValue() {
-			return this.name();
+		@Override
+		public String toString() {
+			return this.text;
 		}
 
-		@JsonCreator
-		public static Enum<CommercialFlowDiv> fromValue(String name) {
-			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
+		public static WorkflowStatus fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
 
@@ -247,8 +239,8 @@ public class Contract extends EntityBase {
 	/**
 	 * 商流区分
 	 */
-	@ApiModelProperty(value = "商流区分", required = false, position = 24)
-	private CommercialFlowDiv commercialFlowDiv;
+	@ApiModelProperty(value = "商流区分", required = false, position = 24, allowableValues = "range[0,255]")
+	private String commercialFlowDiv;
 
 	/**
 	 * 発行書式
