@@ -28,7 +28,7 @@ public class ArrangementChecklistCompMaster extends EntityBaseMaster {
 	 * 手配業務タイプマスタ
 	 */
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "arrange_work_type_master_id", referencedColumnName = "id")
+	@JoinColumn(name = "arrangement_work_type_master_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "手配業務タイプマスタ", required = true, position = 2)
 	private ArrangementWorkTypeMaster arrangementWorkTypeMaster;
 

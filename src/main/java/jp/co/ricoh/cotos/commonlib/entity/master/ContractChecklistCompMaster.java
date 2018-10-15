@@ -10,6 +10,7 @@ import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
+import jp.co.ricoh.cotos.commonlib.entity.EnumType.TargetContractType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -21,26 +22,6 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "contract_checklist_comp_master")
 public class ContractChecklistCompMaster extends EntityBaseMaster {
-
-	public enum TargetContractType {
-
-		共通("1"), 新規("2"), プラン変更("3"), 情報変更("4");
-
-		private final String text;
-
-		private TargetContractType(final String text) {
-			this.text = text;
-		}
-
-		@Override
-		public String toString() {
-			return this.text;
-		}
-
-		public static TargetContractType fromString(String string) {
-			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
-		}
-	}
 
 	public enum TargetLifecycleStatus {
 
@@ -63,14 +44,14 @@ public class ContractChecklistCompMaster extends EntityBaseMaster {
 	}
 
 	@Id
-	@ApiModelProperty(value = "チェックリスト構成マスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "契約チェックリスト構成マスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
 	/**
 	 * 商品
 	 */
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "product_id", referencedColumnName = "id")
+	@JoinColumn(name = "product_master_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "商品マスタ", required = true, position = 2)
 	private ProductMaster productMaster;
 

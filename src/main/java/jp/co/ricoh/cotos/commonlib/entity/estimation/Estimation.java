@@ -17,7 +17,7 @@ import javax.validation.constraints.Pattern;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
-import jp.co.ricoh.cotos.commonlib.entity.master.ProductMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.ProductGrpMaster;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -108,12 +108,12 @@ public class Estimation extends EntityBase {
 	private WorkflowStatus workflowStatus;
 
 	/**
-	 * 商品マスタ
+	 * 商品グループマスタ
 	 */
 	@ManyToOne
-	@JoinColumn(name = "product_id", referencedColumnName = "id")
-	@ApiModelProperty(value = "商品マスタ", required = true, position = 4)
-	private ProductMaster productMaster;
+	@JoinColumn(name = "product_grp_master_id", referencedColumnName = "id")
+	@ApiModelProperty(value = "商品グループマスタ", required = true, position = 4)
+	private ProductGrpMaster productGrpMaster;
 
 	/**
 	 * 案件番号

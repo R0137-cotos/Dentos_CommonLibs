@@ -13,12 +13,13 @@ import javax.persistence.Table;
 
 import org.springframework.http.HttpMethod;
 
+import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * URL毎の権限種別を表したマスター
+ * URL権限マスタ
  */
 
 @Entity
@@ -120,6 +121,7 @@ public class UrlAuthMaster extends EntityBaseMaster {
 		 * URLパターン
 		 */
 		@Column(nullable = false)
+		@ApiModelProperty(value = "URLパターン", required = true, position = 1)
 		private String urlPattern;
 
 		/**
@@ -127,6 +129,7 @@ public class UrlAuthMaster extends EntityBaseMaster {
 		 */
 		@Column(nullable = false)
 		@Enumerated(EnumType.STRING)
+		@ApiModelProperty(value = "HTTPメソッド", required = true, position = 2)
 		private HttpMethod method;
 
 		/**
@@ -134,6 +137,7 @@ public class UrlAuthMaster extends EntityBaseMaster {
 		 */
 		@Column(nullable = false)
 		@Enumerated(EnumType.STRING)
+		@ApiModelProperty(value = "システムドメイン", required = true, position = 3)
 		private Domain domain;
 	}
 
@@ -144,6 +148,7 @@ public class UrlAuthMaster extends EntityBaseMaster {
 	 * 認可処理実施要否
 	 */
 	@Column(nullable = false)
+	@ApiModelProperty(value = "認可処理実施要否", required = true, position = 4 , allowableValues = "range[0,1]" )
 	private int requireAuthorize;
 
 	/**
@@ -151,47 +156,55 @@ public class UrlAuthMaster extends EntityBaseMaster {
 	 */
 	@Column(nullable = true)
 	@Enumerated(EnumType.STRING)
+	@ApiModelProperty(value = "外部参照ドメイン", required = false, position = 5  )
 	private Domain externalRefDomain;
 
 	/**
 	 * DBデータ存在有無
 	 */
 	@Column(nullable = false)
+	@ApiModelProperty(value = "DBデータ存在有無", required = true, position = 6 , allowableValues = "range[0,1]" )
 	private int existsDb;
 
 	/**
 	 * パラメータータイプ
 	 */
 	@Column(nullable = false)
+	@ApiModelProperty(value = "パラメータータイプ", required = true, position = 7 )
 	private ParameterType paramType;
 
 	/**
 	 * パラメーターキー
 	 */
 	@Column(nullable = true)
+	@ApiModelProperty(value = "パラメーターキー", required = false, position = 8 )
 	private String paramKey;
 
 	/**
 	 * アクション区分
 	 */
 	@Column(nullable = true)
+	@ApiModelProperty(value = "アクション区分", required = true, position = 9 )
 	private ActionDiv actionDiv;
 
 	/**
 	 * 権限区分
 	 */
 	@Column(nullable = true)
+	@ApiModelProperty(value = "権限区分", required = true, position = 10 )
 	private AuthDiv authDiv;
 
 	/**
 	 * 参照種別
 	 */
 	@Column(nullable = true)
+	@ApiModelProperty(value = "参照種別", required = true, position = 11 )
 	private AccessType accessType;
 
 	/**
 	 * 処理概要
 	 */
 	@Column(nullable = true)
+	@ApiModelProperty(value = "処理概要", required = true, position = 12 )
 	private String description;
 }

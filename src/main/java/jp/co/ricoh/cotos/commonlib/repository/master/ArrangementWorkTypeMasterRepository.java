@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import jp.co.ricoh.cotos.commonlib.entity.master.ArrangementWorkTypeMaster;
 
 @Repository
-public interface ArrangementWorkTypeMasterRepository extends CrudRepository<ArrangementWorkTypeMaster, String> {
+public interface ArrangementWorkTypeMasterRepository extends CrudRepository<ArrangementWorkTypeMaster, Long> {
 	public List<ArrangementWorkTypeMaster> findAllByOrderByIdAsc();
 }

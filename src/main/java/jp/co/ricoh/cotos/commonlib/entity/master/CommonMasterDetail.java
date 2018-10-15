@@ -33,7 +33,7 @@ public class CommonMasterDetail extends EntityBaseMaster {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "common_master_detail_seq")
 	@SequenceGenerator(name = "common_master_detail_seq", sequenceName = "common_master_detail_seq", allocationSize = 1)
-	@ApiModelProperty(value = "汎用マスタ明細ID", required = true, position = 1)
+	@ApiModelProperty(value = "汎用マスタ明細ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
 	/**
@@ -42,7 +42,7 @@ public class CommonMasterDetail extends EntityBaseMaster {
 	@ManyToOne
 	@JoinColumn(name = "common_master_id")
 	@JsonIgnore
-	@ApiModelProperty(value = "汎用マスタ", required = false, position = 2)
+	@ApiModelProperty(value = "汎用マスタ", required = true, position = 2)
 	private CommonMaster commonMaster;
 
 	/**
@@ -50,16 +50,16 @@ public class CommonMasterDetail extends EntityBaseMaster {
 	 */
 	@Column(nullable = false)
 	@ApiModelProperty(value = "コード値", required = true, position = 3, allowableValues = "range[0,255]")
-	private String cdVal;
+	private String codeValue;
 
 	/**
 	 * コード表示値
 	 */
 	@ApiModelProperty(value = "コード表示値", required = false, position = 4, allowableValues = "range[0,255]")
-	private String displayVal;
+	private String displayValue;
 
 	/**
-	 * コード説明
+	 * コード内容値
 	 */
 	@ApiModelProperty(value = "コード内容値", required = false, position = 5, allowableValues = "range[0,255]")
 	private String description;
@@ -109,8 +109,14 @@ public class CommonMasterDetail extends EntityBaseMaster {
 	private Date availablePeriodTo;
 
 	/**
-	 * ソート順
+	 * 表示順
 	 */
-	@ApiModelProperty(value = "ソート順", required = false, position = 13)
-	private Integer sortNumber;
+	@ApiModelProperty(value = "表示順", required = false, position = 13, allowableValues = "range[0,999]")
+	private Integer displayOrder;
+
+	/**
+	 * 削除フラグ
+	 */
+	@ApiModelProperty(value = "削除フラグ", required = false, position = 14, allowableValues = "range[0,1]")
+	private String deleteFlg;
 }

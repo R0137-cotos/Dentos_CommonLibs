@@ -35,7 +35,7 @@ public class ApprovalSearch {
 
 	/**
 	 * 承認ルート特定 ※見積承認ルート取得の場合:(estimation, null) 契約承認ルート取得の場合:(null, contract)
-	 * 
+	 *
 	 * @param estimation
 	 *            見積情報
 	 * @param contract
@@ -49,9 +49,9 @@ public class ApprovalSearch {
 		// 承認ルートグループIDから承認ルートグループを特定
 		long approvalRouteGrpId = 0L;
 		if (null != estimation) {
-			approvalRouteGrpId = estimation.getProductMaster().getEstimationApprovalRouteGrpId();
+			approvalRouteGrpId = estimation.getProductGrpMaster().getEstimationApprovalRouteGrpMaster().getId();
 		} else {
-			approvalRouteGrpId = contract.getProductMaster().getContractApprovalRouteGrpId();
+			approvalRouteGrpId = contract.getProductGrpMaster().getContractApprovalRouteGrpMaster().getId();
 		}
 		ApprovalRouteGrpMaster approvalRouteGrpMaster = approvalRouteGrpMasterRepository.findOne(approvalRouteGrpId);
 
@@ -73,7 +73,7 @@ public class ApprovalSearch {
 
 	/**
 	 * ルート条件式を実行
-	 * 
+	 *
 	 * @param estimation
 	 *            条件式の引数
 	 * @param contract
@@ -103,7 +103,7 @@ public class ApprovalSearch {
 
 	/**
 	 * JavaScriptのテンプレートファイルを読み込み、置換文字列を置換
-	 * 
+	 *
 	 * @param jsFilePathOnClasspath
 	 *            テンプレートファイルパス
 	 * @param formula

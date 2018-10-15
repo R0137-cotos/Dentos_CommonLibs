@@ -22,13 +22,13 @@ import lombok.EqualsAndHashCode;
 @Table(name = "approval_route_node_master")
 public class ApprovalRouteNodeMaster extends EntityBaseMaster {
 
-	public enum AuthorizerClass {
+	public enum ApproverClass {
 
 		メイン承認者("1"), 代理承認者("2");
 
 		private final String text;
 
-		private AuthorizerClass(final String text) {
+		private ApproverClass(final String text) {
 			this.text = text;
 		}
 
@@ -37,18 +37,18 @@ public class ApprovalRouteNodeMaster extends EntityBaseMaster {
 			return this.text;
 		}
 
-		public static AuthorizerClass fromString(String string) {
+		public static ApproverClass fromString(String string) {
 			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
 
-	public enum AuthorizerDeriveMethodDiv {
+	public enum ApproverDeriveMethodDiv {
 
 		直属上司指定("1"), 組織絶対階層指定("2"), 組織直接指定("3"), ユーザー直接指定("4");
 
 		private final String text;
 
-		private AuthorizerDeriveMethodDiv(final String text) {
+		private ApproverDeriveMethodDiv(final String text) {
 			this.text = text;
 		}
 
@@ -57,7 +57,7 @@ public class ApprovalRouteNodeMaster extends EntityBaseMaster {
 			return this.text;
 		}
 
-		public static AuthorizerDeriveMethodDiv fromString(String string) {
+		public static ApproverDeriveMethodDiv fromString(String string) {
 			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
@@ -84,13 +84,13 @@ public class ApprovalRouteNodeMaster extends EntityBaseMaster {
 	 * 承認者種別
 	 */
 	@ApiModelProperty(value = "承認者種別", required = true, position = 4)
-	private AuthorizerClass authorizerClass;
+	private ApproverClass approverClass;
 
 	/**
 	 * 承認者導出方式区分
 	 */
 	@ApiModelProperty(value = "承認者導出方式区分", required = true, position = 5)
-	private AuthorizerDeriveMethodDiv approverDeriveMethodDiv;
+	private ApproverDeriveMethodDiv approverDeriveMethodDiv;
 
 	/**
 	 * 組織階層レベル

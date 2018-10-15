@@ -2,6 +2,7 @@ package jp.co.ricoh.cotos.commonlib.entity.master;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -74,15 +75,15 @@ public class ItemMaster extends EntityBaseMaster {
 	 * 商品マスタ
 	 */
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "product_id", referencedColumnName = "id")
-	@ApiModelProperty(value = "商品マスタ", required = true, position = 2)
+	@JoinColumn(name = "product_master_id", referencedColumnName = "id")
+	@ApiModelProperty(value = "商品マスタ", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
 	private ProductMaster productMaster;
 
 	/**
 	 * 品種名
 	 */
 	@ApiModelProperty(value = "品種名", required = true, position = 3, allowableValues = "range[0,255]")
-	private String name;
+	private String itemName;
 
 	/**
 	 * リコー品種コード
@@ -113,15 +114,13 @@ public class ItemMaster extends EntityBaseMaster {
 	 * 積上げ可能期間（開始日）
 	 */
 	@ApiModelProperty(value = "積上げ可能期間（開始日）", required = true, position = 8, allowableValues = "range[0,19]")
-	@Pattern(regexp = "YYYY-MM-DD HH:mm:ss")
-	private String effectiveFrom;
+	private Date effectiveFrom;
 
 	/**
 	 * 積上げ可能期間（終了日）
 	 */
 	@ApiModelProperty(value = "積上げ可能期間（終了日）", required = true, position = 9, allowableValues = "range[0,19]")
-	@Pattern(regexp = "YYYY-MM-DD HH:mm:ss")
-	private String effectiveTo;
+	private Date effectiveTo;
 
 	/**
 	 * 計上分解構成マスタ

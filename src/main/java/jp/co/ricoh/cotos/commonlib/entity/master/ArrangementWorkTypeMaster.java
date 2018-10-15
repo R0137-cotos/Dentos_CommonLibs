@@ -31,7 +31,7 @@ public class ArrangementWorkTypeMaster extends EntityBaseMaster {
 	 * 手配業務タイプ名
 	 */
 	@ApiModelProperty(value = "手配業務タイプ名", required = true, position = 2, allowableValues = "range[0,255]")
-	private String name;;
+	private String arrangementWorkName;
 
 	/**
 	 * 説明
@@ -40,11 +40,11 @@ public class ArrangementWorkTypeMaster extends EntityBaseMaster {
 	private String description;
 
 	/**
-	 * 手配承認ルートグループ
+	 * 承認ルートグループマスタ
 	 */
 	@ManyToOne
-	@JoinColumn(name = "arrange_approval_route_grp_id", referencedColumnName = "id")
-	@ApiModelProperty(value = "品種マスタ", required = false, position = 4)
+	@JoinColumn(name = "arrangement_approval_route_grp_id", referencedColumnName = "id")
+	@ApiModelProperty(value = "承認ルートグループマスタ", required = false, position = 4)
 	private ApprovalRouteGrpMaster approvalRouteGrpMaster;
 
 	/**

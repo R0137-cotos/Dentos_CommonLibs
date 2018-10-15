@@ -21,8 +21,11 @@ import lombok.EqualsAndHashCode;
 @Table(name = "arrangement_work_comp_master")
 public class ArrangementWorkCompMaster extends EntityBaseMaster {
 
+	/**
+	 * 手配業務構成マスタID
+	 */
 	@Id
-	@ApiModelProperty(value = "手配業務マスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "手配業務構成マスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
 	/**
@@ -49,7 +52,7 @@ public class ArrangementWorkCompMaster extends EntityBaseMaster {
 	 * 手配業務タイプマスタ
 	 */
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "arrange_work_type_master_id", referencedColumnName = "id")
+	@JoinColumn(name = "arrangement_work_type_master_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "手配業務タイプマスタ", required = true, position = 5)
 	private ArrangementWorkTypeMaster arrangementWorkTypeMaster;
 

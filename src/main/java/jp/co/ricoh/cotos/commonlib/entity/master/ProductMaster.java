@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Pattern;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
@@ -14,7 +13,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * 商材を表すMaster
+ * 商品マスタ
  */
 @Entity
 @Data
@@ -27,62 +26,43 @@ public class ProductMaster extends EntityBaseMaster {
 	private long id;
 
 	/**
-	 * 見積承認ルートグループID
-	 */
-	@ApiModelProperty(value = "見積承認ルートグループID", required = false, position = 2, allowableValues = "range[0,9999999999999999999]")
-	private Long estimationApprovalRouteGrpId;
-
-	/**
-	 * 契約承認ルートグループID
-	 */
-	@ApiModelProperty(value = "契約承認ルートグループID", required = false, position = 3, allowableValues = "range[0,9999999999999999999]")
-	private Long contractApprovalRouteGrpId;
-
-	/**
 	 * 商品名
 	 */
-	@ApiModelProperty(value = "商品名", required = true, position = 4, allowableValues = "range[0,255]")
-	private String name;
+	@ApiModelProperty(value = "商品名", required = true, position = 2, allowableValues = "range[0,255]")
+	private String productName;
 
 	/**
 	 * 代表品種マスタID
 	 */
-	@ApiModelProperty(value = "代表品種マスタID", required = true, position = 5, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "代表品種マスタID", required = true, position = 3, allowableValues = "range[0,9999999999999999999]")
 	private long repItemMasterId;
 
 	/**
-	 * 積上げ可能期間（開始日）
+	 * 商品構成マスタ
 	 */
-	@ApiModelProperty(value = "積上げ可能期間（開始日）", required = true, position = 6, allowableValues = "range[0,19]")
-	@Pattern(regexp = "YYYY-MM-DD HH:mm:ss")
-	private String effectiveFrom;
-
-	/**
-	 * 積上げ可能期間（終了日）
-	 */
-	@ApiModelProperty(value = "積上げ可能期間（終了日）", required = true, position = 7, allowableValues = "range[0,19]")
-	@Pattern(regexp = "YYYY-MM-DD HH:mm:ss")
-	private String effectiveTo;
+	@OneToMany(mappedBy = "productMaster")
+	@ApiModelProperty(value = "商品構成マスタ", required = false, position = 4)
+	private List<ProductCompMaster> productCompMasterList;
 
 	/**
 	 * 品種マスタ
 	 */
 	@OneToMany(mappedBy = "productMaster")
-	@ApiModelProperty(value = "品種マスタ", required = true, position = 8)
+	@ApiModelProperty(value = "品種マスタ", required = true, position = 5)
 	private List<ItemMaster> itemMasterList;
 
 	/**
 	 * 見積チェックリスト構成マスタ
 	 */
 	@OneToMany(mappedBy = "productMaster")
-	@ApiModelProperty(value = "チェックリスト構成マスタ", required = false, position = 9)
+	@ApiModelProperty(value = "チェックリスト構成マスタ", required = false, position = 6)
 	private List<EstimationChecklistCompMaster> estimationChecklistCompMasterList;
 
 	/**
 	 * 契約チェックリスト構成マスタ
 	 */
 	@OneToMany(mappedBy = "productMaster")
-	@ApiModelProperty(value = "チェックリスト構成マスタ", required = false, position = 9)
+	@ApiModelProperty(value = "チェックリスト構成マスタ", required = false, position = 7)
 	private List<ContractChecklistCompMaster> contractChecklistCompMasterList;
 
 }

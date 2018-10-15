@@ -56,7 +56,7 @@ public class RecordDecomposeCompMaster extends EntityBaseMaster {
 	/**
 	 * 明細番号
 	 */
-	@ApiModelProperty(value = "明細番号", required = true, position = 6)
+	@ApiModelProperty(value = "明細番号", required = true, position = 6, allowableValues = "range[0,999]")
 	private int seqNumber;
 
 }

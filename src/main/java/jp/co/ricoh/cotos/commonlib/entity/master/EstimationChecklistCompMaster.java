@@ -63,14 +63,14 @@ public class EstimationChecklistCompMaster extends EntityBaseMaster {
 	}
 
 	@Id
-	@ApiModelProperty(value = "チェックリスト構成マスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "見積チェックリスト構成マスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
 	/**
-	 * 商品
+	 * 商品マスタ
 	 */
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "product_id", referencedColumnName = "id")
+	@JoinColumn(name = "product_master_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "商品マスタ", required = true, position = 2)
 	private ProductMaster productMaster;
 

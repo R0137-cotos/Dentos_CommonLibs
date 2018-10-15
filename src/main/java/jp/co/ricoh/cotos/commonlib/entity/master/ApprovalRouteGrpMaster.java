@@ -41,7 +41,28 @@ public class ApprovalRouteGrpMaster extends EntityBaseMaster {
 	 * 承認ルートマスタ
 	 */
 	@OneToMany(mappedBy = "approvalRouteGrpMaster")
-	@ApiModelProperty(value = "承認ルートマスタ", required = true, position = 4, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "承認ルートマスタ", required = true, position = 4)
 	private List<ApprovalRouteMaster> approvalRouteMasterList;
+
+	/**
+	 * 商品グループマスタ（見積承認）
+	 */
+	@OneToMany(mappedBy = "estimationApprovalRouteGrpMaster")
+	@ApiModelProperty(value = "商品グループマスタ（見積承認）", required = true, position = 5)
+	private List<ProductGrpMaster> productGrpMasterList;
+
+	/**
+	 * 商品グループマスタ（契約承認）
+	 */
+	@OneToMany(mappedBy = "contractApprovalRouteGrpMaster")
+	@ApiModelProperty(value = "商品グループマスタ（契約承認）", required = true, position = 6)
+	private List<ProductGrpMaster> contractProductGrpMasterList;
+
+	/**
+	 * 手配業務タイプマスタ
+	 */
+	@OneToMany(mappedBy = "approvalRouteGrpMaster")
+	@ApiModelProperty(value = "手配業務タイプマスタ", required = true, position = 7)
+	private List<ArrangementWorkTypeMaster> arrangementWorkTypeMasterList;
 
 }
