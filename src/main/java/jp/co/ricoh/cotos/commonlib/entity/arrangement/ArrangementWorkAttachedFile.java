@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -52,7 +53,7 @@ public class ArrangementWorkAttachedFile extends EntityBase {
 	 * コメント
 	 */
 	@ApiModelProperty(value = "コメント", required = false, position = 5, allowableValues = "range[0,1000]")
-	private String comment;
+	private String attachedComment;
 
 	/**
 	 * 添付者MoM社員ID
@@ -78,5 +79,10 @@ public class ArrangementWorkAttachedFile extends EntityBase {
 	@ApiModelProperty(value = "添付日時", required = true, position = 9, readOnly = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date attachedAt;
+	
+	@PrePersist
+	public void prePersist() {
+		this.attachedAt = new Date();
+	}
 
 }

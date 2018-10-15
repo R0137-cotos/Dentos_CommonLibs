@@ -18,6 +18,7 @@ import javax.validation.constraints.Pattern;
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import jp.co.ricoh.cotos.commonlib.entity.master.ProductMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.ProductGrpMaster;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -71,13 +72,13 @@ public class Estimation extends EntityBase {
 		}
 	}
 
-	public enum EstimationDiv {
+	public enum EstimationType {
 
 		新規("1"), プラン変更("2");
 
 		private final String text;
 
-		private EstimationDiv(final String text) {
+		private EstimationType(final String text) {
 			this.text = text;
 		}
 
@@ -86,7 +87,7 @@ public class Estimation extends EntityBase {
 			return this.text;
 		}
 
-		public static EstimationDiv fromString(String string) {
+		public static EstimationType fromString(String string) {
 			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
@@ -96,78 +97,79 @@ public class Estimation extends EntityBase {
 	private long id;
 
 	/**
+	 * 商品グループマスタID
+	 */
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "product_grp_master_id", referencedColumnName = "id")
+	@ApiModelProperty(value = "商品グループマスタID", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
+	private ProductGrpMaster productGrpMaster;
+	
+	/**
 	 * ライフサイクル状態
 	 */
-	@ApiModelProperty(value = "ライフサイクル状態", required = true, position = 2)
+	@ApiModelProperty(value = "ライフサイクル状態", required = true, position = 3)
 	private LifecycleStatus lifecycleStatus;
 
 	/**
 	 * ワークフロー状態
 	 */
-	@ApiModelProperty(value = "ワークフロー状態", required = true, position = 3)
+	@ApiModelProperty(value = "ワークフロー状態", required = true, position = 4)
 	private WorkflowStatus workflowStatus;
-
+	
 	/**
-	 * 商品マスタ
+	 * 恒久契約識別番号
 	 */
-	@ManyToOne
-	@JoinColumn(name = "product_id", referencedColumnName = "id")
-	@ApiModelProperty(value = "商品マスタ", required = true, position = 4)
-	private ProductMaster productMaster;
+	@ApiModelProperty(value = "恒久契約識別番号", required = true, position = 5, allowableValues = "range[0,255]")
+	private String immutableContIdentNumber;
 
 	/**
 	 * 案件番号
 	 */
-	@ApiModelProperty(value = "案件番号", required = false, position = 5, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "案件番号", required = false, position = 6, allowableValues = "range[0,255]")
 	private String caseNumber;
 
 	/**
 	 * 案件名
 	 */
-	@ApiModelProperty(value = "案件名", required = false, position = 6, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "案件名", required = false, position = 7, allowableValues = "range[0,255]")
 	private String caseTitle;
 
 	/**
 	 * 見積番号
 	 */
-	@ApiModelProperty(value = "見積番号", required = true, position = 7, allowableValues = "range[0,255]", readOnly = true)
+	@ApiModelProperty(value = "見積番号", required = true, position = 8, allowableValues = "range[0,255]", readOnly = true)
 	@Pattern(regexp = "CEYYYYMMDDNNNNN")
 	private String estimateNumber;
 
 	/**
 	 * 見積番号枝番
 	 */
-	@ApiModelProperty(value = "見積番号枝番", required = true, position = 8, allowableValues = "range[0,99]", readOnly = true)
+	@ApiModelProperty(value = "見積番号枝番", required = true, position = 9, allowableValues = "range[0,99]", readOnly = true)
 	private int estimateBranchNumber;
 
 	/**
 	 * 見積件名
 	 */
-	@ApiModelProperty(value = "見積件名", required = false, position = 9, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "見積件名", required = false, position = 10, allowableValues = "range[0,255]")
 	private String estimationTitle;
 
 	/**
 	 * 見積種別
 	 */
-	@ApiModelProperty(value = "見積種別", required = true, position = 10)
-	private EstimationDiv estimationType;
+	@ApiModelProperty(value = "見積種別", required = true, position = 11)
+	private EstimationType estimationType;
 
 	/**
 	 * 見積作成元システム区分
 	 */
-	@ApiModelProperty(value = "見積作成元システム区分", required = false, position = 11)
+	@ApiModelProperty(value = "見積作成元システム区分", required = false, position = 12)
 	private String estimatedSystemDiv;
-
-	/**
-	 * サービス識別番号
-	 */
-	@ApiModelProperty(value = "サービス識別番号", required = false, position = 12, allowableValues = "range[0,255]")
-	private String serviceIdentificationNumber;
 
 	/**
 	 * 変更元契約番号
 	 */
 	@ApiModelProperty(value = "変更元契約番号", required = false, position = 13, allowableValues = "range[0,255]")
+	@Pattern(regexp = "CAYYYYMMDDNNNNN")
 	private String originContractNumber;
 
 	/**
@@ -185,7 +187,7 @@ public class Estimation extends EntityBase {
 	/**
 	 * 商流区分
 	 */
-	@ApiModelProperty(value = "商流区分", required = false, position = 16)
+	@ApiModelProperty(value = "商流区分", required = false, position = 16, allowableValues = "range[0,255]")
 	private String commercialFlowDiv;
 
 	/**

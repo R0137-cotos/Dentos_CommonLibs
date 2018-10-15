@@ -43,7 +43,7 @@ public class EstimationPicSaEmp extends EntityBase {
 	/**
 	 * 所属組織階層レベル
 	 */
-	@ApiModelProperty(value = "所属組織階層レベル", required = false, position = 4, allowableValues = "range[0,999]")
+	@ApiModelProperty(value = "所属組織階層レベル", required = false, position = 4, allowableValues = "range[0,9]")
 	private Integer orgHierarchyLevel;
 
 	/**
@@ -62,7 +62,7 @@ public class EstimationPicSaEmp extends EntityBase {
 	 * 会社代表電話番号
 	 */
 	@ApiModelProperty(value = "会社代表電話番号", required = false, position = 7, allowableValues = "range[0,255]")
-	private String orgTel;
+	private String orgPhoneNumber;
 
 	/**
 	 * 社員名

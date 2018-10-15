@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -39,7 +40,7 @@ public class EstimationAttachedFile extends EntityBase {
 	/**
 	 * ファイル種類
 	 */
-	@ApiModelProperty(value = "ファイル種類", required = false, position = 3, allowableValues = "range[0,1000]")
+	@ApiModelProperty(value = "ファイル種類", required = false, position = 3, allowableValues = "range[0,255]")
 	private String fileKind;
 
 	/**
@@ -77,4 +78,9 @@ public class EstimationAttachedFile extends EntityBase {
 	 */
 	@ApiModelProperty(value = "添付日時", required = true, position = 9, readOnly = true)
 	private Date attachedAt;
+
+	@PrePersist
+	public void prePersist() {
+		this.attachedAt = new Date();
+	}
 }

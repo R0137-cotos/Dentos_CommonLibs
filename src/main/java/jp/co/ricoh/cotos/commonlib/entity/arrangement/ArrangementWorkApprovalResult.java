@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -71,4 +72,8 @@ public class ArrangementWorkApprovalResult extends EntityBase {
 	@ApiModelProperty(value = "実施日時", required = true, position = 8, readOnly = true)
 	private Date processedAt;
 
+	@PrePersist
+	public void prePersist() {
+		this.processedAt = new Date();
+	}
 }

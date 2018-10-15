@@ -61,7 +61,7 @@ public class EstimationAddedEditorEmp extends EntityBase {
 	 * 会社代表電話番号
 	 */
 	@ApiModelProperty(value = "会社代表電話番号", required = false, position = 7, allowableValues = "range[0,255]")
-	private String orgTel;
+	private String orgPhoneNumber;
 
 	/**
 	 * 社員名

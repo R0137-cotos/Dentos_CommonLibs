@@ -8,6 +8,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -24,12 +25,12 @@ import lombok.EqualsAndHashCode;
 @Table(name = "operation_log")
 public class OperationLog extends EntityBase {
 
-	public enum OperationLogType {
+	public enum Operation {
 		キャンセル, 新規作成, 新規作成_再見積, 新規作成_コピー, 新規作成_プラン変更, 受注, 失注, 更新, 業務依頼, 業務処理完了
 	}
 
 	@Id
-	@ApiModelProperty(value = "操作履歴ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "操作OperationLogType履歴ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
 	/**
@@ -45,7 +46,7 @@ public class OperationLog extends EntityBase {
 	 */
 	@ApiModelProperty(value = "操作内容", required = true, position = 3, allowableValues = "range[0,1000]")
 	@Enumerated(EnumType.STRING)
-	private OperationLogType operation;
+	private Operation operation;
 
 	/**
 	 * 操作者MoM社員ID
@@ -70,4 +71,9 @@ public class OperationLog extends EntityBase {
 	 */
 	@ApiModelProperty(value = "実施日時", required = true, position = 7, readOnly = true)
 	private Date operatedAt;
+	
+	@PrePersist
+	public void prePersist() {
+		this.operatedAt = new Date();
+	}
 }

@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -53,10 +54,10 @@ public class ArrangementWorkCheckResult extends EntityBase {
 	private int displayOrder;
 
 	/**
-	 * チェック実施者
+	 * チェック実施者MoM社員ID
 	 */
-	@ApiModelProperty(value = "チェック実施者", required = false, position = 6, allowableValues = "range[0,255]")
-	private String checkedUser;
+	@ApiModelProperty(value = "チェック実施者MoM社員ID", required = false, position = 6, allowableValues = "range[0,255]")
+	private String checkedUserId;
 
 	/**
 	 * チェック実施者氏名
@@ -75,5 +76,11 @@ public class ArrangementWorkCheckResult extends EntityBase {
 	 */
 	@ApiModelProperty(value = "チェック実施日時", required = false, position = 9, readOnly = true)
 	private Date checkedAt;
+	
+	@PrePersist
+	public void prePersist() {
+		this.checkedAt = new Date();
+	}
+
 
 }
