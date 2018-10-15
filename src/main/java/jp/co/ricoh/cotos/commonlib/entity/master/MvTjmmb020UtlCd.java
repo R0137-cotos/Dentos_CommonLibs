@@ -14,6 +14,9 @@ import javax.persistence.TemporalType;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+/**
+ * oM汎用マスタ明細
+ */
 @Entity
 @Data
 @Table(name = "mv_tjmmb020_utl_cd")
