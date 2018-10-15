@@ -4,6 +4,19 @@ cotos:
       鍵: APIを呼ぶことが出来るアプリケーション名
       鍵2: 別のアプリケーション
     throughURIs: /dummy, /swagger-ui.html, /dummy2
+    jwt:
+      secretKey: select_key
+      tillExpired: 10
+      claims: 
+        momEmpId: jwt_mom_emp_id
+        singleUserId: jwt_single_user_id
+        origin: jwt_origin
+    headers:
+      momEmpId: headers_mom_emp_id
+      singleUserId: headers_single_user_id
+      applicationId: headers_applicationId
+      pass: headers_pass
+      authorization: headers_authorization
   file:
     uploadFileDir: ./build/testTemp
     fileMaxSize: 19166
