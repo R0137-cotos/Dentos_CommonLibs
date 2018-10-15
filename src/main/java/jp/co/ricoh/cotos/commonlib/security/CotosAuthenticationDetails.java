@@ -23,11 +23,15 @@ public class CotosAuthenticationDetails implements UserDetails {
 	@Getter
 	private String origin;
 
-	public CotosAuthenticationDetails(String momEmployeeId, String singleUserId, String origin) {
+	@Getter
+	private String jwt;
+
+	public CotosAuthenticationDetails(String momEmployeeId, String singleUserId, String origin, String jwt) {
 		super();
 		this.momEmployeeId = momEmployeeId;
 		this.singleUserId = singleUserId;
 		this.origin = origin;
+		this.jwt = jwt;
 	}
 
 	@Override

@@ -50,16 +50,16 @@ public class TestFindProperties {
 		List<String> throughURIs = Arrays.asList("/dummy", "/swagger-ui.html", "/dummy2");
 		Assert.assertEquals("権限:URL情報が正しく取得されること", throughURIs, appProperties.getAuthProperties().getThroughURIs());
 		Assert.assertEquals("権限:CORS設定が正しく取得されること", null, appProperties.getAuthProperties().getCorsOrigins());
-		Assert.assertEquals("権限:jwt用秘密鍵が正しく取得されること", "select_key", appProperties.getAuthProperties().getJwtProperties().getSecretKey());
+		Assert.assertEquals("権限:jwt用秘密鍵が正しく取得されること", "cotosSecretKey", appProperties.getAuthProperties().getJwtProperties().getSecretKey());
 		Assert.assertEquals("権限:jwt用期限切れ時間が正しく取得されること", (Long) 10L, appProperties.getAuthProperties().getJwtProperties().getTillExpired());
-		Assert.assertEquals("権限:jwt用MoM社員IDが正しく取得されること", "jwt_mom_emp_id", appProperties.getAuthProperties().getJwtProperties().getClaimsProperties().getMomEmpId());
-		Assert.assertEquals("権限:jwt用シングルユーザーIDが正しく取得されること", "jwt_single_user_id", appProperties.getAuthProperties().getJwtProperties().getClaimsProperties().getSingleUserId());
-		Assert.assertEquals("権限:jwt用originが正しく取得されること", "jwt_origin", appProperties.getAuthProperties().getJwtProperties().getClaimsProperties().getOrigin());
+		Assert.assertEquals("権限:jwt用MoM社員IDが正しく取得されること", "momEmpId", appProperties.getAuthProperties().getJwtProperties().getClaimsProperties().getMomEmpId());
+		Assert.assertEquals("権限:jwt用シングルユーザーIDが正しく取得されること", "singleUserId", appProperties.getAuthProperties().getJwtProperties().getClaimsProperties().getSingleUserId());
+		Assert.assertEquals("権限:jwt用originが正しく取得されること", "origin", appProperties.getAuthProperties().getJwtProperties().getClaimsProperties().getOrigin());
 		Assert.assertEquals("権限:ヘッダーMoM社員IDが正しく取得されること", "headers_mom_emp_id", appProperties.getAuthProperties().getHeadersProperties().getMomEmpId());
 		Assert.assertEquals("権限:ヘッダーシングルユーザーIDが正しく取得されること", "headers_single_user_id", appProperties.getAuthProperties().getHeadersProperties().getSingleUserId());
 		Assert.assertEquals("権限:ヘッダーアプリケーションIDが正しく取得されること", "headers_applicationId", appProperties.getAuthProperties().getHeadersProperties().getApplicationId());
 		Assert.assertEquals("権限:ヘッダーパスが正しく取得されること", "headers_pass", appProperties.getAuthProperties().getHeadersProperties().getPass());
-		Assert.assertEquals("権限:ヘッダー承認情報が正しく取得されること", "headers_authorization", appProperties.getAuthProperties().getHeadersProperties().getAuthorization());
+		Assert.assertEquals("権限:ヘッダー承認情報が正しく取得されること", "X-Cotos-Authorization", appProperties.getAuthProperties().getHeadersProperties().getAuthorization());
 		Assert.assertEquals("外部参照:MoM承認権限用URLが正しく取得されること", "http://165.96.254.183:10110/jmo/services/KengenService", appProperties.getRemoteMomProperties().getUrl());
 		Assert.assertEquals("外部参照:MoM承認権限用リテラルIDが正しく取得されること", "CSP", appProperties.getRemoteMomProperties().getRelatedid());
 	}
