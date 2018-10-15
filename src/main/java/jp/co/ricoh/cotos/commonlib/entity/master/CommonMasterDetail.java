@@ -31,6 +31,7 @@ import lombok.EqualsAndHashCode;
 public class CommonMasterDetail extends EntityBaseMaster {
 
 	@Id
+	@Column(nullable = false)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "common_master_detail_seq")
 	@SequenceGenerator(name = "common_master_detail_seq", sequenceName = "common_master_detail_seq", allocationSize = 1)
 	@ApiModelProperty(value = "汎用マスタ明細ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
@@ -39,8 +40,9 @@ public class CommonMasterDetail extends EntityBaseMaster {
 	/**
 	 * 汎用マスタ
 	 */
+	@Column(nullable = false)
 	@ManyToOne
-	@JoinColumn(name = "common_master_id")
+	@JoinColumn(name = "common_master_id", referencedColumnName = "id")
 	@JsonIgnore
 	@ApiModelProperty(value = "汎用マスタ", required = true, position = 2)
 	private CommonMaster commonMaster;
@@ -111,12 +113,14 @@ public class CommonMasterDetail extends EntityBaseMaster {
 	/**
 	 * 表示順
 	 */
-	@ApiModelProperty(value = "表示順", required = false, position = 13, allowableValues = "range[0,999]")
+	@Column(nullable = false)
+	@ApiModelProperty(value = "表示順", required = true, position = 13, allowableValues = "range[0,999]")
 	private Integer displayOrder;
 
 	/**
 	 * 削除フラグ
 	 */
-	@ApiModelProperty(value = "削除フラグ", required = false, position = 14, allowableValues = "range[0,1]")
+	@Column(nullable = false)
+	@ApiModelProperty(value = "削除フラグ", required = true, position = 14, allowableValues = "range[0,1]")
 	private String deleteFlg;
 }

@@ -5,13 +5,21 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Pattern;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
@@ -68,44 +76,54 @@ public class ItemMaster extends EntityBaseMaster {
 	}
 
 	@Id
+	@Column(nullable = false)
+ 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "item_master_seq")
+ 	@SequenceGenerator(name = "item_master_seq", sequenceName = "item_master_seq", allocationSize = 1)
 	@ApiModelProperty(value = "品種マスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
 	/**
 	 * 商品マスタ
 	 */
+	@Column(nullable = false)
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "product_master_id", referencedColumnName = "id")
-	@ApiModelProperty(value = "商品マスタ", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
+	@JsonIgnore
+	@ApiModelProperty(value = "商品マスタ", required = true, position = 2)
 	private ProductMaster productMaster;
 
 	/**
 	 * 品種名
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "品種名", required = true, position = 3, allowableValues = "range[0,255]")
 	private String itemName;
 
 	/**
 	 * リコー品種コード
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "リコー品種コード", required = true, position = 4, allowableValues = "range[0,255]")
 	private String ricohItemCode;
 
 	/**
 	 * 品種区分
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "品種区分", required = true, position = 5)
 	private ItemType itemType;
 
 	/**
 	 * 費用種別
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "費用種別", required = true, position = 6)
 	private CostType costType;
 
 	/**
 	 * 仕切価格
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "仕切価格", required = true, position = 7, allowableValues = "range[0.00,9999999999999999999.99]")
 	@Pattern(regexp = "9999999999999999999.99")
 	private BigDecimal partitionPrice;
@@ -113,12 +131,16 @@ public class ItemMaster extends EntityBaseMaster {
 	/**
 	 * 積上げ可能期間（開始日）
 	 */
+	@Column(nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
 	@ApiModelProperty(value = "積上げ可能期間（開始日）", required = true, position = 8, allowableValues = "range[0,19]")
 	private Date effectiveFrom;
 
 	/**
 	 * 積上げ可能期間（終了日）
 	 */
+	@Column(nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
 	@ApiModelProperty(value = "積上げ可能期間（終了日）", required = true, position = 9, allowableValues = "range[0,19]")
 	private Date effectiveTo;
 

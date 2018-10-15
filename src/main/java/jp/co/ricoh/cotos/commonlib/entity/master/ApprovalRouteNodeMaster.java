@@ -2,11 +2,17 @@ package jp.co.ricoh.cotos.commonlib.entity.master;
 
 import java.util.Arrays;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
@@ -63,32 +69,40 @@ public class ApprovalRouteNodeMaster extends EntityBaseMaster {
 	}
 
 	@Id
+	@Column(nullable = false)
+ 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "approval_route_node_master_seq")
+ 	@SequenceGenerator(name = "approval_route_node_master_seq", sequenceName = "approval_route_node_master_seq", allocationSize = 1)
 	@ApiModelProperty(value = "承認ルートノードマスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
 	/**
 	 * 承認ルートマスタ
 	 */
+	@Column(nullable = false)
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "approval_route_id", referencedColumnName = "id")
+	@JsonIgnore
 	@ApiModelProperty(value = "承認ルートマスタ", required = true, position = 2)
 	private ApprovalRouteMaster approvalRouteMaster;
 
 	/**
 	 * 承認順
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "承認順", required = true, position = 3, allowableValues = "range[0,999]")
 	private int approvalOrder;
 
 	/**
 	 * 承認者種別
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "承認者種別", required = true, position = 4)
 	private ApproverClass approverClass;
 
 	/**
 	 * 承認者導出方式区分
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "承認者導出方式区分", required = true, position = 5)
 	private ApproverDeriveMethodDiv approverDeriveMethodDiv;
 

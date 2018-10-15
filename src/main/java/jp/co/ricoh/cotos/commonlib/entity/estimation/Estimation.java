@@ -112,7 +112,7 @@ public class Estimation extends EntityBase {
 	 */
 	@ManyToOne
 	@JoinColumn(name = "product_grp_master_id", referencedColumnName = "id")
-	@ApiModelProperty(value = "商品グループマスタ", required = true, position = 4)
+	@ApiModelProperty(value = "商品グループマスタ", required = false, position = 4)
 	private ProductGrpMaster productGrpMaster;
 
 	/**

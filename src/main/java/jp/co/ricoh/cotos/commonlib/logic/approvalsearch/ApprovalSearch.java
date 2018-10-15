@@ -56,11 +56,14 @@ public class ApprovalSearch {
 		ApprovalRouteGrpMaster approvalRouteGrpMaster = approvalRouteGrpMasterRepository.findOne(approvalRouteGrpId);
 
 		// ルート特定、または条件式実行結果ステータスの異常・警告が発生するまでループ
-		ApprovalRouteMaster applyApprovalRouteMaster = approvalRouteGrpMaster.getApprovalRouteMasterList().stream().filter(approvalRouteMaster -> {
-			// 条件式実行
-			RouteFormulaResult formulaResult = this.execRouteFormula(estimation, contract, approvalRouteMaster);
-			return (RouteFormulaStatus.正常.equals(formulaResult.getStatus()) && formulaResult.isApplyRoute()) || RouteFormulaStatus.異常.equals(formulaResult.getStatus()) || RouteFormulaStatus.警告.equals(formulaResult.getStatus());
-		}).findFirst().get();
+		ApprovalRouteMaster applyApprovalRouteMaster = approvalRouteGrpMaster.getApprovalRouteMasterList().stream()
+				.filter(approvalRouteMaster -> {
+					// 条件式実行
+					RouteFormulaResult formulaResult = this.execRouteFormula(estimation, contract, approvalRouteMaster);
+					return (RouteFormulaStatus.正常.equals(formulaResult.getStatus()) && formulaResult.isApplyRoute())
+							|| RouteFormulaStatus.異常.equals(formulaResult.getStatus())
+							|| RouteFormulaStatus.警告.equals(formulaResult.getStatus());
+				}).findFirst().get();
 
 		// 特定した承認ルートマスタの条件式を実行
 		RouteFormulaResult formulaResult = this.execRouteFormula(estimation, contract, applyApprovalRouteMaster);
@@ -83,7 +86,8 @@ public class ApprovalSearch {
 	 * @return 実施結果
 	 * @throws ScriptException
 	 */
-	private RouteFormulaResult execRouteFormula(Estimation estimation, Contract contract, ApprovalRouteMaster approvalRouteMaster) {
+	private RouteFormulaResult execRouteFormula(Estimation estimation, Contract contract,
+			ApprovalRouteMaster approvalRouteMaster) {
 
 		ScriptEngineManager manager = new ScriptEngineManager();
 		ScriptEngine engine = manager.getEngineByName("nashorn");
@@ -94,7 +98,8 @@ public class ApprovalSearch {
 			} else {
 				engine.put("contract", contract);
 			}
-			engine.eval(loadScriptFromClasspath("js/routeFormulaTemplate.js", approvalRouteMaster.getRouteConditionFormula()));
+			engine.eval(loadScriptFromClasspath("js/routeFormulaTemplate.js",
+					approvalRouteMaster.getRouteConditionFormula()));
 			return (RouteFormulaResult) engine.eval("result");
 		} catch (ScriptException e) {
 			throw new RouteFormulaScriptException(e);
@@ -113,7 +118,9 @@ public class ApprovalSearch {
 	private String loadScriptFromClasspath(String jsFilePathOnClasspath, String formula) {
 		try {
 			MustacheFactory mf = new DefaultMustacheFactory();
-			Mustache mustache = mf.compile(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream(jsFilePathOnClasspath)), jsFilePathOnClasspath);
+			Mustache mustache = mf.compile(
+					new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream(jsFilePathOnClasspath)),
+					jsFilePathOnClasspath);
 			StringWriter out = new StringWriter();
 
 			Map<String, Object> parameter = new HashMap<>();

@@ -148,7 +148,7 @@ public class UrlAuthMaster extends EntityBaseMaster {
 	 * 認可処理実施要否
 	 */
 	@Column(nullable = false)
-	@ApiModelProperty(value = "認可処理実施要否", required = true, position = 4 , allowableValues = "range[0,1]" )
+	@ApiModelProperty(value = "認可処理実施要否", required = true, position = 4 , allowableValues = "range[0,9]")
 	private int requireAuthorize;
 
 	/**
@@ -163,7 +163,7 @@ public class UrlAuthMaster extends EntityBaseMaster {
 	 * DBデータ存在有無
 	 */
 	@Column(nullable = false)
-	@ApiModelProperty(value = "DBデータ存在有無", required = true, position = 6 , allowableValues = "range[0,1]" )
+	@ApiModelProperty(value = "DBデータ存在有無", required = true, position = 6 , allowableValues = "range[0,9]")
 	private int existsDb;
 
 	/**
@@ -177,7 +177,7 @@ public class UrlAuthMaster extends EntityBaseMaster {
 	 * パラメーターキー
 	 */
 	@Column(nullable = true)
-	@ApiModelProperty(value = "パラメーターキー", required = false, position = 8 )
+	@ApiModelProperty(value = "パラメーターキー", required = false, position = 8, allowableValues = "range[0,255]")
 	private String paramKey;
 
 	/**
@@ -205,6 +205,6 @@ public class UrlAuthMaster extends EntityBaseMaster {
 	 * 処理概要
 	 */
 	@Column(nullable = true)
-	@ApiModelProperty(value = "処理概要", required = true, position = 12 )
+	@ApiModelProperty(value = "処理概要", required = true, position = 12, allowableValues = "range[0,255]")
 	private String description;
 }
