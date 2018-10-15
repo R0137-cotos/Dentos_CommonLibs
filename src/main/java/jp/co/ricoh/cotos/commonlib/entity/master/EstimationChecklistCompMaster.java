@@ -78,7 +78,6 @@ public class EstimationChecklistCompMaster extends EntityBaseMaster {
 	/**
 	 * 商品マスタ
 	 */
-	@Column(nullable = false)
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "product_master_id", referencedColumnName = "id")
 	@JsonIgnore
@@ -104,7 +103,6 @@ public class EstimationChecklistCompMaster extends EntityBaseMaster {
 	/**
 	 * 汎用チェック事項マスタ
 	 */
-	@Column(nullable = false)
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "gp_check_matter_master_id", referencedColumnName = "id")
 	@JsonIgnore

@@ -37,7 +37,6 @@ public class ApprovalRouteMaster extends EntityBaseMaster {
 	/**
 	 * 承認ルートグループマスタ
 	 */
-	@Column(nullable = false)
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "approval_route_grp_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "承認ルートグループマスタ", required = true, position = 2)

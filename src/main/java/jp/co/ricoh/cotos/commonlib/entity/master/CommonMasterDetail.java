@@ -40,7 +40,6 @@ public class CommonMasterDetail extends EntityBaseMaster {
 	/**
 	 * 汎用マスタ
 	 */
-	@Column(nullable = false)
 	@ManyToOne
 	@JoinColumn(name = "common_master_id", referencedColumnName = "id")
 	@JsonIgnore

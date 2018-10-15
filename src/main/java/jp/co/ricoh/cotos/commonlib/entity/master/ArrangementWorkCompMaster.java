@@ -40,7 +40,6 @@ public class ArrangementWorkCompMaster extends EntityBaseMaster {
 	/**
 	 * 品種マスタ
 	 */
-	@Column(nullable = false)
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "item_master_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "品種マスタ", required = true, position = 2)
@@ -63,7 +62,6 @@ public class ArrangementWorkCompMaster extends EntityBaseMaster {
 	/**
 	 * 手配業務タイプマスタ
 	 */
-	@Column(nullable = false)
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "arrangement_work_type_master_id", referencedColumnName = "id")
 	@JsonIgnore

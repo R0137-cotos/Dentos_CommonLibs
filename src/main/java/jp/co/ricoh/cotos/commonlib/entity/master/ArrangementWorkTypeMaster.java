@@ -50,7 +50,6 @@ public class ArrangementWorkTypeMaster extends EntityBaseMaster {
 	/**
 	 * 承認ルートグループマスタ
 	 */
-	@Column(nullable = false)
 	@ManyToOne
 	@JoinColumn(name = "arrangement_approval_route_grp_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "承認ルートグループマスタ", required = false, position = 4)

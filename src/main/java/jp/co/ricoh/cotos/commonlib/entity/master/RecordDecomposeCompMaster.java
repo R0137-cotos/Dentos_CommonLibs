@@ -35,7 +35,6 @@ public class RecordDecomposeCompMaster extends EntityBaseMaster {
 	/**
 	 * 品種マスタ
 	 */
-	@Column(nullable = false)
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "item_master_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "品種マスタ", required = true, position = 2)
@@ -58,7 +57,6 @@ public class RecordDecomposeCompMaster extends EntityBaseMaster {
 	/**
 	 * 計上分解マスタ
 	 */
-	@Column(nullable = false)
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "record_decompose_master_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "計上分解マスタ", required = true, position = 5)

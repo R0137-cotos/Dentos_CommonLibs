@@ -78,7 +78,6 @@ public class ApprovalRouteNodeMaster extends EntityBaseMaster {
 	/**
 	 * 承認ルートマスタ
 	 */
-	@Column(nullable = false)
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "approval_route_id", referencedColumnName = "id")
 	@JsonIgnore

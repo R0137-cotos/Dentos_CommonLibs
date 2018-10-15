@@ -39,7 +39,6 @@ public class ProductCompMaster extends EntityBaseMaster {
 	/**
 	 * 商品グループマスタ
 	 */
-	@Column(nullable = false)
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "product_grp_master_id", referencedColumnName = "id")
 	@JsonIgnore
@@ -49,7 +48,6 @@ public class ProductCompMaster extends EntityBaseMaster {
 	/**
 	 * 商品マスタ
 	 */
-	@Column(nullable = false)
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "product_master_id", referencedColumnName = "id")
 	@JsonIgnore

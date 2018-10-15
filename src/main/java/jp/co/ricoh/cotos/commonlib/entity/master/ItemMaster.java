@@ -85,7 +85,6 @@ public class ItemMaster extends EntityBaseMaster {
 	/**
 	 * 商品マスタ
 	 */
-	@Column(nullable = false)
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "product_master_id", referencedColumnName = "id")
 	@JsonIgnore

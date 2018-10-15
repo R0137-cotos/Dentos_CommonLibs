@@ -36,7 +36,6 @@ public class ArrangementChecklistCompMaster extends EntityBaseMaster {
 	/**
 	 * 手配業務タイプマスタ
 	 */
-	@Column(nullable = false)
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "arrangement_work_type_master_id", referencedColumnName = "id")
 	@JsonIgnore
@@ -46,7 +45,6 @@ public class ArrangementChecklistCompMaster extends EntityBaseMaster {
 	/**
 	 * 汎用チェック事項マスタ
 	 */
-	@Column(nullable = false)
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "gp_check_matter_master_id", referencedColumnName = "id")
 	@JsonIgnore
