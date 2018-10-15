@@ -4,12 +4,16 @@ import java.sql.Date;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
@@ -89,12 +93,15 @@ public class Contract extends EntityBase {
 	}
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_detail_seq")
+	@SequenceGenerator(name = "contract_detail_seq", sequenceName = "contract_detail_seq", allocationSize = 1)
 	@ApiModelProperty(value = "契約ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
 	/**
 	 * 契約種別
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "契約種別", required = true, position = 2)
 	private ContractType contractType;
 
@@ -110,12 +117,14 @@ public class Contract extends EntityBase {
 	/**
 	 * ライフサイクル状態
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "ライフサイクル状態", required = true, position = 4)
 	private LifecycleStatus lifecycleStatus;
 
 	/**
 	 * ワークフロー状態
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "ワークフロー状態", required = true, position = 5)
 	private WorkflowStatus workflowStatus;
 
@@ -140,13 +149,15 @@ public class Contract extends EntityBase {
 	/**
 	 * 契約番号
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "契約番号", required = true, position = 9, allowableValues = "range[0,255]", readOnly = true)
-	@Pattern(regexp = "CAYYYYMMDDNNNNN")
+	@Pattern(regexp = "CCYYYYMMDDNNNNN")
 	private String contractNumber;
 
 	/**
 	 * 契約番号枝番
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "契約番号枝番", required = true, position = 10, allowableValues = "range[0,99]", readOnly = true)
 	private int contractBranchNumber;
 
@@ -196,6 +207,7 @@ public class Contract extends EntityBase {
 	/**
 	 * 売上計上フラグ
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "売上計上フラグ", required = true, position = 18, allowableValues = "range[0,9]")
 	private int accountSalesFlg;
 
@@ -226,6 +238,7 @@ public class Contract extends EntityBase {
 	/**
 	 * 見積番号
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "見積番号", required = true, position = 23, allowableValues = "range[0,255]")
 	@Pattern(regexp = "CEYYYYMMDDNNNNN")
 	private String estimationNumber;
@@ -233,6 +246,7 @@ public class Contract extends EntityBase {
 	/**
 	 * 見積番号枝番
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "見積番号枝番", required = true, position = 24, allowableValues = "range[0,99]")
 	private int estimationBranchNumber;
 
@@ -357,7 +371,7 @@ public class Contract extends EntityBase {
 	/**
 	 * 商品(契約用)
 	 */
-	// @OneToMany(mappedBy = "contract")
-	// @ApiModelProperty(value = "商品(契約用)", required = true, position = 43)
-	// private ProductMaster productMaster;
+	@OneToMany(mappedBy = "contract")
+	@ApiModelProperty(value = "商品(契約用)", required = true, position = 43)
+	private ProductContract productContract;
 }

@@ -2,12 +2,18 @@ package jp.co.ricoh.cotos.commonlib.entity.contract;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
@@ -25,6 +31,8 @@ import lombok.EqualsAndHashCode;
 public class ContractApprovalRoute extends EntityBase {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_approval_route_seq")
+	@SequenceGenerator(name = "contract_approval_route_seq", sequenceName = "contract_approval_route_seq", allocationSize = 1)
 	@ApiModelProperty(value = "契約承認ルートID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
@@ -33,24 +41,28 @@ public class ContractApprovalRoute extends EntityBase {
 	 */
 	@OneToOne(optional = false)
 	@JoinColumn(name = "contract_id", referencedColumnName = "id")
+	@JsonIgnore
 	@ApiModelProperty(value = "契約", required = true, position = 2)
 	private Contract contract;
 
 	/**
 	 * 対象ライフサイクル状態
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "対象ライフサイクル状態", required = true, position = 3)
 	private LifecycleStatus targetLifecycleStatus;
 
 	/**
 	 * 承認依頼者MoM社員ID
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "承認依頼者MoM社員ID", required = true, position = 4, allowableValues = "range[0,255]")
 	private String approvalRequesterEmpId;
 
 	/**
 	 * 承認依頼者氏名
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "承認依頼者氏名", required = true, position = 5, allowableValues = "range[0,255]")
 	private String approvalRequesterName;
 
@@ -63,6 +75,7 @@ public class ContractApprovalRoute extends EntityBase {
 	/**
 	 * 特価承認対象フラグ
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "特価承認対象フラグ", required = true, position = 7, allowableValues = "range[0,9]")
 	private int specialPriceApprovalFlg;
 
