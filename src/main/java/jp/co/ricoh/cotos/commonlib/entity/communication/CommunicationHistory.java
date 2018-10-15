@@ -4,7 +4,10 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Pattern;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -33,7 +36,7 @@ public class CommunicationHistory extends EntityBase {
 	 * サービスカテゴリ
 	 */
 	@ApiModelProperty(value = "サービスカテゴリ", required = true, position = 2)
-	private ServiceCategory communicationCategory;
+	private ServiceCategory serviceCategory;
 
 	/**
 	 * 処理カテゴリー
@@ -78,14 +81,14 @@ public class CommunicationHistory extends EntityBase {
 	 */
 	@ApiModelProperty(value = "依頼者<br />" //
 			+ "ワークフローの起点となったユーザーのMoM社員IDを設定", required = true, position = 8, allowableValues = "range[0,255]") //
-	private String requestOrigin;
+	private String requestOriginId;
 
 	/**
 	 * 伝達者
 	 */
 	@ApiModelProperty(value = "伝達者<br />" //
 			+ "ユーザー識別子としてMoM社員IDを設定", required = true, position = 9, allowableValues = "range[0,255]") //
-	private String requestFrom;
+	private String requestFromId;
 
 	/**
 	 * 被伝達者
@@ -99,7 +102,7 @@ public class CommunicationHistory extends EntityBase {
 	 */
 	@ApiModelProperty(value = "被伝達者候補<br />" //
 			+ "ユーザー識別子としてMoM社員IDを設定", required = false, position = 11, allowableValues = "range[0,255]") //
-	private String requestToCandidate;
+	private String requestToCandidateId;
 
 	/**
 	 * 対象文書番号
@@ -134,8 +137,7 @@ public class CommunicationHistory extends EntityBase {
 	/**
 	 * 件名
 	 */
-	@ApiModelProperty(value = "件名<br />"
-			+ "見積⇒見積の案件名を設定<br />" //
+	@ApiModelProperty(value = "件名<br />" + "見積⇒見積の案件名を設定<br />" //
 			+ "契約⇒契約の案件名を設定<br />" //
 			+ "手配⇒手配業務タイプマスタの手配業務タイプ名を設定", required = true, position = 16, allowableValues = "range[0,255]") //
 	private String title;
@@ -150,5 +152,11 @@ public class CommunicationHistory extends EntityBase {
 	 * 伝達日時
 	 */
 	@ApiModelProperty(value = "伝達日時", required = true, position = 18, readOnly = true)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date communicatedAt;
+
+	@PrePersist
+	public void prePersist() {
+		this.communicatedAt = new Date();
+	}
 }

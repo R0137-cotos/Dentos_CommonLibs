@@ -8,7 +8,10 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
@@ -68,6 +71,12 @@ public class ContractOperationLog extends EntityBase {
 	/**
 	 * 実施日時
 	 */
+	@Temporal(TemporalType.TIMESTAMP)
 	@ApiModelProperty(value = "実施日時", required = true, position = 7, readOnly = true)
 	private Date operatedAt;
+
+	@PrePersist
+	public void prePersist() {
+		this.operatedAt = new Date();
+	}
 }

@@ -6,7 +6,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
@@ -37,7 +40,7 @@ public class ContractAttachedFile extends EntityBase {
 	/**
 	 * ファイル種類
 	 */
-	@ApiModelProperty(value = "ファイル種類", required = false, position = 3, allowableValues = "range[0,1000]")
+	@ApiModelProperty(value = "ファイル種類", required = false, position = 3, allowableValues = "range[0,255]")
 	private String fileKind;
 
 	/**
@@ -50,7 +53,7 @@ public class ContractAttachedFile extends EntityBase {
 	 * コメント
 	 */
 	@ApiModelProperty(value = "コメント", required = false, position = 5, allowableValues = "range[0,1000]")
-	private String comment;
+	private String attachedComment;
 
 	/**
 	 * 添付者MoM社員ID
@@ -73,6 +76,12 @@ public class ContractAttachedFile extends EntityBase {
 	/**
 	 * 添付日時
 	 */
+	@Temporal(TemporalType.TIMESTAMP)
 	@ApiModelProperty(value = "添付日時", required = true, position = 9, readOnly = true)
 	private Date attachedAt;
+
+	@PrePersist
+	public void prePersist() {
+		this.attachedAt = new Date();
+	}
 }

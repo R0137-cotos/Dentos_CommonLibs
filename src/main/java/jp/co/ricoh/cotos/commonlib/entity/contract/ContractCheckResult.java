@@ -60,10 +60,10 @@ public class ContractCheckResult extends EntityBase {
 	private int displayOrder;
 
 	/**
-	 * チェック実施者
+	 * チェック実施者MoM社員ID
 	 */
-	@ApiModelProperty(value = "チェック実施者", required = false, position = 7)
-	private String checkedUser;
+	@ApiModelProperty(value = "チェック実施者MoM社員ID", required = false, position = 7)
+	private String checkedUserId;
 
 	/**
 	 * チェック実施者氏名

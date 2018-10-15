@@ -6,9 +6,13 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
@@ -33,14 +37,14 @@ public class Contact extends EntityBase {
 	 * 見積ID
 	 */
 	@ApiModelProperty(value = "見積ID", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
-	private String estimateId;
+	private String estimationId;
 
 	/**
 	 * 親問い合わせ
 	 */
 	@OneToOne
 	@JoinColumn(name = "parent_id", referencedColumnName = "id")
-	@ApiModelProperty(value = "親問い合わせ", required = false, position = 3)
+	@ApiModelProperty(value = "親問い合わせ", required = true, position = 3) // TODO ほんとに必須？
 	private Contact parent;
 
 	/**
@@ -65,12 +69,14 @@ public class Contact extends EntityBase {
 	 * 内容
 	 */
 	@ApiModelProperty(value = "内容", required = false, position = 7)
+	@Lob
 	private String content;
 
 	/**
 	 * 送信日時
 	 */
 	@ApiModelProperty(value = "送信日時", required = true, position = 8, readOnly = true)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date sendAt;
 
 	/**
@@ -79,4 +85,9 @@ public class Contact extends EntityBase {
 	@OneToMany(mappedBy = "contact")
 	@ApiModelProperty(value = "宛先", required = true, position = 9)
 	private List<ContactTo> contactToList;
+
+	@PrePersist
+	public void prePersist() {
+		this.sendAt = new Date();
+	}
 }

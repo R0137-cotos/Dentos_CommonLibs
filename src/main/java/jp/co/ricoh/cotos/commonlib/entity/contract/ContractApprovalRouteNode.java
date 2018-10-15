@@ -40,7 +40,7 @@ public class ContractApprovalRouteNode extends EntityBase {
 	/**
 	 * 承認者組織階層レベル
 	 */
-	@ApiModelProperty(value = "承認者組織階層レベル", required = false, position = 4, allowableValues = "range[0,9]")
+	@ApiModelProperty(value = "承認者組織階層レベル", required = false, position = 4, allowableValues = "range[0,9999999999]")//TODO ほんと？
 	private Integer approverOrgLevel;
 
 	/**

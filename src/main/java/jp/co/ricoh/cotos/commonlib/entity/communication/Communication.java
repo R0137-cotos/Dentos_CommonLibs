@@ -4,7 +4,10 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Pattern;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -33,7 +36,7 @@ public class Communication extends EntityBase {
 	 * サービスカテゴリ
 	 */
 	@ApiModelProperty(value = "サービスカテゴリ", required = true, position = 2)
-	private ServiceCategory communicationCategory;
+	private ServiceCategory serviceCategory;
 
 	/**
 	 * 処理カテゴリー
@@ -78,28 +81,28 @@ public class Communication extends EntityBase {
 	 */
 	@ApiModelProperty(value = "依頼者<br />" //
 			+ "ワークフローの起点となったユーザーのMoM社員IDを設定", required = true, position = 8, allowableValues = "range[0,255]") //
-	private String requestOrigin;
+	private String requestOriginId;
 
 	/**
 	 * 伝達者
 	 */
 	@ApiModelProperty(value = "伝達者<br />" //
 			+ "ユーザー識別子としてMoM社員IDを設定", required = true, position = 9, allowableValues = "range[0,255]") //
-	private String requestFrom;
+	private String requestFromId;
 
 	/**
 	 * 被伝達者
 	 */
 	@ApiModelProperty(value = "被伝達者<br />" //
 			+ "ユーザー識別子としてMoM社員IDを設定", required = true, position = 10, allowableValues = "range[0,255]") //
-	private String requestTo;
+	private String requestToId;
 
 	/**
 	 * 被伝達者候補
 	 */
 	@ApiModelProperty(value = "被伝達者候補<br />" //
 			+ "ユーザー識別子としてMoM社員IDを設定", required = false, position = 11, allowableValues = "range[0,255]") //
-	private String requestToCandidate;
+	private String requestToCandidateId;
 
 	/**
 	 * 対象文書番号
@@ -150,5 +153,11 @@ public class Communication extends EntityBase {
 	 * 伝達日時
 	 */
 	@ApiModelProperty(value = "伝達日時", required = true, position = 18, readOnly = true)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date communicatedAt;
+	
+	@PrePersist
+	public void prePersist() {
+		this.communicatedAt = new Date();
+	}
 }
