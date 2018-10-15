@@ -69,30 +69,35 @@ public class CommonMasterDetail extends EntityBaseMaster {
 	/**
 	 * 設定値1
 	 */
+	@Column(name = "DATA_AREA_1")
 	@ApiModelProperty(value = "設定値1", required = false, position = 6, allowableValues = "range[0,255]")
 	private String dataArea1;
 
 	/**
 	 * 設定値2
 	 */
+	@Column(name = "DATA_AREA_2")
 	@ApiModelProperty(value = "設定値2", required = false, position = 7, allowableValues = "range[0,255]")
 	private String dataArea2;
 
 	/**
 	 * 設定値3
 	 */
+	@Column(name = "DATA_AREA_3")
 	@ApiModelProperty(value = "設定値3", required = false, position = 8, allowableValues = "range[0,255]")
 	private String dataArea3;
 
 	/**
 	 * 設定値4
 	 */
+	@Column(name = "DATA_AREA_4")
 	@ApiModelProperty(value = "設定値4", required = false, position = 9, allowableValues = "range[0,255]")
 	private String dataArea4;
 
 	/**
 	 * 設定値5
 	 */
+	@Column(name = "DATA_AREA_5")
 	@ApiModelProperty(value = "設定値5", required = false, position = 10, allowableValues = "range[0,255]")
 	private String dataArea5;
 

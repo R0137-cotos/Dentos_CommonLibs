@@ -66,4 +66,11 @@ public class CommonMaster extends EntityBaseMaster {
 	@OneToMany(mappedBy = "commonMaster")
 	@ApiModelProperty(value = "汎用マスタ明細", required = false, position = 6)
 	private List<CommonMasterDetail> commonMasterDetailList;
+
+	/**
+	 * 削除フラグ
+	 */
+	@Column(nullable = false)
+	@ApiModelProperty(value = "削除フラグ", required = true, position = 7, allowableValues = "range[0,1]")
+	private String deleteFlg;
 }
