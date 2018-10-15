@@ -27,7 +27,6 @@ import lombok.EqualsAndHashCode;
 public class GpCheckMatterMaster extends EntityBaseMaster {
 
 	@Id
-	@Column(nullable = false)
  	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gp_check_matter_master_seq")
  	@SequenceGenerator(name = "gp_check_matter_master_seq", sequenceName = "gp_check_matter_master_seq", allocationSize = 1)
 	@ApiModelProperty(value = "汎用チェック事項マスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")

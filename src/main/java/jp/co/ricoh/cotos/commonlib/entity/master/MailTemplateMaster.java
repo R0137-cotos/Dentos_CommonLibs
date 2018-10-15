@@ -27,7 +27,6 @@ public class MailTemplateMaster extends EntityBaseMaster {
 
 
 	@Id
-	@Column(nullable = false)
  	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mail_template_master_seq")
  	@SequenceGenerator(name = "mail_template_master_seq", sequenceName = "mail_template_master_seq", allocationSize = 1)
 	@ApiModelProperty(value = "メールテンプレートID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")

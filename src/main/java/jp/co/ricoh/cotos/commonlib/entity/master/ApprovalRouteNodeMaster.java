@@ -69,7 +69,6 @@ public class ApprovalRouteNodeMaster extends EntityBaseMaster {
 	}
 
 	@Id
-	@Column(nullable = false)
  	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "approval_route_node_master_seq")
  	@SequenceGenerator(name = "approval_route_node_master_seq", sequenceName = "approval_route_node_master_seq", allocationSize = 1)
 	@ApiModelProperty(value = "承認ルートノードマスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")

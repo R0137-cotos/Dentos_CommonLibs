@@ -31,7 +31,6 @@ import lombok.EqualsAndHashCode;
 public class CommonMasterDetail extends EntityBaseMaster {
 
 	@Id
-	@Column(nullable = false)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "common_master_detail_seq")
 	@SequenceGenerator(name = "common_master_detail_seq", sequenceName = "common_master_detail_seq", allocationSize = 1)
 	@ApiModelProperty(value = "汎用マスタ明細ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")

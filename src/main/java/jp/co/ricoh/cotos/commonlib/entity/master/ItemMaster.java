@@ -76,7 +76,6 @@ public class ItemMaster extends EntityBaseMaster {
 	}
 
 	@Id
-	@Column(nullable = false)
  	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "item_master_seq")
  	@SequenceGenerator(name = "item_master_seq", sequenceName = "item_master_seq", allocationSize = 1)
 	@ApiModelProperty(value = "品種マスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")

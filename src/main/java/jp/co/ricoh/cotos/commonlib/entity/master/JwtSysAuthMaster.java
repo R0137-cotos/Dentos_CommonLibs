@@ -2,10 +2,7 @@ package jp.co.ricoh.cotos.commonlib.entity.master;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -23,9 +20,6 @@ import lombok.EqualsAndHashCode;
 public class JwtSysAuthMaster extends EntityBaseMaster {
 
 	@Id
- 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "jwt_sys_auth_master_seq")
- 	@SequenceGenerator(name = "jwt_sys_auth_master_seq", sequenceName = "jwt_sys_auth_master_seq", allocationSize = 1)
-	@Column(nullable = false)
 	@ApiModelProperty(value = "システムID", required = true, position = 1)
 	private String systemId;
 

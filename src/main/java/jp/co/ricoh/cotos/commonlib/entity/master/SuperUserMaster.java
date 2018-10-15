@@ -24,7 +24,6 @@ import lombok.EqualsAndHashCode;
 public class SuperUserMaster extends EntityBaseMaster {
 
 	@Id
-	@Column(nullable = false)
  	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "super_user_master_seq")
  	@SequenceGenerator(name = "super_user_master_seq", sequenceName = "super_user_master_seq", allocationSize = 1)
 	@ApiModelProperty(value = "スーパーユーザーマスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")

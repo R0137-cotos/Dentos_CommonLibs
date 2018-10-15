@@ -1,6 +1,5 @@
 package jp.co.ricoh.cotos.commonlib.entity.master;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,7 +29,6 @@ public class ProductCompMaster extends EntityBaseMaster {
 	 * 商品構成マスタID
 	 */
 	@Id
-	@Column(nullable = false)
  	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_comp_master_seq")
  	@SequenceGenerator(name = "product_comp_master_seq", sequenceName = "product_comp_master_seq", allocationSize = 1)
 	@ApiModelProperty(value = "商品構成マスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")

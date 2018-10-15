@@ -50,7 +50,6 @@ public class ContractChecklistCompMaster extends EntityBaseMaster {
 	}
 
 	@Id
-	@Column(nullable = false)
  	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_checklist_comp_master_seq")
  	@SequenceGenerator(name = "contract_checklist_comp_master_seq", sequenceName = "contract_checklist_comp_master_seq", allocationSize = 1)
 	@ApiModelProperty(value = "契約チェックリスト構成マスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")

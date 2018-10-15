@@ -69,7 +69,6 @@ public class EstimationChecklistCompMaster extends EntityBaseMaster {
 	}
 
 	@Id
-	@Column(nullable = false)
  	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "estimation_checklist_comp_master_seq")
  	@SequenceGenerator(name = "estimation_checklist_comp_master_seq", sequenceName = "estimation_checklist_comp_master_seq", allocationSize = 1)
 	@ApiModelProperty(value = "見積チェックリスト構成マスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
