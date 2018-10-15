@@ -1,14 +1,12 @@
 package jp.co.ricoh.cotos.commonlib.log;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.transaction.Transactional;
 
-import org.apache.catalina.util.URLEncoder;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Test;
@@ -27,9 +25,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import jp.co.ricoh.cotos.commonlib.util.HeadersProperties;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class CotosLogTests {
+
+	@Autowired
+	HeadersProperties headersProperties;
 
 	@LocalServerPort
 	private int port;
@@ -53,7 +56,7 @@ public class CotosLogTests {
 	@Test
 	@Transactional
 	public void ログ出力_認証情報あり() throws Exception {
-		RestTemplate rest = initRest("シングルユーザID:MOM社員ID:鍵");
+		RestTemplate rest = initRest("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcmlnaW4iOiJjb3Rvcy5yaWNvaC5jby5qcCIsInNpbmdsZVVzZXJJZCI6InNpZCIsIm1vbUVtcElkIjoibWlkIiwiZXhwIjoyNTM0MDIyNjgzOTl9.Apmi4uDwtiscf9WgVIh5Rx1DjoZX2eS7H2YlAGayOsQ");
 		ResponseEntity<String> response = rest.getForEntity(loadTopURL() + "test/api/log?isSuccess=true&hasBody=false", String.class);
 		Assert.assertEquals("正常終了", 200, response.getStatusCodeValue());
 		Assert.assertEquals("正常終了", "test", response.getBody());
@@ -62,7 +65,7 @@ public class CotosLogTests {
 	@Test
 	@Transactional
 	public void ログ出力_認証情報なし() throws Exception {
-		RestTemplate rest = initRest("::");
+		RestTemplate rest = initRest("");
 		try {
 			rest.getForEntity(loadTopURL() + "test/api/log?isSuccess=true&hasBody=false", String.class);
 			Assert.fail("正常終了してしまった。");
@@ -78,7 +81,7 @@ public class CotosLogTests {
 			rest.setInterceptors(Stream.concat(rest.getInterceptors().stream(), Arrays.asList(new ClientHttpRequestInterceptor() {
 				@Override
 				public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
-					request.getHeaders().add("Authentication", "Bearer " + new URLEncoder().encode(header, Charset.forName("UTF-8")));
+					request.getHeaders().add(headersProperties.getAuthorization(), "Bearer " + header);
 					return execution.execute(request, body);
 				}
 			}).stream()).collect(Collectors.toList()));

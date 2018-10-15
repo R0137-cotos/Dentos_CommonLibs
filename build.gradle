@@ -38,6 +38,7 @@ dependencies {
     compile 'org.jxls:jxls:2.4.3'
     compile 'org.jxls:jxls-poi:1.0.14'
     compile group: 'org.apache.poi', name : 'poi', version: '3.17'
+    compile('com.auth0:java-jwt:3.4.0')
 
     compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.7.0'
     compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.7.0'
@@ -74,7 +75,7 @@ uploadArchives {
     repositories {
         mavenDeployer {
             repository url: "file://${repo.absolutePath}"
-            pom.version = '0.0.56'
+            pom.version = '0.0.57'
             pom.groupId = 'jp.co.ricoh.cotos'
             pom.artifactId = 'common-libraries'
         }
