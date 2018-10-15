@@ -21,4 +21,8 @@ public class HeadersProperties {
 	private String pass;
 
 	private String authorization;
+
+	private String requireDispAuthorize;
+
+	private String dispAuthorization;
 }

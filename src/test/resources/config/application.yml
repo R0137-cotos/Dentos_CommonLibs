@@ -14,6 +14,8 @@ cotos:
       applicationId: headers_applicationId
       pass: headers_pass
       authorization: X-Cotos-Authorization
+      requireDispAuthorize: X-Cotos-Require-Disp-Authorize
+      dispAuthorization: X-Cotos-Disp-Authorization
   file:
     uploadFileDir: ./build/testTemp
     fileMaxSize: 19166
