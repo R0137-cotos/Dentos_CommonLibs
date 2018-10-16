@@ -25,7 +25,7 @@ import lombok.EqualsAndHashCode;
 public class AuthPatternMaster extends EntityBaseMaster {
 
 	@Id
-	@ApiModelProperty(value = "権限パターンID", required = true, position = 1)
+	@ApiModelProperty(value = "権限パターンID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long authPatternId;
 
 	/**

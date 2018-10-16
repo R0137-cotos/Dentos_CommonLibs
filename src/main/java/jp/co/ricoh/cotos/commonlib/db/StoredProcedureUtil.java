@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import jp.co.ricoh.cotos.commonlib.dto.result.ApproverInfo;
-import jp.co.ricoh.cotos.commonlib.entity.master.ApprovalRouteNodeMaster.AuthorizerDeriveMethodDiv;
+import jp.co.ricoh.cotos.commonlib.entity.master.ApprovalRouteNodeMaster.ApproverDeriveMethodDiv;
 
 /**
  * ストアドプロシージャー実行用ユーティリティー<br/>
@@ -26,7 +26,7 @@ public class StoredProcedureUtil {
 	/**
 	 * PROC_GET_APPROVER を実行する
 	 */
-	public ApproverInfo procGetApprover(AuthorizerDeriveMethodDiv processingType, String momId, String momCorpId, Integer hierarchyLevel) {
+	public ApproverInfo procGetApprover(ApproverDeriveMethodDiv processingType, String momId, String momCorpId, Integer hierarchyLevel) {
 
 		// クエリー準備
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery("PROC_GET_APPROVER", ApproverInfo.class);

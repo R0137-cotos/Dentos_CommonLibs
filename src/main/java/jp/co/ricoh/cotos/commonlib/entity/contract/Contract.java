@@ -108,10 +108,10 @@ public class Contract extends EntityBase {
 	/**
 	 * 商品グループマスタID
 	 */
-	// @Column(nullable = false)
-	// @ApiModelProperty(value = "商品グループマスタID", required = false, position = 3,
-	// allowableValues = "range[0,9999999999999999999]")
-	// private long productGrpMasterId;
+	@Column(nullable = false)
+	 @ApiModelProperty(value = "商品グループマスタID", required = false, position = 3,
+	 allowableValues = "range[0,9999999999999999999]")
+	 private long productGrpMasterId;
 
 	/**
 	 * ライフサイクル状態

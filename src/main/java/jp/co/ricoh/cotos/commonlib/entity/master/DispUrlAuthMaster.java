@@ -64,8 +64,11 @@ public class DispUrlAuthMaster extends EntityBaseMaster {
 	@ApiModelProperty(value = "アクション名", required = false, position = 4)
 	private String actionName;
 
+	/**
+	 * 権限パターンマスタ
+	 */
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "authPatternId")
+	@JoinColumn(name = "auth_pattern_id", referencedColumnName = "authPatternId")
 	@ApiModelProperty(value = "権限パターンマスタ", required = true, position = 5)
 	private AuthPatternMaster authPatternMaster;
 }

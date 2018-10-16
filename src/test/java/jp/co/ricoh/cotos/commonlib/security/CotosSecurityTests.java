@@ -1,7 +1,6 @@
 package jp.co.ricoh.cotos.commonlib.security;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -10,7 +9,6 @@ import java.util.stream.Stream;
 
 import javax.transaction.Transactional;
 
-import org.apache.catalina.util.URLEncoder;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -48,11 +46,18 @@ import jp.co.ricoh.cotos.commonlib.repository.master.SuperUserMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.UrlAuthMasterRepository;
 import jp.co.ricoh.cotos.commonlib.security.mom.MomAuthorityService;
 import jp.co.ricoh.cotos.commonlib.security.mom.MomAuthorityService.AuthLevel;
+import jp.co.ricoh.cotos.commonlib.util.HeadersProperties;
 import lombok.val;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class CotosSecurityTests {
+
+	private static final String WITHIN_PERIOD_JWT = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcmlnaW4iOiJjb3Rvcy5yaWNvaC5jby5qcCIsInNpbmdsZVVzZXJJZCI6InNpZCIsIm1vbUVtcElkIjoibWlkIiwiZXhwIjoyNTM0MDIyNjgzOTl9.Apmi4uDwtiscf9WgVIh5Rx1DjoZX2eS7H2YlAGayOsQ";
+
+	private static final String WITHOUT_PERIOD_JWT = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcmlnaW4iOiJjb3Rvcy5yaWNvaC5jby5qcCIsInNpbmdsZVVzZXJJZCI6InNpZCIsIm1vbUVtcElkIjoibWlkIiwiZXhwIjoxNTM5NTY5MDQwfQ.TyKAZllpcbryn31Px4zqP48SYUAMOrGEspqGN50QQDQ";
+
+	private static final String FALSIFICATION_JWT = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcmlnaW4iOiJjb3Rvcy5yaWNvaC5jby5qcCIsInNpbmdsZVVzZXJJZCI6ImZhbHNpZmljYXRpb24iLCJtb21FbXBJZCI6Im1pZCIsImV4cCI6MTUzOTU2OTA0MH0.YfBJJ1ajM-cV2fzgKXOoFRNw1dx-fxlYXmFC4bT6mpE";
 
 	@SpyBean
 	MomAuthorityService momAuthorityService;
@@ -65,6 +70,9 @@ public class CotosSecurityTests {
 
 	@Autowired
 	MvEmployeeMasterRepository mvEmployeeMasterRepository;
+
+	@Autowired
+	HeadersProperties headersProperties;
 
 	@LocalServerPort
 	private int port;
@@ -80,17 +88,13 @@ public class CotosSecurityTests {
 		context = injectContext;
 	}
 
-	private static boolean isH2() {
-		return "org.h2.Driver".equals(context.getEnvironment().getProperty("spring.datasource.driverClassName"));
-	}
-
 	@AfterClass
 	public static void stopAPServer() throws InterruptedException {
 		context.stop();
 	}
 
 	@Test
-	public void 認証_鍵なしGET() {
+	public void 認証_トークンなしGET() {
 		RestTemplate rest = initRest(null);
 		try {
 			rest.getForEntity(loadTopURL() + "test/api/test/1", String.class);
@@ -101,7 +105,7 @@ public class CotosSecurityTests {
 	}
 
 	@Test
-	public void 認証_鍵なしPOST() {
+	public void 認証_トークンなしPOST() {
 		RestTemplate rest = initRest(null);
 		try {
 			rest.postForEntity(loadTopURL() + "test/api/test", null, String.class);
@@ -113,17 +117,50 @@ public class CotosSecurityTests {
 
 	@Test
 	@Transactional
-	public void 認可_許可_GET() throws Exception {
-		RestTemplate rest = initRest("シングルユーザID:MOM社員ID:鍵");
+	public void 認証_トークンあり_オリジンなし_正常() throws Exception {
+		RestTemplate rest = initRest(WITHIN_PERIOD_JWT);
 		ResponseEntity<String> response = rest.getForEntity(loadTopURL() + "test/api/test/1?isSuccess=true&hasBody=false", String.class);
 		Assert.assertEquals("正常終了", 200, response.getStatusCodeValue());
-		Assert.assertEquals("正常終了", "シングルユーザID,MOM社員ID,APIを呼ぶことが出来るアプリケーション名", response.getBody());
+		Assert.assertEquals("正常終了", "sid,mid,cotos.ricoh.co.jp," + WITHIN_PERIOD_JWT, response.getBody());
+	}
+
+	@Test
+	@Transactional
+	public void 認証_トークンあり_異常_有効期限切れ() throws Exception {
+		RestTemplate rest = initRest(WITHOUT_PERIOD_JWT);
+		try {
+			rest.getForEntity(loadTopURL() + "test/api/test/1?isSuccess=true&hasBody=false", String.class);
+			Assert.fail("正常終了");
+		} catch (HttpClientErrorException e) {
+			Assert.assertEquals("アクセス不可であること", 401, e.getStatusCode().value());
+		}
+	}
+
+	@Test
+	@Transactional
+	public void 認証_トークンあり_異常_改竄() throws Exception {
+		RestTemplate rest = initRest(FALSIFICATION_JWT);
+		try {
+			rest.getForEntity(loadTopURL() + "test/api/test/1?isSuccess=true&hasBody=false", String.class);
+			Assert.fail("正常終了");
+		} catch (HttpClientErrorException e) {
+			Assert.assertEquals("アクセス不可であること", 401, e.getStatusCode().value());
+		}
+	}
+
+	@Test
+	@Transactional
+	public void 認可_許可_GET() throws Exception {
+		RestTemplate rest = initRest(WITHIN_PERIOD_JWT);
+		ResponseEntity<String> response = rest.getForEntity(loadTopURL() + "test/api/test/1?isSuccess=true&hasBody=false", String.class);
+		Assert.assertEquals("正常終了", 200, response.getStatusCodeValue());
+		Assert.assertEquals("正常終了", "sid,mid,cotos.ricoh.co.jp," + WITHIN_PERIOD_JWT, response.getBody());
 	}
 
 	@Test
 	@Transactional
 	public void 認可_拒否_GET() throws Exception {
-		RestTemplate rest = initRest("シングルユーザID:MOM社員ID:鍵");
+		RestTemplate rest = initRest(WITHIN_PERIOD_JWT);
 		try {
 			rest.getForEntity(loadTopURL() + "test/api/test/1?isSuccess=false&hasBody=false", String.class);
 			Assert.fail("正常終了");
@@ -135,20 +172,20 @@ public class CotosSecurityTests {
 	@Test
 	@Transactional
 	public void 認可_許可_POST() throws Exception {
-		RestTemplate rest = initRest("シングルユーザID:MOM社員ID:鍵");
+		RestTemplate rest = initRest(WITHIN_PERIOD_JWT);
 
 		TestEntity entity = new TestEntity();
 		entity.setTest("test");
 
 		ResponseEntity<String> response = rest.postForEntity(loadTopURL() + "test/api/test?isSuccess=true&hasBody=true", entity, String.class);
 		Assert.assertEquals("正常終了", 200, response.getStatusCodeValue());
-		Assert.assertEquals("正常終了", "シングルユーザID,MOM社員ID,APIを呼ぶことが出来るアプリケーション名", response.getBody());
+		Assert.assertEquals("正常終了", "sid,mid,cotos.ricoh.co.jp," + WITHIN_PERIOD_JWT, response.getBody());
 	}
 
 	@Test
 	@Transactional
 	public void 認可_拒否_POST() throws Exception {
-		RestTemplate rest = initRest("シングルユーザID:MOM社員ID:鍵");
+		RestTemplate rest = initRest(WITHIN_PERIOD_JWT);
 		TestEntity entity = new TestEntity();
 		entity.setTest("test");
 		try {
@@ -171,9 +208,6 @@ public class CotosSecurityTests {
 	@Transactional
 	public void 正常_MoM権限_編集_すべて() throws Exception {
 
-		if (isH2())
-			return;
-
 		Mockito.doReturn(AuthLevel.すべて).when(momAuthorityService).searchMomAuthority(Mockito.anyString(), Mockito.any(), Mockito.any());
 
 		AuthorityJudgeParameter authParam = new AuthorityJudgeParameter();
@@ -189,9 +223,6 @@ public class CotosSecurityTests {
 	@Transactional
 	public void 正常_MoM権限_編集_東西() throws Exception {
 
-		if (isH2())
-			return;
-
 		Mockito.doReturn(AuthLevel.東西).when(momAuthorityService).searchMomAuthority(Mockito.anyString(), Mockito.any(), Mockito.any());
 
 		AuthorityJudgeParameter authParam = new AuthorityJudgeParameter();
@@ -206,9 +237,6 @@ public class CotosSecurityTests {
 	@Test
 	@Transactional
 	public void 正常_MoM権限_編集_自顧客() throws Exception {
-
-		if (isH2())
-			return;
 
 		Mockito.doReturn(AuthLevel.自顧客).when(momAuthorityService).searchMomAuthority(Mockito.anyString(), Mockito.any(), Mockito.any());
 
@@ -227,9 +255,6 @@ public class CotosSecurityTests {
 	@Transactional
 	public void 正常_MoM権限_編集_配下() throws Exception {
 
-		if (isH2())
-			return;
-
 		Mockito.doReturn(AuthLevel.配下).when(momAuthorityService).searchMomAuthority(Mockito.anyString(), Mockito.any(), Mockito.any());
 
 		AuthorityJudgeParameter authParam = new AuthorityJudgeParameter();
@@ -246,9 +271,6 @@ public class CotosSecurityTests {
 	@Test
 	@Transactional
 	public void 正常_MoM権限_編集_自社() throws Exception {
-
-		if (isH2())
-			return;
 
 		Mockito.doReturn(AuthLevel.自社).when(momAuthorityService).searchMomAuthority(Mockito.anyString(), Mockito.any(), Mockito.any());
 
@@ -267,9 +289,6 @@ public class CotosSecurityTests {
 	@Transactional
 	public void 正常_MoM権限_編集_地域() throws Exception {
 
-		if (isH2())
-			return;
-
 		Mockito.doReturn(AuthLevel.地域).when(momAuthorityService).searchMomAuthority(Mockito.anyString(), Mockito.any(), Mockito.any());
 
 		AuthorityJudgeParameter authParam = new AuthorityJudgeParameter();
@@ -286,9 +305,6 @@ public class CotosSecurityTests {
 	@Test
 	@Transactional
 	public void 異常_MoM権限_編集_自顧客() throws Exception {
-
-		if (isH2())
-			return;
 
 		Mockito.doReturn(AuthLevel.自顧客).when(momAuthorityService).searchMomAuthority(Mockito.anyString(), Mockito.any(), Mockito.any());
 
@@ -307,9 +323,6 @@ public class CotosSecurityTests {
 	@Transactional
 	public void 異常_MoM権限_編集_配下() throws Exception {
 
-		if (isH2())
-			return;
-
 		Mockito.doReturn(AuthLevel.配下).when(momAuthorityService).searchMomAuthority(Mockito.anyString(), Mockito.any(), Mockito.any());
 
 		AuthorityJudgeParameter authParam = new AuthorityJudgeParameter();
@@ -326,9 +339,6 @@ public class CotosSecurityTests {
 	@Test
 	@Transactional
 	public void 異常_MoM権限_編集_自社() throws Exception {
-
-		if (isH2())
-			return;
 
 		Mockito.doReturn(AuthLevel.自社).when(momAuthorityService).searchMomAuthority(Mockito.anyString(), Mockito.any(), Mockito.any());
 
@@ -347,9 +357,6 @@ public class CotosSecurityTests {
 	@Transactional
 	public void 異常_MoM権限_編集_地域() throws Exception {
 
-		if (isH2())
-			return;
-
 		Mockito.doReturn(AuthLevel.地域).when(momAuthorityService).searchMomAuthority(Mockito.anyString(), Mockito.any(), Mockito.any());
 
 		AuthorityJudgeParameter authParam = new AuthorityJudgeParameter();
@@ -367,9 +374,6 @@ public class CotosSecurityTests {
 	@Transactional
 	public void 異常_MoM権限_編集_不可() throws Exception {
 
-		if (isH2())
-			return;
-
 		Mockito.doReturn(AuthLevel.不可).when(momAuthorityService).searchMomAuthority(Mockito.anyString(), Mockito.any(), Mockito.any());
 
 		AuthorityJudgeParameter authParam = new AuthorityJudgeParameter();
@@ -384,9 +388,6 @@ public class CotosSecurityTests {
 	@Test
 	@Transactional
 	public void 正常_MoM権限_承認_すべて() throws Exception {
-
-		if (isH2())
-			return;
 
 		Mockito.doReturn(AuthLevel.すべて).when(momAuthorityService).searchMomAuthority(Mockito.anyString(), Mockito.any(), Mockito.any());
 
@@ -403,9 +404,6 @@ public class CotosSecurityTests {
 	@Transactional
 	public void 正常_MoM権限_承認_東西() throws Exception {
 
-		if (isH2())
-			return;
-
 		Mockito.doReturn(AuthLevel.東西).when(momAuthorityService).searchMomAuthority(Mockito.anyString(), Mockito.any(), Mockito.any());
 
 		AuthorityJudgeParameter authParam = new AuthorityJudgeParameter();
@@ -420,9 +418,6 @@ public class CotosSecurityTests {
 	@Test
 	@Transactional
 	public void 正常_MoM権限_承認_配下() throws Exception {
-
-		if (isH2())
-			return;
 
 		Mockito.doReturn(AuthLevel.配下).when(momAuthorityService).searchMomAuthority(Mockito.anyString(), Mockito.any(), Mockito.any());
 
@@ -440,9 +435,6 @@ public class CotosSecurityTests {
 	@Transactional
 	public void 正常_MoM権限_承認_自社() throws Exception {
 
-		if (isH2())
-			return;
-
 		Mockito.doReturn(AuthLevel.自社).when(momAuthorityService).searchMomAuthority(Mockito.anyString(), Mockito.any(), Mockito.any());
 
 		AuthorityJudgeParameter authParam = new AuthorityJudgeParameter();
@@ -458,9 +450,6 @@ public class CotosSecurityTests {
 	@Test
 	@Transactional
 	public void 正常_MoM権限_承認_地域() throws Exception {
-
-		if (isH2())
-			return;
 
 		Mockito.doReturn(AuthLevel.地域).when(momAuthorityService).searchMomAuthority(Mockito.anyString(), Mockito.any(), Mockito.any());
 
@@ -478,9 +467,6 @@ public class CotosSecurityTests {
 	@Transactional
 	public void 異常_MoM権限_承認_不可() throws Exception {
 
-		if (isH2())
-			return;
-
 		Mockito.doReturn(AuthLevel.不可).when(momAuthorityService).searchMomAuthority(Mockito.anyString(), Mockito.any(), Mockito.any());
 
 		AuthorityJudgeParameter authParam = new AuthorityJudgeParameter();
@@ -496,9 +482,6 @@ public class CotosSecurityTests {
 	@Transactional
 	public void 異常_MoM権限_承認_自顧客() throws Exception {
 
-		if (isH2())
-			return;
-
 		Mockito.doReturn(AuthLevel.自顧客).when(momAuthorityService).searchMomAuthority(Mockito.anyString(), Mockito.any(), Mockito.any());
 
 		AuthorityJudgeParameter authParam = new AuthorityJudgeParameter();
@@ -513,9 +496,6 @@ public class CotosSecurityTests {
 	@Test
 	@Transactional
 	public void 異常_MoM権限_承認_配下() throws Exception {
-
-		if (isH2())
-			return;
 
 		Mockito.doReturn(AuthLevel.配下).when(momAuthorityService).searchMomAuthority(Mockito.anyString(), Mockito.any(), Mockito.any());
 
@@ -533,9 +513,6 @@ public class CotosSecurityTests {
 	@Transactional
 	public void 異常_MoM権限_承認_自社() throws Exception {
 
-		if (isH2())
-			return;
-
 		Mockito.doReturn(AuthLevel.自社).when(momAuthorityService).searchMomAuthority(Mockito.anyString(), Mockito.any(), Mockito.any());
 
 		AuthorityJudgeParameter authParam = new AuthorityJudgeParameter();
@@ -552,9 +529,6 @@ public class CotosSecurityTests {
 	@Transactional
 	public void 異常_MoM権限_承認_地域() throws Exception {
 
-		if (isH2())
-			return;
-
 		Mockito.doReturn(AuthLevel.地域).when(momAuthorityService).searchMomAuthority(Mockito.anyString(), Mockito.any(), Mockito.any());
 
 		AuthorityJudgeParameter authParam = new AuthorityJudgeParameter();
@@ -570,9 +544,6 @@ public class CotosSecurityTests {
 	@Test
 	@Transactional
 	public void 正常_MoM権限を取得できること() throws Exception {
-
-		if (isH2())
-			return;
 
 		AuthLevel result = momAuthorityService.searchMomAuthority("u0200757", ActionDiv.更新, AuthDiv.見積_契約_手配);
 		Assert.assertEquals("正常にMoM権限情報を取得できること", AuthLevel.自社, result);
@@ -614,13 +585,13 @@ public class CotosSecurityTests {
 
 		// ID 設定
 		SuperUserMaster superUserMaster = new SuperUserMaster();
-		superUserMaster.setMomEmployeeId("test");
+		superUserMaster.setUserId("test");
 		superUserMasterRepository.save(superUserMaster);
 
 		// データ取得
-		SuperUserMaster result = superUserMasterRepository.findOne(superUserMaster.getMomEmployeeId());
+		SuperUserMaster result = superUserMasterRepository.findOne(superUserMaster.getId());
 
-		Assert.assertEquals("正常に取得できること", "test", result.getMomEmployeeId());
+		Assert.assertEquals("正常に取得できること", "test", result.getUserId());
 	}
 
 	private RestTemplate initRest(final String header) {
@@ -632,7 +603,7 @@ public class CotosSecurityTests {
 					System.out.println("initRest Start");
 					System.out.println(request.getURI());
 					System.out.println(request.getMethod());
-					request.getHeaders().add("Authentication", "Bearer " + new URLEncoder().encode(header, Charset.forName("UTF-8")));
+					request.getHeaders().add(headersProperties.getAuthorization(), "Bearer " + header);
 					System.out.println(request.getHeaders());
 					System.out.println("initRest End");
 					return execution.execute(request, body);
@@ -641,5 +612,4 @@ public class CotosSecurityTests {
 		}
 		return rest;
 	}
-
 }

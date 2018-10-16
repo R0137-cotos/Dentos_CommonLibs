@@ -15,8 +15,8 @@ import jp.co.ricoh.cotos.commonlib.entity.master.MvTjmmb010UtlItem;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTjmmb020UtlCd;
 import jp.co.ricoh.cotos.commonlib.repository.master.CommonMasterDetailRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.CommonMasterRepository;
-import jp.co.ricoh.cotos.commonlib.repository.master.MvTjmmb020UtlCdRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTjmmb010UtlItemRepository;
+import jp.co.ricoh.cotos.commonlib.repository.master.MvTjmmb020UtlCdRepository;
 
 /**
  * 汎用マスタ取得共通クラス
@@ -35,7 +35,7 @@ public class FindCommonMaster {
 
 	/**
 	 * 汎用マスタ取得
-	 * 
+	 *
 	 * @param parameter
 	 *            汎用マスタ取得パラメータ
 	 * @return 汎用マスタリスト
@@ -48,7 +48,7 @@ public class FindCommonMaster {
 				CommonMaster commonMaster = commonMasterRepository.findByArticleCd(articleCd);
 				if (null != commonMaster) {
 					CommonMasterResult result = new CommonMasterResult();
-					result.setArticleCd(commonMaster.getArticleCd());
+					result.setArticleCd(commonMaster.getArticleName());
 					result.setArticleName(commonMaster.getArticleName());
 					List<CommonMasterDetailResult> detailResultList = createCommonMasterDetailResult(commonMasterDetailRepository.findByCommonMasterId(commonMaster.getId()));
 					if (parameter.isAddBlankRowFlg() && !detailResultList.isEmpty()) {
@@ -65,7 +65,7 @@ public class FindCommonMaster {
 
 	/**
 	 * MoM汎用マスタ取得
-	 * 
+	 *
 	 * @param parameter
 	 *            汎用マスタ取得パラメータ
 	 * @return MoM汎用マスタリスト
@@ -95,7 +95,7 @@ public class FindCommonMaster {
 
 	/**
 	 * 汎用マスタ明細結果リスト生成
-	 * 
+	 *
 	 * @param detailList
 	 *            COTOS汎用マスタ明細リスト
 	 * @return 汎用マスタ明細結果リスト
@@ -104,14 +104,14 @@ public class FindCommonMaster {
 		List<CommonMasterDetailResult> list = new ArrayList<>();
 		detailList.stream().forEach(detail -> {
 			CommonMasterDetailResult detailResult = new CommonMasterDetailResult();
-			detailResult.setCdVal(detail.getCdVal());
-			detailResult.setDisplayVal(detail.getDisplayVal());
+			detailResult.setCdVal(detail.getCodeValue());
+			detailResult.setDisplayVal(detail.getDisplayValue());
 			detailResult.setDataArea1(detail.getDataArea1());
 			detailResult.setDataArea2(detail.getDataArea2());
 			detailResult.setDataArea3(detail.getDataArea3());
 			detailResult.setDataArea4(detail.getDataArea4());
 			detailResult.setDataArea5(detail.getDataArea5());
-			detailResult.setSortNumber(detail.getSortNumber());
+			detailResult.setSortNumber(detail.getDisplayOrder());
 			list.add(detailResult);
 		});
 		return list;
@@ -119,7 +119,7 @@ public class FindCommonMaster {
 
 	/**
 	 * 汎用マスタ明細結果リスト生成
-	 * 
+	 *
 	 * @param detailList
 	 *            COTOS汎用マスタ明細リスト
 	 * @return 汎用マスタ明細結果リスト
@@ -143,7 +143,7 @@ public class FindCommonMaster {
 
 	/**
 	 * 汎用マスタ明細結果空行作成
-	 * 
+	 *
 	 * @return 汎用マスタ明細結果
 	 */
 	private CommonMasterDetailResult addBlankRow() {
