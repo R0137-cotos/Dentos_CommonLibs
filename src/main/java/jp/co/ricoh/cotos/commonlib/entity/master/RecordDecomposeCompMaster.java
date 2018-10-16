@@ -26,8 +26,8 @@ import lombok.EqualsAndHashCode;
 public class RecordDecomposeCompMaster extends EntityBaseMaster {
 
 	@Id
- 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "record_decompose_comp_master_seq")
- 	@SequenceGenerator(name = "record_decompose_comp_master_seq", sequenceName = "record_decompose_comp_master_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "record_decompose_comp_master_seq")
+	@SequenceGenerator(name = "record_decompose_comp_master_seq", sequenceName = "record_decompose_comp_master_seq", allocationSize = 1)
 	@ApiModelProperty(value = "計上分解構成マスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 

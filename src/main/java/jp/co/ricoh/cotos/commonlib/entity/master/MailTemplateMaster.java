@@ -31,7 +31,8 @@ public class MailTemplateMaster extends EntityBaseMaster {
 	 */
 	public enum ProcessCategory {
 
-		承認依頼("1"), 承認依頼取消("2"), 承認依頼差戻("3"), 承認("4"), 作業依頼("5"), 作業完了("6"), キャンセル手続き("7"), キャンセル手続き中止("8"), 解約手続き("9"), 解約手続き中止("10"), 問い合わせ("11");
+		承認依頼("1"), 承認依頼取消("2"), 承認依頼差戻("3"), 承認("4"), 作業依頼("5"), 作業完了("6"), キャンセル手続き("7"), キャンセル手続き中止("8"), 解約手続き(
+				"9"), 解約手続き中止("10"), 問い合わせ("11");
 
 		private final String text;
 
@@ -45,13 +46,14 @@ public class MailTemplateMaster extends EntityBaseMaster {
 		}
 
 		public static ProcessCategory fromString(String string) {
-			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst()
+					.orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
 
 	@Id
- 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mail_template_master_seq")
- 	@SequenceGenerator(name = "mail_template_master_seq", sequenceName = "mail_template_master_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mail_template_master_seq")
+	@SequenceGenerator(name = "mail_template_master_seq", sequenceName = "mail_template_master_seq", allocationSize = 1)
 	@ApiModelProperty(value = "メールテンプレートID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 

@@ -16,7 +16,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
-import jp.co.ricoh.cotos.commonlib.entity.EnumType.TargetContractType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -28,6 +27,26 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "contract_checklist_comp_master")
 public class ContractChecklistCompMaster extends EntityBaseMaster {
+
+	public enum TargetContractType {
+
+		共通("1"), 新規("2"), プラン変更("3"), 情報変更("4");
+
+		private final String text;
+
+		private TargetContractType(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		public String toString() {
+			return this.text;
+		}
+
+		public static TargetContractType fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+		}
+	}
 
 	public enum TargetLifecycleStatus {
 
@@ -45,13 +64,14 @@ public class ContractChecklistCompMaster extends EntityBaseMaster {
 		}
 
 		public static TargetLifecycleStatus fromString(String string) {
-			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst()
+					.orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
 
 	@Id
- 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_checklist_comp_master_seq")
- 	@SequenceGenerator(name = "contract_checklist_comp_master_seq", sequenceName = "contract_checklist_comp_master_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_checklist_comp_master_seq")
+	@SequenceGenerator(name = "contract_checklist_comp_master_seq", sequenceName = "contract_checklist_comp_master_seq", allocationSize = 1)
 	@ApiModelProperty(value = "契約チェックリスト構成マスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 

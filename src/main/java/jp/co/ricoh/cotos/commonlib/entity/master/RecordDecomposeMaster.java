@@ -44,13 +44,14 @@ public class RecordDecomposeMaster extends EntityBaseMaster {
 		}
 
 		public static RecordType fromString(String string) {
-			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst()
+					.orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
 
 	@Id
- 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "record_decompose_master_seq")
- 	@SequenceGenerator(name = "record_decompose_master_seq", sequenceName = "record_decompose_master_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "record_decompose_master_seq")
+	@SequenceGenerator(name = "record_decompose_master_seq", sequenceName = "record_decompose_master_seq", allocationSize = 1)
 	@ApiModelProperty(value = "計上分解マスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 

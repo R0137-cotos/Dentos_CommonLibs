@@ -47,7 +47,8 @@ public class UrlAuthMaster extends EntityBaseMaster {
 		}
 
 		public static ParameterType fromString(String string) {
-			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst()
+					.orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
 
@@ -66,7 +67,8 @@ public class UrlAuthMaster extends EntityBaseMaster {
 		}
 
 		public static ActionDiv fromString(String string) {
-			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst()
+					.orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
 
@@ -85,7 +87,8 @@ public class UrlAuthMaster extends EntityBaseMaster {
 		}
 
 		public static AuthDiv fromString(String string) {
-			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst()
+					.orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
 
@@ -104,7 +107,8 @@ public class UrlAuthMaster extends EntityBaseMaster {
 		}
 
 		public static AccessType fromString(String string) {
-			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst()
+					.orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
 
@@ -148,7 +152,7 @@ public class UrlAuthMaster extends EntityBaseMaster {
 	 * 認可処理実施要否
 	 */
 	@Column(nullable = false)
-	@ApiModelProperty(value = "認可処理実施要否", required = true, position = 4 , allowableValues = "range[0,9]")
+	@ApiModelProperty(value = "認可処理実施要否", required = true, position = 4, allowableValues = "range[0,9]")
 	private int requireAuthorize;
 
 	/**
@@ -156,21 +160,21 @@ public class UrlAuthMaster extends EntityBaseMaster {
 	 */
 	@Column(nullable = true)
 	@Enumerated(EnumType.STRING)
-	@ApiModelProperty(value = "外部参照ドメイン", required = false, position = 5  )
+	@ApiModelProperty(value = "外部参照ドメイン", required = false, position = 5)
 	private Domain externalRefDomain;
 
 	/**
 	 * DBデータ存在有無
 	 */
 	@Column(nullable = false)
-	@ApiModelProperty(value = "DBデータ存在有無", required = true, position = 6 , allowableValues = "range[0,9]")
+	@ApiModelProperty(value = "DBデータ存在有無", required = true, position = 6, allowableValues = "range[0,9]")
 	private int existsDb;
 
 	/**
 	 * パラメータータイプ
 	 */
 	@Column(nullable = false)
-	@ApiModelProperty(value = "パラメータータイプ", required = true, position = 7 )
+	@ApiModelProperty(value = "パラメータータイプ", required = true, position = 7)
 	private ParameterType paramType;
 
 	/**
@@ -184,21 +188,21 @@ public class UrlAuthMaster extends EntityBaseMaster {
 	 * アクション区分
 	 */
 	@Column(nullable = true)
-	@ApiModelProperty(value = "アクション区分", required = true, position = 9 )
+	@ApiModelProperty(value = "アクション区分", required = true, position = 9)
 	private ActionDiv actionDiv;
 
 	/**
 	 * 権限区分
 	 */
 	@Column(nullable = true)
-	@ApiModelProperty(value = "権限区分", required = true, position = 10 )
+	@ApiModelProperty(value = "権限区分", required = true, position = 10)
 	private AuthDiv authDiv;
 
 	/**
 	 * 参照種別
 	 */
 	@Column(nullable = true)
-	@ApiModelProperty(value = "参照種別", required = true, position = 11 )
+	@ApiModelProperty(value = "参照種別", required = true, position = 11)
 	private AccessType accessType;
 
 	/**

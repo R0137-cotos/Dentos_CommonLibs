@@ -29,8 +29,8 @@ public class ProductCompMaster extends EntityBaseMaster {
 	 * 商品構成マスタID
 	 */
 	@Id
- 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_comp_master_seq")
- 	@SequenceGenerator(name = "product_comp_master_seq", sequenceName = "product_comp_master_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_comp_master_seq")
+	@SequenceGenerator(name = "product_comp_master_seq", sequenceName = "product_comp_master_seq", allocationSize = 1)
 	@ApiModelProperty(value = "商品構成マスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
@@ -41,7 +41,7 @@ public class ProductCompMaster extends EntityBaseMaster {
 	@JoinColumn(name = "product_grp_master_id", referencedColumnName = "id")
 	@JsonIgnore
 	@ApiModelProperty(value = "商品グループマスタ", required = true, position = 2)
-	private  ProductGrpMaster productGrpMaster;
+	private ProductGrpMaster productGrpMaster;
 
 	/**
 	 * 商品マスタ
@@ -50,6 +50,6 @@ public class ProductCompMaster extends EntityBaseMaster {
 	@JoinColumn(name = "product_master_id", referencedColumnName = "id")
 	@JsonIgnore
 	@ApiModelProperty(value = "商品マスタ", required = true, position = 3)
-	private  ProductMaster productMaster;
+	private ProductMaster productMaster;
 
 }

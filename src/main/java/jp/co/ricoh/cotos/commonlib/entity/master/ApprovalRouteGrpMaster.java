@@ -26,8 +26,8 @@ import lombok.EqualsAndHashCode;
 public class ApprovalRouteGrpMaster extends EntityBaseMaster {
 
 	@Id
- 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "approval_route_grp_master_seq")
- 	@SequenceGenerator(name = "approval_route_grp_master_seq", sequenceName = "approval_route_grp_master_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "approval_route_grp_master_seq")
+	@SequenceGenerator(name = "approval_route_grp_master_seq", sequenceName = "approval_route_grp_master_seq", allocationSize = 1)
 	@ApiModelProperty(value = "承認ルートグループマスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 

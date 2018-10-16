@@ -31,8 +31,8 @@ public class ArrangementWorkCompMaster extends EntityBaseMaster {
 	 * 手配業務構成マスタID
 	 */
 	@Id
- 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "arrangement_work_comp_master_seq")
- 	@SequenceGenerator(name = "arrangement_work_comp_master_seq", sequenceName = "arrangement_work_comp_master_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "arrangement_work_comp_master_seq")
+	@SequenceGenerator(name = "arrangement_work_comp_master_seq", sequenceName = "arrangement_work_comp_master_seq", allocationSize = 1)
 	@ApiModelProperty(value = "手配業務構成マスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 

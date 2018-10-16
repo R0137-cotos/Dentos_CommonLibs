@@ -28,8 +28,8 @@ import lombok.EqualsAndHashCode;
 public class ArrangementWorkTypeMaster extends EntityBaseMaster {
 
 	@Id
- 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "arrangement_work_type_master_seq")
- 	@SequenceGenerator(name = "arrangement_work_type_master_seq", sequenceName = "arrangement_work_type_master_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "arrangement_work_type_master_seq")
+	@SequenceGenerator(name = "arrangement_work_type_master_seq", sequenceName = "arrangement_work_type_master_seq", allocationSize = 1)
 	@ApiModelProperty(value = "手配業務タイプマスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
