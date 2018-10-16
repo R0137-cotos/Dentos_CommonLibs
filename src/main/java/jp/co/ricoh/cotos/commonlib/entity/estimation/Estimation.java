@@ -107,10 +107,9 @@ public class Estimation extends EntityBase {
 	/**
 	 * 商品グループマスタID
 	 */
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "product_grp_master_id", referencedColumnName = "id")
-	@ApiModelProperty(value = "商品グループマスタID", required = true, position = 2)
-	private ProductGrpMaster productGrpMaster;
+	@Column(nullable = false)
+	@ApiModelProperty(value = "商品グループマスタID", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
+	private long productGrpMasterId;
 
 	/**
 	 * ライフサイクル状態

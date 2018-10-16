@@ -66,13 +66,11 @@ public class ArrangementWork extends EntityBase {
 	private Arrangement arrangement;
 
 	/**
-	 * 手配業務タイプマスタ
+	 * 手配業務タイプマスタID
 	 */
 	@Column(nullable = false)
-	@ManyToOne(optional = true)
-	@JoinColumn(name = "arrangement_work_type_master_id", referencedColumnName = "id")
-	@ApiModelProperty(value = "手配業務タイプマスタ", required = true, position = 3)
-	private ArrangementWorkTypeMaster arrangementWorkTypeMaster;
+	@ApiModelProperty(value = "手配業務タイプマスタID", required = true, position = 3, allowableValues = "range[0,9999999999999999999]")
+	private long arrangementWorkTypeMasterId;
 
 	/**
 	 * ワークフロー状態

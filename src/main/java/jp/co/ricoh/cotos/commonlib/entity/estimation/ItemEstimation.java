@@ -46,13 +46,11 @@ public class ItemEstimation extends EntityBase {
 	private long id;
 
 	/**
-	 * 品種マスタ
+	 * 品種マスタID
 	 */
 	@Column(nullable = false)
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "item_master_id", referencedColumnName = "id")
-	@ApiModelProperty(value = "品種マスタ", required = true, position = 2)
-	private ItemMaster itemMaster;
+	@ApiModelProperty(value = "品種マスタID", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
+	private long itemMasterId;
 	
 	/**
 	 * 商品マスタ
