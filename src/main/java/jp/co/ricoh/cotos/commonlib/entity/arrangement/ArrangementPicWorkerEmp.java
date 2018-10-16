@@ -38,7 +38,7 @@ public class ArrangementPicWorkerEmp extends EntityBase {
 	 * RJ社員情報マスタ
 	 */
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "momEmployeeId", referencedColumnName = "mom_emp_id")
+	@JoinColumn(name = "momEmployeeId", referencedColumnName = "emp_id")
 	@ApiModelProperty(value = "RJ社員情報マスタ", required = true, position = 2)
 	private MvEmployeeMaster mvEmployeeMaster;
 
