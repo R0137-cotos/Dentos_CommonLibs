@@ -130,4 +130,12 @@ public class TestRepositories {
 		DispUrlAuthMaster created = repository.findOne(found.getId());
 		Assert.assertEquals(newId, created.getId().getActionId());
 	}
+	
+	@Test
+	@WithMockCustomUser
+	@Transactional
+	public void testtest() throws Exception {
+		
+	}
+	
 }

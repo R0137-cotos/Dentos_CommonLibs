@@ -3,9 +3,13 @@ package jp.co.ricoh.cotos.commonlib.entity.arrangement;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -42,24 +46,29 @@ public class Arrangement extends EntityBase {
 	}
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "arrangement_seq")
+	@SequenceGenerator(name = "arrangement_seq", sequenceName = "arrangement_seq", allocationSize = 1)
 	@ApiModelProperty(value = "手配ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
 	/**
 	 * 契約ID
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "契約ID", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
 	private long contractId;
 
 	/**
 	 * 解約フラグ
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "解約フラグ", required = true, position = 3, allowableValues = "range[0,9]")
 	private int disengagementFlg;
 
 	/**
 	 * ワークフロー状態
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "ワークフロー状態", required = true, position = 4)
 	private WorkflowStatus workflowStatus;
 

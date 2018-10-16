@@ -2,12 +2,20 @@ package jp.co.ricoh.cotos.commonlib.entity.estimation;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
@@ -26,15 +34,19 @@ import lombok.ToString;
 public class EstimationAttachedFile extends EntityBase {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "estimation_attached_file_seq")
+	@SequenceGenerator(name = "estimation_attached_file_seq", sequenceName = "estimation_attached_file_seq", allocationSize = 1)
 	@ApiModelProperty(value = "見積添付ファイルID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
 	/**
 	 * 見積
 	 */
+	@Column(nullable = false)
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "estimation_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "見積", required = true, position = 2)
+	@JsonIgnore
 	private Estimation estimation;
 
 	/**
@@ -46,6 +58,7 @@ public class EstimationAttachedFile extends EntityBase {
 	/**
 	 * 添付ファイルパス
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "添付ファイルパス", required = true, position = 4, allowableValues = "range[0,1023]")
 	private String attachedFilePass;
 
@@ -53,17 +66,19 @@ public class EstimationAttachedFile extends EntityBase {
 	 * コメント
 	 */
 	@ApiModelProperty(value = "コメント", required = false, position = 5, allowableValues = "range[0,1000]")
-	private String comment;
+	private String attachedComment;
 
 	/**
 	 * 添付者MoM社員ID
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "添付者MoM社員ID", required = true, position = 6, allowableValues = "range[0,255]")
 	private String attachedEmpId;
 
 	/**
 	 * 添付者氏名
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "添付者氏名", required = true, position = 7, allowableValues = "range[0,255]")
 	private String attachedEmpName;
 
@@ -76,7 +91,9 @@ public class EstimationAttachedFile extends EntityBase {
 	/**
 	 * 添付日時
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "添付日時", required = true, position = 9, readOnly = true)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date attachedAt;
 
 	@PrePersist

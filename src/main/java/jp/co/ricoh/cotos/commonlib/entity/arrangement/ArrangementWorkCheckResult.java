@@ -2,12 +2,20 @@ package jp.co.ricoh.cotos.commonlib.entity.arrangement;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
@@ -24,32 +32,39 @@ import lombok.EqualsAndHashCode;
 public class ArrangementWorkCheckResult extends EntityBase {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "arrangement_work_check_result_seq")
+	@SequenceGenerator(name = "arrangement_work_check_result_seq", sequenceName = "arrangement_work_check_result_seq", allocationSize = 1)
 	@ApiModelProperty(value = "手配業務チェック結果ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
 	/**
 	 * 手配業務
 	 */
+	@Column(nullable = false)
 	@ManyToOne
 	@JoinColumn(name = "arrangement_work_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "手配業務", required = true, position = 2)
+	@JsonIgnore
 	private ArrangementWork arrangementWork;
 
 	/**
 	 * チェック事項コード
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "チェック事項コード", required = true, position = 3, allowableValues = "range[0,255]")
 	private String checkMatterCode;
 
 	/**
 	 * チェック事項文面
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "チェック事項文面", required = true, position = 4, allowableValues = "range[0,255]")
 	private String checkMatterText;
 
 	/**
 	 * 表示順
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "表示順", required = true, position = 5, allowableValues = "range[0,999]")
 	private int displayOrder;
 
@@ -75,12 +90,12 @@ public class ArrangementWorkCheckResult extends EntityBase {
 	 * チェック実施日時
 	 */
 	@ApiModelProperty(value = "チェック実施日時", required = false, position = 9, readOnly = true)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date checkedAt;
 	
 	@PrePersist
 	public void prePersist() {
 		this.checkedAt = new Date();
 	}
-
 
 }

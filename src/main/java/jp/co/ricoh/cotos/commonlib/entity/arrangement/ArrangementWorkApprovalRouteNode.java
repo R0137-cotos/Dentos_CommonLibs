@@ -1,9 +1,13 @@
 package jp.co.ricoh.cotos.commonlib.entity.arrangement;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -21,12 +25,15 @@ import lombok.EqualsAndHashCode;
 public class ArrangementWorkApprovalRouteNode extends EntityBase {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "arrangement_work_approval_route_node_seq")
+	@SequenceGenerator(name = "arrangement_work_approval_route_node_seq", sequenceName = "arrangement_work_approval_route_node_seq", allocationSize = 1)
 	@ApiModelProperty(value = "手配業務承認ルートノードID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
 	/**
 	 * 手配業務承認ルート
 	 */
+	@Column(nullable = false)
 	@ManyToOne
 	@JoinColumn(name = "arrangement_work_approval_route_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "手配業務承認ルート", required = true, position = 2)
@@ -35,6 +42,7 @@ public class ArrangementWorkApprovalRouteNode extends EntityBase {
 	/**
 	 * 承認順
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "承認順", required = true, position = 3, allowableValues = "range[0,999]")
 	private long approvalOrder;
 
@@ -47,12 +55,14 @@ public class ArrangementWorkApprovalRouteNode extends EntityBase {
 	/**
 	 * 承認者MoM社員ID
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "承認者MoM社員ID", required = true, position = 5, allowableValues = "range[0,255]")
 	private String approverEmpId;
 
 	/**
 	 * 承認者氏名
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "承認者氏名", required = true, position = 6, allowableValues = "range[0,255]")
 	private String approverName;
 

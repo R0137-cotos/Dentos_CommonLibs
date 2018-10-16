@@ -1,9 +1,13 @@
 package jp.co.ricoh.cotos.commonlib.entity.estimation;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -22,12 +26,15 @@ import lombok.EqualsAndHashCode;
 public class DealerEstimation extends EntityBase {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dealer_estimation_seq")
+	@SequenceGenerator(name = "dealer_estimation_seq", sequenceName = "dealer_estimation_seq", allocationSize = 1)
 	@ApiModelProperty(value = "ID", required = true, position = 1)
 	private long id;
 
 	/**
 	 * 企事部マスタ
 	 */
+	@Column(nullable = false)
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "mom_kjb_system_id", referencedColumnName = "mclMomRelId")
 	@ApiModelProperty(value = "企事部マスタ", required = true, position = 2)
@@ -84,6 +91,7 @@ public class DealerEstimation extends EntityBase {
 	/**
 	 * 見積
 	 */
+	@Column(nullable = false)
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "estimation_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "見積", required = true, position = 11)
@@ -92,6 +100,7 @@ public class DealerEstimation extends EntityBase {
 	/**
 	 * 販売店商流順
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "販売店商流順", required = true, position = 12, allowableValues = "range[0,999]")
 	private int dealerFlowOrder;
 

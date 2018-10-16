@@ -2,12 +2,20 @@ package jp.co.ricoh.cotos.commonlib.entity.estimation;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
@@ -25,38 +33,46 @@ import lombok.EqualsAndHashCode;
 public class EstimationCheckResult extends EntityBase {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "estimation_check_result_seq")
+	@SequenceGenerator(name = "estimation_check_result_seq", sequenceName = "estimation_check_result_seq", allocationSize = 1)
 	@ApiModelProperty(value = "見積チェック結果ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
 	/**
 	 * 見積
 	 */
+	@Column(nullable = false)
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "estimation_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "見積", required = true, position = 2)
+	@JsonIgnore
 	private Estimation estimation;
 
 	/**
 	 * 対象ライフサイクル状態
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "対象ライフサイクル状態", required = true, position = 3)
 	private LifecycleStatus lifecycleStatus;
 
 	/**
 	 * チェック事項コード
 	 */
-	@ApiModelProperty(value = "チェック事項コード", required = true, position = 4)
+	@Column(nullable = false)
+	@ApiModelProperty(value = "チェック事項コード", required = true, position = 4, allowableValues = "range[0,255]")
 	private String checkmatterCode;
 
 	/**
 	 * チェック事項文面
 	 */
-	@ApiModelProperty(value = "チェック事項文面", required = true, position = 5)
+	@Column(nullable = false)
+	@ApiModelProperty(value = "チェック事項文面", required = true, position = 5, allowableValues = "range[0,255]")
 	private String checkmatterText;
 
 	/**
 	 * 表示順
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "表示順", required = true, position = 6, allowableValues = "range[0,999]")
 	private int displayOrder;
 
@@ -82,6 +98,7 @@ public class EstimationCheckResult extends EntityBase {
 	 * チェック実施者日時
 	 */
 	@ApiModelProperty(value = "チェック実施者日時", required = false, position = 10, readOnly = true)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date checkedAt;
 
 	@PrePersist

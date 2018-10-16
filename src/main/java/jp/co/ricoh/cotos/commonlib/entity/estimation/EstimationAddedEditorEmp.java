@@ -1,10 +1,16 @@
 package jp.co.ricoh.cotos.commonlib.entity.estimation;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
@@ -22,14 +28,17 @@ import lombok.EqualsAndHashCode;
 public class EstimationAddedEditorEmp extends EntityBase {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "estimation_added_editor_emp_seq")
+	@SequenceGenerator(name = "estimation_added_editor_emp_seq", sequenceName = "estimation_added_editor_emp_seq", allocationSize = 1)
 	@ApiModelProperty(value = "ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
 	/**
 	 * RJ社員情報マスタ
 	 */
+	@Column(nullable = false)
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "momEmployeeId")
+	@JoinColumn(name = "momEmployeeId", referencedColumnName = "mom_emp_id")
 	@ApiModelProperty(value = "RJ社員情報マスタ", required = true, position = 2)
 	private MvEmployeeMaster mvEmployeeMaster;
 
@@ -66,6 +75,7 @@ public class EstimationAddedEditorEmp extends EntityBase {
 	/**
 	 * 社員名
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "社員名", required = true, position = 8, allowableValues = "range[0,255]")
 	private String employeeName;
 
@@ -111,6 +121,7 @@ public class EstimationAddedEditorEmp extends EntityBase {
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "estimation_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "見積", required = true, position = 15)
+	@JsonIgnore
 	private Estimation estimation;
 
 }

@@ -5,14 +5,20 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Pattern;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -93,6 +99,8 @@ public class Estimation extends EntityBase {
 	}
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "estimation_seq")
+	@SequenceGenerator(name = "estimation_seq", sequenceName = "estimation_seq", allocationSize = 1)
 	@ApiModelProperty(value = "見積ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
@@ -101,25 +109,27 @@ public class Estimation extends EntityBase {
 	 */
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "product_grp_master_id", referencedColumnName = "id")
-	@ApiModelProperty(value = "商品グループマスタID", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "商品グループマスタID", required = true, position = 2)
 	private ProductGrpMaster productGrpMaster;
-	
+
 	/**
 	 * ライフサイクル状態
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "ライフサイクル状態", required = true, position = 3)
 	private LifecycleStatus lifecycleStatus;
 
 	/**
 	 * ワークフロー状態
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "ワークフロー状態", required = true, position = 4)
 	private WorkflowStatus workflowStatus;
-	
+
 	/**
 	 * 恒久契約識別番号
 	 */
-	@ApiModelProperty(value = "恒久契約識別番号", required = true, position = 5, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "恒久契約識別番号", required = false, position = 5, allowableValues = "range[0,255]")
 	private String immutableContIdentNumber;
 
 	/**
@@ -137,15 +147,17 @@ public class Estimation extends EntityBase {
 	/**
 	 * 見積番号
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "見積番号", required = true, position = 8, allowableValues = "range[0,255]", readOnly = true)
 	@Pattern(regexp = "CEYYYYMMDDNNNNN")
-	private String estimateNumber;
+	private String estimationNumber;
 
 	/**
 	 * 見積番号枝番
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "見積番号枝番", required = true, position = 9, allowableValues = "range[0,99]", readOnly = true)
-	private int estimateBranchNumber;
+	private int estimationBranchNumber;
 
 	/**
 	 * 見積件名
@@ -156,6 +168,7 @@ public class Estimation extends EntityBase {
 	/**
 	 * 見積種別
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "見積種別", required = true, position = 11)
 	private EstimationType estimationType;
 
@@ -169,20 +182,20 @@ public class Estimation extends EntityBase {
 	 * 変更元契約番号
 	 */
 	@ApiModelProperty(value = "変更元契約番号", required = false, position = 13, allowableValues = "range[0,255]")
-	@Pattern(regexp = "CAYYYYMMDDNNNNN")
+	@Pattern(regexp = "CCYYYYMMDDNNNNN")
 	private String originContractNumber;
 
 	/**
 	 * 変更元契約番号枝番
 	 */
 	@ApiModelProperty(value = "変更元契約番号枝番", required = false, position = 14, allowableValues = "range[0,99]")
-	private int originContractBranchNumber;
+	private Integer originContractBranchNumber;
 
 	/**
 	 * 変更元契約ID
 	 */
 	@ApiModelProperty(value = "変更元契約ID", required = false, position = 15, allowableValues = "range[0,9999999999999999999]")
-	private long originContractId;
+	private Long originContractId;
 
 	/**
 	 * 商流区分
@@ -212,6 +225,7 @@ public class Estimation extends EntityBase {
 	 * 見積有効期限
 	 */
 	@ApiModelProperty(value = "見積有効期限", required = false, position = 20)
+	@Temporal(TemporalType.DATE)
 	private Date estimationLimit;
 
 	/**
@@ -240,12 +254,14 @@ public class Estimation extends EntityBase {
 
 	/** 見積鑑用納期 */
 	@ApiModelProperty(value = "見積鑑用納期", required = false, position = 25)
+	@Temporal(TemporalType.DATE)
 	private Date coverDeliveryDate;
 
 	/**
 	 * 見積鑑用有効期限
 	 */
 	@ApiModelProperty(value = "見積鑑用有効期限", required = false, position = 26)
+	@Temporal(TemporalType.DATE)
 	private Date coverExpirationDate;
 
 	/**
@@ -258,6 +274,7 @@ public class Estimation extends EntityBase {
 	 * 見積鑑用見積提示日
 	 */
 	@ApiModelProperty(value = "見積鑑用見積提示日", required = false, position = 28)
+	@Temporal(TemporalType.DATE)
 	private Date coverPresentationDate;
 
 	/**
@@ -329,7 +346,6 @@ public class Estimation extends EntityBase {
 	/**
 	 * 競合先契約種別
 	 */
-	// TODO 区分値不明
 	@ApiModelProperty(value = "競合先契約種別", required = false, position = 40, allowableValues = "range[0,255]")
 	private String competitionContractDiv;
 

@@ -3,12 +3,16 @@ package jp.co.ricoh.cotos.commonlib.entity.arrangement;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -47,12 +51,15 @@ public class ArrangementWork extends EntityBase {
 	}
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "arrangement_work_seq")
+	@SequenceGenerator(name = "arrangement_work_seq", sequenceName = "arrangement_work_seq", allocationSize = 1)
 	@ApiModelProperty(value = "手配業務ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
 	/**
 	 * 手配
 	 */
+	@Column(nullable = false)
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "arrangement_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "手配", required = true, position = 2)
@@ -61,6 +68,7 @@ public class ArrangementWork extends EntityBase {
 	/**
 	 * 手配業務タイプマスタ
 	 */
+	@Column(nullable = false)
 	@ManyToOne(optional = true)
 	@JoinColumn(name = "arrangement_work_type_master_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "手配業務タイプマスタ", required = true, position = 3)
@@ -69,6 +77,7 @@ public class ArrangementWork extends EntityBase {
 	/**
 	 * ワークフロー状態
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "ワークフロー状態", required = true, position = 4)
 	private WorkflowStatus workflowStatus;
 
