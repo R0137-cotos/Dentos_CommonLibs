@@ -40,12 +40,11 @@ public class ProductContract extends EntityBase {
 	private long id;
 
 	/**
-	 * 商品マスタ
+	 * 商品マスタID
 	 */
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "product_master_id", referencedColumnName = "id")
-	@ApiModelProperty(value = "商品マスタ", required = true, position = 2)
-	private ProductMaster productMaster;
+	@Column(nullable = false)
+	@ApiModelProperty(value = "商品マスタID", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
+	private long productMasterId;
 
 	/**
 	 * 商品名

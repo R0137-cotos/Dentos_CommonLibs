@@ -9,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -20,7 +19,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
-import jp.co.ricoh.cotos.commonlib.entity.master.ItemMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.ItemMaster.CostType;
 import jp.co.ricoh.cotos.commonlib.entity.master.ItemMaster.ItemType;
 import lombok.Data;
@@ -43,12 +41,11 @@ public class ItemContract extends EntityBase {
 	private long id;
 
 	/**
-	 * 品種マスタ
+	 * 品種マスタID
 	 */
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "item_master_id", referencedColumnName = "id")
-	@ApiModelProperty(value = "品種マスタ", required = true, position = 2)
-	private ItemMaster itemMaster;
+	@Column(nullable = false)
+	@ApiModelProperty(value = "品種マスタID", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
+	private long itemMasterId;
 
 	/**
 	 * 商品マスタID

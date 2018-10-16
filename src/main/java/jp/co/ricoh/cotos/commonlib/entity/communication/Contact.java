@@ -64,6 +64,7 @@ public class Contact extends EntityBase {
 	/**
 	 * サービスカテゴリ
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "サービスカテゴリ", required = false, position = 5)
 	private ServiceCategory serviceCategory;
 
