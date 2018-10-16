@@ -11,12 +11,12 @@ public class CommonMasterDetailResult {
 	/**
 	 * コード値
 	 */
-	private String cdVal;
+	private String codeValue;
 
 	/**
 	 * コード表示値
 	 */
-	private String displayVal;
+	private String displayValue;
 
 	/**
 	 * 設定値1
@@ -44,7 +44,7 @@ public class CommonMasterDetailResult {
 	private String dataArea5;
 
 	/**
-	 * ソート順
+	 * 表示順
 	 */
-	private Integer sortNumber;
+	private Integer displayOrder;
 }

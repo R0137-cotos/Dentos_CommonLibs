@@ -18,5 +18,3 @@ insert into common_master_detail(id,available_period_from,available_period_to,co
 values(9,trunc(current_date)-1,to_date('2999/12/31', 'yyyy/mm/dd'),4,'テスト項目4',null,null,null,null,null,0,4,2,0);
 insert into common_master_detail(id,available_period_from,available_period_to,code_value,display_value,data_area_1,data_area_2,data_area_3,data_area_4,data_area_5,delete_flg,display_order,common_master_id,version)
 values(10,trunc(current_date)-1,to_date('2999/12/31', 'yyyy/mm/dd'),5,'テスト項目5',null,null,null,null,null,0,5,2,0);
-insert into common_master_detail(id,available_period_from,available_period_to,code_value,display_value,data_area_1,data_area_2,data_area_3,data_area_4,data_area_5,delete_flg,display_order,common_master_id,version)
-values(11,trunc(current_date)-1,to_date('2999/12/31', 'yyyy/mm/dd'),1,'テスト項目1',null,null,null,null,null,0,1,3,0);
