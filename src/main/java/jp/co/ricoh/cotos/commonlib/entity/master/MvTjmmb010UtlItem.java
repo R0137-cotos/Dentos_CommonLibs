@@ -14,6 +14,9 @@ import javax.persistence.Transient;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+/**
+ * MoM汎用マスタ
+ */
 @Entity
 @Data
 @Table(name = "mv_tjmmb010_utl_item")

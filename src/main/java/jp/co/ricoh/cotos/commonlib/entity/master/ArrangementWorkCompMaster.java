@@ -1,10 +1,16 @@
 package jp.co.ricoh.cotos.commonlib.entity.master;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
@@ -21,8 +27,13 @@ import lombok.EqualsAndHashCode;
 @Table(name = "arrangement_work_comp_master")
 public class ArrangementWorkCompMaster extends EntityBaseMaster {
 
+	/**
+	 * 手配業務構成マスタID
+	 */
 	@Id
-	@ApiModelProperty(value = "手配業務マスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "arrangement_work_comp_master_seq")
+	@SequenceGenerator(name = "arrangement_work_comp_master_seq", sequenceName = "arrangement_work_comp_master_seq", allocationSize = 1)
+	@ApiModelProperty(value = "手配業務構成マスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
 	/**
@@ -36,12 +47,14 @@ public class ArrangementWorkCompMaster extends EntityBaseMaster {
 	/**
 	 * 対象契約種別
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "対象契約種別", required = true, position = 3)
 	private TargetContractType targetContractType;
 
 	/**
 	 * 解約フラグ
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "解約フラグ", required = true, position = 4, allowableValues = "range[0,9]")
 	private int disengagementFlg;
 
@@ -49,13 +62,15 @@ public class ArrangementWorkCompMaster extends EntityBaseMaster {
 	 * 手配業務タイプマスタ
 	 */
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "arrange_work_type_master_id", referencedColumnName = "id")
+	@JoinColumn(name = "arrangement_work_type_master_id", referencedColumnName = "id")
+	@JsonIgnore
 	@ApiModelProperty(value = "手配業務タイプマスタ", required = true, position = 5)
 	private ArrangementWorkTypeMaster arrangementWorkTypeMaster;
 
 	/**
 	 * 明細番号
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "明細番号", required = true, position = 6, allowableValues = "range[0,999]")
 	private int seqNumber;
 

@@ -20,7 +20,6 @@ import lombok.EqualsAndHashCode;
 public class JwtSysAuthMaster extends EntityBaseMaster {
 
 	@Id
-	@Column(nullable = false)
 	@ApiModelProperty(value = "システムID", required = true, position = 1)
 	private String systemId;
 
