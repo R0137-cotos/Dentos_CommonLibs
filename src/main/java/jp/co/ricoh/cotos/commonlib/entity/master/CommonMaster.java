@@ -1,5 +1,6 @@
 package jp.co.ricoh.cotos.commonlib.entity.master;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -13,7 +14,6 @@ import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
-import jp.co.ricoh.cotos.commonlib.entity.EnumType.ServiceCategory;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -25,6 +25,30 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "common_master")
 public class CommonMaster extends EntityBaseMaster {
+
+	/**
+	 * サービスカテゴリ
+	 */
+	public enum ServiceCategory {
+
+		共通("0"), 見積("1"), 契約("2"), 手配("3");
+
+		private final String text;
+
+		private ServiceCategory(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		public String toString() {
+			return this.text;
+		}
+
+		public static ServiceCategory fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst()
+					.orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+		}
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "common_master_seq")
