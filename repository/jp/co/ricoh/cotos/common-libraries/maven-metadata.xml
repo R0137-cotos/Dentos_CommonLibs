@@ -3,11 +3,7 @@
   <groupId>jp.co.ricoh.cotos</groupId>
   <artifactId>common-libraries</artifactId>
   <versioning>
-<<<<<<< HEAD
     <release>0.0.61</release>
-=======
-    <release>0.0.60</release>
->>>>>>> feature/cotos-phase_2nd
     <versions>
       <version>0.0.1</version>
       <version>0.0.2</version>
@@ -68,14 +64,9 @@
       <version>0.0.57</version>
       <version>0.0.58</version>
       <version>0.0.59</version>
-<<<<<<< HEAD
+      <version>0.0.60</version>
       <version>0.0.61</version>
     </versions>
     <lastUpdated>20181016050905</lastUpdated>
-=======
-      <version>0.0.60</version>
-    </versions>
-    <lastUpdated>20181016050848</lastUpdated>
->>>>>>> feature/cotos-phase_2nd
   </versioning>
 </metadata>
