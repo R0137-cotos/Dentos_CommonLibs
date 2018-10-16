@@ -1,7 +1,6 @@
 package jp.co.ricoh.cotos.commonlib.entity.estimation;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,9 +15,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
@@ -80,7 +77,7 @@ public class EstimationDetail extends EntityBase {
 	@Lob
 	@ApiModelProperty(value = "拡張項目", required = false, position = 7)
 	private String extendsParameter;
-	
+
 	@OneToOne(optional = false)
 	@ApiModelProperty(value = "品種(見積用)", required = true, position = 8)
 	private ItemEstimation itemEstimation;

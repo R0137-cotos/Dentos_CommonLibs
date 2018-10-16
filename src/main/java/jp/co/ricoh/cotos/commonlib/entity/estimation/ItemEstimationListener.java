@@ -29,7 +29,7 @@ public class ItemEstimationListener {
 	@Transactional
 	public void appendsEstimationItemFields(ItemEstimation item) {
 		ItemMaster itemMaster = itemMasterRepository.findByRicohItemCode(item.getRicohItemCode());
-		item.setItemMaster(itemMaster);
+		//item.setItemMaster(itemMaster);
 		BeanUtils.copyProperties(itemMaster, item, "id");
 	}
 }

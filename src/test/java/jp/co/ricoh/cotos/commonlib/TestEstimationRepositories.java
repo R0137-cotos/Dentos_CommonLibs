@@ -1,7 +1,5 @@
 package jp.co.ricoh.cotos.commonlib;
 
-import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 

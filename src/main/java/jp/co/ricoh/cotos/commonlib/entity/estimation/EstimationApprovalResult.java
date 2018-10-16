@@ -87,7 +87,7 @@ public class EstimationApprovalResult extends EntityBase {
 	@ApiModelProperty(value = "実施日時", required = true, position = 8, readOnly = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date processedAt;
-	
+
 	@PrePersist
 	public void prePersist() {
 		this.processedAt = new Date();

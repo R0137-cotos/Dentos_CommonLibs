@@ -17,7 +17,6 @@ import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
-import jp.co.ricoh.cotos.commonlib.entity.master.ArrangementWorkTypeMaster;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

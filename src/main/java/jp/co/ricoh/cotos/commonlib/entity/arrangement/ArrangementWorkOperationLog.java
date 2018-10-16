@@ -87,7 +87,7 @@ public class ArrangementWorkOperationLog extends EntityBase {
 	@ApiModelProperty(value = "実施日時", required = true, position = 7, readOnly = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date operatedAt;
-	
+
 	@PrePersist
 	public void prePersist() {
 		this.operatedAt = new Date();

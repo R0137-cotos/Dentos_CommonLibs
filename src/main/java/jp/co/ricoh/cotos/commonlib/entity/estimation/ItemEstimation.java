@@ -10,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -22,7 +21,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
-import jp.co.ricoh.cotos.commonlib.entity.master.ItemMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.ItemMaster.CostType;
 import jp.co.ricoh.cotos.commonlib.entity.master.ItemMaster.ItemType;
 import lombok.Data;
@@ -51,7 +49,7 @@ public class ItemEstimation extends EntityBase {
 	@Column(nullable = false)
 	@ApiModelProperty(value = "品種マスタID", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
 	private long itemMasterId;
-	
+
 	/**
 	 * 商品マスタ
 	 */
@@ -81,14 +79,14 @@ public class ItemEstimation extends EntityBase {
 	 */
 	@ApiModelProperty(value = "費用種別", required = true, position = 7)
 	private CostType costType;
-	
+
 	/**
 	 * 仕切価格
 	 */
 	@ApiModelProperty(value = "仕切価格", required = true, position = 8, allowableValues = "range[0.00,9999999999999999999.99]")
 	@Pattern(regexp = "9999999999999999999.99")
 	private BigDecimal partitionPrice;
-	
+
 	/**
 	 * 積上げ可能期間（開始日）
 	 */
@@ -96,7 +94,7 @@ public class ItemEstimation extends EntityBase {
 	@ApiModelProperty(value = "積上げ可能期間（開始日）", required = true, position = 9, readOnly = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date effectiveFrom;
-	
+
 	/**
 	 * 積上げ可能期間（終了日）
 	 */
@@ -104,7 +102,7 @@ public class ItemEstimation extends EntityBase {
 	@ApiModelProperty(value = "積上げ可能期間（終了日）", required = true, position = 10, readOnly = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date effectiveTo;
-	
+
 	/**
 	 * 見積明細
 	 */

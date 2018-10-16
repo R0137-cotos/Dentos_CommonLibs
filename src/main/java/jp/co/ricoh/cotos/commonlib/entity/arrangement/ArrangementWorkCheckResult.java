@@ -91,7 +91,7 @@ public class ArrangementWorkCheckResult extends EntityBase {
 	@ApiModelProperty(value = "チェック実施日時", required = false, position = 9, readOnly = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date checkedAt;
-	
+
 	@PrePersist
 	public void prePersist() {
 		this.checkedAt = new Date();

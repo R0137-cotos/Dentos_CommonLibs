@@ -23,7 +23,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @Table(name = "estimation_approval_route_node")
 public class EstimationApprovalRouteNode extends EntityBase {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "estimation_approval_route_node_seq")
 	@SequenceGenerator(name = "estimation_approval_route_node_seq", sequenceName = "estimation_approval_route_node_seq", allocationSize = 1)

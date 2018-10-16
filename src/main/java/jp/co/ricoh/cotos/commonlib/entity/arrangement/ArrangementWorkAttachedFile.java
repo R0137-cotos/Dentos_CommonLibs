@@ -89,7 +89,7 @@ public class ArrangementWorkAttachedFile extends EntityBase {
 	@ApiModelProperty(value = "添付日時", required = true, position = 9, readOnly = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date attachedAt;
-	
+
 	@PrePersist
 	public void prePersist() {
 		this.attachedAt = new Date();
