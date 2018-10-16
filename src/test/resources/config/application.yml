@@ -1,9 +1,21 @@
 cotos:
   auth:
-    authentications:
-      鍵: APIを呼ぶことが出来るアプリケーション名
-      鍵2: 別のアプリケーション
     throughURIs: /dummy, /swagger-ui.html, /dummy2
+    jwt:
+      secretKey: cotosSecretKey
+      tillExpired: 10
+      claims:
+        momEmpId: momEmpId
+        singleUserId: singleUserId
+        origin: origin
+    headers:
+      momEmpId: headers_mom_emp_id
+      singleUserId: headers_single_user_id
+      applicationId: headers_applicationId
+      pass: headers_pass
+      authorization: X-Cotos-Authorization
+      requireDispAuthorize: X-Cotos-Require-Disp-Authorize
+      dispAuthorization: X-Cotos-Disp-Authorization
   file:
     uploadFileDir: ./build/testTemp
     fileMaxSize: 19166
