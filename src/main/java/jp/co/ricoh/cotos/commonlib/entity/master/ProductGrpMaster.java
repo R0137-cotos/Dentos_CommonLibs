@@ -42,19 +42,19 @@ public class ProductGrpMaster extends EntityBaseMaster {
 	/**
 	 * 見積承認ルートグループマスタ
 	 */
-	@ManyToOne(optional = false)
+	@ManyToOne()
 	@JoinColumn(name = "estimation_approval_route_grp_id", referencedColumnName = "id")
 	@JsonIgnore
-	@ApiModelProperty(value = "承認ルートグループマスタ", required = true, position = 2)
+	@ApiModelProperty(value = "承認ルートグループマスタ", required = false, position = 2)
 	private ApprovalRouteGrpMaster estimationApprovalRouteGrpMaster;
 
 	/**
 	 * 契約承認ルートグループマスタ
 	 */
-	@ManyToOne(optional = false)
+	@ManyToOne()
 	@JoinColumn(name = "contract_approval_route_grp_id", referencedColumnName = "id")
 	@JsonIgnore
-	@ApiModelProperty(value = "契約承認ルートグループマスタ", required = true, position = 3)
+	@ApiModelProperty(value = "契約承認ルートグループマスタ", required = false, position = 3)
 	private ApprovalRouteGrpMaster contractApprovalRouteGrpMaster;
 
 	/**

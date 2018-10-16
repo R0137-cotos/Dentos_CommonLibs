@@ -48,7 +48,7 @@ public class ApprovalRouteGrpMaster extends EntityBaseMaster {
 	 * 承認ルートマスタ
 	 */
 	@OneToMany(mappedBy = "approvalRouteGrpMaster")
-	@ApiModelProperty(value = "承認ルートマスタ", required = false, position = 4)
+	@ApiModelProperty(value = "承認ルートマスタ", required = true, position = 4)
 	private List<ApprovalRouteMaster> approvalRouteMasterList;
 
 	/**
