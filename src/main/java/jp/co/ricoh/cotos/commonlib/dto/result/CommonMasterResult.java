@@ -11,9 +11,9 @@ import lombok.Data;
 public class CommonMasterResult {
 
 	/**
-	 * 汎用マスタID
+	 * カラム名
 	 */
-	private String articleCd;
+	private String columnName;
 
 	/**
 	 * 汎用マスタ名称
