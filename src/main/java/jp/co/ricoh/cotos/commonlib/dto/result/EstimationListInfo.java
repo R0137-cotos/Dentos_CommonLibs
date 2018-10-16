@@ -41,7 +41,7 @@ public class EstimationListInfo {
 	@ApiModelProperty(value = "見積種別<br />" //
 			+ "新規、プラン変更等の見積種別を表す。", //
 			required = false, position = 3) //
-	private EstimationType estimationDiv;
+	private EstimationType estimationtype;
 
 	/**
 	 * 見積件名

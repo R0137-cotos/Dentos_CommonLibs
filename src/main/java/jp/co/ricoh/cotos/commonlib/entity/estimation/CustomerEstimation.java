@@ -38,7 +38,6 @@ public class CustomerEstimation extends EntityBase {
 	/**
 	 * 企事部マスタ
 	 */
-	@Column(nullable = false)
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "mom_kjb_system_id", referencedColumnName = "mclMomRelId")
 	@ApiModelProperty(value = "企事部マスタ", required = true, position = 2)
@@ -124,7 +123,6 @@ public class CustomerEstimation extends EntityBase {
 	/**
 	 * 見積
 	 */
-	@Column(nullable = false)
 	@OneToOne(optional = false)
 	@JoinColumn(name = "estimation_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "見積", required = true, position = 15)

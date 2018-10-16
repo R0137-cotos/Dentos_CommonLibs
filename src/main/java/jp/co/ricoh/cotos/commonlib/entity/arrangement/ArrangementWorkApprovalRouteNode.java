@@ -33,8 +33,7 @@ public class ArrangementWorkApprovalRouteNode extends EntityBase {
 	/**
 	 * 手配業務承認ルート
 	 */
-	@Column(nullable = false)
-	@ManyToOne
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "arrangement_work_approval_route_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "手配業務承認ルート", required = true, position = 2)
 	private ArrangementWorkApprovalRoute arrangementWorkApprovalRoute;

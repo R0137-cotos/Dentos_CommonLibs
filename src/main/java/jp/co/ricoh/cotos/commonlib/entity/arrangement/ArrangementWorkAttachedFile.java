@@ -38,8 +38,7 @@ public class ArrangementWorkAttachedFile extends EntityBase {
 	/**
 	 * 手配業務
 	 */
-	@Column(nullable = false)
-	@ManyToOne
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "arrangement_work_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "手配業務", required = true, position = 2)
 	private ArrangementWork arrangementWork;

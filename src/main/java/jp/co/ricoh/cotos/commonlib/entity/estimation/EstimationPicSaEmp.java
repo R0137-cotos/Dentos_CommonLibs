@@ -35,7 +35,6 @@ public class EstimationPicSaEmp extends EntityBase {
 	/**
 	 * RJ社員情報マスタ
 	 */
-	@Column(nullable = false)
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "momEmployeeId", referencedColumnName = "mom_emp_id")
 	@ApiModelProperty(value = "RJ社員情報マスタ", required = true, position = 2)
@@ -117,7 +116,6 @@ public class EstimationPicSaEmp extends EntityBase {
 	/**
 	 * 見積
 	 */
-	@Column(nullable = false)
 	@OneToOne(optional = false)
 	@JoinColumn(name = "estimation_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "見積", required = true, position = 15)

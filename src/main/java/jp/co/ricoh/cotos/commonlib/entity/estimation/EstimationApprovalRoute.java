@@ -36,7 +36,6 @@ public class EstimationApprovalRoute extends EntityBase {
 	/**
 	 * 見積
 	 */
-	@Column(nullable = false)
 	@OneToOne
 	@ApiModelProperty(value = "見積", required = true, position = 2)
 	@JoinColumn(name = "estimation_id", referencedColumnName = "id")
@@ -79,7 +78,6 @@ public class EstimationApprovalRoute extends EntityBase {
 	/**
 	 * 見積承認ルートノード
 	 */
-	@Column(nullable = false)
 	@OneToMany(mappedBy = "estimationApprovalRoute")
 	@ApiModelProperty(value = "見積承認ルートノード", required = true, position = 8)
 	private List<EstimationApprovalRouteNode> estimationApprovalRouteNodeList;

@@ -36,7 +36,6 @@ public class EstimationAddedEditorEmp extends EntityBase {
 	/**
 	 * RJ社員情報マスタ
 	 */
-	@Column(nullable = false)
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "momEmployeeId", referencedColumnName = "mom_emp_id")
 	@ApiModelProperty(value = "RJ社員情報マスタ", required = true, position = 2)

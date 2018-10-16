@@ -41,8 +41,7 @@ public class ArrangementWorkApprovalResult extends EntityBase {
 	/**
 	 * 手配業務承認ルート
 	 */
-	@Column(nullable = false)
-	@ManyToOne(optional = true)
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "arrange_work_approval_route_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "手配業務承認ルート", required = true, position = 2)
 	@JsonIgnore

@@ -37,9 +37,9 @@ public class ArrangementPicWorkerEmp extends EntityBase {
 	/**
 	 * RJ社員情報マスタ
 	 */
-	@ManyToOne
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "momEmployeeId", referencedColumnName = "mom_emp_id")
-	@ApiModelProperty(value = "RJ社員情報マスタ", required = false, position = 2)
+	@ApiModelProperty(value = "RJ社員情報マスタ", required = true, position = 2)
 	private MvEmployeeMaster mvEmployeeMaster;
 
 	/**
@@ -118,8 +118,7 @@ public class ArrangementPicWorkerEmp extends EntityBase {
 	/**
 	 * 手配業務
 	 */
-	@Column(nullable = false)
-	@OneToOne(optional = true)
+	@OneToOne(optional = false)
 	@JoinColumn(name = "arrangement_work_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "手配業務", required = true, position = 15)
 	@JsonIgnore

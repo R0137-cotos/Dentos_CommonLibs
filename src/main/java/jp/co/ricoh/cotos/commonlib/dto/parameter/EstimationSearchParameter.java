@@ -253,7 +253,7 @@ public class EstimationSearchParameter {
 	@ApiModelProperty(value = "契約種別<br />" //
 			+ "新規, 変更などの見積種別を表す。", //
 			required = false) //
-	private EstimationType estimationDiv;
+	private EstimationType estimationType;
 
 	/**
 	 * 商品名称

@@ -42,7 +42,6 @@ public class EstimationAttachedFile extends EntityBase {
 	/**
 	 * 見積
 	 */
-	@Column(nullable = false)
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "estimation_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "見積", required = true, position = 2)
