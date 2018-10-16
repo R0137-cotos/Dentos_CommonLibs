@@ -585,13 +585,13 @@ public class CotosSecurityTests {
 
 		// ID 設定
 		SuperUserMaster superUserMaster = new SuperUserMaster();
-		superUserMaster.setMomEmployeeId("test");
+		superUserMaster.setUserId("test");
 		superUserMasterRepository.save(superUserMaster);
 
 		// データ取得
-		SuperUserMaster result = superUserMasterRepository.findOne(superUserMaster.getMomEmployeeId());
+		SuperUserMaster result = superUserMasterRepository.findOne(superUserMaster.getId());
 
-		Assert.assertEquals("正常に取得できること", "test", result.getMomEmployeeId());
+		Assert.assertEquals("正常に取得できること", "test", result.getUserId());
 	}
 
 	private RestTemplate initRest(final String header) {

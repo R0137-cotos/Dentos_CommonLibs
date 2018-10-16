@@ -11,8 +11,6 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
@@ -23,8 +21,6 @@ import javax.validation.constraints.Pattern;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
-import jp.co.ricoh.cotos.commonlib.entity.master.ProductMaster;
-import jp.co.ricoh.cotos.commonlib.entity.master.ProductGrpMaster;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

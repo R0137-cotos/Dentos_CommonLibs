@@ -35,7 +35,7 @@ public class ApprovalSearch {
 
 	/**
 	 * 承認ルート特定 ※見積承認ルート取得の場合:(estimation, null) 契約承認ルート取得の場合:(null, contract)
-	 * 
+	 *
 	 * @param estimation
 	 *            見積情報
 	 * @param contract
@@ -49,18 +49,21 @@ public class ApprovalSearch {
 		// 承認ルートグループIDから承認ルートグループを特定
 		long approvalRouteGrpId = 0L;
 		if (null != estimation) {
-			approvalRouteGrpId = estimation.getProductMaster().getEstimationApprovalRouteGrpId();
+			approvalRouteGrpId = estimation.getProductGrpMaster().getEstimationApprovalRouteGrpMaster().getId();
 		} else {
-			approvalRouteGrpId = contract.getProductMaster().getContractApprovalRouteGrpId();
+			approvalRouteGrpId = contract.getProductGrpMaster().getContractApprovalRouteGrpMaster().getId();
 		}
 		ApprovalRouteGrpMaster approvalRouteGrpMaster = approvalRouteGrpMasterRepository.findOne(approvalRouteGrpId);
 
 		// ルート特定、または条件式実行結果ステータスの異常・警告が発生するまでループ
-		ApprovalRouteMaster applyApprovalRouteMaster = approvalRouteGrpMaster.getApprovalRouteMasterList().stream().filter(approvalRouteMaster -> {
-			// 条件式実行
-			RouteFormulaResult formulaResult = this.execRouteFormula(estimation, contract, approvalRouteMaster);
-			return (RouteFormulaStatus.正常.equals(formulaResult.getStatus()) && formulaResult.isApplyRoute()) || RouteFormulaStatus.異常.equals(formulaResult.getStatus()) || RouteFormulaStatus.警告.equals(formulaResult.getStatus());
-		}).findFirst().get();
+		ApprovalRouteMaster applyApprovalRouteMaster = approvalRouteGrpMaster.getApprovalRouteMasterList().stream()
+				.filter(approvalRouteMaster -> {
+					// 条件式実行
+					RouteFormulaResult formulaResult = this.execRouteFormula(estimation, contract, approvalRouteMaster);
+					return (RouteFormulaStatus.正常.equals(formulaResult.getStatus()) && formulaResult.isApplyRoute())
+							|| RouteFormulaStatus.異常.equals(formulaResult.getStatus())
+							|| RouteFormulaStatus.警告.equals(formulaResult.getStatus());
+				}).findFirst().get();
 
 		// 特定した承認ルートマスタの条件式を実行
 		RouteFormulaResult formulaResult = this.execRouteFormula(estimation, contract, applyApprovalRouteMaster);
@@ -73,7 +76,7 @@ public class ApprovalSearch {
 
 	/**
 	 * ルート条件式を実行
-	 * 
+	 *
 	 * @param estimation
 	 *            条件式の引数
 	 * @param contract
@@ -83,7 +86,8 @@ public class ApprovalSearch {
 	 * @return 実施結果
 	 * @throws ScriptException
 	 */
-	private RouteFormulaResult execRouteFormula(Estimation estimation, Contract contract, ApprovalRouteMaster approvalRouteMaster) {
+	private RouteFormulaResult execRouteFormula(Estimation estimation, Contract contract,
+			ApprovalRouteMaster approvalRouteMaster) {
 
 		ScriptEngineManager manager = new ScriptEngineManager();
 		ScriptEngine engine = manager.getEngineByName("nashorn");
@@ -94,7 +98,8 @@ public class ApprovalSearch {
 			} else {
 				engine.put("contract", contract);
 			}
-			engine.eval(loadScriptFromClasspath("js/routeFormulaTemplate.js", approvalRouteMaster.getRouteConditionFormula()));
+			engine.eval(loadScriptFromClasspath("js/routeFormulaTemplate.js",
+					approvalRouteMaster.getRouteConditionFormula()));
 			return (RouteFormulaResult) engine.eval("result");
 		} catch (ScriptException e) {
 			throw new RouteFormulaScriptException(e);
@@ -103,7 +108,7 @@ public class ApprovalSearch {
 
 	/**
 	 * JavaScriptのテンプレートファイルを読み込み、置換文字列を置換
-	 * 
+	 *
 	 * @param jsFilePathOnClasspath
 	 *            テンプレートファイルパス
 	 * @param formula
@@ -113,7 +118,9 @@ public class ApprovalSearch {
 	private String loadScriptFromClasspath(String jsFilePathOnClasspath, String formula) {
 		try {
 			MustacheFactory mf = new DefaultMustacheFactory();
-			Mustache mustache = mf.compile(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream(jsFilePathOnClasspath)), jsFilePathOnClasspath);
+			Mustache mustache = mf.compile(
+					new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream(jsFilePathOnClasspath)),
+					jsFilePathOnClasspath);
 			StringWriter out = new StringWriter();
 
 			Map<String, Object> parameter = new HashMap<>();

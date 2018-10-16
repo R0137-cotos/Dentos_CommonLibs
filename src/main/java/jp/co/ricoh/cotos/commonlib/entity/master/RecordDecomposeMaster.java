@@ -4,9 +4,13 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
@@ -40,17 +44,21 @@ public class RecordDecomposeMaster extends EntityBaseMaster {
 		}
 
 		public static RecordType fromString(String string) {
-			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst()
+					.orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "record_decompose_master_seq")
+	@SequenceGenerator(name = "record_decompose_master_seq", sequenceName = "record_decompose_master_seq", allocationSize = 1)
 	@ApiModelProperty(value = "計上分解マスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
 	/**
 	 * 計上種別
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "計上種別", required = true, position = 2)
 	private RecordType recordType;
 
@@ -75,12 +83,14 @@ public class RecordDecomposeMaster extends EntityBaseMaster {
 	/**
 	 * 数量
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "数量", required = true, position = 6, allowableValues = "range[0,99999]")
 	private int quantity;
 
 	/**
 	 * 対象金額
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "対象金額", required = true, position = 7, allowableValues = "range[0.00,9999999999999999999.99]")
 	@Pattern(regexp = "9999999999999999999.99")
 	private BigDecimal amount;
