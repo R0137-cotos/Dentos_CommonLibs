@@ -1,4 +1,4 @@
-package jp.co.ricoh.cotos.commonlib.repository.contract;
+package jp.co.ricoh.cotos.commonlib.repository;
 
 import javax.transaction.Transactional;
 
@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import jp.co.ricoh.cotos.commonlib.DBConfig;
 import jp.co.ricoh.cotos.commonlib.TestTools;
 import jp.co.ricoh.cotos.commonlib.entity.contract.Contract;
+import jp.co.ricoh.cotos.commonlib.repository.contract.ContractRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
