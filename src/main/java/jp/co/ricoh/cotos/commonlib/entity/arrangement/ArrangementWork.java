@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -115,6 +116,7 @@ public class ArrangementWork extends EntityBase {
 	 * 手配業務チェック結果
 	 */
 	@OneToMany(mappedBy = "arrangementWork")
+	@OrderBy("displayOrder ASC")
 	private List<ArrangementWorkCheckResult> arrangementWorkCheckResultList;
 
 }

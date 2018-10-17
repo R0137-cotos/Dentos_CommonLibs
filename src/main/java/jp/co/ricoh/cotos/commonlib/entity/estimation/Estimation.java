@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -410,6 +411,7 @@ public class Estimation extends EntityBase {
 	 * 見積チェック結果
 	 */
 	@OneToMany(mappedBy = "estimation")
+	@OrderBy("displayOrder ASC")
 	@ApiModelProperty(value = "見積チェック結果", required = false, position = 50)
 	private List<EstimationCheckResult> estimationChechResultList;
 
