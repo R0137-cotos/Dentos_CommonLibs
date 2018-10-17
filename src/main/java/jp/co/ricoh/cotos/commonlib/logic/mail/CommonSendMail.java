@@ -41,10 +41,31 @@ public class CommonSendMail {
 	/**
 	 * メールテンプレートマスタ特定&メール送信処理
 	 * 
+	 * <pre>
+	 * 【処理内容】
+	 * ・引数のサービスカテゴリー(見積、契約、手配etc)と処理カテゴリー(承認、承認依頼、承認依頼差戻etc)を元にメールテンプレートマスタTBL(MAIL_TEMPLATE_MASTER)からメールテンプレートマスタ情報を取得　　詳細は以下を参照
+	 *  条件：
+	 *    サービスカテゴリー(MAIL_TEMPLATE_MASTER.SERVICE_CATEGORY)=引数のサービスカテゴリー
+	 *    処理カテゴリー(MAIL_TEMPLATE_MASTER.PROCESS_CATEGORY)=引数の処理カテゴリー
+	 * ・引数のメール件名置換リストとメールテンプレートマスタTBL.メール件名(MAIL_TEMPLATE_MASTER.MAIL_SUBJECT)を元にメール件名作成
+	 *  例：
+	 *    メールテンプレートマスタTBL.メール件名(MAIL_TEMPLATE_MASTER.MAIL_SUBJECT)
+	 *     【{{replaceValue1}}】見積承認依頼メール {{replaceValue2}}
+	 *    メール件名置換リスト
+	 *     テスト1,テスト2,テスト3
+	 *    各値が上記の場合、以下が生成されるメール件名
+	 *     【テスト1】見積承認依頼メール テスト2
+	 * ・引数のメール本文置換リストとメールテンプレートマスタTBL.メール本文(MAIL_TEMPLATE_MASTER.MAIL_BODY)を元にメール本文作成
+	 *  ※設定できる引数の数がメール件名と異なるだけで、文字列生成方法はメール件名と同一
+	 * ・引数のToメールアドレスリストとCCメールアドレスリストと上記で作成したメール件名やメール本文を使用してメール送信
+	 * ・送信元メールアドレスは、メールテンプレートマスタTBL.送信元メールアドレス(MAIL_TEMPLATE_MASTER.SEND_FROM_MAIL_ADDRESS)から取得
+	 * ・メールは文字コードをUTF-8で作成しており、ファイル添付も可能
+	 * </pre>
+	 * 
 	 * @param emailToList
-	 *            Toメールアドレス
+	 *            Toメールアドレスリスト(複数設定可能)
 	 * @param emailCcList
-	 *            CCメールアドレスリスト
+	 *            CCメールアドレスリスト(複数設定可能)
 	 * @param serviceCategory
 	 *            サービスカテゴリー
 	 * @param processCategory
@@ -65,12 +86,32 @@ public class CommonSendMail {
 	/**
 	 * メールテンプレートマスタ特定&メール送信処理
 	 * 
+	 * <pre>
+	 * 【処理内容】
+	 * ・引数のメールテンプレートマスタIDを元にメールテンプレートマスタTBL(MAIL_TEMPLATE_MASTER)からメールテンプレートマスタ情報を取得
+	 *  条件：
+	 *    メールテンプレートマスタID(MAIL_TEMPLATE_MASTER.ID)=引数のメールテンプレートマスタID
+	 * ・引数のメール件名置換リストとメールテンプレートマスタTBL.メール件名(MAIL_TEMPLATE_MASTER.MAIL_SUBJECT)を元にメール件名作成
+	 *  例：
+	 *    メールテンプレートマスタTBL.メール件名(MAIL_TEMPLATE_MASTER.MAIL_SUBJECT)
+	 *     【{{replaceValue1}}】見積承認依頼メール {{replaceValue2}}
+	 *    メール件名置換リスト
+	 *     テスト1,テスト2,テスト3
+	 *    各値が上記の場合、以下が生成されるメール件名
+	 *     【テスト1】見積承認依頼メール テスト2
+	 * ・引数のメール本文置換リストとメールテンプレートマスタTBL.メール本文(MAIL_TEMPLATE_MASTER.MAIL_BODY)を元にメール本文作成
+	 *  ※設定できる引数の数がメール件名と異なるだけで、文字列生成方法はメール件名と同一
+	 * ・引数のToメールアドレスリストとCCメールアドレスリストと上記で作成したメール件名やメール本文を使用してメール送信
+	 * ・送信元メールアドレスは、メールテンプレートマスタTBL.送信元メールアドレス(MAIL_TEMPLATE_MASTER.SEND_FROM_MAIL_ADDRESS)から取得
+	 * ・メールは文字コードをUTF-8で作成しており、ファイル添付も可能
+	 * </pre>
+	 * 
 	 * @param mailTemplateMasterId
 	 *            メールテンプレートマスタID
 	 * @param emailToList
-	 *            Toメールアドレス
+	 *            Toメールアドレスリスト(複数設定可能)
 	 * @param emailCcList
-	 *            CCメールアドレスリスト
+	 *            CCメールアドレスリスト(複数設定可能)
 	 * @param mailSubjectRepalceValueList
 	 *            メール件名置換リスト(最大5個まで)
 	 * @param mailTextRepalceValueList
