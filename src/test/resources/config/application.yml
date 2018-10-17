@@ -18,9 +18,9 @@ cotos:
       dispAuthorization: X-Cotos-Disp-Authorization
   file:
     uploadFileDir: ./build/testTemp
-    fileMaxSize: 19166
-    fileNmMaxSize: 15
-    extension: 
+    fileMaxSize: 616110
+    fileNmMaxSize: 14
+    extension: xlsx, txt
   search:
     limitSize: 5
 spring:
