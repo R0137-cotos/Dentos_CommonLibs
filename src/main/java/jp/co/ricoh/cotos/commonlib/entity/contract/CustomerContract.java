@@ -1,11 +1,17 @@
 package jp.co.ricoh.cotos.commonlib.entity.contract;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
@@ -22,7 +28,10 @@ import lombok.EqualsAndHashCode;
 @Data
 @Table(name = "customer_contract")
 public class CustomerContract extends EntityBase {
+
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_contract_seq")
+	@SequenceGenerator(name = "customer_contract_seq", sequenceName = "customer_contract_seq", allocationSize = 1)
 	@ApiModelProperty(value = "ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
@@ -37,30 +46,35 @@ public class CustomerContract extends EntityBase {
 	/**
 	 * MoM企事部ID
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "MoM企事部ID", required = true, position = 3, allowableValues = "range[0,255]")
 	private String momCustId;
 
 	/**
 	 * MoM企業ID
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "MoM企業ID", required = true, position = 4, allowableValues = "range[0,255]")
 	private String companyId;
 
 	/**
 	 * MoM事業所ID
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "MoM事業所ID", required = true, position = 5, allowableValues = "range[0,255]")
 	private String officeId;
 
 	/**
 	 * 企事部設定区分
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "企事部設定区分", required = true, position = 6)
 	private DepartmentDiv departmentDiv;
 
 	/**
 	 * 顧客名
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "顧客名", required = true, position = 7, allowableValues = "range[0,255]")
 	private String customerName;
 
@@ -165,6 +179,7 @@ public class CustomerContract extends EntityBase {
 	 */
 	@OneToOne(optional = false)
 	@JoinColumn(name = "contract_id", referencedColumnName = "id")
+	@JsonIgnore
 	@ApiModelProperty(value = "契約", required = true, position = 24)
 	private Contract contract;
 }
