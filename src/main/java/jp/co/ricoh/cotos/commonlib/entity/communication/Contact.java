@@ -51,7 +51,7 @@ public class Contact extends EntityBase {
 	 */
 	@OneToOne
 	@JoinColumn(name = "parent_id", referencedColumnName = "id")
-	@ApiModelProperty(value = "親問い合わせ", required = true, position = 3) // TODO ほんとに必須？
+	@ApiModelProperty(value = "親問い合わせ", required = false, position = 3)
 	private Contact parent;
 
 	/**

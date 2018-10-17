@@ -14,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
+import jp.co.ricoh.cotos.commonlib.entity.EnumType.DealerFlowOrder;
 import jp.co.ricoh.cotos.commonlib.entity.master.VKbMaster;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -102,6 +103,6 @@ public class DealerContract extends EntityBase {
 	 * 販売店商流順
 	 */
 	@Column(nullable = false)
-	@ApiModelProperty(value = "販売店商流順", required = true, position = 12, allowableValues = "range[0,999]")
-	private int dealerFlowOrder;
+	@ApiModelProperty(value = "販売店商流順", required = true, position = 12)
+	private DealerFlowOrder dealerFlowOrder;
 }

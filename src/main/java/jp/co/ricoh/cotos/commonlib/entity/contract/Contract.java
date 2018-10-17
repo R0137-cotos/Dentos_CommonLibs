@@ -15,6 +15,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -328,6 +329,7 @@ public class Contract extends EntityBase {
 	 * 契約チェック結果
 	 */
 	@OneToMany(mappedBy = "contract")
+	@OrderBy("displayOrder ASC")
 	@ApiModelProperty(value = "契約チェック結果", required = false, position = 35)
 	private List<ContractCheckResult> chechResultList;
 
