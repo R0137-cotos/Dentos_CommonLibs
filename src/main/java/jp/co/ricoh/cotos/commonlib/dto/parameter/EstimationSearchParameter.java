@@ -167,7 +167,7 @@ public class EstimationSearchParameter {
 	 * お客様企事部ID
 	 */
 	@ApiParam(value = "お客様企事部ID", required = false)
-	@ApiModelProperty(value = "お客様企事部IDID<br />" //
+	@ApiModelProperty(value = "お客様企事部ID<br />" //
 			+ "お客様企事部IDにはMoM企事部IDを指定する。", //
 			required = false, allowableValues = "range[0,255]") //
 	private String customerId;
