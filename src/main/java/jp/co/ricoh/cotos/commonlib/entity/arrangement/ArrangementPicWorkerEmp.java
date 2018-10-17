@@ -1,11 +1,17 @@
 package jp.co.ricoh.cotos.commonlib.entity.arrangement;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
@@ -23,15 +29,17 @@ import lombok.EqualsAndHashCode;
 public class ArrangementPicWorkerEmp extends EntityBase {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "arrangement_pic_worker_emp_seq")
+	@SequenceGenerator(name = "arrangement_pic_worker_emp_seq", sequenceName = "arrangement_pic_worker_emp_seq", allocationSize = 1)
 	@ApiModelProperty(value = "ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
 	/**
 	 * RJ社員情報マスタ
 	 */
-	@ManyToOne(optional = true)
-	@JoinColumn(name = "momEmployeeId")
-	@ApiModelProperty(value = "RJ社員情報マスタ", required = false, position = 2)
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "momEmployeeId", referencedColumnName = "emp_id")
+	@ApiModelProperty(value = "RJ社員情報マスタ", required = true, position = 2)
 	private MvEmployeeMaster mvEmployeeMaster;
 
 	/**
@@ -62,11 +70,12 @@ public class ArrangementPicWorkerEmp extends EntityBase {
 	 * 会社代表電話番号
 	 */
 	@ApiModelProperty(value = "会社代表電話番号", required = false, position = 7, allowableValues = "range[0,255]")
-	private String orgTel;
+	private String orgPhoneNumbewr;
 
 	/**
 	 * 社員名
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "社員名", required = true, position = 8, allowableValues = "range[0,255]")
 	private String employeeName;
 
@@ -109,9 +118,10 @@ public class ArrangementPicWorkerEmp extends EntityBase {
 	/**
 	 * 手配業務
 	 */
-	@OneToOne(optional = true)
+	@OneToOne(optional = false)
 	@JoinColumn(name = "arrangement_work_id", referencedColumnName = "id")
-	@ApiModelProperty(value = "手配業務", required = false, position = 15)
+	@ApiModelProperty(value = "手配業務", required = true, position = 15)
+	@JsonIgnore
 	private ArrangementWork arrangementWork;
 
 }

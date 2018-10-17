@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiParam;
-import jp.co.ricoh.cotos.commonlib.entity.estimation.Estimation.EstimationDiv;
+import jp.co.ricoh.cotos.commonlib.entity.estimation.Estimation.EstimationType;
 import jp.co.ricoh.cotos.commonlib.entity.estimation.Estimation.WorkflowStatus;
 import lombok.Data;
 
@@ -253,7 +253,7 @@ public class EstimationSearchParameter {
 	@ApiModelProperty(value = "契約種別<br />" //
 			+ "新規, 変更などの見積種別を表す。", //
 			required = false) //
-	private EstimationDiv estimationDiv;
+	private EstimationType estimationType;
 
 	/**
 	 * 商品名称

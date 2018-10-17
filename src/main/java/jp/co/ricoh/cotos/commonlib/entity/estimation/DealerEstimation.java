@@ -1,13 +1,18 @@
 package jp.co.ricoh.cotos.commonlib.entity.estimation;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
+import jp.co.ricoh.cotos.commonlib.entity.EnumType.DealerFlowOrder;
 import jp.co.ricoh.cotos.commonlib.entity.master.VKbMaster;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -22,6 +27,8 @@ import lombok.EqualsAndHashCode;
 public class DealerEstimation extends EntityBase {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dealer_estimation_seq")
+	@SequenceGenerator(name = "dealer_estimation_seq", sequenceName = "dealer_estimation_seq", allocationSize = 1)
 	@ApiModelProperty(value = "ID", required = true, position = 1)
 	private long id;
 
@@ -92,7 +99,8 @@ public class DealerEstimation extends EntityBase {
 	/**
 	 * 販売店商流順
 	 */
-	@ApiModelProperty(value = "販売店商流順", required = true, position = 12, allowableValues = "range[0,999]")
-	private int dealerFlowOrder;
+	@Column(nullable = false)
+	@ApiModelProperty(value = "販売店商流順", required = true, position = 12)
+	private DealerFlowOrder dealerFlowOrder;
 
 }

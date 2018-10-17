@@ -2,11 +2,16 @@ package jp.co.ricoh.cotos.commonlib.entity.arrangement;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -24,13 +29,15 @@ import lombok.EqualsAndHashCode;
 public class ArrangementWorkApprovalRoute extends EntityBase {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "arrangement_work_approval_route_seq")
+	@SequenceGenerator(name = "arrangement_work_approval_route_seq", sequenceName = "arrangement_work_approval_route_seq", allocationSize = 1)
 	@ApiModelProperty(value = "手配業務承認ルートID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
 	/**
 	 * 手配業務
 	 */
-	@OneToOne(optional = true)
+	@OneToOne(optional = false)
 	@JoinColumn(name = "arrange_work_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "手配業務", required = true, position = 2)
 	private ArrangementWork arrangementWork;
@@ -38,12 +45,14 @@ public class ArrangementWorkApprovalRoute extends EntityBase {
 	/**
 	 * 承認依頼者MoM社員ID
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "承認依頼者MoM社員ID", required = true, position = 3, allowableValues = "range[0,255]")
 	private String approvalRequesterEmpId;
 
 	/**
 	 * 承認依頼者氏名
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "承認依頼者氏名", required = true, position = 4, allowableValues = "range[0,255]")
 	private String approvalRequesterName;
 
@@ -64,6 +73,7 @@ public class ArrangementWorkApprovalRoute extends EntityBase {
 	 * 手配業務承認ルートノード
 	 */
 	@OneToMany(mappedBy = "arrangementWorkApprovalRoute")
+	@OrderBy("approvalOrder ASC")
 	@ApiModelProperty(value = "手配業務承認ルートノード", required = true, position = 7)
 	private List<ArrangementWorkApprovalRouteNode> arrangementWorkApprovalRouteNodeList;
 
