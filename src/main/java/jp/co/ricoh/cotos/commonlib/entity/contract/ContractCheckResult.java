@@ -55,14 +55,14 @@ public class ContractCheckResult extends EntityBase {
 	 * チェック事項コード
 	 */
 	@Column(nullable = false)
-	@ApiModelProperty(value = "チェック事項コード", required = true, position = 4)
+	@ApiModelProperty(value = "チェック事項コード", required = true, position = 4, allowableValues = "range[0,255]")
 	private String checkmatterCode;
 
 	/**
 	 * チェック事項文面
 	 */
 	@Column(nullable = false)
-	@ApiModelProperty(value = "チェック事項文面", required = true, position = 5)
+	@ApiModelProperty(value = "チェック事項文面", required = true, position = 5, allowableValues = "range[0,255]")
 	private String checkmatterText;
 
 	/**
@@ -81,13 +81,13 @@ public class ContractCheckResult extends EntityBase {
 	/**
 	 * チェック実施者氏名
 	 */
-	@ApiModelProperty(value = "チェック実施者氏名", required = false, position = 8)
+	@ApiModelProperty(value = "チェック実施者氏名", required = false, position = 8, allowableValues = "range[0,255]")
 	private String checkedUserName;
 
 	/**
 	 * チェック実施者組織名
 	 */
-	@ApiModelProperty(value = "チェック実施者組織名", required = false, position = 9)
+	@ApiModelProperty(value = "チェック実施者組織名", required = false, position = 9, allowableValues = "range[0,255]")
 	private String checkedOrgName;
 
 	/**

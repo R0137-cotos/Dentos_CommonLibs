@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import jp.co.ricoh.cotos.commonlib.entity.master.VKbMaster;
-import jp.co.ricoh.cotos.commonlib.entity.master.VKbMaster.KjbSetDiv;
+import jp.co.ricoh.cotos.commonlib.entity.master.VKbMaster.DepartmentDiv;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -57,7 +57,7 @@ public class CustomerEstimation extends EntityBase {
 	 * 企事部設定区分
 	 */
 	@ApiModelProperty(value = "企事部設定区分", required = true, position = 6)
-	private KjbSetDiv departmentDiv;
+	private DepartmentDiv departmentDiv;
 
 	/**
 	 * 顧客名

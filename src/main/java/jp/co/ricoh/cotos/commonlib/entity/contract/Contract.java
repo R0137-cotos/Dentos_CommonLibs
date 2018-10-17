@@ -1,7 +1,7 @@
 package jp.co.ricoh.cotos.commonlib.entity.contract;
 
-import java.sql.Date;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -17,6 +17,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Pattern;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -192,18 +194,21 @@ public class Contract extends EntityBase {
 	 * 導入希望日
 	 */
 	@ApiModelProperty(value = "導入希望日", required = false, position = 15)
+	@Temporal(TemporalType.DATE)
 	private Date introductionPreferredDate;
 
 	/**
 	 * 変更希望日
 	 */
 	@ApiModelProperty(value = "変更希望日", required = false, position = 16)
+	@Temporal(TemporalType.DATE)
 	private Date changePreferredDate;
 
 	/**
 	 * 契約日
 	 */
 	@ApiModelProperty(value = "契約日", required = false, position = 17)
+	@Temporal(TemporalType.DATE)
 	private Date contractDate;
 
 	/**
@@ -217,24 +222,28 @@ public class Contract extends EntityBase {
 	 * 請求開始日
 	 */
 	@ApiModelProperty(value = "請求開始日", required = false, position = 19)
+	@Temporal(TemporalType.DATE)
 	private Date billingDate;
 
 	/**
 	 * サービス開始日
 	 */
 	@ApiModelProperty(value = "サービス開始日", required = false, position = 20)
+	@Temporal(TemporalType.DATE)
 	private Date serviceTermStart;
 
 	/**
 	 * サービス終了日
 	 */
 	@ApiModelProperty(value = "サービス終了日", required = false, position = 21)
+	@Temporal(TemporalType.DATE)
 	private Date serviceTermEnd;
 
 	/**
 	 * 解約予定日
 	 */
 	@ApiModelProperty(value = "解約予定日", required = false, position = 22)
+	@Temporal(TemporalType.DATE)
 	private Date cancelScheduledDate;
 
 	/**
@@ -255,6 +264,7 @@ public class Contract extends EntityBase {
 	/**
 	 * 見積ID
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "見積ID", required = true, position = 25, allowableValues = "range[0,99999999999999999999]")
 	private long estimationId;
 
