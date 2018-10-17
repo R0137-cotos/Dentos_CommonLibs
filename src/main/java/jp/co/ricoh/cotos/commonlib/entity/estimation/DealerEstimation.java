@@ -100,7 +100,7 @@ public class DealerEstimation extends EntityBase {
 	 * 販売店商流順
 	 */
 	@Column(nullable = false)
-	@ApiModelProperty(value = "販売店商流順", required = true, position = 12, allowableValues = "range[0,999]")
+	@ApiModelProperty(value = "販売店商流順", required = true, position = 12)
 	private DealerFlowOrder dealerFlowOrder;
 
 }
