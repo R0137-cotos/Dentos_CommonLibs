@@ -130,4 +130,5 @@ public class TestRepositories {
 		DispUrlAuthMaster created = repository.findOne(found.getId());
 		Assert.assertEquals(newId, created.getId().getActionId());
 	}
+
 }

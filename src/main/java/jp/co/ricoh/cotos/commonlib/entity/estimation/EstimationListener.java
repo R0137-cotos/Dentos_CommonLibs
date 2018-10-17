@@ -31,7 +31,7 @@ public class EstimationListener {
 	@PrePersist
 	@Transactional
 	public void appendsEstimationNumber(Estimation entity) {
-		if (null != entity.getEstimateNumber()) {
+		if (null != entity.getEstimationNumber()) {
 			return;
 		}
 		long sequence = dbUtil.loadSingleFromSQLFile("sql/nextEstimationNumberSequence.sql", GeneratedNumber.class).getGeneratedNumber();
@@ -44,7 +44,7 @@ public class EstimationListener {
 			dbUtil.execute("sql/updateEstimationNumberVal.3.sql", Collections.emptyMap());
 			sequence = dbUtil.loadSingleFromSQLFile("sql/nextEstimationNumberSequence.sql", GeneratedNumber.class).getGeneratedNumber();
 		}
-		entity.setEstimateNumber(ID_PREFIX + sequence + "-01");
+		entity.setEstimationNumber(ID_PREFIX + sequence + "-01");
 	}
 
 }
