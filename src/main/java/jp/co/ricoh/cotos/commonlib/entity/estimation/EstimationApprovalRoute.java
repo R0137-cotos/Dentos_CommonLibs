@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -79,6 +80,7 @@ public class EstimationApprovalRoute extends EntityBase {
 	 * 見積承認ルートノード
 	 */
 	@OneToMany(mappedBy = "estimationApprovalRoute")
+	@OrderBy("approvalOrder ASC")
 	@ApiModelProperty(value = "見積承認ルートノード", required = true, position = 8)
 	private List<EstimationApprovalRouteNode> estimationApprovalRouteNodeList;
 

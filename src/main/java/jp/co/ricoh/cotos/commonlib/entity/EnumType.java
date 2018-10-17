@@ -167,4 +167,28 @@ public class EnumType {
 			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
+
+	/**
+	 * 販売店商流順
+	 */
+	public enum DealerFlowOrder {
+
+		販売店("1"), 母店("2");
+
+		private final String text;
+
+		private DealerFlowOrder(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		public String toString() {
+			return this.text;
+		}
+
+		public static DealerFlowOrder fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+		}
+	}
+
 }
