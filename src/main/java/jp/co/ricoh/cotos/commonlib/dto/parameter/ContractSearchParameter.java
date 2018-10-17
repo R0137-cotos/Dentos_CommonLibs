@@ -150,10 +150,10 @@ public class ContractSearchParameter {
 	private Date serviceTermEndTo;
 
 	/**
-	 * お客様企業ID
+	 * お客様企事部ID
 	 */
-	@ApiParam(value = "お客様企業ID", required = false)
-	@ApiModelProperty(value = "お客様企業ID", required = false, allowableValues = "range[0,255]")
+	@ApiParam(value = "お客様企事部ID", required = false)
+	@ApiModelProperty(value = "お客様企事部ID", required = false, allowableValues = "range[0,255]")
 	private String customerId;
 
 	/**

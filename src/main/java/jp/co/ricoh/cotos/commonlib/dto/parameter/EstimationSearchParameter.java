@@ -164,11 +164,11 @@ public class EstimationSearchParameter {
 	private String collaborationEmptxId;
 
 	/**
-	 * 企業ID
+	 * お客様企事部ID
 	 */
-	@ApiParam(value = "企事部ID", required = false)
-	@ApiModelProperty(value = "企事部ID<br />" //
-			+ "企事部IDにはMoM企事部IDを指定する。", //
+	@ApiParam(value = "お客様企事部ID", required = false)
+	@ApiModelProperty(value = "お客様企事部IDID<br />" //
+			+ "お客様企事部IDにはMoM企事部IDを指定する。", //
 			required = false, allowableValues = "range[0,255]") //
 	private String customerId;
 
