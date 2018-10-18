@@ -110,7 +110,7 @@ public class CommunicationHistory extends EntityBase {
 	@Column(nullable = false)
 	@ApiModelProperty(value = "被伝達者<br />" //
 			+ "ユーザー識別子としてMoM社員IDを設定", required = true, position = 10, allowableValues = "range[0,255]") //
-	private String requestTo;
+	private String requestToId;
 
 	/**
 	 * 被伝達者候補

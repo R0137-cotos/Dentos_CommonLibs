@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -49,7 +50,7 @@ public class Contact extends EntityBase {
 	/**
 	 * 親問い合わせ
 	 */
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "parent_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "親問い合わせ", required = false, position = 3)
 	private Contact parent;
@@ -72,7 +73,7 @@ public class Contact extends EntityBase {
 	 * タイトル
 	 */
 	@ApiModelProperty(value = "タイトル", required = false, position = 6, allowableValues = "range[0,255]")
-	private String titile;
+	private String title;
 
 	/**
 	 * 内容
