@@ -58,7 +58,7 @@ public class TestFileUpDownload {
 		String fileNm = "testFile1.xlsx";
 		String retFileNm = fileUpDownload.fileUpload(ファイル情報作成(fileNm));
 		ファイルダウンロード(fileNm);
-		Assert.assertEquals("作成されたファイルパスが正しいこと", ".\\build\\testTemp\\testFile1.xlsx", retFileNm);
+		Assert.assertEquals("作成されたファイルパスが正しいこと", appProperties.getFileProperties().getUploadFileDir() + "\\" + fileNm, retFileNm);
 	}
 
 	@Test
