@@ -60,7 +60,7 @@ public class ItemContract extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@ApiModelProperty(value = "品種名", required = true, position = 4, allowableValues = "range[0,255]")
-	private String name;
+	private String itemContractName;
 
 	/**
 	 * リコー品種コード

@@ -97,6 +97,6 @@ public class ProductContract extends EntityBase {
 	 */
 	@ApiModelProperty(value = "拡張項目", required = false, position = 9)
 	@Lob
-	private String extexndsParameter;
+	private String extendsParameter;
 
 }

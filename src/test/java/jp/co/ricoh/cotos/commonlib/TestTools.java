@@ -1,9 +1,11 @@
 package jp.co.ricoh.cotos.commonlib;
 
+import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.Optional;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.junit.Assert;
 import org.springframework.stereotype.Component;
 
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
@@ -17,8 +19,40 @@ public class TestTools {
 
 		return propertyName.isPresent() ? propertyName.get() : null;
 	}
-	
-	public boolean assertColumnsNotNull(EntityBase entity) {
+
+	/**
+	 * 
+	 * エンティティクラスのフィールドの設定値に null が含まれるか
+	 * 
+	 * 
+	 * 
+	 * @param entity
+	 * 
+	 * @throws Exception
+	 * 
+	 */
+
+	public void assertColumnsNotNull(EntityBase entity) throws Exception {
+		Assert.assertTrue(hasNullColumn(entity) == false);
+	}
+
+	/**
+	 * エンティティクラスのフィールドの設定値に null が含まれるかどうかを判定する
+	 * 
+	 * @param entity エンティティ
+	 * @return boolean 判定結果（true：フィールドの設定値が null の項目を含む false：フィールドの設定値はすべて null
+	 *         以外である）
+	 * @throws Exception
+	 * 
+	 */
+
+	public boolean hasNullColumn(EntityBase entity) throws Exception {
+		for (Field field : entity.getClass().getDeclaredFields()) {
+			field.setAccessible(true);
+			if (field.get(entity) == null)
+				return true;
+		}
 		return false;
+
 	}
 }

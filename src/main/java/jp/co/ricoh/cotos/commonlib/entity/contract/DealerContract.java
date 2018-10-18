@@ -2,6 +2,7 @@ package jp.co.ricoh.cotos.commonlib.entity.contract;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -37,7 +38,7 @@ public class DealerContract extends EntityBase {
 	/**
 	 * MoM企事部
 	 */
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "mom_kjb_system_id", referencedColumnName = "mclMomRelId")
 	@ApiModelProperty(value = "MoM企事部", required = false, position = 2)
 	private VKbMaster vKbMaster;

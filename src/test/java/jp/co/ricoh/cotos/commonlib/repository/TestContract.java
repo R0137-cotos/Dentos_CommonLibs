@@ -20,6 +20,8 @@ import jp.co.ricoh.cotos.commonlib.TestTools;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractAddedEditorEmpRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractApprovalResultRepository;
+import jp.co.ricoh.cotos.commonlib.repository.contract.ContractApprovalRouteNodeRepository;
+import jp.co.ricoh.cotos.commonlib.repository.contract.ContractApprovalRouteRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractAttachedFileRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractCheckResultRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractDetailRepository;
@@ -28,6 +30,7 @@ import jp.co.ricoh.cotos.commonlib.repository.contract.ContractPicSaEmpRepositor
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.CustomerContractRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.DealerContractRepository;
+import jp.co.ricoh.cotos.commonlib.repository.contract.ItemContractRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ProductContractRepository;
 
 @RunWith(SpringRunner.class)
@@ -43,11 +46,11 @@ public class TestContract {
 	@Autowired
 	ContractApprovalResultRepository contractApprovalResultRepository;
 
-//	@Autowired	
-//	ContractApprovalRouteRepository contractApprovalRouteRepository;
+	@Autowired
+	ContractApprovalRouteRepository contractApprovalRouteRepository;
 
-//	@Autowired
-//	ContractApprovalRouteNodeRepository contractApprovalRouteNodeRepository;
+	@Autowired
+	ContractApprovalRouteNodeRepository contractApprovalRouteNodeRepository;
 
 	@Autowired
 	ContractAttachedFileRepository contractAttachedFileRepository;
@@ -57,9 +60,6 @@ public class TestContract {
 
 	@Autowired
 	ContractDetailRepository contractDetailRepository;
-
-//	@Autowired	
-//	ContractListenerRepository contractListenerRepository;
 
 	@Autowired
 	ContractOperationLogRepository contractOperationLogRepository;
@@ -71,14 +71,12 @@ public class TestContract {
 	CustomerContractRepository customerContractRepository;
 
 	@Autowired
-	DealerContractRepository DealerContractRepository;
+	DealerContractRepository dealerContractRepository;
 
-//	@Autowired	
-//	GeneratedNumberRepository GeneratedNumberRepository;
+	@Autowired
+	ItemContractRepository itemContractRepository;
 
-//	@Autowired	
-//	ItemContractRepository itemContractRepository;
-
+	@Autowired
 	ProductContractRepository productContractRepository;
 
 	@Autowired
@@ -105,23 +103,102 @@ public class TestContract {
 	@Test
 	@Transactional
 	public void 全てのカラムがNullではないことを確認_契約() {
-		全てのカラムがNullではないことを確認_共通(contractRepository, 4L);
+		全てのカラムがNullではないことを確認_共通(contractRepository, 4L, 5L);
 	}
 
-	private <T extends EntityBase, ID extends Serializable> void 全てのカラムがNullではないことを確認_共通(CrudRepository<T, ID> repository, ID id) {
-		// テストデータ登録
-		//context.getBean(DBConfig.class).initTargetTestData("repository/contract.sql");
-			
-		// データが取得できることを確認
-		T found = repository.findOne(id);
-		Assert.assertNotNull(found);
+	@Test
+	@Transactional
+	public void 全てのカラムがNullではないことを確認_契約追加編集者社員() {
+		全てのカラムがNullではないことを確認_共通(contractAddedEditorEmpRepository, 401L, 501L);
+	}
 
-		// 全てのカラムがNullではないことを確認
-		try {
-			//Assert.assertTrue("正常終了", testTools.assertColumnsNotNull(found));
-			// 山中さんがメソッド作成中
-		} catch (Exception e) {
-			Assert.fail("例外が発生した場合、エラー"); // assertColumnsNotNullで投げていたら。
+	@Test
+	@Transactional
+	public void 全てのカラムがNullではないことを確認_契約承認実績() {
+		全てのカラムがNullではないことを確認_共通(contractApprovalResultRepository, 401L, 501L);
+	}
+
+	@Test
+	@Transactional
+	public void 全てのカラムがNullではないことを確認_契約承認ルート() {
+		全てのカラムがNullではないことを確認_共通(contractApprovalRouteRepository, 401L, 501L);
+	}
+
+	@Test
+	@Transactional
+	public void 全てのカラムがNullではないことを確認_契約承認ルートノード() {
+		全てのカラムがNullではないことを確認_共通(contractApprovalRouteNodeRepository, 401L, 501L);
+	}
+
+	@Test
+	@Transactional
+	public void 全てのカラムがNullではないことを確認_契約添付ファイル() {
+		全てのカラムがNullではないことを確認_共通(contractAttachedFileRepository, 401L, 501L);
+	}
+
+	@Test
+	@Transactional
+	public void 全てのカラムがNullではないことを確認_契約チェック結果() {
+		全てのカラムがNullではないことを確認_共通(contractCheckResultRepository, 401L, 501L);
+	}
+
+	@Test
+	@Transactional
+	public void 全てのカラムがNullではないことを確認_契約明細() {
+		全てのカラムがNullではないことを確認_共通(contractDetailRepository, 401L, 501L);
+	}
+
+	@Test
+	@Transactional
+	public void 全てのカラムがNullではないことを確認_契約操作履歴() {
+		全てのカラムがNullではないことを確認_共通(contractOperationLogRepository, 401L, 501L);
+	}
+
+	@Test
+	@Transactional
+	public void 全てのカラムがNullではないことを確認_契約担当SA社員() {
+		全てのカラムがNullではないことを確認_共通(contractPicSaEmpRepository, 401L, 501L);
+	}
+
+	@Test
+	@Transactional
+	public void 全てのカラムがNullではないことを確認_顧客_契約用() {
+		全てのカラムがNullではないことを確認_共通(customerContractRepository, 401L, 501L);
+	}
+
+	@Test
+	@Transactional
+	public void 全てのカラムがNullではないことを確認_販売店_契約用() {
+		全てのカラムがNullではないことを確認_共通(dealerContractRepository, 401L, 501L);
+	}
+
+	@Test
+	@Transactional
+	public void 全てのカラムがNullではないことを確認_品種_契約用() {
+		全てのカラムがNullではないことを確認_共通(itemContractRepository, 401L, 501L);
+	}
+
+	@Test
+	@Transactional
+	public void 全てのカラムがNullではないことを確認_商品_契約用() {
+		全てのカラムがNullではないことを確認_共通(productContractRepository, 401L, 501L);
+	}
+
+	private <T extends EntityBase, ID extends Serializable> void 全てのカラムがNullではないことを確認_共通(CrudRepository<T, ID> repository, @SuppressWarnings("unchecked") ID... ids) {
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/contract.sql");
+
+		for (ID id : ids) {
+			// データが取得できることを確認
+			T found = repository.findOne(id);
+			Assert.assertNotNull(found);
+
+			// 全てのカラムがNullではないことを確認
+			try {
+				testTools.assertColumnsNotNull(found);
+			} catch (Exception e) {
+				Assert.fail("例外が発生した場合、エラー");
+			}
 		}
 	}
 }

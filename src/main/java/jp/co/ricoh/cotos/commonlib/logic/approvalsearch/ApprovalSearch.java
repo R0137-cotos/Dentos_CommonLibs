@@ -52,7 +52,8 @@ public class ApprovalSearch {
 			//TODO:エンティティ作成に伴いエラーになった
 			//approvalRouteGrpId = estimation.getProductGrpMaster().getEstimationApprovalRouteGrpMaster().getId();
 		} else {
-			approvalRouteGrpId = contract.getProductGrpMaster().getContractApprovalRouteGrpMaster().getId();
+			//TODO:エンティティ作成に伴いエラーになった
+			//approvalRouteGrpId = contract.getProductGrpMaster().getContractApprovalRouteGrpMaster().getId();
 		}
 		ApprovalRouteGrpMaster approvalRouteGrpMaster = approvalRouteGrpMasterRepository.findOne(approvalRouteGrpId);
 
