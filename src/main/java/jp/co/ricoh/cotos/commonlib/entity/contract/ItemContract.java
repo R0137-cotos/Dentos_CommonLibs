@@ -60,7 +60,7 @@ public class ItemContract extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@ApiModelProperty(value = "品種名", required = true, position = 4, allowableValues = "range[0,255]")
-	private String name;
+	private String itemContractName;
 
 	/**
 	 * リコー品種コード
@@ -114,5 +114,5 @@ public class ItemContract extends EntityBase {
 	@JoinColumn(name = "contract_detail_id", referencedColumnName = "id")
 	@JsonIgnore
 	@ApiModelProperty(value = "契約明細", required = true, position = 8)
-	private ContractDetail contrantDetail;
+	private ContractDetail contractDetail;
 }
