@@ -56,8 +56,9 @@ public class TestFileUpDownload {
 		アップロードディレクトリファイル削除();
 
 		String fileNm = "testFile1.xlsx";
-		fileUpDownload.fileUpload(ファイル情報作成(fileNm));
+		String retFileNm = fileUpDownload.fileUpload(ファイル情報作成(fileNm));
 		ファイルダウンロード(fileNm);
+		Assert.assertEquals("作成されたファイルパスが正しいこと", ".\\build\\testTemp\\testFile1.xlsx", retFileNm);
 	}
 
 	@Test
