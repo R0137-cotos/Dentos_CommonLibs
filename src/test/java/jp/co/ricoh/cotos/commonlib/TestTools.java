@@ -64,7 +64,7 @@ public class TestTools {
 			field.setAccessible(true);
 			if (field.getType() == List.class)
 				continue;
-			if (field.getType() == EntityBaseMaster.class)
+			if (field.getType() == EntityBase.class)
 				continue;
 			if (field.get(entity) == null)
 				return true;

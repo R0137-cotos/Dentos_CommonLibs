@@ -167,7 +167,7 @@ public class TestEstimation {
 
 		// テストデータ登録
 		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimation.sql");
-		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/OperationLog.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/operationLog.sql");
 		
 		// リポジトリ作成
 		OperationLogRepository repository = context.getBean(OperationLogRepository.class);
