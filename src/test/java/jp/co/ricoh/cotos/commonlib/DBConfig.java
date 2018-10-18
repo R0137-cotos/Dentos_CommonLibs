@@ -30,6 +30,11 @@ public class DBConfig {
 	public void initTargetTestData(String path) {
 		Arrays.asList(dbUtil.loadSQLFromClasspath(path).split(";")).stream().forEach(sql -> em.createNativeQuery(sql).executeUpdate());
 	}
+	
+	@Transactional
+	public void initTargetTestClobData(String path) {
+		Arrays.asList(dbUtil.loadSQLFromClasspath(path).split("/")).stream().forEach(sql -> em.createNativeQuery(sql).executeUpdate());
+	}
 
 	@Value("${spring.datasource.driverClassName}")
 	String dbDriver;
