@@ -43,13 +43,6 @@ public class CustomerContract extends EntityBase {
 	@JoinColumn(name = "mom_kjb_system_id", referencedColumnName = "mclMomRelId")
 	@ApiModelProperty(value = "企事部マスタ", required = true, position = 2)
 	private VKbMaster vKbMaster;
-	
-//	/**
-//	 * 企事部マスタID
-//	 */
-//	@Column(nullable = false, name = "mom_kjb_system_id")
-//	@ApiModelProperty(value = "企事部マスタID", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
-//	private long vKbMasterId;
 
 	/**
 	 * MoM企事部ID

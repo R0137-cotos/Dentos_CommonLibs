@@ -44,7 +44,7 @@ public class Contract extends EntityBase {
 		private ContractType(final String text) {
 			this.text = text;
 		}
-		
+
 		@Override
 		public String toString() {
 			return this.text;

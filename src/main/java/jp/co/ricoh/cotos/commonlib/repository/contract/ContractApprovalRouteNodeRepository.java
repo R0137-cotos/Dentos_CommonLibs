@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractApprovalRouteNode;
 
-public interface ContractApprovalRouteNodeRepository extends CrudRepository<ContractApprovalRouteNode, Long>{
+public interface ContractApprovalRouteNodeRepository extends CrudRepository<ContractApprovalRouteNode, Long> {
 
 }

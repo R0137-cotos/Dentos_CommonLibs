@@ -13,11 +13,11 @@ public class WorkflowStatusConverter implements AttributeConverter<WorkflowStatu
 			return null;
 		return workflowStatus.toString();
 	}
-	
+
 	@Override
 	public WorkflowStatus convertToEntityAttribute(String value) {
 		if (value == null)
 			return null;
-		return WorkflowStatus.fromString(value); //IllegalArgumentExceptionはContractType.fromString側で投げている
+		return WorkflowStatus.fromString(value); // IllegalArgumentExceptionはContractType.fromString側で投げている
 	}
 }

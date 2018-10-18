@@ -114,5 +114,5 @@ public class ItemContract extends EntityBase {
 	@JoinColumn(name = "contract_detail_id", referencedColumnName = "id")
 	@JsonIgnore
 	@ApiModelProperty(value = "契約明細", required = true, position = 8)
-	private ContractDetail contrantDetail;
+	private ContractDetail contractDetail;
 }

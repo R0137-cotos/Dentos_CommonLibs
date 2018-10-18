@@ -19,7 +19,7 @@ public class ApprovalProcessCategoryConverter implements AttributeConverter<Appr
 	public ApprovalProcessCategory convertToEntityAttribute(String value) {
 		if (value == null)
 			return null;
-		return ApprovalProcessCategory.fromString(value); //IllegalArgumentExceptionはContractType.fromString側で投げている
+		return ApprovalProcessCategory.fromString(value); // IllegalArgumentExceptionはContractType.fromString側で投げている
 	}
-	
+
 }

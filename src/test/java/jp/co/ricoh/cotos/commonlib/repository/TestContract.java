@@ -1,6 +1,8 @@
 package jp.co.ricoh.cotos.commonlib.repository;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -82,7 +84,6 @@ public class TestContract {
 	@Autowired
 	TestTools testTools;
 
-	// -- start ここからコピペ テスト前後のデータクリア -- //
 	static ConfigurableApplicationContext context;
 
 	@Autowired
@@ -98,107 +99,96 @@ public class TestContract {
 			context.stop();
 		}
 	}
-	// -- start ここまでコピペ テスト前後のデータクリア -- //
 
 	@Test
-	@Transactional
 	public void 全てのカラムがNullではないことを確認_契約() {
 		全てのカラムがNullではないことを確認_共通(contractRepository, 4L, 5L);
 	}
 
 	@Test
-	@Transactional
 	public void 全てのカラムがNullではないことを確認_契約追加編集者社員() {
 		全てのカラムがNullではないことを確認_共通(contractAddedEditorEmpRepository, 401L, 501L);
 	}
 
 	@Test
-	@Transactional
 	public void 全てのカラムがNullではないことを確認_契約承認実績() {
 		全てのカラムがNullではないことを確認_共通(contractApprovalResultRepository, 401L, 501L);
 	}
 
 	@Test
-	@Transactional
 	public void 全てのカラムがNullではないことを確認_契約承認ルート() {
 		全てのカラムがNullではないことを確認_共通(contractApprovalRouteRepository, 401L, 501L);
 	}
 
 	@Test
-	@Transactional
 	public void 全てのカラムがNullではないことを確認_契約承認ルートノード() {
 		全てのカラムがNullではないことを確認_共通(contractApprovalRouteNodeRepository, 401L, 501L);
 	}
 
 	@Test
-	@Transactional
 	public void 全てのカラムがNullではないことを確認_契約添付ファイル() {
 		全てのカラムがNullではないことを確認_共通(contractAttachedFileRepository, 401L, 501L);
 	}
 
 	@Test
-	@Transactional
 	public void 全てのカラムがNullではないことを確認_契約チェック結果() {
 		全てのカラムがNullではないことを確認_共通(contractCheckResultRepository, 401L, 501L);
 	}
 
 	@Test
-	@Transactional
 	public void 全てのカラムがNullではないことを確認_契約明細() {
 		全てのカラムがNullではないことを確認_共通(contractDetailRepository, 401L, 501L);
 	}
 
 	@Test
-	@Transactional
 	public void 全てのカラムがNullではないことを確認_契約操作履歴() {
 		全てのカラムがNullではないことを確認_共通(contractOperationLogRepository, 401L, 501L);
 	}
 
 	@Test
-	@Transactional
 	public void 全てのカラムがNullではないことを確認_契約担当SA社員() {
 		全てのカラムがNullではないことを確認_共通(contractPicSaEmpRepository, 401L, 501L);
 	}
 
 	@Test
-	@Transactional
 	public void 全てのカラムがNullではないことを確認_顧客_契約用() {
 		全てのカラムがNullではないことを確認_共通(customerContractRepository, 401L, 501L);
 	}
 
 	@Test
-	@Transactional
 	public void 全てのカラムがNullではないことを確認_販売店_契約用() {
 		全てのカラムがNullではないことを確認_共通(dealerContractRepository, 401L, 501L);
 	}
 
 	@Test
-	@Transactional
 	public void 全てのカラムがNullではないことを確認_品種_契約用() {
 		全てのカラムがNullではないことを確認_共通(itemContractRepository, 401L, 501L);
 	}
 
 	@Test
-	@Transactional
 	public void 全てのカラムがNullではないことを確認_商品_契約用() {
+
 		全てのカラムがNullではないことを確認_共通(productContractRepository, 401L, 501L);
 	}
 
+	@Transactional
 	private <T extends EntityBase, ID extends Serializable> void 全てのカラムがNullではないことを確認_共通(CrudRepository<T, ID> repository, @SuppressWarnings("unchecked") ID... ids) {
 		// テストデータ登録
 		context.getBean(DBConfig.class).initTargetTestData("repository/contract.sql");
 
-		for (ID id : ids) {
+		List<ID> idList = Arrays.asList(ids);
+
+		idList.stream().forEach(id -> {
 			// データが取得できることを確認
 			T found = repository.findOne(id);
 			Assert.assertNotNull(found);
-
 			// 全てのカラムがNullではないことを確認
 			try {
 				testTools.assertColumnsNotNull(found);
-			} catch (Exception e) {
+			} catch (Exception e1) {
 				Assert.fail("例外が発生した場合、エラー");
 			}
-		}
+		});
 	}
+
 }

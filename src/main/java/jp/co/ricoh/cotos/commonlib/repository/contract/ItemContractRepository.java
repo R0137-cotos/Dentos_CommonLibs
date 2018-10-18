@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import jp.co.ricoh.cotos.commonlib.entity.contract.ItemContract;
 
-public interface ItemContractRepository  extends CrudRepository<ItemContract, Long>{
+public interface ItemContractRepository extends CrudRepository<ItemContract, Long> {
 
 }

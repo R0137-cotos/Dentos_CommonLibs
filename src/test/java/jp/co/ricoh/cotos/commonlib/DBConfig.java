@@ -25,11 +25,6 @@ public class DBConfig {
 	public void clearData() {
 		Arrays.asList(dbUtil.loadSQLFromClasspath("clearData.sql").split(";")).stream().forEach(sql -> em.createNativeQuery(sql).executeUpdate());
 	}
-	
-//	@Transactional
-//	public void insertMaster() {
-//		
-//	}
 
 	@Transactional
 	public void initTargetTestData(String path) {

@@ -82,7 +82,10 @@ public class ContractDetail extends EntityBase {
 	@Lob
 	private String extendsParameter;
 
-//	@OneToOne
-//	@ApiModelProperty(value = "品種(契約用)", required = false, position = 8)
-//	private ItemContract itemContract;
+	/**
+	 * 品種(契約用)
+	 */
+	@OneToOne(mappedBy = "contractDetail")
+	@ApiModelProperty(value = "品種(契約用)", required = false, position = 8)
+	private ItemContract itemContract;
 }

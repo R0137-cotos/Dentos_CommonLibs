@@ -13,11 +13,11 @@ public class ContractTypeConverter implements AttributeConverter<ContractType, S
 			return null;
 		return contractType.toString();
 	}
-	
+
 	@Override
 	public ContractType convertToEntityAttribute(String value) {
 		if (value == null)
 			return null;
-		return ContractType.fromString(value); //IllegalArgumentExceptionはContractType.fromString側で投げている
+		return ContractType.fromString(value); // IllegalArgumentExceptionはContractType.fromString側で投げている
 	}
 }

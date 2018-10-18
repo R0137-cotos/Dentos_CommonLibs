@@ -13,11 +13,11 @@ public class LifecycleStatusConverter implements AttributeConverter<LifecycleSta
 			return null;
 		return lifecycleStatus.toString();
 	}
-	
+
 	@Override
 	public LifecycleStatus convertToEntityAttribute(String value) {
 		if (value == null)
 			return null;
-		return LifecycleStatus.fromString(value); //IllegalArgumentExceptionはContractType.fromString側で投げている
+		return LifecycleStatus.fromString(value); // IllegalArgumentExceptionはContractType.fromString側で投げている
 	}
 }
