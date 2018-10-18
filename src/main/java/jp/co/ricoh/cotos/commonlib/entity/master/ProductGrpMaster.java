@@ -1,6 +1,7 @@
 package jp.co.ricoh.cotos.commonlib.entity.master;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -58,10 +60,17 @@ public class ProductGrpMaster extends EntityBaseMaster {
 	private ApprovalRouteGrpMaster contractApprovalRouteGrpMaster;
 
 	/**
+	 * 商品構成マスタ
+	 */
+	@OneToMany(mappedBy = "productGrpMaster")
+	@ApiModelProperty(value = "商品構成マスタ", required = false, position = 4)
+	private List<ProductCompMaster> productCompMasterList;
+
+	/**
 	 * 商品グループ名
 	 */
 	@Column(nullable = false)
-	@ApiModelProperty(value = "商品グループ名", required = true, position = 4, allowableValues = "range[255]")
+	@ApiModelProperty(value = "商品グループ名", required = true, position = 5, allowableValues = "range[255]")
 	private long productGrpName;
 
 	/**
@@ -69,7 +78,7 @@ public class ProductGrpMaster extends EntityBaseMaster {
 	 */
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
-	@ApiModelProperty(value = "積上げ可能期間(開始日)", required = true, position = 5)
+	@ApiModelProperty(value = "積上げ可能期間(開始日)", required = true, position = 6)
 	private Date effectiveFrom;
 
 	/**
@@ -77,7 +86,7 @@ public class ProductGrpMaster extends EntityBaseMaster {
 	 */
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
-	@ApiModelProperty(value = "積上げ可能期間(終了日)", required = true, position = 6)
+	@ApiModelProperty(value = "積上げ可能期間(終了日)", required = true, position = 7)
 	private Date effectiveTo;
 
 }

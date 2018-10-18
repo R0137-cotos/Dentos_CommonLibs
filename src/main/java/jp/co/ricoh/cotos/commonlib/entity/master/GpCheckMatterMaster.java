@@ -51,7 +51,7 @@ public class GpCheckMatterMaster extends EntityBaseMaster {
 	 */
 	@OneToMany(mappedBy = "gpCheckMatterMaster")
 	@ApiModelProperty(value = "手配チェックリスト構成マスタ", required = false, position = 4)
-	private List<ArrangementChecklistCompMaster> arrangementWorkCompMasterList;
+	private List<ArrangementChecklistCompMaster> arrangementChecklistCompMasterList;
 
 	/**
 	 * 見積チェックリスト構成マスタ

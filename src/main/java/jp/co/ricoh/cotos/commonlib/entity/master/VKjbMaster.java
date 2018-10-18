@@ -13,7 +13,7 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "v_kjb_master")
-public class VKbMaster {
+public class VKjbMaster {
 
 	public enum KjbSetDiv {
 		企事, 企事部;

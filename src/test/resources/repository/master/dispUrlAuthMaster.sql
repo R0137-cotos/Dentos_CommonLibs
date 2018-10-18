@@ -1,0 +1,2 @@
+insert into disp_url_auth_master (system_domain,url_pattern,action_id,action_name,auth_pattern_id,version) values ('cotos.ricoh.co.jp','api/estimation/[0-9]+','test_action_001','登録ボタン',1,1);
+insert into disp_url_auth_master (system_domain,url_pattern,action_id,action_name,auth_pattern_id,version) values ('cotos.ricoh.co.jp','api/estimation/[0-9]+','test_action_002','承認ボタン',1,1);

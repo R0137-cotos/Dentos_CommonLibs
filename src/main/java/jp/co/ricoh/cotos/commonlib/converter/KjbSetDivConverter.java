@@ -3,7 +3,7 @@ package jp.co.ricoh.cotos.commonlib.converter;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
-import jp.co.ricoh.cotos.commonlib.entity.master.VKbMaster.KjbSetDiv;
+import jp.co.ricoh.cotos.commonlib.entity.master.VKjbMaster.KjbSetDiv;
 
 @Converter(autoApply = true)
 public class KjbSetDivConverter implements AttributeConverter<KjbSetDiv, String> {

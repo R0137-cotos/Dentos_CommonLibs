@@ -4,6 +4,8 @@ import java.util.Arrays;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -88,6 +90,7 @@ public class ContractChecklistCompMaster extends EntityBaseMaster {
 	 * 対象契約種別
 	 */
 	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
 	@ApiModelProperty(value = "対象契約種別<br /> "//
 			+ "共通/新規/プラン変更/情報変更", required = true, position = 3)
 	private TargetContractType targetContractType;
@@ -96,6 +99,7 @@ public class ContractChecklistCompMaster extends EntityBaseMaster {
 	 * 対象ライフサイクル状態
 	 */
 	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
 	@ApiModelProperty(value = "対象ライフサイクル状態<br /> "//
 			+ "作成中/キャンセル手続き中/解約手続き中", required = true, position = 4)
 	private TargetLifecycleStatus targetLifecycleStatus;

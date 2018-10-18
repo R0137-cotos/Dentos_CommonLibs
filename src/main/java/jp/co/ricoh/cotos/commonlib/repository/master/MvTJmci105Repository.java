@@ -7,4 +7,5 @@ import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmci105Master;
 
 @Repository
 public interface MvTJmci105Repository extends CrudRepository<MvTJmci105Master, String> {
+	public MvTJmci105Master findByCustomerNumber(String customerNumber);
 }

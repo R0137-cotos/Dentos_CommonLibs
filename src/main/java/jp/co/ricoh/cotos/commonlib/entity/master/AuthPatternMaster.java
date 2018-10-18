@@ -1,10 +1,13 @@
 package jp.co.ricoh.cotos.commonlib.entity.master;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -49,4 +52,11 @@ public class AuthPatternMaster extends EntityBaseMaster {
 	@Enumerated(EnumType.STRING)
 	@ApiModelProperty(value = "参照種別", required = true, position = 4)
 	private AccessType accessType;
+
+	/**
+	 * 画面URL権限マスタ
+	 */
+	@OneToMany(mappedBy = "authPatternMaster")
+	@ApiModelProperty(value = "画面URL権限マスタ", required = false, position = 5)
+	private List<DispUrlAuthMaster> authPatternMasterList;
 }

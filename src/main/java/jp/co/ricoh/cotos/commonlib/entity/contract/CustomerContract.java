@@ -9,8 +9,8 @@ import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
-import jp.co.ricoh.cotos.commonlib.entity.master.VKbMaster;
-import jp.co.ricoh.cotos.commonlib.entity.master.VKbMaster.KjbSetDiv;
+import jp.co.ricoh.cotos.commonlib.entity.master.VKjbMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.VKjbMaster.KjbSetDiv;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -32,7 +32,7 @@ public class CustomerContract extends EntityBase {
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "mom_kjb_system_id", referencedColumnName = "mclMomRelId")
 	@ApiModelProperty(value = "企事部マスタ", required = true, position = 2)
-	private VKbMaster vKbMaster;
+	private VKjbMaster vKjbMaster;
 
 	/**
 	 * MoM企事部ID
