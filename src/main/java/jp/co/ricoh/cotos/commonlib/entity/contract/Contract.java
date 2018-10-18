@@ -10,9 +10,7 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
@@ -24,7 +22,6 @@ import javax.validation.constraints.Pattern;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
-import jp.co.ricoh.cotos.commonlib.entity.master.ProductGrpMaster;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -112,12 +109,10 @@ public class Contract extends EntityBase {
 	private ContractType contractType;
 
 	/**
-	 * 商品グループマスタ
+	 * 商品グループマスタID
 	 */
-	@ManyToOne
-	@JoinColumn(name = "product_grp_master_id", referencedColumnName = "id")
-	@ApiModelProperty(value = "商品グループマスタ", required = false, position = 3)
-	private ProductGrpMaster productGrpMaster;
+	@ApiModelProperty(value = "商品グループマスタID", required = false, position = 3, allowableValues = "range[0,9999999999999999999]")
+	private long productGrpMasterId;
 
 	/**
 	 * ライフサイクル状態
@@ -331,7 +326,7 @@ public class Contract extends EntityBase {
 	@OneToMany(mappedBy = "contract")
 	@OrderBy("displayOrder ASC")
 	@ApiModelProperty(value = "契約チェック結果", required = false, position = 35)
-	private List<ContractCheckResult> chechResultList;
+	private List<ContractCheckResult> checkResultList;
 
 	/**
 	 * 契約承認ルート

@@ -56,14 +56,14 @@ public class ContractCheckResult extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@ApiModelProperty(value = "チェック事項コード", required = true, position = 4, allowableValues = "range[0,255]")
-	private String checkmatterCode;
+	private String checkMatterCode;
 
 	/**
 	 * チェック事項文面
 	 */
 	@Column(nullable = false)
 	@ApiModelProperty(value = "チェック事項文面", required = true, position = 5, allowableValues = "range[0,255]")
-	private String checkmatterText;
+	private String checkMatterText;
 
 	/**
 	 * 表示順
