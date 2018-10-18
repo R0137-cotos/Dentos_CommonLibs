@@ -2,11 +2,17 @@ package jp.co.ricoh.cotos.commonlib.entity.communication;
 
 import java.util.Arrays;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
@@ -43,6 +49,8 @@ public class ContactTo extends EntityBase {
 	}
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contact_to_seq")
+	@SequenceGenerator(name = "contact_to_seq", sequenceName = "contact_to_seq", allocationSize = 1)
 	@ApiModelProperty(value = "宛先ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
@@ -51,6 +59,7 @@ public class ContactTo extends EntityBase {
 	 */
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "contact_id", referencedColumnName = "id")
+	@JsonIgnore
 	@ApiModelProperty(value = "問い合わせ", required = true, position = 2)
 	private Contact contact;
 
@@ -63,6 +72,7 @@ public class ContactTo extends EntityBase {
 	/**
 	 * 宛先MoM社員ID
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "宛先MoM社員ID", required = true, position = 4, allowableValues = "range[0,255]")
 	private String contactToEmpId;
 

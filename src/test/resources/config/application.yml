@@ -23,6 +23,8 @@ cotos:
     extension: xlsx, txt
   search:
     limitSize: 5
+  mail:
+    fromMailAddress: test@ricoh.co.jp
 spring:
   datasource:
     url: jdbc:oracle:thin:@dev-db.cotos.ricoh.co.jp:1521/pdb1

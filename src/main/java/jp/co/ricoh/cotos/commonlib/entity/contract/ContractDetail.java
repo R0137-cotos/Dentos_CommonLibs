@@ -1,18 +1,21 @@
 package jp.co.ricoh.cotos.commonlib.entity.contract;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
@@ -28,22 +31,10 @@ import lombok.EqualsAndHashCode;
 @Data
 @Table(name = "contract_detail")
 public class ContractDetail extends EntityBase {
-	public enum RunningSummaryDiv {
-
-		年額, 月額;//TODO ERD、汎用コード値資料に記載がないため正しいか確認
-
-		@JsonValue
-		public String toValue() {
-			return this.name();
-		}
-
-		@JsonCreator
-		public static Enum<RunningSummaryDiv> fromValue(String name) {
-			return Arrays.stream(values()).filter(v -> v.name() == name).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(name)));
-		}
-	}
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_detail_seq")
+	@SequenceGenerator(name = "contract_detail_seq", sequenceName = "contract_detail_seq", allocationSize = 1)
 	@ApiModelProperty(value = "契約明細ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
@@ -52,68 +43,46 @@ public class ContractDetail extends EntityBase {
 	 */
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "contract_id", referencedColumnName = "id")
+	@JsonIgnore
 	@ApiModelProperty(value = "契約", required = true, position = 2)
 	private Contract contract;
 
 	/**
 	 * 状態
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "状態", required = true, position = 3)
 	private DetailStatus status;
 
 	/**
 	 * 数量
 	 */
-	@ApiModelProperty(value = "数量", required = true, position = 3, allowableValues = "range[0,99999]")
+	@Column(nullable = false)
+	@ApiModelProperty(value = "数量", required = true, position = 4, allowableValues = "range[0,99999]")
 	private int quantity;
 
 	/**
-	 * イニシャル見積金額
+	 * 見積金額
 	 */
-	@ApiModelProperty(value = "イニシャル見積金額", required = false, position = 4, allowableValues = "range[0.00,9999999999999999999.99]")
+	@Column(nullable = false)
+	@ApiModelProperty(value = "見積金額", required = true, position = 5, allowableValues = "range[0.00,9999999999999999999.99]")
 	@Pattern(regexp = "9999999999999999999.99")
-	private BigDecimal initialAmountSummary;
-
-	/**
-	 * イニシャル粗利率
-	 */
-	@ApiModelProperty(value = "イニシャル粗利率", required = false, position = 5, allowableValues = "range[0.00,99999.99]")
-	@Pattern(regexp = "99999.99")
-	private BigDecimal initialGrossProfitRate;
-
-	/**
-	 * ランニングサマリ対象区分
-	 */
-	@ApiModelProperty(value = "ランニングサマリ対象区分", required = false, position = 6)
-	private RunningSummaryDiv runningSummaryDiv;
-
-	/**
-	 * ランニングサマリ見積金額
-	 */
-	@ApiModelProperty(value = "ランニングサマリ見積金額", required = false, position = 7, allowableValues = "range[0.00,9999999999999999999.99]")
-	@Pattern(regexp = "9999999999999999999.99")
-	private BigDecimal runningAmountSummary;
-
-	/**
-	 * ランニング粗利率
-	 */
-	@ApiModelProperty(value = "ランニング粗利率", required = false, position = 8, allowableValues = "range[0.00,99999.99]")
-	@Pattern(regexp = "99999.99")
-	private BigDecimal runningGrossProfitRate;
+	private BigDecimal amountSummary;
 
 	/**
 	 * 摘要
 	 */
-	@ApiModelProperty(value = "摘要", required = false, position = 9, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "摘要", required = false, position = 6, allowableValues = "range[0,255]")
 	private String detailAbstract;
 
 	/**
 	 * 拡張項目
 	 */
-	@ApiModelProperty(value = "拡張項目", required = false, position = 10)
+	@ApiModelProperty(value = "拡張項目", required = false, position = 7)
+	@Lob
 	private String extendsParameter;
 
 	@OneToOne
-	@ApiModelProperty(value = "品種(契約用)", required = false, position = 11)
+	@ApiModelProperty(value = "品種(契約用)", required = false, position = 8)
 	private ItemContract itemContract;
 }

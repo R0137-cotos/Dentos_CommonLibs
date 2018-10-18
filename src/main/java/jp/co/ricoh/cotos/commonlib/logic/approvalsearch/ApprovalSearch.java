@@ -49,7 +49,8 @@ public class ApprovalSearch {
 		// 承認ルートグループIDから承認ルートグループを特定
 		long approvalRouteGrpId = 0L;
 		if (null != estimation) {
-			approvalRouteGrpId = estimation.getProductGrpMaster().getEstimationApprovalRouteGrpMaster().getId();
+			//TODO:エンティティ作成に伴いエラーになった
+			//approvalRouteGrpId = estimation.getProductGrpMaster().getEstimationApprovalRouteGrpMaster().getId();
 		} else {
 			approvalRouteGrpId = contract.getProductGrpMaster().getContractApprovalRouteGrpMaster().getId();
 		}

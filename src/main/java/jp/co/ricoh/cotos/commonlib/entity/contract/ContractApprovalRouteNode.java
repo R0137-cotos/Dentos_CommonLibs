@@ -1,10 +1,16 @@
 package jp.co.ricoh.cotos.commonlib.entity.contract;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
@@ -19,7 +25,10 @@ import lombok.EqualsAndHashCode;
 @Data
 @Table(name = "contract_approval_route_node")
 public class ContractApprovalRouteNode extends EntityBase {
+
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_approval_route_node_seq")
+	@SequenceGenerator(name = "contract_approval_route_node_seq", sequenceName = "contract_approval_route_node_seq", allocationSize = 1)
 	@ApiModelProperty(value = "契約承認ルートノードID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
@@ -28,30 +37,34 @@ public class ContractApprovalRouteNode extends EntityBase {
 	 */
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "contract_approval_route_id", referencedColumnName = "id")
+	@JsonIgnore
 	@ApiModelProperty(value = "契約承認ルート", required = true, position = 2)
 	private ContractApprovalRoute contractApprovalRoute;
 
 	/**
 	 * 承認順
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "承認順", required = true, position = 3, allowableValues = "range[0,999]")
 	private int approvalOrder;
 
 	/**
 	 * 承認者組織階層レベル
 	 */
-	@ApiModelProperty(value = "承認者組織階層レベル", required = false, position = 4, allowableValues = "range[0,9]")
+	@ApiModelProperty(value = "承認者組織階層レベル", required = false, position = 4, allowableValues = "range[0,9999999999]") // TODO ほんと？
 	private Integer approverOrgLevel;
 
 	/**
 	 * 承認者MoM社員ID
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "承認者MoM社員ID", required = true, position = 5, allowableValues = "range[0,255]")
 	private String approverEmpId;
 
 	/**
 	 * 承認者氏名
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "承認者氏名", required = true, position = 6, allowableValues = "range[0,255]")
 	private String approverName;
 

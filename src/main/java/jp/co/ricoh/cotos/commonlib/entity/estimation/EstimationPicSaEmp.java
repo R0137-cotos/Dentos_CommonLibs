@@ -1,10 +1,14 @@
 package jp.co.ricoh.cotos.commonlib.entity.estimation;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -23,6 +27,8 @@ import lombok.EqualsAndHashCode;
 public class EstimationPicSaEmp extends EntityBase {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "estimation_pic_sa_emp_seq")
+	@SequenceGenerator(name = "estimation_pic_sa_emp_seq", sequenceName = "estimation_pic_sa_emp_seq", allocationSize = 1)
 	@ApiModelProperty(value = "ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
@@ -30,7 +36,7 @@ public class EstimationPicSaEmp extends EntityBase {
 	 * RJ社員情報マスタ
 	 */
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "momEmployeeId")
+	@JoinColumn(name = "momEmployeeId", referencedColumnName = "emp_id")
 	@ApiModelProperty(value = "RJ社員情報マスタ", required = true, position = 2)
 	private MvEmployeeMaster mvEmployeeMaster;
 
@@ -43,7 +49,7 @@ public class EstimationPicSaEmp extends EntityBase {
 	/**
 	 * 所属組織階層レベル
 	 */
-	@ApiModelProperty(value = "所属組織階層レベル", required = false, position = 4, allowableValues = "range[0,999]")
+	@ApiModelProperty(value = "所属組織階層レベル", required = false, position = 4, allowableValues = "range[0,9]")
 	private Integer orgHierarchyLevel;
 
 	/**
@@ -62,11 +68,12 @@ public class EstimationPicSaEmp extends EntityBase {
 	 * 会社代表電話番号
 	 */
 	@ApiModelProperty(value = "会社代表電話番号", required = false, position = 7, allowableValues = "range[0,255]")
-	private String orgTel;
+	private String orgPhoneNumber;
 
 	/**
 	 * 社員名
 	 */
+	@Column(nullable = false)
 	@ApiModelProperty(value = "社員名", required = true, position = 8, allowableValues = "range[0,255]")
 	private String employeeName;
 
