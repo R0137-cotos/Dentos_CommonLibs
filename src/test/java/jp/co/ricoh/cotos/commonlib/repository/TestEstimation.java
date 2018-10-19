@@ -233,13 +233,14 @@ public class TestEstimation {
 
 	// TODO: エラーになる
 	@Test
-	@WithMockCustomUser
 	@Transactional
 	public void EstimationApprovalResultRepositoryのテスト() throws Exception {
 
 		// テストデータ登録
 		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimationApprovalRoute.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimationApprovalResult.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimation.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimationApprovalRouteNode.sql");
 
 		// リポジトリ作成
 		EstimationApprovalResultRepository repository = context.getBean(EstimationApprovalResultRepository.class);
