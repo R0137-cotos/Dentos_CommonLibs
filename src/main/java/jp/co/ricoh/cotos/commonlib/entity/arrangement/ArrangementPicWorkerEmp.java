@@ -70,7 +70,7 @@ public class ArrangementPicWorkerEmp extends EntityBase {
 	 * 会社代表電話番号
 	 */
 	@ApiModelProperty(value = "会社代表電話番号", required = false, position = 7, allowableValues = "range[0,255]")
-	private String orgPhoneNumbewr;
+	private String orgPhoneNumber;
 
 	/**
 	 * 社員名

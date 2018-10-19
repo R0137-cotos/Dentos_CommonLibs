@@ -18,7 +18,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Pattern;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
@@ -151,7 +150,6 @@ public class Contract extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@ApiModelProperty(value = "契約番号", required = true, position = 9, allowableValues = "range[0,255]", readOnly = true)
-	@Pattern(regexp = "CCYYYYMMDDNNNNN")
 	private String contractNumber;
 
 	/**
@@ -171,7 +169,6 @@ public class Contract extends EntityBase {
 	 * 変更元契約番号
 	 */
 	@ApiModelProperty(value = "変更元契約番号", required = false, position = 12, allowableValues = "range[0,255]")
-	@Pattern(regexp = "CAYYYYMMDDNNNNN")
 	private String originContractNumber;
 
 	/**
@@ -247,7 +244,6 @@ public class Contract extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@ApiModelProperty(value = "見積番号", required = true, position = 23, allowableValues = "range[0,255]")
-	@Pattern(regexp = "CEYYYYMMDDNNNNN")
 	private String estimationNumber;
 
 	/**

@@ -12,7 +12,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Pattern;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
@@ -110,7 +109,7 @@ public class CommunicationHistory extends EntityBase {
 	@Column(nullable = false)
 	@ApiModelProperty(value = "被伝達者<br />" //
 			+ "ユーザー識別子としてMoM社員IDを設定", required = true, position = 10, allowableValues = "range[0,255]") //
-	private String requestTo;
+	private String requestToId;
 
 	/**
 	 * 被伝達者候補
@@ -125,8 +124,7 @@ public class CommunicationHistory extends EntityBase {
 	@Column(nullable = false)
 	@ApiModelProperty(value = "対象文書番号<br />" //
 			+ "見積⇒見積番号を設定<br />" //
-			+ "契約/手配⇒契約番号を設定", required = true, position = 12, allowableValues = "range[0,255]") //
-	@Pattern(regexp = "見積:CEYYYYMMDDNNNNN、契約/手配:CAYYYYMMDDNNNNN")
+			+ "契約/手配⇒契約番号を設定", required = true, position = 12, allowableValues = "range[0,255]")
 	private String targetDocNumber;
 
 	/**
@@ -135,7 +133,7 @@ public class CommunicationHistory extends EntityBase {
 	@Column(nullable = false)
 	@ApiModelProperty(value = "対象文書番号枝番<br />" //
 			+ "見積⇒見積番号枝番を設定<br />" //
-			+ "契約/手配⇒契約番号枝番を設定", required = true, position = 13, allowableValues = "range[0,99]") //
+			+ "契約/手配⇒契約番号枝番を設定", required = true, position = 13, allowableValues = "range[0,99]")
 	private int targetDocBranchNumber;
 
 	/**

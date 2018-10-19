@@ -8,7 +8,6 @@ import java.util.Map;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
 
@@ -269,7 +268,6 @@ public class ContractSearchParameter {
 	@ApiModelProperty(value = "請求開始月<br />" //
 			+ "日付フォーマット：yyyy/MM", //
 			required = false) //
-	@Pattern(regexp = "yyyy/MM")
 	private String billingMonth;
 
 	/**
