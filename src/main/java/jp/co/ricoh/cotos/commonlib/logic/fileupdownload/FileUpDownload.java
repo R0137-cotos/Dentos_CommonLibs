@@ -40,7 +40,7 @@ public class FileUpDownload {
 	 * @return ファイルパス
 	 * @throws IOException
 	 */
-	public void fileUpload(MultipartFile file) throws ErrorCheckException, IOException {
+	public String fileUpload(MultipartFile file) throws ErrorCheckException, IOException {
 		// チェック処理
 		if (null == file) {
 			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "FileInfoNotFoundError"));
@@ -67,6 +67,8 @@ public class FileUpDownload {
 		} catch (IOException e) {
 			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "FileUploadError", new String[] { uploadFile.getAbsolutePath() }));
 		}
+		
+		return uploadFile.getPath();
 	}
 
 	/**

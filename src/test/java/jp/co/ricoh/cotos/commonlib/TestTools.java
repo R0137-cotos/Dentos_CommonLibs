@@ -31,7 +31,14 @@ public class TestTools {
 	public void assertColumnsNotNull(EntityBaseMaster entity) throws Exception {
 		Assert.assertTrue(hasNullColumn(entity) == false);
 	}
-	
+
+	/**
+	 * エンティティクラスのフィールドの設定値に null が含まれるか
+	 * 
+	 * @param entity
+	 * @throws Exception
+	 */
+
 	public void assertColumnsNotNull(EntityBase entity) throws Exception {
 		Assert.assertTrue(hasNullColumn(entity) == false);
 	}
@@ -58,17 +65,15 @@ public class TestTools {
 		}
 		return false;
 	}
-	
+
 	public boolean hasNullColumn(EntityBase entity) throws Exception {
 		for (Field field : entity.getClass().getDeclaredFields()) {
 			field.setAccessible(true);
-			if (field.getType() == List.class)
-				continue;
-			if (field.getType() == EntityBase.class)
-				continue;
+
 			if (field.get(entity) == null)
 				return true;
 		}
 		return false;
+
 	}
 }

@@ -8,7 +8,6 @@ import java.util.Map;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
 
@@ -150,10 +149,10 @@ public class ContractSearchParameter {
 	private Date serviceTermEndTo;
 
 	/**
-	 * お客様企業ID
+	 * お客様企事部ID
 	 */
-	@ApiParam(value = "お客様企業ID", required = false)
-	@ApiModelProperty(value = "お客様企業ID", required = false, allowableValues = "range[0,255]")
+	@ApiParam(value = "お客様企事部ID", required = false)
+	@ApiModelProperty(value = "お客様企事部ID", required = false, allowableValues = "range[0,255]")
 	private String customerId;
 
 	/**
@@ -269,7 +268,6 @@ public class ContractSearchParameter {
 	@ApiModelProperty(value = "請求開始月<br />" //
 			+ "日付フォーマット：yyyy/MM", //
 			required = false) //
-	@Pattern(regexp = "yyyy/MM")
 	private String billingMonth;
 
 	/**

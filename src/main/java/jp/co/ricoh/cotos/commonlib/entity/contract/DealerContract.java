@@ -1,13 +1,21 @@
 package jp.co.ricoh.cotos.commonlib.entity.contract;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
+import jp.co.ricoh.cotos.commonlib.entity.EnumType.DealerFlowOrder;
 import jp.co.ricoh.cotos.commonlib.entity.master.VKbMaster;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -22,13 +30,15 @@ import lombok.EqualsAndHashCode;
 public class DealerContract extends EntityBase {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dealer_contract_seq")
+	@SequenceGenerator(name = "dealer_contract_seq", sequenceName = "dealer_contract_seq", allocationSize = 1)
 	@ApiModelProperty(value = "ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
 	/**
 	 * MoM企事部
 	 */
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "mom_kjb_system_id", referencedColumnName = "mclMomRelId")
 	@ApiModelProperty(value = "MoM企事部", required = false, position = 2)
 	private VKbMaster vKbMaster;
@@ -86,12 +96,14 @@ public class DealerContract extends EntityBase {
 	 */
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "contract_id", referencedColumnName = "id")
+	@JsonIgnore
 	@ApiModelProperty(value = "契約", required = true, position = 11)
 	private Contract contract;
 
 	/**
 	 * 販売店商流順
 	 */
-	@ApiModelProperty(value = "販売店商流順", required = true, position = 12, allowableValues = "range[0,999]")
-	private int dealerFlowOrder;
+	@Column(nullable = false)
+	@ApiModelProperty(value = "販売店商流順", required = true, position = 12)
+	private DealerFlowOrder dealerFlowOrder;
 }
