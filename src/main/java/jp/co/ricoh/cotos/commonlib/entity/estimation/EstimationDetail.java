@@ -49,7 +49,7 @@ public class EstimationDetail extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@ApiModelProperty(value = "状態", required = true, position = 3)
-	private DetailStatus status;
+	private DetailStatus state;
 
 	/**
 	 * 数量
@@ -78,7 +78,7 @@ public class EstimationDetail extends EntityBase {
 	@ApiModelProperty(value = "拡張項目", required = false, position = 7)
 	private String extendsParameter;
 
-	@OneToOne(optional = false)
+	@OneToOne(optional = false, mappedBy = "estimationDetail")
 	@ApiModelProperty(value = "品種(見積用)", required = true, position = 8)
 	private ItemEstimation itemEstimation;
 

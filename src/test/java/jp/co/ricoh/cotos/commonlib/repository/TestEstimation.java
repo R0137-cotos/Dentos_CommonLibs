@@ -189,7 +189,6 @@ public class TestEstimation {
 
 	}
 
-	// TODO: エラーになる
 	@Test
 	@WithMockCustomUser
 	@Transactional
@@ -341,7 +340,6 @@ public class TestEstimation {
 
 	}
 
-	// TODO: エラーになる
 	@Test
 	@WithMockCustomUser
 	@Transactional
