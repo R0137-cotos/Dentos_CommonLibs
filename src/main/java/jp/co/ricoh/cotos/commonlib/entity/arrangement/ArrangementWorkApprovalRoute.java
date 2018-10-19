@@ -38,7 +38,7 @@ public class ArrangementWorkApprovalRoute extends EntityBase {
 	 * 手配業務
 	 */
 	@OneToOne(optional = false)
-	@JoinColumn(name = "arrange_work_id", referencedColumnName = "id")
+	@JoinColumn(name = "arrangement_work_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "手配業務", required = true, position = 2)
 	private ArrangementWork arrangementWork;
 
