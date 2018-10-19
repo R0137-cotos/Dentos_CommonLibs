@@ -18,7 +18,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Pattern;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
@@ -145,7 +144,6 @@ public class Estimation extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@ApiModelProperty(value = "見積番号", required = true, position = 8, allowableValues = "range[0,255]", readOnly = true)
-	@Pattern(regexp = "CEYYYYMMDDNNNNN")
 	private String estimationNumber;
 
 	/**
@@ -178,7 +176,6 @@ public class Estimation extends EntityBase {
 	 * 変更元契約番号
 	 */
 	@ApiModelProperty(value = "変更元契約番号", required = false, position = 13, allowableValues = "range[0,255]")
-	@Pattern(regexp = "CCYYYYMMDDNNNNN")
 	private String originContractNumber;
 
 	/**
@@ -349,7 +346,6 @@ public class Estimation extends EntityBase {
 	 * 競合先基本料金
 	 */
 	@ApiModelProperty(value = "競合先基本料金", required = false, position = 41, allowableValues = "range[0.00,9999999999999999999.99]")
-	@Pattern(regexp = "9999999999999999999.99")
 	private BigDecimal competitionAmount;
 
 	/**
