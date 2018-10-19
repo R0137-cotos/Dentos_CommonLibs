@@ -20,6 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import jp.co.ricoh.cotos.commonlib.DBConfig;
 import jp.co.ricoh.cotos.commonlib.TestTools;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
+import jp.co.ricoh.cotos.commonlib.entity.communication.Contact;
 import jp.co.ricoh.cotos.commonlib.repository.communication.CommunicationHistoryRepository;
 import jp.co.ricoh.cotos.commonlib.repository.communication.CommunicationRepository;
 import jp.co.ricoh.cotos.commonlib.repository.communication.ContactRepository;
@@ -62,22 +63,29 @@ public class TestCommunication {
 
 	@Test
 	public void 全てのカラムがNullではないことを確認_コミュニケーション() {
-		全てのカラムがNullではないことを確認_共通(communicationRepository, 1L, 4L);
+		全てのカラムがNullではないことを確認_共通(communicationRepository, 1L);
 	}
 
 	@Test
 	public void 全てのカラムがNullではないことを確認_コミュニケーション履歴() {
-		全てのカラムがNullではないことを確認_共通(communicationHistoryRepository, 1L, 2L, 3L, 4L, 5L, 6L);
+		全てのカラムがNullではないことを確認_共通(communicationHistoryRepository, 1L);
 	}
 
 	@Test
 	public void 全てのカラムがNullではないことを確認_問い合わせ() {
-		全てのカラムがNullではないことを確認_共通(contactRepository, 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L);
+		全てのカラムがNullではないことを確認_共通(contactRepository, 5L);
+	}
+
+	@Test
+	public void 親がいない場合には親がnullになることを確認_問い合わせ() {
+		context.getBean(DBConfig.class).initTargetTestData("repository/communication.sql");
+		Contact child = contactRepository.findOne(4L);
+		Assert.assertNull(child.getParent());
 	}
 
 	@Test
 	public void 全てのカラムがNullではないことを確認_問い合わせ宛先() {
-		全てのカラムがNullではないことを確認_共通(contactToRepository, 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L, 14L, 15L, 16L);
+		全てのカラムがNullではないことを確認_共通(contactToRepository, 1L);
 	}
 
 	@Transactional

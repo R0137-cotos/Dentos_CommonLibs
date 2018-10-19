@@ -11,13 +11,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
@@ -50,10 +52,18 @@ public class Contact extends EntityBase {
 	/**
 	 * 親問い合わせ
 	 */
-	@OneToOne(fetch = FetchType.LAZY)
+	@ManyToOne
+	@JsonIgnore
 	@JoinColumn(name = "parent_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "親問い合わせ", required = false, position = 3)
 	private Contact parent;
+
+	/**
+	 * 子問い合わせリスト
+	 */
+	@OneToMany(mappedBy = "parent")
+	@ApiModelProperty(value = "子問い合わせリスト", required = false, position = 3)
+	private List<Contact> children;
 
 	/**
 	 * 送信者MoM社員ID
