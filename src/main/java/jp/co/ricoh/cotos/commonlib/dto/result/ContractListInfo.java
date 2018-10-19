@@ -9,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Pattern;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.contract.Contract.ContractType;
@@ -95,7 +94,6 @@ public class ContractListInfo {
 	 * 請求開始月
 	 */
 	@ApiModelProperty(value = "請求開始月", required = false, position = 10)
-	@Pattern(regexp = "yyyy/MM")
 	private String billingStartMonth;
 
 	/**
