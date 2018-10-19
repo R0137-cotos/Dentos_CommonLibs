@@ -641,10 +641,6 @@ public class TestMaster {
 		// Entity の リストとエンティティクラスの項目の値が null ではないことを確認
 		if (found.getApprovalRouteMasterList() == null || found.getApprovalRouteMasterList().size() == 0)
 			Assert.assertTrue(false);
-		//		if (found.getEstimationProductGrpMasterList() == null || found.getEstimationProductGrpMasterList().size() == 0)
-		//			Assert.assertTrue(false);
-		//		if (found.getContractProductGrpMasterList() == null || found.getContractProductGrpMasterList().size() == 0)
-		//			Assert.assertTrue(false);
 		if (found.getArrangementWorkTypeMasterList() == null || found.getArrangementWorkTypeMasterList().size() == 0)
 			Assert.assertTrue(false);
 	}
