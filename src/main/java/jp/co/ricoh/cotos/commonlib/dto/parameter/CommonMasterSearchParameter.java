@@ -1,18 +1,17 @@
 package jp.co.ricoh.cotos.commonlib.dto.parameter;
 
-import java.util.List;
-
 import io.swagger.annotations.ApiParam;
+import jp.co.ricoh.cotos.commonlib.entity.EnumType.ServiceCategory;
 import lombok.Data;
 
 @Data
 public class CommonMasterSearchParameter {
 
 	/**
-	 * 汎用マスタIDリスト
+	 * サービスカテゴリ
 	 */
-	@ApiParam(value = "汎用マスタIDリスト", required = false)
-	private List<String> commonArticleCdList;
+	@ApiParam(value = "サービスカテゴリ", required = false)
+	private ServiceCategory serviceCategory;
 
 	/**
 	 * 空行追加フラグ

@@ -407,7 +407,6 @@ public class TestMaster {
 			Assert.assertTrue(false);
 	}
 
-
 	@Test
 	@WithMockCustomUser
 	@Transactional
@@ -589,7 +588,6 @@ public class TestMaster {
 			Assert.assertTrue(false);
 	}
 
-
 	@Test
 	@WithMockCustomUser
 	@Transactional
@@ -617,7 +615,6 @@ public class TestMaster {
 			Assert.assertTrue(false);
 	}
 
-
 	@Test
 	@WithMockCustomUser
 	@Transactional
@@ -644,15 +641,13 @@ public class TestMaster {
 		// Entity の リストとエンティティクラスの項目の値が null ではないことを確認
 		if (found.getApprovalRouteMasterList() == null || found.getApprovalRouteMasterList().size() == 0)
 			Assert.assertTrue(false);
-//		if (found.getEstimationProductGrpMasterList() == null || found.getEstimationProductGrpMasterList().size() == 0)
-//			Assert.assertTrue(false);
-//		if (found.getContractProductGrpMasterList() == null || found.getContractProductGrpMasterList().size() == 0)
-//			Assert.assertTrue(false);
+		//		if (found.getEstimationProductGrpMasterList() == null || found.getEstimationProductGrpMasterList().size() == 0)
+		//			Assert.assertTrue(false);
+		//		if (found.getContractProductGrpMasterList() == null || found.getContractProductGrpMasterList().size() == 0)
+		//			Assert.assertTrue(false);
 		if (found.getArrangementWorkTypeMasterList() == null || found.getArrangementWorkTypeMasterList().size() == 0)
 			Assert.assertTrue(false);
 	}
-
-
 
 	@Test
 	@WithMockCustomUser
@@ -665,10 +660,9 @@ public class TestMaster {
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/approvalRouteGrpMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/productMaster.sql");
 
-//		context.getBean(DBConfig.class).initTargetTestData("repository/master/approvalRouteMaster.sql");
-//		context.getBean(DBConfig.class).initTargetTestData("repository/master/approvalRouteNodeMaster.sql");
-//		context.getBean(DBConfig.class).initTargetTestData("repository/master/arrangementWorkTypeMaster.sql");
-
+		//		context.getBean(DBConfig.class).initTargetTestData("repository/master/approvalRouteMaster.sql");
+		//		context.getBean(DBConfig.class).initTargetTestData("repository/master/approvalRouteNodeMaster.sql");
+		//		context.getBean(DBConfig.class).initTargetTestData("repository/master/arrangementWorkTypeMaster.sql");
 
 		// エンティティの取得
 		Long id = 1L;
@@ -686,7 +680,6 @@ public class TestMaster {
 		if (found.getProductMaster() == null)
 			Assert.assertTrue(false);
 	}
-
 
 	@Test
 	@WithMockCustomUser
@@ -743,9 +736,11 @@ public class TestMaster {
 		testTool.assertColumnsNotNull(found);
 
 		// Entity の リストとエンティティクラスの項目の値が null ではないことを確認
-		if (found.getContractChecklistCompMasterList() == null || found.getContractChecklistCompMasterList().size() == 0)
+		if (found.getContractChecklistCompMasterList() == null
+				|| found.getContractChecklistCompMasterList().size() == 0)
 			Assert.assertTrue(false);
-		if (found.getEstimationChecklistCompMasterList() == null || found.getEstimationChecklistCompMasterList().size() == 0)
+		if (found.getEstimationChecklistCompMasterList() == null
+				|| found.getEstimationChecklistCompMasterList().size() == 0)
 			Assert.assertTrue(false);
 		if (found.getItemMasterList() == null || found.getItemMasterList().size() == 0)
 			Assert.assertTrue(false);
@@ -783,7 +778,6 @@ public class TestMaster {
 		if (found.getRecordDecomposeCompMasterList() == null || found.getRecordDecomposeCompMasterList().size() == 0)
 			Assert.assertTrue(false);
 	}
-
 
 	@Test
 	@WithMockCustomUser
@@ -949,7 +943,6 @@ public class TestMaster {
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
 	}
-
 
 	public static void main(String[] args) throws Exception {
 		TestTools tool = new TestTools();

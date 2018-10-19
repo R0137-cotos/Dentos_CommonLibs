@@ -11,7 +11,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import io.swagger.annotations.ApiModelProperty;
-import jp.co.ricoh.cotos.commonlib.entity.estimation.Estimation.EstimationDiv;
+import jp.co.ricoh.cotos.commonlib.entity.estimation.Estimation.EstimationType;
 import jp.co.ricoh.cotos.commonlib.entity.estimation.Estimation.WorkflowStatus;
 import lombok.Data;
 
@@ -41,7 +41,7 @@ public class EstimationListInfo {
 	@ApiModelProperty(value = "見積種別<br />" //
 			+ "新規、プラン変更等の見積種別を表す。", //
 			required = false, position = 3) //
-	private EstimationDiv estimationDiv;
+	private EstimationType estimationtype;
 
 	/**
 	 * 見積件名

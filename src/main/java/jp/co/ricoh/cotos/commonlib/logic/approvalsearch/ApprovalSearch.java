@@ -10,6 +10,7 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,8 +21,6 @@ import com.github.mustachejava.MustacheFactory;
 import jp.co.ricoh.cotos.commonlib.dto.result.ApprovalRouteMasterResult;
 import jp.co.ricoh.cotos.commonlib.dto.result.RouteFormulaResult;
 import jp.co.ricoh.cotos.commonlib.dto.result.RouteFormulaResult.RouteFormulaStatus;
-import jp.co.ricoh.cotos.commonlib.entity.contract.Contract;
-import jp.co.ricoh.cotos.commonlib.entity.estimation.Estimation;
 import jp.co.ricoh.cotos.commonlib.entity.master.ApprovalRouteGrpMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.ApprovalRouteMaster;
 import jp.co.ricoh.cotos.commonlib.exception.RouteFormulaScriptException;
@@ -34,39 +33,39 @@ public class ApprovalSearch {
 	ApprovalRouteGrpMasterRepository approvalRouteGrpMasterRepository;
 
 	/**
-	 * 承認ルート特定 ※見積承認ルート取得の場合:(estimation, null) 契約承認ルート取得の場合:(null, contract)
-	 *
-	 * @param estimation
-	 *            見積情報
-	 * @param contract
-	 *            契約情報
+	 * 承認ルート特定
+	 * 
+	 * <pre>
+	 * 【処理内容】
+	 * ・引数の承認ルートグループIDを元に承認ルートグループマスタTBL(APPROVAL_ROUTE_GRP_MASTER)から承認ルートグループマスタ情報取得
+	 * ・引数のエンティティを元にJavaScriptエンジン「Nashorn」を使用し、承認ルートマスタTBL(APPROVAL_ROUTE_MASTER)からルート条件式に一致にする承認ルートマスタ情報取得
+	 *  ※上記処理で失敗した場合は、処理結果ステータスに「警告」または「異常」を設定し戻り値返却
+	 * ・承認ルートマスタ情報に紐づく承認ルードノード情報は各ドメインの共通処理で取得
+	 * </pre>
+	 * 
+	 * @param approvalRouteGrpId
+	 *            承認ルートグループID
+	 * @param entity
+	 *            エンティティ
+	 * @param domain
+	 *            ドメイン(estimation・contract・arrangementのいずれかを設定)
 	 * @return 承認ルート
 	 */
-	public ApprovalRouteMasterResult findApprovalRouteMaster(Estimation estimation, Contract contract) {
+	@SuppressWarnings("hiding")
+	public <T> ApprovalRouteMasterResult findApprovalRouteMaster(long approvalRouteGrpId, T entity, String domain) {
 
 		ApprovalRouteMasterResult reslut = new ApprovalRouteMasterResult();
-
-		// 承認ルートグループIDから承認ルートグループを特定
-		long approvalRouteGrpId = 0L;
-		if (null != estimation) {
-			approvalRouteGrpId = estimation.getProductGrpMaster().getEstimationApprovalRouteGrpMaster().getId();
-		} else {
-			approvalRouteGrpId = contract.getProductGrpMaster().getContractApprovalRouteGrpMaster().getId();
-		}
 		ApprovalRouteGrpMaster approvalRouteGrpMaster = approvalRouteGrpMasterRepository.findOne(approvalRouteGrpId);
 
 		// ルート特定、または条件式実行結果ステータスの異常・警告が発生するまでループ
-		ApprovalRouteMaster applyApprovalRouteMaster = approvalRouteGrpMaster.getApprovalRouteMasterList().stream()
-				.filter(approvalRouteMaster -> {
-					// 条件式実行
-					RouteFormulaResult formulaResult = this.execRouteFormula(estimation, contract, approvalRouteMaster);
-					return (RouteFormulaStatus.正常.equals(formulaResult.getStatus()) && formulaResult.isApplyRoute())
-							|| RouteFormulaStatus.異常.equals(formulaResult.getStatus())
-							|| RouteFormulaStatus.警告.equals(formulaResult.getStatus());
-				}).findFirst().get();
+		ApprovalRouteMaster applyApprovalRouteMaster = approvalRouteGrpMaster.getApprovalRouteMasterList().stream().filter(approvalRouteMaster -> {
+			// 条件式実行
+			RouteFormulaResult formulaResult = this.execRouteFormula(entity, domain, approvalRouteMaster);
+			return (RouteFormulaStatus.正常.equals(formulaResult.getStatus()) && formulaResult.isApplyRoute()) || RouteFormulaStatus.異常.equals(formulaResult.getStatus()) || RouteFormulaStatus.警告.equals(formulaResult.getStatus());
+		}).findFirst().get();
 
 		// 特定した承認ルートマスタの条件式を実行
-		RouteFormulaResult formulaResult = this.execRouteFormula(estimation, contract, applyApprovalRouteMaster);
+		RouteFormulaResult formulaResult = this.execRouteFormula(entity, domain, applyApprovalRouteMaster);
 
 		reslut.setRouteFormulaResult(formulaResult);
 		reslut.setApprovalRouteMaster(applyApprovalRouteMaster);
@@ -77,29 +76,24 @@ public class ApprovalSearch {
 	/**
 	 * ルート条件式を実行
 	 *
-	 * @param estimation
-	 *            条件式の引数
-	 * @param contract
-	 *            条件式の引数
+	 * @param entity
+	 *            エンティティ
+	 * @param domain
+	 *            ドメイン
 	 * @param approvalRouteMaster
 	 *            条件式
 	 * @return 実施結果
 	 * @throws ScriptException
 	 */
-	private RouteFormulaResult execRouteFormula(Estimation estimation, Contract contract,
-			ApprovalRouteMaster approvalRouteMaster) {
+	@SuppressWarnings("hiding")
+	private <T> RouteFormulaResult execRouteFormula(T entityClass, String domain, ApprovalRouteMaster approvalRouteMaster) {
 
 		ScriptEngineManager manager = new ScriptEngineManager();
 		ScriptEngine engine = manager.getEngineByName("nashorn");
 
 		try {
-			if (null != estimation) {
-				engine.put("estimation", estimation);
-			} else {
-				engine.put("contract", contract);
-			}
-			engine.eval(loadScriptFromClasspath("js/routeFormulaTemplate.js",
-					approvalRouteMaster.getRouteConditionFormula()));
+			engine.put(domain, entityClass);
+			engine.eval(loadScriptFromClasspath("js/routeFormulaTemplate.js", approvalRouteMaster.getRouteConditionFormula()));
 			return (RouteFormulaResult) engine.eval("result");
 		} catch (ScriptException e) {
 			throw new RouteFormulaScriptException(e);
@@ -118,9 +112,7 @@ public class ApprovalSearch {
 	private String loadScriptFromClasspath(String jsFilePathOnClasspath, String formula) {
 		try {
 			MustacheFactory mf = new DefaultMustacheFactory();
-			Mustache mustache = mf.compile(
-					new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream(jsFilePathOnClasspath)),
-					jsFilePathOnClasspath);
+			Mustache mustache = mf.compile(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream(jsFilePathOnClasspath)), jsFilePathOnClasspath);
 			StringWriter out = new StringWriter();
 
 			Map<String, Object> parameter = new HashMap<>();

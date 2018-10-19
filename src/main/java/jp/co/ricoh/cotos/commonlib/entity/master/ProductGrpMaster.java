@@ -37,8 +37,8 @@ public class ProductGrpMaster extends EntityBaseMaster {
 	 * 商品グループマスタID
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_grp_master")
-	@SequenceGenerator(name = "product_grp_master", sequenceName = "product_grp_master", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_grp_master_seq")
+	@SequenceGenerator(name = "product_grp_master_seq", sequenceName = "product_grp_master_seq", allocationSize = 1)
 	@ApiModelProperty(value = "商品グループマスタID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 

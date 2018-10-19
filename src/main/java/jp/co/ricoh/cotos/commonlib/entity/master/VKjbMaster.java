@@ -15,7 +15,7 @@ import lombok.Data;
 @Table(name = "v_kjb_master")
 public class VKjbMaster {
 
-	public enum KjbSetDiv {
+	public enum DepartmentDiv {
 		企事, 企事部;
 	}
 
