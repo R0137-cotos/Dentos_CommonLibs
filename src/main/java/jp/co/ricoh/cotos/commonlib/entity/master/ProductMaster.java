@@ -11,6 +11,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import lombok.Data;
@@ -49,6 +51,7 @@ public class ProductMaster extends EntityBaseMaster {
 	 * 商品構成マスタ
 	 */
 	@OneToMany(mappedBy = "productMaster")
+	@JsonIgnore
 	@ApiModelProperty(value = "商品構成マスタ", required = false, position = 4)
 	private List<ProductCompMaster> productCompMasterList;
 

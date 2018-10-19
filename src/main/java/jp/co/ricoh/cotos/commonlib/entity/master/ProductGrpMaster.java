@@ -1,3 +1,4 @@
+
 package jp.co.ricoh.cotos.commonlib.entity.master;
 
 import java.util.Date;
@@ -46,8 +47,7 @@ public class ProductGrpMaster extends EntityBaseMaster {
 	 */
 	@ManyToOne
 	@JoinColumn(name = "estimation_approval_route_grp_id", referencedColumnName = "id")
-	@JsonIgnore
-	@ApiModelProperty(value = "承認ルートグループマスタ", required = false, position = 2)
+	@ApiModelProperty(value = "承認ルートグループマスタ（見積）", required = false, position = 2)
 	private ApprovalRouteGrpMaster estimationApprovalRouteGrpMaster;
 
 	/**
@@ -55,14 +55,14 @@ public class ProductGrpMaster extends EntityBaseMaster {
 	 */
 	@ManyToOne
 	@JoinColumn(name = "contract_approval_route_grp_id", referencedColumnName = "id")
-	@JsonIgnore
-	@ApiModelProperty(value = "契約承認ルートグループマスタ", required = false, position = 3)
+	@ApiModelProperty(value = "承認ルートグループマスタ（契約）", required = false, position = 3)
 	private ApprovalRouteGrpMaster contractApprovalRouteGrpMaster;
 
 	/**
 	 * 商品構成マスタ
 	 */
 	@OneToMany(mappedBy = "productGrpMaster")
+	@JsonIgnore
 	@ApiModelProperty(value = "商品構成マスタ", required = false, position = 4)
 	private List<ProductCompMaster> productCompMasterList;
 
@@ -71,7 +71,7 @@ public class ProductGrpMaster extends EntityBaseMaster {
 	 */
 	@Column(nullable = false)
 	@ApiModelProperty(value = "商品グループ名", required = true, position = 5, allowableValues = "range[255]")
-	private long productGrpName;
+	private String productGrpName;
 
 	/**
 	 * 積上げ可能期間(開始日)

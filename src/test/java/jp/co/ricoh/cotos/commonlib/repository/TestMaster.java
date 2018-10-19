@@ -1,6 +1,8 @@
 package jp.co.ricoh.cotos.commonlib.repository;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.persistence.EntityManager;
 
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.http.HttpMethod;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,8 +22,38 @@ import jp.co.ricoh.cotos.commonlib.DBConfig;
 import jp.co.ricoh.cotos.commonlib.TestTools;
 import jp.co.ricoh.cotos.commonlib.WithMockCustomUser;
 import jp.co.ricoh.cotos.commonlib.db.DBUtil;
+import jp.co.ricoh.cotos.commonlib.entity.master.ApprovalRouteGrpMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.ApprovalRouteMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.ApprovalRouteNodeMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.ArrangementChecklistCompMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.ArrangementWorkCompMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.ArrangementWorkTypeMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.AuthPatternMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.BusinessCalendar;
+import jp.co.ricoh.cotos.commonlib.entity.master.CommonMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.CommonMasterDetail;
+import jp.co.ricoh.cotos.commonlib.entity.master.ContractChecklistCompMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.DispUrlAuthMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.EstimationChecklistCompMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.GpCheckMatterMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.ItemMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.JwtSysAuthMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.MailTemplateMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.MvEmployeeMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmci101Master;
+import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmci105Master;
+import jp.co.ricoh.cotos.commonlib.entity.master.MvTjmmb010UtlItem;
+import jp.co.ricoh.cotos.commonlib.entity.master.MvTjmmb020UtlCd;
 import jp.co.ricoh.cotos.commonlib.entity.master.ProductCompMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.ProductGrpMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.ProductMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.RecordDecomposeCompMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.RecordDecomposeMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.SuperUserMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.Domain;
+import jp.co.ricoh.cotos.commonlib.entity.master.VKjbMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.VPicAffiliateMaster;
 import jp.co.ricoh.cotos.commonlib.repository.master.ApprovalRouteGrpMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ApprovalRouteMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ApprovalRouteNodeMasterRepository;
@@ -150,8 +183,6 @@ public class TestMaster {
 			context.stop();
 		}
 	}
-
-/*
 
 	@Test
 	@WithMockCustomUser
@@ -586,6 +617,7 @@ public class TestMaster {
 			Assert.assertTrue(false);
 	}
 
+
 	@Test
 	@WithMockCustomUser
 	@Transactional
@@ -612,15 +644,16 @@ public class TestMaster {
 		// Entity の リストとエンティティクラスの項目の値が null ではないことを確認
 		if (found.getApprovalRouteMasterList() == null || found.getApprovalRouteMasterList().size() == 0)
 			Assert.assertTrue(false);
-		if (found.getEstimationProductGrpMasterList() == null || found.getEstimationProductGrpMasterList().size() == 0)
-			Assert.assertTrue(false);
-		if (found.getContractProductGrpMasterList() == null || found.getContractProductGrpMasterList().size() == 0)
-			Assert.assertTrue(false);
+//		if (found.getEstimationProductGrpMasterList() == null || found.getEstimationProductGrpMasterList().size() == 0)
+//			Assert.assertTrue(false);
+//		if (found.getContractProductGrpMasterList() == null || found.getContractProductGrpMasterList().size() == 0)
+//			Assert.assertTrue(false);
 		if (found.getArrangementWorkTypeMasterList() == null || found.getArrangementWorkTypeMasterList().size() == 0)
 			Assert.assertTrue(false);
 	}
 
-*/
+
+
 	@Test
 	@WithMockCustomUser
 	@Transactional
@@ -654,7 +687,7 @@ public class TestMaster {
 			Assert.assertTrue(false);
 	}
 
-/*
+
 	@Test
 	@WithMockCustomUser
 	@Transactional
@@ -682,8 +715,6 @@ public class TestMaster {
 		if (found.getContractApprovalRouteGrpMaster() == null)
 			Assert.assertTrue(false);
 		if (found.getEstimationApprovalRouteGrpMaster() == null)
-			Assert.assertTrue(false);
-		if (found.getProductCompMasterList() == null || found.getProductCompMasterList().size)() == 0)
 			Assert.assertTrue(false);
 	}
 
@@ -718,8 +749,6 @@ public class TestMaster {
 			Assert.assertTrue(false);
 		if (found.getItemMasterList() == null || found.getItemMasterList().size() == 0)
 			Assert.assertTrue(false);
-		if (found.getProductCompMasterList() == null || found.getProductCompMasterList().size() == 0)
-			Assert.assertTrue(false);
 	}
 
 	@Test
@@ -734,6 +763,7 @@ public class TestMaster {
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/recordDecomposeCompMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/arrangementWorkTypeMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/recordDecomposeMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/approvalRouteGrpMaster.sql");
 
 		// エンティティの取得
 		Long id = 1L;
@@ -836,7 +866,7 @@ public class TestMaster {
 		// テストデータはなし
 
 		// エンティティの取得
-		String id = "4930594";
+		String id = "1";
 		MvTJmci101Master found = mvTJmci101MasterRepository.findOne(id);
 
 		// Entity が null ではないことを確認
@@ -920,7 +950,6 @@ public class TestMaster {
 		Assert.assertNotNull(found);
 	}
 
-*/
 
 	public static void main(String[] args) throws Exception {
 		TestTools tool = new TestTools();
