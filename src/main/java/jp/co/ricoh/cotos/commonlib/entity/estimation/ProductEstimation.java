@@ -14,7 +14,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -80,7 +79,6 @@ public class ProductEstimation extends EntityBase {
 	 * サービス識別番号
 	 */
 	@ApiModelProperty(value = "サービス識別番号", required = false, position = 7, allowableValues = "range[0,255]")
-	@Pattern(regexp = "CEYYYYMMDDNNNNN")
 	private String serviceIdentNumber;
 
 	/**

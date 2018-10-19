@@ -13,7 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.constraints.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -62,7 +61,6 @@ public class EstimationDetail extends EntityBase {
 	 * 見積金額
 	 */
 	@ApiModelProperty(value = "見積金額", required = false, position = 5, allowableValues = "range[0.00,9999999999999999999.99]")
-	@Pattern(regexp = "9999999999999999999.99")
 	private BigDecimal amountSummary;
 
 	/**
