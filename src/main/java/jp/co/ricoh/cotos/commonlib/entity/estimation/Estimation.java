@@ -363,7 +363,7 @@ public class Estimation extends EntityBase {
 	 */
 	@OneToOne(mappedBy = "estimation")
 	@ApiModelProperty(value = "見積承認ルート", required = false, position = 43)
-	private EstimationApprovalRoute estimationWorkApprovalRoute;
+	private EstimationApprovalRoute estimationApprovalRoute;
 
 	/**
 	 * 見積操作履歴
@@ -413,7 +413,7 @@ public class Estimation extends EntityBase {
 	@OneToMany(mappedBy = "estimation")
 	@OrderBy("displayOrder ASC")
 	@ApiModelProperty(value = "見積チェック結果", required = false, position = 50)
-	private List<EstimationCheckResult> estimationChechResultList;
+	private List<EstimationCheckResult> estimationCheckResultList;
 
 	/**
 	 * 見積明細
@@ -421,5 +421,12 @@ public class Estimation extends EntityBase {
 	@OneToMany(mappedBy = "estimation")
 	@ApiModelProperty(value = "見積明細", required = false, position = 51)
 	private List<EstimationDetail> estimationDetailList;
+	
+    /**
+     * 商品（見積用）
+     */
+    @OneToMany(mappedBy = "estimation")
+    @ApiModelProperty(value = "商品（見積用）", required = false, position = 52)
+    private List<ProductEstimation> productEstimationList;
 
 }

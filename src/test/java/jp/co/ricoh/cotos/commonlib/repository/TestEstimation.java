@@ -1,7 +1,5 @@
 package jp.co.ricoh.cotos.commonlib.repository;
 
-import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
@@ -19,12 +17,34 @@ import jp.co.ricoh.cotos.commonlib.DBConfig;
 import jp.co.ricoh.cotos.commonlib.TestTools;
 import jp.co.ricoh.cotos.commonlib.WithMockCustomUser;
 import jp.co.ricoh.cotos.commonlib.db.DBUtil;
+import jp.co.ricoh.cotos.commonlib.entity.estimation.CustomerEstimation;
+import jp.co.ricoh.cotos.commonlib.entity.estimation.DealerEstimation;
+import jp.co.ricoh.cotos.commonlib.entity.estimation.Estimation;
+import jp.co.ricoh.cotos.commonlib.entity.estimation.EstimationAddedEditorEmp;
+import jp.co.ricoh.cotos.commonlib.entity.estimation.EstimationApprovalResult;
+import jp.co.ricoh.cotos.commonlib.entity.estimation.EstimationApprovalRoute;
+import jp.co.ricoh.cotos.commonlib.entity.estimation.EstimationApprovalRouteNode;
 import jp.co.ricoh.cotos.commonlib.entity.estimation.EstimationAttachedFile;
+import jp.co.ricoh.cotos.commonlib.entity.estimation.EstimationCheckResult;
+import jp.co.ricoh.cotos.commonlib.entity.estimation.EstimationDetail;
+import jp.co.ricoh.cotos.commonlib.entity.estimation.EstimationPicSaEmp;
+import jp.co.ricoh.cotos.commonlib.entity.estimation.ItemEstimation;
 import jp.co.ricoh.cotos.commonlib.entity.estimation.OperationLog;
-import jp.co.ricoh.cotos.commonlib.entity.master.AuthPatternMaster;
+import jp.co.ricoh.cotos.commonlib.entity.estimation.ProductEstimation;
 import jp.co.ricoh.cotos.commonlib.repository.estimation.AttachedFileRepository;
+import jp.co.ricoh.cotos.commonlib.repository.estimation.CustomerEstimationRepository;
+import jp.co.ricoh.cotos.commonlib.repository.estimation.DealerEstimationRepository;
+import jp.co.ricoh.cotos.commonlib.repository.estimation.EstimationAddedEditorEmpRepository;
+import jp.co.ricoh.cotos.commonlib.repository.estimation.EstimationApprovalResultRepository;
+import jp.co.ricoh.cotos.commonlib.repository.estimation.EstimationApprovalRouteNodeRepository;
+import jp.co.ricoh.cotos.commonlib.repository.estimation.EstimationApprovalRouteRepository;
+import jp.co.ricoh.cotos.commonlib.repository.estimation.EstimationCheckResultRepository;
+import jp.co.ricoh.cotos.commonlib.repository.estimation.EstimationDetailRepository;
+import jp.co.ricoh.cotos.commonlib.repository.estimation.EstimationPicSaEmpRepository;
+import jp.co.ricoh.cotos.commonlib.repository.estimation.EstimationRepository;
+import jp.co.ricoh.cotos.commonlib.repository.estimation.ItemEstimationRepository;
 import jp.co.ricoh.cotos.commonlib.repository.estimation.OperationLogRepository;
-import jp.co.ricoh.cotos.commonlib.repository.master.AuthPatternMasterRepository;
+import jp.co.ricoh.cotos.commonlib.repository.estimation.ProductEstimationRepository;
 
 /**
  * Repository（見積ドメイン）のテストクラス
@@ -43,84 +63,6 @@ public class TestEstimation {
 	EntityManager entityManager;
 
 	static ConfigurableApplicationContext context;
-
-	/*
-	 * @Autowired private ApprovalRouteGrpMasterRepository
-	 * approvalRouteGrpMasterRepository;
-	 * 
-	 * @Autowired private ApprovalRouteMasterRepository
-	 * approvalRouteMasterRepository;
-	 * 
-	 * @Autowired private ApprovalRouteNodeMasterRepository
-	 * approvalRouteNodeMasterRepository;
-	 * 
-	 * @Autowired private ArrangementChecklistCompMasterRepository
-	 * arrangementChecklistCompMasterRepository;
-	 * 
-	 * @Autowired private ArrangementWorkCompMasterRepository
-	 * arrangementWorkCompMasterRepository;
-	 * 
-	 * @Autowired private ArrangementWorkTypeMasterRepository
-	 * arrangementWorkTypeMasterRepository;
-	 * 
-	 * @Autowired private AuthPatternMasterRepository authPatternMasterRepository;
-	 * 
-	 * @Autowired private BusinessCalendarRepository businessCalendarRepository;
-	 * 
-	 * @Autowired private CommonMasterDetailRepository commonMasterDetailRepository;
-	 * 
-	 * @Autowired private CommonMasterRepository commonMasterRepository;
-	 * 
-	 * @Autowired private ContractChecklistCompMasterRepository
-	 * contractChecklistCompMasterRepository;
-	 * 
-	 * @Autowired private DispUrlAuthMasterRepository dispUrlAuthMasterRepository;
-	 * 
-	 * @Autowired private EstimationChecklistCompMasterRepository
-	 * estimationChecklistCompMasterRepository;
-	 * 
-	 * @Autowired private GpCheckMatterMasterRepository
-	 * gpCheckMatterMasterRepository;
-	 * 
-	 * @Autowired private ItemMasterRepository itemMasterRepository;
-	 * 
-	 * @Autowired private JwtSysAuthMasterRepository jwtSysAuthMasterRepository;
-	 * 
-	 * @Autowired private MailTemplateMasterRepository mailTemplateMasterRepository;
-	 * 
-	 * @Autowired private MvEmployeeMasterRepository mvEmployeeMasterRepository;
-	 * 
-	 * @Autowired private MvTJmci101MasterRepository mvTJmci101MasterRepository;
-	 * 
-	 * @Autowired private MvTJmci105Repository mvTJmci105Repository;
-	 * 
-	 * @Autowired private MvTjmmb010UtlItemRepository mvTjmmb010UtlItemRepository;
-	 * 
-	 * @Autowired private MvTjmmb020UtlCdRepository mvTjmmb020UtlCdRepository;
-	 * 
-	 * @Autowired private ProductCompMasterRepository productCompMasterRepository;
-	 * 
-	 * @Autowired private ProductGrpMasterRepository productGrpMasterRepository;
-	 * 
-	 * @Autowired private ProductMasterRepository productMasterRepository;
-	 * 
-	 * @Autowired private RecordDecomposeCompMasterRepository
-	 * recordDecomposeCompMasterRepository;
-	 * 
-	 * @Autowired private RecordDecomposeMasterRepository
-	 * recordDecomposeMasterRepository;
-	 * 
-	 * @Autowired private SuperUserMasterRepository superUserMasterRepository;
-	 * 
-	 * @Autowired private UrlAuthMasterRepository urlAuthMasterRepository;
-	 * 
-	 * @Autowired private VKbMasterRepository vKbMasterRepository;
-	 * 
-	 * @Autowired private VPicAffiliateMasterRepository
-	 * vPicAffiliateMasterRepository;
-	 */
-	
-	//@Autowired private AttachedFileRepository attachedFileRepository;
 
 	@Autowired
 	TestTools testTool = null;
@@ -147,11 +89,34 @@ public class TestEstimation {
 		// テストデータ登録
 		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimation.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimationAttachedFile.sql");
-		
+
 		// リポジトリ作成
 		AttachedFileRepository repository = context.getBean(AttachedFileRepository.class);
 		EstimationAttachedFile found = repository.findOne(401L);
+
+		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		testTool.assertColumnsNotNull(found);
+
+		// REVIEW:下記の必要性
+		// Entity の リストとエンティティクラスの項目が値が null ではないことを確認
+		// testTool.assertColumnsNotNull(found.getEstimation());
+	}
+
+	@Test
+	@WithMockCustomUser
+	@Transactional
+	public void OperationLogRepositoryのテスト() throws Exception {
+
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimation.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/operationLog.sql");
+
+		// リポジトリ作成
+		OperationLogRepository repository = context.getBean(OperationLogRepository.class);
+		OperationLog found = repository.findOne(401L);
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -163,22 +128,262 @@ public class TestEstimation {
 	@Test
 	@WithMockCustomUser
 	@Transactional
-	public void OperationLogRepositoryのテスト() throws Exception {
+	public void EstimationAddedEditorEmpRepositoryのテスト() throws Exception {
 
 		// テストデータ登録
 		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimation.sql");
-		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/operationLog.sql");
-		
+		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimationAddedEditorEmp.sql");
+
 		// リポジトリ作成
-		OperationLogRepository repository = context.getBean(OperationLogRepository.class);
-		OperationLog found = repository.findOne(401L);
-		Assert.assertNotNull(found);
+		EstimationAddedEditorEmpRepository repository = context.getBean(EstimationAddedEditorEmpRepository.class);
+		EstimationAddedEditorEmp found = repository.findOne(401L);
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
 
 		// Entity の各項目の値が null ではないことを確認
 		testTool.assertColumnsNotNull(found);
+	}
+
+	@Test
+	@WithMockCustomUser
+	@Transactional
+	public void DealerEstimationRepositoryのテスト() throws Exception {
+
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimation.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/dealerEstimation.sql");
+
+		// リポジトリ作成
+		DealerEstimationRepository repository = context.getBean(DealerEstimationRepository.class);
+		DealerEstimation found = repository.findOne(402L);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		testTool.assertColumnsNotNull(found);
+
+	}
+
+	@Test
+	@WithMockCustomUser
+	@Transactional
+	public void EstimationCheckResultRepositoryのテスト() throws Exception {
+
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimation.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimationCheckResult.sql");
+
+		// リポジトリ作成
+		EstimationCheckResultRepository repository = context.getBean(EstimationCheckResultRepository.class);
+		EstimationCheckResult found = repository.findOne(401L);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		testTool.assertColumnsNotNull(found);
+
+	}
+
+	// TODO: エラーになる
+	@Test
+	@WithMockCustomUser
+	@Transactional
+	public void EstimationDetailRepositoryのテスト() throws Exception {
+
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimation.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/itemEstimation.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimationDetail.sql");
+
+		// リポジトリ作成
+		EstimationDetailRepository repository = context.getBean(EstimationDetailRepository.class);
+		EstimationDetail found = repository.findOne(401L);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		testTool.assertColumnsNotNull(found);
+
+	}
+
+	@Test
+	@WithMockCustomUser
+	@Transactional
+	public void ProductEstimationRepositoryのテスト() throws Exception {
+
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimation.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/productEstimation.sql");
+
+		// リポジトリ作成
+		ProductEstimationRepository repository = context.getBean(ProductEstimationRepository.class);
+		ProductEstimation found = repository.findOne(401L);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		testTool.assertColumnsNotNull(found);
+
+	}
+
+	// TODO: エラーになる
+	@Test
+	@WithMockCustomUser
+	@Transactional
+	public void EstimationApprovalResultRepositoryのテスト() throws Exception {
+
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimationApprovalRoute.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimationApprovalResult.sql");
+
+		// リポジトリ作成
+		EstimationApprovalResultRepository repository = context.getBean(EstimationApprovalResultRepository.class);
+		EstimationApprovalResult found = repository.findOne(401L);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		testTool.assertColumnsNotNull(found);
+
+	}
+
+	// TODO: エラーになる
+	@Test
+	@WithMockCustomUser
+	@Transactional
+	public void EstimationApprovalRouteNodeRepositoryのテスト() throws Exception {
+
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimationApprovalRoute.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimationApprovalRouteNode.sql");
+
+		// リポジトリ作成
+		EstimationApprovalRouteNodeRepository repository = context.getBean(EstimationApprovalRouteNodeRepository.class);
+		EstimationApprovalRouteNode found = repository.findOne(401L);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		testTool.assertColumnsNotNull(found);
+
+	}
+
+	@Test
+	@WithMockCustomUser
+	@Transactional
+	public void CustomerEstimationRepositoryのテスト() throws Exception {
+
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimation.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/customerEstimation.sql");
+
+		// リポジトリ作成
+		CustomerEstimationRepository repository = context.getBean(CustomerEstimationRepository.class);
+		CustomerEstimation found = repository.findOne(401L);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		testTool.assertColumnsNotNull(found);
+
+	}
+
+	@Test
+	@WithMockCustomUser
+	@Transactional
+	public void EstimationPicSaEmpRepositoryのテスト() throws Exception {
+
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimation.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimationPicSaEmp.sql");
+
+		// リポジトリ作成
+		EstimationPicSaEmpRepository repository = context.getBean(EstimationPicSaEmpRepository.class);
+		EstimationPicSaEmp found = repository.findOne(401L);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		testTool.assertColumnsNotNull(found);
+
+	}
+
+	// TODO: エラーになる
+	@Test
+	@WithMockCustomUser
+	@Transactional
+	public void EstimationApprovalRouteRepositoryのテスト() throws Exception {
+
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimation.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimationApprovalRouteNode.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimationApprovalResult.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimationApprovalRoute.sql");
+
+		// リポジトリ作成
+		EstimationApprovalRouteRepository repository = context.getBean(EstimationApprovalRouteRepository.class);
+		EstimationApprovalRoute found = repository.findOne(401L);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		testTool.assertColumnsNotNull(found);
+
+	}
+
+	// TODO: エラーになる
+	@Test
+	@WithMockCustomUser
+	@Transactional
+	public void ItemEstimationRepositoryのテスト() throws Exception {
+
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimationDetail.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/itemEstimation.sql");
+
+		// リポジトリ作成
+		ItemEstimationRepository repository = context.getBean(ItemEstimationRepository.class);
+		ItemEstimation found = repository.findOne(401L);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		testTool.assertColumnsNotNull(found);
+
+	}
+
+	@Test
+	@WithMockCustomUser
+	@Transactional
+	public void EstimationRepositoryのテスト() throws Exception {
+
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimation.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimationApprovalRoute.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimationPicSaEmp.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/customerEstimation.sql");
+
+		// リポジトリ作成
+		EstimationRepository repository = context.getBean(EstimationRepository.class);
+		Estimation found = repository.findOne(4L);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		testTool.assertColumnsNotNull(found);
+
 	}
 
 	/*
@@ -481,18 +686,13 @@ public class TestEstimation {
 	 */
 
 	/*
-	public static void main(String[] args) throws Exception {
-		TestTools tool = new TestTools();
-		ProductCompMaster entity = new ProductCompMaster();
-		entity.setCreatedAt(Calendar.getInstance().getTime());
-		entity.setCreatedUserId("");
-		entity.setId(1L);
-		entity.setProductGrpMaster(new ProductGrpMaster());
-		entity.setUpdatedAt(Calendar.getInstance().getTime());
-		entity.setUpdatedUserId("");
-		entity.setVersion(1L);
-		System.out.println(tool.findNullProperties(entity));
-	}
-	*/
+	 * public static void main(String[] args) throws Exception { TestTools tool =
+	 * new TestTools(); ProductCompMaster entity = new ProductCompMaster();
+	 * entity.setCreatedAt(Calendar.getInstance().getTime());
+	 * entity.setCreatedUserId(""); entity.setId(1L); entity.setProductGrpMaster(new
+	 * ProductGrpMaster()); entity.setUpdatedAt(Calendar.getInstance().getTime());
+	 * entity.setUpdatedUserId(""); entity.setVersion(1L);
+	 * System.out.println(tool.findNullProperties(entity)); }
+	 */
 
 }
