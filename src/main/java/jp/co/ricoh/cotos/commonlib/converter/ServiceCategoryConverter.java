@@ -22,5 +22,4 @@ public class ServiceCategoryConverter implements AttributeConverter<ServiceCateg
 		return ServiceCategory.fromString(value); //IllegalArgumentExceptionはContractType.fromString側で投げている
 	}
 
-
 }
