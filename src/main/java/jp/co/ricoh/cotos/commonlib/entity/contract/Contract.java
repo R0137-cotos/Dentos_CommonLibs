@@ -314,7 +314,7 @@ public class Contract extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "contract")
 	@ApiModelProperty(value = "契約明細", required = true, position = 34)
-	private List<ContractDetail> detailList;
+	private List<ContractDetail> contractDetailList;
 
 	/**
 	 * 契約チェック結果
@@ -322,35 +322,35 @@ public class Contract extends EntityBase {
 	@OneToMany(mappedBy = "contract")
 	@OrderBy("displayOrder ASC")
 	@ApiModelProperty(value = "契約チェック結果", required = false, position = 35)
-	private List<ContractCheckResult> checkResultList;
+	private List<ContractCheckResult> contractCheckResultList;
 
 	/**
 	 * 契約承認ルート
 	 */
 	@OneToMany(mappedBy = "contract")
 	@ApiModelProperty(value = "契約承認ルート", required = false, position = 36)
-	private List<ContractApprovalRoute> approvalRouteList;
+	private List<ContractApprovalRoute> contractApprovalRouteList;
 
 	/**
 	 * 契約添付ファイル
 	 */
 	@OneToMany(mappedBy = "contract")
 	@ApiModelProperty(value = "契約添付ファイル", required = false, position = 37)
-	private List<ContractAttachedFile> attachedFileList;
+	private List<ContractAttachedFile> contractAttachedFileList;
 
 	/**
 	 * 契約担当SA社員
 	 */
 	@OneToOne(mappedBy = "contract")
 	@ApiModelProperty(value = "契約担当SA社員", required = true, position = 38)
-	private ContractPicSaEmp picSaEmpList;
+	private ContractPicSaEmp contractPicSaEmp;
 
 	/**
 	 * 契約追加編集者社員
 	 */
 	@OneToMany(mappedBy = "contract")
 	@ApiModelProperty(value = "契約追加編集者社員", required = false, position = 39)
-	private List<ContractAddedEditorEmp> addedEditorEmpList;
+	private List<ContractAddedEditorEmp> contractAddedEditorEmpList;
 
 	/**
 	 * 販売店(契約用)
@@ -364,14 +364,14 @@ public class Contract extends EntityBase {
 	 */
 	@OneToOne(mappedBy = "contract")
 	@ApiModelProperty(value = "顧客(契約用)", required = true, position = 41)
-	private CustomerContract contractCustomer;
+	private CustomerContract customerContract;
 
 	/**
 	 * 契約操作履歴
 	 */
 	@OneToMany(mappedBy = "contract")
 	@ApiModelProperty(value = "契約操作履歴", required = true, position = 42, readOnly = true)
-	private List<ContractOperationLog> operationLogList;
+	private List<ContractOperationLog> contractOperationLogList;
 
 	/**
 	 * 商品(契約用)

@@ -85,7 +85,7 @@ public class ContractApprovalRoute extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "contractApprovalRoute")
 	@ApiModelProperty(value = "契約承認実績", required = false, position = 8, readOnly = true)
-	private List<ContractApprovalResult> contractApprovalResult;
+	private List<ContractApprovalResult> contractApprovalResultList;
 
 	/**
 	 * 契約承認ルートノード
@@ -93,5 +93,5 @@ public class ContractApprovalRoute extends EntityBase {
 	@OneToMany(mappedBy = "contractApprovalRoute")
 	@ApiModelProperty(value = "契約承認ルートノード", required = true, position = 9)
 	@OrderBy("approvalOrder ASC")
-	private List<ContractApprovalRouteNode> contractApprovalRouteNode;
+	private List<ContractApprovalRouteNode> contractApprovalRouteNodeList;
 }
