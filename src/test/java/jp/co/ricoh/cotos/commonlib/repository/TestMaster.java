@@ -665,11 +665,9 @@ public class TestMaster {
 		testTool.assertColumnsNotNull(found);
 
 		// Entity の リストとエンティティクラスの項目の値が null ではないことを確認
-		if (found.getContractChecklistCompMasterList() == null
-				|| found.getContractChecklistCompMasterList().size() == 0)
+		if (found.getContractChecklistCompMasterList() == null || found.getContractChecklistCompMasterList().size() == 0)
 			Assert.assertTrue(false);
-		if (found.getEstimationChecklistCompMasterList() == null
-				|| found.getEstimationChecklistCompMasterList().size() == 0)
+		if (found.getEstimationChecklistCompMasterList() == null || found.getEstimationChecklistCompMasterList().size() == 0)
 			Assert.assertTrue(false);
 		if (found.getItemMasterList() == null || found.getItemMasterList().size() == 0)
 			Assert.assertTrue(false);
