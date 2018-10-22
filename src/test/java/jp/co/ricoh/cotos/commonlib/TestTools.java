@@ -23,22 +23,8 @@ public class TestTools {
 	}
 
 	/**
-	 *
 	 * エンティティクラスのフィールドの設定値に null が含まれるか
-	 *
-	 *
-	 *
-	 * @param entity
-	 *
-	 * @throws Exception
-	 *
-	 */
-	public void assertColumnsNotNull(EntityBase entity) throws Exception {
-		Assert.assertTrue(hasNullColumn(entity) == false);
-	}
-
-	/**
-	 * エンティティクラスのフィールドの設定値に null が含まれるか
+	 * 
 	 * @param entity
 	 * @throws Exception
 	 */
@@ -47,29 +33,24 @@ public class TestTools {
 	}
 
 	/**
-	 * エンティティクラスのフィールドの設定値に null が含まれるかどうかを判定する
-	 *
-	 * @param entity エンティティ
-	 * @return boolean 判定結果（true：フィールドの設定値が null の項目を含む false：フィールドの設定値はすべて null
-	 *         以外である）
+	 * エンティティクラスのフィールドの設定値に null が含まれるか
+	 * 
+	 * @param entity
 	 * @throws Exception
-	 *
 	 */
-	public boolean hasNullColumn(EntityBase entity) throws Exception {
-		for (Field field : entity.getClass().getDeclaredFields()) {
-			field.setAccessible(true);
-			if (field.get(entity) == null)
-				return true;
-		}
-		return false;
+
+	public void assertColumnsNotNull(EntityBase entity) throws Exception {
+		Assert.assertTrue(hasNullColumn(entity) == false);
 	}
 
 	/**
 	 * エンティティクラスのフィールドの設定値に null が含まれるかどうかを判定する
 	 * ただしフィールドの型がリスト、エンティティクラスだった場合、判定処理をスキップする
 	 *
-	 * @param entity エンティティ
-	 * @return boolean 判定結果（true：フィールドの設定値が null の項目を含む　false：フィールドの設定値はすべて null 以外である）
+	 * @param entity
+	 *            エンティティ
+	 * @return boolean 判定結果（true：フィールドの設定値が null の項目を含む false：フィールドの設定値はすべて null
+	 *         以外である）
 	 * @throws Exception
 	 */
 	public boolean hasNullColumn(EntityBaseMaster entity) throws Exception {
@@ -83,5 +64,16 @@ public class TestTools {
 				return true;
 		}
 		return false;
+	}
+
+	public boolean hasNullColumn(EntityBase entity) throws Exception {
+		for (Field field : entity.getClass().getDeclaredFields()) {
+			field.setAccessible(true);
+
+			if (field.get(entity) == null)
+				return true;
+		}
+		return false;
+
 	}
 }

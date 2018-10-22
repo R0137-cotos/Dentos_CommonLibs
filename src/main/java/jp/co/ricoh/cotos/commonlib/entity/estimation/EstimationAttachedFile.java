@@ -59,7 +59,7 @@ public class EstimationAttachedFile extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@ApiModelProperty(value = "添付ファイルパス", required = true, position = 4, allowableValues = "range[0,1023]")
-	private String attachedFilePass;
+	private String attachedFilePath;
 
 	/**
 	 * コメント
