@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import jp.co.ricoh.cotos.commonlib.entity.EnumType.DealerFlowOrder;
-import jp.co.ricoh.cotos.commonlib.entity.master.VKbMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.VKjbMaster;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -41,7 +41,7 @@ public class DealerContract extends EntityBase {
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "mom_kjb_system_id", referencedColumnName = "mclMomRelId")
 	@ApiModelProperty(value = "MoM企事部", required = false, position = 2)
-	private VKbMaster vKbMaster;
+	private VKjbMaster vKjbMaster;
 
 	/**
 	 * 販売店名

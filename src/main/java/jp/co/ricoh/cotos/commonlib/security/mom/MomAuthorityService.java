@@ -21,7 +21,7 @@ import jp.co.ricoh.cotos.commonlib.entity.master.MvEmployeeMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.AccessType;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.ActionDiv;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.AuthDiv;
-import jp.co.ricoh.cotos.commonlib.entity.master.VKbMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.VKjbMaster;
 import jp.co.ricoh.cotos.commonlib.util.DatasourceProperties;
 import jp.co.ricoh.cotos.commonlib.util.RemoteMomProperties;
 import jp.co.ricoh.jmo.cache.AuthoritySearch;
@@ -109,7 +109,7 @@ public class MomAuthorityService {
 		if (AccessType.参照.equals(accessType) || AccessType.編集.equals(accessType)) {
 
 			// 参照・編集処理用の認可処理を実施
-			return this.hasEditAuthority(authLevel, authParam.getActorMvEmployeeMaster(), authParam.getVKbMaster(), authParam.getMvEmployeeMasterList());
+			return this.hasEditAuthority(authLevel, authParam.getActorMvEmployeeMaster(), authParam.getVKjbMaster(), authParam.getMvEmployeeMasterList());
 		} else if (AccessType.承認.equals(accessType)) {
 
 			// 承認処理用の認可処理を実施
@@ -122,7 +122,7 @@ public class MomAuthorityService {
 	/**
 	 * 参照・編集権限が存在するか判定する
 	 */
-	private boolean hasEditAuthority(AuthLevel authLevel, MvEmployeeMaster editor, VKbMaster customer, List<MvEmployeeMaster> targetEmployeeMasterList) {
+	private boolean hasEditAuthority(AuthLevel authLevel, MvEmployeeMaster editor, VKjbMaster customer, List<MvEmployeeMaster> targetEmployeeMasterList) {
 
 		// 権限レベルによる認可処理を実施
 		switch (authLevel) {

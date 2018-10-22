@@ -1,0 +1,1 @@
+insert into auth_pattern_master (auth_pattern_id,action_div,auth_div,access_type,version) values (1,'01','2200','参照',1);

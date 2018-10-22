@@ -11,6 +11,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import lombok.Data;
@@ -55,6 +57,7 @@ public class ApprovalRouteGrpMaster extends EntityBaseMaster {
 	 * 商品グループマスタ（見積承認）
 	 */
 	@OneToMany(mappedBy = "estimationApprovalRouteGrpMaster")
+	@JsonIgnore
 	@ApiModelProperty(value = "商品グループマスタ（見積承認）", required = false, position = 5)
 	private List<ProductGrpMaster> estimationProductGrpMasterList;
 
@@ -62,6 +65,7 @@ public class ApprovalRouteGrpMaster extends EntityBaseMaster {
 	 * 商品グループマスタ（契約承認）
 	 */
 	@OneToMany(mappedBy = "contractApprovalRouteGrpMaster")
+	@JsonIgnore
 	@ApiModelProperty(value = "商品グループマスタ（契約承認）", required = false, position = 6)
 	private List<ProductGrpMaster> contractProductGrpMasterList;
 

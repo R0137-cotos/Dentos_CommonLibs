@@ -1,0 +1,2 @@
+INSERT INTO record_decompose_master (id,created_at,created_user_id,updated_at,updated_user_id,version,record_type,description,transfer_dest_code,transfer_dest_name,quantity,amount) VALUES (1,'2018/09/19 12:09:10','COTOS','2018/09/19 12:09:10','COTOS',1,'1','dummy','dummy','dummy',1,100);
+INSERT INTO record_decompose_master (id,created_at,created_user_id,updated_at,updated_user_id,version,record_type,description,transfer_dest_code,transfer_dest_name,quantity,amount) VALUES (2,'2018/09/19 12:09:10','COTOS','2018/09/19 12:09:10','COTOS',1,'2','dummy','dummy','dummy',2,200);

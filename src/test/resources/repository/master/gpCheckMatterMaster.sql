@@ -1,0 +1,2 @@
+INSERT INTO gp_check_matter_master (id,created_at,created_user_id,updated_at,updated_user_id,version,check_matter_code,check_matter_text) VALUES (1,'2018/09/19 12:09:10','COTOS','2018/09/19 12:09:10','COTOS',1,'TEST_1','テストチェック事項１');
+INSERT INTO gp_check_matter_master (id,created_at,created_user_id,updated_at,updated_user_id,version,check_matter_code,check_matter_text) VALUES (2,'2018/09/19 12:09:10','COTOS','2018/09/19 12:09:10','COTOS',1,'TEST_2','テストチェック事項２');

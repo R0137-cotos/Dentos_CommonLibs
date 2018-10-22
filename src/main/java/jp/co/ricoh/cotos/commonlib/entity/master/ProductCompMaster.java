@@ -9,8 +9,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import lombok.Data;
@@ -39,7 +37,6 @@ public class ProductCompMaster extends EntityBaseMaster {
 	 */
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "product_grp_master_id", referencedColumnName = "id")
-	@JsonIgnore
 	@ApiModelProperty(value = "商品グループマスタ", required = true, position = 2)
 	private ProductGrpMaster productGrpMaster;
 
@@ -48,7 +45,6 @@ public class ProductCompMaster extends EntityBaseMaster {
 	 */
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "product_master_id", referencedColumnName = "id")
-	@JsonIgnore
 	@ApiModelProperty(value = "商品マスタ", required = true, position = 3)
 	private ProductMaster productMaster;
 

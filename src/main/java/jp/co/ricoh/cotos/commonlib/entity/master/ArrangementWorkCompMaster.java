@@ -2,6 +2,8 @@ package jp.co.ricoh.cotos.commonlib.entity.master;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,7 +19,6 @@ import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import jp.co.ricoh.cotos.commonlib.entity.EnumType.TargetContractType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
 /**
  * 手配業務構成マスタを表すEntity
  */
@@ -48,6 +49,7 @@ public class ArrangementWorkCompMaster extends EntityBaseMaster {
 	 * 対象契約種別
 	 */
 	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
 	@ApiModelProperty(value = "対象契約種別", required = true, position = 3)
 	private TargetContractType targetContractType;
 

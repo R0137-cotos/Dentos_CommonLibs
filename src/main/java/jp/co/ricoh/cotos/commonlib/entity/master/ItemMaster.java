@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -107,6 +109,7 @@ public class ItemMaster extends EntityBaseMaster {
 	 * 品種区分
 	 */
 	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
 	@ApiModelProperty(value = "品種区分", required = true, position = 5)
 	private ItemType itemType;
 
@@ -114,6 +117,7 @@ public class ItemMaster extends EntityBaseMaster {
 	 * 費用種別
 	 */
 	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
 	@ApiModelProperty(value = "費用種別", required = true, position = 6)
 	private CostType costType;
 

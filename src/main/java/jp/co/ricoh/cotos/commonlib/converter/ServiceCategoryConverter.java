@@ -7,6 +7,7 @@ import jp.co.ricoh.cotos.commonlib.entity.EnumType.ServiceCategory;
 
 @Converter(autoApply = true)
 public class ServiceCategoryConverter implements AttributeConverter<ServiceCategory, String> {
+
 	@Override
 	public String convertToDatabaseColumn(ServiceCategory serviceCategory) {
 		if (serviceCategory == null)
@@ -18,7 +19,7 @@ public class ServiceCategoryConverter implements AttributeConverter<ServiceCateg
 	public ServiceCategory convertToEntityAttribute(String value) {
 		if (value == null)
 			return null;
-		return ServiceCategory.fromString(value); // IllegalArgumentExceptionはContractType.fromString側で投げている
+		return ServiceCategory.fromString(value); //IllegalArgumentExceptionはContractType.fromString側で投げている
 	}
 
 }

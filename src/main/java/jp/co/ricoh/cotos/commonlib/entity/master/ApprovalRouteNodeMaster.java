@@ -4,6 +4,8 @@ import java.util.Arrays;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -96,6 +98,7 @@ public class ApprovalRouteNodeMaster extends EntityBaseMaster {
 	 * 承認者種別
 	 */
 	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
 	@ApiModelProperty(value = "承認者種別", required = true, position = 4)
 	private ApproverClass approverClass;
 
@@ -103,6 +106,7 @@ public class ApprovalRouteNodeMaster extends EntityBaseMaster {
 	 * 承認者導出方式区分
 	 */
 	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
 	@ApiModelProperty(value = "承認者導出方式区分", required = true, position = 5)
 	private ApproverDeriveMethodDiv approverDeriveMethodDiv;
 
