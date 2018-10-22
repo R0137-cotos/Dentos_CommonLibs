@@ -7,6 +7,8 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -104,6 +106,7 @@ public class Contract extends EntityBase {
 	 * 契約種別
 	 */
 	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
 	@ApiModelProperty(value = "契約種別", required = true, position = 2)
 	private ContractType contractType;
 
@@ -117,6 +120,7 @@ public class Contract extends EntityBase {
 	 * ライフサイクル状態
 	 */
 	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
 	@ApiModelProperty(value = "ライフサイクル状態", required = true, position = 4)
 	private LifecycleStatus lifecycleStatus;
 
@@ -124,6 +128,7 @@ public class Contract extends EntityBase {
 	 * ワークフロー状態
 	 */
 	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
 	@ApiModelProperty(value = "ワークフロー状態", required = true, position = 5)
 	private WorkflowStatus workflowStatus;
 
