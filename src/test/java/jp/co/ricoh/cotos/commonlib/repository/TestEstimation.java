@@ -1,6 +1,5 @@
 package jp.co.ricoh.cotos.commonlib.repository;
 
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import org.junit.AfterClass;
@@ -15,8 +14,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import jp.co.ricoh.cotos.commonlib.DBConfig;
 import jp.co.ricoh.cotos.commonlib.TestTools;
-import jp.co.ricoh.cotos.commonlib.WithMockCustomUser;
-import jp.co.ricoh.cotos.commonlib.db.DBUtil;
 import jp.co.ricoh.cotos.commonlib.entity.estimation.CustomerEstimation;
 import jp.co.ricoh.cotos.commonlib.entity.estimation.DealerEstimation;
 import jp.co.ricoh.cotos.commonlib.entity.estimation.Estimation;
@@ -56,16 +53,52 @@ import jp.co.ricoh.cotos.commonlib.repository.estimation.ProductEstimationReposi
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class TestEstimation {
 
-	@Autowired
-	DBUtil dbUtil;
-
-	@Autowired
-	EntityManager entityManager;
-
 	static ConfigurableApplicationContext context;
 
 	@Autowired
-	TestTools testTool = null;
+	TestTools testTool;
+
+	@Autowired
+	AttachedFileRepository attachedFileRepository;
+
+	@Autowired
+	OperationLogRepository operationLogRepository;
+
+	@Autowired
+	EstimationAddedEditorEmpRepository estimationAddedEditorEmpRepository;
+
+	@Autowired
+	DealerEstimationRepository dealerEstimationRepository;
+
+	@Autowired
+	EstimationCheckResultRepository estimationCheckResultRepository;
+
+	@Autowired
+	EstimationDetailRepository estimationDetailRepository;
+
+	@Autowired
+	ProductEstimationRepository productEstimationRepository;
+
+	@Autowired
+	EstimationApprovalResultRepository estimationApprovalResultRepository;
+
+	@Autowired
+	EstimationApprovalRouteNodeRepository estimationApprovalRouteNodeRepository;
+
+	@Autowired
+	CustomerEstimationRepository customerEstimationRepository;
+
+	@Autowired
+	EstimationPicSaEmpRepository estimationPicSaEmpRepository;
+
+	@Autowired
+	EstimationApprovalRouteRepository estimationApprovalRouteRepository;
+
+	@Autowired
+	ItemEstimationRepository itemEstimationRepository;
+
+	@Autowired
+	EstimationRepository estimationRepository;
 
 	@Autowired
 	public void injectContext(ConfigurableApplicationContext injectContext) {
@@ -84,41 +117,23 @@ public class TestEstimation {
 	}
 
 	@Test
-	@WithMockCustomUser
 	@Transactional
 	public void AttachedFileRepositoryのテスト() throws Exception {
 
-		// テストデータ登録
-		// context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimation.sql");
-		// context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimationAttachedFile.sql");
-
-		// リポジトリ作成
-		AttachedFileRepository repository = context.getBean(AttachedFileRepository.class);
-		EstimationAttachedFile found = repository.findOne(401L);
+		EstimationAttachedFile found = attachedFileRepository.findOne(401L);
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
 
 		// Entity の各項目の値が null ではないことを確認
 		testTool.assertColumnsNotNull(found);
-
-		// REVIEW:下記の必要性
-		// Entity の リストとエンティティクラスの項目が値が null ではないことを確認
-		// testTool.assertColumnsNotNull(found.getEstimation());
 	}
 
 	@Test
-	@WithMockCustomUser
 	@Transactional
 	public void OperationLogRepositoryのテスト() throws Exception {
 
-		// テストデータ登録
-		// context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimation.sql");
-		// context.getBean(DBConfig.class).initTargetTestData("repository/estimation/operationLog.sql");
-
-		// リポジトリ作成
-		OperationLogRepository repository = context.getBean(OperationLogRepository.class);
-		OperationLog found = repository.findOne(401L);
+		OperationLog found = operationLogRepository.findOne(401L);
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -128,17 +143,10 @@ public class TestEstimation {
 	}
 
 	@Test
-	@WithMockCustomUser
 	@Transactional
 	public void EstimationAddedEditorEmpRepositoryのテスト() throws Exception {
 
-		// テストデータ登録
-		// context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimation.sql");
-		// context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimationAddedEditorEmp.sql");
-
-		// リポジトリ作成
-		EstimationAddedEditorEmpRepository repository = context.getBean(EstimationAddedEditorEmpRepository.class);
-		EstimationAddedEditorEmp found = repository.findOne(401L);
+		EstimationAddedEditorEmp found = estimationAddedEditorEmpRepository.findOne(401L);
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -148,17 +156,10 @@ public class TestEstimation {
 	}
 
 	@Test
-	@WithMockCustomUser
 	@Transactional
 	public void DealerEstimationRepositoryのテスト() throws Exception {
 
-		// テストデータ登録
-		// context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimation.sql");
-		// context.getBean(DBConfig.class).initTargetTestData("repository/estimation/dealerEstimation.sql");
-
-		// リポジトリ作成
-		DealerEstimationRepository repository = context.getBean(DealerEstimationRepository.class);
-		DealerEstimation found = repository.findOne(402L);
+		DealerEstimation found = dealerEstimationRepository.findOne(402L);
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -169,17 +170,10 @@ public class TestEstimation {
 	}
 
 	@Test
-	@WithMockCustomUser
 	@Transactional
 	public void EstimationCheckResultRepositoryのテスト() throws Exception {
 
-		// テストデータ登録
-		// context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimation.sql");
-		// context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimationCheckResult.sql");
-
-		// リポジトリ作成
-		EstimationCheckResultRepository repository = context.getBean(EstimationCheckResultRepository.class);
-		EstimationCheckResult found = repository.findOne(401L);
+		EstimationCheckResult found = estimationCheckResultRepository.findOne(401L);
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -190,18 +184,10 @@ public class TestEstimation {
 	}
 
 	@Test
-	@WithMockCustomUser
 	@Transactional
 	public void EstimationDetailRepositoryのテスト() throws Exception {
 
-		// テストデータ登録
-		// context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimation.sql");
-		// context.getBean(DBConfig.class).initTargetTestData("repository/estimation/itemEstimation.sql");
-		// context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimationDetail.sql");
-
-		// リポジトリ作成
-		EstimationDetailRepository repository = context.getBean(EstimationDetailRepository.class);
-		EstimationDetail found = repository.findOne(401L);
+		EstimationDetail found = estimationDetailRepository.findOne(401L);
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -212,17 +198,10 @@ public class TestEstimation {
 	}
 
 	@Test
-	@WithMockCustomUser
 	@Transactional
 	public void ProductEstimationRepositoryのテスト() throws Exception {
 
-		// テストデータ登録
-		// context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimation.sql");
-		// context.getBean(DBConfig.class).initTargetTestData("repository/estimation/productEstimation.sql");
-
-		// リポジトリ作成
-		ProductEstimationRepository repository = context.getBean(ProductEstimationRepository.class);
-		ProductEstimation found = repository.findOne(401L);
+		ProductEstimation found = productEstimationRepository.findOne(401L);
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -236,15 +215,7 @@ public class TestEstimation {
 	@Transactional
 	public void EstimationApprovalResultRepositoryのテスト() throws Exception {
 
-		// テストデータ登録
-		// context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimationApprovalRoute.sql");
-		// context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimationApprovalResult.sql");
-		// context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimation.sql");
-		// context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimationApprovalRouteNode.sql");
-
-		// リポジトリ作成
-		EstimationApprovalResultRepository repository = context.getBean(EstimationApprovalResultRepository.class);
-		EstimationApprovalResult found = repository.findOne(401L);
+		EstimationApprovalResult found = estimationApprovalResultRepository.findOne(401L);
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -255,17 +226,10 @@ public class TestEstimation {
 	}
 
 	@Test
-	@WithMockCustomUser
 	@Transactional
 	public void EstimationApprovalRouteNodeRepositoryのテスト() throws Exception {
 
-		// テストデータ登録
-		// context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimationApprovalRoute.sql");
-		// context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimationApprovalRouteNode.sql");
-
-		// リポジトリ作成
-		EstimationApprovalRouteNodeRepository repository = context.getBean(EstimationApprovalRouteNodeRepository.class);
-		EstimationApprovalRouteNode found = repository.findOne(401L);
+		EstimationApprovalRouteNode found = estimationApprovalRouteNodeRepository.findOne(401L);
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -276,17 +240,10 @@ public class TestEstimation {
 	}
 
 	@Test
-	@WithMockCustomUser
 	@Transactional
 	public void CustomerEstimationRepositoryのテスト() throws Exception {
 
-		// テストデータ登録
-		// context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimation.sql");
-		// context.getBean(DBConfig.class).initTargetTestData("repository/estimation/customerEstimation.sql");
-
-		// リポジトリ作成
-		CustomerEstimationRepository repository = context.getBean(CustomerEstimationRepository.class);
-		CustomerEstimation found = repository.findOne(401L);
+		CustomerEstimation found = customerEstimationRepository.findOne(401L);
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -297,17 +254,10 @@ public class TestEstimation {
 	}
 
 	@Test
-	@WithMockCustomUser
 	@Transactional
 	public void EstimationPicSaEmpRepositoryのテスト() throws Exception {
 
-		// テストデータ登録
-		// context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimation.sql");
-		// context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimationPicSaEmp.sql");
-
-		// リポジトリ作成
-		EstimationPicSaEmpRepository repository = context.getBean(EstimationPicSaEmpRepository.class);
-		EstimationPicSaEmp found = repository.findOne(401L);
+		EstimationPicSaEmp found = estimationPicSaEmpRepository.findOne(401L);
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -318,19 +268,10 @@ public class TestEstimation {
 	}
 
 	@Test
-	@WithMockCustomUser
 	@Transactional
 	public void EstimationApprovalRouteRepositoryのテスト() throws Exception {
 
-		// テストデータ登録
-		// context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimation.sql");
-		// context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimationApprovalRouteNode.sql");
-		// context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimationApprovalResult.sql");
-		// context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimationApprovalRoute.sql");
-
-		// リポジトリ作成
-		EstimationApprovalRouteRepository repository = context.getBean(EstimationApprovalRouteRepository.class);
-		EstimationApprovalRoute found = repository.findOne(401L);
+		EstimationApprovalRoute found = estimationApprovalRouteRepository.findOne(401L);
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -341,17 +282,10 @@ public class TestEstimation {
 	}
 
 	@Test
-	@WithMockCustomUser
 	@Transactional
 	public void ItemEstimationRepositoryのテスト() throws Exception {
 
-		// テストデータ登録
-		// context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimationDetail.sql");
-		// context.getBean(DBConfig.class).initTargetTestData("repository/estimation/itemEstimation.sql");
-
-		// リポジトリ作成
-		ItemEstimationRepository repository = context.getBean(ItemEstimationRepository.class);
-		ItemEstimation found = repository.findOne(401L);
+		ItemEstimation found = itemEstimationRepository.findOne(401L);
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -362,19 +296,10 @@ public class TestEstimation {
 	}
 
 	@Test
-	@WithMockCustomUser
 	@Transactional
 	public void EstimationRepositoryのテスト() throws Exception {
 
-		// テストデータ登録
-		// context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimation.sql");
-		// context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimationApprovalRoute.sql");
-		// context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimationPicSaEmp.sql");
-		// context.getBean(DBConfig.class).initTargetTestData("repository/estimation/customerEstimation.sql");
-
-		// リポジトリ作成
-		EstimationRepository repository = context.getBean(EstimationRepository.class);
-		Estimation found = repository.findOne(4L);
+		Estimation found = estimationRepository.findOne(4L);
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
