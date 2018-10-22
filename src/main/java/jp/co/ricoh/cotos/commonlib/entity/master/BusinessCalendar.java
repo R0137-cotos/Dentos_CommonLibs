@@ -27,7 +27,7 @@ public class BusinessCalendar {
 	 */
 	@Column(nullable = false)
 	@ApiModelProperty(value = "休日フラグ", required = true, position = 2, allowableValues = "range[0,1]")
-	private String businessHoliday;
+	private int businessHoliday;
 
 	/**
 	 * 営業日付

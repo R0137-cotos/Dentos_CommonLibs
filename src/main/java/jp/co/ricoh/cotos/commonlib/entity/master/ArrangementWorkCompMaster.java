@@ -16,9 +16,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
+import jp.co.ricoh.cotos.commonlib.entity.EnumType.TargetContractType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
 /**
  * 手配業務構成マスタを表すEntity
  */
@@ -51,7 +51,7 @@ public class ArrangementWorkCompMaster extends EntityBaseMaster {
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	@ApiModelProperty(value = "対象契約種別", required = true, position = 3)
-	private jp.co.ricoh.cotos.commonlib.entity.EnumType.TargetContractType targetContractType;
+	private TargetContractType targetContractType;
 
 	/**
 	 * 解約フラグ

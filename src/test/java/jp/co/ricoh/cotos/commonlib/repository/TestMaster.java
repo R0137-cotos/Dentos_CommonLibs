@@ -1,10 +1,7 @@
 package jp.co.ricoh.cotos.commonlib.repository;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-
-import javax.persistence.EntityManager;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -16,12 +13,9 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.HttpMethod;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 import jp.co.ricoh.cotos.commonlib.DBConfig;
 import jp.co.ricoh.cotos.commonlib.TestTools;
-import jp.co.ricoh.cotos.commonlib.WithMockCustomUser;
-import jp.co.ricoh.cotos.commonlib.db.DBUtil;
 import jp.co.ricoh.cotos.commonlib.entity.master.ApprovalRouteGrpMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.ApprovalRouteMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.ApprovalRouteNodeMaster;
@@ -95,12 +89,6 @@ import jp.co.ricoh.cotos.commonlib.repository.master.VPicAffiliateMasterReposito
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class TestMaster {
-
-	@Autowired
-	DBUtil dbUtil;
-
-	@Autowired
-	EntityManager entityManager;
 
 	static ConfigurableApplicationContext context;
 
@@ -185,8 +173,6 @@ public class TestMaster {
 	}
 
 	@Test
-	@WithMockCustomUser
-	@Transactional
 	public void CommonMasterRepositoryのテスト() throws Exception {
 
 		// テストデータ登録
@@ -208,8 +194,6 @@ public class TestMaster {
 	}
 
 	@Test
-	@WithMockCustomUser
-	@Transactional
 	public void JwtSysAuthMasterRepositoryのテスト() throws Exception {
 
 		// テストデータ登録
@@ -226,8 +210,6 @@ public class TestMaster {
 	}
 
 	@Test
-	@WithMockCustomUser
-	@Transactional
 	public void CommonMasterDetailRepositoryのテスト() throws Exception {
 
 		// テストデータ登録
@@ -249,8 +231,6 @@ public class TestMaster {
 	}
 
 	@Test
-	@WithMockCustomUser
-	@Transactional
 	public void MailTemplateMasterRepositoryのテスト() throws Exception {
 
 		// テストデータ登録
@@ -268,8 +248,6 @@ public class TestMaster {
 	}
 
 	@Test
-	@WithMockCustomUser
-	@Transactional
 	public void BusinessCalendarRepositoryのテスト() throws Exception {
 
 		// テストデータ登録
@@ -284,14 +262,11 @@ public class TestMaster {
 		Assert.assertNotNull(found);
 
 		// Entity の各項目の値が null ではないことを確認
-		Assert.assertTrue(found.getBusinessDay() != null && found.getBusinessHoliday() != null
-				&& found.getCalendarDate() != null);
+		Assert.assertTrue(found.getBusinessDay() != null && found.getCalendarDate() != null);
 
 	}
 
 	@Test
-	@WithMockCustomUser
-	@Transactional
 	public void SuperUserMasterのテスト() throws Exception {
 
 		// テストデータ登録
@@ -309,8 +284,6 @@ public class TestMaster {
 	}
 
 	@Test
-	@WithMockCustomUser
-	@Transactional
 	public void UrlAuthMasterのテスト() throws Exception {
 
 		// テストデータ登録
@@ -331,8 +304,6 @@ public class TestMaster {
 	}
 
 	@Test
-	@WithMockCustomUser
-	@Transactional
 	public void AuthPatternMasterのテスト() throws Exception {
 
 		// テストデータ登録
@@ -355,8 +326,6 @@ public class TestMaster {
 	}
 
 	@Test
-	@WithMockCustomUser
-	@Transactional
 	public void DispUrlAuthMasterのテスト() throws Exception {
 
 		// テストデータ登録
@@ -382,19 +351,17 @@ public class TestMaster {
 	}
 
 	@Test
-	@WithMockCustomUser
-	@Transactional
 	public void ArrangementChecklistCompMasterのテスト() throws Exception {
 
 		// テストデータ登録
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/arrangementChecklistCompMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/arrangementWorkTypeMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/gpCheckMatterMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/approvalRouteGrpMaster.sql");
 
 		// エンティティの取得
 		Long id = 1L;
 		ArrangementChecklistCompMaster found = arrangementChecklistCompMasterRepository.findOne(id);
-		found = arrangementChecklistCompMasterRepository.findOne(id);
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -408,8 +375,6 @@ public class TestMaster {
 	}
 
 	@Test
-	@WithMockCustomUser
-	@Transactional
 	public void GpCheckMatterMasterのテスト() throws Exception {
 
 		// テストデータ登録
@@ -424,7 +389,6 @@ public class TestMaster {
 		// エンティティの取得
 		Long id = 1L;
 		GpCheckMatterMaster found = gpCheckMatterMasterRepository.findOne(id);
-		found = gpCheckMatterMasterRepository.findOne(id);
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -433,20 +397,15 @@ public class TestMaster {
 		testTool.assertColumnsNotNull(found);
 
 		// Entity の リストとエンティティクラスの項目の値が null ではないことを確認
-		if (found.getArrangementChecklistCompMasterList() == null
-				|| found.getArrangementChecklistCompMasterList().size() == 0)
+		if (found.getArrangementChecklistCompMasterList() == null || found.getArrangementChecklistCompMasterList().size() == 0)
 			Assert.assertTrue(false);
-		if (found.getEstimationChecklistCompMasterList() == null
-				|| found.getEstimationChecklistCompMasterList().size() == 0)
+		if (found.getEstimationChecklistCompMasterList() == null || found.getEstimationChecklistCompMasterList().size() == 0)
 			Assert.assertTrue(false);
-		if (found.getContractChecklistCompMasterList() == null
-				|| found.getContractChecklistCompMasterList().size() == 0)
+		if (found.getContractChecklistCompMasterList() == null || found.getContractChecklistCompMasterList().size() == 0)
 			Assert.assertTrue(false);
 	}
 
 	@Test
-	@WithMockCustomUser
-	@Transactional
 	public void ArrangementWorkTypeMasterのテスト() throws Exception {
 
 		// テストデータ登録
@@ -458,7 +417,6 @@ public class TestMaster {
 		// エンティティの取得
 		Long id = 1L;
 		ArrangementWorkTypeMaster found = arrangementWorkTypeMasterRepository.findOne(id);
-		found = arrangementWorkTypeMasterRepository.findOne(id);
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -471,14 +429,11 @@ public class TestMaster {
 			Assert.assertTrue(false);
 		if (found.getArrangementWorkCompMasterList() == null || found.getArrangementWorkCompMasterList() == null)
 			Assert.assertTrue(false);
-		if (found.getArrangementChecklistCompMasterList() == null
-				|| found.getArrangementChecklistCompMasterList() == null)
+		if (found.getArrangementChecklistCompMasterList() == null || found.getArrangementChecklistCompMasterList() == null)
 			Assert.assertTrue(false);
 	}
 
 	@Test
-	@WithMockCustomUser
-	@Transactional
 	public void EstimationChecklistCompMasterのテスト() throws Exception {
 
 		// テストデータ登録
@@ -489,7 +444,6 @@ public class TestMaster {
 		// エンティティの取得
 		Long id = 1L;
 		EstimationChecklistCompMaster found = estimationChecklistCompMasterRepository.findOne(id);
-		found = estimationChecklistCompMasterRepository.findOne(id);
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -505,8 +459,6 @@ public class TestMaster {
 	}
 
 	@Test
-	@WithMockCustomUser
-	@Transactional
 	public void ContractChecklistCompMasterのテスト() throws Exception {
 
 		// テストデータ登録
@@ -517,7 +469,6 @@ public class TestMaster {
 		// エンティティの取得
 		Long id = 1L;
 		ContractChecklistCompMaster found = contractChecklistCompMasterRepository.findOne(id);
-		found = contractChecklistCompMasterRepository.findOne(id);
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -533,8 +484,6 @@ public class TestMaster {
 	}
 
 	@Test
-	@WithMockCustomUser
-	@Transactional
 	public void ArrangementWorkCompMasterのテスト() throws Exception {
 
 		// テストデータ登録
@@ -564,8 +513,6 @@ public class TestMaster {
 	}
 
 	@Test
-	@WithMockCustomUser
-	@Transactional
 	public void ApprovalRouteNodeMasterのテスト() throws Exception {
 
 		// テストデータ登録
@@ -589,8 +536,6 @@ public class TestMaster {
 	}
 
 	@Test
-	@WithMockCustomUser
-	@Transactional
 	public void ApprovalRouteMasterのテスト() throws Exception {
 
 		// テストデータ登録
@@ -616,8 +561,6 @@ public class TestMaster {
 	}
 
 	@Test
-	@WithMockCustomUser
-	@Transactional
 	public void ApprovalRouteGrpMasterのテスト() throws Exception {
 
 		// テストデータ登録
@@ -646,8 +589,6 @@ public class TestMaster {
 	}
 
 	@Test
-	@WithMockCustomUser
-	@Transactional
 	public void ProductCompMasterのテスト() throws Exception {
 
 		// テストデータ登録
@@ -655,10 +596,6 @@ public class TestMaster {
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/productGrpMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/approvalRouteGrpMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/productMaster.sql");
-
-		//		context.getBean(DBConfig.class).initTargetTestData("repository/master/approvalRouteMaster.sql");
-		//		context.getBean(DBConfig.class).initTargetTestData("repository/master/approvalRouteNodeMaster.sql");
-		//		context.getBean(DBConfig.class).initTargetTestData("repository/master/arrangementWorkTypeMaster.sql");
 
 		// エンティティの取得
 		Long id = 1L;
@@ -678,8 +615,6 @@ public class TestMaster {
 	}
 
 	@Test
-	@WithMockCustomUser
-	@Transactional
 	public void ProductGrpMasterのテスト() throws Exception {
 
 		// テストデータ登録
@@ -708,8 +643,6 @@ public class TestMaster {
 	}
 
 	@Test
-	@WithMockCustomUser
-	@Transactional
 	public void ProductMasterのテスト() throws Exception {
 
 		// テストデータ登録
@@ -743,8 +676,6 @@ public class TestMaster {
 	}
 
 	@Test
-	@WithMockCustomUser
-	@Transactional
 	public void ItemMasterのテスト() throws Exception {
 
 		// テストデータ登録
@@ -776,8 +707,6 @@ public class TestMaster {
 	}
 
 	@Test
-	@WithMockCustomUser
-	@Transactional
 	public void RecordDecomposeCompMasterのテスト() throws Exception {
 
 		// テストデータ登録
@@ -806,8 +735,6 @@ public class TestMaster {
 	}
 
 	@Test
-	@WithMockCustomUser
-	@Transactional
 	public void RecordDecomposeMasterのテスト() throws Exception {
 
 		// テストデータ登録
@@ -834,8 +761,6 @@ public class TestMaster {
 	}
 
 	@Test
-	@WithMockCustomUser
-	@Transactional
 	public void MvTJmci105Masterのテスト() throws Exception {
 
 		// テストデータはなし
@@ -849,8 +774,6 @@ public class TestMaster {
 	}
 
 	@Test
-	@WithMockCustomUser
-	@Transactional
 	public void MvTJmci101Masterのテスト() throws Exception {
 
 		// テストデータはなし
@@ -864,8 +787,6 @@ public class TestMaster {
 	}
 
 	@Test
-	@WithMockCustomUser
-	@Transactional
 	public void MvTjmmb010UtlItemのテスト() throws Exception {
 
 		// テストデータはなし
@@ -879,8 +800,6 @@ public class TestMaster {
 	}
 
 	@Test
-	@WithMockCustomUser
-	@Transactional
 	public void MvTjmmb020UtlItemのテスト() throws Exception {
 
 		// テストデータはなし
@@ -896,8 +815,7 @@ public class TestMaster {
 	}
 
 	@Test
-	@WithMockCustomUser
-	@Transactional
+
 	public void MvEmployeeMasterのテスト() throws Exception {
 
 		// テストデータはなし
@@ -911,8 +829,6 @@ public class TestMaster {
 	}
 
 	@Test
-	@WithMockCustomUser
-	@Transactional
 	public void VPicAffiliateMasterのテスト() throws Exception {
 
 		// テストデータはなし
@@ -926,8 +842,6 @@ public class TestMaster {
 	}
 
 	@Test
-	@WithMockCustomUser
-	@Transactional
 	public void VKjbMasterのテスト() throws Exception {
 
 		// テストデータはなし
@@ -938,19 +852,6 @@ public class TestMaster {
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
-	}
-
-	public static void main(String[] args) throws Exception {
-		TestTools tool = new TestTools();
-		ProductCompMaster entity = new ProductCompMaster();
-		entity.setCreatedAt(Calendar.getInstance().getTime());
-		entity.setCreatedUserId("");
-		entity.setId(1L);
-		entity.setProductGrpMaster(new ProductGrpMaster());
-		entity.setUpdatedAt(Calendar.getInstance().getTime());
-		entity.setUpdatedUserId("");
-		entity.setVersion(1L);
-		System.out.println(tool.findNullProperties(entity));
 	}
 
 }
