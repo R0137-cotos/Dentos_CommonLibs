@@ -1,7 +1,5 @@
 package jp.co.ricoh.cotos.commonlib.repository;
 
-import javax.transaction.Transactional;
-
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Test;
@@ -117,7 +115,6 @@ public class TestEstimation {
 	}
 
 	@Test
-	@Transactional
 	public void AttachedFileRepositoryのテスト() throws Exception {
 
 		EstimationAttachedFile found = attachedFileRepository.findOne(401L);
@@ -130,7 +127,6 @@ public class TestEstimation {
 	}
 
 	@Test
-	@Transactional
 	public void OperationLogRepositoryのテスト() throws Exception {
 
 		OperationLog found = operationLogRepository.findOne(401L);
@@ -143,7 +139,6 @@ public class TestEstimation {
 	}
 
 	@Test
-	@Transactional
 	public void EstimationAddedEditorEmpRepositoryのテスト() throws Exception {
 
 		EstimationAddedEditorEmp found = estimationAddedEditorEmpRepository.findOne(401L);
@@ -156,7 +151,6 @@ public class TestEstimation {
 	}
 
 	@Test
-	@Transactional
 	public void DealerEstimationRepositoryのテスト() throws Exception {
 
 		DealerEstimation found = dealerEstimationRepository.findOne(402L);
@@ -170,7 +164,6 @@ public class TestEstimation {
 	}
 
 	@Test
-	@Transactional
 	public void EstimationCheckResultRepositoryのテスト() throws Exception {
 
 		EstimationCheckResult found = estimationCheckResultRepository.findOne(401L);
@@ -184,7 +177,6 @@ public class TestEstimation {
 	}
 
 	@Test
-	@Transactional
 	public void EstimationDetailRepositoryのテスト() throws Exception {
 
 		EstimationDetail found = estimationDetailRepository.findOne(401L);
@@ -198,7 +190,6 @@ public class TestEstimation {
 	}
 
 	@Test
-	@Transactional
 	public void ProductEstimationRepositoryのテスト() throws Exception {
 
 		ProductEstimation found = productEstimationRepository.findOne(401L);
@@ -212,7 +203,6 @@ public class TestEstimation {
 	}
 
 	@Test
-	@Transactional
 	public void EstimationApprovalResultRepositoryのテスト() throws Exception {
 
 		EstimationApprovalResult found = estimationApprovalResultRepository.findOne(401L);
@@ -226,7 +216,6 @@ public class TestEstimation {
 	}
 
 	@Test
-	@Transactional
 	public void EstimationApprovalRouteNodeRepositoryのテスト() throws Exception {
 
 		EstimationApprovalRouteNode found = estimationApprovalRouteNodeRepository.findOne(401L);
@@ -240,7 +229,6 @@ public class TestEstimation {
 	}
 
 	@Test
-	@Transactional
 	public void CustomerEstimationRepositoryのテスト() throws Exception {
 
 		CustomerEstimation found = customerEstimationRepository.findOne(401L);
@@ -254,7 +242,6 @@ public class TestEstimation {
 	}
 
 	@Test
-	@Transactional
 	public void EstimationPicSaEmpRepositoryのテスト() throws Exception {
 
 		EstimationPicSaEmp found = estimationPicSaEmpRepository.findOne(401L);
@@ -268,7 +255,6 @@ public class TestEstimation {
 	}
 
 	@Test
-	@Transactional
 	public void EstimationApprovalRouteRepositoryのテスト() throws Exception {
 
 		EstimationApprovalRoute found = estimationApprovalRouteRepository.findOne(401L);
@@ -282,7 +268,6 @@ public class TestEstimation {
 	}
 
 	@Test
-	@Transactional
 	public void ItemEstimationRepositoryのテスト() throws Exception {
 
 		ItemEstimation found = itemEstimationRepository.findOne(401L);
@@ -296,7 +281,6 @@ public class TestEstimation {
 	}
 
 	@Test
-	@Transactional
 	public void EstimationRepositoryのテスト() throws Exception {
 
 		Estimation found = estimationRepository.findOne(4L);
