@@ -8,6 +8,8 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -111,6 +113,7 @@ public class Estimation extends EntityBase {
 	 * ライフサイクル状態
 	 */
 	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
 	@ApiModelProperty(value = "ライフサイクル状態", required = true, position = 3)
 	private LifecycleStatus lifecycleStatus;
 
@@ -118,6 +121,7 @@ public class Estimation extends EntityBase {
 	 * ワークフロー状態
 	 */
 	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
 	@ApiModelProperty(value = "ワークフロー状態", required = true, position = 4)
 	private WorkflowStatus workflowStatus;
 
@@ -163,6 +167,7 @@ public class Estimation extends EntityBase {
 	 * 見積種別
 	 */
 	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
 	@ApiModelProperty(value = "見積種別", required = true, position = 11)
 	private EstimationType estimationType;
 
