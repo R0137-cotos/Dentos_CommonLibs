@@ -493,7 +493,7 @@ public class TestMaster {
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/arrangementWorkTypeMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/recordDecomposeCompMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/arrangementChecklistCompMaster.sql");
-		context.getBean(DBConfig.class).initTargetTestData("repository/master/ApprovalRouteGrpMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/approvalRouteGrpMaster.sql");
 
 		// エンティティの取得
 		Long id = 1L;
