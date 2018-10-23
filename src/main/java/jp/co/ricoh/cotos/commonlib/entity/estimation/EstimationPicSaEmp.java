@@ -2,6 +2,7 @@ package jp.co.ricoh.cotos.commonlib.entity.estimation;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,6 +24,7 @@ import lombok.EqualsAndHashCode;
  */
 @Entity
 @EqualsAndHashCode(callSuper = true)
+@EntityListeners(EstimationPicSaEmpListener.class)
 @Data
 @Table(name = "estimation_pic_sa_emp")
 public class EstimationPicSaEmp extends EntityBase {
