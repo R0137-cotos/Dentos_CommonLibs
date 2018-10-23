@@ -4,8 +4,6 @@ import java.util.Arrays;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -46,8 +44,7 @@ public class EstimationChecklistCompMaster extends EntityBaseMaster {
 		}
 
 		public static TargetEstimationType fromString(String string) {
-			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst()
-					.orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
 
@@ -67,8 +64,7 @@ public class EstimationChecklistCompMaster extends EntityBaseMaster {
 		}
 
 		public static TargetLifecycleStatus fromString(String string) {
-			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst()
-					.orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
 
@@ -91,7 +87,6 @@ public class EstimationChecklistCompMaster extends EntityBaseMaster {
 	 * 対象見積種別
 	 */
 	@Column(nullable = false)
-	@Enumerated(EnumType.STRING)
 	@ApiModelProperty(value = "対象見積種別<br /> "//
 			+ "共通/新規/プラン変更<br /> ", required = true, position = 3)
 	private TargetEstimationType targetEstimationType;
@@ -100,7 +95,6 @@ public class EstimationChecklistCompMaster extends EntityBaseMaster {
 	 * 対象ライフサイクル状態
 	 */
 	@Column(nullable = false)
-	@Enumerated(EnumType.STRING)
 	@ApiModelProperty(value = "対象ライフサイクル状態<br /> "//
 			+ "作成中<br /> ", required = true, position = 4)
 	private TargetLifecycleStatus targetLifecycleStatus;

@@ -3,7 +3,6 @@ package jp.co.ricoh.cotos.commonlib.converter;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
-import jp.co.ricoh.cotos.commonlib.entity.EnumType.DetailStatus;
 import jp.co.ricoh.cotos.commonlib.entity.master.ItemMaster.CostType;
 
 @Converter(autoApply = true)
