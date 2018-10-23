@@ -3,8 +3,6 @@ package jp.co.ricoh.cotos.commonlib.dto.result;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.Temporal;
@@ -46,7 +44,6 @@ public class ContractListInfo {
 	/**
 	 * 契約種別
 	 */
-	@Enumerated(EnumType.STRING)
 	@ApiModelProperty(value = "契約種別<br />" //
 			+ "新規, プラン変更, 解約などの契約種別を表す。", //
 			required = false, position = 4) //
@@ -55,7 +52,6 @@ public class ContractListInfo {
 	/**
 	 * 契約ステータス
 	 */
-	@Enumerated(EnumType.STRING)
 	@ApiModelProperty(value = "契約ステータス<br />" //
 			+ "状態遷移上のライフサイクル状態を表す。", //
 			required = false, position = 5) //
@@ -64,7 +60,6 @@ public class ContractListInfo {
 	/**
 	 * 契約状態
 	 */
-	@Enumerated(EnumType.STRING)
 	@ApiModelProperty(value = "契約状態<br />" //
 			+ "状態遷移上のワークフロー状態を表す。", //
 			required = false, position = 6) //

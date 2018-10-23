@@ -106,7 +106,6 @@ public class ContractSearchParameter {
 	 * 契約状態
 	 */
 	@ApiParam(value = "契約状態", required = false)
-	@Enumerated(EnumType.STRING)
 	@ApiModelProperty(value = "契約状態<br />" //
 			+ "状態遷移上のワークフローステータスを表す。", //
 			required = false) //
@@ -274,7 +273,6 @@ public class ContractSearchParameter {
 	 * 契約ステータス
 	 */
 	@ApiParam(value = "契約ステータス", required = false)
-	@Enumerated(EnumType.STRING)
 	@ApiModelProperty(value = "契約ステータス<br />" //
 			+ "状態遷移上のライフサイクル状態を表す。", //
 			required = false) //
@@ -284,7 +282,6 @@ public class ContractSearchParameter {
 	 * 契約種別
 	 */
 	@ApiParam(value = "契約種別", required = false)
-	@Enumerated(EnumType.STRING)
 	@ApiModelProperty(value = "契約種別<br />" //
 			+ "新規, プラン変更, 解約などの契約種別を表す。", //
 			required = false)

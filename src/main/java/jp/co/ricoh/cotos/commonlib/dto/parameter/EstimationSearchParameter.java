@@ -238,7 +238,6 @@ public class EstimationSearchParameter {
 	/**
 	 * 見積ステータス
 	 */
-	@Enumerated(EnumType.STRING)
 	@ApiParam(value = "見積ステータス", required = false)
 	@ApiModelProperty(value = "見積ステータス<br />" //
 			+ "状態遷移上のワークフロー状態を表す。", //
@@ -248,7 +247,6 @@ public class EstimationSearchParameter {
 	/**
 	 * 見積種別
 	 */
-	@Enumerated(EnumType.STRING)
 	@ApiParam(value = "見積種別", required = false)
 	@ApiModelProperty(value = "契約種別<br />" //
 			+ "新規, 変更などの見積種別を表す。", //

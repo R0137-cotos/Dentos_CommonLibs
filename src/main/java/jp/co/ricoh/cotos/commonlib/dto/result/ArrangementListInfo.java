@@ -6,8 +6,6 @@ import java.util.Date;
 import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.PrePersist;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -72,7 +70,6 @@ public class ArrangementListInfo {
 	/**
 	 * 契約状態
 	 */
-	@Enumerated(EnumType.STRING)
 	@ApiModelProperty(value = "契約状態<br />" //
 			+ "状態遷移上のワークフロー状態を表す。", //
 			required = false, position = 6) //
@@ -81,7 +78,6 @@ public class ArrangementListInfo {
 	/**
 	 * 契約種別
 	 */
-	@Enumerated(EnumType.STRING)
 	@ApiModelProperty(value = "契約種別<br />" //
 			+ "新規, プラン変更, 解約などの契約種別を表す。", //
 			required = false, position = 7) //
@@ -128,7 +124,6 @@ public class ArrangementListInfo {
 	/**
 	 * 手配業務ステータス
 	 */
-	@Enumerated(EnumType.STRING)
 	@ApiModelProperty(value = "手配業務ステータス<br />" //
 			+ "状態遷移上のワークフロー状態を表す。", //
 			required = false, position = 14) //

@@ -3,8 +3,6 @@ package jp.co.ricoh.cotos.commonlib.dto.result;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.Temporal;
@@ -37,7 +35,6 @@ public class EstimationListInfo {
 	/**
 	 * 見積種別
 	 */
-	@Enumerated(EnumType.STRING)
 	@ApiModelProperty(value = "見積種別<br />" //
 			+ "新規、プラン変更等の見積種別を表す。", //
 			required = false, position = 3) //
@@ -52,7 +49,6 @@ public class EstimationListInfo {
 	/**
 	 * 見積ステータス
 	 */
-	@Enumerated(EnumType.STRING)
 	@ApiModelProperty(value = "見積ステータス<br />" //
 			+ "状態遷移上のワークフロー状態を表す。", //
 			required = false, position = 5) //
