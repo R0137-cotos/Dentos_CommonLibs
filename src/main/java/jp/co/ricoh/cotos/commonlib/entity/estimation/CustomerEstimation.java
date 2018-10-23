@@ -27,7 +27,7 @@ import lombok.EqualsAndHashCode;
  */
 @Entity
 @EqualsAndHashCode(callSuper = true)
-@EntityListeners(CustomerEstimation.class)
+@EntityListeners(CustomerEstimationListener.class)
 @Data
 @Table(name = "customer_estimation")
 public class CustomerEstimation extends EntityBase {
