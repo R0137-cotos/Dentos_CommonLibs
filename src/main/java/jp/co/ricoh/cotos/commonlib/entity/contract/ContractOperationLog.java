@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -29,6 +30,7 @@ import lombok.EqualsAndHashCode;
  */
 @Entity
 @EqualsAndHashCode(callSuper = true)
+@EntityListeners(ContractOperationLogListener.class)
 @Data
 @Table(name = "contract_operation_log")
 public class ContractOperationLog extends EntityBase {
