@@ -8,7 +8,6 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import jp.co.ricoh.cotos.commonlib.entity.estimation.OperationLog;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvEmployeeMaster;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorCheckException;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorInfo;
@@ -35,16 +34,16 @@ public class ContractOperationLogListener {
 	 */
 	@PrePersist
 	@Transactional
-	public void appendsEmployeeFields(OperationLog operationLog) {
-		MvEmployeeMaster employeeMaster = mvEmployeeMasterRepository.findByMomEmployeeId(operationLog.getOperatorEmpId());
+	public void appendsEmployeeFields(ContractOperationLog contractOperationLog) {
+		MvEmployeeMaster employeeMaster = mvEmployeeMasterRepository.findByMomEmployeeId(contractOperationLog.getOperatorEmpId());
 
 		if (employeeMaster == null) {
 			String[] regexList = { "操作者MoM社員ID" };
 			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "MasterDoesNotExistEmployeeMaster", regexList));
 		}
 
-		operationLog.setOperatorName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
-		operationLog.setOperatorOrgName(employeeMaster.getOrgName());
+		contractOperationLog.setOperatorName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
+		contractOperationLog.setOperatorOrgName(employeeMaster.getOrgName());
 	}
 
 }
