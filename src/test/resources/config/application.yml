@@ -28,8 +28,8 @@ cotos:
 spring:
   datasource:
     url: jdbc:oracle:thin:@dev-db.cotos.ricoh.co.jp:1521/pdb1
-    username: cotos_sapporo
-    password: cotos_sapporo
+    username: cotos_onsite
+    password: cotos_onsite
     driverClassName: oracle.jdbc.OracleDriver
   jpa:
     database-platform: org.hibernate.dialect.Oracle12cDialect
@@ -40,7 +40,7 @@ spring:
         show_sql: true
         use_sql_comments: true
         format_sql: true
-        default_schema: cotos_sapporo
+        default_schema: cotos_onsite
         proc:
           param_null_passing: true
         enable_lazy_load_no_trans: true
