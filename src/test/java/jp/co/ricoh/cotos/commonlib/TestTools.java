@@ -1,30 +1,44 @@
 package jp.co.ricoh.cotos.commonlib;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.poi.ss.formula.functions.T;
 import org.junit.Assert;
+import org.springframework.http.HttpRequest;
+import org.springframework.http.client.ClientHttpRequestExecution;
+import org.springframework.http.client.ClientHttpRequestInterceptor;
+import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.client.RestTemplate;
 
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
+import jp.co.ricoh.cotos.commonlib.security.TestSecurityController;
+import jp.co.ricoh.cotos.commonlib.util.HeadersProperties;
 
 @Component
 public class TestTools {
 
 	public <T> String findNullProperties(T entity) throws Exception {
 		Map<String, String> entityMap = BeanUtils.describe(entity);
-		Optional<String> propertyName = BeanUtils.describe(entity).keySet().stream().filter(key -> entityMap.get(key) == null).findFirst();
+		Optional<String> propertyName = BeanUtils.describe(entity).keySet().stream()
+				.filter(key -> entityMap.get(key) == null).findFirst();
 
 		return propertyName.isPresent() ? propertyName.get() : null;
 	}
 
 	/**
 	 * エンティティクラスのフィールドの設定値に null が含まれるか
-	 * 
+	 *
 	 * @param entity
 	 * @throws Exception
 	 */
@@ -34,7 +48,7 @@ public class TestTools {
 
 	/**
 	 * エンティティクラスのフィールドの設定値に null が含まれるか
-	 * 
+	 *
 	 * @param entity
 	 * @throws Exception
 	 */
@@ -76,4 +90,56 @@ public class TestTools {
 		return false;
 
 	}
+
+	/**
+	 * 指定した Entity クラスの Validation を実行する
+	 * @param entity
+	 *            エンティティ
+	 * @param testSecurityController
+	 *            TestSecurityController
+	 * @param headersProperties
+	 *            HeadersProperties
+	 * @param localServerPort
+	 *            ポート番号
+	 * @return BindingResult Validation の実行結果
+	 */
+	public BindingResult executeEntityValidation(Class<T> entity, TestSecurityController testSecurityController,
+			HeadersProperties headersProperties, int localServerPort) {
+
+		BindingResult bindingResult = null;
+		final String WITHIN_PERIOD_JWT = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcmlnaW4iOiJjb3Rvcy5yaWNvaC5jby5qcCIsInNpbmdsZVVzZXJJZCI6InNpZCIsIm1vbUVtcElkIjoibWlkIiwiZXhwIjoyNTM0MDIyNjgzOTl9.Apmi4uDwtiscf9WgVIh5Rx1DjoZX2eS7H2YlAGayOsQ";
+		RestTemplate rest = initRest(WITHIN_PERIOD_JWT, headersProperties);
+		rest.postForEntity(loadTopURL(localServerPort) + "test/api/xxx?isSuccess=true&hasBody=false", entity,
+				BindingResult.class);
+
+		bindingResult = testSecurityController.callEntityValidation(entity, bindingResult);
+
+		return bindingResult;
+	}
+
+	private RestTemplate initRest(final String header, final HeadersProperties headersProperties) {
+		RestTemplate rest = new RestTemplate();
+		if (null != header) {
+			rest.setInterceptors(
+					Stream.concat(rest.getInterceptors().stream(), Arrays.asList(new ClientHttpRequestInterceptor() {
+						@Override
+						public ClientHttpResponse intercept(HttpRequest request, byte[] body,
+								ClientHttpRequestExecution execution) throws IOException {
+							System.out.println("initRest Start");
+							System.out.println(request.getURI());
+							System.out.println(request.getMethod());
+							request.getHeaders().add(headersProperties.getAuthorization(), "Bearer " + header);
+							System.out.println(request.getHeaders());
+							System.out.println("initRest End");
+							return execution.execute(request, body);
+						}
+					}).stream()).collect(Collectors.toList()));
+		}
+		return rest;
+	}
+
+	private String loadTopURL(int localServerPort) {
+		return "http://localhost:" + localServerPort + "/";
+	}
+
 }
