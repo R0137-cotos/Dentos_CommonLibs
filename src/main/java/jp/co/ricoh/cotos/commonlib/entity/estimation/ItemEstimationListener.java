@@ -21,15 +21,16 @@ public class ItemEstimationListener {
 	}
 
 	/**
-	 * ItemMaster情報をItemトランザクションに紐づけます。
+	 * 品種マスタ情報を品種（見積用）トランザクションに紐づけます。
 	 *
 	 * @param entity
 	 */
 	@PrePersist
 	@Transactional
-	public void appendsEstimationItemFields(ItemEstimation item) {
-		ItemMaster itemMaster = itemMasterRepository.findByRicohItemCode(item.getRicohItemCode());
-		//item.setItemMaster(itemMaster);
-		BeanUtils.copyProperties(itemMaster, item, "id");
+	public void appendsEstimationItemFields(ItemEstimation itemEstimation) {
+		ItemMaster itemMaster = itemMasterRepository.findByRicohItemCode(itemEstimation.getRicohItemCode());
+		itemEstimation.setItemMasterId(itemMaster.getId());
+		BeanUtils.copyProperties(itemMaster, itemEstimation, "id");
+		itemEstimation.setItemEstimationName(itemMaster.getItemName());
 	}
 }

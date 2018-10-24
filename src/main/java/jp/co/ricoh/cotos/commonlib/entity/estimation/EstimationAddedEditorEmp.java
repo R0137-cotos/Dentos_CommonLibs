@@ -2,6 +2,7 @@ package jp.co.ricoh.cotos.commonlib.entity.estimation;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,6 +30,7 @@ import lombok.EqualsAndHashCode;
  */
 @Entity
 @EqualsAndHashCode(callSuper = true)
+@EntityListeners(EstimationAddedEditorEmpListener.class)
 @Data
 @Table(name = "estimation_added_editor_emp")
 public class EstimationAddedEditorEmp extends EntityBase {
