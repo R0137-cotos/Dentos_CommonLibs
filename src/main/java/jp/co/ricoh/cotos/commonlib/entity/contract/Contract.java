@@ -195,7 +195,7 @@ public class Contract extends EntityBase {
 	 * 変更元契約番号枝番
 	 */
 	@ApiModelProperty(value = "変更元契約番号枝番", required = false, position = 13, allowableValues = "range[0,99]")
-	private int originContractBranchNumber;
+	private Integer originContractBranchNumber;
 
 	/**
 	 * 変更元契約ID
