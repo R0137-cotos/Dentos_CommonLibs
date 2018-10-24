@@ -31,5 +31,6 @@ public class ItemEstimationListener {
 		ItemMaster itemMaster = itemMasterRepository.findByRicohItemCode(itemEstimation.getRicohItemCode());
 		itemEstimation.setItemMasterId(itemMaster.getId());
 		BeanUtils.copyProperties(itemMaster, itemEstimation, "id");
+		itemEstimation.setItemEstimationName(itemMaster.getItemName());
 	}
 }

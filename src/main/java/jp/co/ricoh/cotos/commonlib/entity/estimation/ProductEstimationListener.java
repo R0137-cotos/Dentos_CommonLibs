@@ -29,6 +29,7 @@ public class ProductEstimationListener {
 		ProductMaster productMaster = productMasterRepository.findOne(productEstimation.getId());
 		productEstimation.setProductMasterId(productMaster.getId());
 		BeanUtils.copyProperties(productMaster, productEstimation, "id");
+		productEstimation.setProductEstimationName(productMaster.getProductName());
 	}
 
 }
