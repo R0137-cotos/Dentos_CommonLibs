@@ -15,6 +15,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
@@ -53,6 +56,8 @@ public class ArrangementWork extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "arrangement_work_seq")
 	@SequenceGenerator(name = "arrangement_work_seq", sequenceName = "arrangement_work_seq", allocationSize = 1)
+	@NotNull
+	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "手配業務ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
@@ -61,6 +66,7 @@ public class ArrangementWork extends EntityBase {
 	 */
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "arrangement_id", referencedColumnName = "id")
+	@NotNull
 	@ApiModelProperty(value = "手配", required = true, position = 2)
 	private Arrangement arrangement;
 
@@ -68,6 +74,8 @@ public class ArrangementWork extends EntityBase {
 	 * 手配業務タイプマスタID
 	 */
 	@Column(nullable = false)
+	@NotNull
+	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "手配業務タイプマスタID", required = true, position = 3, allowableValues = "range[0,9999999999999999999]")
 	private long arrangementWorkTypeMasterId;
 
@@ -75,12 +83,14 @@ public class ArrangementWork extends EntityBase {
 	 * ワークフロー状態
 	 */
 	@Column(nullable = false)
+	@NotNull
 	@ApiModelProperty(value = "ワークフロー状態", required = true, position = 4)
 	private WorkflowStatus workflowStatus;
 
 	/**
 	 * メモ
 	 */
+	@Size(max = 4000)
 	@ApiModelProperty(value = "メモ", required = false, position = 5, allowableValues = "range[0,4000]")
 	private String memo;
 
@@ -88,6 +98,7 @@ public class ArrangementWork extends EntityBase {
 	 * 手配業務承認ルート
 	 */
 	@OneToOne(mappedBy = "arrangementWork")
+	@NotNull
 	@ApiModelProperty(value = "手配業務承認ルート", required = false, position = 6)
 	private ArrangementWorkApprovalRoute arrangementWorkApprovalRoute;
 

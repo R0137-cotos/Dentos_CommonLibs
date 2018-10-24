@@ -7,6 +7,8 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,6 +20,11 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
@@ -97,6 +104,8 @@ public class Contract extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_seq")
 	@SequenceGenerator(name = "contract_seq", sequenceName = "contract_seq", allocationSize = 1)
+	@NotNull
+	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "契約ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
@@ -104,12 +113,14 @@ public class Contract extends EntityBase {
 	 * 契約種別
 	 */
 	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
 	@ApiModelProperty(value = "契約種別", required = true, position = 2)
 	private ContractType contractType;
 
 	/**
 	 * 商品グループマスタID
 	 */
+	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "商品グループマスタID", required = false, position = 3, allowableValues = "range[0,9999999999999999999]")
 	private long productGrpMasterId;
 
@@ -117,6 +128,8 @@ public class Contract extends EntityBase {
 	 * ライフサイクル状態
 	 */
 	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
+	@NotNull
 	@ApiModelProperty(value = "ライフサイクル状態", required = true, position = 4)
 	private LifecycleStatus lifecycleStatus;
 
@@ -124,30 +137,37 @@ public class Contract extends EntityBase {
 	 * ワークフロー状態
 	 */
 	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
+	@NotNull
 	@ApiModelProperty(value = "ワークフロー状態", required = true, position = 5)
 	private WorkflowStatus workflowStatus;
 
 	/**
 	 * 恒久契約識別番号
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "恒久契約識別番号", required = false, position = 6, allowableValues = "range[0,255]")
 	private String immutableContIdentNumber;
 
 	/**
 	 * 案件番号
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "案件番号", required = false, position = 7, allowableValues = "range[0,255]")
 	private String caseNumber;
 
 	/**
 	 * 案件名
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "案件名", required = false, position = 8, allowableValues = "range[0,255]")
 	private String caseTitle;
 
 	/**
 	 * 契約番号
 	 */
+	@NotEmpty
+	@Size(max = 255)
 	@Column(nullable = false)
 	@ApiModelProperty(value = "契約番号", required = true, position = 9, allowableValues = "range[0,255]", readOnly = true)
 	private String contractNumber;
@@ -155,6 +175,8 @@ public class Contract extends EntityBase {
 	/**
 	 * 契約番号枝番
 	 */
+	@NotNull
+	@Max(99)
 	@Column(nullable = false)
 	@ApiModelProperty(value = "契約番号枝番", required = true, position = 10, allowableValues = "range[0,99]", readOnly = true)
 	private int contractBranchNumber;
@@ -168,6 +190,7 @@ public class Contract extends EntityBase {
 	/**
 	 * 変更元契約番号
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "変更元契約番号", required = false, position = 12, allowableValues = "range[0,255]")
 	private String originContractNumber;
 
@@ -175,11 +198,12 @@ public class Contract extends EntityBase {
 	 * 変更元契約番号枝番
 	 */
 	@ApiModelProperty(value = "変更元契約番号枝番", required = false, position = 13, allowableValues = "range[0,99]")
-	private Integer originContractBranchNumber;
+	private int originContractBranchNumber;
 
 	/**
 	 * 変更元契約ID
 	 */
+	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "変更元契約ID", required = false, position = 14, allowableValues = "range[0,9999999999999999999]")
 	private Long originContractId;
 
@@ -207,6 +231,8 @@ public class Contract extends EntityBase {
 	/**
 	 * 売上計上フラグ
 	 */
+	@NotNull
+	@Max(9)
 	@Column(nullable = false)
 	@ApiModelProperty(value = "売上計上フラグ", required = true, position = 18, allowableValues = "range[0,9]")
 	private int accountSalesFlg;
@@ -243,6 +269,8 @@ public class Contract extends EntityBase {
 	 * 見積番号
 	 */
 	@Column(nullable = false)
+	@NotEmpty
+	@Size(max = 255)
 	@ApiModelProperty(value = "見積番号", required = true, position = 23, allowableValues = "range[0,255]")
 	private String estimationNumber;
 
@@ -250,6 +278,8 @@ public class Contract extends EntityBase {
 	 * 見積番号枝番
 	 */
 	@Column(nullable = false)
+	@NotNull
+	@Max(99)
 	@ApiModelProperty(value = "見積番号枝番", required = true, position = 24, allowableValues = "range[0,99]")
 	private int estimationBranchNumber;
 
@@ -257,48 +287,57 @@ public class Contract extends EntityBase {
 	 * 見積ID
 	 */
 	@Column(nullable = false)
+	@NotNull
+	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "見積ID", required = true, position = 25, allowableValues = "range[0,99999999999999999999]")
 	private long estimationId;
 
 	/**
 	 * 見積件名
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "見積件名", required = false, position = 26, allowableValues = "range[0,255]")
 	private String estimationTitle;
 
 	/**
 	 * 商流区分
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "商流区分", required = false, position = 27, allowableValues = "range[0,255]")
 	private String commercialFlowDiv;
 
 	/**
 	 * 発行書式
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "発行書式", required = false, position = 28, allowableValues = "range[0,255]")
 	private String issueFormat;
 
 	/**
 	 * 得意先コード
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "得意先コード", required = false, position = 29, allowableValues = "range[0,255]")
 	private String issueEstimationTitle;
 
 	/**
 	 * 得意先宛先名
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "得意先宛先名", required = false, position = 30, allowableValues = "range[0,255]")
 	private String issueCustomerCorpName;
 
 	/**
 	 * 支払条件
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "支払条件", required = false, position = 31, allowableValues = "range[0,255]")
 	private String paymentTerms;
 
 	/**
 	 * 支払方法
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "支払方法", required = false, position = 32, allowableValues = "range[0,255]")
 	private String paymentMethod;
 
@@ -313,6 +352,7 @@ public class Contract extends EntityBase {
 	 * 契約明細
 	 */
 	@OneToMany(mappedBy = "contract")
+	@NotEmpty
 	@ApiModelProperty(value = "契約明細", required = true, position = 34)
 	private List<ContractDetail> contractDetailList;
 
@@ -342,6 +382,7 @@ public class Contract extends EntityBase {
 	 * 契約担当SA社員
 	 */
 	@OneToOne(mappedBy = "contract")
+	@NotNull
 	@ApiModelProperty(value = "契約担当SA社員", required = true, position = 38)
 	private ContractPicSaEmp contractPicSaEmp;
 
@@ -363,6 +404,7 @@ public class Contract extends EntityBase {
 	 * 顧客(契約用)
 	 */
 	@OneToOne(mappedBy = "contract")
+	@NotNull
 	@ApiModelProperty(value = "顧客(契約用)", required = true, position = 41)
 	private CustomerContract customerContract;
 
@@ -370,6 +412,7 @@ public class Contract extends EntityBase {
 	 * 契約操作履歴
 	 */
 	@OneToMany(mappedBy = "contract")
+	@NotEmpty
 	@ApiModelProperty(value = "契約操作履歴", required = true, position = 42, readOnly = true)
 	private List<ContractOperationLog> contractOperationLogList;
 
@@ -377,6 +420,7 @@ public class Contract extends EntityBase {
 	 * 商品(契約用)
 	 */
 	@OneToMany(mappedBy = "contract")
+	@NotEmpty
 	@ApiModelProperty(value = "商品(契約用)", required = true, position = 43)
 	private List<ProductContract> productContractList;
 }

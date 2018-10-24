@@ -14,6 +14,11 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -34,6 +39,8 @@ public class ArrangementWorkCheckResult extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "arrangement_work_check_result_seq")
 	@SequenceGenerator(name = "arrangement_work_check_result_seq", sequenceName = "arrangement_work_check_result_seq", allocationSize = 1)
+	@NotNull
+	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "手配業務チェック結果ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
@@ -42,6 +49,7 @@ public class ArrangementWorkCheckResult extends EntityBase {
 	 */
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "arrangement_work_id", referencedColumnName = "id")
+	@NotNull
 	@ApiModelProperty(value = "手配業務", required = true, position = 2)
 	@JsonIgnore
 	private ArrangementWork arrangementWork;
@@ -50,6 +58,8 @@ public class ArrangementWorkCheckResult extends EntityBase {
 	 * チェック事項コード
 	 */
 	@Column(nullable = false)
+	@NotEmpty
+	@Size(max = 255)
 	@ApiModelProperty(value = "チェック事項コード", required = true, position = 3, allowableValues = "range[0,255]")
 	private String checkMatterCode;
 
@@ -57,6 +67,8 @@ public class ArrangementWorkCheckResult extends EntityBase {
 	 * チェック事項文面
 	 */
 	@Column(nullable = false)
+	@NotEmpty
+	@Size(max = 255)
 	@ApiModelProperty(value = "チェック事項文面", required = true, position = 4, allowableValues = "range[0,255]")
 	private String checkMatterText;
 
@@ -64,24 +76,29 @@ public class ArrangementWorkCheckResult extends EntityBase {
 	 * 表示順
 	 */
 	@Column(nullable = false)
+	@NotNull
+	@Max(999)
 	@ApiModelProperty(value = "表示順", required = true, position = 5, allowableValues = "range[0,999]")
 	private int displayOrder;
 
 	/**
 	 * チェック実施者MoM社員ID
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "チェック実施者MoM社員ID", required = false, position = 6, allowableValues = "range[0,255]")
 	private String checkedUserId;
 
 	/**
 	 * チェック実施者氏名
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "チェック実施者氏名", required = false, position = 7, allowableValues = "range[0,255]")
 	private String checkedUserName;
 
 	/**
 	 * チェック実施者組織名
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "チェック実施者組織名", required = false, position = 8, allowableValues = "range[0,255]")
 	private String checkedOrgName;
 

@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
@@ -48,6 +50,8 @@ public class Arrangement extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "arrangement_seq")
 	@SequenceGenerator(name = "arrangement_seq", sequenceName = "arrangement_seq", allocationSize = 1)
+	@NotNull
+	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "手配ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
@@ -55,6 +59,8 @@ public class Arrangement extends EntityBase {
 	 * 契約ID
 	 */
 	@Column(nullable = false)
+	@NotNull
+	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "契約ID", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
 	private long contractId;
 
@@ -62,6 +68,8 @@ public class Arrangement extends EntityBase {
 	 * 解約フラグ
 	 */
 	@Column(nullable = false)
+	@NotNull
+	@Max(9L)
 	@ApiModelProperty(value = "解約フラグ", required = true, position = 3, allowableValues = "range[0,9]")
 	private int disengagementFlg;
 
@@ -69,6 +77,7 @@ public class Arrangement extends EntityBase {
 	 * ワークフロー状態
 	 */
 	@Column(nullable = false)
+	@NotNull
 	@ApiModelProperty(value = "ワークフロー状態", required = true, position = 4)
 	private WorkflowStatus workflowStatus;
 

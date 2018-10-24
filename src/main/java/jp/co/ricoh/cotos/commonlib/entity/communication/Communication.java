@@ -12,6 +12,11 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
@@ -34,6 +39,8 @@ public class Communication extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "communication_seq")
 	@SequenceGenerator(name = "communication_seq", sequenceName = "communication_seq", allocationSize = 1)
+	@NotNull
+	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
@@ -41,6 +48,7 @@ public class Communication extends EntityBase {
 	 * サービスカテゴリ
 	 */
 	@Column(nullable = false)
+	@NotNull
 	@ApiModelProperty(value = "サービスカテゴリ", required = true, position = 2)
 	private ServiceCategory serviceCategory;
 
@@ -48,6 +56,7 @@ public class Communication extends EntityBase {
 	 * 処理カテゴリー
 	 */
 	@Column(nullable = false)
+	@NotNull
 	@ApiModelProperty(value = "処理カテゴリー", required = true, position = 3)
 	private ProcessCategory processCategory;
 
@@ -55,6 +64,8 @@ public class Communication extends EntityBase {
 	 * 対象文書キー
 	 */
 	@Column(nullable = false)
+	@NotEmpty
+	@Size(max = 255)
 	@ApiModelProperty(value = "対象文書キー<br />コミュニケーションの対象情報を一意に特定するためのキー情報を格納<br />" //
 			+ "見積⇒見積ID<br />" //
 			+ "契約⇒契約ID<br />" //
@@ -65,6 +76,7 @@ public class Communication extends EntityBase {
 	 * ワークフロー種別
 	 */
 	@Column(nullable = false)
+	@NotNull
 	@ApiModelProperty(value = "ワークフロー種別", required = true, position = 5)
 	private WorkflowType workflowType;
 
@@ -72,6 +84,7 @@ public class Communication extends EntityBase {
 	 * 承認対象種別
 	 */
 	@Column(nullable = false)
+	@NotNull
 	@ApiModelProperty(value = "承認対象種別<br />" //
 			+ "承認フロー⇒新規/情報変更/プラン変更/キャンセル/解約/作業完了報告<br />" //
 			+ "タスクフロー⇒非承認", required = true, position = 6) //
@@ -81,6 +94,8 @@ public class Communication extends EntityBase {
 	 * 対象文書画面URL
 	 */
 	@Column(nullable = false)
+	@NotEmpty
+	@Size(max = 1000)
 	@ApiModelProperty(value = "対象文書画面URL<br />Home画面でレコードクリック時の画面遷移先URLを格納<br />" //
 			+ "見積⇒対象文書キーで特定される見積情報画面のURL<br />" //
 			+ "契約⇒対象文書キーで特定される契約情報画面のURL<br />" //
@@ -91,6 +106,8 @@ public class Communication extends EntityBase {
 	 * 依頼者
 	 */
 	@Column(nullable = false)
+	@NotEmpty
+	@Size(max = 255)
 	@ApiModelProperty(value = "依頼者<br />" //
 			+ "ワークフローの起点となったユーザーのMoM社員IDを設定", required = true, position = 8, allowableValues = "range[0,255]") //
 	private String requestOriginId;
@@ -99,6 +116,8 @@ public class Communication extends EntityBase {
 	 * 伝達者
 	 */
 	@Column(nullable = false)
+	@NotEmpty
+	@Size(max = 255)
 	@ApiModelProperty(value = "伝達者<br />" //
 			+ "ユーザー識別子としてMoM社員IDを設定", required = true, position = 9, allowableValues = "range[0,255]") //
 	private String requestFromId;
@@ -107,6 +126,8 @@ public class Communication extends EntityBase {
 	 * 被伝達者
 	 */
 	@Column(nullable = false)
+	@NotEmpty
+	@Size(max = 255)
 	@ApiModelProperty(value = "被伝達者<br />" //
 			+ "ユーザー識別子としてMoM社員IDを設定", required = true, position = 10, allowableValues = "range[0,255]") //
 	private String requestToId;
@@ -114,6 +135,7 @@ public class Communication extends EntityBase {
 	/**
 	 * 被伝達者候補
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "被伝達者候補<br />" //
 			+ "ユーザー識別子としてMoM社員IDを設定", required = false, position = 11, allowableValues = "range[0,255]") //
 	private String requestToCandidateId;
@@ -122,6 +144,8 @@ public class Communication extends EntityBase {
 	 * 対象文書番号
 	 */
 	@Column(nullable = false)
+	@NotEmpty
+	@Size(max = 255)
 	@ApiModelProperty(value = "対象文書番号<br />" //
 			+ "見積⇒見積番号を設定<br />" //
 			+ "契約/手配⇒契約番号を設定", required = true, position = 12, allowableValues = "range[0,255]")
@@ -130,6 +154,8 @@ public class Communication extends EntityBase {
 	/**
 	 * 対象文書番号枝番
 	 */
+	@NotNull
+	@Max(99)
 	@Column(nullable = false)
 	@ApiModelProperty(value = "対象文書番号枝番<br />" //
 			+ "見積⇒見積番号枝番を設定<br />" //
@@ -140,6 +166,8 @@ public class Communication extends EntityBase {
 	 * 顧客名
 	 */
 	@Column(nullable = false)
+	@NotEmpty
+	@Size(max = 255)
 	@ApiModelProperty(value = "顧客名", required = true, position = 14, allowableValues = "range[0,255]")
 	private String customerName;
 
@@ -147,6 +175,8 @@ public class Communication extends EntityBase {
 	 * 商品名
 	 */
 	@Column(nullable = false)
+	@NotEmpty
+	@Size(max = 255)
 	@ApiModelProperty(value = "商品名<br />" //
 			+ "商品マスタの商品名を設定", required = true, position = 15, allowableValues = "range[0,255]") //
 	private String productName;
@@ -155,6 +185,8 @@ public class Communication extends EntityBase {
 	 * 件名
 	 */
 	@Column(nullable = false)
+	@NotEmpty
+	@Size(max = 255)
 	@ApiModelProperty(value = "件名<br />" + "見積⇒見積の案件名を設定<br />" //
 			+ "契約⇒契約の案件名を設定<br />" //
 			+ "手配⇒手配業務タイプマスタの手配業務タイプ名を設定", required = true, position = 16, allowableValues = "range[0,255]") //
@@ -163,12 +195,14 @@ public class Communication extends EntityBase {
 	/**
 	 * コメント
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "コメント", required = false, position = 17, allowableValues = "range[0,255]")
 	private String communicationComment;
 
 	/**
 	 * 伝達日時
 	 */
+	@NotNull
 	@ApiModelProperty(value = "伝達日時", required = true, position = 18, readOnly = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date communicatedAt;

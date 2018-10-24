@@ -14,6 +14,11 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -34,6 +39,8 @@ public class ProductContract extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_contract_seq")
 	@SequenceGenerator(name = "product_contract_seq", sequenceName = "product_contract_seq", allocationSize = 1)
+	@NotNull
+	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
@@ -41,6 +48,8 @@ public class ProductContract extends EntityBase {
 	 * 商品マスタID
 	 */
 	@Column(nullable = false)
+	@NotNull
+	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "商品マスタID", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
 	private long productMasterId;
 
@@ -48,6 +57,8 @@ public class ProductContract extends EntityBase {
 	 * 商品名
 	 */
 	@Column(nullable = false)
+	@NotEmpty
+	@Size(max = 255)
 	@ApiModelProperty(value = "商品名", required = true, position = 3, allowableValues = "range[0,255]")
 	private String productContractName;
 
@@ -55,6 +66,8 @@ public class ProductContract extends EntityBase {
 	 * 代表品種マスタID
 	 */
 	@Column(nullable = false)
+	@NotNull
+	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "代表品種マスタID", required = true, position = 4, allowableValues = "range[0,9999999999999999999]")
 	private long repItemMasterId;
 
@@ -63,6 +76,7 @@ public class ProductContract extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
+	@NotNull
 	@ApiModelProperty(value = "積上げ可能期間(開始日)", required = true, position = 5)
 	private Date effectiveFrom;
 
@@ -71,6 +85,7 @@ public class ProductContract extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
+	@NotNull
 	@ApiModelProperty(value = "積上げ可能期間(終了日)", required = true, position = 6)
 	private Date effectiveTo;
 
@@ -78,6 +93,8 @@ public class ProductContract extends EntityBase {
 	 * サービス識別番号
 	 */
 	@Column(nullable = false)
+	@NotEmpty
+	@Size(max = 255)
 	@ApiModelProperty(value = "サービス識別番号", required = true, position = 7, allowableValues = "range[0,255]")
 	private String serviceIdentNumber;
 
@@ -87,6 +104,7 @@ public class ProductContract extends EntityBase {
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "contract_id", referencedColumnName = "id")
 	@JsonIgnore
+	@NotNull
 	@ApiModelProperty(value = "契約", required = true, position = 8)
 	private Contract contract;
 

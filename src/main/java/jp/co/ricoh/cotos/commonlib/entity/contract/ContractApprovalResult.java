@@ -14,6 +14,11 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -35,6 +40,8 @@ public class ContractApprovalResult extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_approval_result_seq")
 	@SequenceGenerator(name = "contract_approval_result_seq", sequenceName = "contract_approval_result_seq", allocationSize = 1)
+	@NotNull
+	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "契約承認実績ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
@@ -44,6 +51,7 @@ public class ContractApprovalResult extends EntityBase {
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "contract_approval_route_id", referencedColumnName = "id")
 	@JsonIgnore
+	@NotNull
 	@ApiModelProperty(value = "契約承認ルート", required = true, position = 2)
 	private ContractApprovalRoute contractApprovalRoute;
 
@@ -51,6 +59,8 @@ public class ContractApprovalResult extends EntityBase {
 	 * 承認処理カテゴリ
 	 */
 	@Column(nullable = false)
+	@NotEmpty
+	@Size(max = 255)
 	@ApiModelProperty(value = "承認処理カテゴリ", required = true, position = 3, allowableValues = "range[0,255]")
 	private ApprovalProcessCategory approvalProcessCategory;
 
@@ -58,6 +68,8 @@ public class ContractApprovalResult extends EntityBase {
 	 * 処理実施者MoM社員ID
 	 */
 	@Column(nullable = false)
+	@NotEmpty
+	@Size(max = 255)
 	@ApiModelProperty(value = "処理実施者MoM社員ID", required = true, position = 4, allowableValues = "range[0,255]")
 	private String actualEmpId;
 
@@ -65,18 +77,22 @@ public class ContractApprovalResult extends EntityBase {
 	 * 処理実施者氏名
 	 */
 	@Column(nullable = false)
+	@NotEmpty
+	@Size(max = 255)
 	@ApiModelProperty(value = "処理実施者氏名", required = true, position = 5, allowableValues = "range[0,255]")
 	private String actualUserName;
 
 	/**
 	 * 処理実施者組織名
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "処理実施者組織名", required = false, position = 6, allowableValues = "range[0,255]")
 	private String actualOrgName;
 
 	/**
 	 * コメント
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "コメント", required = false, position = 7, allowableValues = "range[0,255]")
 	private String requestComment;
 
@@ -85,6 +101,7 @@ public class ContractApprovalResult extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
+	@NotNull
 	@ApiModelProperty(value = "実施日時", required = true, position = 8, readOnly = true)
 	private Date processedAt;
 

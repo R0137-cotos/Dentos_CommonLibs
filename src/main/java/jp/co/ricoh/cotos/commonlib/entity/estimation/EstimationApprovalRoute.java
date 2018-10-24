@@ -13,6 +13,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
@@ -31,6 +36,8 @@ public class EstimationApprovalRoute extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "estimation_approval_route_seq")
 	@SequenceGenerator(name = "estimation_approval_route_seq", sequenceName = "estimation_approval_route_seq", allocationSize = 1)
+	@NotNull
+	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "見積承認ルートID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
@@ -38,6 +45,7 @@ public class EstimationApprovalRoute extends EntityBase {
 	 * 見積
 	 */
 	@OneToOne
+	@NotNull
 	@ApiModelProperty(value = "見積", required = true, position = 2)
 	@JoinColumn(name = "estimation_id", referencedColumnName = "id")
 	private Estimation estimation;
@@ -46,6 +54,8 @@ public class EstimationApprovalRoute extends EntityBase {
 	 * 承認依頼者MoM社員ID
 	 */
 	@Column(nullable = false)
+	@NotEmpty
+	@Size(max = 255)	
 	@ApiModelProperty(value = "承認依頼者MoM社員ID", required = true, position = 3, allowableValues = "range[0,255]")
 	private String approvalRequesterEmpId;
 
@@ -53,12 +63,15 @@ public class EstimationApprovalRoute extends EntityBase {
 	 * 承認依頼者氏名
 	 */
 	@Column(nullable = false)
+	@NotEmpty
+	@Size(max = 255)	
 	@ApiModelProperty(value = "承認依頼者氏名", required = true, position = 4, allowableValues = "range[0,255]")
 	private String approvalRequesterName;
 
 	/**
 	 * 承認依頼者組織名
 	 */
+	@Size(max = 255)	
 	@ApiModelProperty(value = "承認依頼者組織名", required = false, position = 5, allowableValues = "range[0,255]")
 	private String approvalRequesterOrgName;
 
@@ -66,6 +79,8 @@ public class EstimationApprovalRoute extends EntityBase {
 	 * 特価承認対象フラグ
 	 */
 	@Column(nullable = false)
+	@NotNull
+	@Max(9)
 	@ApiModelProperty(value = "特価承認対象フラグ", required = true, position = 6, allowableValues = "range[0,9]")
 	private int specialPriceApprovalFlg;
 
@@ -81,6 +96,7 @@ public class EstimationApprovalRoute extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "estimationApprovalRoute")
 	@OrderBy("approvalOrder ASC")
+	@NotEmpty
 	@ApiModelProperty(value = "見積承認ルートノード", required = true, position = 8)
 	private List<EstimationApprovalRouteNode> estimationApprovalRouteNodeList;
 

@@ -13,6 +13,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
@@ -31,6 +36,8 @@ public class ArrangementWorkApprovalRoute extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "arrangement_work_approval_route_seq")
 	@SequenceGenerator(name = "arrangement_work_approval_route_seq", sequenceName = "arrangement_work_approval_route_seq", allocationSize = 1)
+	@NotNull
+	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "手配業務承認ルートID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
@@ -38,6 +45,7 @@ public class ArrangementWorkApprovalRoute extends EntityBase {
 	 * 手配業務
 	 */
 	@OneToOne(optional = false)
+	@NotNull
 	@JoinColumn(name = "arrangement_work_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "手配業務", required = true, position = 2)
 	private ArrangementWork arrangementWork;
@@ -46,6 +54,8 @@ public class ArrangementWorkApprovalRoute extends EntityBase {
 	 * 承認依頼者MoM社員ID
 	 */
 	@Column(nullable = false)
+	@NotEmpty
+	@Size(max = 255)
 	@ApiModelProperty(value = "承認依頼者MoM社員ID", required = true, position = 3, allowableValues = "range[0,255]")
 	private String approvalRequesterEmpId;
 
@@ -53,12 +63,15 @@ public class ArrangementWorkApprovalRoute extends EntityBase {
 	 * 承認依頼者氏名
 	 */
 	@Column(nullable = false)
+	@NotEmpty
+	@Size(max = 255)
 	@ApiModelProperty(value = "承認依頼者氏名", required = true, position = 4, allowableValues = "range[0,255]")
 	private String approvalRequesterName;
 
 	/**
 	 * 承認依頼者組織名
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "承認依頼者組織名", required = false, position = 5, allowableValues = "range[0,255]")
 	private String approvalRequesterOrgName;
 
@@ -66,7 +79,7 @@ public class ArrangementWorkApprovalRoute extends EntityBase {
 	 * 手配業務承認実績
 	 */
 	@OneToMany(mappedBy = "arrangementWorkApprovalRoute")
-	@ApiModelProperty(value = "手配業務承認実績", required = false, position = 6, allowableValues = "range[0,255]", readOnly = true)
+	@ApiModelProperty(value = "手配業務承認実績", required = false, position = 6, readOnly = true)
 	private List<ArrangementWorkApprovalResult> arrangementWorkApprovalResultList;
 
 	/**
@@ -74,6 +87,7 @@ public class ArrangementWorkApprovalRoute extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "arrangementWorkApprovalRoute")
 	@OrderBy("approvalOrder ASC")
+	@NotEmpty
 	@ApiModelProperty(value = "手配業務承認ルートノード", required = true, position = 7)
 	private List<ArrangementWorkApprovalRouteNode> arrangementWorkApprovalRouteNodeList;
 

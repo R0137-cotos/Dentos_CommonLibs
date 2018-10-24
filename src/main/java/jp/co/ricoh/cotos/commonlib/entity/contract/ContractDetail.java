@@ -13,6 +13,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -34,6 +38,8 @@ public class ContractDetail extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_detail_seq")
 	@SequenceGenerator(name = "contract_detail_seq", sequenceName = "contract_detail_seq", allocationSize = 1)
+	@NotNull
+	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "契約明細ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
@@ -43,6 +49,7 @@ public class ContractDetail extends EntityBase {
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "contract_id", referencedColumnName = "id")
 	@JsonIgnore
+	@NotNull
 	@ApiModelProperty(value = "契約", required = true, position = 2)
 	private Contract contract;
 
@@ -50,6 +57,7 @@ public class ContractDetail extends EntityBase {
 	 * 状態
 	 */
 	@Column(nullable = false)
+	@NotNull
 	@ApiModelProperty(value = "状態", required = true, position = 3)
 	private DetailStatus state;
 
@@ -57,6 +65,8 @@ public class ContractDetail extends EntityBase {
 	 * 数量
 	 */
 	@Column(nullable = false)
+	@NotNull
+	@Max(99999)
 	@ApiModelProperty(value = "数量", required = true, position = 4, allowableValues = "range[0,99999]")
 	private int quantity;
 
@@ -64,12 +74,15 @@ public class ContractDetail extends EntityBase {
 	 * 見積金額
 	 */
 	@Column(nullable = false)
+	@NotNull
+	@DecimalMax("9999999999999999999.99")
 	@ApiModelProperty(value = "見積金額", required = true, position = 5, allowableValues = "range[0.00,9999999999999999999.99]")
 	private BigDecimal amountSummary;
 
 	/**
 	 * 摘要
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "摘要", required = false, position = 6, allowableValues = "range[0,255]")
 	private String detailAbstract;
 

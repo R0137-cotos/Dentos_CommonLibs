@@ -16,6 +16,11 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -40,6 +45,8 @@ public class ContractOperationLog extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_operation_log_seq")
 	@SequenceGenerator(name = "contract_operation_log_seq", sequenceName = "contract_operation_log_seq", allocationSize = 1)
+	@NotNull
+	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "操作履歴ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
@@ -49,6 +56,7 @@ public class ContractOperationLog extends EntityBase {
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "contract_id", referencedColumnName = "id")
 	@JsonIgnore
+	@NotNull
 	@ApiModelProperty(value = "契約", required = true, position = 2)
 	private Contract contract;
 
@@ -56,6 +64,8 @@ public class ContractOperationLog extends EntityBase {
 	 * 操作内容
 	 */
 	@Column(nullable = false)
+	@NotEmpty
+	@Size(max = 1000)
 	@ApiModelProperty(value = "操作内容", required = true, position = 3, allowableValues = "range[0,1000]")
 	@Enumerated(EnumType.STRING)
 	private OperationLogType operation;
@@ -64,18 +74,23 @@ public class ContractOperationLog extends EntityBase {
 	 * 操作者MoM社員ID
 	 */
 	@Column(nullable = false)
+	@NotEmpty
+	@Size(max = 255)
 	@ApiModelProperty(value = "操作者MoM社員ID", required = true, position = 4, allowableValues = "range[0,255]")
 	private String operatorEmpId;
 
 	/**
 	 * 操作者氏名
 	 */
+	@NotEmpty
+	@Size(max = 255)
 	@ApiModelProperty(value = "操作者氏名", required = true, position = 5, allowableValues = "range[0,255]")
 	private String operatorName;
 
 	/**
 	 * 操作者組織名
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "操作者組織名", required = false, position = 6, allowableValues = "range[0,255]")
 	private String operatorOrgName;
 
@@ -84,6 +99,7 @@ public class ContractOperationLog extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
+	@NotNull
 	@ApiModelProperty(value = "実施日時", required = true, position = 7, readOnly = true)
 	private Date operatedAt;
 
