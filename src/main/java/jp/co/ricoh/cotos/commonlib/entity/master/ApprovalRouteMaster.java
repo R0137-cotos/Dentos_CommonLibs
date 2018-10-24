@@ -17,12 +17,14 @@ import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * 承認ルートマスタ
  */
 @Entity
 @Data
+@ToString(exclude = { "approvalRouteGrpMaster" })
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "approval_route_master")
 public class ApprovalRouteMaster extends EntityBaseMaster {
