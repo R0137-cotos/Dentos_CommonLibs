@@ -44,7 +44,7 @@ public class EstimationListener {
 			dbUtil.execute("sql/updateEstimationNumberVal.3.sql", Collections.emptyMap());
 			sequence = dbUtil.loadSingleFromSQLFile("sql/nextEstimationNumberSequence.sql", GeneratedNumber.class).getGeneratedNumber();
 		}
-		entity.setEstimationNumber(ID_PREFIX + sequence);
+		entity.setEstimationNumber(ID_PREFIX + sequence + "-01");
 	}
 
 }
