@@ -47,7 +47,6 @@ public class ContractAttachedFile extends EntityBase {
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "contract_id", referencedColumnName = "id")
 	@JsonIgnore
-	@NotNull
 	@ApiModelProperty(value = "契約", required = true, position = 2)
 	private Contract contract;
 

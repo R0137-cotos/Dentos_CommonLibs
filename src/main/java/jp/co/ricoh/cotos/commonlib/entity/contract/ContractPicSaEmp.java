@@ -141,7 +141,6 @@ public class ContractPicSaEmp extends EntityBase {
 	@OneToOne(optional = false)
 	@JoinColumn(name = "contract_id", referencedColumnName = "id")
 	@JsonIgnore
-	@NotNull
 	@ApiModelProperty(value = "契約", required = true, position = 15)
 	private Contract contract;
 }

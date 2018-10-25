@@ -12,7 +12,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -46,7 +45,6 @@ public class ContractCheckResult extends EntityBase {
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "contract_id", referencedColumnName = "id")
 	@JsonIgnore
-	@NotNull
 	@ApiModelProperty(value = "契約", required = true, position = 2)
 	private Contract contract;
 

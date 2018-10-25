@@ -135,7 +135,6 @@ public class ArrangementPicWorkerEmp extends EntityBase {
 	 */
 	@OneToOne(optional = false)
 	@JoinColumn(name = "arrangement_work_id", referencedColumnName = "id")
-	@NotNull
 	@ApiModelProperty(value = "手配業務", required = true, position = 15)
 	@JsonIgnore
 	private ArrangementWork arrangementWork;

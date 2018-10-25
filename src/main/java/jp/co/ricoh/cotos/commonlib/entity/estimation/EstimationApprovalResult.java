@@ -47,7 +47,6 @@ public class EstimationApprovalResult extends EntityBase {
 	 */
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "estimation_approval_route_id", referencedColumnName = "id")
-	@NotNull
 	@ApiModelProperty(value = "見積承認ルート", required = true, position = 2)
 	@JsonIgnore
 	private EstimationApprovalRoute estimationApprovalRoute;

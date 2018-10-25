@@ -91,7 +91,6 @@ public class ProductEstimation extends EntityBase {
 	 */
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "estimation_id", referencedColumnName = "id")
-	@NotNull
 	@ApiModelProperty(value = "見積", required = true, position = 8)
 	@JsonIgnore
 	private Estimation estimation;

@@ -52,7 +52,6 @@ public class ArrangementWorkOperationLog extends EntityBase {
 	 */
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "arrangement_work_id", referencedColumnName = "id")
-	@NotNull
 	@ApiModelProperty(value = "手配業務", required = true, position = 2)
 	@JsonIgnore
 	private ArrangementWork arrangementWork;

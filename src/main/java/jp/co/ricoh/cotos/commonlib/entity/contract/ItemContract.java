@@ -126,7 +126,6 @@ public class ItemContract extends EntityBase {
 	@OneToOne(optional = false)
 	@JoinColumn(name = "contract_detail_id", referencedColumnName = "id")
 	@JsonIgnore
-	@NotNull
 	@ApiModelProperty(value = "契約明細", required = true, position = 8)
 	private ContractDetail contractDetail;
 }

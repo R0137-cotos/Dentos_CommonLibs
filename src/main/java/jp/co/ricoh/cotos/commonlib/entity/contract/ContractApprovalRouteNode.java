@@ -10,7 +10,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -43,7 +42,6 @@ public class ContractApprovalRouteNode extends EntityBase {
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "contract_approval_route_id", referencedColumnName = "id")
 	@JsonIgnore
-	@NotNull
 	@ApiModelProperty(value = "契約承認ルート", required = true, position = 2)
 	private ContractApprovalRoute contractApprovalRoute;
 

@@ -15,7 +15,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Max;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -47,7 +46,6 @@ public class ArrangementWorkCheckResult extends EntityBase {
 	 */
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "arrangement_work_id", referencedColumnName = "id")
-	@NotNull
 	@ApiModelProperty(value = "手配業務", required = true, position = 2)
 	@JsonIgnore
 	private ArrangementWork arrangementWork;

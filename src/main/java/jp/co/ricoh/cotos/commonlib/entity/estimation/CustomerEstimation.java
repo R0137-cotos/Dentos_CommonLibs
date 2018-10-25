@@ -12,7 +12,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -149,7 +148,6 @@ public class CustomerEstimation extends EntityBase {
 	 */
 	@OneToOne(optional = false)
 	@JoinColumn(name = "estimation_id", referencedColumnName = "id")
-	@NotNull
 	@ApiModelProperty(value = "見積", required = true, position = 15)
 	@JsonIgnore
 	private Estimation estimation;
