@@ -1,7 +1,5 @@
 package jp.co.ricoh.cotos.commonlib.check;
 
-import java.util.List;
-
 import org.apache.commons.beanutils.BeanUtils;
 import org.junit.AfterClass;
 import org.junit.Test;
@@ -29,7 +27,6 @@ import jp.co.ricoh.cotos.commonlib.entity.contract.CustomerContract;
 import jp.co.ricoh.cotos.commonlib.entity.contract.DealerContract;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ItemContract;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ProductContract;
-import jp.co.ricoh.cotos.commonlib.exception.ErrorInfo;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractAddedEditorEmpRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractApprovalResultRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractApprovalRouteNodeRepository;
@@ -45,6 +42,7 @@ import jp.co.ricoh.cotos.commonlib.repository.contract.DealerContractRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ItemContractRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ProductContractRepository;
 import jp.co.ricoh.cotos.commonlib.security.TestSecurityController;
+import jp.co.ricoh.cotos.commonlib.security.bean.ParamterCheckResult;
 import jp.co.ricoh.cotos.commonlib.util.HeadersProperties;
 
 /**
@@ -138,7 +136,7 @@ public class TestContract {
 		BeanUtils.copyProperties(entity, testTarget);
 
 		// 正常系
-		List<ErrorInfo> result = testTool.executeEntityValidation(testTarget, testSecurityController, headersProperties, localServerPort);
+		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
 		// 異常系（@NotNull、@NotEmptyの null チェック：）
@@ -155,7 +153,7 @@ public class TestContract {
 		BeanUtils.copyProperties(entity, testTarget);
 
 		// 正常系
-		List<ErrorInfo> result = testTool.executeEntityValidation(testTarget, testSecurityController, headersProperties, localServerPort);
+		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
 		// 異常系（@NotNull、@NotEmptyの null チェック：）
@@ -172,7 +170,7 @@ public class TestContract {
 		BeanUtils.copyProperties(entity, testTarget);
 
 		// 正常系
-		List<ErrorInfo> result = testTool.executeEntityValidation(testTarget, testSecurityController, headersProperties, localServerPort);
+		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
 		// 異常系（@NotNull、@NotEmptyの null チェック：）
@@ -189,7 +187,7 @@ public class TestContract {
 		BeanUtils.copyProperties(entity, testTarget);
 
 		// 正常系
-		List<ErrorInfo> result = testTool.executeEntityValidation(testTarget, testSecurityController, headersProperties, localServerPort);
+		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
 		// 異常系（@NotNull、@NotEmptyの null チェック：）
@@ -206,7 +204,7 @@ public class TestContract {
 		BeanUtils.copyProperties(entity, testTarget);
 
 		// 正常系
-		List<ErrorInfo> result = testTool.executeEntityValidation(testTarget, testSecurityController, headersProperties, localServerPort);
+		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
 		// 異常系（@NotNull、@NotEmptyの null チェック：）
@@ -223,7 +221,7 @@ public class TestContract {
 		BeanUtils.copyProperties(entity, testTarget);
 
 		// 正常系
-		List<ErrorInfo> result = testTool.executeEntityValidation(testTarget, testSecurityController, headersProperties, localServerPort);
+		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
 		// 異常系（@NotNull、@NotEmptyの null チェック：）
@@ -240,7 +238,7 @@ public class TestContract {
 		BeanUtils.copyProperties(entity, testTarget);
 
 		// 正常系
-		List<ErrorInfo> result = testTool.executeEntityValidation(testTarget, testSecurityController, headersProperties, localServerPort);
+		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
 		// 異常系（@NotNull、@NotEmptyの null チェック：）
@@ -257,7 +255,7 @@ public class TestContract {
 		BeanUtils.copyProperties(entity, testTarget);
 
 		// 正常系
-		List<ErrorInfo> result = testTool.executeEntityValidation(testTarget, testSecurityController, headersProperties, localServerPort);
+		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
 		// 異常系（@NotNull、@NotEmptyの null チェック：）
@@ -274,7 +272,7 @@ public class TestContract {
 		BeanUtils.copyProperties(entity, testTarget);
 
 		// 正常系
-		List<ErrorInfo> result = testTool.executeEntityValidation(testTarget, testSecurityController, headersProperties, localServerPort);
+		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
 		// 異常系（@NotNull、@NotEmptyの null チェック：）
@@ -291,7 +289,7 @@ public class TestContract {
 		BeanUtils.copyProperties(entity, testTarget);
 
 		// 正常系
-		List<ErrorInfo> result = testTool.executeEntityValidation(testTarget, testSecurityController, headersProperties, localServerPort);
+		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
 		// 異常系（@NotNull、@NotEmptyの null チェック：）
@@ -308,7 +306,7 @@ public class TestContract {
 		BeanUtils.copyProperties(entity, testTarget);
 
 		// 正常系
-		List<ErrorInfo> result = testTool.executeEntityValidation(testTarget, testSecurityController, headersProperties, localServerPort);
+		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
 		// 異常系（@NotNull、@NotEmptyの null チェック：）
@@ -325,7 +323,7 @@ public class TestContract {
 		BeanUtils.copyProperties(entity, testTarget);
 
 		// 正常系
-		List<ErrorInfo> result = testTool.executeEntityValidation(testTarget, testSecurityController, headersProperties, localServerPort);
+		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
 		// 異常系（@NotNull、@NotEmptyの null チェック：）
@@ -342,7 +340,7 @@ public class TestContract {
 		BeanUtils.copyProperties(entity, testTarget);
 
 		// 正常系
-		List<ErrorInfo> result = testTool.executeEntityValidation(testTarget, testSecurityController, headersProperties, localServerPort);
+		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
 		// 異常系（@NotNull、@NotEmptyの null チェック：）
@@ -359,7 +357,7 @@ public class TestContract {
 		BeanUtils.copyProperties(entity, testTarget);
 
 		// 正常系
-		List<ErrorInfo> result = testTool.executeEntityValidation(testTarget, testSecurityController, headersProperties, localServerPort);
+		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
 		// 異常系（@NotNull、@NotEmptyの null チェック：）

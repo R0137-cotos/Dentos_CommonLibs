@@ -1,7 +1,18 @@
 package jp.co.ricoh.cotos.commonlib.security;
 
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.ClientHttpRequestExecution;
+import org.springframework.http.client.ClientHttpRequestInterceptor;
+import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -10,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import jp.co.ricoh.cotos.commonlib.entity.arrangement.Arrangement;
 import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangementPicWorkerEmp;
@@ -52,6 +64,10 @@ import jp.co.ricoh.cotos.commonlib.entity.estimation.EstimationPicSaEmp;
 import jp.co.ricoh.cotos.commonlib.entity.estimation.ItemEstimation;
 import jp.co.ricoh.cotos.commonlib.entity.estimation.OperationLog;
 import jp.co.ricoh.cotos.commonlib.entity.estimation.ProductEstimation;
+import jp.co.ricoh.cotos.commonlib.exception.ErrorCheckException;
+import jp.co.ricoh.cotos.commonlib.logic.check.CheckUtil;
+import jp.co.ricoh.cotos.commonlib.security.bean.ParamterCheckResult;
+import jp.co.ricoh.cotos.commonlib.util.HeadersProperties;
 import lombok.Data;
 
 /**
@@ -63,6 +79,9 @@ import lombok.Data;
 @RestController
 @RequestMapping("/test/api")
 public class TestSecurityController {
+
+	@Autowired
+	CheckUtil checkUtil;
 
 	private String swaggerBody = "swagger";
 
@@ -101,298 +120,298 @@ public class TestSecurityController {
 		return swaggerBody;
 	}
 
+	private ParamterCheckResult createParameterCheckResult(BindingResult result) {
+		ParamterCheckResult paramterCheckResult = new ParamterCheckResult();
+		if (result == null)
+			return paramterCheckResult;
+		try {
+			checkUtil.checkEntity(result);
+		} catch (ErrorCheckException ex) {
+			paramterCheckResult.setErrorInfoList(ex.getErrorInfoList());
+			return paramterCheckResult;
+		}
+		return paramterCheckResult;
+	}
+
+	private String loadTopURL(int localServerPort) {
+		return "http://localhost:" + localServerPort + "/";
+	}
+
+	private RestTemplate initRest(final String header, final HeadersProperties headersProperties) {
+		RestTemplate rest = new RestTemplate();
+		if (null != header) {
+			rest.setInterceptors(
+					Stream.concat(rest.getInterceptors().stream(), Arrays.asList(new ClientHttpRequestInterceptor() {
+						@Override
+						public ClientHttpResponse intercept(HttpRequest request, byte[] body,
+								ClientHttpRequestExecution execution) throws IOException {
+							System.out.println("initRest Start");
+							System.out.println(request.getURI());
+							System.out.println(request.getMethod());
+							request.getHeaders().add(headersProperties.getAuthorization(), "Bearer " + header);
+							System.out.println(request.getHeaders());
+							System.out.println("initRest End");
+							return execution.execute(request, body);
+						}
+					}).stream()).collect(Collectors.toList()));
+		}
+		return rest;
+	}
+
 	/**
-	 * 指定した Entity クラスに相応しい Validation 実行メソッドを呼び出す
-	 * @param entity エンティティ
-	 * @param result テスト実行結果
-	 * @return BindingResult テスト実行結果
+	 * パラメータチェックの URL を取得
+	 * @param entity パラメータチェック対象のエンティティ
+	 * @param localServerPort ポート番号
+	 * @return String パラメータチェックの URL
 	 */
-	public BindingResult callEntityValidation(Object entity, BindingResult result) {
-		// 以下、arrangement パッケージの callEntityValidation
-		if (entity instanceof Arrangement) {
-			callEntityValidation((Arrangement) entity, result);
-		} else if (entity instanceof ArrangementPicWorkerEmp) {
-			callEntityValidation((ArrangementPicWorkerEmp) entity, result);
-		} else if (entity instanceof ArrangementWork) {
-			callEntityValidation((ArrangementWork) entity, result);
-		} else if (entity instanceof ArrangementWorkApprovalResult) {
-			callEntityValidation((ArrangementWorkApprovalResult) entity, result);
-		} else if (entity instanceof ArrangementWorkApprovalRoute) {
-			callEntityValidation((ArrangementWorkApprovalRoute) entity, result);
-		} else if (entity instanceof ArrangementWorkApprovalRouteNode) {
-			callEntityValidation((ArrangementWorkApprovalRouteNode) entity, result);
-		} else if (entity instanceof ArrangementWorkAttachedFile) {
-			callEntityValidation((ArrangementWorkAttachedFile) entity, result);
-		} else if (entity instanceof ArrangementWorkCheckResult) {
-			callEntityValidation((ArrangementWorkCheckResult) entity, result);
-		} else if (entity instanceof ArrangementWorkOperationLog) {
-			callEntityValidation((ArrangementWorkOperationLog) entity, result);
-		}
-		// 以下、communication パッケージの callEntityValidation
-		else if (entity instanceof Communication) {
-			callEntityValidation((Communication) entity, result);
-		} else if (entity instanceof CommunicationHistory) {
-			callEntityValidation((CommunicationHistory) entity, result);
-		} else if (entity instanceof Contact) {
-			callEntityValidation((Contact) entity, result);
-		} else if (entity instanceof ContactTo) {
-			callEntityValidation((ContactTo) entity, result);
-		}
-		// 以下、contact パッケージの callEntityValidation
-		else if (entity instanceof Contract) {
-			callEntityValidation((Contract) entity, result);
-		} else if (entity instanceof ContractAddedEditorEmp) {
-			callEntityValidation((ContractAddedEditorEmp) entity, result);
-		} else if (entity instanceof ContractApprovalResult) {
-			callEntityValidation((ContractApprovalResult) entity, result);
-		} else if (entity instanceof ContractApprovalRoute) {
-			callEntityValidation((ContractApprovalRoute) entity, result);
-		} else if (entity instanceof ContractApprovalRouteNode) {
-			callEntityValidation((ContractApprovalRouteNode) entity, result);
-		} else if (entity instanceof ContractAttachedFile) {
-			callEntityValidation((ContractAttachedFile) entity, result);
-		} else if (entity instanceof ContractCheckResult) {
-			callEntityValidation((ContractCheckResult) entity, result);
-		} else if (entity instanceof ContractDetail) {
-			callEntityValidation((ContractDetail) entity, result);
-		} else if (entity instanceof ContractOperationLog) {
-			callEntityValidation((ContractOperationLog) entity, result);
-		} else if (entity instanceof ContractPicSaEmp) {
-			callEntityValidation((ContractPicSaEmp) entity, result);
-		} else if (entity instanceof CustomerContract) {
-			callEntityValidation((CustomerContract) entity, result);
-		} else if (entity instanceof DealerContract) {
-			callEntityValidation((DealerContract) entity, result);
-		} else if (entity instanceof ItemContract) {
-			callEntityValidation((ItemContract) entity, result);
-		} else if (entity instanceof ProductContract) {
-			callEntityValidation((ProductContract) entity, result);
-		}
-		// 以下、estimation パッケージの callEntityValidation
-		else if (entity instanceof CustomerEstimation) {
-			callEntityValidation((CustomerEstimation) entity, result);
-		} else if (entity instanceof DealerEstimation) {
-			callEntityValidation((DealerEstimation) entity, result);
-		} else if (entity instanceof Estimation) {
-			callEntityValidation((Estimation) entity, result);
-		} else if (entity instanceof EstimationAddedEditorEmp) {
-			callEntityValidation((EstimationAddedEditorEmp) entity, result);
-		} else if (entity instanceof EstimationApprovalResult) {
-			callEntityValidation((EstimationApprovalResult) entity, result);
-		} else if (entity instanceof EstimationApprovalRoute) {
-			callEntityValidation((EstimationApprovalRoute) entity, result);
-		} else if (entity instanceof EstimationApprovalRouteNode) {
-			callEntityValidation((EstimationApprovalRouteNode) entity, result);
-		} else if (entity instanceof EstimationAttachedFile) {
-			callEntityValidation((EstimationAttachedFile) entity, result);
-		} else if (entity instanceof EstimationCheckResult) {
-			callEntityValidation((EstimationCheckResult) entity, result);
-		} else if (entity instanceof EstimationDetail) {
-			callEntityValidation((EstimationDetail) entity, result);
-		} else if (entity instanceof EstimationPicSaEmp) {
-			callEntityValidation((EstimationPicSaEmp) entity, result);
-		} else if (entity instanceof ItemEstimation) {
-			callEntityValidation((ItemEstimation) entity, result);
-		} else if (entity instanceof OperationLog) {
-			callEntityValidation((OperationLog) entity, result);
-		} else if (entity instanceof ProductEstimation) {
-			callEntityValidation((ProductEstimation) entity, result);
-		}
-		return result;
+	public String getParamterCheckUrl(Object entity, int localServerPort) {
+		final String API_ROOT_HEAD = "test/api/ParameterCheck/";
+		final String API_ROOT_END = "?isSuccess=true&hasBody=false";
+		String entityName = entity.getClass().getSimpleName().replaceAll(".java", "");
+		return loadTopURL(localServerPort) + API_ROOT_HEAD + entityName + API_ROOT_END;
 	}
 
-	public BindingResult callEntityValidation(@RequestBody @Validated Arrangement entity, BindingResult result) {
-		return result;
+	public ParamterCheckResult callParameterCheck(Object entity, HeadersProperties headersProperties, int localServerPort) {
+		String WITHIN_PERIOD_JWT = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcmlnaW4iOiJjb3Rvcy5yaWNvaC5jby5qcCIsInNpbmdsZVVzZXJJZCI6InNpZCIsIm1vbUVtcElkIjoibWlkIiwiZXhwIjoyNTM0MDIyNjgzOTl9.Apmi4uDwtiscf9WgVIh5Rx1DjoZX2eS7H2YlAGayOsQ";
+		RestTemplate rest = initRest(WITHIN_PERIOD_JWT, headersProperties);
+		ResponseEntity<ParamterCheckResult> parameterCheckResult = rest.postForEntity(getParamterCheckUrl(entity, localServerPort), entity, ParamterCheckResult.class);
+		return parameterCheckResult.getBody();
 	}
 
-	public BindingResult callEntityValidation(@RequestBody @Validated ArrangementPicWorkerEmp entity,
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/Arrangement")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated Arrangement entity, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ArrangementPicWorkerEmp")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ArrangementPicWorkerEmp entity,
 			BindingResult result) {
-		return result;
+		return createParameterCheckResult(result);
 	}
 
-	public BindingResult callEntityValidation(@RequestBody @Validated ArrangementWork entity, BindingResult result) {
-		return result;
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ArrangementWork")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ArrangementWork entity, BindingResult result) {
+		return createParameterCheckResult(result);
 	}
 
-	public BindingResult callEntityValidation(@RequestBody @Validated ArrangementWorkApprovalResult entity,
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ArrangementWorkApprovalResult")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ArrangementWorkApprovalResult entity,
 			BindingResult result) {
-		return result;
+		return createParameterCheckResult(result);
 	}
 
-	public BindingResult callEntityValidation(@RequestBody @Validated ArrangementWorkApprovalRoute entity,
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ArrangementWorkApprovalRoute")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ArrangementWorkApprovalRoute entity,
 			BindingResult result) {
-		return result;
+		return createParameterCheckResult(result);
 	}
 
-	public BindingResult callEntityValidation(@RequestBody @Validated ArrangementWorkApprovalRouteNode entity,
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ArrangementWorkApprovalRouteNode")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ArrangementWorkApprovalRouteNode entity,
 			BindingResult result) {
-		return result;
+		return createParameterCheckResult(result);
 	}
 
-	public BindingResult callEntityValidation(@RequestBody @Validated ArrangementWorkAttachedFile entity,
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ArrangementWorkAttachedFile")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ArrangementWorkAttachedFile entity,
 			BindingResult result) {
-		return result;
+		return createParameterCheckResult(result);
 	}
 
-	public BindingResult callEntityValidation(@RequestBody @Validated ArrangementWorkCheckResult entity,
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ArrangementWorkCheckResult")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ArrangementWorkCheckResult entity,
 			BindingResult result) {
-		return result;
+		return createParameterCheckResult(result);
 	}
 
-	public BindingResult callEntityValidation(@RequestBody @Validated ArrangementWorkOperationLog entity,
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ArrangementWorkOperationLog")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ArrangementWorkOperationLog entity,
 			BindingResult result) {
-		return result;
+		return createParameterCheckResult(result);
 	}
 
-	// 以下、communication パッケージの callEntityValidation
-	public BindingResult callEntityValidation(@RequestBody @Validated Communication entity, BindingResult result) {
-		return result;
+	// 以下、communication パッケージの callParamterCheck
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/Communication")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated Communication entity, BindingResult result) {
+		return createParameterCheckResult(result);
 	}
 
-	public BindingResult callEntityValidation(@RequestBody @Validated CommunicationHistory entity,
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/CommunicationHistory")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated CommunicationHistory entity,
 			BindingResult result) {
-		return result;
+		return createParameterCheckResult(result);
 	}
 
-	public BindingResult callEntityValidation(@RequestBody @Validated Contact entity, BindingResult result) {
-		return result;
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/Contact")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated Contact entity, BindingResult result) {
+		return createParameterCheckResult(result);
 	}
 
-	public BindingResult callEntityValidation(@RequestBody @Validated ContactTo entity, BindingResult result) {
-		return result;
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContactTo")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContactTo entity, BindingResult result) {
+		return createParameterCheckResult(result);
 	}
 
-	// 以下、contact パッケージの callEntityValidation
-	public BindingResult callEntityValidation(@RequestBody @Validated Contract entity, BindingResult result) {
-		return result;
+	// 以下、contact パッケージの callParamterCheck
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/Contract")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated Contract entity, BindingResult result) {
+		return createParameterCheckResult(result);
 	}
 
-	public BindingResult callEntityValidation(@RequestBody @Validated ContractAddedEditorEmp entity,
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractAddedEditorEmp")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractAddedEditorEmp entity,
 			BindingResult result) {
-		return result;
+		return createParameterCheckResult(result);
 	}
 
-	public BindingResult callEntityValidation(@RequestBody @Validated ContractApprovalResult entity,
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractApprovalResult")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractApprovalResult entity,
 			BindingResult result) {
-		return result;
+		return createParameterCheckResult(result);
 	}
 
-	public BindingResult callEntityValidation(@RequestBody @Validated ContractApprovalRoute entity,
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractApprovalRoute")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractApprovalRoute entity,
 			BindingResult result) {
-		return result;
+		return createParameterCheckResult(result);
 	}
 
-	public BindingResult callEntityValidation(@RequestBody @Validated ContractApprovalRouteNode entity,
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractApprovalRouteNode")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractApprovalRouteNode entity,
 			BindingResult result) {
-		return result;
+		return createParameterCheckResult(result);
 	}
 
-	public BindingResult callEntityValidation(@RequestBody @Validated ContractAttachedFile entity,
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractAttachedFile")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractAttachedFile entity,
 			BindingResult result) {
-		return result;
+		return createParameterCheckResult(result);
 	}
 
-	public BindingResult callEntityValidation(@RequestBody @Validated ContractCheckResult entity,
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractCheckResult")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractCheckResult entity,
 			BindingResult result) {
-		return result;
+		return createParameterCheckResult(result);
 	}
 
-	public BindingResult callEntityValidation(@RequestBody @Validated ContractDetail entity, BindingResult result) {
-		return result;
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractDetail")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractDetail entity, BindingResult result) {
+		return createParameterCheckResult(result);
 	}
 
-	public BindingResult callEntityValidation(@RequestBody @Validated ContractOperationLog entity,
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractOperationLog")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractOperationLog entity,
 			BindingResult result) {
-		return result;
+		return createParameterCheckResult(result);
 	}
 
-	public BindingResult callEntityValidation(@RequestBody @Validated ContractPicSaEmp entity,
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractPicSaEmp")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractPicSaEmp entity,
 			BindingResult result) {
-		return result;
+		return createParameterCheckResult(result);
 	}
 
-	public BindingResult callEntityValidation(@RequestBody @Validated CustomerContract entity,
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/CustomerContract")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated CustomerContract entity,
 			BindingResult result) {
-		return result;
+		return createParameterCheckResult(result);
 	}
 
-	public BindingResult callEntityValidation(@RequestBody @Validated DealerContract entity, BindingResult result) {
-		return result;
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/DealerContract")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated DealerContract entity, BindingResult result) {
+		return createParameterCheckResult(result);
 	}
 
-	public BindingResult callEntityValidation(@RequestBody @Validated ItemContract entity, BindingResult result) {
-		return result;
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ItemContract")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ItemContract entity, BindingResult result) {
+		return createParameterCheckResult(result);
 	}
 
-	public BindingResult callEntityValidation(@RequestBody @Validated ProductContract entity, BindingResult result) {
-		return result;
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ProductContract")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ProductContract entity, BindingResult result) {
+		return createParameterCheckResult(result);
 	}
 
-	// 以下、estimation パッケージの callEntityValidation
-	public BindingResult callEntityValidation(@RequestBody @Validated CustomerEstimation entity,
+	// 以下、estimation パッケージの callParamterCheck
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/CustomerEstimation")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated CustomerEstimation entity,
 			BindingResult result) {
-		return result;
+		return createParameterCheckResult(result);
 	}
 
-	public BindingResult callEntityValidation(@RequestBody @Validated DealerEstimation entity,
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/DealerEstimation")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated DealerEstimation entity,
 			BindingResult result) {
-		return result;
+		return createParameterCheckResult(result);
 	}
 
-	public BindingResult callEntityValidation(@RequestBody @Validated Estimation entity, BindingResult result) {
-		return result;
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/Estimation")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated Estimation entity, BindingResult result) {
+		return createParameterCheckResult(result);
 	}
 
-	public BindingResult callEntityValidation(@RequestBody @Validated EstimationAddedEditorEmp entity,
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/EstimationAddedEditorEmp")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated EstimationAddedEditorEmp entity,
 			BindingResult result) {
-		return result;
+		return createParameterCheckResult(result);
 	}
 
-	public BindingResult callEntityValidation(@RequestBody @Validated EstimationApprovalResult entity,
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/EstimationApprovalResult")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated EstimationApprovalResult entity,
 			BindingResult result) {
-		return result;
+		return createParameterCheckResult(result);
 	}
 
-	public BindingResult callEntityValidation(@RequestBody @Validated EstimationApprovalRoute entity,
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/EstimationApprovalRoute")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated EstimationApprovalRoute entity,
 			BindingResult result) {
-		return result;
+		return createParameterCheckResult(result);
 	}
 
-	public BindingResult callEntityValidation(@RequestBody @Validated EstimationApprovalRouteNode entity,
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/EstimationApprovalRouteNode")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated EstimationApprovalRouteNode entity,
 			BindingResult result) {
-		return result;
+		return createParameterCheckResult(result);
 	}
 
-	public BindingResult callEntityValidation(@RequestBody @Validated EstimationAttachedFile entity,
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/EstimationAttachedFile")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated EstimationAttachedFile entity,
 			BindingResult result) {
-		return result;
+		return createParameterCheckResult(result);
 	}
 
-	public BindingResult callEntityValidation(@RequestBody @Validated EstimationCheckResult entity,
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/EstimationCheckResult")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated EstimationCheckResult entity,
 			BindingResult result) {
-		return result;
+		return createParameterCheckResult(result);
 	}
 
-	public BindingResult callEntityValidation(@RequestBody @Validated EstimationDetail entity,
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/EstimationDetail")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated EstimationDetail entity,
 			BindingResult result) {
-		return result;
+		return createParameterCheckResult(result);
 	}
 
-	public BindingResult callEntityValidation(@RequestBody @Validated EstimationPicSaEmp entity,
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/EstimationPicSaEmp")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated EstimationPicSaEmp entity,
 			BindingResult result) {
-		return result;
+		return createParameterCheckResult(result);
 	}
 
-	public BindingResult callEntityValidation(@RequestBody @Validated ItemEstimation entity, BindingResult result) {
-		return result;
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ItemEstimation")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ItemEstimation entity, BindingResult result) {
+		return createParameterCheckResult(result);
 	}
 
-	public BindingResult callEntityValidation(@RequestBody @Validated OperationLog entity, BindingResult result) {
-		return result;
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/OperationLog")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated OperationLog entity, BindingResult result) {
+		return createParameterCheckResult(result);
 	}
 
-	public BindingResult callEntityValidation(@RequestBody @Validated ProductEstimation entity,
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ProductEstimation")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ProductEstimation entity,
 			BindingResult result) {
-		return result;
+		return createParameterCheckResult(result);
 	}
+
 }

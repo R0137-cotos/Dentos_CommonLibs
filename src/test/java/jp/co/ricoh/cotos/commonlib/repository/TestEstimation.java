@@ -1,26 +1,14 @@
 package jp.co.ricoh.cotos.commonlib.repository;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.http.HttpRequest;
-import org.springframework.http.client.ClientHttpRequestExecution;
-import org.springframework.http.client.ClientHttpRequestInterceptor;
-import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.client.RestTemplate;
 
 import jp.co.ricoh.cotos.commonlib.DBConfig;
 import jp.co.ricoh.cotos.commonlib.TestTools;
@@ -52,8 +40,6 @@ import jp.co.ricoh.cotos.commonlib.repository.estimation.EstimationRepository;
 import jp.co.ricoh.cotos.commonlib.repository.estimation.ItemEstimationRepository;
 import jp.co.ricoh.cotos.commonlib.repository.estimation.OperationLogRepository;
 import jp.co.ricoh.cotos.commonlib.repository.estimation.ProductEstimationRepository;
-import jp.co.ricoh.cotos.commonlib.security.TestSecurityController;
-import jp.co.ricoh.cotos.commonlib.util.HeadersProperties;
 
 /**
  * Repository（見積ドメイン）のテストクラス
@@ -66,15 +52,6 @@ import jp.co.ricoh.cotos.commonlib.util.HeadersProperties;
 public class TestEstimation {
 
 	static ConfigurableApplicationContext context;
-	
-	@Autowired
-    HeadersProperties headersProperties;
-	
-	
-	
-	
-	
-	
 
 	@Autowired
 	TestTools testTool;
@@ -128,23 +105,6 @@ public class TestEstimation {
 		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimation_all.sql");
 
 	}
-
-	@Autowired
-	TestSecurityController testSecurityController;
-	
-	
-	@LocalServerPort
-    private int port;
-
-
-    private String loadTopURL() {
-        return "http://localhost:" + port + "/";
-    }
-
-	
-	
-	
-	
 
 	@AfterClass
 	public static void stopAPServer() throws InterruptedException {
@@ -220,20 +180,6 @@ public class TestEstimation {
 	public void EstimationDetailRepositoryのテスト() throws Exception {
 
 		EstimationDetail found = estimationDetailRepository.findOne(401L);
-		found.setState(null);
-
-		// BindingResult errors = new BeanPropertyBindingResult(found, "entity");
-
-		/*
-		 * CheckUtil aa = new CheckUtil(); aa.checkEntity(errors);
-		 */
-
-		BindingResult bindingResult = null;
-		String WITHIN_PERIOD_JWT = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcmlnaW4iOiJjb3Rvcy5yaWNvaC5jby5qcCIsInNpbmdsZVVzZXJJZCI6InNpZCIsIm1vbUVtcElkIjoibWlkIiwiZXhwIjoyNTM0MDIyNjgzOTl9.Apmi4uDwtiscf9WgVIh5Rx1DjoZX2eS7H2YlAGayOsQ";
-		RestTemplate rest = initRest(WITHIN_PERIOD_JWT);
-		rest.postForEntity(loadTopURL() + "test/api/xxx?isSuccess=true&hasBody=false",  found,BindingResult.class);
-
-		bindingResult = testSecurityController.callEntityValidation(found, bindingResult);
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -242,25 +188,6 @@ public class TestEstimation {
 		testTool.assertColumnsNotNull(found);
 
 	}
-	
-	private RestTemplate initRest(final String header) {
-        RestTemplate rest = new RestTemplate();
-        if (null != header) {
-            rest.setInterceptors(Stream.concat(rest.getInterceptors().stream(), Arrays.asList(new ClientHttpRequestInterceptor() {
-                @Override
-                public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
-                    System.out.println("initRest Start");
-                    System.out.println(request.getURI());
-                    System.out.println(request.getMethod());
-                    request.getHeaders().add(headersProperties.getAuthorization(), "Bearer " + header);
-                    System.out.println(request.getHeaders());
-                    System.out.println("initRest End");
-                    return execution.execute(request, body);
-                }
-            }).stream()).collect(Collectors.toList()));
-        }
-        return rest;
-    }
 
 	@Test
 	public void ProductEstimationRepositoryのテスト() throws Exception {
