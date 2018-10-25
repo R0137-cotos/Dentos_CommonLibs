@@ -35,8 +35,8 @@ public class TestFindProperties {
 	@Test
 	public void プロパティ取得() {
 		boolean isCi = environment.getActiveProfiles().length > 0 && environment.getActiveProfiles()[0].equals("ci");
-		String username = isCi ? "cotos_ci_2nd" : "cotos_onsite";
-		String password = isCi ? "cotos_ci_2nd" : "cotos_onsite";
+		String username = isCi ? "cotos_ci_commonlibs" : "cotos_onsite";
+		String password = isCi ? "cotos_ci_commonlibs" : "cotos_onsite";
 		Assert.assertEquals("DB設定：ドライバーが正しく取得されること", "oracle.jdbc.OracleDriver", appProperties.getDatasourceProperties().getDriverClassName());
 		Assert.assertEquals("DB設定：URLが正しく取得されること", "jdbc:oracle:thin:@dev-db.cotos.ricoh.co.jp:1521/pdb1", appProperties.getDatasourceProperties().getUrl());
 		Assert.assertEquals("DB設定：ユーザー名が正しく取得されること", username, appProperties.getDatasourceProperties().getUsername());
