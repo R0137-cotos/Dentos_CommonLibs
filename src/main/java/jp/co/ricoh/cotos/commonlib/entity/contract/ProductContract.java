@@ -74,19 +74,15 @@ public class ProductContract extends EntityBase {
 	/**
 	 * 積上げ可能期間(開始日)
 	 */
-	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
-	@NotNull
-	@ApiModelProperty(value = "積上げ可能期間(開始日)", required = true, position = 5)
+	@ApiModelProperty(value = "積上げ可能期間(開始日)", required = false, position = 5)
 	private Date effectiveFrom;
 
 	/**
 	 * 積上げ可能期間(終了日)
 	 */
-	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
-	@NotNull
-	@ApiModelProperty(value = "積上げ可能期間(終了日)", required = true, position = 6)
+	@ApiModelProperty(value = "積上げ可能期間(終了日)", required = false, position = 6)
 	private Date effectiveTo;
 
 	/**
