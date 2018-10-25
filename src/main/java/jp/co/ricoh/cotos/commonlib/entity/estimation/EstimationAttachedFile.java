@@ -4,7 +4,6 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -35,7 +34,6 @@ import lombok.ToString;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-@EntityListeners(EstimationAttachedFileListener.class)
 @ToString
 @Table(name = "estimation_attached_file")
 public class EstimationAttachedFile extends EntityBase {

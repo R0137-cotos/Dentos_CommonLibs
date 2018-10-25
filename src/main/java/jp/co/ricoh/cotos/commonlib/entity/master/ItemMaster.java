@@ -24,14 +24,12 @@ import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 /**
  * 品種を表すEntity
  */
 @Entity
 @Data
-@ToString(exclude = { "productMaster" })
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "item_master")
 public class ItemMaster extends EntityBaseMaster {

@@ -69,14 +69,18 @@ public class ProductEstimation extends EntityBase {
 	/**
 	 * 積上げ可能期間（開始日）
 	 */
-	@ApiModelProperty(value = "積上げ可能期間（開始日）", required = false, position = 5, readOnly = true)
+	@Column(nullable = false)
+	@NotNull
+	@ApiModelProperty(value = "積上げ可能期間（開始日）", required = true, position = 5, readOnly = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date effectiveFrom;
 
 	/**
 	 * 積上げ可能期間（終了日）
 	 */
-	@ApiModelProperty(value = "積上げ可能期間（終了日）", required = false, position = 6, readOnly = true)
+	@Column(nullable = false)
+	@NotNull
+	@ApiModelProperty(value = "積上げ可能期間（終了日）", required = true, position = 6, readOnly = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date effectiveTo;
 

@@ -23,14 +23,12 @@ import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 /**
  * 商品グループマスタ
  */
 @Entity
 @Data
-@ToString(exclude = { "estimationApprovalRouteGrpMaster", "contractApprovalRouteGrpMaster" })
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "product_grp_master")
 public class ProductGrpMaster extends EntityBaseMaster {

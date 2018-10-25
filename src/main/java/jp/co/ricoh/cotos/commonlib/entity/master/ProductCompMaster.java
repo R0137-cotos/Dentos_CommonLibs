@@ -13,14 +13,12 @@ import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 /**
  * 商品構成マスタ
  */
 @Entity
 @Data
-@ToString(exclude = { "productGrpMaster", "productMaster" })
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "product_comp_master")
 public class ProductCompMaster extends EntityBaseMaster {

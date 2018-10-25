@@ -4,7 +4,6 @@ import javax.persistence.PrePersist;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import jp.co.ricoh.cotos.commonlib.entity.master.ProductMaster;
@@ -15,7 +14,6 @@ public class ProductEstimationListener {
 
 	private static ProductMasterRepository productMasterRepository;
 
-	@Autowired
 	public void setProductMasterRepository(ProductMasterRepository productMasterRepository) {
 		ProductEstimationListener.productMasterRepository = productMasterRepository;
 	}
@@ -28,10 +26,9 @@ public class ProductEstimationListener {
 	@PrePersist
 	@Transactional
 	public void appendsEstimationProductsFields(ProductEstimation productEstimation) {
-		ProductMaster productMaster = productMasterRepository.findOne(productEstimation.getProductMasterId());
+		ProductMaster productMaster = productMasterRepository.findOne(productEstimation.getId());
 		productEstimation.setProductMasterId(productMaster.getId());
 		BeanUtils.copyProperties(productMaster, productEstimation, "id");
-		productEstimation.setProductEstimationName(productMaster.getProductName());
 	}
 
 }

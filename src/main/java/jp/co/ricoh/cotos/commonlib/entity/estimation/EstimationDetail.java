@@ -87,7 +87,7 @@ public class EstimationDetail extends EntityBase {
 	@ApiModelProperty(value = "拡張項目", required = false, position = 7)
 	private String extendsParameter;
 
-	@OneToOne(mappedBy = "estimationDetail")
+	@OneToOne(optional = false, mappedBy = "estimationDetail")
 	@ApiModelProperty(value = "品種(見積用)", required = true, position = 8)
 	private ItemEstimation itemEstimation;
 
