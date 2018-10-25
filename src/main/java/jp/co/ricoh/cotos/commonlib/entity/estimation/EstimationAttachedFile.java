@@ -41,8 +41,6 @@ public class EstimationAttachedFile extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "estimation_attached_file_seq")
 	@SequenceGenerator(name = "estimation_attached_file_seq", sequenceName = "estimation_attached_file_seq", allocationSize = 1)
-	@NotNull
-	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "見積添付ファイルID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 

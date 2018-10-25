@@ -14,6 +14,8 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -34,8 +36,6 @@ public class ContractAddedEditorEmp extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_added_editor_emp_seq")
 	@SequenceGenerator(name = "contract_added_editor_emp_seq", sequenceName = "contract_added_editor_emp_seq", allocationSize = 1)
-	@NotNull
-	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
@@ -87,6 +87,7 @@ public class ContractAddedEditorEmp extends EntityBase {
 	 * 社員名
 	 */
 	@Column(nullable = false)
+	@NotEmpty
 	@Size(max = 255)
 	@ApiModelProperty(value = "社員名", required = true, position = 8, allowableValues = "range[0,255]")
 	private String employeeName;

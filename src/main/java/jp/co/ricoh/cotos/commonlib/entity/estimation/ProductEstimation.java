@@ -40,8 +40,6 @@ public class ProductEstimation extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_estimation_seq")
 	@SequenceGenerator(name = "product_estimation_seq", sequenceName = "product_estimation_seq", allocationSize = 1)
-	@NotNull
-	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
@@ -49,8 +47,6 @@ public class ProductEstimation extends EntityBase {
 	 * 商品マスタID
 	 */
 	@Column(nullable = false)
-	@NotNull
-	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "商品マスタID", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
 	private long productMasterId;
 
@@ -67,8 +63,6 @@ public class ProductEstimation extends EntityBase {
 	 * 代表品種マスタID
 	 */
 	@Column(nullable = false)
-	@NotNull
-	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "代表品種マスタID", required = true, position = 4, allowableValues = "range[0,9999999999999999999]")
 	private long repItemMasterId;
 

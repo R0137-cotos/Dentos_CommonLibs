@@ -14,6 +14,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import jp.co.ricoh.cotos.commonlib.entity.EnumType.DealerFlowOrder;
@@ -34,7 +36,6 @@ public class DealerEstimation extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dealer_estimation_seq")
 	@SequenceGenerator(name = "dealer_estimation_seq", sequenceName = "dealer_estimation_seq", allocationSize = 1)
-	@NotNull
 	@ApiModelProperty(value = "ID", required = true, position = 1)
 	private long id;
 
@@ -43,7 +44,7 @@ public class DealerEstimation extends EntityBase {
 	 */
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "mom_kjb_system_id", referencedColumnName = "mclMomRelId")
-	@NotNull
+	@NotEmpty
 	@ApiModelProperty(value = "企事部マスタ", required = true, position = 2)
 	private VKjbMaster vKjbMaster;
 
@@ -116,7 +117,7 @@ public class DealerEstimation extends EntityBase {
 	 * 販売店商流順
 	 */
 	@Column(nullable = false)
-	@NotNull
+	@NotEmpty
 	@ApiModelProperty(value = "販売店商流順", required = true, position = 12)
 	private DealerFlowOrder dealerFlowOrder;
 

@@ -39,8 +39,6 @@ public class Communication extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "communication_seq")
 	@SequenceGenerator(name = "communication_seq", sequenceName = "communication_seq", allocationSize = 1)
-	@NotNull
-	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
@@ -48,7 +46,7 @@ public class Communication extends EntityBase {
 	 * サービスカテゴリ
 	 */
 	@Column(nullable = false)
-	@NotNull
+	@NotEmpty
 	@ApiModelProperty(value = "サービスカテゴリ", required = true, position = 2)
 	private ServiceCategory serviceCategory;
 
@@ -56,7 +54,7 @@ public class Communication extends EntityBase {
 	 * 処理カテゴリー
 	 */
 	@Column(nullable = false)
-	@NotNull
+	@NotEmpty
 	@ApiModelProperty(value = "処理カテゴリー", required = true, position = 3)
 	private ProcessCategory processCategory;
 
@@ -76,7 +74,7 @@ public class Communication extends EntityBase {
 	 * ワークフロー種別
 	 */
 	@Column(nullable = false)
-	@NotNull
+	@NotEmpty
 	@ApiModelProperty(value = "ワークフロー種別", required = true, position = 5)
 	private WorkflowType workflowType;
 
@@ -84,7 +82,7 @@ public class Communication extends EntityBase {
 	 * 承認対象種別
 	 */
 	@Column(nullable = false)
-	@NotNull
+	@NotEmpty
 	@ApiModelProperty(value = "承認対象種別<br />" //
 			+ "承認フロー⇒新規/情報変更/プラン変更/キャンセル/解約/作業完了報告<br />" //
 			+ "タスクフロー⇒非承認", required = true, position = 6) //
@@ -154,7 +152,6 @@ public class Communication extends EntityBase {
 	/**
 	 * 対象文書番号枝番
 	 */
-	@NotNull
 	@Max(99)
 	@Column(nullable = false)
 	@ApiModelProperty(value = "対象文書番号枝番<br />" //

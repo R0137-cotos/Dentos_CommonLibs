@@ -105,8 +105,6 @@ public class Estimation extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "estimation_seq")
 	@SequenceGenerator(name = "estimation_seq", sequenceName = "estimation_seq", allocationSize = 1)
-	@NotNull
-	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "見積ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
@@ -114,8 +112,6 @@ public class Estimation extends EntityBase {
 	 * 商品グループマスタID
 	 */
 	@Column(nullable = false)
-	@NotNull
-	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "商品グループマスタID", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
 	private long productGrpMasterId;
 
@@ -123,7 +119,7 @@ public class Estimation extends EntityBase {
 	 * ライフサイクル状態
 	 */
 	@Column(nullable = false)
-	@NotNull
+	@NotEmpty
 	@ApiModelProperty(value = "ライフサイクル状態", required = true, position = 3)
 	private LifecycleStatus lifecycleStatus;
 
@@ -131,7 +127,7 @@ public class Estimation extends EntityBase {
 	 * ワークフロー状態
 	 */
 	@Column(nullable = false)
-	@NotNull
+	@NotEmpty
 	@ApiModelProperty(value = "ワークフロー状態", required = true, position = 4)
 	private WorkflowStatus workflowStatus;
 
@@ -169,7 +165,6 @@ public class Estimation extends EntityBase {
 	 * 見積番号枝番
 	 */
 	@Column(nullable = false)
-	@NotNull
 	@Max(99)
 	@ApiModelProperty(value = "見積番号枝番", required = true, position = 9, allowableValues = "range[0,99]", readOnly = true)
 	private int estimationBranchNumber;
@@ -185,7 +180,7 @@ public class Estimation extends EntityBase {
 	 * 見積種別
 	 */
 	@Column(nullable = false)
-	@NotNull
+	@NotEmpty
 	@ApiModelProperty(value = "見積種別", required = true, position = 11)
 	private EstimationType estimationType;
 
@@ -212,7 +207,6 @@ public class Estimation extends EntityBase {
 	/**
 	 * 変更元契約ID
 	 */
-	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "変更元契約ID", required = false, position = 15, allowableValues = "range[0,9999999999999999999]")
 	private Long originContractId;
 

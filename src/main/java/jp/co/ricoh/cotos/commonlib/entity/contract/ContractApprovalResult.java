@@ -40,8 +40,6 @@ public class ContractApprovalResult extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_approval_result_seq")
 	@SequenceGenerator(name = "contract_approval_result_seq", sequenceName = "contract_approval_result_seq", allocationSize = 1)
-	@NotNull
-	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "契約承認実績ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 

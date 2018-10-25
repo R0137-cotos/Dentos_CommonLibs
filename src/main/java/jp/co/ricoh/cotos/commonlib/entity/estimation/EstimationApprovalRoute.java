@@ -36,8 +36,6 @@ public class EstimationApprovalRoute extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "estimation_approval_route_seq")
 	@SequenceGenerator(name = "estimation_approval_route_seq", sequenceName = "estimation_approval_route_seq", allocationSize = 1)
-	@NotNull
-	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "見積承認ルートID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
@@ -79,7 +77,6 @@ public class EstimationApprovalRoute extends EntityBase {
 	 * 特価承認対象フラグ
 	 */
 	@Column(nullable = false)
-	@NotNull
 	@Max(9)
 	@ApiModelProperty(value = "特価承認対象フラグ", required = true, position = 6, allowableValues = "range[0,9]")
 	private int specialPriceApprovalFlg;
@@ -96,7 +93,7 @@ public class EstimationApprovalRoute extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "estimationApprovalRoute")
 	@OrderBy("approvalOrder ASC")
-	@NotEmpty
+	@NotNull
 	@ApiModelProperty(value = "見積承認ルートノード", required = true, position = 8)
 	private List<EstimationApprovalRouteNode> estimationApprovalRouteNodeList;
 

@@ -56,8 +56,6 @@ public class ArrangementWork extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "arrangement_work_seq")
 	@SequenceGenerator(name = "arrangement_work_seq", sequenceName = "arrangement_work_seq", allocationSize = 1)
-	@NotNull
-	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "手配業務ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
@@ -74,8 +72,6 @@ public class ArrangementWork extends EntityBase {
 	 * 手配業務タイプマスタID
 	 */
 	@Column(nullable = false)
-	@NotNull
-	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "手配業務タイプマスタID", required = true, position = 3, allowableValues = "range[0,9999999999999999999]")
 	private long arrangementWorkTypeMasterId;
 

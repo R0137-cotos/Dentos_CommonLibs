@@ -18,6 +18,8 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -38,8 +40,6 @@ public class ContractDetail extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_detail_seq")
 	@SequenceGenerator(name = "contract_detail_seq", sequenceName = "contract_detail_seq", allocationSize = 1)
-	@NotNull
-	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "契約明細ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
@@ -57,7 +57,7 @@ public class ContractDetail extends EntityBase {
 	 * 状態
 	 */
 	@Column(nullable = false)
-	@NotNull
+	@NotEmpty
 	@ApiModelProperty(value = "状態", required = true, position = 3)
 	private DetailStatus state;
 
@@ -65,7 +65,6 @@ public class ContractDetail extends EntityBase {
 	 * 数量
 	 */
 	@Column(nullable = false)
-	@NotNull
 	@Max(99999)
 	@ApiModelProperty(value = "数量", required = true, position = 4, allowableValues = "range[0,99999]")
 	private int quantity;

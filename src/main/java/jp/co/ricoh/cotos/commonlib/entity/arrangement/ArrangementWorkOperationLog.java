@@ -45,8 +45,6 @@ public class ArrangementWorkOperationLog extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "arrangement_work_operation_log_seq")
 	@SequenceGenerator(name = "arrangement_work_operation_log_seq", sequenceName = "arrangement_work_operation_log_seq", allocationSize = 1)
-	@NotNull
-	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "手配業務操作履歴ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 

@@ -37,8 +37,6 @@ public class ContractCheckResult extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_check_result_seq")
 	@SequenceGenerator(name = "contract_check_result_seq", sequenceName = "contract_check_result_seq", allocationSize = 1)
-	@NotNull
-	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "契約チェック結果ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
@@ -56,7 +54,7 @@ public class ContractCheckResult extends EntityBase {
 	 * 対象ライフサイクル状態
 	 */
 	@Column(nullable = false)
-	@NotNull
+	@NotEmpty
 	@ApiModelProperty(value = "対象ライフサイクル状態", required = true, position = 3)
 	private LifecycleStatus targetLifecycleStatus;
 
@@ -82,7 +80,6 @@ public class ContractCheckResult extends EntityBase {
 	 * 表示順
 	 */
 	@Column(nullable = false)
-	@NotEmpty
 	@Max(999)
 	@ApiModelProperty(value = "表示順", required = true, position = 6, allowableValues = "range[0,999]")
 	private int displayOrder;

@@ -36,8 +36,6 @@ public class ArrangementWorkApprovalRoute extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "arrangement_work_approval_route_seq")
 	@SequenceGenerator(name = "arrangement_work_approval_route_seq", sequenceName = "arrangement_work_approval_route_seq", allocationSize = 1)
-	@NotNull
-	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "手配業務承認ルートID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
@@ -87,7 +85,7 @@ public class ArrangementWorkApprovalRoute extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "arrangementWorkApprovalRoute")
 	@OrderBy("approvalOrder ASC")
-	@NotEmpty
+	@NotNull
 	@ApiModelProperty(value = "手配業務承認ルートノード", required = true, position = 7)
 	private List<ArrangementWorkApprovalRouteNode> arrangementWorkApprovalRouteNodeList;
 

@@ -39,8 +39,6 @@ public class ArrangementWorkCheckResult extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "arrangement_work_check_result_seq")
 	@SequenceGenerator(name = "arrangement_work_check_result_seq", sequenceName = "arrangement_work_check_result_seq", allocationSize = 1)
-	@NotNull
-	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "手配業務チェック結果ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
@@ -76,7 +74,6 @@ public class ArrangementWorkCheckResult extends EntityBase {
 	 * 表示順
 	 */
 	@Column(nullable = false)
-	@NotNull
 	@Max(999)
 	@ApiModelProperty(value = "表示順", required = true, position = 5, allowableValues = "range[0,999]")
 	private int displayOrder;

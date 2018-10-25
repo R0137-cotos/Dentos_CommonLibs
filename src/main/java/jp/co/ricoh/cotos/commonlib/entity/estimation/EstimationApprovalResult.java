@@ -14,7 +14,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -40,8 +39,6 @@ public class EstimationApprovalResult extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "estimation_approval_result_seq")
 	@SequenceGenerator(name = "estimation_approval_result_seq", sequenceName = "estimation_approval_result_seq", allocationSize = 1)
-	@NotNull
-	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "見積承認実績ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
@@ -59,7 +56,7 @@ public class EstimationApprovalResult extends EntityBase {
 	 * 承認処理カテゴリー
 	 */
 	@Column(nullable = false)
-	@NotNull
+	@NotEmpty
 	@ApiModelProperty(value = "承認処理カテゴリー", required = true, position = 3)
 	private ApprovalProcessCategory approvalProcessCategory;
 

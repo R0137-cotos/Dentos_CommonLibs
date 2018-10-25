@@ -37,7 +37,6 @@ public class EstimationDetail extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "estimation_detail_seq")
 	@SequenceGenerator(name = "estimation_detail_seq", sequenceName = "estimation_detail_seq", allocationSize = 1)
-	@NotNull
 	@ApiModelProperty(value = "見積明細ID", required = true, position = 1)
 	private long id;
 
@@ -55,7 +54,7 @@ public class EstimationDetail extends EntityBase {
 	 * 状態
 	 */
 	@Column(nullable = false)
-	@NotNull
+	@NotEmpty
 	@ApiModelProperty(value = "状態", required = true, position = 3)
 	private DetailStatus state;
 
@@ -63,7 +62,6 @@ public class EstimationDetail extends EntityBase {
 	 * 数量
 	 */
 	@Column(nullable = false)
-	@NotNull
 	@Max(99999)
 	@ApiModelProperty(value = "数量", required = true, position = 4, allowableValues = "range[0,99999]")
 	private int quantity;

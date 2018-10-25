@@ -40,8 +40,6 @@ public class ArrangementWorkApprovalResult extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "arrangement_work_approval_result_seq")
 	@SequenceGenerator(name = "arrangement_work_approval_result_seq", sequenceName = "arrangement_work_approval_result_seq", allocationSize = 1)
-	@NotNull
-	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "手配業務承認実績ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 

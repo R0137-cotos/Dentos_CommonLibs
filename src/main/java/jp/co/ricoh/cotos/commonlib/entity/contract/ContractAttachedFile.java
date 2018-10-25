@@ -39,8 +39,6 @@ public class ContractAttachedFile extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_attached_file_seq")
 	@SequenceGenerator(name = "contract_attached_file_seq", sequenceName = "contract_attached_file_seq", allocationSize = 1)
-	@NotNull
-	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "契約添付ファイルID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 

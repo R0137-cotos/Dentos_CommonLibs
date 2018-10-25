@@ -38,8 +38,6 @@ public class CustomerContract extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_contract_seq")
 	@SequenceGenerator(name = "customer_contract_seq", sequenceName = "customer_contract_seq", allocationSize = 1)
-	@NotNull
-	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
@@ -48,7 +46,7 @@ public class CustomerContract extends EntityBase {
 	 */
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "mom_kjb_system_id", referencedColumnName = "mclMomRelId")
-	@NotNull
+	@NotEmpty
 	@ApiModelProperty(value = "企事部マスタ", required = true, position = 2)
 	private VKjbMaster vKjbMaster;
 
@@ -83,7 +81,7 @@ public class CustomerContract extends EntityBase {
 	 * 企事部設定区分
 	 */
 	@Column(nullable = false)
-	@NotNull
+	@NotEmpty
 	@ApiModelProperty(value = "企事部設定区分", required = true, position = 6)
 	private DepartmentDiv departmentDiv;
 

@@ -36,8 +36,6 @@ public class ArrangementPicWorkerEmp extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "arrangement_pic_worker_emp_seq")
 	@SequenceGenerator(name = "arrangement_pic_worker_emp_seq", sequenceName = "arrangement_pic_worker_emp_seq", allocationSize = 1)
-	@NotNull
-	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
@@ -140,7 +138,7 @@ public class ArrangementPicWorkerEmp extends EntityBase {
 	 */
 	@OneToOne(optional = false)
 	@JoinColumn(name = "arrangement_work_id", referencedColumnName = "id")
-	@NotEmpty
+	@NotNull
 	@ApiModelProperty(value = "手配業務", required = true, position = 15)
 	@JsonIgnore
 	private ArrangementWork arrangementWork;

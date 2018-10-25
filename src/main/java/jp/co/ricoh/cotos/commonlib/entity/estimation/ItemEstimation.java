@@ -52,16 +52,12 @@ public class ItemEstimation extends EntityBase {
 	 * 品種マスタID
 	 */
 	@Column(nullable = false)
-	@NotNull
-	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "品種マスタID", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
 	private long itemMasterId;
 
 	/**
 	 * 商品マスタ
 	 */
-	@NotNull
-	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "商品マスタ", required = true, position = 3, allowableValues = "range[0,9999999999999999999]")
 	private long productMasterId;
 
@@ -84,14 +80,14 @@ public class ItemEstimation extends EntityBase {
 	/**
 	 * 品種区分
 	 */
-	@NotNull
+	@NotEmpty
 	@ApiModelProperty(value = "品種区分", required = true, position = 6)
 	private ItemType itemType;
 
 	/**
 	 * 費用種別
 	 */
-	@NotNull
+	@NotEmpty
 	@ApiModelProperty(value = "費用種別", required = true, position = 7)
 	private CostType costType;
 

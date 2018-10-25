@@ -43,8 +43,6 @@ public class ItemContract extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "item_contract_seq")
 	@SequenceGenerator(name = "item_contract_seq", sequenceName = "item_contract_seq", allocationSize = 1)
-	@NotNull
-	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
@@ -52,8 +50,6 @@ public class ItemContract extends EntityBase {
 	 * 品種マスタID
 	 */
 	@Column(nullable = false)
-	@NotNull
-	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "品種マスタID", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
 	private long itemMasterId;
 
@@ -61,8 +57,6 @@ public class ItemContract extends EntityBase {
 	 * 商品マスタID
 	 */
 	@Column(nullable = false)
-	@NotNull
-	@Max(9223372036854775807L)
 	@ApiModelProperty(value = "商品マスタID", required = true, position = 3, allowableValues = "range[0,9999999999999999999]")
 	private long productMasterId;
 
@@ -88,7 +82,7 @@ public class ItemContract extends EntityBase {
 	 * 品種区分
 	 */
 	@Column(nullable = false)
-	@NotNull
+	@NotEmpty
 	@ApiModelProperty(value = "品種区分", required = true, position = 6)
 	private ItemType itemType;
 
@@ -96,7 +90,7 @@ public class ItemContract extends EntityBase {
 	 * 費用種別
 	 */
 	@Column(nullable = false)
-	@NotNull
+	@NotEmpty
 	@ApiModelProperty(value = "費用種別", required = true, position = 7)
 	private CostType costType;
 

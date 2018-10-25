@@ -39,7 +39,6 @@ public class CustomerEstimation extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_estimation_seq")
 	@SequenceGenerator(name = "customer_estimation_seq", sequenceName = "customer_estimation_seq", allocationSize = 1)
-	@NotNull
 	@ApiModelProperty(value = "ID", required = true, position = 1)
 	private long id;
 
@@ -48,7 +47,7 @@ public class CustomerEstimation extends EntityBase {
 	 */
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "mom_kjb_system_id", referencedColumnName = "mclMomRelId")
-	@NotNull
+	@NotEmpty
 	@ApiModelProperty(value = "企事部マスタ", required = true, position = 2)
 	private VKjbMaster vKjbMaster;
 
@@ -83,7 +82,7 @@ public class CustomerEstimation extends EntityBase {
 	 * 企事部設定区分
 	 */
 	@Column(nullable = false)
-	@NotNull
+	@NotEmpty
 	@ApiModelProperty(value = "企事部設定区分", required = true, position = 6)
 	private DepartmentDiv departmentDiv;
 
