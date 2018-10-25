@@ -1,4 +1,4 @@
-package jp.co.ricoh.cotos.commonlib.entity.estimation;
+package jp.co.ricoh.cotos.commonlib.entity.contract;
 
 import java.util.ArrayList;
 
@@ -17,37 +17,37 @@ import jp.co.ricoh.cotos.commonlib.logic.check.CheckUtil;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvEmployeeMasterRepository;
 
 @Component
-public class EstimationAddedEditorEmpListener {
+public class ContractPicSaEmpListener {
 
 	private static MvEmployeeMasterRepository mvEmployeeMasterRepository;
 
 	@Autowired
 	public void setMvEmployeeMasterRepository(MvEmployeeMasterRepository mvEmployeeMasterRepository) {
-		EstimationAddedEditorEmpListener.mvEmployeeMasterRepository = mvEmployeeMasterRepository;
+		ContractPicSaEmpListener.mvEmployeeMasterRepository = mvEmployeeMasterRepository;
 	}
 
 	@Autowired
 	CheckUtil checkUtil;
 
 	/**
-	 * 社員マスタ情報を見積追加編集者トランザクションに紐づけます。
+	 * 社員マスタ情報を契約担当SA社員トランザクションに紐づけます。
 	 *
-	 * @param entity
+	 * @param contractPicSaEmp
 	 */
 	@PrePersist
 	@Transactional
-	public void appendsEmployeeFields(EstimationAddedEditorEmp estimationAddedEditorEmp) {
-		MvEmployeeMaster employeeMaster = mvEmployeeMasterRepository.findByMomEmployeeId(estimationAddedEditorEmp.getMvEmployeeMaster().getMomEmployeeId());
+	public void appendsEmployeeFields(ContractPicSaEmp contractPicSaEmp) {
+		MvEmployeeMaster employeeMaster = mvEmployeeMasterRepository.findByMomEmployeeId(contractPicSaEmp.getMvEmployeeMaster().getMomEmployeeId());
 
 		if (employeeMaster == null) {
-			String[] regexList = { "見積追加編集者社員" };
+			String[] regexList = { "契約担当SA社員" };
 			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "MasterDoesNotExistEmployeeMaster", regexList));
 		}
 
-		BeanUtils.copyProperties(employeeMaster, estimationAddedEditorEmp);
-		estimationAddedEditorEmp.setEmployeeName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
-		estimationAddedEditorEmp.setAddress(convertJoinedAddress(employeeMaster));
-		estimationAddedEditorEmp.setMvEmployeeMaster(employeeMaster);
+		BeanUtils.copyProperties(employeeMaster, contractPicSaEmp);
+		contractPicSaEmp.setEmployeeName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
+		contractPicSaEmp.setAddress(convertJoinedAddress(employeeMaster));
+		contractPicSaEmp.setMvEmployeeMaster(employeeMaster);
 	}
 
 	private String convertJoinedAddress(MvEmployeeMaster master) {

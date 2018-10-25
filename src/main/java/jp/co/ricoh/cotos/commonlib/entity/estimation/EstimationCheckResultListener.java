@@ -2,7 +2,7 @@ package jp.co.ricoh.cotos.commonlib.entity.estimation;
 
 import java.util.ArrayList;
 
-import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +28,11 @@ public class EstimationCheckResultListener {
 	CheckUtil checkUtil;
 
 	/**
-	 * 社員マスタ情報を見積操作履歴トランザクションに紐づけます。
+	 * 社員マスタ情報を見積チェック結果トランザクションに紐づけます。
 	 *
-	 * @param estimationPicSaEmp
+	 * @param estimationCheckResult
 	 */
-	@PrePersist
+	@PreUpdate
 	@Transactional
 	public void appendsEmployeeFields(EstimationCheckResult estimationCheckResult) {
 		MvEmployeeMaster employeeMaster = mvEmployeeMasterRepository.findByMomEmployeeId(estimationCheckResult.getCheckedUserId());

@@ -1,4 +1,4 @@
-package jp.co.ricoh.cotos.commonlib.entity.estimation;
+package jp.co.ricoh.cotos.commonlib.entity.arrangement;
 
 import java.util.ArrayList;
 
@@ -15,35 +15,35 @@ import jp.co.ricoh.cotos.commonlib.logic.check.CheckUtil;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvEmployeeMasterRepository;
 
 @Component
-public class EstimationAttachedFileListener {
+public class ArrangementWorkAttachedFileListener {
 
 	private static MvEmployeeMasterRepository mvEmployeeMasterRepository;
 
 	@Autowired
 	public void setMvEmployeeMasterRepository(MvEmployeeMasterRepository mvEmployeeMasterRepository) {
-		EstimationAttachedFileListener.mvEmployeeMasterRepository = mvEmployeeMasterRepository;
+		ArrangementWorkAttachedFileListener.mvEmployeeMasterRepository = mvEmployeeMasterRepository;
 	}
 
 	@Autowired
 	CheckUtil checkUtil;
 
 	/**
-	 * 社員マスタ情報を見積添付ファイルトランザクションに紐づけます。
+	 * 社員マスタ情報を手配業務添付ファイルトランザクションに紐づけます。
 	 *
-	 * @param estimationAttachedFile
+	 * @param arrangementWorkAttachedFile
 	 */
 	@PrePersist
 	@Transactional
-	public void appendsEmployeeFields(EstimationAttachedFile estimationAttachedFile) {
-		MvEmployeeMaster employeeMaster = mvEmployeeMasterRepository.findByMomEmployeeId(estimationAttachedFile.getAttachedEmpId());
+	public void appendsEmployeeFields(ArrangementWorkAttachedFile arrangementWorkAttachedFile) {
+		MvEmployeeMaster employeeMaster = mvEmployeeMasterRepository.findByMomEmployeeId(arrangementWorkAttachedFile.getAttachedEmpId());
 
 		if (employeeMaster == null) {
 			String[] regexList = { "添付者MoM社員ID" };
 			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "MasterDoesNotExistEmployeeMaster", regexList));
 		}
 
-		estimationAttachedFile.setAttachedEmpName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
-		estimationAttachedFile.setAttachedOrgName(employeeMaster.getOrgName());
+		arrangementWorkAttachedFile.setAttachedEmpName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
+		arrangementWorkAttachedFile.setAttachedOrgName(employeeMaster.getOrgName());
 	}
 
 }

@@ -30,7 +30,7 @@ public class OperationLogListener {
 	/**
 	 * 社員マスタ情報を見積操作履歴トランザクションに紐づけます。
 	 *
-	 * @param estimationPicSaEmp
+	 * @param operationLog
 	 */
 	@PrePersist
 	@Transactional

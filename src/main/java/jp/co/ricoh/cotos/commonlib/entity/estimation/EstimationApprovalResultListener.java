@@ -15,35 +15,34 @@ import jp.co.ricoh.cotos.commonlib.logic.check.CheckUtil;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvEmployeeMasterRepository;
 
 @Component
-public class EstimationAttachedFileListener {
+public class EstimationApprovalResultListener {
 
 	private static MvEmployeeMasterRepository mvEmployeeMasterRepository;
 
 	@Autowired
 	public void setMvEmployeeMasterRepository(MvEmployeeMasterRepository mvEmployeeMasterRepository) {
-		EstimationAttachedFileListener.mvEmployeeMasterRepository = mvEmployeeMasterRepository;
+		EstimationApprovalResultListener.mvEmployeeMasterRepository = mvEmployeeMasterRepository;
 	}
 
 	@Autowired
 	CheckUtil checkUtil;
 
 	/**
-	 * 社員マスタ情報を見積添付ファイルトランザクションに紐づけます。
+	 * 社員マスタ情報を見積承認実績トランザクションに紐づけます。
 	 *
-	 * @param estimationAttachedFile
+	 * @param estimationApprovalResult
 	 */
 	@PrePersist
 	@Transactional
-	public void appendsEmployeeFields(EstimationAttachedFile estimationAttachedFile) {
-		MvEmployeeMaster employeeMaster = mvEmployeeMasterRepository.findByMomEmployeeId(estimationAttachedFile.getAttachedEmpId());
+	public void appendsEmployeeFields(EstimationApprovalResult estimationApprovalResult) {
+		MvEmployeeMaster employeeMaster = mvEmployeeMasterRepository.findByMomEmployeeId(estimationApprovalResult.getActualEmpId());
 
 		if (employeeMaster == null) {
-			String[] regexList = { "添付者MoM社員ID" };
+			String[] regexList = { "操作者MoM社員ID" };
 			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "MasterDoesNotExistEmployeeMaster", regexList));
 		}
 
-		estimationAttachedFile.setAttachedEmpName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
-		estimationAttachedFile.setAttachedOrgName(employeeMaster.getOrgName());
+		estimationApprovalResult.setActualUserName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
+		estimationApprovalResult.setActualOrgName(employeeMaster.getOrgName());
 	}
-
 }

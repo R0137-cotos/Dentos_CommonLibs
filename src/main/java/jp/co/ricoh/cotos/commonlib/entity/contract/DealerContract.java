@@ -2,6 +2,7 @@ package jp.co.ricoh.cotos.commonlib.entity.contract;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,6 +26,7 @@ import lombok.EqualsAndHashCode;
  */
 @Entity
 @EqualsAndHashCode(callSuper = true)
+@EntityListeners(DealerContractListener.class)
 @Data
 @Table(name = "dealer_contract")
 public class DealerContract extends EntityBase {

@@ -1,8 +1,8 @@
-package jp.co.ricoh.cotos.commonlib.entity.estimation;
+package jp.co.ricoh.cotos.commonlib.entity.contract;
 
 import java.util.ArrayList;
 
-import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,35 +15,35 @@ import jp.co.ricoh.cotos.commonlib.logic.check.CheckUtil;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvEmployeeMasterRepository;
 
 @Component
-public class EstimationAttachedFileListener {
+public class ContractCheckResultListener {
 
 	private static MvEmployeeMasterRepository mvEmployeeMasterRepository;
 
 	@Autowired
 	public void setMvEmployeeMasterRepository(MvEmployeeMasterRepository mvEmployeeMasterRepository) {
-		EstimationAttachedFileListener.mvEmployeeMasterRepository = mvEmployeeMasterRepository;
+		ContractCheckResultListener.mvEmployeeMasterRepository = mvEmployeeMasterRepository;
 	}
 
 	@Autowired
 	CheckUtil checkUtil;
 
 	/**
-	 * 社員マスタ情報を見積添付ファイルトランザクションに紐づけます。
+	 * 社員マスタ情報を契約チェック結果トランザクションに紐づけます。
 	 *
-	 * @param estimationAttachedFile
+	 * @param contractCheckResult
 	 */
-	@PrePersist
+	@PreUpdate
 	@Transactional
-	public void appendsEmployeeFields(EstimationAttachedFile estimationAttachedFile) {
-		MvEmployeeMaster employeeMaster = mvEmployeeMasterRepository.findByMomEmployeeId(estimationAttachedFile.getAttachedEmpId());
+	public void appendsEmployeeFields(ContractCheckResult contractCheckResult) {
+		MvEmployeeMaster employeeMaster = mvEmployeeMasterRepository.findByMomEmployeeId(contractCheckResult.getCheckedUserId());
 
 		if (employeeMaster == null) {
-			String[] regexList = { "添付者MoM社員ID" };
+			String[] regexList = { "操作者MoM社員ID" };
 			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "MasterDoesNotExistEmployeeMaster", regexList));
 		}
 
-		estimationAttachedFile.setAttachedEmpName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
-		estimationAttachedFile.setAttachedOrgName(employeeMaster.getOrgName());
+		contractCheckResult.setCheckedUserName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
+		contractCheckResult.setCheckedOrgName(employeeMaster.getOrgName());
 	}
 
 }

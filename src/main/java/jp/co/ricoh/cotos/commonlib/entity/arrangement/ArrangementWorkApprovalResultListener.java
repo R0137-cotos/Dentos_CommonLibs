@@ -1,4 +1,4 @@
-package jp.co.ricoh.cotos.commonlib.entity.estimation;
+package jp.co.ricoh.cotos.commonlib.entity.arrangement;
 
 import java.util.ArrayList;
 
@@ -15,35 +15,34 @@ import jp.co.ricoh.cotos.commonlib.logic.check.CheckUtil;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvEmployeeMasterRepository;
 
 @Component
-public class EstimationAttachedFileListener {
+public class ArrangementWorkApprovalResultListener {
 
 	private static MvEmployeeMasterRepository mvEmployeeMasterRepository;
 
 	@Autowired
 	public void setMvEmployeeMasterRepository(MvEmployeeMasterRepository mvEmployeeMasterRepository) {
-		EstimationAttachedFileListener.mvEmployeeMasterRepository = mvEmployeeMasterRepository;
+		ArrangementWorkApprovalResultListener.mvEmployeeMasterRepository = mvEmployeeMasterRepository;
 	}
 
 	@Autowired
 	CheckUtil checkUtil;
 
 	/**
-	 * 社員マスタ情報を見積添付ファイルトランザクションに紐づけます。
+	 * 社員マスタ情報を手配業務承認実績トランザクションに紐づけます。
 	 *
-	 * @param estimationAttachedFile
+	 * @param arrangementWorkApprovalResult
 	 */
 	@PrePersist
 	@Transactional
-	public void appendsEmployeeFields(EstimationAttachedFile estimationAttachedFile) {
-		MvEmployeeMaster employeeMaster = mvEmployeeMasterRepository.findByMomEmployeeId(estimationAttachedFile.getAttachedEmpId());
+	public void appendsEmployeeFields(ArrangementWorkApprovalResult arrangementWorkApprovalResult) {
+		MvEmployeeMaster employeeMaster = mvEmployeeMasterRepository.findByMomEmployeeId(arrangementWorkApprovalResult.getActualEmpId());
 
 		if (employeeMaster == null) {
-			String[] regexList = { "添付者MoM社員ID" };
+			String[] regexList = { "操作者MoM社員ID" };
 			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "MasterDoesNotExistEmployeeMaster", regexList));
 		}
 
-		estimationAttachedFile.setAttachedEmpName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
-		estimationAttachedFile.setAttachedOrgName(employeeMaster.getOrgName());
+		arrangementWorkApprovalResult.setActualUserName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
+		arrangementWorkApprovalResult.setActualOrgName(employeeMaster.getOrgName());
 	}
-
 }

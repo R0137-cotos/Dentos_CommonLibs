@@ -1,4 +1,4 @@
-package jp.co.ricoh.cotos.commonlib.entity.estimation;
+package jp.co.ricoh.cotos.commonlib.entity.arrangement;
 
 import java.util.ArrayList;
 
@@ -17,37 +17,37 @@ import jp.co.ricoh.cotos.commonlib.logic.check.CheckUtil;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvEmployeeMasterRepository;
 
 @Component
-public class EstimationAddedEditorEmpListener {
+public class ArrangementPicWorkerEmpListener {
 
 	private static MvEmployeeMasterRepository mvEmployeeMasterRepository;
 
 	@Autowired
 	public void setMvEmployeeMasterRepository(MvEmployeeMasterRepository mvEmployeeMasterRepository) {
-		EstimationAddedEditorEmpListener.mvEmployeeMasterRepository = mvEmployeeMasterRepository;
+		ArrangementPicWorkerEmpListener.mvEmployeeMasterRepository = mvEmployeeMasterRepository;
 	}
 
 	@Autowired
 	CheckUtil checkUtil;
 
 	/**
-	 * 社員マスタ情報を見積追加編集者トランザクションに紐づけます。
+	 * 社員マスタ情報を担当作業者社員トランザクションに紐づけます。
 	 *
-	 * @param entity
+	 * @param arrangementPicWorkerEmp
 	 */
 	@PrePersist
 	@Transactional
-	public void appendsEmployeeFields(EstimationAddedEditorEmp estimationAddedEditorEmp) {
-		MvEmployeeMaster employeeMaster = mvEmployeeMasterRepository.findByMomEmployeeId(estimationAddedEditorEmp.getMvEmployeeMaster().getMomEmployeeId());
+	public void appendsEmployeeFields(ArrangementPicWorkerEmp arrangementPicWorkerEmp) {
+		MvEmployeeMaster employeeMaster = mvEmployeeMasterRepository.findByMomEmployeeId(arrangementPicWorkerEmp.getMvEmployeeMaster().getMomEmployeeId());
 
 		if (employeeMaster == null) {
-			String[] regexList = { "見積追加編集者社員" };
+			String[] regexList = { "担当作業者社員" };
 			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "MasterDoesNotExistEmployeeMaster", regexList));
 		}
 
-		BeanUtils.copyProperties(employeeMaster, estimationAddedEditorEmp);
-		estimationAddedEditorEmp.setEmployeeName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
-		estimationAddedEditorEmp.setAddress(convertJoinedAddress(employeeMaster));
-		estimationAddedEditorEmp.setMvEmployeeMaster(employeeMaster);
+		BeanUtils.copyProperties(employeeMaster, arrangementPicWorkerEmp);
+		arrangementPicWorkerEmp.setEmployeeName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
+		arrangementPicWorkerEmp.setAddress(convertJoinedAddress(employeeMaster));
+		arrangementPicWorkerEmp.setMvEmployeeMaster(employeeMaster);
 	}
 
 	private String convertJoinedAddress(MvEmployeeMaster master) {
