@@ -15,7 +15,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -69,18 +68,14 @@ public class ProductEstimation extends EntityBase {
 	/**
 	 * 積上げ可能期間（開始日）
 	 */
-	@Column(nullable = false)
-	@NotNull
-	@ApiModelProperty(value = "積上げ可能期間（開始日）", required = true, position = 5, readOnly = true)
+	@ApiModelProperty(value = "積上げ可能期間（開始日）", required = false, position = 5, readOnly = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date effectiveFrom;
 
 	/**
 	 * 積上げ可能期間（終了日）
 	 */
-	@Column(nullable = false)
-	@NotNull
-	@ApiModelProperty(value = "積上げ可能期間（終了日）", required = true, position = 6, readOnly = true)
+	@ApiModelProperty(value = "積上げ可能期間（終了日）", required = false, position = 6, readOnly = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date effectiveTo;
 
