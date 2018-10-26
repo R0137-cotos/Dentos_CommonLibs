@@ -30,7 +30,7 @@ public class EstimationAttachedFileListener {
 	/**
 	 * 社員マスタ情報を見積添付ファイルトランザクションに紐づけます。
 	 *
-	 * @param estimationPicSaEmp
+	 * @param estimationAttachedFile
 	 */
 	@PrePersist
 	@Transactional

@@ -23,7 +23,7 @@ public class ItemEstimationListener {
 	/**
 	 * 品種マスタ情報を品種（見積用）トランザクションに紐づけます。
 	 *
-	 * @param entity
+	 * @param itemEstimation
 	 */
 	@PrePersist
 	@Transactional
@@ -33,4 +33,5 @@ public class ItemEstimationListener {
 		BeanUtils.copyProperties(itemMaster, itemEstimation, "id");
 		itemEstimation.setItemEstimationName(itemMaster.getItemName());
 	}
+
 }

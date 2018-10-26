@@ -14,7 +14,7 @@ import jp.co.ricoh.cotos.commonlib.db.DBUtil;
 
 @Component
 public class ContractListener {
-	private static final String ID_PREFIX = "CA";
+	private static final String ID_PREFIX = "CC";
 
 	private static DBUtil dbUtil;
 
@@ -44,7 +44,7 @@ public class ContractListener {
 			dbUtil.execute("sql/updateContractNumberVal.3.sql", Collections.emptyMap());
 			sequence = dbUtil.loadSingleFromSQLFile("sql/nextContractNumberSequence.sql", GeneratedNumber.class).getGeneratedNumber();
 		}
-		contract.setContractNumber(ID_PREFIX + sequence + "-01");
+		contract.setContractNumber(ID_PREFIX + sequence);
 	}
 
 }

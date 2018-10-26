@@ -64,5 +64,4 @@ public class EstimationAddedEditorEmpListener {
 		return sb.toString();
 	}
 
-	
 }
