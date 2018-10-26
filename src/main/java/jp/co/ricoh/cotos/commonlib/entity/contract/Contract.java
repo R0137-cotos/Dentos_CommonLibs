@@ -368,6 +368,7 @@ public class Contract extends EntityBase {
 	 * 契約担当SA社員
 	 */
 	@OneToOne(mappedBy = "contract")
+	@NotNull
 	@ApiModelProperty(value = "契約担当SA社員", required = true, position = 38)
 	private ContractPicSaEmp contractPicSaEmp;
 

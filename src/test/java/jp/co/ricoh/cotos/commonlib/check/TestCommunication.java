@@ -149,9 +149,6 @@ public class TestCommunication {
 		Assert.assertTrue(result.getErrorInfoList().size() == 11);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 
-		// 異常系（@Max ： ）
-
-		// 異常系（@DecimalMax：）
 	}
 
 	@Test
@@ -227,7 +224,6 @@ public class TestCommunication {
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
 
-		// 異常系（@DecimalMax：）
 	}
 
 	@Test
@@ -264,8 +260,6 @@ public class TestCommunication {
 		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 
-		// 異常系（@Max ：）
-		// 異常系（@DecimalMax：）
 	}
 
 	@Test
@@ -300,8 +294,6 @@ public class TestCommunication {
 		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 
-		// 異常系（@Max ：）
-		// 異常系（@DecimalMax：）
 	}
 
 }

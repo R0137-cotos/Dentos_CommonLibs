@@ -124,8 +124,6 @@ public class TestArrangement {
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 
-		// 異常系（@NotEmptyの空文字列チェック：）
-
 		// 異常系（@Size(max) ：momOrgId orgHierarchyLevel orgName salesCompanyName
 		// orgPhoneNumber employeeName salesDepartmentName postNumber address
 		// phoneNumber faxNumber mailAddress）
@@ -144,9 +142,6 @@ public class TestArrangement {
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 11);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
-
-		// 異常系（@Max ：）
-		// 異常系（@DecimalMax：）
 	}
 
 	@Test
@@ -167,8 +162,6 @@ public class TestArrangement {
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 
-		// 異常系（@NotEmptyの空文字列チェック：）
-		// 異常系（@Size(max) ：）
 		// 異常系（@Max ：disengagementFlg）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setDisengagementFlg(10);
@@ -176,7 +169,6 @@ public class TestArrangement {
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
 
-		// 異常系（@DecimalMax：）
 	}
 
 	@Test
@@ -218,8 +210,6 @@ public class TestArrangement {
 		Assert.assertTrue(result.getErrorInfoList().size() == 4);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 
-		// 異常系（@Max ：）
-		// 異常系（@DecimalMax：）
 	}
 
 	@Test
@@ -271,7 +261,6 @@ public class TestArrangement {
 		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
 
-		// 異常系（@DecimalMax：）
 	}
 
 	@Test
@@ -314,8 +303,6 @@ public class TestArrangement {
 		Assert.assertTrue(result.getErrorInfoList().size() == 3);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 
-		// 異常系（@Max ：）
-		// 異常系（@DecimalMax：）
 	}
 
 	@Test
@@ -363,8 +350,6 @@ public class TestArrangement {
 		Assert.assertTrue(result.getErrorInfoList().size() == 6);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 
-		// 異常系（@Max ：）
-		// 異常系（@DecimalMax：）
 	}
 
 	@Test
@@ -412,7 +397,6 @@ public class TestArrangement {
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
 
-		// 異常系（@DecimalMax：）
 	}
 
 	@Test
@@ -453,8 +437,6 @@ public class TestArrangement {
 		Assert.assertTrue(result.getErrorInfoList().size() == 3);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 
-		// 異常系（@Max ：）
-		// 異常系（@DecimalMax：）
 	}
 
 	@Test
@@ -477,7 +459,6 @@ public class TestArrangement {
 		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 
-		// 異常系（@NotEmptyの空文字列チェック：）
 		// 異常系（@Size(max) ：memo）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setMemo(STR_4001);
@@ -485,8 +466,6 @@ public class TestArrangement {
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 
-		// 異常系（@Max ：）
-		// 異常系（@DecimalMax：）
 	}
 
 }

@@ -137,12 +137,9 @@ public class TestContract {
 	public void ContractAddedEditorEmpのテスト() throws Exception {
 		ContractAddedEditorEmp entity = contractAddedEditorEmpRepository.findOne(401L);
 		ContractAddedEditorEmp testTarget = new ContractAddedEditorEmp();
-		testTarget.setMvEmployeeMaster(null);
 
 		// 正常系
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setMvEmployeeMaster(null);
-
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
@@ -152,7 +149,7 @@ public class TestContract {
 
 		testTarget.setEmployeeName(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 
 		// 異常系（@NotEmptyの空文字列チェック：employeeName）
@@ -161,14 +158,12 @@ public class TestContract {
 
 		testTarget.setEmployeeName("");
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 
 		// 異常系（@Size(max) ：momOrgId orgName salesCompanyName orgPhoneNumber employeeName
 		// salesDepartmentName postNumber phoneNumber faxNumber mailAddress）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setMvEmployeeMaster(null);
-
 		testTarget.setMomOrgId(STR_256);
 		testTarget.setOrgName(STR_256);
 		testTarget.setSalesCompanyName(STR_256);
@@ -185,14 +180,11 @@ public class TestContract {
 
 		// 異常系（@Max ：orgHierarchyLevel ）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setMvEmployeeMaster(null);
-
 		testTarget.setOrgHierarchyLevel(10);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
 
-		// 異常系（@DecimalMax：）
 	}
 
 	@Test
@@ -234,8 +226,6 @@ public class TestContract {
 		Assert.assertTrue(result.getErrorInfoList().size() == 4);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 
-		// 異常系（@Max ：）
-		// 異常系（@DecimalMax：）
 	}
 
 	@Test
@@ -283,7 +273,6 @@ public class TestContract {
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
 
-		// 異常系（@DecimalMax：）
 	}
 
 	@Test
@@ -331,7 +320,6 @@ public class TestContract {
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
 
-		// 異常系（@DecimalMax：）
 	}
 
 	@Test
@@ -377,8 +365,6 @@ public class TestContract {
 		Assert.assertTrue(result.getErrorInfoList().size() == 6);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 
-		// 異常系（@Max ：）
-		// 異常系（@DecimalMax：）
 	}
 
 	@Test
@@ -427,7 +413,6 @@ public class TestContract {
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
 
-		// 異常系（@DecimalMax：）
 	}
 
 	@Test
@@ -447,8 +432,6 @@ public class TestContract {
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
-
-		// 異常系（@NotEmptyの空文字列チェック：）
 
 		// 異常系（@Size(max) ：detailAbstract）
 		BeanUtils.copyProperties(testTarget, entity);
@@ -511,8 +494,6 @@ public class TestContract {
 		Assert.assertTrue(result.getErrorInfoList().size() == 3);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 
-		// 異常系（@Max ：）
-		// 異常系（@DecimalMax：）
 	}
 
 	@Test
@@ -520,7 +501,6 @@ public class TestContract {
 		ContractPicSaEmp entity = contractPicSaEmpRepository.findOne(401L);
 		ContractPicSaEmp testTarget = new ContractPicSaEmp();
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setMvEmployeeMaster(null);
 
 		// 正常系
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
@@ -532,7 +512,7 @@ public class TestContract {
 
 		testTarget.setEmployeeName(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 
 		// 異常系（@NotEmptyの空文字列チェック：employeeName）
@@ -541,13 +521,11 @@ public class TestContract {
 
 		testTarget.setEmployeeName("");
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 
 		// 異常系（@Size(max) ：momOrgId orgName salesCompanyName orgPhoneNumber employeeName
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setMvEmployeeMaster(null);
-
 		testTarget.setMomOrgId(STR_256);
 		testTarget.setOrgName(STR_256);
 		testTarget.setSalesCompanyName(STR_256);
@@ -565,14 +543,11 @@ public class TestContract {
 
 		// 異常系（@Max ：orgHierarchyLevel）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setMvEmployeeMaster(null);
-
 		testTarget.setOrgHierarchyLevel(10);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
 
-		// 異常系（@DecimalMax：）
 	}
 
 	@Test
@@ -580,7 +555,6 @@ public class TestContract {
 		Contract entity = contractRepository.findOne(4L);
 		Contract testTarget = new Contract();
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setContractPicSaEmp(null);
 		testTarget.setContractAddedEditorEmpList(null);
 		testTarget.setDealerContractList(null);
 		testTarget.setCustomerContract(null);
@@ -604,7 +578,7 @@ public class TestContract {
 		testTarget.setContractNumber(null);
 		testTarget.setEstimationNumber(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 7);
+		Assert.assertTrue(result.getErrorInfoList().size() == 8);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 
 		// 異常系（@NotEmptyの空文字列チェック：contractNumber estimationNumber）
@@ -617,16 +591,14 @@ public class TestContract {
 		testTarget.setContractNumber("");
 		testTarget.setEstimationNumber("");
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(result.getErrorInfoList().size() == 3);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 
 		// 異常系（@Size(max) ：immutableContIdentNumber caseNumber caseTitle contractNumber
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setContractPicSaEmp(null);
 		testTarget.setContractAddedEditorEmpList(null);
 		testTarget.setDealerContractList(null);
 		testTarget.setCustomerContract(null);
-
 		testTarget.setImmutableContIdentNumber(STR_256);
 		testTarget.setCaseNumber(STR_256);
 		testTarget.setCaseTitle(STR_256);
@@ -646,7 +618,6 @@ public class TestContract {
 
 		// 異常系（@Max ：contractBranchNumber accountSalesFlg estimationBranchNumber）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setContractPicSaEmp(null);
 		testTarget.setContractAddedEditorEmpList(null);
 		testTarget.setDealerContractList(null);
 		testTarget.setCustomerContract(null);
@@ -658,7 +629,6 @@ public class TestContract {
 		Assert.assertTrue(result.getErrorInfoList().size() == 3);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
 
-		// 異常系（@DecimalMax：）
 	}
 
 	@Test
@@ -730,8 +700,6 @@ public class TestContract {
 		Assert.assertTrue(result.getErrorInfoList().size() == 20);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 
-		// 異常系（@Max ：）
-		// 異常系（@DecimalMax：）
 	}
 
 	@Test
@@ -755,8 +723,6 @@ public class TestContract {
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 
-		// 異常系（@NotEmptyの空文字列チェック：）
-
 		// 異常系（@Size(max) ：dealerName postNumber address orgPhoneNumber picName
 		// picDeptName picPhoneNumber picFaxNumber）
 		BeanUtils.copyProperties(testTarget, entity);
@@ -774,8 +740,6 @@ public class TestContract {
 		Assert.assertTrue(result.getErrorInfoList().size() == 8);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 
-		// 異常系（@Max ：）
-		// 異常系（@DecimalMax：）
 	}
 
 	@Test
@@ -816,8 +780,6 @@ public class TestContract {
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
-
-		// 異常系（@Max ：）
 
 		// 異常系（@DecimalMax：partitionPrice）
 		BeanUtils.copyProperties(testTarget, entity);
@@ -865,8 +827,6 @@ public class TestContract {
 		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 
-		// 異常系（@Max ：）
-		// 異常系（@DecimalMax：）
 	}
 
 }

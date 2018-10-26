@@ -197,8 +197,7 @@ public class TestEstimation {
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 11);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
-		// 異常系（@Max ：）
-		// 異常系（@DecimalMax：）
+
 	}
 
 	@Test
@@ -221,7 +220,6 @@ public class TestEstimation {
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 
-		// 異常系（@NotEmptyの空文字列チェック：）
 		// 異常系（@Size(max) ：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setVKjbMaster(null);
@@ -238,10 +236,6 @@ public class TestEstimation {
 		Assert.assertTrue(result.getErrorInfoList().size() == 8);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 
-		// 異常系（@Max ：）
-
-		// 異常系（@DecimalMax：）
-
 	}
 
 	@Test
@@ -251,7 +245,6 @@ public class TestEstimation {
 
 		// 正常系
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setEstimationPicSaEmp(null);
 		testTarget.setCustomerEstimation(null);
 		testTarget.setOperationLogList(null);
 		testTarget.setEstimationAttachedFileList(null);
@@ -279,13 +272,11 @@ public class TestEstimation {
 		testTarget.setEstimationType(null);
 		testTarget.setWorkflowStatus(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 3);
+		Assert.assertTrue(result.getErrorInfoList().size() == 4);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 
-		// 異常系（@NotEmptyの空文字列チェック：）
 		// 異常系（@Size(max) ：）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setEstimationPicSaEmp(null);
 		testTarget.setCustomerEstimation(null);
 		testTarget.setOperationLogList(null);
 		testTarget.setEstimationAttachedFileList(null);
@@ -327,7 +318,6 @@ public class TestEstimation {
 
 		// 異常系（@Max ：）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setEstimationPicSaEmp(null);
 		testTarget.setCustomerEstimation(null);
 		testTarget.setOperationLogList(null);
 		testTarget.setEstimationAttachedFileList(null);
@@ -343,8 +333,6 @@ public class TestEstimation {
 		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
 
-		// 異常系（@DecimalMax：）
-
 	}
 
 	@Test
@@ -352,7 +340,6 @@ public class TestEstimation {
 		EstimationAddedEditorEmp entity = estimationAddedEditorEmpRepository.findOne(401L);
 		EstimationAddedEditorEmp testTarget = new EstimationAddedEditorEmp();
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setMvEmployeeMaster(null);
 
 		// 正常系
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
@@ -364,7 +351,7 @@ public class TestEstimation {
 
 		testTarget.setEmployeeName(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 
 		// 異常系（@NotEmptyの空文字列チェック：）
@@ -373,13 +360,11 @@ public class TestEstimation {
 
 		testTarget.setEmployeeName("");
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 
 		// 異常系（@Size(max) ：）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setMvEmployeeMaster(null);
-
 		testTarget.setMomOrgId(STR_256);
 		testTarget.setOrgName(STR_256);
 		testTarget.setSalesCompanyName(STR_256);
@@ -397,14 +382,11 @@ public class TestEstimation {
 
 		// 異常系（@Max ：）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setMvEmployeeMaster(null);
-
 		testTarget.setOrgHierarchyLevel(INT_10);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
 
-		// 異常系（@DecimalMax：）
 	}
 
 	@Test
@@ -444,9 +426,6 @@ public class TestEstimation {
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 4);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
-
-		// 異常系（@Max ：）
-		// 異常系（@DecimalMax：）
 
 	}
 
@@ -537,7 +516,6 @@ public class TestEstimation {
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
-		// 異常系（@DecimalMax：）
 	}
 
 	@Test
@@ -577,8 +555,6 @@ public class TestEstimation {
 		Assert.assertTrue(result.getErrorInfoList().size() == 4);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 
-		// 異常系（@Max ：id ※ long 型の最大値と同じ。試験実施できない）
-		// 異常系（@DecimalMax：なし）
 	}
 
 	@Test
@@ -626,8 +602,6 @@ public class TestEstimation {
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
 
-		// 異常系（@DecimalMax：）
-
 	}
 
 	@Test
@@ -646,7 +620,6 @@ public class TestEstimation {
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
-		// 異常系（@NotEmptyの空文字列チェック：）
 		// 異常系（@Size(max) ：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setDetailAbstract(STR_256);
@@ -674,7 +647,6 @@ public class TestEstimation {
 
 		// 正常系
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setMvEmployeeMaster(null);
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
@@ -684,7 +656,7 @@ public class TestEstimation {
 
 		testTarget.setEmployeeName(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 		// 異常系（@NotEmptyの空文字列チェック：）
 		BeanUtils.copyProperties(testTarget, entity);
@@ -692,12 +664,10 @@ public class TestEstimation {
 
 		testTarget.setEmployeeName("");
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 		// 異常系（@Size(max) ：）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setMvEmployeeMaster(null);
-
 		testTarget.setMomOrgId(STR_256);
 		testTarget.setOrgName(STR_256);
 		testTarget.setSalesCompanyName(STR_256);
@@ -713,13 +683,10 @@ public class TestEstimation {
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		// 異常系（@Max ：）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setMvEmployeeMaster(null);
-
 		testTarget.setOrgHierarchyLevel(INT_10);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
-		// 異常系（@DecimalMax：）
 	}
 
 	@Test
@@ -757,7 +724,6 @@ public class TestEstimation {
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
-		// 異常系（@Max ：）
 		// 異常系（@DecimalMax：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setPartitionPrice(DECIMAL_10000000000000000000);
@@ -798,8 +764,6 @@ public class TestEstimation {
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
-		// 異常系（@Max ：）
-		// 異常系（@DecimalMax：）
 	}
 
 	@Test
@@ -817,7 +781,6 @@ public class TestEstimation {
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
-		// 異常系（@NotEmptyの空文字列チェック：）
 		// 異常系（@Size(max) ：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setProductEstimationName(STR_256);
@@ -825,8 +788,6 @@ public class TestEstimation {
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
-		// 異常系（@Max ：）
-		// 異常系（@DecimalMax：）
 	}
 
 }

@@ -419,6 +419,7 @@ public class Estimation extends EntityBase {
 	 * 見積担当SA社員
 	 */
 	@OneToOne(mappedBy = "estimation")
+	@NotNull
 	@ApiModelProperty(value = "見積担当SA社員", required = true, position = 46)
 	private EstimationPicSaEmp estimationPicSaEmp;
 
