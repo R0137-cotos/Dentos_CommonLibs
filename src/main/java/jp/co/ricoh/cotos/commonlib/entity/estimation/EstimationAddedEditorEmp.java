@@ -12,7 +12,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -46,7 +45,6 @@ public class EstimationAddedEditorEmp extends EntityBase {
 	 */
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "momEmployeeId", referencedColumnName = "emp_id")
-	@NotNull
 	@ApiModelProperty(value = "RJ社員情報マスタ", required = true, position = 2)
 	private MvEmployeeMaster mvEmployeeMaster;
 

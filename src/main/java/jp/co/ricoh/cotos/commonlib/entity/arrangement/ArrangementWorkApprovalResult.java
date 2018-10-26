@@ -55,8 +55,7 @@ public class ArrangementWorkApprovalResult extends EntityBase {
 	 * 承認処理カテゴリ
 	 */
 	@Column(nullable = false)
-	@NotEmpty
-	@Size(max = 255)
+	@NotNull
 	@ApiModelProperty(value = "承認処理カテゴリ", required = true, position = 3, allowableValues = "range[0,255]")
 	private ApprovalProcessCategory approvalProcessCategory;
 

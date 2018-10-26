@@ -72,7 +72,7 @@ public class ItemContract extends EntityBase {
 	 * リコー品種コード
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "リコー品種コード", required = true, position = 5, allowableValues = "range[0,255]")
 	private String ricohItemCode;
@@ -81,7 +81,7 @@ public class ItemContract extends EntityBase {
 	 * 品種区分
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@ApiModelProperty(value = "品種区分", required = true, position = 6)
 	private ItemType itemType;
 
@@ -89,7 +89,7 @@ public class ItemContract extends EntityBase {
 	 * 費用種別
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@ApiModelProperty(value = "費用種別", required = true, position = 7)
 	private CostType costType;
 

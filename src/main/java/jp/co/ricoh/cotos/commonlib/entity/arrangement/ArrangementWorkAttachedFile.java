@@ -19,6 +19,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import lombok.Data;
@@ -44,7 +46,7 @@ public class ArrangementWorkAttachedFile extends EntityBase {
 	 */
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "arrangement_work_id", referencedColumnName = "id")
-	@NotNull
+	@JsonIgnore
 	@ApiModelProperty(value = "手配業務", required = true, position = 2)
 	private ArrangementWork arrangementWork;
 

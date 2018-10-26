@@ -122,7 +122,7 @@ public class Contract extends EntityBase {
 	 * ライフサイクル状態
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@ApiModelProperty(value = "ライフサイクル状態", required = true, position = 4)
 	private LifecycleStatus lifecycleStatus;
 
@@ -130,7 +130,7 @@ public class Contract extends EntityBase {
 	 * ワークフロー状態
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@ApiModelProperty(value = "ワークフロー状態", required = true, position = 5)
 	private WorkflowStatus workflowStatus;
 
@@ -368,7 +368,6 @@ public class Contract extends EntityBase {
 	 * 契約担当SA社員
 	 */
 	@OneToOne(mappedBy = "contract")
-	@NotNull
 	@ApiModelProperty(value = "契約担当SA社員", required = true, position = 38)
 	private ContractPicSaEmp contractPicSaEmp;
 
@@ -390,7 +389,6 @@ public class Contract extends EntityBase {
 	 * 顧客(契約用)
 	 */
 	@OneToOne(mappedBy = "contract")
-	@NotNull
 	@ApiModelProperty(value = "顧客(契約用)", required = true, position = 41)
 	private CustomerContract customerContract;
 

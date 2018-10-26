@@ -18,6 +18,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import lombok.Data;
@@ -42,7 +44,7 @@ public class ArrangementWorkApprovalRoute extends EntityBase {
 	 * 手配業務
 	 */
 	@OneToOne(optional = false)
-	@NotNull
+	@JsonIgnore
 	@JoinColumn(name = "arrangement_work_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "手配業務", required = true, position = 2)
 	private ArrangementWork arrangementWork;

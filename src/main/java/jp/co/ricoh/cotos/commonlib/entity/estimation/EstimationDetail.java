@@ -15,9 +15,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -52,7 +51,7 @@ public class EstimationDetail extends EntityBase {
 	 * 状態
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@ApiModelProperty(value = "状態", required = true, position = 3)
 	private DetailStatus state;
 

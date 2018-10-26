@@ -15,6 +15,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -56,7 +58,7 @@ public class EstimationCheckResult extends EntityBase {
 	 * 対象ライフサイクル状態
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@ApiModelProperty(value = "対象ライフサイクル状態", required = true, position = 3)
 	private LifecycleStatus targetLifecycleStatus;
 
@@ -81,8 +83,8 @@ public class EstimationCheckResult extends EntityBase {
 	/**
 	 * 表示順
 	 */
+	@Max(999)
 	@Column(nullable = false)
-	@Size(max = 999)
 	@ApiModelProperty(value = "表示順", required = true, position = 6, allowableValues = "range[0,999]")
 	private int displayOrder;
 

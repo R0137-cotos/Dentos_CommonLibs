@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -52,7 +53,7 @@ public class ContractCheckResult extends EntityBase {
 	 * 対象ライフサイクル状態
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@ApiModelProperty(value = "対象ライフサイクル状態", required = true, position = 3)
 	private LifecycleStatus targetLifecycleStatus;
 
@@ -105,7 +106,6 @@ public class ContractCheckResult extends EntityBase {
 	/**
 	 * チェック実施者日時
 	 */
-	@Size(max = 255)
 	@ApiModelProperty(value = "チェック実施者日時", required = false, position = 10, readOnly = true)
 	private Date checkedAt;
 }

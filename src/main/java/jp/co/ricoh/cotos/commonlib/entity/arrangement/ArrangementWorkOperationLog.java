@@ -60,8 +60,7 @@ public class ArrangementWorkOperationLog extends EntityBase {
 	 * 操作内容
 	 */
 	@Column(nullable = false)
-	@NotEmpty
-	@Size(max = 1000)
+	@NotNull
 	@ApiModelProperty(value = "操作内容", required = true, position = 3, allowableValues = "range[0,1000]")
 	@Enumerated(EnumType.STRING)
 	private Operation operation;

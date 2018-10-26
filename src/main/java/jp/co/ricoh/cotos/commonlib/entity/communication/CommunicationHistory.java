@@ -45,7 +45,7 @@ public class CommunicationHistory extends EntityBase {
 	 * サービスカテゴリ
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@ApiModelProperty(value = "サービスカテゴリ", required = true, position = 2)
 	private ServiceCategory serviceCategory;
 
@@ -53,7 +53,7 @@ public class CommunicationHistory extends EntityBase {
 	 * 処理カテゴリー
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@ApiModelProperty(value = "処理カテゴリー", required = true, position = 3)
 	private ProcessCategory processCategory;
 
@@ -73,7 +73,7 @@ public class CommunicationHistory extends EntityBase {
 	 * ワークフロー種別
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@ApiModelProperty(value = "ワークフロー種別", required = true, position = 5)
 	private WorkflowType workflowType;
 
@@ -81,7 +81,7 @@ public class CommunicationHistory extends EntityBase {
 	 * 承認対象種別
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@ApiModelProperty(value = "承認対象種別<br />" //
 			+ "承認フロー⇒新規/情報変更/プラン変更/キャンセル/解約/作業完了報告<br />" //
 			+ "タスクフロー⇒非承認", required = true, position = 6) //

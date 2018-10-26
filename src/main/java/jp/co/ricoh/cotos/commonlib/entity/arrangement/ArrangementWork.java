@@ -18,6 +18,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import lombok.Data;
@@ -63,7 +65,7 @@ public class ArrangementWork extends EntityBase {
 	 */
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "arrangement_id", referencedColumnName = "id")
-	@NotNull
+	@JsonIgnore
 	@ApiModelProperty(value = "手配", required = true, position = 2)
 	private Arrangement arrangement;
 

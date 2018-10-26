@@ -13,10 +13,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
@@ -45,7 +46,6 @@ public class EstimationPicSaEmp extends EntityBase {
 	 */
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "momEmployeeId", referencedColumnName = "emp_id")
-	@NotNull
 	@ApiModelProperty(value = "RJ社員情報マスタ", required = true, position = 2)
 	private MvEmployeeMaster mvEmployeeMaster;
 
@@ -140,7 +140,7 @@ public class EstimationPicSaEmp extends EntityBase {
 	 */
 	@OneToOne(optional = false)
 	@JoinColumn(name = "estimation_id", referencedColumnName = "id")
-	@NotNull
+	@JsonIgnore
 	@ApiModelProperty(value = "見積", required = true, position = 15)
 	private Estimation estimation;
 

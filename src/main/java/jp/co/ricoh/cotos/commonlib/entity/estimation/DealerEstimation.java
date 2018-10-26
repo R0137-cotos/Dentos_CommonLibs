@@ -14,7 +14,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
@@ -44,7 +44,6 @@ public class DealerEstimation extends EntityBase {
 	 */
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "mom_kjb_system_id", referencedColumnName = "mclMomRelId")
-	@NotEmpty
 	@ApiModelProperty(value = "企事部マスタ", required = true, position = 2)
 	private VKjbMaster vKjbMaster;
 
@@ -109,7 +108,7 @@ public class DealerEstimation extends EntityBase {
 	 */
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "estimation_id", referencedColumnName = "id")
-	@NotNull
+	@JsonIgnore
 	@ApiModelProperty(value = "見積", required = true, position = 11)
 	private Estimation estimation;
 
@@ -117,7 +116,7 @@ public class DealerEstimation extends EntityBase {
 	 * 販売店商流順
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@ApiModelProperty(value = "販売店商流順", required = true, position = 12)
 	private DealerFlowOrder dealerFlowOrder;
 

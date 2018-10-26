@@ -79,14 +79,14 @@ public class ItemEstimation extends EntityBase {
 	/**
 	 * 品種区分
 	 */
-	@NotEmpty
+	@NotNull
 	@ApiModelProperty(value = "品種区分", required = true, position = 6)
 	private ItemType itemType;
 
 	/**
 	 * 費用種別
 	 */
-	@NotEmpty
+	@NotNull
 	@ApiModelProperty(value = "費用種別", required = true, position = 7)
 	private CostType costType;
 

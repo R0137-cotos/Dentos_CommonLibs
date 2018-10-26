@@ -2,6 +2,7 @@ package jp.co.ricoh.cotos.commonlib.check;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import jp.co.ricoh.cotos.commonlib.DBConfig;
 import jp.co.ricoh.cotos.commonlib.TestTools;
+import jp.co.ricoh.cotos.commonlib.TestTools.ParameterErrorIds;
 import jp.co.ricoh.cotos.commonlib.entity.arrangement.Arrangement;
 import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangementPicWorkerEmp;
 import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangementWork;
@@ -47,6 +49,7 @@ public class TestArrangement {
 
 	private static final String STR_256 = "0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345";
 	private static final String STR_1025 = "01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234";
+	private static final String STR_4001 = "01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
 
 	static ConfigurableApplicationContext context;
 
@@ -87,7 +90,7 @@ public class TestArrangement {
 	public void injectContext(ConfigurableApplicationContext injectContext) {
 		context = injectContext;
 		context.getBean(DBConfig.class).clearData();
-		context.getBean(DBConfig.class).initTargetTestData("repository/contract.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/arrangement.sql");
 	}
 
 	@Autowired
@@ -106,153 +109,382 @@ public class TestArrangement {
 
 	@Test
 	public void ArrangementPicWorkerEmpのテスト() throws Exception {
-		ArrangementPicWorkerEmp entity = arrangementPicWorkerEmpRepository.findOne(null);
+		ArrangementPicWorkerEmp entity = arrangementPicWorkerEmpRepository.findOne(401L);
 		ArrangementPicWorkerEmp testTarget = new ArrangementPicWorkerEmp();
-		BeanUtils.copyProperties(entity, testTarget);
+		BeanUtils.copyProperties(testTarget, entity);
 
 		// 正常系
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
-		// 異常系（@NotNull、@NotEmptyの null チェック：）
+		// 異常系（@NotNull、@NotEmptyの null チェック：mvEmployeeMaster
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setMvEmployeeMaster(null);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+
 		// 異常系（@NotEmptyの空文字列チェック：）
-		// 異常系（@Size(max) ：）
+
+		// 異常系（@Size(max) ：momOrgId orgHierarchyLevel orgName salesCompanyName
+		// orgPhoneNumber employeeName salesDepartmentName postNumber address
+		// phoneNumber faxNumber mailAddress）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setMomOrgId(STR_256);
+		testTarget.setOrgHierarchyLevel(STR_256);
+		testTarget.setOrgName(STR_256);
+		testTarget.setSalesCompanyName(STR_256);
+		testTarget.setOrgPhoneNumber(STR_256);
+		testTarget.setEmployeeName(STR_256);
+		testTarget.setSalesDepartmentName(STR_256);
+		testTarget.setPostNumber(STR_256);
+		testTarget.setAddress(STR_1025);
+		testTarget.setPhoneNumber(STR_256);
+		testTarget.setFaxNumber(STR_256);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 11);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+
 		// 異常系（@Max ：）
 		// 異常系（@DecimalMax：）
 	}
 
 	@Test
 	public void Arrangementのテスト() throws Exception {
-		Arrangement entity = arrangementRepository.findOne(null);
+		Arrangement entity = arrangementRepository.findOne(4L);
 		Arrangement testTarget = new Arrangement();
-		BeanUtils.copyProperties(entity, testTarget);
+		entity.setArrangementWorkList(null);
+		BeanUtils.copyProperties(testTarget, entity);
 
 		// 正常系
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
-		// 異常系（@NotNull、@NotEmptyの null チェック：）
+		// 異常系（@NotNull、@NotEmptyの null チェック：workflowStatus）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setWorkflowStatus(null);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+
 		// 異常系（@NotEmptyの空文字列チェック：）
 		// 異常系（@Size(max) ：）
-		// 異常系（@Max ：）
+		// 異常系（@Max ：disengagementFlg）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setDisengagementFlg(10);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
+
 		// 異常系（@DecimalMax：）
 	}
 
 	@Test
 	public void ArrangementWorkApprovalResultのテスト() throws Exception {
-		ArrangementWorkApprovalResult entity = arrangementWorkApprovalResultRepository.findOne(null);
+		ArrangementWorkApprovalResult entity = arrangementWorkApprovalResultRepository.findOne(401L);
 		ArrangementWorkApprovalResult testTarget = new ArrangementWorkApprovalResult();
-		BeanUtils.copyProperties(entity, testTarget);
+		BeanUtils.copyProperties(testTarget, entity);
 
 		// 正常系
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
-		// 異常系（@NotNull、@NotEmptyの null チェック：）
-		// 異常系（@NotEmptyの空文字列チェック：）
-		// 異常系（@Size(max) ：）
+		// 異常系（@NotNull、@NotEmptyの null チェック：processedAt approvalProcessCategory
+		// actualEmpId actualUserName）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setProcessedAt(null);
+		testTarget.setApprovalProcessCategory(null);
+		testTarget.setActualEmpId(null);
+		testTarget.setActualUserName(null);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 4);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+
+		// 異常系（@NotEmptyの空文字列チェック：actualEmpId actualUserName）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setActualEmpId("");
+		testTarget.setActualUserName("");
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+
+		// 異常系（@Size(max) ：actualEmpId actualUserName actualOrgName requestComment）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setActualEmpId(STR_256);
+		testTarget.setActualUserName(STR_256);
+		testTarget.setActualOrgName(STR_256);
+		testTarget.setRequestComment(STR_256);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 4);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+
 		// 異常系（@Max ：）
 		// 異常系（@DecimalMax：）
 	}
 
 	@Test
 	public void ArrangementWorkApprovalRouteNodeのテスト() throws Exception {
-		ArrangementWorkApprovalRouteNode entity = arrangementWorkApprovalRouteNodeRepository.findOne(null);
+		ArrangementWorkApprovalRouteNode entity = arrangementWorkApprovalRouteNodeRepository.findOne(401L);
 		ArrangementWorkApprovalRouteNode testTarget = new ArrangementWorkApprovalRouteNode();
-		BeanUtils.copyProperties(entity, testTarget);
+		BeanUtils.copyProperties(testTarget, entity);
 
 		// 正常系
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
-		// 異常系（@NotNull、@NotEmptyの null チェック：）
-		// 異常系（@NotEmptyの空文字列チェック：）
-		// 異常系（@Size(max) ：）
-		// 異常系（@Max ：）
+		// 異常系（@NotNull、@NotEmptyの null チェック：arrangementWorkApprovalRoute approverEmpId
+		// approverName）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setArrangementWorkApprovalRoute(null);
+		testTarget.setApproverEmpId(null);
+		testTarget.setApproverName(null);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+
+		// 異常系（@NotEmptyの空文字列チェック：approverEmpId approverName）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setApproverEmpId("");
+		testTarget.setApproverName("");
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+
+		// 異常系（@Size(max) ：approverEmpId approverName approverOrgName subApproverEmpId
+		// subApproverName subApproverOrgName）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setApproverEmpId(STR_256);
+		testTarget.setApproverName(STR_256);
+		testTarget.setApproverOrgName(STR_256);
+		testTarget.setSubApproverEmpId(STR_256);
+		testTarget.setSubApproverName(STR_256);
+		testTarget.setSubApproverOrgName(STR_256);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 6);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+
+		// 異常系（@Max ： approvalOrder approverOrgLevel）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setApprovalOrder(1000L);
+		testTarget.setApproverOrgLevel(10);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
+
 		// 異常系（@DecimalMax：）
 	}
 
 	@Test
 	public void ArrangementWorkApprovalRouteのテスト() throws Exception {
-		ArrangementWorkApprovalRoute entity = arrangementWorkApprovalRouteRepository.findOne(null);
+		ArrangementWorkApprovalRoute entity = arrangementWorkApprovalRouteRepository.findOne(401L);
 		ArrangementWorkApprovalRoute testTarget = new ArrangementWorkApprovalRoute();
-		BeanUtils.copyProperties(entity, testTarget);
+		BeanUtils.copyProperties(testTarget, entity);
 
 		// 正常系
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
-		// 異常系（@NotNull、@NotEmptyの null チェック：）
-		// 異常系（@NotEmptyの空文字列チェック：）
-		// 異常系（@Size(max) ：）
+		// 異常系（@NotNull、@NotEmptyの null チェック：arrangementWork
+		// arrangementWorkApprovalRouteNodeList approvalRequesterEmpId
+		// approvalRequesterName）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setArrangementWork(null);
+		testTarget.setArrangementWorkApprovalRouteNodeList(null);
+		testTarget.setApprovalRequesterEmpId(null);
+		testTarget.setApprovalRequesterName(null);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 3);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+
+		// 異常系（@NotEmptyの空文字列チェック：approvalRequesterEmpId approvalRequesterName）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setApprovalRequesterEmpId("");
+		testTarget.setApprovalRequesterName("");
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+
+		// 異常系（@Size(max) ：approvalRequesterEmpId approvalRequesterName
+		// approvalRequesterOrgName ）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setApprovalRequesterEmpId(STR_256);
+		testTarget.setApprovalRequesterName(STR_256);
+		testTarget.setApprovalRequesterOrgName(STR_256);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 3);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+
 		// 異常系（@Max ：）
 		// 異常系（@DecimalMax：）
 	}
 
 	@Test
 	public void ArrangementWorkAttachedFileのテスト() throws Exception {
-		ArrangementWorkAttachedFile entity = arrangementWorkAttachedFileRepository.findOne(null);
+		ArrangementWorkAttachedFile entity = arrangementWorkAttachedFileRepository.findOne(401L);
 		ArrangementWorkAttachedFile testTarget = new ArrangementWorkAttachedFile();
-		BeanUtils.copyProperties(entity, testTarget);
+		BeanUtils.copyProperties(testTarget, entity);
 
 		// 正常系
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
-		// 異常系（@NotNull、@NotEmptyの null チェック：）
-		// 異常系（@NotEmptyの空文字列チェック：）
-		// 異常系（@Size(max) ：）
+		// 異常系（@NotNull、@NotEmptyの null チェック：arrangementWork attachedAt attachedFilePath
+		// attachedEmpId attachedEmpName）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setArrangementWork(null);
+		testTarget.setAttachedAt(null);
+		testTarget.setAttachedFilePath(null);
+		testTarget.setAttachedEmpId(null);
+		testTarget.setAttachedEmpName(null);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		System.out.println(result.getErrorInfoList().size());
+		Assert.assertTrue(result.getErrorInfoList().size() == 4);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+
+		// 異常系（@NotEmptyの空文字列チェック：attachedFilePath attachedEmpId attachedEmpName）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setAttachedFilePath("");
+		testTarget.setAttachedEmpId("");
+		testTarget.setAttachedEmpName("");
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 3);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+
+		// 異常系（@Size(max) ：fileKind attachedFilePath attachedComment attachedEmpId
+		// attachedEmpName attachedOrgName ）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setFileKind(STR_256);
+		testTarget.setAttachedFilePath(STR_1025);
+		testTarget.setAttachedComment(STR_1025);
+		testTarget.setAttachedEmpId(STR_256);
+		testTarget.setAttachedEmpName(STR_256);
+		testTarget.setAttachedOrgName(STR_256);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 6);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+
 		// 異常系（@Max ：）
 		// 異常系（@DecimalMax：）
 	}
 
 	@Test
 	public void ArrangementWorkCheckResultのテスト() throws Exception {
-		ArrangementWorkCheckResult entity = arrangementWorkCheckResultRepository.findOne(null);
+		ArrangementWorkCheckResult entity = arrangementWorkCheckResultRepository.findOne(401L);
 		ArrangementWorkCheckResult testTarget = new ArrangementWorkCheckResult();
-		BeanUtils.copyProperties(entity, testTarget);
+		BeanUtils.copyProperties(testTarget, entity);
 
 		// 正常系
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
-		// 異常系（@NotNull、@NotEmptyの null チェック：）
-		// 異常系（@NotEmptyの空文字列チェック：）
-		// 異常系（@Size(max) ：）
-		// 異常系（@Max ：）
+		// 異常系（@NotNull、@NotEmptyの null チェック：checkMatterCode checkMatterText）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setCheckMatterCode(null);
+		testTarget.setCheckMatterText(null);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+
+		// 異常系（@NotEmptyの空文字列チェック：checkMatterCode checkMatterText）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setCheckMatterCode("");
+		testTarget.setCheckMatterText("");
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+
+		// 異常系（@Size(max) ：checkMatterCode checkMatterText checkedUserId
+		// checkedUserName checkedOrgName）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setCheckMatterCode(STR_256);
+		testTarget.setCheckMatterText(STR_256);
+		testTarget.setCheckedUserId(STR_256);
+		testTarget.setCheckedUserName(STR_256);
+		testTarget.setCheckedOrgName(STR_256);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 5);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+
+		// 異常系（@Max ：displayOrder）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setDisplayOrder(1000);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
+
 		// 異常系（@DecimalMax：）
 	}
 
 	@Test
 	public void ArrangementWorkOperationLogのテスト() throws Exception {
-		ArrangementWorkOperationLog entity = arrangementWorkOperationLogRepository.findOne(null);
+		ArrangementWorkOperationLog entity = arrangementWorkOperationLogRepository.findOne(401L);
 		ArrangementWorkOperationLog testTarget = new ArrangementWorkOperationLog();
-		BeanUtils.copyProperties(entity, testTarget);
+		BeanUtils.copyProperties(testTarget, entity);
 
 		// 正常系
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
-		// 異常系（@NotNull、@NotEmptyの null チェック：）
-		// 異常系（@NotEmptyの空文字列チェック：）
-		// 異常系（@Size(max) ：）
+		// 異常系（@NotNull、@NotEmptyの null チェック：operatedAt operation operatorEmpId
+		// operatorName）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setOperatedAt(null);
+		testTarget.setOperation(null);
+		testTarget.setOperatorEmpId(null);
+		testTarget.setOperatorName(null);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 4);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+
+		// 異常系（@NotEmptyの空文字列チェック：operatorEmpId operatorName）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setOperatorEmpId("");
+		testTarget.setOperatorName("");
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+
+		// 異常系（@Size(max) ：operatorEmpId operatorName operatorOrgName）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setOperatorEmpId(STR_256);
+		testTarget.setOperatorName(STR_256);
+		testTarget.setOperatorOrgName(STR_256);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 3);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+
 		// 異常系（@Max ：）
 		// 異常系（@DecimalMax：）
 	}
 
 	@Test
 	public void ArrangementWorkのテスト() throws Exception {
-		ArrangementWork entity = arrangementWorkRepository.findOne(null);
+		ArrangementWork entity = arrangementWorkRepository.findOne(401L);
 		ArrangementWork testTarget = new ArrangementWork();
-		BeanUtils.copyProperties(entity, testTarget);
+		BeanUtils.copyProperties(testTarget, entity);
 
 		// 正常系
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
-		// 異常系（@NotNull、@NotEmptyの null チェック：）
+		// 異常系（@NotNull、@NotEmptyの null チェック：arrangement workflowStatus
+		// arrangementWorkApprovalRoute ）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setArrangement(null);
+		testTarget.setWorkflowStatus(null);
+		testTarget.setArrangementWorkApprovalRoute(null);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+
 		// 異常系（@NotEmptyの空文字列チェック：）
-		// 異常系（@Size(max) ：）
+		// 異常系（@Size(max) ：memo）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setMemo(STR_4001);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+
 		// 異常系（@Max ：）
 		// 異常系（@DecimalMax：）
 	}

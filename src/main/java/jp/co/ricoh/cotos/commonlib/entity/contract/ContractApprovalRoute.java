@@ -55,7 +55,7 @@ public class ContractApprovalRoute extends EntityBase {
 	 * 対象ライフサイクル状態
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@ApiModelProperty(value = "対象ライフサイクル状態", required = true, position = 3)
 	private LifecycleStatus targetLifecycleStatus;
 

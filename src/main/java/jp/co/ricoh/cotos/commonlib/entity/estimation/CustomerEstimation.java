@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -46,7 +47,6 @@ public class CustomerEstimation extends EntityBase {
 	 */
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "mom_kjb_system_id", referencedColumnName = "mclMomRelId")
-	@NotEmpty
 	@ApiModelProperty(value = "企事部マスタ", required = true, position = 2)
 	private VKjbMaster vKjbMaster;
 
@@ -81,7 +81,7 @@ public class CustomerEstimation extends EntityBase {
 	 * 企事部設定区分
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@ApiModelProperty(value = "企事部設定区分", required = true, position = 6)
 	private DepartmentDiv departmentDiv;
 
