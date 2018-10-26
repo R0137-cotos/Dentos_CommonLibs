@@ -32,7 +32,7 @@ public class CommonSendMail {
 	@Autowired
 	MailTemplateMasterRepository mailTemplateMasterRepository;
 
-	@Autowired
+	@Autowired(required = false)
 	JavaMailSender javaMailSender;
 
 	@Autowired
