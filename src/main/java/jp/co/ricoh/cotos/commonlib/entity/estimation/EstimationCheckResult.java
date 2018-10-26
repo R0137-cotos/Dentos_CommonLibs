@@ -15,6 +15,11 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -53,6 +58,7 @@ public class EstimationCheckResult extends EntityBase {
 	 * 対象ライフサイクル状態
 	 */
 	@Column(nullable = false)
+	@NotNull
 	@ApiModelProperty(value = "対象ライフサイクル状態", required = true, position = 3)
 	private LifecycleStatus targetLifecycleStatus;
 
@@ -60,6 +66,8 @@ public class EstimationCheckResult extends EntityBase {
 	 * チェック事項コード
 	 */
 	@Column(nullable = false)
+	@NotEmpty
+	@Size(max = 255)
 	@ApiModelProperty(value = "チェック事項コード", required = true, position = 4, allowableValues = "range[0,255]")
 	private String checkMatterCode;
 
@@ -67,12 +75,15 @@ public class EstimationCheckResult extends EntityBase {
 	 * チェック事項文面
 	 */
 	@Column(nullable = false)
+	@NotEmpty
+	@Size(max = 255)
 	@ApiModelProperty(value = "チェック事項文面", required = true, position = 5, allowableValues = "range[0,255]")
 	private String checkMatterText;
 
 	/**
 	 * 表示順
 	 */
+	@Max(999)
 	@Column(nullable = false)
 	@ApiModelProperty(value = "表示順", required = true, position = 6, allowableValues = "range[0,999]")
 	private int displayOrder;
@@ -80,18 +91,21 @@ public class EstimationCheckResult extends EntityBase {
 	/**
 	 * チェック実施者
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "チェック実施者", required = false, position = 7, allowableValues = "range[0,255]")
 	private String checkedUserId;
 
 	/**
 	 * チェック実施者氏名
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "チェック実施者氏名", required = false, position = 8, allowableValues = "range[0,255]")
 	private String checkedUserName;
 
 	/**
 	 * チェック実施者組織名
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "チェック実施者組織名", required = false, position = 9, allowableValues = "range[0,255]")
 	private String checkedOrgName;
 

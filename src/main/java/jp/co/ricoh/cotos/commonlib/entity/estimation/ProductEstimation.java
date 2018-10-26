@@ -15,6 +15,9 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -51,6 +54,8 @@ public class ProductEstimation extends EntityBase {
 	 * 商品名
 	 */
 	@Column(nullable = false)
+	@NotEmpty
+	@Size(max = 255)
 	@ApiModelProperty(value = "商品名", required = true, position = 3, allowableValues = "range[0,255]")
 	private String productEstimationName;
 
@@ -78,6 +83,7 @@ public class ProductEstimation extends EntityBase {
 	/**
 	 * サービス識別番号
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "サービス識別番号", required = false, position = 7, allowableValues = "range[0,255]")
 	private String serviceIdentNumber;
 

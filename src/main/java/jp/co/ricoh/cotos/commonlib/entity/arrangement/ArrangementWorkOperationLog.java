@@ -17,6 +17,10 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -58,6 +62,7 @@ public class ArrangementWorkOperationLog extends EntityBase {
 	 * 操作内容
 	 */
 	@Column(nullable = false)
+	@NotNull
 	@ApiModelProperty(value = "操作内容", required = true, position = 3, allowableValues = "range[0,1000]")
 	@Enumerated(EnumType.STRING)
 	private Operation operation;
@@ -66,6 +71,8 @@ public class ArrangementWorkOperationLog extends EntityBase {
 	 * 操作者MoM社員ID
 	 */
 	@Column(nullable = false)
+	@NotEmpty
+	@Size(max = 255)
 	@ApiModelProperty(value = "操作者MoM社員ID", required = true, position = 4, allowableValues = "range[0,255]")
 	private String operatorEmpId;
 
@@ -73,12 +80,15 @@ public class ArrangementWorkOperationLog extends EntityBase {
 	 * 操作者氏名
 	 */
 	@Column(nullable = false)
+	@NotEmpty
+	@Size(max = 255)
 	@ApiModelProperty(value = "操作者氏名", required = true, position = 5, allowableValues = "range[0,255]")
 	private String operatorName;
 
 	/**
 	 * 操作者組織名
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "操作者組織名", required = false, position = 6, allowableValues = "range[0,255]")
 	private String operatorOrgName;
 
@@ -86,6 +96,7 @@ public class ArrangementWorkOperationLog extends EntityBase {
 	 * 実施日時
 	 */
 	@Column(nullable = false)
+	@NotNull
 	@ApiModelProperty(value = "実施日時", required = true, position = 7, readOnly = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date operatedAt;

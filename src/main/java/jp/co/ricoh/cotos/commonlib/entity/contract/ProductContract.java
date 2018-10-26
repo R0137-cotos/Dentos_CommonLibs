@@ -15,6 +15,10 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -50,6 +54,8 @@ public class ProductContract extends EntityBase {
 	 * 商品名
 	 */
 	@Column(nullable = false)
+	@NotEmpty
+	@Size(max = 255)
 	@ApiModelProperty(value = "商品名", required = true, position = 3, allowableValues = "range[0,255]")
 	private String productContractName;
 
@@ -64,6 +70,7 @@ public class ProductContract extends EntityBase {
 	 * 積上げ可能期間(開始日)
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
+	@NotNull
 	@ApiModelProperty(value = "積上げ可能期間(開始日)", required = false, position = 5)
 	private Date effectiveFrom;
 
@@ -71,6 +78,7 @@ public class ProductContract extends EntityBase {
 	 * 積上げ可能期間(終了日)
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
+	@NotNull
 	@ApiModelProperty(value = "積上げ可能期間(終了日)", required = false, position = 6)
 	private Date effectiveTo;
 
@@ -78,6 +86,8 @@ public class ProductContract extends EntityBase {
 	 * サービス識別番号
 	 */
 	@Column(nullable = false)
+	@NotEmpty
+	@Size(max = 255)
 	@ApiModelProperty(value = "サービス識別番号", required = true, position = 7, allowableValues = "range[0,255]")
 	private String serviceIdentNumber;
 

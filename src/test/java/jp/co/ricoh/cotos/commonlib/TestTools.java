@@ -11,9 +11,26 @@ import org.springframework.stereotype.Component;
 
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
+import jp.co.ricoh.cotos.commonlib.exception.ErrorInfo;
+import jp.co.ricoh.cotos.commonlib.security.bean.ParamterCheckResult;
 
 @Component
 public class TestTools {
+
+	/**
+	 * パラメータチェックで使用するエラーID
+	 * 
+	 * @author hideto.yamanaka
+	 *
+	 */
+	public enum ParameterErrorIds {
+		/** NotNull、NotEmpty：EntityCheckNotNullError（{0}が設定されていません。） */
+		ROT00013,
+		/** Size：EntityCheckStringSizeError（{0}は最大文字数（{1}）を超えています。） */
+		ROT00014,
+		/** Max：EntityCheckNumberMaxError（{0}は最大値（{1}）を超えています。） */
+		ROT00015;
+	}
 
 	public <T> String findNullProperties(T entity) throws Exception {
 		Map<String, String> entityMap = BeanUtils.describe(entity);
@@ -24,7 +41,7 @@ public class TestTools {
 
 	/**
 	 * エンティティクラスのフィールドの設定値に null が含まれるか
-	 * 
+	 *
 	 * @param entity
 	 * @throws Exception
 	 */
@@ -34,7 +51,7 @@ public class TestTools {
 
 	/**
 	 * エンティティクラスのフィールドの設定値に null が含まれるか
-	 * 
+	 *
 	 * @param entity
 	 * @throws Exception
 	 */
@@ -76,4 +93,38 @@ public class TestTools {
 		return false;
 
 	}
+
+	/**
+	 * 入力チェックエラーが発生しなことを確認するアサーション
+	 * 
+	 * @param result
+	 *            Entity のパラメータチェックの実行結果
+	 */
+	public void assertValidationOk(ParamterCheckResult result) {
+		Assert.assertTrue(result == null || result.getErrorInfoList() == null || result.getErrorInfoList().size() == 0);
+	}
+
+	/**
+	 * 入力チェックエラーが発生するを確認するアサーション
+	 * 
+	 * @param result
+	 *            Entity のパラメータチェックの実行結果
+	 */
+	public void assertValidationNg(ParamterCheckResult result) {
+		Assert.assertTrue(result != null && result.getErrorInfoList() != null && result.getErrorInfoList().size() > 0);
+	}
+
+	/**
+	 * ErrorInfo のエラー ID が全て指定したものと同じであるかどうかを判定する
+	 * 
+	 * @param errorInfoList
+	 *            ErrorInfo のリスト
+	 * @param paramterErrorId
+	 *            エラーID
+	 * @return boolean 判定結果（true：全て一致 false：不一致あり）
+	 */
+	public boolean errorIdMatchesAll(List<ErrorInfo> errorInfoList, ParameterErrorIds paramterErrorId) {
+		return (errorInfoList.size() == (int) errorInfoList.stream().filter(info -> info != null && paramterErrorId.toString().equals(info.getErrorId())).count());
+	}
+
 }

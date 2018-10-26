@@ -17,6 +17,10 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -46,7 +50,7 @@ public class Contact extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@ApiModelProperty(value = "見積ID", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
-	private String estimationId;
+	private long estimationId;
 
 	/**
 	 * 親問い合わせ
@@ -68,6 +72,8 @@ public class Contact extends EntityBase {
 	 * 送信者MoM社員ID
 	 */
 	@Column(nullable = false)
+	@NotEmpty
+	@Size(max = 255)
 	@ApiModelProperty(value = "送信者MoM社員ID", required = true, position = 4, allowableValues = "range[0,255]")
 	private String contactFromEmpId;
 
@@ -81,6 +87,7 @@ public class Contact extends EntityBase {
 	/**
 	 * タイトル
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "タイトル", required = false, position = 6, allowableValues = "range[0,255]")
 	private String title;
 
@@ -95,6 +102,7 @@ public class Contact extends EntityBase {
 	 * 送信日時
 	 */
 	@Column(nullable = false)
+	@NotNull
 	@ApiModelProperty(value = "送信日時", required = true, position = 8, readOnly = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date sendAt;
@@ -103,6 +111,7 @@ public class Contact extends EntityBase {
 	 * 宛先
 	 */
 	@OneToMany(mappedBy = "contact")
+	@NotNull
 	@ApiModelProperty(value = "宛先", required = true, position = 9)
 	private List<ContactTo> contactToList;
 

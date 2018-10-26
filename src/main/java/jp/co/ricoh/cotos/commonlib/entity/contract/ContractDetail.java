@@ -13,6 +13,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -50,6 +54,7 @@ public class ContractDetail extends EntityBase {
 	 * 状態
 	 */
 	@Column(nullable = false)
+	@NotNull
 	@ApiModelProperty(value = "状態", required = true, position = 3)
 	private DetailStatus state;
 
@@ -57,6 +62,7 @@ public class ContractDetail extends EntityBase {
 	 * 数量
 	 */
 	@Column(nullable = false)
+	@Max(99999)
 	@ApiModelProperty(value = "数量", required = true, position = 4, allowableValues = "range[0,99999]")
 	private int quantity;
 
@@ -64,12 +70,15 @@ public class ContractDetail extends EntityBase {
 	 * 見積金額
 	 */
 	@Column(nullable = false)
+	@NotNull
+	@DecimalMax("9999999999999999999.99")
 	@ApiModelProperty(value = "見積金額", required = true, position = 5, allowableValues = "range[0.00,9999999999999999999.99]")
 	private BigDecimal amountSummary;
 
 	/**
 	 * 摘要
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "摘要", required = false, position = 6, allowableValues = "range[0,255]")
 	private String detailAbstract;
 

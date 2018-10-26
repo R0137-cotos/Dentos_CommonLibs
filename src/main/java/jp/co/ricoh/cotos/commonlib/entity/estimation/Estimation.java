@@ -18,6 +18,12 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
@@ -111,6 +117,7 @@ public class Estimation extends EntityBase {
 	 * ライフサイクル状態
 	 */
 	@Column(nullable = false)
+	@NotNull
 	@ApiModelProperty(value = "ライフサイクル状態", required = true, position = 3)
 	private LifecycleStatus lifecycleStatus;
 
@@ -118,30 +125,36 @@ public class Estimation extends EntityBase {
 	 * ワークフロー状態
 	 */
 	@Column(nullable = false)
+	@NotNull
 	@ApiModelProperty(value = "ワークフロー状態", required = true, position = 4)
 	private WorkflowStatus workflowStatus;
 
 	/**
 	 * 恒久契約識別番号
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "恒久契約識別番号", required = false, position = 5, allowableValues = "range[0,255]")
 	private String immutableContIdentNumber;
 
 	/**
 	 * 案件番号
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "案件番号", required = false, position = 6, allowableValues = "range[0,255]")
 	private String caseNumber;
 
 	/**
 	 * 案件名
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "案件名", required = false, position = 7, allowableValues = "range[0,255]")
 	private String caseTitle;
 
 	/**
 	 * 見積番号
 	 */
+	@NotEmpty
+	@Size(max = 255)
 	@Column(nullable = false)
 	@ApiModelProperty(value = "見積番号", required = true, position = 8, allowableValues = "range[0,255]", readOnly = true)
 	private String estimationNumber;
@@ -150,12 +163,14 @@ public class Estimation extends EntityBase {
 	 * 見積番号枝番
 	 */
 	@Column(nullable = false)
+	@Max(99)
 	@ApiModelProperty(value = "見積番号枝番", required = true, position = 9, allowableValues = "range[0,99]", readOnly = true)
 	private int estimationBranchNumber;
 
 	/**
 	 * 見積件名
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "見積件名", required = false, position = 10, allowableValues = "range[0,255]")
 	private String estimationTitle;
 
@@ -163,6 +178,7 @@ public class Estimation extends EntityBase {
 	 * 見積種別
 	 */
 	@Column(nullable = false)
+	@NotNull
 	@ApiModelProperty(value = "見積種別", required = true, position = 11)
 	private EstimationType estimationType;
 
@@ -175,12 +191,14 @@ public class Estimation extends EntityBase {
 	/**
 	 * 変更元契約番号
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "変更元契約番号", required = false, position = 13, allowableValues = "range[0,255]")
 	private String originContractNumber;
 
 	/**
 	 * 変更元契約番号枝番
 	 */
+	@Max(99)
 	@ApiModelProperty(value = "変更元契約番号枝番", required = false, position = 14, allowableValues = "range[0,99]")
 	private Integer originContractBranchNumber;
 
@@ -193,24 +211,28 @@ public class Estimation extends EntityBase {
 	/**
 	 * 商流区分
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "商流区分", required = false, position = 16, allowableValues = "range[0,255]")
 	private String commercialFlowDiv;
 
 	/**
 	 * 発行書式
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "発行書式", required = false, position = 17, allowableValues = "range[0,255]")
 	private String issueFormat;
 
 	/**
 	 * 帳票用見積件名
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "帳票用見積件名", required = false, position = 18, allowableValues = "range[0,255]")
 	private String issueEstimationTitle;
 
 	/**
 	 * 帳票用顧客企業名
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "帳票用顧客企業名", required = false, position = 19, allowableValues = "range[0,255]")
 	private String issueCustomerCorpName;
 
@@ -224,24 +246,28 @@ public class Estimation extends EntityBase {
 	/**
 	 * 見積鑑用企業名
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "見積鑑用企業名", required = false, position = 21, allowableValues = "range[0,255]")
 	private String coverCompanyName;
 
 	/**
 	 * 見積鑑用敬称
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "見積鑑用敬称", required = false, position = 22, allowableValues = "range[0,255]")
 	private String coverTitle;
 
 	/**
 	 * 見積鑑用見積件名
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "見積鑑用見積件名", required = false, position = 23, allowableValues = "range[0,255]")
 	private String coverEstimationSubject;
 
 	/**
 	 * 見積鑑用支払条件
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "見積鑑用支払条件", required = false, position = 24, allowableValues = "range[0,255]")
 	private String coverPaymentTerms;
 
@@ -260,6 +286,7 @@ public class Estimation extends EntityBase {
 	/**
 	 * 見積鑑用備考
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "見積鑑用備考", required = false, position = 27, allowableValues = "range[0,255]")
 	private String coverRemarks;
 
@@ -273,78 +300,91 @@ public class Estimation extends EntityBase {
 	/**
 	 * 見積発行元会社名
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "見積発行元会社名", required = false, position = 29, allowableValues = "range[0,255]")
 	private String publishCompany;
 
 	/**
 	 * 見積発行元所属
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "見積発行元所属", required = false, position = 30, allowableValues = "range[0,255]")
 	private String publishDepartment;
 
 	/**
 	 * 見積発行元郵便番号
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "見積発行元郵便番号", required = false, position = 31, allowableValues = "range[0,255]")
 	private String publishPostNumber;
 
 	/**
 	 * 見積発行元住所
 	 */
+	@Size(max = 1000)
 	@ApiModelProperty(value = "見積発行元住所", required = false, position = 32, allowableValues = "range[0,1000]")
 	private String publishAddress;
 
 	/**
 	 * 見積発行元電話番号
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "見積発行元電話番号", required = false, position = 33, allowableValues = "range[0,255]")
 	private String publishTel;
 
 	/**
 	 * 見積発行元FAX番号
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "見積発行元FAX番号", required = false, position = 34, allowableValues = "range[0,255]")
 	private String publishFax;
 
 	/**
 	 * 見積発行元担当者名
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "見積発行元担当者名", required = false, position = 35, allowableValues = "range[0,255]")
 	private String publishEmployee;
 
 	/**
 	 * 特価希望理由
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "特価希望理由", required = false, position = 36, allowableValues = "range[0,255]")
 	private String spPriceApplyReason;
 
 	/**
 	 * 特価希望理由テキスト
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "特価希望理由テキスト", required = false, position = 37, allowableValues = "range[0,255]")
 	private String spPriceApplyReasonText;
 
 	/**
 	 * 主競合先名称
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "主競合先名称", required = false, position = 38, allowableValues = "range[0,255]")
 	private String mainCompetitorName;
 
 	/**
 	 * 競合情報
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "競合情報", required = false, position = 39, allowableValues = "range[0,255]")
 	private String competitionInfo;
 
 	/**
 	 * 競合先契約種別
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "競合先契約種別", required = false, position = 40, allowableValues = "range[0,255]")
 	private String competitionContractDiv;
 
 	/**
 	 * 競合先基本料金
 	 */
+	@DecimalMax("9999999999999999999.99")
 	@ApiModelProperty(value = "競合先基本料金", required = false, position = 41, allowableValues = "range[0.00,9999999999999999999.99]")
 	private BigDecimal competitionAmount;
 
@@ -379,6 +419,7 @@ public class Estimation extends EntityBase {
 	 * 見積担当SA社員
 	 */
 	@OneToOne(mappedBy = "estimation")
+	@NotNull
 	@ApiModelProperty(value = "見積担当SA社員", required = true, position = 46)
 	private EstimationPicSaEmp estimationPicSaEmp;
 

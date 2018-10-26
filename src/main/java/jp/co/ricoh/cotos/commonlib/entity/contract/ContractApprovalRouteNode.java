@@ -9,6 +9,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -45,12 +49,14 @@ public class ContractApprovalRouteNode extends EntityBase {
 	 * 承認順
 	 */
 	@Column(nullable = false)
+	@Max(999)
 	@ApiModelProperty(value = "承認順", required = true, position = 3, allowableValues = "range[0,999]")
 	private int approvalOrder;
 
 	/**
 	 * 承認者組織階層レベル
 	 */
+	@Max(2147483647)
 	@ApiModelProperty(value = "承認者組織階層レベル", required = false, position = 4, allowableValues = "range[0,9999999999]") // TODO ほんと？
 	private Integer approverOrgLevel;
 
@@ -58,6 +64,8 @@ public class ContractApprovalRouteNode extends EntityBase {
 	 * 承認者MoM社員ID
 	 */
 	@Column(nullable = false)
+	@NotEmpty
+	@Size(max = 255)
 	@ApiModelProperty(value = "承認者MoM社員ID", required = true, position = 5, allowableValues = "range[0,255]")
 	private String approverEmpId;
 
@@ -65,12 +73,15 @@ public class ContractApprovalRouteNode extends EntityBase {
 	 * 承認者氏名
 	 */
 	@Column(nullable = false)
+	@NotEmpty
+	@Size(max = 255)
 	@ApiModelProperty(value = "承認者氏名", required = true, position = 6, allowableValues = "range[0,255]")
 	private String approverName;
 
 	/**
 	 * 承認者組織名
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "承認者組織名", required = false, position = 7, allowableValues = "range[0,255]")
 	private String approverOrgName;
 
@@ -83,12 +94,14 @@ public class ContractApprovalRouteNode extends EntityBase {
 	/**
 	 * 代理承認者氏名
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "代理承認者氏名", required = false, position = 9, allowableValues = "range[0,255]")
 	private String subApproverName;
 
 	/**
 	 * 代理承認者組織名
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "代理承認者組織名", required = false, position = 10, allowableValues = "range[0,255]")
 	private String subApproverOrgName;
 
