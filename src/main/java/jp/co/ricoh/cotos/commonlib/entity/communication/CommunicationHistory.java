@@ -167,14 +167,13 @@ public class CommunicationHistory extends EntityBase {
 	private String customerName;
 
 	/**
-	 * 商品名
+	 * 商品グループ名
 	 */
-	@Column(nullable = false)
 	@NotEmpty
 	@Size(max = 255)
-	@ApiModelProperty(value = "商品名<br />" //
-			+ "商品マスタの商品名を設定", required = true, position = 15, allowableValues = "range[0,255]") //
-	private String productName;
+	@ApiModelProperty(value = "商品グループ名<br />" //
+			+ "商品グループマスタの商品グループ名を設定", required = false, position = 15, allowableValues = "range[0,255]") //
+	private String productGrpName;
 
 	/**
 	 * 件名
@@ -202,6 +201,12 @@ public class CommunicationHistory extends EntityBase {
 	@ApiModelProperty(value = "伝達日時", required = true, position = 18, readOnly = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date communicatedAt;
+
+	/**
+	 * 商品グループマスタID
+	 */
+	@ApiModelProperty(value = "商品グループマスタID", required = true, position = 19, allowableValues = "range[0,9999999999999999999]")
+	private long productGrpMasterId;
 
 	@PrePersist
 	public void prePersist() {

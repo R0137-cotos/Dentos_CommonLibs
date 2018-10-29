@@ -108,7 +108,6 @@ public class TestCommunication {
 		testTarget.setRequestToId(null);
 		testTarget.setTargetDocNumber(null);
 		testTarget.setCustomerName(null);
-		testTarget.setProductName(null);
 		testTarget.setTitle(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 14);
@@ -124,7 +123,6 @@ public class TestCommunication {
 		testTarget.setRequestToId("");
 		testTarget.setTargetDocNumber("");
 		testTarget.setCustomerName("");
-		testTarget.setProductName("");
 		testTarget.setTitle("");
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 9);
@@ -142,7 +140,7 @@ public class TestCommunication {
 		testTarget.setRequestToCandidateId(STR_256);
 		testTarget.setTargetDocNumber(STR_256);
 		testTarget.setCustomerName(STR_256);
-		testTarget.setProductName(STR_256);
+		testTarget.setProductGrpName(STR_256);
 		testTarget.setTitle(STR_256);
 		testTarget.setCommunicationComment(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
@@ -178,7 +176,6 @@ public class TestCommunication {
 		testTarget.setRequestToId(null);
 		testTarget.setTargetDocNumber(null);
 		testTarget.setCustomerName(null);
-		testTarget.setProductName(null);
 		testTarget.setTitle(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 14);
@@ -194,7 +191,6 @@ public class TestCommunication {
 		testTarget.setRequestToId("");
 		testTarget.setTargetDocNumber("");
 		testTarget.setCustomerName("");
-		testTarget.setProductName("");
 		testTarget.setTitle("");
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 9);
@@ -210,7 +206,7 @@ public class TestCommunication {
 		testTarget.setRequestToCandidateId(STR_256);
 		testTarget.setTargetDocNumber(STR_256);
 		testTarget.setCustomerName(STR_256);
-		testTarget.setProductName(STR_256);
+		testTarget.setProductGrpName(STR_256);
 		testTarget.setTitle(STR_256);
 		testTarget.setCommunicationComment(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
