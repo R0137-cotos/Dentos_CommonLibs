@@ -3,6 +3,7 @@ package jp.co.ricoh.cotos.commonlib.logic.approvalsearch;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,7 +11,6 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
-import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +23,10 @@ import jp.co.ricoh.cotos.commonlib.dto.result.RouteFormulaResult;
 import jp.co.ricoh.cotos.commonlib.dto.result.RouteFormulaResult.RouteFormulaStatus;
 import jp.co.ricoh.cotos.commonlib.entity.master.ApprovalRouteGrpMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.ApprovalRouteMaster;
+import jp.co.ricoh.cotos.commonlib.exception.ErrorCheckException;
+import jp.co.ricoh.cotos.commonlib.exception.ErrorInfo;
 import jp.co.ricoh.cotos.commonlib.exception.RouteFormulaScriptException;
+import jp.co.ricoh.cotos.commonlib.logic.check.CheckUtil;
 import jp.co.ricoh.cotos.commonlib.repository.master.ApprovalRouteGrpMasterRepository;
 
 @Component
@@ -31,6 +34,9 @@ public class ApprovalSearch {
 
 	@Autowired
 	ApprovalRouteGrpMasterRepository approvalRouteGrpMasterRepository;
+
+	@Autowired
+	CheckUtil checkUtil;
 
 	/**
 	 * 承認ルート特定
@@ -41,14 +47,13 @@ public class ApprovalSearch {
 	 * ・引数のエンティティを元にJavaScriptエンジン「Nashorn」を使用し、承認ルートマスタTBL(APPROVAL_ROUTE_MASTER)からルート条件式に一致にする承認ルートマスタ情報取得
 	 *  ※上記処理で失敗した場合は、処理結果ステータスに「警告」または「異常」を設定し戻り値返却
 	 * ・承認ルートマスタ情報に紐づく承認ルードノード情報は各ドメインの共通処理で取得
+	 * ・指定したIDの承認ルートグループマスタが存在しない場合はエラーを返す。
+	 * 　ROT00004:承認ルートグループが承認ルートグループマスタに存在しません。
 	 * </pre>
 	 * 
-	 * @param approvalRouteGrpId
-	 *            承認ルートグループID
-	 * @param entity
-	 *            エンティティ
-	 * @param domain
-	 *            ドメイン(estimation・contract・arrangementのいずれかを設定)
+	 * @param approvalRouteGrpId 承認ルートグループID
+	 * @param entity             エンティティ
+	 * @param domain             ドメイン(estimation・contract・arrangementのいずれかを設定)
 	 * @return 承認ルート
 	 */
 	@SuppressWarnings("hiding")
@@ -56,6 +61,11 @@ public class ApprovalSearch {
 
 		ApprovalRouteMasterResult reslut = new ApprovalRouteMasterResult();
 		ApprovalRouteGrpMaster approvalRouteGrpMaster = approvalRouteGrpMasterRepository.findOne(approvalRouteGrpId);
+
+		// 指定したIDの承認ルートグループマスタが存在しない場合はエラーを返す。
+		if (approvalRouteGrpMaster == null) {
+			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "MasterDoesNotExistApprovalRouteGrpMaster"));
+		}
 
 		// ルート特定、または条件式実行結果ステータスの異常・警告が発生するまでループ
 		ApprovalRouteMaster applyApprovalRouteMaster = approvalRouteGrpMaster.getApprovalRouteMasterList().stream().filter(approvalRouteMaster -> {
@@ -76,12 +86,9 @@ public class ApprovalSearch {
 	/**
 	 * ルート条件式を実行
 	 *
-	 * @param entity
-	 *            エンティティ
-	 * @param domain
-	 *            ドメイン
-	 * @param approvalRouteMaster
-	 *            条件式
+	 * @param entity              エンティティ
+	 * @param domain              ドメイン
+	 * @param approvalRouteMaster 条件式
 	 * @return 実施結果
 	 * @throws ScriptException
 	 */
@@ -103,10 +110,8 @@ public class ApprovalSearch {
 	/**
 	 * JavaScriptのテンプレートファイルを読み込み、置換文字列を置換
 	 *
-	 * @param jsFilePathOnClasspath
-	 *            テンプレートファイルパス
-	 * @param formula
-	 *            置換対象条件式
+	 * @param jsFilePathOnClasspath テンプレートファイルパス
+	 * @param formula               置換対象条件式
 	 * @return 置換後のJavaScript
 	 */
 	private String loadScriptFromClasspath(String jsFilePathOnClasspath, String formula) {
