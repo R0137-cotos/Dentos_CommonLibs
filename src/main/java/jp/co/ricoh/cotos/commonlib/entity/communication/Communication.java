@@ -180,12 +180,10 @@ public class Communication extends EntityBase {
 	/**
 	 * 件名
 	 */
-	@Column(nullable = false)
-	@NotEmpty
 	@Size(max = 255)
 	@ApiModelProperty(value = "件名<br />" + "見積⇒見積の案件名を設定<br />" //
 			+ "契約⇒契約の案件名を設定<br />" //
-			+ "手配⇒手配業務タイプマスタの手配業務タイプ名を設定", required = true, position = 16, allowableValues = "range[0,255]") //
+			+ "手配⇒手配業務タイプマスタの手配業務タイプ名を設定", required = false, position = 16, allowableValues = "range[0,255]") //
 	private String title;
 
 	/**

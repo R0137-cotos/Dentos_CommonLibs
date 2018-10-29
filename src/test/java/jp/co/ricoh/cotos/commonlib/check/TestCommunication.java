@@ -108,7 +108,6 @@ public class TestCommunication {
 		testTarget.setRequestToId(null);
 		testTarget.setTargetDocNumber(null);
 		testTarget.setCustomerName(null);
-		testTarget.setTitle(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 14);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
@@ -123,7 +122,6 @@ public class TestCommunication {
 		testTarget.setRequestToId("");
 		testTarget.setTargetDocNumber("");
 		testTarget.setCustomerName("");
-		testTarget.setTitle("");
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 9);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
@@ -176,7 +174,6 @@ public class TestCommunication {
 		testTarget.setRequestToId(null);
 		testTarget.setTargetDocNumber(null);
 		testTarget.setCustomerName(null);
-		testTarget.setTitle(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 14);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
@@ -191,7 +188,6 @@ public class TestCommunication {
 		testTarget.setRequestToId("");
 		testTarget.setTargetDocNumber("");
 		testTarget.setCustomerName("");
-		testTarget.setTitle("");
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 9);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
