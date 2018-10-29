@@ -25,4 +25,6 @@ public class HeadersProperties {
 	private String requireDispAuthorize;
 
 	private String dispAuthorization;
+	
+	private String contentType;
 }
