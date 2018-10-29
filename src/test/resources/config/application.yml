@@ -16,6 +16,7 @@ cotos:
       authorization: X-Cotos-Authorization
       requireDispAuthorize: X-Cotos-Require-Disp-Authorize
       dispAuthorization: X-Cotos-Disp-Authorization
+      contentType: Content-type
   file:
     uploadFileDir: ./build/testTemp
     fileMaxSize: 616110
