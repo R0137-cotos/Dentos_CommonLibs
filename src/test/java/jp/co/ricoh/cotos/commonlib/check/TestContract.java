@@ -604,8 +604,8 @@ public class TestContract {
 		testTarget.setEstimationTitle(STR_256);
 		testTarget.setCommercialFlowDiv(STR_256);
 		testTarget.setIssueFormat(STR_256);
-		testTarget.setIssueEstimationTitle(STR_256);
-		testTarget.setIssueCustomerCorpName(STR_256);
+		testTarget.setBillingCustomerSpCode(STR_256);
+		testTarget.setBillingCustomerSpName(STR_256);
 		testTarget.setPaymentTerms(STR_256);
 		testTarget.setPaymentMethod(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
