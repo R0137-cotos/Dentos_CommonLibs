@@ -38,7 +38,7 @@ public class CustomerContractListener {
 	@Transactional
 	public void appendsCustomerContractFields(CustomerContract customerContract) {
 
-		VKjbMaster vKjbMaster = vKjbMasterRepository.findByMclMomRelId(customerContract.getVKjbMaster().getMclMomRelId());
+		VKjbMaster vKjbMaster = vKjbMasterRepository.findByMclMomRelId(customerContract.getMomKjbSystemId());
 		if (vKjbMaster == null) {
 			String[] regexList = { "顧客（契約用）" };
 			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "MasterDoesNotExistKjbMaster", regexList));
@@ -57,7 +57,6 @@ public class CustomerContractListener {
 			customerContract.setFaxNumber(vKjbMaster.getJgsJgsFaxNum());
 		}
 
-		customerContract.setVKjbMaster(vKjbMaster);
 		customerContract.setDepartmentDiv(vKjbMaster.getPrflKjbSetKbn());
 		customerContract.setCompanyId(vKjbMaster.getPrflMomKgyId());
 		customerContract.setOfficeId(vKjbMaster.getPrflMomJgsId());

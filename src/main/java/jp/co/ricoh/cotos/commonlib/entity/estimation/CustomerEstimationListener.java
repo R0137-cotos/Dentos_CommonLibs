@@ -38,7 +38,7 @@ public class CustomerEstimationListener {
 	@Transactional
 	public void appendsCustomerEstimationFields(CustomerEstimation customerEstimation) {
 
-		VKjbMaster vKjbMaster = vKjbMasterRepository.findByMclMomRelId(customerEstimation.getVKjbMaster().getMclMomRelId());
+		VKjbMaster vKjbMaster = vKjbMasterRepository.findByMclMomRelId(customerEstimation.getMomKjbSystemId());
 		if (vKjbMaster == null) {
 			String[] regexList = { "顧客（見積用）" };
 			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "MasterDoesNotExistKjbMaster", regexList));
@@ -57,7 +57,6 @@ public class CustomerEstimationListener {
 			customerEstimation.setFaxNumber(vKjbMaster.getJgsJgsFaxNum());
 		}
 
-		customerEstimation.setVKjbMaster(vKjbMaster);
 		customerEstimation.setDepartmentDiv(vKjbMaster.getPrflKjbSetKbn());
 		customerEstimation.setCompanyId(vKjbMaster.getPrflMomKgyId());
 		customerEstimation.setOfficeId(vKjbMaster.getPrflMomJgsId());

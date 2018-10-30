@@ -117,9 +117,16 @@ public class TestArrangement {
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
-		// 異常系（@NotNull、@NotEmptyの null チェック：mvEmployeeMaster
+		// 異常系（@NotNull、@NotEmptyの null チェック：momEmployeeId）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setMvEmployeeMaster(null);
+		testTarget.setMomEmployeeId(null);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+
+		// 異常系（@NotEmptyの空文字列チェック：momEmployeeId）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setMomEmployeeId("");
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));

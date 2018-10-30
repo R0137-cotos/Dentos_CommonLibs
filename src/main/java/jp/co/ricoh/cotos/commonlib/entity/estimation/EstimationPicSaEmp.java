@@ -7,12 +7,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -21,7 +19,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
-import jp.co.ricoh.cotos.commonlib.entity.master.MvEmployeeMaster;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -42,13 +39,11 @@ public class EstimationPicSaEmp extends EntityBase {
 	private long id;
 
 	/**
-	 * RJ社員情報マスタ
+	 * MoM社員ID
 	 */
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "momEmployeeId", referencedColumnName = "emp_id")
-	@NotNull
-	@ApiModelProperty(value = "RJ社員情報マスタ", required = true, position = 2)
-	private MvEmployeeMaster mvEmployeeMaster;
+	@NotEmpty
+	@ApiModelProperty(value = "MoM社員ID", required = true, position = 2, allowableValues = "range[0,24]")
+	private String momEmployeeId;
 
 	/**
 	 * 所属組織MoM組織ID

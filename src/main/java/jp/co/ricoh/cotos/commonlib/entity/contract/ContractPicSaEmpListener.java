@@ -37,7 +37,7 @@ public class ContractPicSaEmpListener {
 	@PrePersist
 	@Transactional
 	public void appendsEmployeeFields(ContractPicSaEmp contractPicSaEmp) {
-		MvEmployeeMaster employeeMaster = mvEmployeeMasterRepository.findByMomEmployeeId(contractPicSaEmp.getMvEmployeeMaster().getMomEmployeeId());
+		MvEmployeeMaster employeeMaster = mvEmployeeMasterRepository.findByMomEmployeeId(contractPicSaEmp.getMomEmployeeId());
 
 		if (employeeMaster == null) {
 			String[] regexList = { "契約担当SA社員" };
@@ -47,7 +47,6 @@ public class ContractPicSaEmpListener {
 		BeanUtils.copyProperties(employeeMaster, contractPicSaEmp);
 		contractPicSaEmp.setEmployeeName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
 		contractPicSaEmp.setAddress(convertJoinedAddress(employeeMaster));
-		contractPicSaEmp.setMvEmployeeMaster(employeeMaster);
 	}
 
 	private String convertJoinedAddress(MvEmployeeMaster master) {

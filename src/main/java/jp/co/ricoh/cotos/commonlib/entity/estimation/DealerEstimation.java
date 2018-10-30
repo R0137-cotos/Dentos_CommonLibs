@@ -3,7 +3,6 @@ package jp.co.ricoh.cotos.commonlib.entity.estimation;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,7 +18,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import jp.co.ricoh.cotos.commonlib.entity.EnumType.DealerFlowOrder;
-import jp.co.ricoh.cotos.commonlib.entity.master.VKjbMaster;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -40,12 +38,10 @@ public class DealerEstimation extends EntityBase {
 	private long id;
 
 	/**
-	 * 企事部マスタ
+	 * MoM企事部システム連携ID
 	 */
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "mom_kjb_system_id", referencedColumnName = "mclMomRelId")
-	@ApiModelProperty(value = "企事部マスタ", required = true, position = 2)
-	private VKjbMaster vKjbMaster;
+	@ApiModelProperty(value = "MoM企事部システム連携ID", required = true, position = 2, allowableValues = "range[0,15]")
+	private String momKjbSystemId;
 
 	/**
 	 * 販売店名
