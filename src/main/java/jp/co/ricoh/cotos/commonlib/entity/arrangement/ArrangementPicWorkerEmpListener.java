@@ -37,7 +37,7 @@ public class ArrangementPicWorkerEmpListener {
 	@PrePersist
 	@Transactional
 	public void appendsEmployeeFields(ArrangementPicWorkerEmp arrangementPicWorkerEmp) {
-		MvEmployeeMaster employeeMaster = mvEmployeeMasterRepository.findByMomEmployeeId(arrangementPicWorkerEmp.getMvEmployeeMaster().getMomEmployeeId());
+		MvEmployeeMaster employeeMaster = mvEmployeeMasterRepository.findByMomEmployeeId(arrangementPicWorkerEmp.getMomEmployeeId());
 
 		if (employeeMaster == null) {
 			String[] regexList = { "担当作業者社員" };
@@ -47,7 +47,6 @@ public class ArrangementPicWorkerEmpListener {
 		BeanUtils.copyProperties(employeeMaster, arrangementPicWorkerEmp);
 		arrangementPicWorkerEmp.setEmployeeName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
 		arrangementPicWorkerEmp.setAddress(convertJoinedAddress(employeeMaster));
-		arrangementPicWorkerEmp.setMvEmployeeMaster(employeeMaster);
 	}
 
 	private String convertJoinedAddress(MvEmployeeMaster master) {

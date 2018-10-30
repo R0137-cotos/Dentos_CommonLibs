@@ -37,7 +37,7 @@ public class EstimationPicSaEmpListener {
 	@PrePersist
 	@Transactional
 	public void appendsEmployeeFields(EstimationPicSaEmp estimationPicSaEmp) {
-		MvEmployeeMaster employeeMaster = mvEmployeeMasterRepository.findByMomEmployeeId(estimationPicSaEmp.getMvEmployeeMaster().getMomEmployeeId());
+		MvEmployeeMaster employeeMaster = mvEmployeeMasterRepository.findByMomEmployeeId(estimationPicSaEmp.getMomEmployeeId());
 
 		if (employeeMaster == null) {
 			String[] regexList = { "見積担当SA社員" };
@@ -47,7 +47,6 @@ public class EstimationPicSaEmpListener {
 		BeanUtils.copyProperties(employeeMaster, estimationPicSaEmp);
 		estimationPicSaEmp.setEmployeeName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
 		estimationPicSaEmp.setAddress(convertJoinedAddress(employeeMaster));
-		estimationPicSaEmp.setMvEmployeeMaster(employeeMaster);
 	}
 
 	private String convertJoinedAddress(MvEmployeeMaster master) {

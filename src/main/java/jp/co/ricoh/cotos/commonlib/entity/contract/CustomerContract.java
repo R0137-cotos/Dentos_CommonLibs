@@ -3,12 +3,10 @@ package jp.co.ricoh.cotos.commonlib.entity.contract;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -18,10 +16,10 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
-import jp.co.ricoh.cotos.commonlib.entity.master.VKjbMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.VKjbMaster.DepartmentDiv;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -34,6 +32,7 @@ import lombok.EqualsAndHashCode;
 @EntityListeners(CustomerContractListener.class)
 @Data
 @Table(name = "customer_contract")
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class CustomerContract extends EntityBase {
 
 	@Id
@@ -43,12 +42,10 @@ public class CustomerContract extends EntityBase {
 	private long id;
 
 	/**
-	 * 企事部マスタ
+	 * MoM企事部システム連携ID
 	 */
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "mom_kjb_system_id", referencedColumnName = "mclMomRelId")
-	@ApiModelProperty(value = "企事部マスタ", required = true, position = 2)
-	private VKjbMaster vKjbMaster;
+	@ApiModelProperty(value = "MoM企事部システム連携ID", required = true, position = 2, allowableValues = "range[0,15]")
+	private String momKjbSystemId;
 
 	/**
 	 * MoM企事部ID

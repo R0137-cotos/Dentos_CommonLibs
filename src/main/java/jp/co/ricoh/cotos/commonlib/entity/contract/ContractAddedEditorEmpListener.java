@@ -37,7 +37,7 @@ public class ContractAddedEditorEmpListener {
 	@PrePersist
 	@Transactional
 	public void appendsEmployeeFields(ContractAddedEditorEmp contractAddedEditorEmp) {
-		MvEmployeeMaster employeeMaster = mvEmployeeMasterRepository.findByMomEmployeeId(contractAddedEditorEmp.getMvEmployeeMaster().getMomEmployeeId());
+		MvEmployeeMaster employeeMaster = mvEmployeeMasterRepository.findByMomEmployeeId(contractAddedEditorEmp.getMomEmployeeId());
 
 		if (employeeMaster == null) {
 			String[] regexList = { "契約追加編集者社員" };
@@ -47,7 +47,6 @@ public class ContractAddedEditorEmpListener {
 		BeanUtils.copyProperties(employeeMaster, contractAddedEditorEmp);
 		contractAddedEditorEmp.setEmployeeName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
 		contractAddedEditorEmp.setAddress(convertJoinedAddress(employeeMaster));
-		contractAddedEditorEmp.setMvEmployeeMaster(employeeMaster);
 	}
 
 	private String convertJoinedAddress(MvEmployeeMaster master) {
