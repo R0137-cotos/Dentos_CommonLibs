@@ -304,14 +304,14 @@ public class Contract extends EntityBase {
 	 */
 	@Size(max = 255)
 	@ApiModelProperty(value = "得意先コード", required = false, position = 29, allowableValues = "range[0,255]")
-	private String issueEstimationTitle;
+	private String billingCustomerSpCode;
 
 	/**
 	 * 得意先宛先名
 	 */
 	@Size(max = 255)
 	@ApiModelProperty(value = "得意先宛先名", required = false, position = 30, allowableValues = "range[0,255]")
-	private String issueCustomerCorpName;
+	private String billingCustomerSpName;
 
 	/**
 	 * 支払条件
