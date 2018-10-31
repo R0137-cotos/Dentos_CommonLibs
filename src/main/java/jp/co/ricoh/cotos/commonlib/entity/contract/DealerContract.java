@@ -13,6 +13,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -40,7 +42,9 @@ public class DealerContract extends EntityBase {
 	/**
 	 * MoM企事部システム連携ID
 	 */
-	@ApiModelProperty(value = "MoM企事部システム連携ID", required = false, position = 2, allowableValues = "range[0,15]")
+	@Column(nullable = false)
+	@NotEmpty
+	@ApiModelProperty(value = "MoM企事部システム連携ID", required = true, position = 2, allowableValues = "range[0,15]")
 	private String momKjbSystemId;
 
 	/**

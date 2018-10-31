@@ -44,6 +44,9 @@ public class CustomerContract extends EntityBase {
 	/**
 	 * MoM企事部システム連携ID
 	 */
+	@Column(nullable = false)
+	@NotEmpty
+	@Size(max = 15)
 	@ApiModelProperty(value = "MoM企事部システム連携ID", required = true, position = 2, allowableValues = "range[0,15]")
 	private String momKjbSystemId;
 

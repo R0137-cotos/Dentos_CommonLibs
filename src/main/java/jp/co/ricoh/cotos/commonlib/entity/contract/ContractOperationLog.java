@@ -79,6 +79,7 @@ public class ContractOperationLog extends EntityBase {
 	/**
 	 * 操作者氏名
 	 */
+	@Column(nullable = false)
 	@NotEmpty
 	@Size(max = 255)
 	@ApiModelProperty(value = "操作者氏名", required = true, position = 5, allowableValues = "range[0,255]")

@@ -41,6 +41,7 @@ public class ContractAddedEditorEmp extends EntityBase {
 	/**
 	 * MoM社員ID
 	 */
+	@Column(nullable = false)
 	@NotEmpty
 	@ApiModelProperty(value = "MoM社員ID", required = true, position = 2, allowableValues = "range[0,24]")
 	private String momEmployeeId;
