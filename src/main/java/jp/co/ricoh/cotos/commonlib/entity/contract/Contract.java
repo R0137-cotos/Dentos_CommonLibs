@@ -109,6 +109,7 @@ public class Contract extends EntityBase {
 	 * 契約種別
 	 */
 	@Column(nullable = false)
+	@NotNull
 	@ApiModelProperty(value = "契約種別", required = true, position = 2)
 	private ContractType contractType;
 
@@ -338,7 +339,6 @@ public class Contract extends EntityBase {
 	 * 契約明細
 	 */
 	@OneToMany(mappedBy = "contract")
-	@NotNull
 	@ApiModelProperty(value = "契約明細", required = true, position = 34)
 	private List<ContractDetail> contractDetailList;
 
@@ -368,7 +368,6 @@ public class Contract extends EntityBase {
 	 * 契約担当SA社員
 	 */
 	@OneToOne(mappedBy = "contract")
-	@NotNull
 	@ApiModelProperty(value = "契約担当SA社員", required = true, position = 38)
 	private ContractPicSaEmp contractPicSaEmp;
 
@@ -397,7 +396,6 @@ public class Contract extends EntityBase {
 	 * 契約操作履歴
 	 */
 	@OneToMany(mappedBy = "contract")
-	@NotNull
 	@ApiModelProperty(value = "契約操作履歴", required = true, position = 42, readOnly = true)
 	private List<ContractOperationLog> contractOperationLogList;
 
@@ -405,7 +403,6 @@ public class Contract extends EntityBase {
 	 * 商品(契約用)
 	 */
 	@OneToMany(mappedBy = "contract")
-	@NotNull
 	@ApiModelProperty(value = "商品(契約用)", required = true, position = 43)
 	private List<ProductContract> productContractList;
 }

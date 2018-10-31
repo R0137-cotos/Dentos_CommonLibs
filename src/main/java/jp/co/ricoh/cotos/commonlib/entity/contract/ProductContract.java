@@ -15,7 +15,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -70,7 +69,6 @@ public class ProductContract extends EntityBase {
 	 * 積上げ可能期間(開始日)
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
-	@NotNull
 	@ApiModelProperty(value = "積上げ可能期間(開始日)", required = false, position = 5)
 	private Date effectiveFrom;
 
@@ -78,7 +76,6 @@ public class ProductContract extends EntityBase {
 	 * 積上げ可能期間(終了日)
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
-	@NotNull
 	@ApiModelProperty(value = "積上げ可能期間(終了日)", required = false, position = 6)
 	private Date effectiveTo;
 

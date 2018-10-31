@@ -74,7 +74,7 @@ public class ItemContract extends EntityBase {
 	 * リコー品種コード
 	 */
 	@Column(nullable = false)
-	@NotNull
+	@NotEmpty
 	@Size(max = 255)
 	@ApiModelProperty(value = "リコー品種コード", required = true, position = 5, allowableValues = "range[0,255]")
 	private String ricohItemCode;
