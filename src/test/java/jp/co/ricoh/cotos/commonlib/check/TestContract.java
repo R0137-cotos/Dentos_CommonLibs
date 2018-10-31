@@ -143,19 +143,17 @@ public class TestContract {
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
-		// 異常系（@NotNull、@NotEmptyの null チェック：mvEmployeeMaster employeeName）
+		// 異常系（@NotNull、@NotEmptyの null チェック：momEmployeeId employeeName）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setMvEmployeeMaster(null);
-
+		testTarget.setMomEmployeeId(null);
 		testTarget.setEmployeeName(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 
-		// 異常系（@NotEmptyの空文字列チェック：employeeName）
+		// 異常系（@NotEmptyの空文字列チェック：momEmployeeId employeeName）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setMvEmployeeMaster(null);
-
+		testTarget.setMomEmployeeId("");
 		testTarget.setEmployeeName("");
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 2);
@@ -506,19 +504,17 @@ public class TestContract {
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
-		// 異常系（@NotNull、@NotEmptyの null チェック：mvEmployeeMaster employeeName）
+		// 異常系（@NotNull、@NotEmptyの null チェック：momEmployeeId employeeName）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setMvEmployeeMaster(null);
-
+		testTarget.setMomEmployeeId(null);
 		testTarget.setEmployeeName(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 
-		// 異常系（@NotEmptyの空文字列チェック：employeeName）
+		// 異常系（@NotEmptyの空文字列チェック：momEmployeeId employeeName）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setMvEmployeeMaster(null);
-
+		testTarget.setMomEmployeeId("");
 		testTarget.setEmployeeName("");
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 2);
@@ -608,8 +604,8 @@ public class TestContract {
 		testTarget.setEstimationTitle(STR_256);
 		testTarget.setCommercialFlowDiv(STR_256);
 		testTarget.setIssueFormat(STR_256);
-		testTarget.setIssueEstimationTitle(STR_256);
-		testTarget.setIssueCustomerCorpName(STR_256);
+		testTarget.setBillingCustomerSpCode(STR_256);
+		testTarget.setBillingCustomerSpName(STR_256);
 		testTarget.setPaymentTerms(STR_256);
 		testTarget.setPaymentMethod(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
@@ -638,15 +634,15 @@ public class TestContract {
 
 		// 正常系
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setVKjbMaster(null);
+		testTarget.setMomKjbSystemId(null);
 
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
-		// 異常系（@NotNull、@NotEmptyの null チェック：vKjbMaster momCustId companyId officeId
+		// 異常系（@NotNull、@NotEmptyの null チェック：momKjbSystemId momCustId companyId officeId
 		// departmentDiv customerName）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setVKjbMaster(null);
+		testTarget.setMomKjbSystemId(null);
 
 		testTarget.setMomCustId(null);
 		testTarget.setCompanyId(null);
@@ -659,7 +655,7 @@ public class TestContract {
 
 		// 異常系（@NotEmptyの空文字列チェック：momCustId companyId officeId customerName）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setVKjbMaster(null);
+		testTarget.setMomKjbSystemId(null);
 
 		testTarget.setMomCustId("");
 		testTarget.setCompanyId("");
@@ -674,7 +670,7 @@ public class TestContract {
 		// faxNumber companyRepresentativeName companyRepresentativeNameKana picName
 		// picNameKana picDeptName picPhoneNumber picFaxNumber picMailAddress）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setVKjbMaster(null);
+		testTarget.setMomKjbSystemId(null);
 
 		testTarget.setMomCustId(STR_256);
 		testTarget.setCompanyId(STR_256);
@@ -709,14 +705,14 @@ public class TestContract {
 
 		// 正常系
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setVKjbMaster(null);
+		testTarget.setMomKjbSystemId(null);
 
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
 		// 異常系（@NotNull、@NotEmptyの null チェック：dealerFlowOrder）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setVKjbMaster(null);
+		testTarget.setMomKjbSystemId(null);
 
 		testTarget.setDealerFlowOrder(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
@@ -726,7 +722,7 @@ public class TestContract {
 		// 異常系（@Size(max) ：dealerName postNumber address orgPhoneNumber picName
 		// picDeptName picPhoneNumber picFaxNumber）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setVKjbMaster(null);
+		testTarget.setMomKjbSystemId(null);
 
 		testTarget.setDealerName(STR_256);
 		testTarget.setPostNumber(STR_256);

@@ -36,7 +36,7 @@ public class DealerContractListener {
 	@PrePersist
 	@Transactional
 	public void appendsContractDealerFields(DealerContract dealerContract) {
-		VKjbMaster vKjbMaster = vKjbMasterRepository.findByMclMomRelId(dealerContract.getVKjbMaster().getMclMomRelId());
+		VKjbMaster vKjbMaster = vKjbMasterRepository.findByMclMomRelId(dealerContract.getMomKjbSystemId());
 
 		if (vKjbMaster == null) {
 			String[] regexList = { "販売店（契約用）" };
@@ -47,7 +47,6 @@ public class DealerContractListener {
 		dealerContract.setDealerName(this.convertJoinedDealerName(vKjbMaster));
 		dealerContract.setAddress(this.convertJoinedAddress(vKjbMaster));
 
-		dealerContract.setVKjbMaster(vKjbMaster);
 		dealerContract.setPostNumber(vKjbMaster.getJgsJgsPostNum());
 		dealerContract.setOrgPhoneNumber(vKjbMaster.getKgyKgyTelNum());
 	}

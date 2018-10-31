@@ -37,7 +37,7 @@ public class EstimationAddedEditorEmpListener {
 	@PrePersist
 	@Transactional
 	public void appendsEmployeeFields(EstimationAddedEditorEmp estimationAddedEditorEmp) {
-		MvEmployeeMaster employeeMaster = mvEmployeeMasterRepository.findByMomEmployeeId(estimationAddedEditorEmp.getMvEmployeeMaster().getMomEmployeeId());
+		MvEmployeeMaster employeeMaster = mvEmployeeMasterRepository.findByMomEmployeeId(estimationAddedEditorEmp.getMomEmployeeId());
 
 		if (employeeMaster == null) {
 			String[] regexList = { "見積追加編集者社員" };
@@ -47,7 +47,6 @@ public class EstimationAddedEditorEmpListener {
 		BeanUtils.copyProperties(employeeMaster, estimationAddedEditorEmp);
 		estimationAddedEditorEmp.setEmployeeName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
 		estimationAddedEditorEmp.setAddress(convertJoinedAddress(employeeMaster));
-		estimationAddedEditorEmp.setMvEmployeeMaster(employeeMaster);
 	}
 
 	private String convertJoinedAddress(MvEmployeeMaster master) {

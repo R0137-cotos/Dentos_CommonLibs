@@ -146,14 +146,14 @@ public class TestEstimation {
 		BeanUtils.copyProperties(testTarget, entity);
 
 		// 正常系
-		testTarget.setVKjbMaster(null);
+		testTarget.setMomKjbSystemId(null);
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
 		// 異常系（@NotNull、@NotEmptyの null チェック：momCustId companyId officeId departmentDiv
 		// customerName phoneNumber）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setVKjbMaster(null);
+		testTarget.setMomKjbSystemId(null);
 
 		testTarget.setMomCustId(null);
 		testTarget.setCompanyId(null);
@@ -168,7 +168,7 @@ public class TestEstimation {
 		// 異常系（@NotEmptyの空文字列チェック：momCustId companyId officeId departmentDiv
 		// customerName phoneNumber）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setVKjbMaster(null);
+		testTarget.setMomKjbSystemId(null);
 
 		testTarget.setMomCustId("");
 		testTarget.setCompanyId("");
@@ -181,7 +181,7 @@ public class TestEstimation {
 		// 異常系（@Size(max) ：momCustId companyId officeId customerName companyName
 		// officeName departmentName postNumber address faxNumber）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setVKjbMaster(null);
+		testTarget.setMomKjbSystemId(null);
 
 		testTarget.setMomCustId(STR_256);
 		testTarget.setCompanyId(STR_256);
@@ -207,13 +207,13 @@ public class TestEstimation {
 
 		// 正常系
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setVKjbMaster(null);
+		testTarget.setMomKjbSystemId(null);
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
 		// 異常系（@NotNull、@NotEmptyの null チェック：）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setVKjbMaster(null);
+		testTarget.setMomKjbSystemId(null);
 
 		testTarget.setDealerFlowOrder(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
@@ -222,7 +222,7 @@ public class TestEstimation {
 
 		// 異常系（@Size(max) ：）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setVKjbMaster(null);
+		testTarget.setMomKjbSystemId(null);
 
 		testTarget.setDealerName(STR_256);
 		testTarget.setPostNumber(STR_256);
@@ -258,7 +258,6 @@ public class TestEstimation {
 
 		// 異常系（@NotNull、@NotEmptyの null チェック：）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setEstimationPicSaEmp(null);
 		testTarget.setCustomerEstimation(null);
 		testTarget.setOperationLogList(null);
 		testTarget.setEstimationAttachedFileList(null);
@@ -272,7 +271,7 @@ public class TestEstimation {
 		testTarget.setEstimationType(null);
 		testTarget.setWorkflowStatus(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 4);
+		Assert.assertTrue(result.getErrorInfoList().size() == 3);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 
 		// 異常系（@Size(max) ：）
@@ -347,8 +346,7 @@ public class TestEstimation {
 
 		// 異常系（@NotNull、@NotEmptyの null チェック：）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setMvEmployeeMaster(null);
-
+		testTarget.setMomEmployeeId(null);
 		testTarget.setEmployeeName(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 2);
@@ -356,8 +354,7 @@ public class TestEstimation {
 
 		// 異常系（@NotEmptyの空文字列チェック：）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setMvEmployeeMaster(null);
-
+		testTarget.setMomEmployeeId("");
 		testTarget.setEmployeeName("");
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 2);
@@ -652,20 +649,20 @@ public class TestEstimation {
 
 		// 異常系（@NotNull、@NotEmptyの null チェック：）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setMvEmployeeMaster(null);
-
+		testTarget.setMomEmployeeId(null);
 		testTarget.setEmployeeName(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+
 		// 異常系（@NotEmptyの空文字列チェック：）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setMvEmployeeMaster(null);
-
+		testTarget.setMomEmployeeId("");
 		testTarget.setEmployeeName("");
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+
 		// 異常系（@Size(max) ：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setMomOrgId(STR_256);

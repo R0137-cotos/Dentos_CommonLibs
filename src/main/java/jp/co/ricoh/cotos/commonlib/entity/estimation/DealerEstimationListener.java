@@ -36,7 +36,7 @@ public class DealerEstimationListener {
 	@PrePersist
 	@Transactional
 	public void appendsEstimationDealerFields(DealerEstimation dealerEstimation) {
-		VKjbMaster vKjbMaster = vKjbMasterRepository.findByMclMomRelId(dealerEstimation.getVKjbMaster().getMclMomRelId());
+		VKjbMaster vKjbMaster = vKjbMasterRepository.findByMclMomRelId(dealerEstimation.getMomKjbSystemId());
 
 		if (vKjbMaster == null) {
 			String[] regexList = { "販売店（見積用）" };
@@ -47,7 +47,6 @@ public class DealerEstimationListener {
 		dealerEstimation.setDealerName(this.convertJoinedDealerName(vKjbMaster));
 		dealerEstimation.setAddress(this.convertJoinedAddress(vKjbMaster));
 
-		dealerEstimation.setVKjbMaster(vKjbMaster);
 		dealerEstimation.setPostNumber(vKjbMaster.getJgsJgsPostNum());
 		dealerEstimation.setOrgPhoneNumber(vKjbMaster.getKgyKgyTelNum());
 	}
