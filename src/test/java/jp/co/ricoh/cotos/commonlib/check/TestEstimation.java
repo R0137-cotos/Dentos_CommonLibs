@@ -258,7 +258,6 @@ public class TestEstimation {
 
 		// 異常系（@NotNull、@NotEmptyの null チェック：）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setEstimationPicSaEmp(null);
 		testTarget.setCustomerEstimation(null);
 		testTarget.setOperationLogList(null);
 		testTarget.setEstimationAttachedFileList(null);
@@ -272,7 +271,7 @@ public class TestEstimation {
 		testTarget.setEstimationType(null);
 		testTarget.setWorkflowStatus(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 4);
+		Assert.assertTrue(result.getErrorInfoList().size() == 3);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 
 		// 異常系（@Size(max) ：）
