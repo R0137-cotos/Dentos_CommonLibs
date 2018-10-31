@@ -289,7 +289,7 @@ public class TestArrangement {
 		testTarget.setApprovalRequesterEmpId(null);
 		testTarget.setApprovalRequesterName(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 3);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 
 		// 異常系（@NotEmptyの空文字列チェック：approvalRequesterEmpId approvalRequesterName）
@@ -463,7 +463,7 @@ public class TestArrangement {
 		testTarget.setWorkflowStatus(null);
 		testTarget.setArrangementWorkApprovalRoute(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 
 		// 異常系（@Size(max) ：memo）

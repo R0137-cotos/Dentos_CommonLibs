@@ -80,7 +80,7 @@ public class Arrangement extends EntityBase {
 	 * 手配業務
 	 */
 	@OneToMany(mappedBy = "arrangement")
-	@ApiModelProperty(value = "手配業務", required = false, position = 5)
+	@ApiModelProperty(value = "手配業務", required = true, position = 5)
 	private List<ArrangementWork> arrangementWorkList;
 
 }
