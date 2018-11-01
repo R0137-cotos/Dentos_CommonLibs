@@ -169,7 +169,6 @@ public class CommunicationHistory extends EntityBase {
 	/**
 	 * 商品グループ名
 	 */
-	@NotEmpty
 	@Size(max = 255)
 	@ApiModelProperty(value = "商品グループ名<br />" //
 			+ "商品グループマスタの商品グループ名を設定", required = false, position = 15, allowableValues = "range[0,255]") //
@@ -203,8 +202,8 @@ public class CommunicationHistory extends EntityBase {
 	/**
 	 * 商品グループマスタID
 	 */
-	@ApiModelProperty(value = "商品グループマスタID", required = true, position = 19, allowableValues = "range[0,9999999999999999999]")
-	private long productGrpMasterId;
+	@ApiModelProperty(value = "商品グループマスタID", required = false, position = 19, allowableValues = "range[0,9999999999999999999]")
+	private Long productGrpMasterId;
 
 	@PrePersist
 	public void prePersist() {

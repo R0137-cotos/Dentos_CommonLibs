@@ -108,6 +108,8 @@ public class TestCommunication {
 		testTarget.setRequestToId(null);
 		testTarget.setTargetDocNumber(null);
 		testTarget.setCustomerName(null);
+		testTarget.setProductGrpName(null);
+		testTarget.setProductGrpMasterId(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 12);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
@@ -122,8 +124,9 @@ public class TestCommunication {
 		testTarget.setRequestToId("");
 		testTarget.setTargetDocNumber("");
 		testTarget.setCustomerName("");
+		testTarget.setProductGrpName("");
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 9);
+		Assert.assertTrue(result.getErrorInfoList().size() == 7);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 
 		// 異常系（@Size(max) ：targetDocKey targetDocUrl requestOriginId requestFromId
@@ -174,6 +177,8 @@ public class TestCommunication {
 		testTarget.setRequestToId(null);
 		testTarget.setTargetDocNumber(null);
 		testTarget.setCustomerName(null);
+		testTarget.setProductGrpName(null);
+		testTarget.setProductGrpMasterId(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 12);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
@@ -188,8 +193,9 @@ public class TestCommunication {
 		testTarget.setRequestToId("");
 		testTarget.setTargetDocNumber("");
 		testTarget.setCustomerName("");
+		testTarget.setProductGrpName("");
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 9);
+		Assert.assertTrue(result.getErrorInfoList().size() == 7);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 
 		// 異常系（@Size(max) ：）
