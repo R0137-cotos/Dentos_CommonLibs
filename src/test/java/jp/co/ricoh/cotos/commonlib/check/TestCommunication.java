@@ -109,7 +109,7 @@ public class TestCommunication {
 		testTarget.setTargetDocNumber(null);
 		testTarget.setCustomerName(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 14);
+		Assert.assertTrue(result.getErrorInfoList().size() == 12);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 
 		// 異常系（@NotEmptyの空文字列チェック：targetDocKey targetDocUrl requestOriginId
@@ -175,7 +175,7 @@ public class TestCommunication {
 		testTarget.setTargetDocNumber(null);
 		testTarget.setCustomerName(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 14);
+		Assert.assertTrue(result.getErrorInfoList().size() == 12);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 
 		// 異常系（@NotEmptyの空文字列チェック：targetDocKey targetDocUrl requestOriginId
