@@ -103,7 +103,6 @@ public class ContractApprovalRoute extends EntityBase {
 	 * 契約承認ルートノード
 	 */
 	@OneToMany(mappedBy = "contractApprovalRoute")
-	@NotNull
 	@ApiModelProperty(value = "契約承認ルートノード", required = true, position = 9)
 	@OrderBy("approvalOrder ASC")
 	private List<ContractApprovalRouteNode> contractApprovalRouteNodeList;
