@@ -26,13 +26,13 @@ import jp.co.ricoh.cotos.commonlib.entity.estimation.EstimationPicSaEmp;
 import jp.co.ricoh.cotos.commonlib.entity.estimation.ItemEstimation;
 import jp.co.ricoh.cotos.commonlib.entity.estimation.OperationLog;
 import jp.co.ricoh.cotos.commonlib.entity.estimation.ProductEstimation;
+import jp.co.ricoh.cotos.commonlib.repository.estimation.AttachedFileRepository;
 import jp.co.ricoh.cotos.commonlib.repository.estimation.CustomerEstimationRepository;
 import jp.co.ricoh.cotos.commonlib.repository.estimation.DealerEstimationRepository;
 import jp.co.ricoh.cotos.commonlib.repository.estimation.EstimationAddedEditorEmpRepository;
 import jp.co.ricoh.cotos.commonlib.repository.estimation.EstimationApprovalResultRepository;
 import jp.co.ricoh.cotos.commonlib.repository.estimation.EstimationApprovalRouteNodeRepository;
 import jp.co.ricoh.cotos.commonlib.repository.estimation.EstimationApprovalRouteRepository;
-import jp.co.ricoh.cotos.commonlib.repository.estimation.EstimationAttachedFileRepository;
 import jp.co.ricoh.cotos.commonlib.repository.estimation.EstimationCheckResultRepository;
 import jp.co.ricoh.cotos.commonlib.repository.estimation.EstimationDetailRepository;
 import jp.co.ricoh.cotos.commonlib.repository.estimation.EstimationPicSaEmpRepository;
@@ -57,7 +57,7 @@ public class TestEstimation {
 	TestTools testTool;
 
 	@Autowired
-	EstimationAttachedFileRepository estimationAttachedFileRepository;
+	AttachedFileRepository attachedFileRepository;
 
 	@Autowired
 	OperationLogRepository operationLogRepository;
@@ -102,8 +102,8 @@ public class TestEstimation {
 	public void injectContext(ConfigurableApplicationContext injectContext) {
 		context = injectContext;
 		context.getBean(DBConfig.class).clearData();
-		context.getBean(DBConfig.class).initTargetTestData("repository/attachedFile.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimation_all.sql");
+
 	}
 
 	@AfterClass
@@ -117,7 +117,7 @@ public class TestEstimation {
 	@Test
 	public void AttachedFileRepositoryのテスト() throws Exception {
 
-		EstimationAttachedFile found = estimationAttachedFileRepository.findOne(401L);
+		EstimationAttachedFile found = attachedFileRepository.findOne(401L);
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
