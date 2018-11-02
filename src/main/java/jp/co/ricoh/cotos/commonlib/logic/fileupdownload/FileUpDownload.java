@@ -18,13 +18,18 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import jp.co.ricoh.cotos.commonlib.entity.common.AttachedFile;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorCheckException;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorInfo;
 import jp.co.ricoh.cotos.commonlib.logic.check.CheckUtil;
+import jp.co.ricoh.cotos.commonlib.repository.common.AttachedFileRepository;
 import jp.co.ricoh.cotos.commonlib.util.AppProperties;
 
 @Component
 public class FileUpDownload {
+
+	@Autowired
+	AttachedFileRepository attachedFileRepository;
 
 	@Autowired
 	CheckUtil checkUtil;
@@ -37,10 +42,12 @@ public class FileUpDownload {
 	 * 
 	 * @param file
 	 *            ファイル情報
-	 * @return ファイルパス
+	 * @param attachedFileId
+	 *            添付ファイルID
+	 * @return 添付ファイル情報
 	 * @throws IOException
 	 */
-	public String fileUpload(MultipartFile file) throws ErrorCheckException, IOException {
+	public AttachedFile fileUpload(MultipartFile file, Long attachedFileId) throws ErrorCheckException, IOException {
 		// チェック処理
 		if (null == file) {
 			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "FileInfoNotFoundError"));
@@ -58,37 +65,63 @@ public class FileUpDownload {
 			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "FileSizeOverError", new String[] { "ファイル名サイズ" }));
 		}
 
-		// ファイル保存
 		File baseDir = new File(appProperties.getFileProperties().getUploadFileDir());
 		Files.createDirectories(baseDir.toPath());
-		File uploadFile = new File(baseDir, file.getName());
+
+		// 添付ファイル情報登録
+		AttachedFile attachedFile = createAttachedFile(file);
+		attachedFileRepository.save(attachedFile);
+		attachedFile.setFilePhysicsName(attachedFile.getId() + "_" + file.getName());
+		attachedFile.setSavedPath(baseDir.getPath() + "/" + attachedFile.getFilePhysicsName());
+		attachedFileRepository.save(attachedFile);
+
+		// 添付ファイル情報削除
+		if (attachedFileId != null) {
+			deleteFile(attachedFileId);
+		}
+
+		// ファイル保存
+		File uploadFile = new File(baseDir, attachedFile.getFilePhysicsName());
 		try (OutputStream out = Files.newOutputStream(uploadFile.toPath())) {
 			StreamUtils.copy(file.getInputStream(), out);
 		} catch (IOException e) {
 			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "FileUploadError", new String[] { uploadFile.getAbsolutePath() }));
 		}
-		
-		return uploadFile.getPath();
+
+		return attachedFile;
 	}
 
 	/**
 	 * ファイルダウンロード
 	 * 
-	 * @param fileName
-	 *            ファイル名
+	 * <pre>
+	 * ・引数のダウンロードファイル名ファイル名が指定されていない場合は、添付ファイル情報の物理ファイル名をダウンロード時のファイル名にする。
+	 * </pre>
+	 * 
+	 * @param attachedFileId
+	 *            添付ファイルID
+	 * @param downloadFileNm
+	 *            ダウンロードファイル名
 	 * @return ファイル情報
 	 * @throws IOException
 	 */
-	public ResponseEntity<InputStream> downloadFile(String fileName) throws IOException {
-		File file = new File(appProperties.getFileProperties().getUploadFileDir() + "/" + fileName);
+	public ResponseEntity<InputStream> downloadFile(Long attachedFileId, String downloadFileNm) throws IOException {
+		AttachedFile attachedFile = attachedFileRepository.findOne(attachedFileId);
+		if (null == attachedFile) {
+			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "FileAttachedFileNotFoundError", new String[] { "ダウンロード" }));
+		}
+
+		File file = new File(appProperties.getFileProperties().getUploadFileDir() + "/" + attachedFile.getFilePhysicsName());
 		if (!file.exists()) {
 			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "FileNotFoundError", new String[] { file.getAbsolutePath() }));
 		}
 
 		// ファイルダウンロード
 		HttpHeaders header = new HttpHeaders();
-		header.add("Content-Type", "multipart/form-data");
-		header.setContentDispositionFormData("filename", fileName);
+		header.add("Content-Type", attachedFile.getContentType());
+		header.setContentLength(attachedFile.getFileSize());
+		String fileNm = downloadFileNm == null ? attachedFile.getFilePhysicsName() : downloadFileNm;
+		header.setContentDispositionFormData("filename", fileNm);
 
 		InputStream stream;
 		try {
@@ -103,15 +136,22 @@ public class FileUpDownload {
 	/**
 	 * ファイル削除
 	 * 
-	 * @param fileName
-	 *            ファイル名
+	 * @param attachedFileId
+	 *            添付ファイルID
 	 * @throws IOException
 	 */
-	public void deleteFile(String fileName) throws ErrorCheckException, IOException {
-		File file = new File(appProperties.getFileProperties().getUploadFileDir() + "/" + fileName);
+	public void deleteFile(Long attachedFileId) throws ErrorCheckException, IOException {
+		AttachedFile attachedFile = attachedFileRepository.findOne(attachedFileId);
+		if (null == attachedFile) {
+			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "FileAttachedFileNotFoundError", new String[] { "削除" }));
+		}
+
+		File file = new File(appProperties.getFileProperties().getUploadFileDir() + "/" + attachedFile.getFilePhysicsName());
 		if (!file.exists()) {
 			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "FileNotFoundError", new String[] { file.getAbsolutePath() }));
 		}
+
+		attachedFileRepository.delete(attachedFile);
 
 		try {
 			Files.delete(file.toPath());
@@ -174,5 +214,22 @@ public class FileUpDownload {
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * 添付ファイル情報生成
+	 *
+	 * @param multipartFile
+	 *            ファイル情報
+	 * @return 添付ファイル情報
+	 */
+	private AttachedFile createAttachedFile(MultipartFile multipartFile) {
+		AttachedFile attachedFile = new AttachedFile();
+		attachedFile.setId(0);
+		attachedFile.setFilePhysicsName(multipartFile.getName());
+		attachedFile.setFileSize(multipartFile.getSize());
+		attachedFile.setContentType(multipartFile.getContentType());
+		attachedFile.setSavedPath(multipartFile.getName());
+		return attachedFile;
 	}
 }
