@@ -31,13 +31,13 @@ import jp.co.ricoh.cotos.commonlib.entity.estimation.EstimationPicSaEmp;
 import jp.co.ricoh.cotos.commonlib.entity.estimation.ItemEstimation;
 import jp.co.ricoh.cotos.commonlib.entity.estimation.OperationLog;
 import jp.co.ricoh.cotos.commonlib.entity.estimation.ProductEstimation;
-import jp.co.ricoh.cotos.commonlib.repository.estimation.AttachedFileRepository;
 import jp.co.ricoh.cotos.commonlib.repository.estimation.CustomerEstimationRepository;
 import jp.co.ricoh.cotos.commonlib.repository.estimation.DealerEstimationRepository;
 import jp.co.ricoh.cotos.commonlib.repository.estimation.EstimationAddedEditorEmpRepository;
 import jp.co.ricoh.cotos.commonlib.repository.estimation.EstimationApprovalResultRepository;
 import jp.co.ricoh.cotos.commonlib.repository.estimation.EstimationApprovalRouteNodeRepository;
 import jp.co.ricoh.cotos.commonlib.repository.estimation.EstimationApprovalRouteRepository;
+import jp.co.ricoh.cotos.commonlib.repository.estimation.EstimationAttachedFileRepository;
 import jp.co.ricoh.cotos.commonlib.repository.estimation.EstimationCheckResultRepository;
 import jp.co.ricoh.cotos.commonlib.repository.estimation.EstimationDetailRepository;
 import jp.co.ricoh.cotos.commonlib.repository.estimation.EstimationPicSaEmpRepository;
@@ -61,7 +61,6 @@ public class TestEstimation {
 
 	private static final String STR_256 = "0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345";
 	private static final String STR_1001 = "01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
-	private static final String STR_1025 = "01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234";
 	private static final int INT_10 = 10;
 	private static final int INT_100 = 100;
 	private static final int INT_1000 = 1000;
@@ -74,7 +73,7 @@ public class TestEstimation {
 	HeadersProperties headersProperties;
 
 	@Autowired
-	AttachedFileRepository attachedFileRepository;
+	EstimationAttachedFileRepository estimationAttachedFileRepository;
 
 	@Autowired
 	OperationLogRepository operationLogRepository;
@@ -122,6 +121,7 @@ public class TestEstimation {
 	public void injectContext(ConfigurableApplicationContext injectContext) {
 		context = injectContext;
 		context.getBean(DBConfig.class).clearData();
+		context.getBean(DBConfig.class).initTargetTestData("repository/attachedFile.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimation_all.sql");
 	}
 
@@ -518,7 +518,7 @@ public class TestEstimation {
 	@Test
 	public void EstimationAttachedFileのテスト() throws Exception {
 
-		EstimationAttachedFile entity = attachedFileRepository.findOne(401L);
+		EstimationAttachedFile entity = estimationAttachedFileRepository.findOne(401L);
 		EstimationAttachedFile testTarget = new EstimationAttachedFile();
 		BeanUtils.copyProperties(testTarget, entity);
 
@@ -529,27 +529,34 @@ public class TestEstimation {
 		// 異常系（@NotNull、@NotEmptyの null チェック：id、attachedAt、attachedFilePath
 		// ※idはプリミティブ型で試験実施できない）
 		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setFileName(null);
+		testTarget.setAttachedFile(null);
 		testTarget.setAttachedAt(null);
-		testTarget.setAttachedFilePath(null);
+		testTarget.setAttachedEmpId(null);
+		testTarget.setAttachedEmpName(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(result.getErrorInfoList().size() == 5);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 
-		// 異常系（@NotEmptyの空文字列チェック：attachedFilePath）
+		// 異常系（@NotEmptyの空文字列チェック：fileName attachedEmpId attachedEmpName）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setAttachedFilePath("");
+		testTarget.setFileName("");
+		testTarget.setAttachedEmpId("");
+		testTarget.setAttachedEmpName("");
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(result.getErrorInfoList().size() == 3);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 
 		// 異常系（@Size(max) ：fileKind attachedFilePath attachedEmpId attachedEmpName）
 		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setFileName(STR_256);
 		testTarget.setFileKind(STR_256);
-		testTarget.setAttachedFilePath(STR_1025);
+		testTarget.setAttachedComment(STR_1001);
 		testTarget.setAttachedEmpId(STR_256);
 		testTarget.setAttachedEmpName(STR_256);
+		testTarget.setAttachedOrgName(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 4);
+		Assert.assertTrue(result.getErrorInfoList().size() == 6);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 
 	}

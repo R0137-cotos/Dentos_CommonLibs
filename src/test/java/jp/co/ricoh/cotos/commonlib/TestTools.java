@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.apache.commons.beanutils.BeanUtils;
 import org.junit.Assert;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
@@ -86,7 +87,8 @@ public class TestTools {
 	public boolean hasNullColumn(EntityBase entity) throws Exception {
 		for (Field field : entity.getClass().getDeclaredFields()) {
 			field.setAccessible(true);
-
+			if (field.getType() == MultipartFile.class)
+				continue;
 			if (field.get(entity) == null)
 				return true;
 		}

@@ -60,7 +60,7 @@ import jp.co.ricoh.cotos.commonlib.util.HeadersProperties;
 public class TestContract {
 
 	private static final String STR_256 = "0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345";
-	private static final String STR_1025 = "01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234";
+	private static final String STR_1001 = "01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
 
 	static ConfigurableApplicationContext context;
 
@@ -116,6 +116,7 @@ public class TestContract {
 	public void injectContext(ConfigurableApplicationContext injectContext) {
 		context = injectContext;
 		context.getBean(DBConfig.class).clearData();
+		context.getBean(DBConfig.class).initTargetTestData("repository/attachedFile.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/contract.sql");
 	}
 
@@ -333,17 +334,18 @@ public class TestContract {
 		// 異常系（@NotNull、@NotEmptyの null チェック：attachedAt attachedFilePath attachedEmpId
 		// attachedEmpName）
 		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setFileName(null);
+		testTarget.setAttachedFile(null);
 		testTarget.setAttachedAt(null);
-		testTarget.setAttachedFilePath(null);
 		testTarget.setAttachedEmpId(null);
 		testTarget.setAttachedEmpName(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 4);
+		Assert.assertTrue(result.getErrorInfoList().size() == 5);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 
-		// 異常系（@NotEmptyの空文字列チェック：attachedFilePath attachedEmpId attachedEmpName）
+		// 異常系（@NotEmptyの空文字列チェック：fileName attachedEmpId attachedEmpName）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setAttachedFilePath("");
+		testTarget.setFileName("");
 		testTarget.setAttachedEmpId("");
 		testTarget.setAttachedEmpName("");
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
@@ -353,9 +355,9 @@ public class TestContract {
 		// 異常系（@Size(max) ：fileKind attachedFilePath attachedComment attachedEmpId
 		// attachedEmpName attachedOrgName）
 		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setFileName(STR_256);
 		testTarget.setFileKind(STR_256);
-		testTarget.setAttachedFilePath(STR_1025);
-		testTarget.setAttachedComment(STR_1025);
+		testTarget.setAttachedComment(STR_1001);
 		testTarget.setAttachedEmpId(STR_256);
 		testTarget.setAttachedEmpName(STR_256);
 		testTarget.setAttachedOrgName(STR_256);
@@ -529,7 +531,7 @@ public class TestContract {
 		testTarget.setEmployeeName(STR_256);
 		testTarget.setSalesDepartmentName(STR_256);
 		testTarget.setPostNumber(STR_256);
-		testTarget.setAddress(STR_1025);
+		testTarget.setAddress(STR_1001);
 		testTarget.setPhoneNumber(STR_256);
 		testTarget.setFaxNumber(STR_256);
 		testTarget.setMailAddress(STR_256);
@@ -677,7 +679,7 @@ public class TestContract {
 		testTarget.setOfficeName(STR_256);
 		testTarget.setDepartmentName(STR_256);
 		testTarget.setPostNumber(STR_256);
-		testTarget.setAddress(STR_1025);
+		testTarget.setAddress(STR_1001);
 		testTarget.setPhoneNumber(STR_256);
 		testTarget.setFaxNumber(STR_256);
 		testTarget.setCompanyRepresentativeName(STR_256);
@@ -719,7 +721,7 @@ public class TestContract {
 
 		testTarget.setDealerName(STR_256);
 		testTarget.setPostNumber(STR_256);
-		testTarget.setAddress(STR_1025);
+		testTarget.setAddress(STR_1001);
 		testTarget.setOrgPhoneNumber(STR_256);
 		testTarget.setPicName(STR_256);
 		testTarget.setPicDeptName(STR_256);
