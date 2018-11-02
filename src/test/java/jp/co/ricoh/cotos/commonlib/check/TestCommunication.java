@@ -108,10 +108,10 @@ public class TestCommunication {
 		testTarget.setRequestToId(null);
 		testTarget.setTargetDocNumber(null);
 		testTarget.setCustomerName(null);
-		testTarget.setProductName(null);
-		testTarget.setTitle(null);
+		testTarget.setProductGrpName(null);
+		testTarget.setProductGrpMasterId(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 14);
+		Assert.assertTrue(result.getErrorInfoList().size() == 12);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 
 		// 異常系（@NotEmptyの空文字列チェック：targetDocKey targetDocUrl requestOriginId
@@ -124,10 +124,9 @@ public class TestCommunication {
 		testTarget.setRequestToId("");
 		testTarget.setTargetDocNumber("");
 		testTarget.setCustomerName("");
-		testTarget.setProductName("");
-		testTarget.setTitle("");
+		testTarget.setProductGrpName("");
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 9);
+		Assert.assertTrue(result.getErrorInfoList().size() == 7);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 
 		// 異常系（@Size(max) ：targetDocKey targetDocUrl requestOriginId requestFromId
@@ -142,7 +141,7 @@ public class TestCommunication {
 		testTarget.setRequestToCandidateId(STR_256);
 		testTarget.setTargetDocNumber(STR_256);
 		testTarget.setCustomerName(STR_256);
-		testTarget.setProductName(STR_256);
+		testTarget.setProductGrpName(STR_256);
 		testTarget.setTitle(STR_256);
 		testTarget.setCommunicationComment(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
@@ -178,10 +177,10 @@ public class TestCommunication {
 		testTarget.setRequestToId(null);
 		testTarget.setTargetDocNumber(null);
 		testTarget.setCustomerName(null);
-		testTarget.setProductName(null);
-		testTarget.setTitle(null);
+		testTarget.setProductGrpName(null);
+		testTarget.setProductGrpMasterId(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 14);
+		Assert.assertTrue(result.getErrorInfoList().size() == 12);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 
 		// 異常系（@NotEmptyの空文字列チェック：targetDocKey targetDocUrl requestOriginId
@@ -194,10 +193,9 @@ public class TestCommunication {
 		testTarget.setRequestToId("");
 		testTarget.setTargetDocNumber("");
 		testTarget.setCustomerName("");
-		testTarget.setProductName("");
-		testTarget.setTitle("");
+		testTarget.setProductGrpName("");
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 9);
+		Assert.assertTrue(result.getErrorInfoList().size() == 7);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 
 		// 異常系（@Size(max) ：）
@@ -210,7 +208,7 @@ public class TestCommunication {
 		testTarget.setRequestToCandidateId(STR_256);
 		testTarget.setTargetDocNumber(STR_256);
 		testTarget.setCustomerName(STR_256);
-		testTarget.setProductName(STR_256);
+		testTarget.setProductGrpName(STR_256);
 		testTarget.setTitle(STR_256);
 		testTarget.setCommunicationComment(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
