@@ -40,7 +40,6 @@ public class ArrangementPicWorkerEmp extends EntityBase {
 	/**
 	 * MoM社員ID
 	 */
-	@Column(nullable = false)
 	@NotEmpty
 	@ApiModelProperty(value = "MoM社員ID", required = true, position = 2, allowableValues = "range[0,24]")
 	private String momEmployeeId;
@@ -84,7 +83,6 @@ public class ArrangementPicWorkerEmp extends EntityBase {
 	 * 社員名
 	 */
 	@Column(nullable = false)
-	@NotEmpty
 	@Size(max = 255)
 	@ApiModelProperty(value = "社員名", required = true, position = 8, allowableValues = "range[0,255]")
 	private String employeeName;
