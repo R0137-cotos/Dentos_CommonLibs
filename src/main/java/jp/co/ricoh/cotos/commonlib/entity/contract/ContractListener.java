@@ -14,7 +14,8 @@ import jp.co.ricoh.cotos.commonlib.db.DBUtil;
 
 @Component
 public class ContractListener {
-	private static final String ID_PREFIX = "CC";
+	private static final String ID_PREFIX_CONT = "CC";
+	private static final String ID_PREFIX_IMMUTABLE = "CIC";
 
 	private static DBUtil dbUtil;
 
@@ -44,7 +45,31 @@ public class ContractListener {
 			dbUtil.execute("sql/updateContractNumberVal.3.sql", Collections.emptyMap());
 			sequence = dbUtil.loadSingleFromSQLFile("sql/nextContractNumberSequence.sql", GeneratedNumber.class).getGeneratedNumber();
 		}
-		contract.setContractNumber(ID_PREFIX + sequence);
+		contract.setContractNumber(ID_PREFIX_CONT + sequence);
+	}
+
+	/**
+	 * 恒久契約番号を付与する。
+	 * 
+	 * @param contract
+	 */
+	@PrePersist
+	@Transactional
+	public void appendsImmutableContIdentNumber(Contract contract) {
+		if (null != contract.getImmutableContIdentNumber()) {
+			return;
+		}
+		long sequence = dbUtil.loadSingleFromSQLFile("sql/nextImmutableContIdentNumberSequence.sql", GeneratedNumber.class).getGeneratedNumber();
+		long todayLong = Long.parseLong(new SimpleDateFormat("yyyyMMdd").format(new Date()) + "00000");
+		while (todayLong > sequence) {
+			String sql = dbUtil.loadSQLFromClasspath("sql/updateImmutableContIdentNumberVal.1.sql");
+			String replaceSQLDirectlyBecauseIncrementedValueForOracleNamedParametersFailWithORA_01722Error = sql.replace(":incrementValue", String.valueOf(todayLong - sequence));
+			dbUtil.executeWithSQLFile(replaceSQLDirectlyBecauseIncrementedValueForOracleNamedParametersFailWithORA_01722Error, Collections.emptyMap());
+			dbUtil.loadFromSQLFile("sql/updateImmutableContIdentNumberVal.2.sql", GeneratedNumber.class);
+			dbUtil.execute("sql/updateImmutableContIdentNumberVal.3.sql", Collections.emptyMap());
+			sequence = dbUtil.loadSingleFromSQLFile("sql/nextImmutableContIdentNumberSequence.sql", GeneratedNumber.class).getGeneratedNumber();
+		}
+		contract.setImmutableContIdentNumber(ID_PREFIX_IMMUTABLE + sequence);
 	}
 
 }
