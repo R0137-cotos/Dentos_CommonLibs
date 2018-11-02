@@ -13,6 +13,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -85,6 +86,7 @@ public class ArrangementWorkApprovalRoute extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "arrangementWorkApprovalRoute")
 	@OrderBy("approvalOrder ASC")
+	@NotNull
 	@ApiModelProperty(value = "手配業務承認ルートノード", required = true, position = 7)
 	private List<ArrangementWorkApprovalRouteNode> arrangementWorkApprovalRouteNodeList;
 
