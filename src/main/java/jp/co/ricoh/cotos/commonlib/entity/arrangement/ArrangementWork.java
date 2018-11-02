@@ -95,7 +95,6 @@ public class ArrangementWork extends EntityBase {
 	 * 手配業務承認ルート
 	 */
 	@OneToOne(mappedBy = "arrangementWork")
-	@NotNull
 	@ApiModelProperty(value = "手配業務承認ルート", required = false, position = 6)
 	private ArrangementWorkApprovalRoute arrangementWorkApprovalRoute;
 
@@ -125,6 +124,7 @@ public class ArrangementWork extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "arrangementWork")
 	@OrderBy("displayOrder ASC")
+	@ApiModelProperty(value = "手配業務チェック結果", required = false, position = 10)
 	private List<ArrangementWorkCheckResult> arrangementWorkCheckResultList;
 
 }
