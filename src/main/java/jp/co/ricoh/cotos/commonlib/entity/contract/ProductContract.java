@@ -1,7 +1,5 @@
 package jp.co.ricoh.cotos.commonlib.entity.contract;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -13,8 +11,6 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -66,26 +62,12 @@ public class ProductContract extends EntityBase {
 	private long repItemMasterId;
 
 	/**
-	 * 積上げ可能期間(開始日)
-	 */
-	@Temporal(TemporalType.TIMESTAMP)
-	@ApiModelProperty(value = "積上げ可能期間(開始日)", required = false, position = 5)
-	private Date effectiveFrom;
-
-	/**
-	 * 積上げ可能期間(終了日)
-	 */
-	@Temporal(TemporalType.TIMESTAMP)
-	@ApiModelProperty(value = "積上げ可能期間(終了日)", required = false, position = 6)
-	private Date effectiveTo;
-
-	/**
 	 * サービス識別番号
 	 */
 	@Column(nullable = false)
 	@NotEmpty
 	@Size(max = 255)
-	@ApiModelProperty(value = "サービス識別番号", required = true, position = 7, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "サービス識別番号", required = true, position = 5, allowableValues = "range[0,255]")
 	private String serviceIdentNumber;
 
 	/**
@@ -94,13 +76,13 @@ public class ProductContract extends EntityBase {
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "contract_id", referencedColumnName = "id")
 	@JsonIgnore
-	@ApiModelProperty(value = "契約", required = true, position = 8)
+	@ApiModelProperty(value = "契約", required = true, position = 6)
 	private Contract contract;
 
 	/**
 	 * 拡張項目
 	 */
-	@ApiModelProperty(value = "拡張項目", required = false, position = 9)
+	@ApiModelProperty(value = "拡張項目", required = false, position = 7)
 	@Lob
 	private String extendsParameter;
 

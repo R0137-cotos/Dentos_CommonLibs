@@ -747,14 +747,12 @@ public class TestContract {
 		// itemContractName ricohItemCode itemType costType)
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setPartitionPrice(null);
-		testTarget.setEffectiveFrom(null);
-		testTarget.setEffectiveTo(null);
 		testTarget.setItemContractName(null);
 		testTarget.setRicohItemCode(null);
 		testTarget.setItemType(null);
 		testTarget.setCostType(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 7);
+		Assert.assertTrue(result.getErrorInfoList().size() == 5);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 
 		// 異常系（@NotEmptyの空文字列チェック：itemContractName）

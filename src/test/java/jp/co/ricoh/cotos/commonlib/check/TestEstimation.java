@@ -638,7 +638,7 @@ public class TestEstimation {
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
 		// 異常系（@DecimalMax：）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setAmountSummary(DECIMAL_10000000000000000000);
+		testTarget.setEstimationAmountSummary(DECIMAL_10000000000000000000);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
@@ -708,11 +708,10 @@ public class TestEstimation {
 		testTarget.setItemType(null);
 		testTarget.setCostType(null);
 		testTarget.setPartitionPrice(null);
-		testTarget.setEffectiveFrom(null);
 		testTarget.setItemEstimationName(null);
 		testTarget.setRicohItemCode(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 6);
+		Assert.assertTrue(result.getErrorInfoList().size() == 5);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 		// 異常系（@NotEmptyの空文字列チェック：）
 		BeanUtils.copyProperties(testTarget, entity);

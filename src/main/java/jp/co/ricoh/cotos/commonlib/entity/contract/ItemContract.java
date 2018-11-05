@@ -1,7 +1,6 @@
 package jp.co.ricoh.cotos.commonlib.entity.contract;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,8 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -103,29 +100,11 @@ public class ItemContract extends EntityBase {
 	private BigDecimal partitionPrice;
 
 	/**
-	 * 積上げ可能期間(開始日)
-	 */
-	@Column(nullable = false)
-	@Temporal(TemporalType.TIMESTAMP)
-	@NotNull
-	@ApiModelProperty(value = "積上げ可能期間(開始日)", required = true, position = 9)
-	private Date effectiveFrom;
-
-	/**
-	 * 積上げ可能期間(終了日)
-	 */
-	@Column(nullable = false)
-	@Temporal(TemporalType.TIMESTAMP)
-	@NotNull
-	@ApiModelProperty(value = "積上げ可能期間(終了日)", required = true, position = 10)
-	private Date effectiveTo;
-
-	/**
 	 * 契約明細
 	 */
 	@OneToOne(optional = false)
 	@JoinColumn(name = "contract_detail_id", referencedColumnName = "id")
 	@JsonIgnore
-	@ApiModelProperty(value = "契約明細", required = true, position = 8)
+	@ApiModelProperty(value = "契約明細", required = true, position = 9)
 	private ContractDetail contractDetail;
 }
