@@ -5,6 +5,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Optional;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -40,13 +41,14 @@ public class CommonSendMail {
 
 	/**
 	 * メールテンプレートマスタ特定&メール送信処理
-	 * 
+	 *
 	 * <pre>
 	 * 【処理内容】
-	 * ・引数のサービスカテゴリー(見積、契約、手配etc)と処理カテゴリー(承認、承認依頼、承認依頼差戻etc)を元にメールテンプレートマスタTBL(MAIL_TEMPLATE_MASTER)からメールテンプレートマスタ情報を取得　　詳細は以下を参照
+	 * ・引数のサービスカテゴリー(見積、契約、手配etc)と処理カテゴリー(承認、承認依頼、承認依頼差戻etc)と商品グループマスタIDを元にメールテンプレートマスタTBL(MAIL_TEMPLATE_MASTER)からメールテンプレートマスタ情報を取得　　詳細は以下を参照
 	 *  条件：
 	 *    サービスカテゴリー(MAIL_TEMPLATE_MASTER.SERVICE_CATEGORY)=引数のサービスカテゴリー
 	 *    処理カテゴリー(MAIL_TEMPLATE_MASTER.PROCESS_CATEGORY)=引数の処理カテゴリー
+	 *    商品グループマスタID
 	 * ・引数のメール件名置換リストとメールテンプレートマスタTBL.メール件名(MAIL_TEMPLATE_MASTER.MAIL_SUBJECT)を元にメール件名作成
 	 *  例：
 	 *    メールテンプレートマスタTBL.メール件名(MAIL_TEMPLATE_MASTER.MAIL_SUBJECT)
@@ -61,7 +63,7 @@ public class CommonSendMail {
 	 * ・送信元メールアドレスは、メールテンプレートマスタTBL.送信元メールアドレス(MAIL_TEMPLATE_MASTER.SEND_FROM_MAIL_ADDRESS)から取得
 	 * ・メールは文字コードをUTF-8で作成しており、ファイル添付も可能
 	 * </pre>
-	 * 
+	 *
 	 * @param emailToList
 	 *            Toメールアドレスリスト(複数設定可能)
 	 * @param emailCcList
@@ -78,14 +80,14 @@ public class CommonSendMail {
 	 *            添付ファイル
 	 * @throws MessagingException
 	 */
-	public void findMailTemplateMasterAndSendMail(ServiceCategory serviceCategory, ProcessCategory processCategory, List<String> emailToList, List<String> emailCcList, List<String> mailSubjectRepalceValueList, List<String> mailTextRepalceValueList, String uploadFile) throws MessagingException {
-		MailTemplateMaster mailTemplateMaster = mailTemplateMasterRepository.findByServiceCategoryAndProcessCategory(serviceCategory.toString(), processCategory.toString());
+	public void findMailTemplateMasterAndSendMail(ServiceCategory serviceCategory, ProcessCategory processCategory, Long productGrpMasterId, List<String> emailToList, List<String> emailCcList, List<String> mailSubjectRepalceValueList, List<String> mailTextRepalceValueList, String uploadFile) throws MessagingException {
+		MailTemplateMaster mailTemplateMaster = mailTemplateMasterRepository.findByServiceCategoryAndProcessCategoryAndProductGrpMasterId(serviceCategory.toString(), processCategory.toString(), Optional.ofNullable(productGrpMasterId).orElse(0L).toString());
 		sendMail(emailToList, emailCcList, mailTemplateMaster, mailSubjectRepalceValueList, mailTextRepalceValueList, uploadFile);
 	}
 
 	/**
 	 * メールテンプレートマスタ特定&メール送信処理
-	 * 
+	 *
 	 * <pre>
 	 * 【処理内容】
 	 * ・引数のメールテンプレートマスタIDを元にメールテンプレートマスタTBL(MAIL_TEMPLATE_MASTER)からメールテンプレートマスタ情報を取得
@@ -105,7 +107,7 @@ public class CommonSendMail {
 	 * ・送信元メールアドレスは、メールテンプレートマスタTBL.送信元メールアドレス(MAIL_TEMPLATE_MASTER.SEND_FROM_MAIL_ADDRESS)から取得
 	 * ・メールは文字コードをUTF-8で作成しており、ファイル添付も可能
 	 * </pre>
-	 * 
+	 *
 	 * @param mailTemplateMasterId
 	 *            メールテンプレートマスタID
 	 * @param emailToList
@@ -127,7 +129,7 @@ public class CommonSendMail {
 
 	/**
 	 * メール送信処理_添付ファイルあり
-	 * 
+	 *
 	 * @param emailTo
 	 *            Toメールアドレス
 	 * @param emailCcList
@@ -167,7 +169,7 @@ public class CommonSendMail {
 
 	/**
 	 * メール件名作成
-	 * 
+	 *
 	 * @param mailTemplateMaster
 	 *            エラーテンプレートマスタ
 	 * @param mailSubjectRepalceValueList
@@ -188,7 +190,7 @@ public class CommonSendMail {
 
 	/**
 	 * メール本文作成
-	 * 
+	 *
 	 * @param mailTemplateMaster
 	 *            エラーテンプレートマスタ
 	 * @param mailTextRepalceValueList

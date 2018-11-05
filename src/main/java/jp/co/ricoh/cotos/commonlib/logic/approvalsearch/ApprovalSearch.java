@@ -3,7 +3,6 @@ package jp.co.ricoh.cotos.commonlib.logic.approvalsearch;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,8 +22,6 @@ import jp.co.ricoh.cotos.commonlib.dto.result.RouteFormulaResult;
 import jp.co.ricoh.cotos.commonlib.dto.result.RouteFormulaResult.RouteFormulaStatus;
 import jp.co.ricoh.cotos.commonlib.entity.master.ApprovalRouteGrpMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.ApprovalRouteMaster;
-import jp.co.ricoh.cotos.commonlib.exception.ErrorCheckException;
-import jp.co.ricoh.cotos.commonlib.exception.ErrorInfo;
 import jp.co.ricoh.cotos.commonlib.exception.RouteFormulaScriptException;
 import jp.co.ricoh.cotos.commonlib.logic.check.CheckUtil;
 import jp.co.ricoh.cotos.commonlib.repository.master.ApprovalRouteGrpMasterRepository;
@@ -47,8 +44,6 @@ public class ApprovalSearch {
 	 * ・引数のエンティティを元にJavaScriptエンジン「Nashorn」を使用し、承認ルートマスタTBL(APPROVAL_ROUTE_MASTER)からルート条件式に一致にする承認ルートマスタ情報取得
 	 *  ※上記処理で失敗した場合は、処理結果ステータスに「警告」または「異常」を設定し戻り値返却
 	 * ・承認ルートマスタ情報に紐づく承認ルードノード情報は各ドメインの共通処理で取得
-	 * ・指定したIDの承認ルートグループマスタが存在しない場合はエラーを返す。
-	 * 　ROT00004:承認ルートグループが承認ルートグループマスタに存在しません。
 	 * </pre>
 	 * 
 	 * @param approvalRouteGrpId
@@ -64,11 +59,6 @@ public class ApprovalSearch {
 
 		ApprovalRouteMasterResult reslut = new ApprovalRouteMasterResult();
 		ApprovalRouteGrpMaster approvalRouteGrpMaster = approvalRouteGrpMasterRepository.findOne(approvalRouteGrpId);
-
-		// 指定したIDの承認ルートグループマスタが存在しない場合はエラーを返す。
-		if (approvalRouteGrpMaster == null) {
-			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "MasterDoesNotExistApprovalRouteGrpMaster"));
-		}
 
 		// ルート特定、または条件式実行結果ステータスの異常・警告が発生するまでループ
 		ApprovalRouteMaster applyApprovalRouteMaster = approvalRouteGrpMaster.getApprovalRouteMasterList().stream().filter(approvalRouteMaster -> {
