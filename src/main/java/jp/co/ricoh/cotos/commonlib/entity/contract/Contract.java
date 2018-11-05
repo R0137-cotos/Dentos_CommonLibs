@@ -329,9 +329,23 @@ public class Contract extends EntityBase {
 	private String paymentMethod;
 
 	/**
+	 * 解約理由
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "解約理由", required = false, position = 33, allowableValues = "range[0,255]")
+	private String cancelReason;
+
+	/**
+	 * その他解約理由
+	 */
+	@Size(max = 1000)
+	@ApiModelProperty(value = "その他解約理由", required = false, position = 34, allowableValues = "range[0,1000]")
+	private String cancelReasonEtc;
+
+	/**
 	 * 拡張項目
 	 */
-	@ApiModelProperty(value = "拡張項目", required = false, position = 33)
+	@ApiModelProperty(value = "拡張項目", required = false, position = 35)
 	@Lob
 	private String extendsParameter;
 
@@ -339,7 +353,7 @@ public class Contract extends EntityBase {
 	 * 契約明細
 	 */
 	@OneToMany(mappedBy = "contract")
-	@ApiModelProperty(value = "契約明細", required = true, position = 34)
+	@ApiModelProperty(value = "契約明細", required = true, position = 36)
 	private List<ContractDetail> contractDetailList;
 
 	/**
@@ -347,62 +361,62 @@ public class Contract extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "contract")
 	@OrderBy("displayOrder ASC")
-	@ApiModelProperty(value = "契約チェック結果", required = false, position = 35)
+	@ApiModelProperty(value = "契約チェック結果", required = false, position = 37)
 	private List<ContractCheckResult> contractCheckResultList;
 
 	/**
 	 * 契約承認ルート
 	 */
 	@OneToMany(mappedBy = "contract")
-	@ApiModelProperty(value = "契約承認ルート", required = false, position = 36)
+	@ApiModelProperty(value = "契約承認ルート", required = false, position = 38)
 	private List<ContractApprovalRoute> contractApprovalRouteList;
 
 	/**
 	 * 契約添付ファイル
 	 */
 	@OneToMany(mappedBy = "contract")
-	@ApiModelProperty(value = "契約添付ファイル", required = false, position = 37)
+	@ApiModelProperty(value = "契約添付ファイル", required = false, position = 39)
 	private List<ContractAttachedFile> contractAttachedFileList;
 
 	/**
 	 * 契約担当SA社員
 	 */
 	@OneToOne(mappedBy = "contract")
-	@ApiModelProperty(value = "契約担当SA社員", required = true, position = 38)
+	@ApiModelProperty(value = "契約担当SA社員", required = true, position = 40)
 	private ContractPicSaEmp contractPicSaEmp;
 
 	/**
 	 * 契約追加編集者社員
 	 */
 	@OneToMany(mappedBy = "contract")
-	@ApiModelProperty(value = "契約追加編集者社員", required = false, position = 39)
+	@ApiModelProperty(value = "契約追加編集者社員", required = false, position = 41)
 	private List<ContractAddedEditorEmp> contractAddedEditorEmpList;
 
 	/**
 	 * 販売店(契約用)
 	 */
 	@OneToMany(mappedBy = "contract")
-	@ApiModelProperty(value = "販売店(契約用)", required = false, position = 40)
+	@ApiModelProperty(value = "販売店(契約用)", required = false, position = 42)
 	private List<DealerContract> dealerContractList;
 
 	/**
 	 * 顧客(契約用)
 	 */
 	@OneToOne(mappedBy = "contract")
-	@ApiModelProperty(value = "顧客(契約用)", required = true, position = 41)
+	@ApiModelProperty(value = "顧客(契約用)", required = true, position = 43)
 	private CustomerContract customerContract;
 
 	/**
 	 * 契約操作履歴
 	 */
 	@OneToMany(mappedBy = "contract")
-	@ApiModelProperty(value = "契約操作履歴", required = true, position = 42, readOnly = true)
+	@ApiModelProperty(value = "契約操作履歴", required = true, position = 44, readOnly = true)
 	private List<ContractOperationLog> contractOperationLogList;
 
 	/**
 	 * 商品(契約用)
 	 */
 	@OneToMany(mappedBy = "contract")
-	@ApiModelProperty(value = "商品(契約用)", required = true, position = 43)
+	@ApiModelProperty(value = "商品(契約用)", required = true, position = 45)
 	private List<ProductContract> productContractList;
 }

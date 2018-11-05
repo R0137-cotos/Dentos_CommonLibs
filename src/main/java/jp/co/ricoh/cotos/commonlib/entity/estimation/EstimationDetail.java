@@ -68,7 +68,7 @@ public class EstimationDetail extends EntityBase {
 	 */
 	@DecimalMax("9999999999999999999.99")
 	@ApiModelProperty(value = "見積金額", required = false, position = 5, allowableValues = "range[0.00,9999999999999999999.99]")
-	private BigDecimal amountSummary;
+	private BigDecimal estimationAmountSummary;
 
 	/**
 	 * 摘要
