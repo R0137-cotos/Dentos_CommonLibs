@@ -103,6 +103,7 @@ public class ArrangementWorkOperationLog extends EntityBase {
 
 	@PrePersist
 	public void prePersist() {
+		super.prePersist();
 		this.operatedAt = new Date();
 	}
 
