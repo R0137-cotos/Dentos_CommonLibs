@@ -15,4 +15,6 @@ public interface EstimationRepository extends CrudRepository<Estimation, Long> {
 	public List<Estimation> findByOriginContractNumberInOrderByEstimationNumber(String originContractNumber);
 
 	public List<Estimation> findByEstimationNumberAndEstimationBranchNumber(String estimationNumber, int estimationBranchNumber);
+
+	public List<Estimation> findByOriginContractId(String originContractId);
 }
