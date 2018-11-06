@@ -108,6 +108,7 @@ public class ArrangementWorkCheckResult extends EntityBase {
 
 	@PrePersist
 	public void prePersist() {
+		super.prePersist();
 		this.checkedAt = new Date();
 	}
 
