@@ -4,12 +4,12 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
@@ -32,7 +32,6 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-@EntityListeners(ContractCheckResultListener.class)
 @Table(name = "contract_check_result")
 public class ContractCheckResult extends EntityBase {
 
@@ -81,6 +80,7 @@ public class ContractCheckResult extends EntityBase {
 	 * 表示順
 	 */
 	@Column(nullable = false)
+	@OrderBy("desc")
 	@Max(999)
 	@ApiModelProperty(value = "表示順", required = true, position = 6, allowableValues = "range[0,999]")
 	private int displayOrder;

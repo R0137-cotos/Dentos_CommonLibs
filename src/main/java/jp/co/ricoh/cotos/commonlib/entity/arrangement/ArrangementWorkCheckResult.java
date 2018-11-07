@@ -4,12 +4,12 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -32,7 +32,6 @@ import lombok.EqualsAndHashCode;
  */
 @Entity
 @EqualsAndHashCode(callSuper = true)
-@EntityListeners(ArrangementWorkCheckResultListener.class)
 @Data
 @Table(name = "arrangement_work_check_result")
 public class ArrangementWorkCheckResult extends EntityBase {
@@ -74,6 +73,7 @@ public class ArrangementWorkCheckResult extends EntityBase {
 	 * 表示順
 	 */
 	@Column(nullable = false)
+	@OrderBy("desc")
 	@Max(999)
 	@ApiModelProperty(value = "表示順", required = true, position = 5, allowableValues = "range[0,999]")
 	private int displayOrder;
