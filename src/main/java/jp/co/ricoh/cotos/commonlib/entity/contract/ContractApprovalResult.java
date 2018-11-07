@@ -104,6 +104,7 @@ public class ContractApprovalResult extends EntityBase {
 
 	@PrePersist
 	public void prePersist() {
-		this.processedAt = new Date();
+		super.prePersist();
+		this.processedAt = super.getCreatedAt();
 	}
 }

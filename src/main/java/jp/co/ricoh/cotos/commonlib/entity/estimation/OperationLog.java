@@ -100,6 +100,7 @@ public class OperationLog extends EntityBase {
 
 	@PrePersist
 	public void prePersist() {
-		this.operatedAt = new Date();
+		super.prePersist();
+		this.operatedAt = super.getCreatedAt();
 	}
 }

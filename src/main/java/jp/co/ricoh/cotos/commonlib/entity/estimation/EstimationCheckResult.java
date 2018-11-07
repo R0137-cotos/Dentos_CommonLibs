@@ -118,6 +118,7 @@ public class EstimationCheckResult extends EntityBase {
 
 	@PrePersist
 	public void prePersist() {
-		this.checkedAt = new Date();
+		super.prePersist();
+		this.checkedAt = super.getCreatedAt();
 	}
 }

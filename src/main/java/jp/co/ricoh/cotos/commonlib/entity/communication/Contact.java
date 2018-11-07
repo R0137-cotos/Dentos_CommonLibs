@@ -117,6 +117,7 @@ public class Contact extends EntityBase {
 
 	@PrePersist
 	public void prePersist() {
-		this.sendAt = new Date();
+		super.prePersist();
+		this.sendAt = super.getCreatedAt();
 	}
 }

@@ -311,12 +311,13 @@ public class ContractSearchParameter {
 			+ "7:案件番号<br />" //
 			+ "8:請求開始月<br />" //
 			+ "9:お客様企業名<br />" //
-			+ "10:事業所／部門<br />" //
-			+ "11:サービス開始日<br />" //
-			+ "12:サービス終了日<br />" //
-			+ "13:商品名称<br />" //
-			+ "14:担当営業<br />" //
-			+ "15:担当営業所属", //
+			+ "10:事業所<br />"//
+			+ "11:部門<br />" //
+			+ "12:サービス開始日<br />" //
+			+ "13:サービス終了日<br />" //
+			+ "14:商品名称<br />" //
+			+ "15:担当営業<br />" //
+			+ "16:担当営業所属", //
 			required = true, allowableValues = "range[0,15]") //
 	private int sortColumn;
 
@@ -329,13 +330,7 @@ public class ContractSearchParameter {
 	private SortOrder sortOrder;
 
 	/**
-	 * 降順
-	 */
-	@ApiParam(value = "降順", required = false, hidden = true)
-	private boolean sortDesc;
-
-	/**
-	 * パラメータをMapにする
+	 * パラメータをMapにする。
 	 */
 	public Map<String, Object> createParamaterMap() {
 		Map<String, Object> retMap = new HashMap<>();
