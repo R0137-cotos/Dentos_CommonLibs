@@ -130,6 +130,7 @@ public class ContractAttachedFile extends EntityBase {
 
 	@PrePersist
 	public void prePersist() {
-		this.attachedAt = new Date();
+		super.prePersist();
+		this.attachedAt =  super.getCreatedAt();
 	}
 }

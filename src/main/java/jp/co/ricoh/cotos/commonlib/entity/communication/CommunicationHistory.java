@@ -207,6 +207,7 @@ public class CommunicationHistory extends EntityBase {
 
 	@PrePersist
 	public void prePersist() {
-		this.communicatedAt = new Date();
+		super.prePersist();
+		this.communicatedAt = super.getCreatedAt();
 	}
 }

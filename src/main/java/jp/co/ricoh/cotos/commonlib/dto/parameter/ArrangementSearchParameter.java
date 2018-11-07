@@ -341,9 +341,10 @@ public class ArrangementSearchParameter {
 			+ "9:業務担当者<br />" //
 			+ "10:業務ステータス<br />" //
 			+ "11:見積番号<br />" //
-			+ "12:担当営業/支社<br />" //
-			+ "13:サービス開始日<br />" //
-			+ "14:サービス終了日<br />", //
+			+ "12:担当営業<br />"//
+			+ "13:担当支社<br />" //
+			+ "14:サービス開始日<br />" //
+			+ "15:サービス終了日<br />", //
 			required = true, allowableValues = "range[0,14]") //
 	private int sortColumn;
 
@@ -356,13 +357,7 @@ public class ArrangementSearchParameter {
 	private SortOrder sortOrder;
 
 	/**
-	 * 降順
-	 */
-	@ApiParam(value = "降順", required = false, hidden = true)
-	private boolean sortDesc;
-
-	/**
-	 * パラメータをMapにする
+	 * パラメータをMapにする。
 	 */
 	public Map<String, Object> createParamaterMap() {
 		Map<String, Object> retMap = new HashMap<>();
@@ -377,4 +372,5 @@ public class ArrangementSearchParameter {
 
 		return retMap;
 	}
+
 }

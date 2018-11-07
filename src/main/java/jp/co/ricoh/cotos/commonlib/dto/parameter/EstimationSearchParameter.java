@@ -291,13 +291,7 @@ public class EstimationSearchParameter {
 	private SortOrder sortOrder;
 
 	/**
-	 * 降順
-	 */
-	@ApiParam(value = "降順", required = false, hidden = true)
-	private boolean sortDesc;
-
-	/**
-	 * パラメータをMapにする
+	 * パラメータをMapにする。
 	 */
 	public Map<String, Object> createParamaterMap() {
 		Map<String, Object> retMap = new HashMap<>();
@@ -312,4 +306,5 @@ public class EstimationSearchParameter {
 
 		return retMap;
 	}
+
 }
