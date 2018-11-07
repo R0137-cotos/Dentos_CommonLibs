@@ -4,7 +4,6 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,7 +31,6 @@ import lombok.EqualsAndHashCode;
  */
 @Entity
 @EqualsAndHashCode(callSuper = true)
-@EntityListeners(ArrangementWorkCheckResultListener.class)
 @Data
 @Table(name = "arrangement_work_check_result")
 public class ArrangementWorkCheckResult extends EntityBase {
