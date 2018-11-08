@@ -2,6 +2,9 @@ package jp.co.ricoh.cotos.commonlib.entity;
 
 import java.util.Arrays;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 /**
  * 共通区分定義
  */
@@ -12,7 +15,7 @@ public class EnumType {
 	 */
 	public enum ApprovalProcessCategory {
 
-		承認依頼("1"), 承認依頼差戻("2"), 承認("3");
+		承認依頼("1"), 承認依頼差戻("2"), 承認("3"), 承認依頼取消("4");
 
 		private final String text;
 
@@ -21,10 +24,12 @@ public class EnumType {
 		}
 
 		@Override
+		@JsonValue
 		public String toString() {
 			return this.text;
 		}
 
+		@JsonCreator
 		public static ApprovalProcessCategory fromString(String string) {
 			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
@@ -44,10 +49,12 @@ public class EnumType {
 		}
 
 		@Override
+		@JsonValue
 		public String toString() {
 			return this.text;
 		}
 
+		@JsonCreator
 		public static TargetContractType fromString(String string) {
 			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
@@ -67,10 +74,12 @@ public class EnumType {
 		}
 
 		@Override
+		@JsonValue
 		public String toString() {
 			return this.text;
 		}
 
+		@JsonCreator
 		public static ServiceCategory fromString(String string) {
 			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
@@ -90,10 +99,12 @@ public class EnumType {
 		}
 
 		@Override
+		@JsonValue
 		public String toString() {
 			return this.text;
 		}
 
+		@JsonCreator
 		public static ProcessCategory fromString(String string) {
 			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
@@ -113,10 +124,12 @@ public class EnumType {
 		}
 
 		@Override
+		@JsonValue
 		public String toString() {
 			return this.text;
 		}
 
+		@JsonCreator
 		public static WorkflowType fromString(String string) {
 			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
@@ -136,10 +149,12 @@ public class EnumType {
 		}
 
 		@Override
+		@JsonValue
 		public String toString() {
 			return this.text;
 		}
 
+		@JsonCreator
 		public static ApprovalTargetType fromString(String string) {
 			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
@@ -159,10 +174,12 @@ public class EnumType {
 		}
 
 		@Override
+		@JsonValue
 		public String toString() {
 			return this.text;
 		}
 
+		@JsonCreator
 		public static DetailStatus fromString(String string) {
 			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
@@ -182,10 +199,12 @@ public class EnumType {
 		}
 
 		@Override
+		@JsonValue
 		public String toString() {
 			return this.text;
 		}
 
+		@JsonCreator
 		public static DealerFlowOrder fromString(String string) {
 			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
