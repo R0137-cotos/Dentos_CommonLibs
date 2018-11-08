@@ -12,6 +12,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import lombok.Data;
@@ -40,10 +43,12 @@ public class CommonMaster extends EntityBaseMaster {
 		}
 
 		@Override
+		@JsonValue
 		public String toString() {
 			return this.text;
 		}
 
+		@JsonCreator
 		public static ServiceCategory fromString(String string) {
 			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst()
 					.orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));

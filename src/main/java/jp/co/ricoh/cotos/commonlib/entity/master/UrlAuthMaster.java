@@ -13,6 +13,9 @@ import javax.persistence.Table;
 
 import org.springframework.http.HttpMethod;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import lombok.Data;
@@ -42,10 +45,12 @@ public class UrlAuthMaster extends EntityBaseMaster {
 		}
 
 		@Override
+		@JsonValue
 		public String toString() {
 			return this.text;
 		}
 
+		@JsonCreator
 		public static ParameterType fromString(String string) {
 			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst()
 					.orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
@@ -62,10 +67,12 @@ public class UrlAuthMaster extends EntityBaseMaster {
 		}
 
 		@Override
+		@JsonValue
 		public String toString() {
 			return this.text;
 		}
 
+		@JsonCreator
 		public static ActionDiv fromString(String string) {
 			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst()
 					.orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
@@ -82,10 +89,12 @@ public class UrlAuthMaster extends EntityBaseMaster {
 		}
 
 		@Override
+		@JsonValue
 		public String toString() {
 			return this.text;
 		}
 
+		@JsonCreator
 		public static AuthDiv fromString(String string) {
 			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst()
 					.orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
@@ -102,10 +111,12 @@ public class UrlAuthMaster extends EntityBaseMaster {
 		}
 
 		@Override
+		@JsonValue
 		public String toString() {
 			return this.text;
 		}
 
+		@JsonCreator
 		public static AccessType fromString(String string) {
 			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst()
 					.orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));

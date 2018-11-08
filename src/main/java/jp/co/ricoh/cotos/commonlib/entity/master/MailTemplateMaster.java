@@ -11,6 +11,9 @@ import javax.persistence.Lob;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import jp.co.ricoh.cotos.commonlib.entity.EnumType.ServiceCategory;
@@ -41,10 +44,12 @@ public class MailTemplateMaster extends EntityBaseMaster {
 		}
 
 		@Override
+		@JsonValue
 		public String toString() {
 			return this.text;
 		}
 
+		@JsonCreator
 		public static ProcessCategory fromString(String string) {
 			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst()
 					.orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
