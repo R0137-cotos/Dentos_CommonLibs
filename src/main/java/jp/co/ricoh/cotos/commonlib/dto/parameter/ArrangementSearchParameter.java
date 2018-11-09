@@ -45,9 +45,9 @@ public class ArrangementSearchParameter {
 	/**
 	 * 手配業務
 	 */
-	@ApiParam(value = "手配業務", required = false)
-	@ApiModelProperty(value = "手配業務", required = false, allowableValues = "range[0,255]")
-	private String arrangementName;
+	@ApiParam(value = "手配業務タイプマスタID", required = false)
+	@ApiModelProperty(value = "手配業務タイプマスタID", required = false, allowableValues = "range[0,255]")
+	private String arrangementWorkTypeId;
 
 	/**
 	 * 手配業務ステータス
