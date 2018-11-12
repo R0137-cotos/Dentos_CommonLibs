@@ -165,13 +165,13 @@ public class TestMaster {
 	@Autowired
 	public void injectContext(ConfigurableApplicationContext injectContext) {
 		context = injectContext;
-		//context.getBean(DBConfig.class).clearData();
+		context.getBean(DBConfig.class).clearData();
 	}
 
 	@AfterClass
 	public static void stopAPServer() throws InterruptedException {
 		if (null != context) {
-			//context.getBean(DBConfig.class).clearData();
+			context.getBean(DBConfig.class).clearData();
 			context.stop();
 		}
 	}
