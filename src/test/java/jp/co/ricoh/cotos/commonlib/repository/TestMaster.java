@@ -48,6 +48,7 @@ import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.Domain;
 import jp.co.ricoh.cotos.commonlib.entity.master.VKjbMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.VPicAffiliateMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.VPicAffiliateMasterFull;
 import jp.co.ricoh.cotos.commonlib.repository.master.ApprovalRouteGrpMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ApprovalRouteMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ApprovalRouteNodeMasterRepository;
@@ -78,6 +79,7 @@ import jp.co.ricoh.cotos.commonlib.repository.master.RecordDecomposeMasterReposi
 import jp.co.ricoh.cotos.commonlib.repository.master.SuperUserMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.UrlAuthMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.VKjbMasterRepository;
+import jp.co.ricoh.cotos.commonlib.repository.master.VPicAffiliateMasterFullRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.VPicAffiliateMasterRepository;
 
 /**
@@ -154,6 +156,8 @@ public class TestMaster {
 	private VKjbMasterRepository vKjbMasterRepository;
 	@Autowired
 	private VPicAffiliateMasterRepository vPicAffiliateMasterRepository;
+	@Autowired
+	private VPicAffiliateMasterFullRepository vPicAffiliateMasterFullRepository;
 
 	@Autowired
 	TestTools testTool = null;
@@ -161,13 +165,13 @@ public class TestMaster {
 	@Autowired
 	public void injectContext(ConfigurableApplicationContext injectContext) {
 		context = injectContext;
-		context.getBean(DBConfig.class).clearData();
+		//context.getBean(DBConfig.class).clearData();
 	}
 
 	@AfterClass
 	public static void stopAPServer() throws InterruptedException {
 		if (null != context) {
-			context.getBean(DBConfig.class).clearData();
+			//context.getBean(DBConfig.class).clearData();
 			context.stop();
 		}
 	}
@@ -834,6 +838,19 @@ public class TestMaster {
 		// エンティティの取得
 		String id = "0263975";
 		VPicAffiliateMaster found = vPicAffiliateMasterRepository.findOne(id);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+	}
+
+	@Test
+	public void VPicAffiliateMasterFullのテスト() throws Exception {
+
+		// テストデータはなし
+
+		// エンティティの取得
+		String id = "0263975";
+		VPicAffiliateMasterFull found = vPicAffiliateMasterFullRepository.findOne(id);
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
