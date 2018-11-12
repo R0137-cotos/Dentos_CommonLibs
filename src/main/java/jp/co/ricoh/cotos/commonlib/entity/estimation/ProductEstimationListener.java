@@ -30,7 +30,7 @@ public class ProductEstimationListener {
 	public void appendsEstimationProductsFields(ProductEstimation productEstimation) {
 		ProductMaster productMaster = productMasterRepository.findOne(productEstimation.getProductMasterId());
 		productEstimation.setProductMasterId(productMaster.getId());
-		BeanUtils.copyProperties(productMaster, productEstimation, "id", "updated_at", "updated_user_id", "version");
+		BeanUtils.copyProperties(productMaster, productEstimation, "id", "updatedAt", "updatedUserId", "version");
 		productEstimation.setProductEstimationName(productMaster.getProductName());
 	}
 
