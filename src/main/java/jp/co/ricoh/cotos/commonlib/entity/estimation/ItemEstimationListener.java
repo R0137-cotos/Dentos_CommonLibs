@@ -30,7 +30,7 @@ public class ItemEstimationListener {
 	public void appendsEstimationItemFields(ItemEstimation itemEstimation) {
 		ItemMaster itemMaster = itemMasterRepository.findByRicohItemCode(itemEstimation.getRicohItemCode());
 		itemEstimation.setItemMasterId(itemMaster.getId());
-		BeanUtils.copyProperties(itemMaster, itemEstimation, "id");
+		BeanUtils.copyProperties(itemMaster, itemEstimation, "id", "updated_at", "updated_user_id", "version");
 		itemEstimation.setItemEstimationName(itemMaster.getItemName());
 	}
 
