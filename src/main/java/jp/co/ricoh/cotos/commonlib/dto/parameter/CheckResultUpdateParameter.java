@@ -3,6 +3,9 @@ package jp.co.ricoh.cotos.commonlib.dto.parameter;
 import io.swagger.annotations.ApiParam;
 import lombok.Data;
 
+/**
+ * 汎用チェック結果更新時のパラメーターを表します。
+ */
 @Data
 public class CheckResultUpdateParameter {
 
