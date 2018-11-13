@@ -144,8 +144,12 @@ public class TestCommunication {
 		testTarget.setProductGrpName(STR_256);
 		testTarget.setTitle(STR_256);
 		testTarget.setCommunicationComment(STR_256);
+		testTarget.setRequestOriginName(STR_256);
+		testTarget.setRequestFromName(STR_256);
+		testTarget.setRequestToName(STR_256);
+		testTarget.setRequestToCandidateName(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 11);
+		Assert.assertTrue(result.getErrorInfoList().size() == 15);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 
 	}
@@ -211,8 +215,12 @@ public class TestCommunication {
 		testTarget.setProductGrpName(STR_256);
 		testTarget.setTitle(STR_256);
 		testTarget.setCommunicationComment(STR_256);
+		testTarget.setRequestOriginName(STR_256);
+		testTarget.setRequestFromName(STR_256);
+		testTarget.setRequestToName(STR_256);
+		testTarget.setRequestToCandidateName(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 11);
+		Assert.assertTrue(result.getErrorInfoList().size() == 15);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 
 		// 異常系（@Max ： targetDocBranchNumber）
