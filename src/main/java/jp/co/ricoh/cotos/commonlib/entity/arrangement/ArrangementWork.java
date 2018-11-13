@@ -69,7 +69,6 @@ public class ArrangementWork extends EntityBase {
 	 */
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "arrangement_id", referencedColumnName = "id")
-	@JsonIgnore
 	@ApiModelProperty(value = "手配", required = true, position = 2)
 	private Arrangement arrangement;
 

@@ -15,6 +15,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -86,6 +87,7 @@ public class Arrangement extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "arrangement")
 	@ApiModelProperty(value = "手配業務", required = true, position = 5)
+	@JsonIgnore
 	private List<ArrangementWork> arrangementWorkList;
 
 }
