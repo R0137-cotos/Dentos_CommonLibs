@@ -209,28 +209,28 @@ public class CommunicationHistory extends EntityBase {
 	 * 依頼者氏名
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "依頼者氏名", required = false, position = 20, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "依頼者氏名", required = false, position = 20, allowableValues = "range[0,255]", readOnly = true)
 	private String requestOriginName;
 
 	/**
 	 * 伝達者
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "伝達者", required = false, position = 21, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "伝達者", required = false, position = 21, allowableValues = "range[0,255]", readOnly = true)
 	private String requestFromName;
 
 	/**
 	 * 被伝達者
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "被伝達者", required = false, position = 22, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "被伝達者", required = false, position = 22, allowableValues = "range[0,255]", readOnly = true)
 	private String requestToName;
 
 	/**
 	 * 被伝達者候補
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "被伝達者候補", required = false, position = 23, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "被伝達者候補", required = false, position = 23, allowableValues = "range[0,255]", readOnly = true)
 	private String requestToCandidateName;
 
 	@PrePersist
