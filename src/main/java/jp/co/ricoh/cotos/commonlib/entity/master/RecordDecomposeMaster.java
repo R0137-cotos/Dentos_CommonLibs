@@ -14,6 +14,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -101,6 +102,7 @@ public class RecordDecomposeMaster extends EntityBaseMaster {
 	 * 計上分解構成マスタ
 	 */
 	@OneToMany(mappedBy = "recordDecomposeMaster")
+	@JsonIgnore
 	@ApiModelProperty(value = "計上分解構成マスタ", required = false, position = 8)
 	private List<RecordDecomposeCompMaster> recordDecomposeCompMasterList;
 

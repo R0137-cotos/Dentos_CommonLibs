@@ -10,17 +10,21 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import jp.co.ricoh.cotos.commonlib.entity.EnumType.TargetContractType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * 計上分解構成マスタを表すEntity
  */
 @Entity
 @Data
+@ToString(exclude = { "itemMaster" })
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "record_decompose_comp_master")
 public class RecordDecomposeCompMaster extends EntityBaseMaster {
@@ -36,6 +40,7 @@ public class RecordDecomposeCompMaster extends EntityBaseMaster {
 	 */
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "item_master_id", referencedColumnName = "id")
+	@JsonIgnore
 	@ApiModelProperty(value = "品種マスタ", required = true, position = 2)
 	private ItemMaster itemMaster;
 
