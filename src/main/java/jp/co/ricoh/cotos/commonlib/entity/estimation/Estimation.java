@@ -127,7 +127,7 @@ public class Estimation extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@NotNull
-	@ApiModelProperty(value = "ライフサイクル状態", required = true, position = 3)
+	@ApiModelProperty(value = "ライフサイクル状態", required = true, allowableValues = "作成中(\"1\"), 作成完了(\"2\"), 受注(\"3\"), 失注(\"4\"), 破棄(\"5\")", example = "1", position = 3)
 	private LifecycleStatus lifecycleStatus;
 
 	/**
@@ -135,7 +135,7 @@ public class Estimation extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@NotNull
-	@ApiModelProperty(value = "ワークフロー状態", required = true, position = 4)
+	@ApiModelProperty(value = "ワークフロー状態", required = true, allowableValues = "作成中(\"1\"), 業務依頼中(\"2\"), 業務処理完了(\"3\"), 承認依頼中(\"4\"), 承認済(\"5\"), 顧客提示済(\"6\")", example = "1", position = 4)
 	private WorkflowStatus workflowStatus;
 
 	/**
@@ -188,7 +188,7 @@ public class Estimation extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@NotNull
-	@ApiModelProperty(value = "見積種別", required = true, position = 11)
+	@ApiModelProperty(value = "見積種別", required = true, allowableValues = "新規(\"1\"), プラン変更(\"2\")", example = "1", position = 11)
 	private EstimationType estimationType;
 
 	/**

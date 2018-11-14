@@ -115,14 +115,14 @@ public class ItemMaster extends EntityBaseMaster {
 	 * 品種区分
 	 */
 	@Column(nullable = false)
-	@ApiModelProperty(value = "品種区分", required = true, position = 5)
+	@ApiModelProperty(value = "品種区分", required = true, allowableValues = "なし(\"0\"), 基本(\"1\"), オプション(\"2\")", example ="1", position = 5)
 	private ItemType itemType;
 
 	/**
 	 * 費用種別
 	 */
 	@Column(nullable = false)
-	@ApiModelProperty(value = "費用種別", required = true, position = 6)
+	@ApiModelProperty(value = "費用種別", required = true, allowableValues = "初期費(\"1\"), 月額(\"2\"), 年額(\"3\")", example ="1", position = 6)
 	private CostType costType;
 
 	/**

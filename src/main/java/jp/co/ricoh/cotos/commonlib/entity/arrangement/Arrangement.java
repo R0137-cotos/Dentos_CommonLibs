@@ -79,7 +79,7 @@ public class Arrangement extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@NotNull
-	@ApiModelProperty(value = "ワークフロー状態", required = true, position = 4)
+	@ApiModelProperty(value = "ワークフロー状態", required = true, allowableValues="手配中(\"1\"), 手配完了(\"2\")", example = "1", position = 4)
 	private WorkflowStatus workflowStatus;
 
 	/**

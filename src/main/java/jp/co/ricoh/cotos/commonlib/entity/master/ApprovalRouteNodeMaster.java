@@ -102,14 +102,14 @@ public class ApprovalRouteNodeMaster extends EntityBaseMaster {
 	 * 承認者種別
 	 */
 	@Column(nullable = false)
-	@ApiModelProperty(value = "承認者種別", required = true, position = 4)
+	@ApiModelProperty(value = "承認者種別", required = true, allowableValues = "メイン承認者(\"1\"), 代理承認者(\"2\")", example = "1", position = 4)
 	private ApproverClass approverClass;
 
 	/**
 	 * 承認者導出方式区分
 	 */
 	@Column(nullable = false)
-	@ApiModelProperty(value = "承認者導出方式区分", required = true, position = 5)
+	@ApiModelProperty(value = "承認者導出方式区分", required = true, allowableValues = "直属上司指定(\"1\"), 組織絶対階層指定(\"2\"), 組織直接指定(\"3\"), ユーザー直接指定(\"4\")", example = "1", position = 5)
 	private ApproverDeriveMethodDiv approverDeriveMethodDiv;
 
 	/**

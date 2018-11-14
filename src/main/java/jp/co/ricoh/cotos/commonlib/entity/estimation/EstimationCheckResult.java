@@ -58,7 +58,7 @@ public class EstimationCheckResult extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@NotNull
-	@ApiModelProperty(value = "対象ライフサイクル状態", required = true, position = 3)
+	@ApiModelProperty(value = "対象ライフサイクル状態", required = true, allowableValues = "作成中(\"1\"), 作成完了(\"2\"), 受注(\"3\"), 失注(\"4\"), 破棄(\"5\")", example = "1", position = 3)
 	private LifecycleStatus targetLifecycleStatus;
 
 	/**

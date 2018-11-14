@@ -156,7 +156,7 @@ public class VKjbMaster {
 	 * 企事部設定区分
 	 */
 	@Column(length = 1)
-	@ApiModelProperty(value = "企事部設定区分", required = false, position = 16, allowableValues = "range[0,1]")
+	@ApiModelProperty(value = "企事部設定区分", required = false, position = 16, allowableValues = "企事(\"1\"), 企事部(\"2\")", example = "1")
 	private DepartmentDiv prflKjbSetKbn;
 
 	/**

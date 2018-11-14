@@ -185,7 +185,7 @@ public class UrlAuthMaster extends EntityBaseMaster {
 	 * パラメータータイプ
 	 */
 	@Column(nullable = false)
-	@ApiModelProperty(value = "パラメータータイプ", required = true, position = 7)
+	@ApiModelProperty(value = "パラメータータイプ", required = true, allowableValues = "none(\"0\"), path(\"1\"), query(\"2\"), json(\"3\")", example = "1", position = 7)
 	private ParameterType paramType;
 
 	/**
@@ -199,21 +199,21 @@ public class UrlAuthMaster extends EntityBaseMaster {
 	 * アクション区分
 	 */
 	@Column(nullable = true)
-	@ApiModelProperty(value = "アクション区分", required = true, position = 9)
+	@ApiModelProperty(value = "アクション区分", required = true, allowableValues = "なし(\"00\"), 照会(\"01\"), 登録(\"02\"), 更新(\"03\"), 削除(\"04\"), 印刷(\"05\"), ダウンロード(\"06\"), 集計(\"07\")", example = "01", position = 9)
 	private ActionDiv actionDiv;
 
 	/**
 	 * 権限区分
 	 */
 	@Column(nullable = true)
-	@ApiModelProperty(value = "権限区分", required = true, position = 10)
+	@ApiModelProperty(value = "権限区分", required = true, allowableValues = "なし(\"0\"), 見積_契約_手配(\"2200\"), 請求_計上_本部(\"2210\"), システム管理(\"2220\")", example = "0", position = 10)
 	private AuthDiv authDiv;
 
 	/**
 	 * 参照種別
 	 */
 	@Column(nullable = true)
-	@ApiModelProperty(value = "参照種別", required = true, position = 11)
+	@ApiModelProperty(value = "参照種別", required = true, allowableValues = "なし(\"0\"), 参照(\"1\"), 編集(\"2\"), 承認(\"3\")", example = "1", position = 11)
 	private AccessType accessType;
 
 	/**
