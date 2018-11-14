@@ -41,6 +41,7 @@ public class ArrangementWorkCompMaster extends EntityBaseMaster {
 	 */
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "item_master_id", referencedColumnName = "id")
+	@JsonIgnore
 	@ApiModelProperty(value = "品種マスタ", required = true, position = 2)
 	private ItemMaster itemMaster;
 
