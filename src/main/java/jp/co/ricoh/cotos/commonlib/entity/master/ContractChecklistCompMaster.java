@@ -94,7 +94,7 @@ public class ContractChecklistCompMaster extends EntityBaseMaster {
 	 */
 	@Column(nullable = false)
 	@ApiModelProperty(value = "対象契約種別<br /> "//
-			+ "共通/新規/プラン変更/情報変更", required = true, position = 3)
+			+ "共通/新規/プラン変更/情報変更", required = true, allowableValues = "共通(\"1\"), 新規(\"2\"), プラン変更(\"3\"), 情報変更(\"4\")", example = "1", position = 3)
 	private TargetContractType targetContractType;
 
 	/**
@@ -102,7 +102,7 @@ public class ContractChecklistCompMaster extends EntityBaseMaster {
 	 */
 	@Column(nullable = false)
 	@ApiModelProperty(value = "対象ライフサイクル状態<br /> "//
-			+ "作成中/キャンセル手続き中/解約手続き中", required = true, position = 4)
+			+ "作成中/キャンセル手続き中/解約手続き中", required = true, allowableValues = "作成中(\"1\"), キャンセル手続き中(\"2\"), 解約手続き中(\"3\")", example ="1", position = 4)
 	private TargetLifecycleStatus targetLifecycleStatus;
 
 	/**

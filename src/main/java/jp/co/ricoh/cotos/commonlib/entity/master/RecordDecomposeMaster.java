@@ -63,7 +63,7 @@ public class RecordDecomposeMaster extends EntityBaseMaster {
 	 * 計上種別
 	 */
 	@Column(nullable = false)
-	@ApiModelProperty(value = "計上種別", required = true, position = 2)
+	@ApiModelProperty(value = "計上種別", required = true, allowableValues = "原価振替(\"1\"), 割戻(\"2\")", example = "1", position = 2)
 	private RecordType recordType;
 
 	/**

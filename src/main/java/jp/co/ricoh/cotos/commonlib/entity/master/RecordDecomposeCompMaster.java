@@ -48,7 +48,7 @@ public class RecordDecomposeCompMaster extends EntityBaseMaster {
 	 * 対象契約種別
 	 */
 	@Column(nullable = false)
-	@ApiModelProperty(value = "対象契約種別", required = true, position = 3)
+	@ApiModelProperty(value = "対象契約種別", required = true, allowableValues = "共通(\"1\"), 新規(\"2\"), プラン変更(\"3\"), 情報変更(\"4\")", example = "1", position = 3)
 	private TargetContractType targetContractType;
 
 	/**

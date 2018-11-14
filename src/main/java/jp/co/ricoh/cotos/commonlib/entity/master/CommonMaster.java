@@ -79,7 +79,7 @@ public class CommonMaster extends EntityBaseMaster {
 	 * サービスカテゴリ
 	 */
 	@Column(nullable = false)
-	@ApiModelProperty(value = "サービスカテゴリ", required = true, position = 4)
+	@ApiModelProperty(value = "サービスカテゴリ", required = true, allowableValues = "共通(\"0\"), 見積(\"1\"), 契約(\"2\"), 手配(\"3\")", example = "1", position = 4)
 	private ServiceCategory serviceCategory;
 
 	/**

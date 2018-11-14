@@ -77,7 +77,7 @@ public class CustomerEstimation extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@NotNull
-	@ApiModelProperty(value = "企事部設定区分", required = true, position = 6)
+	@ApiModelProperty(value = "企事部設定区分", required = true, allowableValues = "企事(\"1\"), 企事部(\"2\")", example = "1", position = 6)
 	private DepartmentDiv departmentDiv;
 
 	/**

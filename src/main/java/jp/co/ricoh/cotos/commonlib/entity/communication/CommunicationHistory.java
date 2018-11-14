@@ -46,7 +46,7 @@ public class CommunicationHistory extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@NotNull
-	@ApiModelProperty(value = "サービスカテゴリ", required = true, position = 2)
+	@ApiModelProperty(value = "サービスカテゴリ", required = true, allowableValues = "見積(\"1\"), 契約(\"2\"), 手配(\"3\")", example = "1", position = 2)
 	private ServiceCategory serviceCategory;
 
 	/**
@@ -54,7 +54,7 @@ public class CommunicationHistory extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@NotNull
-	@ApiModelProperty(value = "処理カテゴリー", required = true, position = 3)
+	@ApiModelProperty(value = "処理カテゴリー", required = true, allowableValues = "承認依頼(\"1\"), 承認依頼取消(\"2\"), 承認依頼差戻(\"3\"), 承認(\"4\"), 作業依頼(\"5\"), 作業完了(\"6\"), キャンセル手続き(\"7\"), キャンセル手続き中止(\"8\"), 解約手続き(\"9\"), 解約手続き中止(\"10\")", example = "1", position = 3)
 	private ProcessCategory processCategory;
 
 	/**
@@ -74,7 +74,7 @@ public class CommunicationHistory extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@NotNull
-	@ApiModelProperty(value = "ワークフロー種別", required = true, position = 5)
+	@ApiModelProperty(value = "ワークフロー種別", required = true, allowableValues = "承認フロー(\"1\"), タスクフロー(\"2\")", example = "1", position = 5)
 	private WorkflowType workflowType;
 
 	/**
@@ -84,7 +84,7 @@ public class CommunicationHistory extends EntityBase {
 	@NotNull
 	@ApiModelProperty(value = "承認対象種別<br />" //
 			+ "承認フロー⇒新規/情報変更/プラン変更/キャンセル/解約/作業完了報告<br />" //
-			+ "タスクフロー⇒非承認", required = true, position = 6) //
+			+ "タスクフロー⇒非承認", required = true, allowableValues = "新規(\"1\"), 情報変更(\"2\"), プラン変更(\"3\"), キャンセル(\"4\"), 解約(\"5\"), 作業完了報告(\"6\"), 非承認(\"7\")", example = "1", position = 6) //
 	private ApprovalTargetType approvalTargetType;
 
 	/**

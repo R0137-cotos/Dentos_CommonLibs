@@ -55,7 +55,7 @@ public class ContractDetail extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@NotNull
-	@ApiModelProperty(value = "状態", required = true, position = 3)
+	@ApiModelProperty(value = "状態", required = true, allowableValues = "NONE(\"1\"), ADD(\"2\"), DELETE(\"3\")", example = "", position = 3)
 	private DetailStatus state;
 
 	/**

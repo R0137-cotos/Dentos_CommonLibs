@@ -33,21 +33,21 @@ public class AuthPatternMaster extends EntityBaseMaster {
 	 * アクション区分
 	 */
 	@Column(nullable = false)
-	@ApiModelProperty(value = "アクション区分", required = true, position = 2)
+	@ApiModelProperty(value = "アクション区分", required = true, allowableValues  ="なし(\"00\"), 照会(\"01\"), 登録(\"02\"), 更新(\"03\"), 削除(\"04\"), 印刷(\"05\"), ダウンロード(\"06\"), 集計(\"07\")", example = "00", position = 2)
 	private ActionDiv actionDiv;
 
 	/**
 	 * 権限区分
 	 */
 	@Column(nullable = false)
-	@ApiModelProperty(value = "権限区分", required = true, position = 3)
+	@ApiModelProperty(value = "権限区分", required = true, allowableValues = "なし(\"0\"), 見積_契約_手配(\"2200\"), 請求_計上_本部(\"2210\"), システム管理(\"2220\")", example = "0", position = 3)
 	private AuthDiv authDiv;
 
 	/**
 	 * 参照種別
 	 */
 	@Column(nullable = false)
-	@ApiModelProperty(value = "参照種別", required = true, position = 4)
+	@ApiModelProperty(value = "参照種別", required = true, allowableValues = "なし(\"0\"), 参照(\"1\"), 編集(\"2\"), 承認(\"3\")", example = "1", position = 4)
 	private AccessType accessType;
 
 	/**

@@ -73,7 +73,7 @@ public class ContactTo extends EntityBase {
 	/**
 	 * 送信タイプ
 	 */
-	@ApiModelProperty(value = "送信タイプ", required = false, position = 3)
+	@ApiModelProperty(value = "送信タイプ", required = false, allowableValues = "TO(\"1\"), CC(\"2\")", example = "1", position = 3)
 	private SendType sendType;
 
 	/**

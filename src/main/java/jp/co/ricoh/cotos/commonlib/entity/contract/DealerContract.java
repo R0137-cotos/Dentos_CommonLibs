@@ -115,6 +115,6 @@ public class DealerContract extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@NotNull
-	@ApiModelProperty(value = "販売店商流順", required = true, position = 12)
+	@ApiModelProperty(value = "販売店商流順", required = true, allowableValues = "販売店(\"1\"), 母店(\"2\")", example = "1", position = 12)
 	private DealerFlowOrder dealerFlowOrder;
 }

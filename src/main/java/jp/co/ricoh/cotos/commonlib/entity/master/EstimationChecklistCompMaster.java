@@ -94,7 +94,7 @@ public class EstimationChecklistCompMaster extends EntityBaseMaster {
 	 */
 	@Column(nullable = false)
 	@ApiModelProperty(value = "対象見積種別<br /> "//
-			+ "共通/新規/プラン変更<br /> ", required = true, position = 3)
+			+ "共通/新規/プラン変更<br /> ", required = true, allowableValues  = "共通(\"1\"), 新規(\"2\"), プラン変更(\"3\")", example = "1", position = 3)
 	private TargetEstimationType targetEstimationType;
 
 	/**
@@ -102,7 +102,7 @@ public class EstimationChecklistCompMaster extends EntityBaseMaster {
 	 */
 	@Column(nullable = false)
 	@ApiModelProperty(value = "対象ライフサイクル状態<br /> "//
-			+ "作成中<br /> ", required = true, position = 4)
+			+ "作成中<br /> ", required = true, allowableValues = "作成中(\"1\")", example = "1", position = 4)
 	private TargetLifecycleStatus targetLifecycleStatus;
 
 	/**

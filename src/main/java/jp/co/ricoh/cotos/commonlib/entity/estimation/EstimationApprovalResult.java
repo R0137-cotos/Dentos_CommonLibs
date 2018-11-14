@@ -58,7 +58,7 @@ public class EstimationApprovalResult extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@NotNull
-	@ApiModelProperty(value = "承認処理カテゴリー", required = true, position = 3)
+	@ApiModelProperty(value = "承認処理カテゴリー", required = true, allowableValues = "承認依頼(\"1\"), 承認依頼差戻(\"2\"), 承認(\"3\"), 承認依頼取消(\"4\")", example = "1", position = 3)
 	private ApprovalProcessCategory approvalProcessCategory;
 
 	/**
