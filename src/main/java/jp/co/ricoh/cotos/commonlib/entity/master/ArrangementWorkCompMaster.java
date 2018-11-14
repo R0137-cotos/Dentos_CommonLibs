@@ -17,6 +17,7 @@ import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import jp.co.ricoh.cotos.commonlib.entity.EnumType.TargetContractType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * 手配業務構成マスタを表すEntity
@@ -24,6 +25,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
+@ToString(exclude = { "itemMaster" })
 @Table(name = "arrangement_work_comp_master")
 public class ArrangementWorkCompMaster extends EntityBaseMaster {
 
