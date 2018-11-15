@@ -11,6 +11,6 @@ import jp.co.ricoh.cotos.commonlib.entity.master.CommonMaster;
 
 @Repository
 public interface CommonMasterRepository extends CrudRepository<CommonMaster, Long> {
-	@Query(value = "FROM CommonMaster WHERE (service_category = :SERVICE_CATEGORY OR (service_category = '0' AND column_name NOT IN (SELECT column_name FROM CommonMaster WHERE service_category = :SERVICE_CATEGORY))) AND delete_flg = '0' order by id")
+	@Query(value = "SELECT * FROM common_master WHERE (service_category = :SERVICE_CATEGORY OR (service_category = '0' AND column_name NOT IN (SELECT column_name FROM common_master WHERE service_category = :SERVICE_CATEGORY))) AND delete_flg = '0' order by id", nativeQuery = true)
 	public List<CommonMaster> findByServiceCategory(@Param("SERVICE_CATEGORY") String serviceCategory);
 }
