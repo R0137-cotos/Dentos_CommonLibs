@@ -87,11 +87,17 @@ public class CotosSecurityTests {
 	@Autowired
 	public void injectContext(ConfigurableApplicationContext injectContext) {
 		context = injectContext;
+		context.getBean(DBConfig.class).clearData();
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/superUserMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/urlAuthMaster.sql");
 	}
 
 	@AfterClass
 	public static void stopAPServer() throws InterruptedException {
-		context.stop();
+		if (null != context) {
+			context.getBean(DBConfig.class).clearData();
+			context.stop();
+		}
 	}
 
 	@Test
@@ -556,7 +562,7 @@ public class CotosSecurityTests {
 
 		List<UrlAuthMaster> result = urlAuthMasterRepository.findByIdMethodAndIdDomainOrderByIdUrlPatternAsc(HttpMethod.GET, Domain.estimation);
 
-		Assert.assertEquals("正常に取得できること", 5, result.size());
+		Assert.assertEquals("正常に取得できること", 1, result.size());
 	}
 
 	@Test
@@ -565,7 +571,7 @@ public class CotosSecurityTests {
 
 		SuperUserMaster result = superUserMasterRepository.findOne(1L);
 
-		Assert.assertEquals("正常に取得できること", "00500784", result.getUserId());
+		Assert.assertEquals("正常に取得できること", "MOM_EMPLOYEE_ID", result.getUserId());
 	}
 
 	private RestTemplate initRest(final String header) {
