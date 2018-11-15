@@ -75,6 +75,7 @@ public class ApprovalRouteGrpMaster extends EntityBaseMaster {
 	 * 手配業務タイプマスタ
 	 */
 	@OneToMany(mappedBy = "approvalRouteGrpMaster")
+	@JsonIgnore
 	@ApiModelProperty(value = "手配業務タイプマスタ", required = false, position = 7)
 	private List<ArrangementWorkTypeMaster> arrangementWorkTypeMasterList;
 
