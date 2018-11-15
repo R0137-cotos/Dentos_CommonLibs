@@ -31,6 +31,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import jp.co.ricoh.cotos.commonlib.DBConfig;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.AuthorityJudgeParameter;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvEmployeeMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.SuperUserMaster;
@@ -86,11 +87,17 @@ public class CotosSecurityTests {
 	@Autowired
 	public void injectContext(ConfigurableApplicationContext injectContext) {
 		context = injectContext;
+		context.getBean(DBConfig.class).clearData();
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/superUserMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/urlAuthMaster.sql");
 	}
 
 	@AfterClass
 	public static void stopAPServer() throws InterruptedException {
-		context.stop();
+		if (null != context) {
+			context.getBean(DBConfig.class).clearData();
+			context.stop();
+		}
 	}
 
 	@Test
@@ -549,49 +556,22 @@ public class CotosSecurityTests {
 		Assert.assertEquals("正常にMoM権限情報を取得できること", AuthLevel.自社, result);
 	}
 
-	// TODO 以下テストはCommonLibs実装時にテストOKになるようにすること
-	@Ignore
 	@Test
 	@Transactional
 	public void 正常_URL権限種別マスターを取得できること() throws Exception {
 
-		UrlAuthMaster urlAuthMaster = new UrlAuthMaster();
-
-		// ID 設定
-		Id urlAuthMasterId = new Id();
-		urlAuthMasterId.setUrlPattern("/test");
-		urlAuthMasterId.setMethod(HttpMethod.GET);
-		urlAuthMasterId.setDomain(Domain.estimation);
-		urlAuthMaster.setId(urlAuthMasterId);
-
-		// 必須項目設定
-		urlAuthMaster.setRequireAuthorize(1);
-		urlAuthMaster.setExistsDb(1);
-		urlAuthMaster.setParamType(ParameterType.path);
-		urlAuthMaster.setActionDiv(ActionDiv.照会);
-		urlAuthMasterRepository.save(urlAuthMaster);
-
-		// データ取得
-		List<UrlAuthMaster> result = urlAuthMasterRepository.findByIdMethodAndIdDomainOrderByIdUrlPatternAsc(urlAuthMasterId.getMethod(), urlAuthMasterId.getDomain());
+		List<UrlAuthMaster> result = urlAuthMasterRepository.findByIdMethodAndIdDomainOrderByIdUrlPatternAsc(HttpMethod.GET, Domain.estimation);
 
 		Assert.assertEquals("正常に取得できること", 1, result.size());
 	}
 
-	// TODO 実装時にテストするようにする
-	@Ignore
 	@Test
 	@Transactional
 	public void 正常_スーパーユーザーマスターを取得できること() throws Exception {
 
-		// ID 設定
-		SuperUserMaster superUserMaster = new SuperUserMaster();
-		superUserMaster.setUserId("test");
-		superUserMasterRepository.save(superUserMaster);
+		SuperUserMaster result = superUserMasterRepository.findOne(1L);
 
-		// データ取得
-		SuperUserMaster result = superUserMasterRepository.findOne(superUserMaster.getId());
-
-		Assert.assertEquals("正常に取得できること", "test", result.getUserId());
+		Assert.assertEquals("正常に取得できること", "MOM_EMPLOYEE_ID", result.getUserId());
 	}
 
 	private RestTemplate initRest(final String header) {
