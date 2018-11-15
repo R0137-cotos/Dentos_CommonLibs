@@ -569,6 +569,11 @@ public class CotosSecurityTests {
 		urlAuthMaster.setExistsDb(1);
 		urlAuthMaster.setParamType(ParameterType.path);
 		urlAuthMaster.setActionDiv(ActionDiv.照会);
+		urlAuthMaster.setVersion(1L);
+		urlAuthMaster.setAccessType(AccessType.参照);
+		urlAuthMaster.setAuthDiv(AuthDiv.システム管理);
+		urlAuthMaster.setDescription("コメント");
+		
 		urlAuthMasterRepository.save(urlAuthMaster);
 
 		// データ取得
