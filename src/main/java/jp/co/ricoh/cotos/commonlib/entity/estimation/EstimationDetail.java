@@ -1,6 +1,7 @@
 package jp.co.ricoh.cotos.commonlib.entity.estimation;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.DecimalMax;
@@ -88,4 +90,8 @@ public class EstimationDetail extends EntityBase {
 	@ApiModelProperty(value = "品種(見積用)", required = true, position = 8)
 	private ItemEstimation itemEstimation;
 
+	@PrePersist
+	public void prePersist() {
+		super.setCreatedAt(new Date());
+	}
 }
