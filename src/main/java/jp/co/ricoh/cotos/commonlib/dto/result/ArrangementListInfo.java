@@ -1,11 +1,7 @@
 package jp.co.ricoh.cotos.commonlib.dto.result;
 
-import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Embeddable;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
 import javax.persistence.PrePersist;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,39 +15,26 @@ import lombok.Data;
  * 一覧を取得するためには、こちらのクラスを使ってください。 <br/>
  * このクラスを使用してDBへの保存を行うことは出来ません。
  */
-@Entity
 @Data
 public class ArrangementListInfo {
-	@Embeddable
-	@Data
-	public static class Id implements Serializable {
 
-		/**
-		 * シリアルバージョンID
-		 */
-		private static final long serialVersionUID = 1L;
+	/**
+	 * 契約ID
+	 */
+	@ApiModelProperty(value = "契約ID", required = true, position = 1)
+	private long contractId;
 
-		/**
-		 * 契約ID
-		 */
-		@ApiModelProperty(value = "契約ID", required = true, position = 1)
-		private long contractId;
+	/**
+	 * 手配ID
+	 */
+	@ApiModelProperty(value = "手配ID", required = true, position = 2)
+	private long arrangementId;
 
-		/**
-		 * 手配ID
-		 */
-		@ApiModelProperty(value = "手配ID", required = true, position = 2)
-		private long arrangementId;
-
-		/**
-		 * 手配業務ID
-		 */
-		@ApiModelProperty(value = "手配業務ID", required = true, position = 3)
-		private long arrangementWorkId;
-	}
-
-	@EmbeddedId
-	private Id id;
+	/**
+	 * 手配業務ID
+	 */
+	@ApiModelProperty(value = "手配業務ID", required = true, position = 3)
+	private long arrangementWorkId;
 
 	/**
 	 * 契約番号

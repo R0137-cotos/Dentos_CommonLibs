@@ -2,8 +2,6 @@ package jp.co.ricoh.cotos.commonlib.dto.result;
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -18,11 +16,9 @@ import lombok.Data;
  * 一覧を取得するためには、こちらのクラスを使ってください。 <br/>
  * このクラスを使用してDBへの保存を行うことは出来ません。
  */
-@Entity
 @Data
 public class EstimationListInfo {
 
-	@Id
 	@ApiModelProperty(value = "見積ID", required = true, position = 1)
 	private long id;
 

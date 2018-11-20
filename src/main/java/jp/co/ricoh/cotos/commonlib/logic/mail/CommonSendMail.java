@@ -165,6 +165,8 @@ public class CommonSendMail {
 			FileSystemResource res = new FileSystemResource(uploadFile);
 			attachedHelper.addAttachment(res.getFilename(), res);
 		}
+		
+		javaMailSender.send(attachedMsg);
 	}
 
 	/**
