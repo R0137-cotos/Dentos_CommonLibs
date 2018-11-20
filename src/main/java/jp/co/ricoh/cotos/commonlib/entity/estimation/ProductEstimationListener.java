@@ -22,7 +22,7 @@ public class ProductEstimationListener {
 
 	/**
 	 * 商品マスタ情報を商品（見積用）トランザクションに紐づけます。
-	 * 
+	 *
 	 * @param productEstimation
 	 */
 	@PrePersist
@@ -30,7 +30,7 @@ public class ProductEstimationListener {
 	public void appendsEstimationProductsFields(ProductEstimation productEstimation) {
 		ProductMaster productMaster = productMasterRepository.findOne(productEstimation.getProductMasterId());
 		productEstimation.setProductMasterId(productMaster.getId());
-		BeanUtils.copyProperties(productMaster, productEstimation, "id", "updatedAt", "updatedUserId", "version");
+		BeanUtils.copyProperties(productMaster, productEstimation, "id", "updatedAt", "updatedUserId", "createdAt", "createdUserId", "version");
 		productEstimation.setProductEstimationName(productMaster.getProductName());
 	}
 
