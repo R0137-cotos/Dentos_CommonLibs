@@ -23,13 +23,16 @@ import lombok.Data;
 public class EstimationListInfo {
 
 	@Id
-	@ApiModelProperty(value = "見積ID", required = true, position = 1)
+	@ApiModelProperty(value = "連番", required = true, position = 1)
+	private long seqNo;
+	
+	@ApiModelProperty(value = "見積ID", required = true, position = 2)
 	private long id;
 
 	/**
 	 * 見積番号
 	 */
-	@ApiModelProperty(value = "見積番号", required = true, position = 2, allowableValues = "range[0,18]")
+	@ApiModelProperty(value = "見積番号", required = true, position = 3, allowableValues = "range[0,18]")
 	private String estimateNumber;
 
 	/**
@@ -37,13 +40,13 @@ public class EstimationListInfo {
 	 */
 	@ApiModelProperty(value = "見積種別<br />" //
 			+ "新規、プラン変更等の見積種別を表す。", //
-			required = false, position = 3) //
+			required = false, position = 4) //
 	private EstimationType estimationtype;
 
 	/**
 	 * 見積件名
 	 */
-	@ApiModelProperty(value = "見積件名", required = false, position = 4, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "見積件名", required = false, position = 5, allowableValues = "range[0,255]")
 	private String estimationTitle;
 
 	/**
@@ -51,56 +54,56 @@ public class EstimationListInfo {
 	 */
 	@ApiModelProperty(value = "見積ステータス<br />" //
 			+ "状態遷移上のワークフロー状態を表す。", //
-			required = false, position = 5) //
+			required = false, position = 6) //
 	private WorkflowStatus status;
 
 	/**
 	 * 案件番号
 	 */
-	@ApiModelProperty(value = "案件番号", required = false, position = 6, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "案件番号", required = false, position = 7, allowableValues = "range[0,255]")
 	private String caseNumber;
 
 	/**
 	 * 事業所名
 	 */
-	@ApiModelProperty(value = "事業所名", required = false, position = 7, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "事業所名", required = false, position = 8, allowableValues = "range[0,255]")
 	private String officeName;
 
 	/**
 	 * 企業名
 	 */
-	@ApiModelProperty(value = "企業名", required = false, position = 8, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "企業名", required = false, position = 9, allowableValues = "range[0,255]")
 	private String customerName;
 
 	/**
 	 * 部門名
 	 */
-	@ApiModelProperty(value = "部門名", required = false, position = 9, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "部門名", required = false, position = 10, allowableValues = "range[0,255]")
 	private String departmentName;
 
 	/**
 	 * 担当営業
 	 */
-	@ApiModelProperty(value = "担当営業", required = false, position = 10, allowableValues = "range[0,8]")
+	@ApiModelProperty(value = "担当営業", required = false, position = 11, allowableValues = "range[0,8]")
 	private String picEmptxName;
 
 	/**
 	 * 商品名
 	 */
-	@ApiModelProperty(value = "商品名", required = false, position = 11, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "商品名", required = false, position = 12, allowableValues = "range[0,255]")
 	private String itemName;
 
 	/**
 	 * 掲示日
 	 */
-	@ApiModelProperty(value = "掲示日", required = false, position = 12)
+	@ApiModelProperty(value = "掲示日", required = false, position = 13)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date coverPresentationDate;
 
 	/**
 	 * 担当支社名
 	 */
-	@ApiModelProperty(value = "担当支社名", required = false, position = 13, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "担当支社名", required = false, position = 14, allowableValues = "range[0,255]")
 	private String picAffiliateName;
 
 	@PrePersist
