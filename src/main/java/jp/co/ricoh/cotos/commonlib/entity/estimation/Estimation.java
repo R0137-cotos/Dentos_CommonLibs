@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
+import javax.persistence.PreUpdate;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -24,12 +25,15 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.StringUtils;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
+import jp.co.ricoh.cotos.commonlib.security.CotosAuthenticationDetails;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -474,4 +478,12 @@ public class Estimation extends EntityBase {
 	@ApiModelProperty(value = "商品（見積用）", required = false, position = 52)
 	private List<ProductEstimation> productEstimationList;
 
+	@PreUpdate
+	public void preUpdate() {
+		if (StringUtils.isEmpty(super.getUpdatedUserId())) {
+			CotosAuthenticationDetails userInfo = (CotosAuthenticationDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			super.setUpdatedUserId(userInfo.getMomEmployeeId());
+		}
+		super.setCreatedAt(new Date());
+	}
 }
