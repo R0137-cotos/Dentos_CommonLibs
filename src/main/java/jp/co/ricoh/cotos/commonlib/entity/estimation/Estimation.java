@@ -484,6 +484,6 @@ public class Estimation extends EntityBase {
 			CotosAuthenticationDetails userInfo = (CotosAuthenticationDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			super.setUpdatedUserId(userInfo.getMomEmployeeId());
 		}
-		super.setCreatedAt(new Date());
+		super.setUpdatedAt(new Date());
 	}
 }
