@@ -16,9 +16,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiParam;
-import jp.co.ricoh.cotos.commonlib.entity.contract.Contract.ContractType;
-import jp.co.ricoh.cotos.commonlib.entity.contract.Contract.LifecycleStatus;
-import jp.co.ricoh.cotos.commonlib.entity.contract.Contract.WorkflowStatus;
 import lombok.Data;
 
 /**
@@ -56,7 +53,7 @@ public class ArrangementSearchParameter {
 	@ApiModelProperty(value = "手配業務ステータス<br />" //
 			+ "状態遷移上のワークフロー状態を表す。", //
 			required = false) //
-	private jp.co.ricoh.cotos.commonlib.entity.arrangement.Arrangement.WorkflowStatus arrangementWorkStatus;
+	private String arrangementWorkStatus;
 
 	/**
 	 * 手配業務担当者
@@ -151,7 +148,7 @@ public class ArrangementSearchParameter {
 	@ApiModelProperty(value = "契約状態<br />" //
 			+ "状態遷移上のワークフローステータスを表す。", //
 			required = false) //
-	private WorkflowStatus contractCondition;
+	private String contractCondition;
 
 	/**
 	 * サービス開始日(前)
@@ -302,7 +299,7 @@ public class ArrangementSearchParameter {
 	@ApiModelProperty(value = "契約ステータス<br />" //
 			+ "状態遷移上のライフサイクル状態を表す。", //
 			required = false) //
-	private LifecycleStatus contractStatus;
+	private String contractStatus;
 
 	/**
 	 * 契約種別
@@ -311,7 +308,7 @@ public class ArrangementSearchParameter {
 	@ApiModelProperty(value = "契約種別<br />" //
 			+ "新規, プラン変更, 解約などの契約種別を表す。", //
 			required = false)
-	private ContractType contractType;
+	private String contractType;
 
 	/**
 	 * 商品名称
