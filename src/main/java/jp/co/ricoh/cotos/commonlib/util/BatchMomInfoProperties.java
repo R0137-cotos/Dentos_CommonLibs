@@ -9,7 +9,7 @@ import lombok.Data;
 @Component
 @Data
 @EnableConfigurationProperties
-@ConfigurationProperties(prefix = "cotos.mom")
+@ConfigurationProperties(prefix = "cotos.mom.system")
 public class BatchMomInfoProperties {
 
 	String momEmpId;

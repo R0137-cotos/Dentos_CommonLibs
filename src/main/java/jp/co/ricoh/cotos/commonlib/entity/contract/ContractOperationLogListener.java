@@ -36,15 +36,16 @@ public class ContractOperationLogListener {
 	@PrePersist
 	@Transactional
 	public void appendsEmployeeFields(ContractOperationLog contractOperationLog) {
-		MvEmployeeMaster employeeMaster = mvEmployeeMasterRepository.findByMomEmployeeId(contractOperationLog.getOperatorEmpId());
 
-		if (employeeMaster == null) {
-			String[] regexList = { "操作者MoM社員ID" };
-			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "MasterDoesNotExistEmployeeMaster", regexList));
-		} else if ("99999999".equals(contractOperationLog.getOperatorEmpId())){
+		if ("99999999".equals(contractOperationLog.getOperatorEmpId())) {
 			contractOperationLog.setOperatorName("dummy_batch_operator");
 			contractOperationLog.setOperatorOrgName("dummy_batch_operator_org");
 			return;
+		}
+		MvEmployeeMaster employeeMaster = mvEmployeeMasterRepository.findByMomEmployeeId(contractOperationLog.getOperatorEmpId());
+		if (employeeMaster == null) {
+			String[] regexList = { "操作者MoM社員ID" };
+			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "MasterDoesNotExistEmployeeMaster", regexList));
 		}
 
 		contractOperationLog.setOperatorName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
