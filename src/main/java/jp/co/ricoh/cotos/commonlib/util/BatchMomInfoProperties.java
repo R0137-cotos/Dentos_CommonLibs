@@ -13,5 +13,9 @@ import lombok.Data;
 public class BatchMomInfoProperties {
 
 	String momEmpId;
+	
+	String operatorName;
+	
+	String operatorOrgName;
 
 }
