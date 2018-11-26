@@ -7,10 +7,12 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Version;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.security.CotosAuthenticationDetails;
+import jp.co.ricoh.cotos.commonlib.util.BatchMomInfoProperties;
 import lombok.Data;
 
 /**
@@ -36,8 +38,16 @@ public class EntityBase {
 	@ApiModelProperty(value = "version", required = true, position = 105, allowableValues = "range[0,9999999999999999999]")
 	private long version;
 
+	@Autowired
+	BatchMomInfoProperties batchProperty;
+
 	@PrePersist
 	public void prePersist() {
+		// バッチ実行時の対応
+		if (batchProperty.getMomEmpId().equals(createdUserId)) {
+			this.createdAt = new Date();
+			return;
+		}
 		CotosAuthenticationDetails userInfo = (CotosAuthenticationDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		this.createdUserId = userInfo.getMomEmployeeId();
 		this.createdAt = new Date();
@@ -45,6 +55,11 @@ public class EntityBase {
 
 	@PreUpdate
 	public void preUpdate() {
+		// バッチ実行時の対応
+		if (batchProperty.getMomEmpId().equals(updatedUserId)) {
+			this.updatedAt = new Date();
+			return;
+		}
 		CotosAuthenticationDetails userInfo = (CotosAuthenticationDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		this.updatedUserId = userInfo.getMomEmployeeId();
 		this.updatedAt = new Date();
