@@ -252,11 +252,11 @@ public class EstimationSearchParameter {
 	private String estimationType;
 
 	/**
-	 * 商品名称
+	 * 商品マスタID
 	 */
-	@ApiParam(value = "商品名称", required = false)
-	@ApiModelProperty(value = "商品名称", required = false, allowableValues = "range[0,255]")
-	private String productName;
+	@ApiParam(value = "商品マスタID", required = false)
+	@ApiModelProperty(value = "商品マスタID", required = false)
+	private Long productId;
 
 	/**
 	 * ソート項目
