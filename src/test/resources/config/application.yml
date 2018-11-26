@@ -26,6 +26,11 @@ cotos:
     limitSize: 5
   mail:
     fromMailAddress: test@ricoh.co.jp
+  mom:
+    system:
+      momEmpId: 99999999
+      operatorName: dummy_batch_operator
+      operatorOrgName: dummy_batch_operator_org
 spring:
   datasource:
     url: jdbc:oracle:thin:@dev-db.cotos.ricoh.co.jp:1521/pdb1

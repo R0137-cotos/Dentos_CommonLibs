@@ -27,7 +27,7 @@ public class ContractOperationLogListener {
 
 	@Autowired
 	CheckUtil checkUtil;
-	
+
 	@Autowired
 	BatchMomInfoProperties batchProperty;
 
@@ -42,8 +42,8 @@ public class ContractOperationLogListener {
 	public void appendsEmployeeFields(ContractOperationLog contractOperationLog) {
 
 		if (batchProperty.getMomEmpId().equals(contractOperationLog.getOperatorEmpId())) {
-			contractOperationLog.setOperatorName("dummy_batch_operator");
-			contractOperationLog.setOperatorOrgName("dummy_batch_operator_org");
+			contractOperationLog.setOperatorName(batchProperty.getOperatorName());
+			contractOperationLog.setOperatorOrgName(batchProperty.getOperatorOrgName());
 			return;
 		}
 		MvEmployeeMaster employeeMaster = mvEmployeeMasterRepository.findByMomEmployeeId(contractOperationLog.getOperatorEmpId());
