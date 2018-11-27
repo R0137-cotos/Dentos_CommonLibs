@@ -41,11 +41,6 @@ public class ContractOperationLogListener {
 	@Transactional
 	public void appendsEmployeeFields(ContractOperationLog contractOperationLog) {
 
-		if (batchProperty.getMomEmpId().equals(contractOperationLog.getOperatorEmpId())) {
-			contractOperationLog.setOperatorName(batchProperty.getOperatorName());
-			contractOperationLog.setOperatorOrgName(batchProperty.getOperatorOrgName());
-			return;
-		}
 		MvEmployeeMaster employeeMaster = mvEmployeeMasterRepository.findByMomEmployeeId(contractOperationLog.getOperatorEmpId());
 		if (employeeMaster == null) {
 			String[] regexList = { "操作者MoM社員ID" };
