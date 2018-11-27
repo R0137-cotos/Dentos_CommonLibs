@@ -1,6 +1,7 @@
 package jp.co.ricoh.cotos.commonlib.logic.check;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.poi.ss.formula.functions.T;
@@ -44,13 +45,20 @@ public class CheckUtil {
 	 *
 	 * @param result
 	 *            Entityチェック結果
+	 * @param ignoreFields
+	 *            Entityチェック対象外項目名配列(未指定可)
 	 * @throws ErrorCheckException
 	 *             エラーチェックException
 	 */
-	public void checkEntity(BindingResult result) throws ErrorCheckException {
+	public void checkEntity(BindingResult result, String... ignoreFields) throws ErrorCheckException {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 		if (result.hasErrors()) {
 			for (FieldError fieldError : result.getFieldErrors()) {
+
+				if (Arrays.asList(ignoreFields).contains(fieldError.getField())) {
+					continue;
+				}
+
 				String fieldNm = messageUtil.convertSingleValue(fieldError.getField());
 				String errCode = fieldError.getCode();
 				String max = null;
