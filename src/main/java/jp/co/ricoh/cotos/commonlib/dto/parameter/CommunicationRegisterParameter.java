@@ -23,4 +23,16 @@ public class CommunicationRegisterParameter {
 	 */
 	@ApiParam(value = "メールCC送付先MoM社員IDリスト", required = false)
 	private List<String> momEmpList;
+
+	/**
+	 * メール件名置換リスト
+	 */
+	@ApiParam(value = "メール件名置換リスト", required = true)
+	private List<String> mailSubjectRepalceValueList;
+
+	/**
+	 * メール本文置換リスト
+	 */
+	@ApiParam(value = "メール本文置換リスト", required = true)
+	private List<String> mailTextRepalceValueList;
 }
