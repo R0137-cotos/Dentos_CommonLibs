@@ -46,7 +46,7 @@ public class CheckUtil {
 	 * @param result
 	 *            Entityチェック結果
 	 * @param ignoreFields
-	 *            Entityチェック対象外項目名配列
+	 *            Entityチェック対象外項目名配列(未指定可)
 	 * @throws ErrorCheckException
 	 *             エラーチェックException
 	 */
