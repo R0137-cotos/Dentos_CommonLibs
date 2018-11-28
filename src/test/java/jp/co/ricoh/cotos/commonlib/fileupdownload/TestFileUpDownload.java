@@ -63,23 +63,8 @@ public class TestFileUpDownload {
 		アップロードディレクトリファイル削除();
 
 		String fileNm = "testFile1.xlsx";
-		AttachedFile attachedFile = fileUpDownload.fileUpload(ファイル情報作成(fileNm), null);
+		AttachedFile attachedFile = fileUpDownload.fileUpload(ファイル情報作成(fileNm));
 		ファイルダウンロード(attachedFile.getId(), fileNm);
-	}
-
-	@Test
-	@WithMockCustomUser
-	public void ファイルアップロード_ダウンロード_ファイル削除あり() throws Exception {
-
-		テストデータ作成();
-		アップロードディレクトリファイル削除();
-
-		File file = ファイルコピー("/src/test/resources/attachmentFiles/abcdefghijk.txt", "1_output_default_.txt");
-		String fileNm = "testFile1.xlsx";
-		AttachedFile attachedFile = fileUpDownload.fileUpload(ファイル情報作成(fileNm), 10L);
-		ファイルダウンロード(attachedFile.getId(), fileNm);
-		Assert.assertTrue("添付ファイル情報が存在しないこと", !attachedFileRepository.exists(10L));
-		Assert.assertTrue("ファイルが存在しないこと", !file.exists());
 	}
 
 	@Test
@@ -98,7 +83,7 @@ public class TestFileUpDownload {
 	@Test
 	public void ファイルアップロードエラー() throws Exception {
 		try {
-			fileUpDownload.fileUpload(null, null);
+			fileUpDownload.fileUpload(null);
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException e) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00104", e.getErrorInfoList().get(0).getErrorId());
@@ -106,7 +91,7 @@ public class TestFileUpDownload {
 		}
 
 		try {
-			fileUpDownload.fileUpload(ファイル情報作成("testFile2.xlsx"), null);
+			fileUpDownload.fileUpload(ファイル情報作成("testFile2.xlsx"));
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException e) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00106", e.getErrorInfoList().get(0).getErrorId());
@@ -114,7 +99,7 @@ public class TestFileUpDownload {
 		}
 
 		try {
-			fileUpDownload.fileUpload(ファイル情報作成("filename.aaa"), null);
+			fileUpDownload.fileUpload(ファイル情報作成("filename.aaa"));
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException e) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00105", e.getErrorInfoList().get(0).getErrorId());
@@ -122,7 +107,7 @@ public class TestFileUpDownload {
 		}
 
 		try {
-			fileUpDownload.fileUpload(ファイル情報作成("abcdefghijk.txt"), null);
+			fileUpDownload.fileUpload(ファイル情報作成("abcdefghijk.txt"));
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException e) {
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00106", e.getErrorInfoList().get(0).getErrorId());

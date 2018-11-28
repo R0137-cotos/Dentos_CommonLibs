@@ -42,12 +42,10 @@ public class FileUpDownload {
 	 * 
 	 * @param file
 	 *            ファイル情報
-	 * @param attachedFileId
-	 *            添付ファイルID
 	 * @return 添付ファイル情報
 	 * @throws IOException
 	 */
-	public AttachedFile fileUpload(MultipartFile file, Long attachedFileId) throws ErrorCheckException, IOException {
+	public AttachedFile fileUpload(MultipartFile file) throws ErrorCheckException, IOException {
 		// チェック処理
 		if (null == file) {
 			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "FileInfoNotFoundError"));
@@ -74,11 +72,6 @@ public class FileUpDownload {
 		attachedFile.setFilePhysicsName(attachedFile.getId() + "_" + file.getName());
 		attachedFile.setSavedPath(baseDir.getPath() + "/" + attachedFile.getFilePhysicsName());
 		attachedFileRepository.save(attachedFile);
-
-		// 添付ファイル情報削除
-		if (attachedFileId != null) {
-			deleteFile(attachedFileId);
-		}
 
 		// ファイル保存
 		File uploadFile = new File(baseDir, attachedFile.getFilePhysicsName());
