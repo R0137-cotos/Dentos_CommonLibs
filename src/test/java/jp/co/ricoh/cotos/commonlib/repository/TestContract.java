@@ -21,6 +21,7 @@ import jp.co.ricoh.cotos.commonlib.DBConfig;
 import jp.co.ricoh.cotos.commonlib.TestTools;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractApprovalRoute;
+import jp.co.ricoh.cotos.commonlib.entity.contract.ContractApprovalRouteNode;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractAddedEditorEmpRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractApprovalResultRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractApprovalRouteNodeRepository;
@@ -179,6 +180,16 @@ public class TestContract {
 		context.getBean(DBConfig.class).initTargetTestData("repository/contract.sql");
 
 		ContractApprovalRoute found = contractApprovalRouteRepository.findByContractIdAndApprovalRequesterEmpIdAndTargetLifecycleStatus(4L, "00808347", "5");
+		Assert.assertNotNull(found);
+	}
+	
+	@Test
+	public void 契約承認ルートノード条件取得確認() {
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/attachedFile.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/contract.sql");
+
+		ContractApprovalRouteNode found = contractApprovalRouteNodeRepository.findByContractApprovalRouteIdAndApprovalOrderAndApproverEmpId(401L, 1, "00808347");
 		Assert.assertNotNull(found);
 	}
 
