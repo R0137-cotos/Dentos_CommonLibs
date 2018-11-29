@@ -47,7 +47,7 @@ public class ContractOperationLogListener {
 	@Transactional
 	public void appendsEmployeeFields(ContractOperationLog contractOperationLog) {
 
-		if (batchProperty.getMomEmpId().equals(contractOperationLog.getOperatorEmpId())) {
+		if (contractOperationLog.getOperatorEmpId().equals(batchProperty.getMomEmpId())) {
 			contractOperationLog.setOperatorName(batchProperty.getOperatorName());
 			contractOperationLog.setOperatorOrgName(batchProperty.getOperatorOrgName());
 			return;
