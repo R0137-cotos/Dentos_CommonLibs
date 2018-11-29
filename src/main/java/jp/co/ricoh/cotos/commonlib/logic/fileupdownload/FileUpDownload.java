@@ -69,7 +69,7 @@ public class FileUpDownload {
 		// 添付ファイル情報登録
 		AttachedFile attachedFile = createAttachedFile(file);
 		attachedFileRepository.save(attachedFile);
-		attachedFile.setFilePhysicsName(attachedFile.getId() + "_" + file.getName());
+		attachedFile.setFilePhysicsName(attachedFile.getId() + "_" + file.getOriginalFilename());
 		attachedFile.setSavedPath(baseDir.getPath() + "/" + attachedFile.getFilePhysicsName());
 		attachedFileRepository.save(attachedFile);
 
@@ -177,7 +177,7 @@ public class FileUpDownload {
 			return true;
 		}
 
-		String fileExtension = findExtension(multipartFile.getName());
+		String fileExtension = findExtension(multipartFile.getOriginalFilename());
 		return extensionList.stream().filter(ext -> ext.equals(fileExtension)).collect(Collectors.toList()).size() > 0;
 	}
 
@@ -189,7 +189,7 @@ public class FileUpDownload {
 	 * @return チェック結果
 	 */
 	private boolean existsFileNmSizeMaxOver(MultipartFile multipartFile) {
-		return !(multipartFile.getName().length() > appProperties.getFileProperties().getFileNmMaxSize());
+		return !(multipartFile.getOriginalFilename().length() > appProperties.getFileProperties().getFileNmMaxSize());
 	}
 
 	/**
@@ -219,10 +219,10 @@ public class FileUpDownload {
 	private AttachedFile createAttachedFile(MultipartFile multipartFile) {
 		AttachedFile attachedFile = new AttachedFile();
 		attachedFile.setId(0);
-		attachedFile.setFilePhysicsName(multipartFile.getName());
+		attachedFile.setFilePhysicsName(multipartFile.getOriginalFilename());
 		attachedFile.setFileSize(multipartFile.getSize());
 		attachedFile.setContentType(multipartFile.getContentType());
-		attachedFile.setSavedPath(multipartFile.getName());
+		attachedFile.setSavedPath(multipartFile.getOriginalFilename());
 		return attachedFile;
 	}
 }
