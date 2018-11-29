@@ -9,6 +9,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import io.swagger.annotations.ApiModelProperty;
+import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangementWork;
 import jp.co.ricoh.cotos.commonlib.entity.contract.Contract.ContractType;
 import lombok.Data;
 
@@ -117,7 +118,7 @@ public class ArrangementListInfo {
 	@ApiModelProperty(value = "手配業務ステータス<br />" //
 			+ "状態遷移上のワークフロー状態を表す。", //
 			required = false, position = 15) //
-	private jp.co.ricoh.cotos.commonlib.entity.arrangement.Arrangement.WorkflowStatus arrangementWorkStatus;
+	private ArrangementWork.WorkflowStatus arrangementWorkStatus;
 
 	/**
 	 * 見積書番号
