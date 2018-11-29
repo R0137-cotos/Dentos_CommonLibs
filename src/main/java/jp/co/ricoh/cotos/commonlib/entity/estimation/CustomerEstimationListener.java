@@ -20,6 +20,7 @@ import jp.co.ricoh.cotos.commonlib.repository.master.VKjbMasterRepository;
 public class CustomerEstimationListener {
 
 	private static VKjbMasterRepository vKjbMasterRepository;
+	private static CheckUtil checkUtil;
 
 	@Autowired
 	public void setVkjbMasterRepository(VKjbMasterRepository vKjbMasterRepository) {
@@ -27,11 +28,13 @@ public class CustomerEstimationListener {
 	}
 
 	@Autowired
-	CheckUtil checkUtil;
+	public void setCheckUtil(CheckUtil checkUtil) {
+		CustomerEstimationListener.checkUtil = checkUtil;
+	}
 
 	/**
 	 * 顧客マスタ情報を顧客(見積用)トランザクションに紐づけます。
-	 * 
+	 *
 	 * @param customerEstimation
 	 */
 	@PrePersist

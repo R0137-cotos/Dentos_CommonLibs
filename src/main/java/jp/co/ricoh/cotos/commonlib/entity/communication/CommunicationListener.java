@@ -19,6 +19,7 @@ import jp.co.ricoh.cotos.commonlib.repository.master.MvEmployeeMasterRepository;
 public class CommunicationListener {
 
 	private static MvEmployeeMasterRepository mvEmployeeMasterRepository;
+	private static CheckUtil checkUtil;
 
 	@Autowired
 	public void setMvEmployeeMasterRepository(MvEmployeeMasterRepository mvEmployeeMasterRepository) {
@@ -26,7 +27,9 @@ public class CommunicationListener {
 	}
 
 	@Autowired
-	CheckUtil checkUtil;
+	public void setCheckUtil(CheckUtil checkUtil) {
+		CommunicationListener.checkUtil = checkUtil;
+	}
 
 	/**
 	 * 社員マスタ情報をコミュニケーショントランザクションに焼き付けます。

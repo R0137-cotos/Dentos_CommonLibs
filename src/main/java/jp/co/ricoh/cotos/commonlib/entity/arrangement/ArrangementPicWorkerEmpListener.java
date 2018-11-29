@@ -20,6 +20,7 @@ import jp.co.ricoh.cotos.commonlib.repository.master.MvEmployeeMasterRepository;
 public class ArrangementPicWorkerEmpListener {
 
 	private static MvEmployeeMasterRepository mvEmployeeMasterRepository;
+	private static CheckUtil checkUtil;
 
 	@Autowired
 	public void setMvEmployeeMasterRepository(MvEmployeeMasterRepository mvEmployeeMasterRepository) {
@@ -27,7 +28,9 @@ public class ArrangementPicWorkerEmpListener {
 	}
 
 	@Autowired
-	CheckUtil checkUtil;
+	public void setCheckUtil(CheckUtil checkUtil) {
+		ArrangementPicWorkerEmpListener.checkUtil = checkUtil;
+	}
 
 	/**
 	 * 社員マスタ情報を担当作業者社員トランザクションに紐づけます。

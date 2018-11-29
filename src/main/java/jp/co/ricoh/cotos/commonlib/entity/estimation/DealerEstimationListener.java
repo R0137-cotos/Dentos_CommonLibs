@@ -19,6 +19,7 @@ import jp.co.ricoh.cotos.commonlib.repository.master.VKjbMasterRepository;
 public class DealerEstimationListener {
 
 	private static VKjbMasterRepository vKjbMasterRepository;
+	private static CheckUtil checkUtil;
 
 	@Autowired
 	public void setKjbMasterRepository(VKjbMasterRepository kjbMasterRepository) {
@@ -26,7 +27,9 @@ public class DealerEstimationListener {
 	}
 
 	@Autowired
-	CheckUtil checkUtil;
+	public void setCheckUtil(CheckUtil checkUtil) {
+		DealerEstimationListener.checkUtil = checkUtil;
+	}
 
 	/**
 	 * 企事部マスタ情報を販売店（見積用）トランザクションに紐づけます。
