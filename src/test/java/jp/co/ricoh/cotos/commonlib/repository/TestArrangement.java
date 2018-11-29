@@ -21,6 +21,7 @@ import jp.co.ricoh.cotos.commonlib.DBConfig;
 import jp.co.ricoh.cotos.commonlib.TestTools;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangementWorkApprovalRoute;
+import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangementWorkApprovalRouteNode;
 import jp.co.ricoh.cotos.commonlib.repository.arrangement.ArrangementPicWorkerEmpRepository;
 import jp.co.ricoh.cotos.commonlib.repository.arrangement.ArrangementRepository;
 import jp.co.ricoh.cotos.commonlib.repository.arrangement.ArrangementWorkApprovalResultRepository;
@@ -142,6 +143,16 @@ public class TestArrangement {
 		context.getBean(DBConfig.class).initTargetTestData("repository/arrangement.sql");
 
 		ArrangementWorkApprovalRoute found = arrangementWorkApporovalRouteRepository.findByArrangementWorkIdAndApprovalRequesterEmpId(401L, "00397971");
+		Assert.assertNotNull(found);
+	}
+	
+	@Test
+	public void 手配承認ルートノード条件取得確認() {
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/attachedFile.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/arrangement.sql");
+
+		ArrangementWorkApprovalRouteNode found = arrangmentWorkApprovalRouteNodeRepository.findByArrangementWorkApprovalRouteIdAndApprovalOrderAndApproverEmpId(401L, 1L, "00808347");
 		Assert.assertNotNull(found);
 	}
 

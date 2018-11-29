@@ -226,6 +226,9 @@ public class TestEstimation {
 		// Entity の各項目の値が null ではないことを確認
 		testTool.assertColumnsNotNull(found);
 
+		found = estimationApprovalRouteNodeRepository.findByEstimationApprovalRouteIdAndApprovalOrderAndApproverEmpId(401L, 1, "00808347");
+		Assert.assertNotNull(found);
+
 	}
 
 	@Test
