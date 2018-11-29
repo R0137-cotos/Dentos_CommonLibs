@@ -7,4 +7,5 @@ import jp.co.ricoh.cotos.commonlib.entity.estimation.EstimationApprovalRoute;
 
 @Repository
 public interface EstimationApprovalRouteRepository extends CrudRepository<EstimationApprovalRoute, Long> {
+	public EstimationApprovalRoute findByEstimationIdAndApprovalRequesterEmpId(Long estimationId, String approvalRequesterEmpId);
 }

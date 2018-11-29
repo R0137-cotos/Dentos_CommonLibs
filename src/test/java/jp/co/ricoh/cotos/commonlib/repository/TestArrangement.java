@@ -20,6 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import jp.co.ricoh.cotos.commonlib.DBConfig;
 import jp.co.ricoh.cotos.commonlib.TestTools;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
+import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangementWorkApprovalRoute;
 import jp.co.ricoh.cotos.commonlib.repository.arrangement.ArrangementPicWorkerEmpRepository;
 import jp.co.ricoh.cotos.commonlib.repository.arrangement.ArrangementRepository;
 import jp.co.ricoh.cotos.commonlib.repository.arrangement.ArrangementWorkApprovalResultRepository;
@@ -132,6 +133,16 @@ public class TestArrangement {
 	@Test
 	public void 全てのカラムがNullではないことを確認_担当作業者社員() {
 		全てのカラムがNullではないことを確認_共通(arrangementPicWorkerEmpRepository, 401L, 501L);
+	}
+	
+	@Test
+	public void 手配承認ルート条件取得確認() {
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/attachedFile.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/arrangement.sql");
+
+		ArrangementWorkApprovalRoute found = arrangementWorkApporovalRouteRepository.findByArrangementWorkIdAndApprovalRequesterEmpId(401L, "00397971");
+		Assert.assertNotNull(found);
 	}
 
 	@Transactional
