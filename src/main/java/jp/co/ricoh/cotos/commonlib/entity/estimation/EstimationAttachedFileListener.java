@@ -18,6 +18,7 @@ import jp.co.ricoh.cotos.commonlib.repository.master.MvEmployeeMasterRepository;
 public class EstimationAttachedFileListener {
 
 	private static MvEmployeeMasterRepository mvEmployeeMasterRepository;
+	private static CheckUtil checkUtil;
 
 	@Autowired
 	public void setMvEmployeeMasterRepository(MvEmployeeMasterRepository mvEmployeeMasterRepository) {
@@ -25,7 +26,9 @@ public class EstimationAttachedFileListener {
 	}
 
 	@Autowired
-	CheckUtil checkUtil;
+	public void setCheckUtil(CheckUtil checkUtil) {
+		EstimationAttachedFileListener.checkUtil = checkUtil;
+	}
 
 	/**
 	 * 社員マスタ情報を見積添付ファイルトランザクションに紐づけます。

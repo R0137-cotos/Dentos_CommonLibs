@@ -20,6 +20,7 @@ import jp.co.ricoh.cotos.commonlib.repository.master.MvEmployeeMasterRepository;
 public class EstimationAddedEditorEmpListener {
 
 	private static MvEmployeeMasterRepository mvEmployeeMasterRepository;
+	private static CheckUtil checkUtil;
 
 	@Autowired
 	public void setMvEmployeeMasterRepository(MvEmployeeMasterRepository mvEmployeeMasterRepository) {
@@ -27,7 +28,9 @@ public class EstimationAddedEditorEmpListener {
 	}
 
 	@Autowired
-	CheckUtil checkUtil;
+	public void setCheckUtil(CheckUtil checkUtil) {
+		EstimationAddedEditorEmpListener.checkUtil = checkUtil;
+	}
 
 	/**
 	 * 社員マスタ情報を見積追加編集者トランザクションに紐づけます。

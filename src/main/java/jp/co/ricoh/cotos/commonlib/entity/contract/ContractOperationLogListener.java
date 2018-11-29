@@ -19,6 +19,8 @@ import jp.co.ricoh.cotos.commonlib.util.BatchMomInfoProperties;
 public class ContractOperationLogListener {
 
 	private static MvEmployeeMasterRepository mvEmployeeMasterRepository;
+	private static CheckUtil checkUtil;
+	private static BatchMomInfoProperties batchProperty;
 
 	@Autowired
 	public void setMvEmployeeMasterRepository(MvEmployeeMasterRepository mvEmployeeMasterRepository) {
@@ -26,10 +28,14 @@ public class ContractOperationLogListener {
 	}
 
 	@Autowired
-	CheckUtil checkUtil;
+	public void setCheckUtil(CheckUtil checkUtil) {
+		ContractOperationLogListener.checkUtil = checkUtil;
+	}
 
 	@Autowired
-	BatchMomInfoProperties batchProperty;
+	public void setBatchMomInfoProperties(BatchMomInfoProperties batchProperty) {
+		ContractOperationLogListener.batchProperty = batchProperty;
+	}
 
 	/**
 	 * 社員マスタ情報を契約操作履歴トランザクションに紐づけます。
@@ -40,6 +46,12 @@ public class ContractOperationLogListener {
 	@PrePersist
 	@Transactional
 	public void appendsEmployeeFields(ContractOperationLog contractOperationLog) {
+
+		if (batchProperty.getMomEmpId().equals(contractOperationLog.getOperatorEmpId())) {
+			contractOperationLog.setOperatorName(batchProperty.getOperatorName());
+			contractOperationLog.setOperatorOrgName(batchProperty.getOperatorOrgName());
+			return;
+		}
 
 		MvEmployeeMaster employeeMaster = mvEmployeeMasterRepository.findByMomEmployeeId(contractOperationLog.getOperatorEmpId());
 		if (employeeMaster == null) {

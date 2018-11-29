@@ -18,6 +18,7 @@ import jp.co.ricoh.cotos.commonlib.repository.master.MvEmployeeMasterRepository;
 public class ArrangementWorkApprovalResultListener {
 
 	private static MvEmployeeMasterRepository mvEmployeeMasterRepository;
+	private static CheckUtil checkUtil;
 
 	@Autowired
 	public void setMvEmployeeMasterRepository(MvEmployeeMasterRepository mvEmployeeMasterRepository) {
@@ -25,7 +26,9 @@ public class ArrangementWorkApprovalResultListener {
 	}
 
 	@Autowired
-	CheckUtil checkUtil;
+	public void setCheckUtil(CheckUtil checkUtil) {
+		ArrangementWorkApprovalResultListener.checkUtil = checkUtil;
+	}
 
 	/**
 	 * 社員マスタ情報を手配業務承認実績トランザクションに紐づけます。

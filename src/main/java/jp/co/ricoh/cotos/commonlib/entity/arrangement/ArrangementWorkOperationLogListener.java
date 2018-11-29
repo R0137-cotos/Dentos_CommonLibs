@@ -18,6 +18,7 @@ import jp.co.ricoh.cotos.commonlib.repository.master.MvEmployeeMasterRepository;
 public class ArrangementWorkOperationLogListener {
 
 	private static MvEmployeeMasterRepository mvEmployeeMasterRepository;
+	private static CheckUtil checkUtil;
 
 	@Autowired
 	public void setMvEmployeeMasterRepository(MvEmployeeMasterRepository mvEmployeeMasterRepository) {
@@ -25,7 +26,9 @@ public class ArrangementWorkOperationLogListener {
 	}
 
 	@Autowired
-	CheckUtil checkUtil;
+	public void setCheckUtil(CheckUtil checkUtil) {
+		ArrangementWorkOperationLogListener.checkUtil = checkUtil;
+	}
 
 	/**
 	 * 社員マスタ情報を手配業務操作履歴トランザクションに紐づけます。

@@ -18,6 +18,7 @@ import jp.co.ricoh.cotos.commonlib.repository.master.MvEmployeeMasterRepository;
 public class ContractAttachedFileListener {
 
 	private static MvEmployeeMasterRepository mvEmployeeMasterRepository;
+	private static CheckUtil checkUtil;
 
 	@Autowired
 	public void setMvEmployeeMasterRepository(MvEmployeeMasterRepository mvEmployeeMasterRepository) {
@@ -25,7 +26,9 @@ public class ContractAttachedFileListener {
 	}
 
 	@Autowired
-	CheckUtil checkUtil;
+	public void setCheckUtil(CheckUtil checkUtil) {
+		ContractAttachedFileListener.checkUtil = checkUtil;
+	}
 
 	/**
 	 * 社員マスタ情報を契約添付ファイルトランザクションに紐づけます。
