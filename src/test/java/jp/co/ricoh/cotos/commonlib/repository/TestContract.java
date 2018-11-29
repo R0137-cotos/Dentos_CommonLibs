@@ -20,6 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import jp.co.ricoh.cotos.commonlib.DBConfig;
 import jp.co.ricoh.cotos.commonlib.TestTools;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
+import jp.co.ricoh.cotos.commonlib.entity.contract.ContractApprovalRoute;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractAddedEditorEmpRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractApprovalResultRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractApprovalRouteNodeRepository;
@@ -169,6 +170,16 @@ public class TestContract {
 	public void 全てのカラムがNullではないことを確認_商品_契約用() {
 
 		全てのカラムがNullではないことを確認_共通(productContractRepository, 401L, 501L);
+	}
+	
+	@Test
+	public void 契約承認ルート条件取得確認() {
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/attachedFile.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/contract.sql");
+
+		ContractApprovalRoute found = contractApprovalRouteRepository.findByContractIdAndApprovalRequesterEmpIdAndTargetLifecycleStatus(4L, "00808347", "5");
+		Assert.assertNotNull(found);
 	}
 
 	@Transactional

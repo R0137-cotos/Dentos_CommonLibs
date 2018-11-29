@@ -7,5 +7,5 @@ import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangementWorkApprovalRou
 
 @Repository
 public interface ArrangementWorkApprovalRouteRepository extends CrudRepository<ArrangementWorkApprovalRoute, Long> {
-
+	public ArrangementWorkApprovalRoute findByArrangementWorkIdAndApprovalRequesterEmpId(Long arrangementWorkId, String approvalRequesterEmpId);
 }
