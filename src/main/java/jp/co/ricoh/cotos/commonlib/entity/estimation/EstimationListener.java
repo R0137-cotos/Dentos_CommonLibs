@@ -1,5 +1,8 @@
 package jp.co.ricoh.cotos.commonlib.entity.estimation;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.persistence.PrePersist;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +32,7 @@ public class EstimationListener {
 			return;
 		}
 		long sequence = dbUtil.loadSingleFromSQLFile("sql/nextEstimationNumberSequence.sql", GeneratedNumber.class).getGeneratedNumber();
-		entity.setEstimationNumber(ID_PREFIX + String.format("%05d", sequence));
+		entity.setEstimationNumber(ID_PREFIX + new SimpleDateFormat("yyyyMMdd").format(new Date()) + String.format("%05d", sequence));
 	}
 
 }
