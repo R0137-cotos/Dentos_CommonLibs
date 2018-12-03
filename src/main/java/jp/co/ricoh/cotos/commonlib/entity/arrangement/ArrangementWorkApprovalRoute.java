@@ -77,6 +77,7 @@ public class ArrangementWorkApprovalRoute extends EntityBase {
 	 * 手配業務承認実績
 	 */
 	@OneToMany(mappedBy = "arrangementWorkApprovalRoute")
+	@OrderBy("processedAt ASC")
 	@ApiModelProperty(value = "手配業務承認実績", required = false, position = 6, readOnly = true)
 	private List<ArrangementWorkApprovalResult> arrangementWorkApprovalResultList;
 
