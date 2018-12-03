@@ -157,8 +157,10 @@ public class CommonSendMail {
 		attachedHelper.setTo(toEmail);
 		attachedHelper.setFrom(appProperties.getMailProperties().getFromMailAddress());
 		attachedHelper.setCc(ccEmail);
-		attachedHelper.setSubject(writerMailSubject.toString());
-		attachedHelper.setText(writerMailText.toString());
+		String subject = writerMailSubject.toString().replace("&#10;", "\n");
+		attachedHelper.setSubject(subject);
+		String text = writerMailText.toString().replace("&#10;", "\n");
+		attachedHelper.setText(text);
 
 		if (null != uploadFile) {
 			FileSystemResource res = new FileSystemResource(uploadFile);
