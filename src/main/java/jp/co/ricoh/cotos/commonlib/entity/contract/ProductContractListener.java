@@ -1,7 +1,6 @@
 package jp.co.ricoh.cotos.commonlib.entity.contract;
 
 import javax.persistence.PrePersist;
-import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,7 +24,6 @@ public class ProductContractListener {
 	 * @param productContract
 	 */
 	@PrePersist
-	@Transactional
 	public void appendsServiceIdentNumber(ProductContract productContract) {
 		if (null != productContract.getServiceIdentNumber()) {
 			return;
