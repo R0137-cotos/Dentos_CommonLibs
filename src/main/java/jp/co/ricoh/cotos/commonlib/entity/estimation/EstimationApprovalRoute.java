@@ -87,6 +87,7 @@ public class EstimationApprovalRoute extends EntityBase {
 	 * 見積承認実績
 	 */
 	@OneToMany(mappedBy = "estimationApprovalRoute")
+	@OrderBy("processedAt ASC")
 	@ApiModelProperty(value = "見積承認実績", required = false, position = 7, readOnly = true)
 	private List<EstimationApprovalResult> estimationApprovalResultList;
 

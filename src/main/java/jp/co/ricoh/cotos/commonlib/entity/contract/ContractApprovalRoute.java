@@ -96,6 +96,7 @@ public class ContractApprovalRoute extends EntityBase {
 	 * 契約承認実績
 	 */
 	@OneToMany(mappedBy = "contractApprovalRoute")
+	@OrderBy("processedAt ASC")
 	@ApiModelProperty(value = "契約承認実績", required = false, position = 8, readOnly = true)
 	private List<ContractApprovalResult> contractApprovalResultList;
 
