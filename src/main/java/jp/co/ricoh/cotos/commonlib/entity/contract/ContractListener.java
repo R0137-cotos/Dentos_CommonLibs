@@ -1,5 +1,8 @@
 package jp.co.ricoh.cotos.commonlib.entity.contract;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.persistence.PrePersist;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +34,7 @@ public class ContractListener {
 		 */
 		if (null == contract.getContractNumber()) {
 			long sequenceContract = dbUtil.loadSingleFromSQLFile("sql/nextContractNumberSequence.sql", GeneratedNumber.class).getGeneratedNumber();
-			contract.setContractNumber(ID_PREFIX_CONT + String.format("%05d", sequenceContract));
+			contract.setContractNumber(ID_PREFIX_CONT + new SimpleDateFormat("yyyyMMdd").format(new Date()) + String.format("%05d", sequenceContract));
 		}
 
 		/**
@@ -39,7 +42,7 @@ public class ContractListener {
 		 */
 		if (null == contract.getImmutableContIdentNumber()) {
 			long sequenceImmutable = dbUtil.loadSingleFromSQLFile("sql/nextImmutableContIdentNumberSequence.sql", GeneratedNumber.class).getGeneratedNumber();
-			contract.setImmutableContIdentNumber(ID_PREFIX_IMMUTABLE + String.format("%04d", sequenceImmutable));
+			contract.setImmutableContIdentNumber(ID_PREFIX_IMMUTABLE + new SimpleDateFormat("yyyyMMdd").format(new Date()) + String.format("%04d", sequenceImmutable));
 		}
 	}
 }

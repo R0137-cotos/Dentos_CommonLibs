@@ -1,5 +1,8 @@
 package jp.co.ricoh.cotos.commonlib.entity.contract;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.persistence.PrePersist;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +32,7 @@ public class ProductContractListener {
 			return;
 		}
 		long sequence = dbUtil.loadSingleFromSQLFile("sql/nextServiceIdentNumberSequence.sql", GeneratedNumber.class).getGeneratedNumber();
-		productContract.setServiceIdentNumber(ID_PREFIX + String.format("%05d", sequence));
+		productContract.setServiceIdentNumber(ID_PREFIX + new SimpleDateFormat("yyyyMMdd").format(new Date()) + String.format("%05d", sequence));
 	}
 
 }
