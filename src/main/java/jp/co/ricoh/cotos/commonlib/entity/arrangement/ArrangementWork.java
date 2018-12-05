@@ -111,6 +111,7 @@ public class ArrangementWork extends EntityBase {
 	 * 手配業務操作履歴
 	 */
 	@OneToMany(mappedBy = "arrangementWork")
+	@OrderBy("operatedAt ASC")
 	@ApiModelProperty(value = "手配業務操作履歴", required = false, position = 8, readOnly = true)
 	private List<ArrangementWorkOperationLog> arrangementWorkOperationLogList;
 
