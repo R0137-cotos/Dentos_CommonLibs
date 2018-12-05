@@ -418,6 +418,7 @@ public class Estimation extends EntityBase {
 	 * 見積操作履歴
 	 */
 	@OneToMany(mappedBy = "estimation")
+	@OrderBy("operatedAt ASC")
 	@ApiModelProperty(value = "見積操作履歴", required = false, position = 44, readOnly = true)
 	private List<OperationLog> operationLogList;
 

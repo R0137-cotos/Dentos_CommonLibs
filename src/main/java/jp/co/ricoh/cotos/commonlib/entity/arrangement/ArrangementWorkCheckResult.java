@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OrderBy;
-import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -105,11 +104,5 @@ public class ArrangementWorkCheckResult extends EntityBase {
 	@ApiModelProperty(value = "チェック実施日時", required = false, position = 9, readOnly = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date checkedAt;
-
-	@PrePersist
-	public void prePersist() {
-		super.prePersist();
-		this.checkedAt = super.getCreatedAt();
-	}
 
 }

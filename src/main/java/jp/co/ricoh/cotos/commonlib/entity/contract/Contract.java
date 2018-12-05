@@ -419,6 +419,7 @@ public class Contract extends EntityBase {
 	 * 契約操作履歴
 	 */
 	@OneToMany(mappedBy = "contract")
+	@OrderBy("operatedAt ASC")
 	@ApiModelProperty(value = "契約操作履歴", required = true, position = 44, readOnly = true)
 	private List<ContractOperationLog> contractOperationLogList;
 
