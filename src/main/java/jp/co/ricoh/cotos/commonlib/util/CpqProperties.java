@@ -20,7 +20,11 @@ public class CpqProperties {
 	 */
 	String password;
 	/**
-	 * CPQのドメイン情報（本番：ricoh、ステージングor開発：ricohtest1）
+	 * CPQの環境情報（本番：ricoh、ステージングor開発：ricohtest1）
+	 */
+	String environment;
+	/**
+	 * CPQのドメイン情報
 	 */
 	String url;
 	/**
