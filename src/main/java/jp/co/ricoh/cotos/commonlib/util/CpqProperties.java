@@ -11,15 +11,33 @@ import lombok.Data;
 @EnableConfigurationProperties
 @ConfigurationProperties(prefix = "cotos.cpq")
 public class CpqProperties {
-
+	/**
+	 * CPQのログインユーザー
+	 */
 	String user;
-
+	/**
+	 * CPQのログインパスワード
+	 */
 	String password;
-
-	String environment;
-
+	/**
+	 * CPQのドメイン情報（本番：ricoh、ステージングor開発：ricohtest1）
+	 */
 	String url;
-	
+	/**
+	 * CPQのコマース(プロセス）情報
+	 */
 	String resoure;
+	/**
+	 * 契約更新時にコールするAPI情報
+	 */
+	String updateAssets;
+	/**
+	 * 見積コピー時にコールするAPI情報
+	 */
+	String saveTransaction;
+	/**
+	 * 見積コピー時にコールするAPI情報
+	 */
+	String copyTransaction;
 
 }
