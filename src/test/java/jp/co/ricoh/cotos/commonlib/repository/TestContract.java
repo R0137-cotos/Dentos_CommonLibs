@@ -172,17 +172,17 @@ public class TestContract {
 
 		全てのカラムがNullではないことを確認_共通(productContractRepository, 401L, 501L);
 	}
-	
+
 	@Test
 	public void 契約承認ルート条件取得確認() {
 		// テストデータ登録
 		context.getBean(DBConfig.class).initTargetTestData("repository/attachedFile.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/contract.sql");
 
-		ContractApprovalRoute found = contractApprovalRouteRepository.findByContractIdAndApprovalRequesterEmpIdAndTargetLifecycleStatus(4L, "00808347", "5");
+		ContractApprovalRoute found = contractApprovalRouteRepository.findByContractIdAndTargetLifecycleStatus(4L, "5");
 		Assert.assertNotNull(found);
 	}
-	
+
 	@Test
 	public void 契約承認ルートノード条件取得確認() {
 		// テストデータ登録
