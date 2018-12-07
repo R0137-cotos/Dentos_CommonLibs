@@ -157,16 +157,16 @@ public class CommonSendMail {
 		attachedHelper.setTo(toEmail);
 		attachedHelper.setFrom(appProperties.getMailProperties().getFromMailAddress());
 		attachedHelper.setCc(ccEmail);
-		String subject = writerMailSubject.toString().replace("&#10;", "\n");
+		String subject = writerMailSubject.toString().replace("&#10;", "\r\n");
 		attachedHelper.setSubject(subject);
-		String text = writerMailText.toString().replace("&#10;", "\n");
+		String text = writerMailText.toString().replace("&#10;", "\r\n");
 		attachedHelper.setText(text);
 
 		if (null != uploadFile) {
 			FileSystemResource res = new FileSystemResource(uploadFile);
 			attachedHelper.addAttachment(res.getFilename(), res);
 		}
-		
+
 		javaMailSender.send(attachedMsg);
 	}
 
