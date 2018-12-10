@@ -151,6 +151,13 @@ public class ArrangementListInfo {
 	@ApiModelProperty(value = "サービス終了日", required = false, position = 20)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date serviceTermEnd;
+	
+	/**
+	 * 業務受理日時
+	 */
+	@ApiModelProperty(value = "業務受理日時", required = false, position = 21)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date businessAcceptanceDateTime;
 
 	@PrePersist
 	public void prePersist() {

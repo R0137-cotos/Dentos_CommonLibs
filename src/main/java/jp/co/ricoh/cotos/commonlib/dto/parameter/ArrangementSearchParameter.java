@@ -316,6 +316,15 @@ public class ArrangementSearchParameter {
 	@ApiParam(value = "商品マスタID", required = false)
 	@ApiModelProperty(value = "商品マスタID", required = false)
 	private Long productId;
+	
+	/**
+	 * 業務受理日時
+	 */
+	@ApiParam(value = "業務受理日時", required = false)
+	@ApiModelProperty(value = "業務受理日時<br />" //
+			+ "日付フォーマット:yyyy/MM/dd", //
+			required = false) //
+	private Date businessAcceptanceDateTime;
 
 	// ===========================
 
