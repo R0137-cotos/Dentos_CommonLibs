@@ -324,7 +324,7 @@ public class ArrangementSearchParameter {
 	@ApiModelProperty(value = "業務受理日時<br />" //
 			+ "日付フォーマット:yyyy/MM/dd", //
 			required = false) //
-	private Date businessAcceptanceDateTile;
+	private Date businessAcceptanceDateTime;
 
 	// ===========================
 
