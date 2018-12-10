@@ -439,18 +439,8 @@ public class TestEstimation {
 		// 異常系（@NotNull、@NotEmptyの null チェック：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setEstimationApprovalRouteNodeList(null);
-		testTarget.setApprovalRequesterEmpId(null);
-		testTarget.setApprovalRequesterName(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 3);
-		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
-
-		// 異常系（@NotEmptyの空文字列チェック：）
-		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setApprovalRequesterEmpId("");
-		testTarget.setApprovalRequesterName("");
-		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 
 		// 異常系（@Size(max) ：）

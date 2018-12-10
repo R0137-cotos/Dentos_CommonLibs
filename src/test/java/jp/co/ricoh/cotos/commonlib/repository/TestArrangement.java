@@ -118,7 +118,7 @@ public class TestArrangement {
 
 	@Test
 	public void 全てのカラムがNullではないことを確認_手配業務承認実績() {
-		全てのカラムがNullではないことを確認_共通(arrangementWorkApprovalResultRepository, 401L, 501L);
+		全てのカラムがNullではないことを確認_共通(arrangementWorkApprovalResultRepository, 402L, 502L);
 	}
 
 	@Test
