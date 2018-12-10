@@ -281,26 +281,6 @@ public class TestArrangement {
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
-		// 異常系（@NotNull、@NotEmptyの null チェック：arrangementWork
-		// arrangementWorkApprovalRouteNodeList approvalRequesterEmpId
-		// approvalRequesterName）
-		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setArrangementWork(null);
-		testTarget.setArrangementWorkApprovalRouteNodeList(null);
-		testTarget.setApprovalRequesterEmpId(null);
-		testTarget.setApprovalRequesterName(null);
-		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 2);
-		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
-
-		// 異常系（@NotEmptyの空文字列チェック：approvalRequesterEmpId approvalRequesterName）
-		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setApprovalRequesterEmpId("");
-		testTarget.setApprovalRequesterName("");
-		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 2);
-		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
-
 		// 異常系（@Size(max) ：approvalRequesterEmpId approvalRequesterName
 		// approvalRequesterOrgName ）
 		BeanUtils.copyProperties(testTarget, entity);

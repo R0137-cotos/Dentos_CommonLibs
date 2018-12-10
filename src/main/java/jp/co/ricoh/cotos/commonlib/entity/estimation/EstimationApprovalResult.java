@@ -54,11 +54,17 @@ public class EstimationApprovalResult extends EntityBase {
 	private EstimationApprovalRoute estimationApprovalRoute;
 
 	/**
+	 * 見積承認ルートノードID
+	 */
+	@ApiModelProperty(value = "見積承認ルートノードID", required = false, position = 3)
+	private Long estimationApprovalRouteNodeId;
+
+	/**
 	 * 承認処理カテゴリー
 	 */
 	@Column(nullable = false)
 	@NotNull
-	@ApiModelProperty(value = "承認処理カテゴリー", required = true, allowableValues = "承認依頼(\"1\"), 承認依頼差戻(\"2\"), 承認(\"3\"), 承認依頼取消(\"4\")", example = "1", position = 3)
+	@ApiModelProperty(value = "承認処理カテゴリー", required = true, allowableValues = "承認依頼(\"1\"), 承認依頼差戻(\"2\"), 承認(\"3\"), 承認依頼取消(\"4\")", example = "1", position = 4)
 	private ApprovalProcessCategory approvalProcessCategory;
 
 	/**
@@ -67,7 +73,7 @@ public class EstimationApprovalResult extends EntityBase {
 	@Column(nullable = false)
 	@NotEmpty
 	@Size(max = 255)
-	@ApiModelProperty(value = "処理実施者MoM社員ID", required = true, position = 4, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "処理実施者MoM社員ID", required = true, position = 5, allowableValues = "range[0,255]")
 	private String actualEmpId;
 
 	/**
@@ -76,21 +82,21 @@ public class EstimationApprovalResult extends EntityBase {
 	@Column(nullable = false)
 	@NotEmpty
 	@Size(max = 255)
-	@ApiModelProperty(value = "処理実施者社員名", required = true, position = 5, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "処理実施者社員名", required = true, position = 6, allowableValues = "range[0,255]")
 	private String actualUserName;
 
 	/**
 	 * 処理実施者組織名
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "処理実施者組織名", required = false, position = 6, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "処理実施者組織名", required = false, position = 7, allowableValues = "range[0,255]")
 	private String actualOrgName;
 
 	/**
 	 * コメント
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "コメント", required = false, position = 7, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "コメント", required = false, position = 8, allowableValues = "range[0,255]")
 	private String requestComment;
 
 	/**
@@ -98,7 +104,7 @@ public class EstimationApprovalResult extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@NotNull
-	@ApiModelProperty(value = "実施日時", required = true, position = 8, readOnly = true)
+	@ApiModelProperty(value = "実施日時", required = true, position = 9, readOnly = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date processedAt;
 

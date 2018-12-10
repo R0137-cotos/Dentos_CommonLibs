@@ -2,7 +2,6 @@ package jp.co.ricoh.cotos.commonlib.entity.arrangement;
 
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,8 +13,6 @@ import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -51,8 +48,6 @@ public class ArrangementWorkApprovalRoute extends EntityBase {
 	/**
 	 * 承認依頼者MoM社員ID
 	 */
-	@Column(nullable = false)
-	@NotEmpty
 	@Size(max = 255)
 	@ApiModelProperty(value = "承認依頼者MoM社員ID", required = true, position = 3, allowableValues = "range[0,255]")
 	private String approvalRequesterEmpId;
@@ -60,8 +55,6 @@ public class ArrangementWorkApprovalRoute extends EntityBase {
 	/**
 	 * 承認依頼者氏名
 	 */
-	@Column(nullable = false)
-	@NotEmpty
 	@Size(max = 255)
 	@ApiModelProperty(value = "承認依頼者氏名", required = true, position = 4, allowableValues = "range[0,255]")
 	private String approvalRequesterName;
