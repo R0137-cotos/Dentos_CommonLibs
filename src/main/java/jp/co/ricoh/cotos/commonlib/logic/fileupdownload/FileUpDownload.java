@@ -56,9 +56,11 @@ public class FileUpDownload {
 		}
 
 		String fileName = file.getOriginalFilename();
-		int index = fileName.lastIndexOf("\\");
+		int lastUnixPos = fileName.lastIndexOf('/');
+		int lastWindowsPos = fileName.lastIndexOf('\\');
+		int index = Math.max(lastUnixPos, lastWindowsPos);
 		if (index > 0) {
-			fileName = fileName.substring(index+1);
+			fileName = fileName.substring(index + 1);
 		}
 
 		if (!existsMatchExtension(fileName)) {
