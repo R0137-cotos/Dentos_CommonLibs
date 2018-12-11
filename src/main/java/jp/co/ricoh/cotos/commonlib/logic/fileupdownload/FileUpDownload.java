@@ -55,11 +55,17 @@ public class FileUpDownload {
 			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "FileSizeOverError", new String[] { "ファイルサイズ" }));
 		}
 
-		if (!existsMatchExtension(file)) {
+		String fileName = file.getOriginalFilename();
+		int index = fileName.lastIndexOf("\\");
+		if (index > 0) {
+			fileName = fileName.substring(index+1);
+		}
+
+		if (!existsMatchExtension(fileName)) {
 			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "FileExtensionNotMatchError"));
 		}
 
-		if (!existsFileNmSizeMaxOver(file)) {
+		if (!existsFileNmSizeMaxOver(fileName)) {
 			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "FileSizeOverError", new String[] { "ファイル名サイズ" }));
 		}
 
@@ -67,9 +73,9 @@ public class FileUpDownload {
 		Files.createDirectories(baseDir.toPath());
 
 		// 添付ファイル情報登録
-		AttachedFile attachedFile = createAttachedFile(file);
+		AttachedFile attachedFile = createAttachedFile(file, fileName);
 		attachedFileRepository.save(attachedFile);
-		attachedFile.setFilePhysicsName(attachedFile.getId() + "_" + file.getOriginalFilename());
+		attachedFile.setFilePhysicsName(attachedFile.getId() + "_" + fileName);
 		attachedFile.setSavedPath(baseDir.getPath() + "/" + attachedFile.getFilePhysicsName());
 		attachedFileRepository.save(attachedFile);
 
@@ -167,29 +173,29 @@ public class FileUpDownload {
 	/**
 	 * 拡張子が設定可能なものか確認
 	 *
-	 * @param multipartFile
-	 *            ファイル情報
+	 * @param fileName
+	 *            ファイル名
 	 * @return チェック結果
 	 */
-	private boolean existsMatchExtension(MultipartFile multipartFile) {
+	private boolean existsMatchExtension(String fileName) {
 		List<String> extensionList = appProperties.getFileProperties().getExtension();
 		if (extensionList.isEmpty()) {
 			return true;
 		}
 
-		String fileExtension = findExtension(multipartFile.getOriginalFilename());
+		String fileExtension = findExtension(fileName);
 		return extensionList.stream().filter(ext -> ext.equals(fileExtension)).collect(Collectors.toList()).size() > 0;
 	}
 
 	/**
 	 * ファイル名サイズが最大を超えていないか確認
 	 *
-	 * @param multipartFile
-	 *            ファイル情報
+	 * @param fileName
+	 *            ファイル名
 	 * @return チェック結果
 	 */
-	private boolean existsFileNmSizeMaxOver(MultipartFile multipartFile) {
-		return !(multipartFile.getOriginalFilename().length() > appProperties.getFileProperties().getFileNmMaxSize());
+	private boolean existsFileNmSizeMaxOver(String fileName) {
+		return !(fileName.length() > appProperties.getFileProperties().getFileNmMaxSize());
 	}
 
 	/**
@@ -216,13 +222,13 @@ public class FileUpDownload {
 	 *            ファイル情報
 	 * @return 添付ファイル情報
 	 */
-	private AttachedFile createAttachedFile(MultipartFile multipartFile) {
+	private AttachedFile createAttachedFile(MultipartFile multipartFile, String fileName) {
 		AttachedFile attachedFile = new AttachedFile();
 		attachedFile.setId(0);
-		attachedFile.setFilePhysicsName(multipartFile.getOriginalFilename());
+		attachedFile.setFilePhysicsName(fileName);
 		attachedFile.setFileSize(multipartFile.getSize());
 		attachedFile.setContentType(multipartFile.getContentType());
-		attachedFile.setSavedPath(multipartFile.getOriginalFilename());
+		attachedFile.setSavedPath(fileName);
 		return attachedFile;
 	}
 }

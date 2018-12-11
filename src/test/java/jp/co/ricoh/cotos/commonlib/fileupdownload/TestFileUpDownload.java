@@ -69,6 +69,17 @@ public class TestFileUpDownload {
 
 	@Test
 	@WithMockCustomUser
+	public void ファイルアップロード_ダウンロード_IE() throws Exception {
+
+		アップロードディレクトリファイル削除();
+
+		String fileNm = "testFile1.xlsx";
+		AttachedFile attachedFile = fileUpDownload.fileUpload(ファイル情報作成_IE(fileNm));
+		ファイルダウンロード(attachedFile.getId(), fileNm);
+	}
+
+	@Test
+	@WithMockCustomUser
 	public void ファイル削除() throws Exception {
 
 		テストデータ作成();
@@ -166,6 +177,21 @@ public class TestFileUpDownload {
 		File file = new File(path + "/src/test/resources/attachmentFiles/" + fileNm);
 		InputStream stream = Files.newInputStream(file.toPath());
 		return new MockMultipartFile(file.getName(), file.getName(), "multipart/form-data", stream);
+	}
+
+	/**
+	 * ファイル情報作成(IE)
+	 * 
+	 * @param fileNm
+	 *            ファイル名
+	 * @return ファイル情報
+	 * @throws Exception
+	 */
+	private MockMultipartFile ファイル情報作成_IE(String fileNm) throws Exception {
+		String path = new File(".").getAbsoluteFile().getParent();
+		File file = new File(path + "/src/test/resources/attachmentFiles/" + fileNm);
+		InputStream stream = Files.newInputStream(file.toPath());
+		return new MockMultipartFile(file.getName(), file.getPath(), "multipart/form-data", stream);
 	}
 
 	private void ファイルダウンロード(Long attachedFileId, String compareFileNm) {
