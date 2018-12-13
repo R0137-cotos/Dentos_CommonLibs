@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import jp.co.ricoh.cotos.commonlib.entity.accounting.Accounting;
 import jp.co.ricoh.cotos.commonlib.entity.arrangement.Arrangement;
 import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangementPicWorkerEmp;
 import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangementWork;
@@ -384,6 +385,11 @@ public class TestSecurityController {
 
 	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/AttachedFile")
 	public ParamterCheckResult callParamterCheck(@RequestBody @Validated AttachedFile entity, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/Accounting")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated Accounting entity, BindingResult result) {
 		return createParameterCheckResult(result);
 	}
 

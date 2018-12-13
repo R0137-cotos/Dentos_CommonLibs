@@ -566,7 +566,7 @@ public class TestContract {
 		testTarget.setContractNumber(null);
 		testTarget.setEstimationNumber(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 4);
+		Assert.assertTrue(result.getErrorInfoList().size() == 3);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 
 		// 異常系（@NotEmptyの空文字列チェック：contractNumber estimationNumber）
@@ -579,7 +579,7 @@ public class TestContract {
 		testTarget.setContractNumber("");
 		testTarget.setEstimationNumber("");
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 
 		// 異常系（@Size(max) ：immutableContIdentNumber caseNumber caseTitle contractNumber

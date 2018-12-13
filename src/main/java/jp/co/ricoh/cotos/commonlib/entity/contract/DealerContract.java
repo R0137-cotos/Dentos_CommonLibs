@@ -117,4 +117,68 @@ public class DealerContract extends EntityBase {
 	@NotNull
 	@ApiModelProperty(value = "販売店商流順", required = true, allowableValues = "販売店(\"1\"), 母店(\"2\")", example = "1", position = 12)
 	private DealerFlowOrder dealerFlowOrder;
+
+	/**
+	 * 販売店コード
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "販売店コード", required = false, position = 13, allowableValues = "range[0,255]")
+	private String distributorCd;
+
+	/**
+	 * OE届け先コード
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "OE届け先コード", required = false, position = 14, allowableValues = "range[0,255]")
+	private String oeDeliveryCd;
+
+	/**
+	 * Rings得意先コード
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "Rings得意先コード", required = false, position = 15, allowableValues = "range[0,255]")
+	private String distributorEmployeeMailAddress;
+
+	/**
+	 * 取引先コード（手数料用）
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "取引先コード（手数料用）", required = false, position = 16, allowableValues = "range[0,255]")
+	private String ringsCustomerCd;
+
+	/**
+	 * 担当営業メールアドレス
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "担当営業メールアドレス", required = false, position = 17, allowableValues = "range[0,255]")
+	private String distributorRtcCd;
+
+	/**
+	 * MoM会社ID
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "MoM会社ID", required = false, position = 18, allowableValues = "range[0,255]")
+	private String distributorMomCmpId;
+
+	/**
+	 * MoM販売店識別コード
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "MoM販売店識別コード", required = false, position = 19, allowableValues = "range[0,255]")
+	private String distributorMomShikiCd;
+
+	/**
+	 * MoM組織ID
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "MoM組織ID", required = false, position = 20, allowableValues = "range[0,255]")
+	private String distributorMomSoshikiId;
+
+	/**
+	 * MoMデポコード
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "MoMデポコード", required = false, position = 21, allowableValues = "range[0,255]")
+	private String distributorMomDepoCd;
+
 }
