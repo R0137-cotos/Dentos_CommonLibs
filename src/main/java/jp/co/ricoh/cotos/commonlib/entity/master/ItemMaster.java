@@ -17,6 +17,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -62,7 +64,7 @@ public class ItemMaster extends EntityBaseMaster {
 
 	public enum CostType {
 
-		初期費("1"), 月額("2"), 年額("3");
+		初期費("1"), 月額_定額("2"), 年額("3"), 月額_従量("4");
 
 		private final String text;
 
@@ -115,14 +117,14 @@ public class ItemMaster extends EntityBaseMaster {
 	 * 品種区分
 	 */
 	@Column(nullable = false)
-	@ApiModelProperty(value = "品種区分", required = true, allowableValues = "なし(\"0\"), 基本(\"1\"), オプション(\"2\")", example ="1", position = 5)
+	@ApiModelProperty(value = "品種区分", required = true, allowableValues = "なし(\"0\"), 基本(\"1\"), オプション(\"2\")", example = "1", position = 5)
 	private ItemType itemType;
 
 	/**
 	 * 費用種別
 	 */
 	@Column(nullable = false)
-	@ApiModelProperty(value = "費用種別", required = true, allowableValues = "初期費(\"1\"), 月額(\"2\"), 年額(\"3\")", example ="1", position = 6)
+	@ApiModelProperty(value = "費用種別", required = true, allowableValues = "初期費(\"1\"), 月額_定額(\"2\"), 年額(\"3\"), 月額_従量(\"4\")", example = "1", position = 6)
 	private CostType costType;
 
 	/**
@@ -149,17 +151,59 @@ public class ItemMaster extends EntityBaseMaster {
 	private Date effectiveTo;
 
 	/**
+	 * 仕入取引先コード
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "仕入取引先コード", required = false, position = 10, allowableValues = "range[0,255]")
+	private String bpCd;
+
+	/**
+	 * Ｒ原価
+	 */
+	@DecimalMax("9999999999999999999.99")
+	@ApiModelProperty(value = "Ｒ原価", required = false, position = 11, allowableValues = "range[0.00,9999999999999999999.99]")
+	private BigDecimal rCost;
+
+	/**
+	 * ＲＪ仕入価格
+	 */
+	@DecimalMax("9999999999999999999.99")
+	@ApiModelProperty(value = "ＲＪ仕入価格", required = false, position = 12, allowableValues = "range[0.00,9999999999999999999.99]")
+	private BigDecimal rjPurchasePrice;
+
+	/**
+	 * ＲＪ仕切価格
+	 */
+	@DecimalMax("9999999999999999999.99")
+	@ApiModelProperty(value = "ＲＪ仕切価格", required = false, position = 13, allowableValues = "range[0.00,9999999999999999999.99]")
+	private BigDecimal rjDividingPrice;
+
+	/**
+	 * 母店売価(接点店仕切)
+	 */
+	@DecimalMax("9999999999999999999.99")
+	@ApiModelProperty(value = "母店売価(接点店仕切)", required = false, position = 14, allowableValues = "range[0.00,9999999999999999999.99]")
+	private BigDecimal motherStorePrice;
+
+	/**
+	 * 消費税区分
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "消費税区分", required = false, position = 15, allowableValues = "range[0,255]")
+	private String taxFlag;
+
+	/**
 	 * 計上分解構成マスタ
 	 */
 	@OneToMany(mappedBy = "itemMaster")
-	@ApiModelProperty(value = "計上分解構成マスタ", required = false, position = 10)
+	@ApiModelProperty(value = "計上分解構成マスタ", required = false, position = 16)
 	private List<RecordDecomposeCompMaster> recordDecomposeCompMasterList;
 
 	/**
 	 * 手配業務構成マスタ
 	 */
 	@OneToMany(mappedBy = "itemMaster")
-	@ApiModelProperty(value = "手配業務構成マスタ", required = false, position = 11)
+	@ApiModelProperty(value = "手配業務構成マスタ", required = false, position = 17)
 	private List<ArrangementWorkCompMaster> arrangementWorkCompMasterList;
 
 }

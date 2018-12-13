@@ -57,9 +57,8 @@ public class ProductContract extends EntityBase {
 	/**
 	 * 代表品種マスタID
 	 */
-	@Column(nullable = false)
-	@ApiModelProperty(value = "代表品種マスタID", required = true, position = 4, allowableValues = "range[0,9999999999999999999]")
-	private long repItemMasterId;
+	@ApiModelProperty(value = "代表品種マスタID", required = false, position = 4, allowableValues = "range[0,9999999999999999999]")
+	private Long repItemMasterId;
 
 	/**
 	 * サービス識別番号
