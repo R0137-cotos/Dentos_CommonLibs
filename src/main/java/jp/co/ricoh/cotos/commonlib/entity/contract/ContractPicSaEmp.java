@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -129,7 +130,7 @@ public class ContractPicSaEmp extends EntityBase {
 	@Size(max = 255)
 	@ApiModelProperty(value = "メールアドレス", required = false, position = 14, allowableValues = "range[0,255]")
 	private String mailAddress;
-
+	
 	/**
 	 * 契約
 	 */
@@ -138,4 +139,11 @@ public class ContractPicSaEmp extends EntityBase {
 	@JsonIgnore
 	@ApiModelProperty(value = "契約", required = true, position = 15)
 	private Contract contract;
+	
+	/**
+	 * 拡張項目
+	 */
+	@ApiModelProperty(value = "拡張項目", required = false, position = 16)
+	@Lob
+	private String extendsParameter;
 }
