@@ -150,6 +150,18 @@ public class ContractListInfo {
 	@ApiModelProperty(value = "担当支社名", required = false, position = 20, allowableValues = "range[0,255]")
 	private String picAffiliateName;
 
+	/**
+	 * 担当SS氏名
+	 */
+	@ApiModelProperty(value = "担当SS氏名", required = false, position = 21, allowableValues = "range[0,255]")
+	private String picSsName;
+
+	/**
+	 * 担当CE氏名
+	 */
+	@ApiModelProperty(value = "担当CE氏名", required = false, position = 22, allowableValues = "range[0,255]")
+	private String picCeName;
+
 	@PrePersist
 	public void prePersist() {
 		throw new IllegalAccessError();

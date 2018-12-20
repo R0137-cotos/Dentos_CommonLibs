@@ -240,6 +240,24 @@ public class ContractSearchParameter {
 	private String picEmptxId;
 
 	/**
+	 * 担当SS
+	 */
+	@ApiParam(value = "担当SS：MoM社員IDを指定", required = false)
+	@ApiModelProperty(value = "担当SS<br />" //
+			+ "担当SSにはMoM社員IDを指定する。", //
+			required = false, allowableValues = "range[0,255]") //
+	private String picSsId;
+
+	/**
+	 * 担当CE
+	 */
+	@ApiParam(value = "担当CE：MoM社員IDを指定", required = false)
+	@ApiModelProperty(value = "担当CE<br />" //
+			+ "担当CEにはMoM社員IDを指定する。", //
+			required = false, allowableValues = "range[0,255]") //
+	private String picCeId;
+
+	/**
 	 * 審査／承認者
 	 */
 	@ApiParam(value = "審査／承認者：MoM社員IDを指定", required = false)
@@ -314,7 +332,9 @@ public class ContractSearchParameter {
 			+ "13:サービス終了日<br />" //
 			+ "14:商品名称<br />" //
 			+ "15:担当営業<br />" //
-			+ "16:担当営業所属", //
+			+ "16:担当営業所属<br />" //
+			+ "17:担当SS氏名<br />" //
+			+ "18:担当CE氏名", //
 			required = true, allowableValues = "range[0,15]") //
 	private int sortColumn;
 

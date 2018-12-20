@@ -26,6 +26,8 @@ import jp.co.ricoh.cotos.commonlib.entity.contract.ContractAttachedFile;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractCheckResult;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractDetail;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractOperationLog;
+import jp.co.ricoh.cotos.commonlib.entity.contract.ContractPicCeEmp;
+import jp.co.ricoh.cotos.commonlib.entity.contract.ContractPicMntSsOrg;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractPicSaEmp;
 import jp.co.ricoh.cotos.commonlib.entity.contract.CustomerContract;
 import jp.co.ricoh.cotos.commonlib.entity.contract.DealerContract;
@@ -39,6 +41,8 @@ import jp.co.ricoh.cotos.commonlib.repository.contract.ContractAttachedFileRepos
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractCheckResultRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractDetailRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractOperationLogRepository;
+import jp.co.ricoh.cotos.commonlib.repository.contract.ContractPicCeEmpRepository;
+import jp.co.ricoh.cotos.commonlib.repository.contract.ContractPicMntSsOrgRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractPicSaEmpRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.CustomerContractRepository;
@@ -108,6 +112,12 @@ public class TestContract {
 
 	@Autowired
 	ProductContractRepository productContractRepository;
+
+	@Autowired
+	ContractPicMntSsOrgRepository contractPicMntSsOrgRepository;
+
+	@Autowired
+	ContractPicCeEmpRepository contractPicCeEmpRepository;
 
 	@Autowired
 	TestTools testTool;
@@ -600,8 +610,9 @@ public class TestContract {
 		testTarget.setBillingCustomerSpName(STR_256);
 		testTarget.setPaymentTerms(STR_256);
 		testTarget.setPaymentMethod(STR_256);
+		testTarget.setCancelOrderNo(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 13);
+		Assert.assertTrue(result.getErrorInfoList().size() == 14);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 
 		// 異常系（@Max ：contractBranchNumber accountSalesFlg estimationBranchNumber）
@@ -717,8 +728,18 @@ public class TestContract {
 		testTarget.setPicDeptName(STR_256);
 		testTarget.setPicPhoneNumber(STR_256);
 		testTarget.setPicFaxNumber(STR_256);
+		testTarget.setDistributorCd(STR_256);
+		testTarget.setOeDeliveryCd(STR_256);
+		testTarget.setDistributorEmployeeMailAddress(STR_256);
+		testTarget.setRingsCustomerCd(STR_256);
+		testTarget.setDistributorRtcCd(STR_256);
+		testTarget.setDistributorMomCmpId(STR_256);
+		testTarget.setDistributorMomShikiCd(STR_256);
+		testTarget.setDistributorMomSoshikiId(STR_256);
+		testTarget.setDistributorMomDepoCd(STR_256);
+		testTarget.setOrbSendSiteId(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 8);
+		Assert.assertTrue(result.getErrorInfoList().size() == 18);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 
 	}
@@ -806,4 +827,89 @@ public class TestContract {
 
 	}
 
+	@Test
+	public void ContractPicCeEmpのテスト() throws Exception {
+		ContractPicCeEmp entity = contractPicCeEmpRepository.findOne(401L);
+		ContractPicCeEmp testTarget = new ContractPicCeEmp();
+		BeanUtils.copyProperties(testTarget, entity);
+
+		// 正常系
+		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		testTool.assertValidationOk(result);
+
+		// 異常系（@NotNull、@NotEmptyの null チェック：momEmployeeId employeeName）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setMomEmployeeId(null);
+		testTarget.setEmployeeName(null);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+
+		// 異常系（@NotEmptyの空文字列チェック：momEmployeeId employeeName）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setMomEmployeeId("");
+		testTarget.setEmployeeName("");
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+
+		// 異常系（@Size(max) ：momOrgId orgName salesCompanyName orgPhoneNumber employeeName
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setMomOrgId(STR_256);
+		testTarget.setOrgName(STR_256);
+		testTarget.setSalesCompanyName(STR_256);
+		testTarget.setOrgPhoneNumber(STR_256);
+		testTarget.setEmployeeName(STR_256);
+		testTarget.setSalesDepartmentName(STR_256);
+		testTarget.setPostNumber(STR_256);
+		testTarget.setAddress(STR_1001);
+		testTarget.setPhoneNumber(STR_256);
+		testTarget.setFaxNumber(STR_256);
+		testTarget.setMailAddress(STR_256);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 11);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+
+		// 異常系（@Max ：orgHierarchyLevel）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setOrgHierarchyLevel(10);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
+
+	}
+
+	@Test
+	public void ContractPicMntSsOrgのテスト() throws Exception {
+		ContractPicMntSsOrg entity = contractPicMntSsOrgRepository.findOne(401L);
+		ContractPicMntSsOrg testTarget = new ContractPicMntSsOrg();
+		BeanUtils.copyProperties(testTarget, entity);
+
+		// 正常系
+		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		testTool.assertValidationOk(result);
+
+		// 異常系（@NotNull、@NotEmptyの null チェック：momOrgId）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setMomOrgId(null);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+
+		// 異常系（@NotEmptyの空文字列チェック：momOrgId）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setMomOrgId("");
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+
+		// 異常系（@Size(max) ：momOrgId orgName）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setMomOrgId(STR_256);
+		testTarget.setOrgName(STR_256);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+
+	}
 }
