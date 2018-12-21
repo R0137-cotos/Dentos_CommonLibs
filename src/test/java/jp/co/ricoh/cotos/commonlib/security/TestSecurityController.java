@@ -47,6 +47,8 @@ import jp.co.ricoh.cotos.commonlib.entity.contract.ContractAttachedFile;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractCheckResult;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractDetail;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractOperationLog;
+import jp.co.ricoh.cotos.commonlib.entity.contract.ContractPicCeEmp;
+import jp.co.ricoh.cotos.commonlib.entity.contract.ContractPicMntSsOrg;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractPicSaEmp;
 import jp.co.ricoh.cotos.commonlib.entity.contract.CustomerContract;
 import jp.co.ricoh.cotos.commonlib.entity.contract.DealerContract;
@@ -393,4 +395,13 @@ public class TestSecurityController {
 		return createParameterCheckResult(result);
 	}
 
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractPicCeEmp")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractPicCeEmp entity, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractPicMntSsOrg")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractPicMntSsOrg entity, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
 }

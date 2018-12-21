@@ -188,14 +188,22 @@ public class TestEstimation {
 		testTarget.setOfficeId(STR_256);
 		testTarget.setCustomerName(STR_256);
 		testTarget.setCompanyName(STR_256);
+		testTarget.setCompanyNameKana(STR_256);
 		testTarget.setOfficeName(STR_256);
 		testTarget.setDepartmentName(STR_256);
 		testTarget.setPostNumber(STR_256);
 		testTarget.setAddress(STR_1001);
 		testTarget.setPhoneNumber(STR_256);
 		testTarget.setFaxNumber(STR_256);
+		testTarget.setCompanyRepresentativeName(STR_256);
+		testTarget.setPicName(STR_256);
+		testTarget.setPicNameKana(STR_256);
+		testTarget.setPicDeptName(STR_256);
+		testTarget.setPicPhoneNumber(STR_256);
+		testTarget.setPicFaxNumber(STR_256);
+		testTarget.setPicMailAddress(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 11);
+		Assert.assertTrue(result.getErrorInfoList().size() == 19);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 
 	}
@@ -207,23 +215,19 @@ public class TestEstimation {
 
 		// 正常系
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setMomKjbSystemId(null);
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
 		// 異常系（@NotNull、@NotEmptyの null チェック：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setMomKjbSystemId(null);
-
 		testTarget.setDealerFlowOrder(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 
 		// 異常系（@Size(max) ：）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setMomKjbSystemId(null);
-
 		testTarget.setDealerName(STR_256);
 		testTarget.setPostNumber(STR_256);
 		testTarget.setAddress(STR_1001);
@@ -232,8 +236,9 @@ public class TestEstimation {
 		testTarget.setPicDeptName(STR_256);
 		testTarget.setPicPhoneNumber(STR_256);
 		testTarget.setPicFaxNumber(STR_256);
+		testTarget.setPicMailAddress(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 8);
+		Assert.assertTrue(result.getErrorInfoList().size() == 9);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 
 	}

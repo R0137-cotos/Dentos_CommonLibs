@@ -1,4 +1,4 @@
-package jp.co.ricoh.cotos.commonlib.entity.estimation;
+package jp.co.ricoh.cotos.commonlib.entity.contract;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -18,28 +18,27 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * 見積情報の中で保持する追加編集者社員を表すEntity
+ * 契約情報の中で保持する契約担当CE社員情報を表すEntity
  */
 @Entity
 @EqualsAndHashCode(callSuper = true)
-@EntityListeners(EstimationAddedEditorEmpListener.class)
+@EntityListeners(ContractPicCeEmpListener.class)
 @Data
-@Table(name = "estimation_added_editor_emp")
-public class EstimationAddedEditorEmp extends EmployeeAbstractEntity {
+@Table(name = "contract_pic_ce_emp")
+public class ContractPicCeEmp extends EmployeeAbstractEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "estimation_added_editor_emp_seq")
-	@SequenceGenerator(name = "estimation_added_editor_emp_seq", sequenceName = "estimation_added_editor_emp_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_pic_ce_emp_seq")
+	@SequenceGenerator(name = "contract_pic_ce_emp_seq", sequenceName = "contract_pic_ce_emp_seq", allocationSize = 1)
 	@ApiModelProperty(value = "ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
 	/**
-	 * 見積
+	 * 契約
 	 */
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "estimation_id", referencedColumnName = "id")
-	@ApiModelProperty(value = "見積", required = true, position = 2)
+	@JoinColumn(name = "contract_id", referencedColumnName = "id")
 	@JsonIgnore
-	private Estimation estimation;
-
+	@ApiModelProperty(value = "契約", required = true, position = 2)
+	private Contract contract;
 }
