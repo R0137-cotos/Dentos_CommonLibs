@@ -49,7 +49,7 @@ public class ContractPicMntSsOrg extends EntityBase {
 	 */
 	@Size(max = 255)
 	@ApiModelProperty(value = "課所名", required = false, position = 3, allowableValues = "range[0,255]")
-	private String orgName;
+	private String serviceOrgName;
 
 	/**
 	 * 契約

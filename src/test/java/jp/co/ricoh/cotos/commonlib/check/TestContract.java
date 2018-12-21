@@ -906,7 +906,7 @@ public class TestContract {
 		// 異常系（@Size(max) ：momOrgId orgName）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setMomOrgId(STR_256);
-		testTarget.setOrgName(STR_256);
+		testTarget.setServiceOrgName(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));

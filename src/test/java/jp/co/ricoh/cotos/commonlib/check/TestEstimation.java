@@ -188,12 +188,14 @@ public class TestEstimation {
 		testTarget.setOfficeId(STR_256);
 		testTarget.setCustomerName(STR_256);
 		testTarget.setCompanyName(STR_256);
+		testTarget.setCompanyNameKana(STR_256);
 		testTarget.setOfficeName(STR_256);
 		testTarget.setDepartmentName(STR_256);
 		testTarget.setPostNumber(STR_256);
 		testTarget.setAddress(STR_1001);
 		testTarget.setPhoneNumber(STR_256);
 		testTarget.setFaxNumber(STR_256);
+		testTarget.setCompanyRepresentativeName(STR_256);
 		testTarget.setPicName(STR_256);
 		testTarget.setPicNameKana(STR_256);
 		testTarget.setPicDeptName(STR_256);
@@ -201,7 +203,7 @@ public class TestEstimation {
 		testTarget.setPicFaxNumber(STR_256);
 		testTarget.setPicMailAddress(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 17);
+		Assert.assertTrue(result.getErrorInfoList().size() == 19);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 
 	}
