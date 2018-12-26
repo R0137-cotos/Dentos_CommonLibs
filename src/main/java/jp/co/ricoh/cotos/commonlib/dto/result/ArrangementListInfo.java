@@ -25,7 +25,7 @@ public class ArrangementListInfo {
 	@Id
 	@ApiModelProperty(value = "連番", required = true, position = 1)
 	private long seqNo;
-	
+
 	/**
 	 * 契約ID
 	 */
@@ -105,7 +105,7 @@ public class ArrangementListInfo {
 	@ApiModelProperty(value = "業務受理日時", required = false, position = 13)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date businessAcceptanceDateTime;
-	
+
 	/**
 	 * 手配業務担当者
 	 */
@@ -151,6 +151,12 @@ public class ArrangementListInfo {
 	@ApiModelProperty(value = "サービス終了日", required = false, position = 20)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date serviceTermEnd;
+
+	/**
+	 * 保留フラグ
+	 */
+	@ApiModelProperty(value = "保留フラグ", required = true, position = 21)
+	private int holdingFlg;
 
 	@PrePersist
 	public void prePersist() {
