@@ -81,7 +81,7 @@ public class ArrangementSearchParameter {
 			+ "日付フォーマット:yyyy/MM/dd", //
 			required = false) //
 	private Date desiredDeliveryDateTo;
-	
+
 	/**
 	 * 業務受理日時
 	 */
@@ -326,6 +326,13 @@ public class ArrangementSearchParameter {
 	@ApiModelProperty(value = "商品マスタID", required = false)
 	private Long productId;
 
+	/**
+	 * 保留フラグ
+	 */
+	@ApiParam(value = "保留フラグ", required = true)
+	@ApiModelProperty(value = "保留フラグ", required = true)
+	private int holdingFlg;
+
 	// ===========================
 
 	/**
@@ -350,7 +357,8 @@ public class ArrangementSearchParameter {
 			+ "12:担当営業<br />"//
 			+ "13:担当支社<br />" //
 			+ "14:サービス開始日<br />" //
-			+ "15:サービス終了日<br />", //
+			+ "15:サービス終了日<br />" //
+			+ "16:保留フラグ<br />", //
 			required = true, allowableValues = "range[0,14]") //
 	private int sortColumn;
 
