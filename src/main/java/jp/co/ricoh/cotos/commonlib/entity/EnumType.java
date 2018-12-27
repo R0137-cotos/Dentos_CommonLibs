@@ -90,7 +90,7 @@ public class EnumType {
 	 */
 	public enum ProcessCategory {
 
-		承認依頼("1"), 承認依頼取消("2"), 承認依頼差戻("3"), 承認("4"), 作業依頼("5"), 作業完了("6"), キャンセル手続き("7"), キャンセル手続き中止("8"), 解約手続き("9"), 解約手続き中止("10"), 問い合わせ("11"), 売上計上停止("12"), 売上計上再開("13"), 受注完了("14"), 売上開始指示("15");
+		承認依頼("1"), 承認依頼取消("2"), 承認依頼差戻("3"), 承認("4"), 作業依頼("5"), 作業完了("6"), キャンセル手続き("7"), キャンセル手続き中止("8"), 解約手続き("9"), 解約手続き中止("10"), 問い合わせ("11"), 売上計上停止("12"), 売上計上再開("13"), 売上開始指示("14");
 
 		private final String text;
 
@@ -233,5 +233,23 @@ public class EnumType {
 		public static TargetDirectionType fromString(String string) {
 			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
+	}
+	
+	/**
+	 * 汎用マスタ明細区分
+	 */
+	public enum CommonMasterDetailType {
+
+		お客様担当者, 接点店担当者, 母店接点店担当者;
+
+	}
+	
+	/**
+	 * 汎用マスタカラム名区分
+	 */
+	public enum ColumnNameType {
+
+		issue_format, commercial_flow_div, estimated_system_div, file_kind, cancel_reason, cost_type, sales_tax_rate, branch_custoemr_cd, process_category;
+
 	}
 }
