@@ -15,6 +15,6 @@ public interface CommonMasterDetailRepository extends CrudRepository<CommonMaste
 	public List<CommonMasterDetail> findByCommonMasterId(@Param("COMMON_MASTER_ID") Long commonMasterId);
 
 	// 受注完了時のメール送信でのみ使用可能
-	@Query(value = "FROM COMMONMASTERDETAIL WHERE COMMON_MASTER_ID = :COMMON_MASTER_ID AND TRUNC(CURRENT_DATE) BETWEEN TRUNC(AVAILABLE_PERIOD_FROM) AND TRUNC(AVAILABLE_PERIOD_TO) AND DATA_AREA_1 = :DATA_AREA_1 AND DELETE_FLG = 0")
+	@Query(value = "FROM CommonMasterDetail WHERE COMMON_MASTER_ID = :COMMON_MASTER_ID AND TRUNC(CURRENT_DATE) BETWEEN TRUNC(AVAILABLE_PERIOD_FROM) AND TRUNC(AVAILABLE_PERIOD_TO) AND DATA_AREA_1 = :DATA_AREA_1 AND DELETE_FLG = 0")
 	public CommonMasterDetail findByCommonMasterIdAndDataArea1(@Param("COMMON_MASTER_ID") Long commonMasterId, @Param("DATA_AREA_1") String dataArea1);
 }
