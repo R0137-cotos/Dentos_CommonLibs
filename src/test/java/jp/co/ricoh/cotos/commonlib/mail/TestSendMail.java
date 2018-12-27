@@ -55,7 +55,7 @@ public class TestSendMail {
 		List<String> mailSubjectRepalceValueList = メール件名置換リスト作成();
 		List<String> mailTextRepalceValueList = メール本文置換リスト作成();
 		try {
-			commonSendMail.findMailTemplateMasterAndSendMail(ServiceCategory.見積, ProcessCategory.承認依頼, null, emailToList, emailCcList, mailSubjectRepalceValueList, mailTextRepalceValueList, null);
+			commonSendMail.findMailTemplateMasterAndSendMail(ServiceCategory.見積, ProcessCategory.承認依頼.toString(), null, emailToList, emailCcList, mailSubjectRepalceValueList, mailTextRepalceValueList, null);
 		} catch (Exception e) {
 			Assert.fail("異常終了");
 		}
@@ -70,7 +70,7 @@ public class TestSendMail {
 		List<String> mailSubjectRepalceValueList = メール件名置換リスト作成();
 		List<String> mailTextRepalceValueList = メール本文置換リスト作成();
 		try {
-			commonSendMail.findMailTemplateMasterAndSendMail(ServiceCategory.見積, ProcessCategory.承認依頼, 1L, emailToList, emailCcList, mailSubjectRepalceValueList, mailTextRepalceValueList, null);
+			commonSendMail.findMailTemplateMasterAndSendMail(ServiceCategory.見積, ProcessCategory.承認依頼.toString(), 1L, emailToList, emailCcList, mailSubjectRepalceValueList, mailTextRepalceValueList, null);
 		} catch (Exception e) {
 			Assert.fail("異常終了");
 		}
@@ -118,7 +118,7 @@ public class TestSendMail {
 		List<String> mailSubjectRepalceValueList = メール件名置換リスト作成Null値あり();
 		List<String> mailTextRepalceValueList = メール本文置換リスト作成Null値あり();
 		try {
-			commonSendMail.findMailTemplateMasterAndSendMail(ServiceCategory.見積, ProcessCategory.承認依頼, 0L, emailToList, emailCcList, mailSubjectRepalceValueList, mailTextRepalceValueList, null);
+			commonSendMail.findMailTemplateMasterAndSendMail(ServiceCategory.見積, ProcessCategory.承認依頼.toString(), 0L, emailToList, emailCcList, mailSubjectRepalceValueList, mailTextRepalceValueList, null);
 		} catch (Exception e) {
 			Assert.fail("異常終了");
 		}
