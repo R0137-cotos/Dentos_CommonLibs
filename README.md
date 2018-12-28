@@ -111,3 +111,4 @@
 |153|汎用マスタ・明細リポジトリにメソッド追加、EnumTypeに汎用マスタ明細区分・汎用マスタカラム名区分追加|
 |154|問い合わせ一覧取得用メソッドを追加|
 |155|MailTemplateMasterのprocessCategoryをString型に変更|
+|156|EstimationのOperationLogに破棄を追加|
