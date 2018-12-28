@@ -112,3 +112,4 @@
 |154|問い合わせ一覧取得用メソッドを追加|
 |155|MailTemplateMasterのprocessCategoryをString型に変更|
 |156|EstimationのOperationLogに破棄を追加|
+|157|問い合わせ一覧取得時、親問い合わせのみ取得するよう修正|
