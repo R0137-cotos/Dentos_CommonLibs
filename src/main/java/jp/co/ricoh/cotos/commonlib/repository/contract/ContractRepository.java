@@ -20,4 +20,6 @@ public interface ContractRepository extends CrudRepository<Contract, Long> {
 	public List<Contract> findByLifecycleAndCancelScheduledDate(@Param("opDate") String opDate);
 
 	public List<Contract> findByRjManageNumber(String rjManageNumber);
+
+	public List<Contract> findByEstimationIdOrderByContractBrunchNumber(long estimationId);
 }

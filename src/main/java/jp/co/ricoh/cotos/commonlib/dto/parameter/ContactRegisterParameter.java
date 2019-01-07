@@ -3,7 +3,6 @@ package jp.co.ricoh.cotos.commonlib.dto.parameter;
 import java.util.List;
 
 import io.swagger.annotations.ApiParam;
-import jp.co.ricoh.cotos.commonlib.entity.EnumType.TargetDirectionType;
 import jp.co.ricoh.cotos.commonlib.entity.communication.Contact;
 import lombok.Data;
 
@@ -16,36 +15,18 @@ public class ContactRegisterParameter {
 	/**
 	 * 親問い合わせエンティティ
 	 */
-	@ApiParam(value = "親問い合わせエンティティ", required = false)
-	private Contact parentContact;
+	@ApiParam(value = "問い合わせエンティティ", required = false)
+	private Contact contact;
 
 	/**
-	 * 問い合わせタイトル
+	 * メール件名置換リスト
 	 */
-	@ApiParam(value = "問い合わせタイトル", required = true)
-	private String contactTitle;
+	@ApiParam(value = "メール件名置換リスト", required = true)
+	private List<String> mailSubjectRepalceValueList;
 
 	/**
-	 * 問い合わせ内容
+	 * メール本文置換リスト
 	 */
-	@ApiParam(value = "問い合わせ内容", required = true)
-	private String contactMessage;
-
-	/**
-	 * 宛先種別
-	 */
-	@ApiParam(value = "宛先種別", required = true)
-	private TargetDirectionType targetDirectionType;
-
-	/**
-	 * メールTO送付先MoM社員IDリスト
-	 */
-	@ApiParam(value = "メールTO送付先MoM社員IDリスト", required = false)
-	private List<String> momEmpIdSendToList;
-
-	/**
-	 * メールCC送付先MoM社員IDリスト
-	 */
-	@ApiParam(value = "メールCC送付先MoM社員IDリスト", required = false)
-	private List<String> momEmpIdSendCcList;
+	@ApiParam(value = "メール本文置換リスト", required = true)
+	private List<String> mailTextRepalceValueList;
 }
