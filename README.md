@@ -113,3 +113,4 @@
 |155|MailTemplateMasterのprocessCategoryをString型に変更|
 |156|EstimationのOperationLogに破棄を追加|
 |157|問い合わせ一覧取得時、親問い合わせのみ取得するよう修正|
+|158|契約操作履歴に「契約書出力」追加|
