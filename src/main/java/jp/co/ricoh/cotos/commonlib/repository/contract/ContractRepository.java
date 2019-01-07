@@ -21,5 +21,5 @@ public interface ContractRepository extends CrudRepository<Contract, Long> {
 
 	public List<Contract> findByRjManageNumber(String rjManageNumber);
 
-	public List<Contract> findByEstimationIdOrderByContractBrunchNumber(long estimationId);
+	public List<Contract> findByEstimationIdOrderByContractBranchNumberAsc(long estimationId);
 }
