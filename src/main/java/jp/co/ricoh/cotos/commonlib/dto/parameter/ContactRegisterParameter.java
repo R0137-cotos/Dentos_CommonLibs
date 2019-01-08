@@ -13,10 +13,16 @@ import lombok.Data;
 public class ContactRegisterParameter {
 
 	/**
-	 * 親問い合わせエンティティ
+	 * 問い合わせエンティティ
 	 */
 	@ApiParam(value = "問い合わせエンティティ", required = false)
 	private Contact contact;
+	
+	/**
+	 * 親問い合わせエンティティ
+	 */
+	@ApiParam(value = "親問い合わせエンティティ", required = false)
+	private Contact parentContact;
 
 	/**
 	 * メール件名置換リスト

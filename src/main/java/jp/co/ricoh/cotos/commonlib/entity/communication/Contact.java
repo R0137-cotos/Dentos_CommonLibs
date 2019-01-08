@@ -22,9 +22,7 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
@@ -58,8 +56,7 @@ public class Contact extends EntityBase {
 	 * 親問い合わせ
 	 */
 	@ManyToOne
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = true)
+	@JsonIgnore
 	@JoinColumn(name = "parent_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "親問い合わせ", required = false, position = 3)
 	private Contact parent;
