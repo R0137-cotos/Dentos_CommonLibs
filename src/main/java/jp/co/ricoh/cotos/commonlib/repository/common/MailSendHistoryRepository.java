@@ -8,4 +8,5 @@ import jp.co.ricoh.cotos.commonlib.entity.common.MailSendHistory;
 @Repository
 public interface MailSendHistoryRepository extends CrudRepository<MailSendHistory, Long> {
 
+	public MailSendHistory findByTargetDataId(long targetDataId);
 }
