@@ -11,7 +11,7 @@ import lombok.Data;
  * 問い合わせ情報を作成するためのパラメーターを表します。
  */
 @Data
-public class ContactCompornentsParameter {
+public class ContactComponentsParameter {
 
 	/**
 	 * 親問い合わせエンティティ
