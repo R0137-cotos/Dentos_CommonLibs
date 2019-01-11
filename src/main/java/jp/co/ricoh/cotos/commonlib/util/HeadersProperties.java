@@ -27,4 +27,6 @@ public class HeadersProperties {
 	private String dispAuthorization;
 	
 	private String contentType;
+	
+	private String filename;
 }
