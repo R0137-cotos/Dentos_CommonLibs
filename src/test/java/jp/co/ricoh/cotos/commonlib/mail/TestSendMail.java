@@ -52,10 +52,11 @@ public class TestSendMail {
 
 		List<String> emailToList = 送信先TOメールアドレスリスト作成();
 		List<String> emailCcList = 送信先CCメールアドレスリスト作成();
+		List<String> emailBccList = 送信先BCCメールアドレスリスト作成();
 		List<String> mailSubjectRepalceValueList = メール件名置換リスト作成();
 		List<String> mailTextRepalceValueList = メール本文置換リスト作成();
 		try {
-			commonSendMail.findMailTemplateMasterAndSendMail(ServiceCategory.見積, ProcessCategory.承認依頼.toString(), null, emailToList, emailCcList, mailSubjectRepalceValueList, mailTextRepalceValueList, null);
+			commonSendMail.findMailTemplateMasterAndSendMail(ServiceCategory.見積, ProcessCategory.承認依頼.toString(), null, emailToList, emailCcList, emailBccList, mailSubjectRepalceValueList, mailTextRepalceValueList, null);
 		} catch (Exception e) {
 			Assert.fail("異常終了");
 		}
@@ -67,10 +68,11 @@ public class TestSendMail {
 
 		List<String> emailToList = 送信先TOメールアドレスリスト作成();
 		List<String> emailCcList = 送信先CCメールアドレスリスト作成();
+		List<String> emailBccList = 送信先BCCメールアドレスリスト作成();
 		List<String> mailSubjectRepalceValueList = メール件名置換リスト作成();
 		List<String> mailTextRepalceValueList = メール本文置換リスト作成();
 		try {
-			commonSendMail.findMailTemplateMasterAndSendMail(ServiceCategory.見積, ProcessCategory.承認依頼.toString(), 1L, emailToList, emailCcList, mailSubjectRepalceValueList, mailTextRepalceValueList, null);
+			commonSendMail.findMailTemplateMasterAndSendMail(ServiceCategory.見積, ProcessCategory.承認依頼.toString(), 1L, emailToList, emailCcList, emailBccList, mailSubjectRepalceValueList, mailTextRepalceValueList, null);
 		} catch (Exception e) {
 			Assert.fail("異常終了");
 		}
@@ -82,10 +84,11 @@ public class TestSendMail {
 
 		List<String> emailToList = 送信先TOメールアドレスリスト作成();
 		List<String> emailCcList = 送信先CCメールアドレスリスト作成();
+		List<String> emailBccList = 送信先BCCメールアドレスリスト作成();
 		List<String> mailSubjectRepalceValueList = メール件名置換リスト作成();
 		List<String> mailTextRepalceValueList = メール本文置換リスト作成();
 		try {
-			commonSendMail.findMailTemplateMasterAndSendMail(2L, emailToList, emailCcList, mailSubjectRepalceValueList, mailTextRepalceValueList, null);
+			commonSendMail.findMailTemplateMasterAndSendMail(2L, emailToList, emailCcList, emailBccList, mailSubjectRepalceValueList, mailTextRepalceValueList, null);
 		} catch (Exception e) {
 			Assert.fail("異常終了");
 		}
@@ -98,12 +101,13 @@ public class TestSendMail {
 
 		List<String> emailToList = 送信先TOメールアドレスリスト作成();
 		List<String> emailCcList = 送信先CCメールアドレスリスト作成();
+		List<String> emailBccList = 送信先BCCメールアドレスリスト作成();
 		List<String> mailSubjectRepalceValueList = メール件名置換リスト作成();
 		List<String> mailTextRepalceValueList = メール本文置換リスト作成();
 		String path = new File(".").getAbsoluteFile().getParent();
 		String uploadFile = path + "/src/test/resources/dummyFile/10130102146_201712.zip";
 		try {
-			commonSendMail.findMailTemplateMasterAndSendMail(3L, emailToList, emailCcList, mailSubjectRepalceValueList, mailTextRepalceValueList, uploadFile);
+			commonSendMail.findMailTemplateMasterAndSendMail(3L, emailToList, emailCcList, emailBccList, mailSubjectRepalceValueList, mailTextRepalceValueList, uploadFile);
 		} catch (Exception e) {
 			Assert.fail("異常終了");
 		}
@@ -115,10 +119,11 @@ public class TestSendMail {
 
 		List<String> emailToList = 送信先TOメールアドレスリスト作成();
 		List<String> emailCcList = 送信先CCメールアドレスリスト作成();
+		List<String> emailBccList = 送信先BCCメールアドレスリスト作成();
 		List<String> mailSubjectRepalceValueList = メール件名置換リスト作成Null値あり();
 		List<String> mailTextRepalceValueList = メール本文置換リスト作成Null値あり();
 		try {
-			commonSendMail.findMailTemplateMasterAndSendMail(ServiceCategory.見積, ProcessCategory.承認依頼.toString(), 0L, emailToList, emailCcList, mailSubjectRepalceValueList, mailTextRepalceValueList, null);
+			commonSendMail.findMailTemplateMasterAndSendMail(ServiceCategory.見積, ProcessCategory.承認依頼.toString(), 0L, emailToList, emailCcList, emailBccList, mailSubjectRepalceValueList, mailTextRepalceValueList, null);
 		} catch (Exception e) {
 			Assert.fail("異常終了");
 		}
@@ -130,10 +135,11 @@ public class TestSendMail {
 
 		List<String> emailToList = 送信先TOメールアドレスリスト作成();
 		List<String> emailCcList = 送信先CCメールアドレスリスト作成();
+		List<String> emailBccList = 送信先BCCメールアドレスリスト作成();
 		List<String> mailSubjectRepalceValueList = メール件名置換リスト作成();
 		List<String> mailTextRepalceValueList = メール本文置換リスト作成();
 		try {
-			commonSendMail.findMailTemplateMasterAndSendMail(10L, emailToList, emailCcList, mailSubjectRepalceValueList, mailTextRepalceValueList, null);
+			commonSendMail.findMailTemplateMasterAndSendMail(10L, emailToList, emailCcList, emailBccList, mailSubjectRepalceValueList, mailTextRepalceValueList, null);
 		} catch (Exception e) {
 			Assert.fail("異常終了");
 		}
@@ -150,6 +156,10 @@ public class TestSendMail {
 
 	private List<String> 送信先CCメールアドレスリスト作成() {
 		return IntStream.rangeClosed(1, 2).mapToObj(i -> "send_mail_cc" + i + "@softcomm.co.jp").collect(Collectors.toList());
+	}
+
+	private List<String> 送信先BCCメールアドレスリスト作成() {
+		return IntStream.rangeClosed(1, 2).mapToObj(i -> "send_mail_bcc" + i + "@softcomm.co.jp").collect(Collectors.toList());
 	}
 
 	private List<String> メール件名置換リスト作成() {
