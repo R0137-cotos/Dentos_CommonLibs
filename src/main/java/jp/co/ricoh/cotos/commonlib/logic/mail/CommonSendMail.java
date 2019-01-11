@@ -78,9 +78,9 @@ public class CommonSendMail {
 	 *            添付ファイル
 	 * @throws MessagingException
 	 */
-	public void findMailTemplateMasterAndSendMail(ServiceCategory serviceCategory, String processCategory, Long productGrpMasterId, List<String> emailToList, List<String> emailCcList, List<String> mailSubjectRepalceValueList, List<String> mailTextRepalceValueList, String uploadFile) throws MessagingException {
+	public void findMailTemplateMasterAndSendMail(ServiceCategory serviceCategory, String processCategory, Long productGrpMasterId, List<String> emailToList, List<String> emailCcList, List<String> emailBccList, List<String> mailSubjectRepalceValueList, List<String> mailTextRepalceValueList, String uploadFile) throws MessagingException {
 		MailTemplateMaster mailTemplateMaster = mailTemplateMasterRepository.findByServiceCategoryAndProcessCategoryAndProductGrpMasterId(serviceCategory.toString(), processCategory, productGrpMasterId != null ? productGrpMasterId : 0L);
-		sendMail(emailToList, emailCcList, mailTemplateMaster, mailSubjectRepalceValueList, mailTextRepalceValueList, uploadFile);
+		sendMail(emailToList, emailCcList, emailBccList, mailTemplateMaster, mailSubjectRepalceValueList, mailTextRepalceValueList, uploadFile);
 	}
 
 	/**
@@ -120,9 +120,9 @@ public class CommonSendMail {
 	 *            添付ファイル
 	 * @throws MessagingException
 	 */
-	public void findMailTemplateMasterAndSendMail(long mailTemplateMasterId, List<String> emailToList, List<String> emailCcList, List<String> mailSubjectRepalceValueList, List<String> mailTextRepalceValueList, String uploadFile) throws MessagingException {
+	public void findMailTemplateMasterAndSendMail(long mailTemplateMasterId, List<String> emailToList, List<String> emailCcList, List<String> emailBccList, List<String> mailSubjectRepalceValueList, List<String> mailTextRepalceValueList, String uploadFile) throws MessagingException {
 		MailTemplateMaster mailTemplateMaster = mailTemplateMasterRepository.findOne(mailTemplateMasterId);
-		sendMail(emailToList, emailCcList, mailTemplateMaster, mailSubjectRepalceValueList, mailTextRepalceValueList, uploadFile);
+		sendMail(emailToList, emailCcList, emailBccList, mailTemplateMaster, mailSubjectRepalceValueList, mailTextRepalceValueList, uploadFile);
 	}
 
 	/**
@@ -143,7 +143,7 @@ public class CommonSendMail {
 	 * @throws MessagingException
 	 */
 	@Async
-	private void sendMail(List<String> emailToList, List<String> emailCcList, MailTemplateMaster mailTemplateMaster, List<String> mailSubjectRepalceValueList, List<String> mailTextRepalceValueList, String uploadFile) throws MessagingException {
+	private void sendMail(List<String> emailToList, List<String> emailCcList, List<String> emailBccList, MailTemplateMaster mailTemplateMaster, List<String> mailSubjectRepalceValueList, List<String> mailTextRepalceValueList, String uploadFile) throws MessagingException {
 		MimeMessage attachedMsg = javaMailSender.createMimeMessage();
 		attachedMsg.setHeader("Content-Transfer-Encoding", "base64");
 		MimeMessageHelper attachedHelper = new MimeMessageHelper(attachedMsg, true, StandardCharsets.UTF_8.name());
@@ -153,9 +153,11 @@ public class CommonSendMail {
 
 		String[] toEmail = (String[]) emailToList.toArray(new String[0]);
 		String[] ccEmail = (String[]) emailCcList.toArray(new String[0]);
+		String[] bccEmail = (String[]) emailBccList.toArray(new String[0]);
 		attachedHelper.setTo(toEmail);
 		attachedHelper.setFrom(appProperties.getMailProperties().getFromMailAddress());
 		attachedHelper.setCc(ccEmail);
+		attachedHelper.setBcc(bccEmail);
 		String subject = writerMailSubject.toString().replace("&#10;", "\r\n");
 		attachedHelper.setSubject(subject);
 		String text = writerMailText.toString().replace("&#10;", "\r\n");
