@@ -883,6 +883,7 @@ public class TestMaster {
 	public void MailControlMasterのテスト() throws Exception {
 
 		// テストデータ登録
+
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/mailTemplateMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/mailControlMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/mailConvertValueMaster.sql");
