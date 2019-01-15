@@ -247,6 +247,8 @@ public class TestMaster {
 
 		// テストデータ登録
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/mailTemplateMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/mailControlMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/mailConvertValueMaster.sql");
 
 		Long id = 1L;
 		MailTemplateMaster found = mailTemplateMasterRepository.findOne(id);
@@ -881,9 +883,10 @@ public class TestMaster {
 	public void MailControlMasterのテスト() throws Exception {
 
 		// テストデータ登録
+
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/mailTemplateMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/mailControlMaster.sql");
-
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/mailConvertValueMaster.sql");
 		// エンティティの取得
 		Long id = 1L;
 		MailControlMaster found = mailControlMasterRepository.findOne(id);
