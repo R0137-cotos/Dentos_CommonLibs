@@ -121,64 +121,25 @@ public class MailControlMaster extends EntityBaseMaster {
 	private NotificationTimingType notificationTimingType;
 
 	/**
-	 * 宛先トランザクションテーブル名（To）
+	 * 宛先テーブル区分（To）
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "宛先トランザクションテーブル名（To）", required = false, position = 7, allowableValues = "range[0,255]")
-	private String contactTransactionTableTo;
+	@ApiModelProperty(value = "宛先テーブル名区分（To）", required = false, position = 7, allowableValues = "range[0,255]")
+	private String contactTableTypeTo;
 
 	/**
-	 * 宛先カラム名（To）
+	 * 宛先テーブル区分（Cc）
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "宛先カラム名（To）", required = false, position = 8, allowableValues = "range[0,255]")
-	private String contactColumnNameTo;
+	@ApiModelProperty(value = "宛先テーブル区分（Cc）", required = false, position = 10, allowableValues = "range[0,255]")
+	private String contactTableTypeCc;
 
 	/**
-	 * 宛先（To）参照区分
-	 */
-	@ApiModelProperty(value = "宛先（To）参照区分", required = false, allowableValues = "直接アドレス(\"0\"), MoM社員ID(\"1\")", example = "1", position = 9)
-	private ContactReferenceType contactReferenceTypeTo;
-
-	/**
-	 * 宛先トランザクションテーブル名（Cc）
+	 * 宛先テーブル区分（Bcc）
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "宛先トランザクションテーブル名（Cc）", required = false, position = 10, allowableValues = "range[0,255]")
-	private String contactTransactionTableCc;
-
-	/**
-	 * 宛先カラム名（Cc）
-	 */
-	@Size(max = 255)
-	@ApiModelProperty(value = "宛先カラム名（Cc）", required = false, position = 11, allowableValues = "range[0,255]")
-	private String contactColumnNameCc;
-
-	/**
-	 * 宛先（Cc）参照区分
-	 */
-	@ApiModelProperty(value = "宛先（Cc）参照区分", required = false, allowableValues = "直接アドレス(\"0\"), MoM社員ID(\"1\")", example = "1", position = 12)
-	private ContactReferenceType contactReferenceTypeCc;
-
-	/**
-	 * 宛先トランザクションテーブル名（Bcc）
-	 */
-	@Size(max = 255)
-	@ApiModelProperty(value = "宛先トランザクションテーブル名（Bcc）", required = false, position = 13, allowableValues = "range[0,255]")
-	private String contactTransactionTableBcc;
-
-	/**
-	 * 宛先カラム名（Bcc）
-	 */
-	@Size(max = 255)
-	@ApiModelProperty(value = "宛先カラム名（Bcc）", required = false, position = 14, allowableValues = "range[0,255]")
-	private String contactColumnNameBcc;
-
-	/**
-	 * 宛先（Bcc）参照区分
-	 */
-	@ApiModelProperty(value = "宛先（Bcc）参照区分", required = false, allowableValues = "直接アドレス(\"0\"), MoM社員ID(\"1\")", example = "1", position = 15)
-	private ContactReferenceType contactReferenceTypeBcc;
+	@ApiModelProperty(value = "宛先テーブル区分（Bcc）", required = false, position = 13, allowableValues = "range[0,255]")
+	private String contactTableTypeBcc;
 
 	/**
 	 * メールテンプレートマスタ

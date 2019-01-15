@@ -1,17 +1,19 @@
 package jp.co.ricoh.cotos.commonlib.entity.master;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
-import jp.co.ricoh.cotos.commonlib.entity.EnumType.ProcessCategory;
 import jp.co.ricoh.cotos.commonlib.entity.EnumType.ServiceCategory;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -66,5 +68,12 @@ public class MailTemplateMaster extends EntityBaseMaster {
 	@Lob
 	@ApiModelProperty(value = "メール本文", required = true, position = 6)
 	private String mailBody;
+	
+	/**
+	 * メール制御マスタ
+	 */
+	@OneToMany(mappedBy = "mailTemplateMaster")
+	@ApiModelProperty(value = "メール制御マスタ", required = false, position = 7)
+	private List<MailControlMaster> mailControlMasterList;
 
 }
