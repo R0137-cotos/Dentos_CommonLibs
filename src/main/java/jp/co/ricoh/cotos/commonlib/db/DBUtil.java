@@ -239,4 +239,16 @@ public class DBUtil {
 		params.entrySet().stream().filter(entry -> null != entry.getValue()).forEach(entry -> query.setParameter(entry.getKey(), entry.getValue()));
 		query.executeUpdate();
 	}
+	
+	public <T>List<T> executeSelectWithSQL(String sql) {
+		return executeSelectWithSQL(sql, new HashMap<String, Object>());
+	}
+	
+	public <T>List<T> executeSelectWithSQL(String sql, Map<String, Object> params) {
+		Query query = entityManager.createNativeQuery(sql);
+		params.entrySet().stream().filter(entry -> null != entry.getValue()).forEach(entry -> query.setParameter(entry.getKey(), entry.getValue()));
+		@SuppressWarnings("unchecked")
+		List<T> results = query.getResultList();
+		return results;
+	}
 }
