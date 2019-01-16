@@ -59,8 +59,8 @@ public class MailSendHistory extends EntityBase {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mail_send_history")
-	@SequenceGenerator(name = "mail_send_history", sequenceName = "mail_send_history", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mail_send_history_seq")
+	@SequenceGenerator(name = "mail_send_history_seq", sequenceName = "mail_send_history_seq", allocationSize = 1)
 	@ApiModelProperty(value = "メール送信履歴ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
 	private long id;
 
