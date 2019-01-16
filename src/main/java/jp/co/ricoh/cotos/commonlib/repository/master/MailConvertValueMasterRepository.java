@@ -11,5 +11,5 @@ import jp.co.ricoh.cotos.commonlib.entity.master.MailConvertValueMaster;
 @Repository
 public interface MailConvertValueMasterRepository extends CrudRepository<MailConvertValueMaster, Long> {
 
-	public List<MailConvertValueMaster> findByMailControlMasterId(MailControlMaster mailControlMaster);
+	public List<MailConvertValueMaster> findByMailControlMaster(MailControlMaster mailControlMaster);
 }

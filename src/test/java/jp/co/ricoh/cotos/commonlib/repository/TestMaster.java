@@ -2,6 +2,7 @@ package jp.co.ricoh.cotos.commonlib.repository;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -919,5 +920,11 @@ public class TestMaster {
 		// Entity の リストとエンティティクラスの項目の値が null ではないことを確認
 		if (found.getMailControlMaster() == null)
 			Assert.assertTrue(false);
+
+		// メール制御マスタからデータ取得
+		MailControlMaster found2 = mailControlMasterRepository.findOne(id);
+		List<MailConvertValueMaster> result = mailConvertValueMasterRepository.findByMailControlMaster(found2);
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(result);
 	}
 }
