@@ -10,7 +10,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import jp.co.ricoh.cotos.commonlib.entity.estimation.EstimationPicSaEmp;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvEmployeeMaster;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorCheckException;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorInfo;
@@ -40,17 +39,17 @@ public class ContractPicCeEmpListener {
 	 */
 	@PrePersist
 	@Transactional
-	public void appendsEmployeeFields(EstimationPicSaEmp estimationPicSaEmp) {
-		MvEmployeeMaster employeeMaster = mvEmployeeMasterRepository.findByMomEmployeeId(estimationPicSaEmp.getMomEmployeeId());
+	public void appendsEmployeeFields(ContractPicCeEmp contractPicCeEmp) {
+		MvEmployeeMaster employeeMaster = mvEmployeeMasterRepository.findByMomEmployeeId(contractPicCeEmp.getMomEmployeeId());
 
 		if (employeeMaster == null) {
 			String[] regexList = { "契約担当CE社員" };
 			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "MasterDoesNotExistEmployeeMaster", regexList));
 		}
 
-		BeanUtils.copyProperties(employeeMaster, estimationPicSaEmp);
-		estimationPicSaEmp.setEmployeeName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
-		estimationPicSaEmp.setAddress(convertJoinedAddress(employeeMaster));
+		BeanUtils.copyProperties(employeeMaster, contractPicCeEmp);
+		contractPicCeEmp.setEmployeeName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
+		contractPicCeEmp.setAddress(convertJoinedAddress(employeeMaster));
 	}
 
 	private String convertJoinedAddress(MvEmployeeMaster master) {
