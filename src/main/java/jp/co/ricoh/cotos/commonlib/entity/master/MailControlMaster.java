@@ -1,6 +1,7 @@
 package jp.co.ricoh.cotos.commonlib.entity.master;
 
 import java.util.Arrays;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
@@ -131,14 +133,14 @@ public class MailControlMaster extends EntityBaseMaster {
 	 * 宛先テーブル区分（Cc）
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "宛先テーブル区分（Cc）", required = false, position = 10, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "宛先テーブル区分（Cc）", required = false, position = 8, allowableValues = "range[0,255]")
 	private String contactTableTypeCc;
 
 	/**
 	 * 宛先テーブル区分（Bcc）
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "宛先テーブル区分（Bcc）", required = false, position = 13, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "宛先テーブル区分（Bcc）", required = false, position = 9, allowableValues = "range[0,255]")
 	private String contactTableTypeBcc;
 
 	/**
@@ -147,6 +149,13 @@ public class MailControlMaster extends EntityBaseMaster {
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "mail_template_master_id", referencedColumnName = "id")
 	@JsonIgnore
-	@ApiModelProperty(value = "メールテンプレートマスタ", required = true, position = 16)
+	@ApiModelProperty(value = "メールテンプレートマスタ", required = true, position = 10)
 	private MailTemplateMaster mailTemplateMaster;
+
+	/**
+	 * メール変換値マスタ
+	 */
+	@OneToMany(mappedBy = "mailControlMaster")
+	@ApiModelProperty(value = "メール変換値マスタ", required = false, position = 11)
+	private List<MailConvertValueMaster> MailConvertValueMasterList;
 }
