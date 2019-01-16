@@ -1,7 +1,9 @@
 package jp.co.ricoh.cotos.commonlib.repository;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -20,6 +22,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import jp.co.ricoh.cotos.commonlib.DBConfig;
 import jp.co.ricoh.cotos.commonlib.TestTools;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
+import jp.co.ricoh.cotos.commonlib.entity.contract.Contract;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractApprovalRoute;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractApprovalRouteNode;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractAddedEditorEmpRepository;
@@ -209,6 +212,18 @@ public class TestContract {
 
 		ContractApprovalRouteNode found = contractApprovalRouteNodeRepository.findByContractApprovalRouteIdAndApprovalOrderAndApproverEmpId(401L, 1, "00808347");
 		Assert.assertNotNull(found);
+	}
+
+	@Test
+	public void 契約条件取得確認() throws Exception {
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/attachedFile.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/contract.sql");
+
+		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+		Date date = format.parse("2019/12/01 01:23:45");
+		List<Contract> list = contractRepository.findByContractTypeAndChangePreferredDate(date);
+		Assert.assertTrue(list.size() != 0);
 	}
 
 	@Transactional
