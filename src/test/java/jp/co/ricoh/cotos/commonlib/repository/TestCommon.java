@@ -1,5 +1,7 @@
 package jp.co.ricoh.cotos.commonlib.repository;
 
+import java.util.List;
+
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Test;
@@ -14,8 +16,10 @@ import jp.co.ricoh.cotos.commonlib.DBConfig;
 import jp.co.ricoh.cotos.commonlib.TestTools;
 import jp.co.ricoh.cotos.commonlib.entity.common.AttachedFile;
 import jp.co.ricoh.cotos.commonlib.entity.common.MailSendHistory;
+import jp.co.ricoh.cotos.commonlib.entity.common.VMailAddressList;
 import jp.co.ricoh.cotos.commonlib.repository.common.AttachedFileRepository;
 import jp.co.ricoh.cotos.commonlib.repository.common.MailSendHistoryRepository;
+import jp.co.ricoh.cotos.commonlib.repository.common.VMailAddressListRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -28,6 +32,12 @@ public class TestCommon {
 	/** メール送信履歴 */
 	@Autowired
 	MailSendHistoryRepository mailSendHistoryRepository;
+	
+	/**
+	 * メールアドレス一覧
+	 */
+	@Autowired
+	VMailAddressListRepository vMailAddressListRepository;
 
 	@Autowired
 	TestTools testTool;
@@ -43,6 +53,7 @@ public class TestCommon {
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/mailControlMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/mailConvertValueMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/mailSendHistory.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/estimation/estimation_all.sql");
 	}
 
 	@AfterClass
@@ -75,5 +86,20 @@ public class TestCommon {
 
 		// Entity の各項目の値が null ではないことを確認
 		testTool.assertColumnsNotNull(found);
+	}
+	
+	@Test
+	public void VMailAddressListRepositoryのテスト() throws Exception {
+
+		VMailAddressList found = vMailAddressListRepository.findOne(1L);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+		
+		List<String> foundList = vMailAddressListRepository.findByDomainAndTableAndTranId("1","1",4);
+		
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(foundList);
+
 	}
 }
