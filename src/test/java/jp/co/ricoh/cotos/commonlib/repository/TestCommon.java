@@ -16,10 +16,13 @@ import jp.co.ricoh.cotos.commonlib.DBConfig;
 import jp.co.ricoh.cotos.commonlib.TestTools;
 import jp.co.ricoh.cotos.commonlib.entity.common.AttachedFile;
 import jp.co.ricoh.cotos.commonlib.entity.common.MailSendHistory;
+import jp.co.ricoh.cotos.commonlib.entity.common.MailSendHistory.MailSendType;
 import jp.co.ricoh.cotos.commonlib.entity.common.VMailAddressList;
+import jp.co.ricoh.cotos.commonlib.entity.master.MailControlMaster;
 import jp.co.ricoh.cotos.commonlib.repository.common.AttachedFileRepository;
 import jp.co.ricoh.cotos.commonlib.repository.common.MailSendHistoryRepository;
 import jp.co.ricoh.cotos.commonlib.repository.common.VMailAddressListRepository;
+import jp.co.ricoh.cotos.commonlib.repository.master.MailControlMasterRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -32,12 +35,18 @@ public class TestCommon {
 	/** メール送信履歴 */
 	@Autowired
 	MailSendHistoryRepository mailSendHistoryRepository;
-	
+
 	/**
 	 * メールアドレス一覧
 	 */
 	@Autowired
 	VMailAddressListRepository vMailAddressListRepository;
+
+	/**
+	 * メール制御マスタ
+	 */
+	@Autowired
+	MailControlMasterRepository mailControlMasterRepository;
 
 	@Autowired
 	TestTools testTool;
@@ -86,8 +95,12 @@ public class TestCommon {
 
 		// Entity の各項目の値が null ではないことを確認
 		testTool.assertColumnsNotNull(found);
+		MailControlMaster mailControlMaster = mailControlMasterRepository.findOne(1L);
+		MailSendHistory found2 = mailSendHistoryRepository.findByTargetDataIdAndMailControlMasterAndMailSendType(1L, mailControlMaster, MailSendType.完了);
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found2);
 	}
-	
+
 	@Test
 	public void VMailAddressListRepositoryのテスト() throws Exception {
 
@@ -95,9 +108,9 @@ public class TestCommon {
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
-		
-		List<String> foundList = vMailAddressListRepository.findByDomainAndTableAndTranId("1","1",4);
-		
+
+		List<String> foundList = vMailAddressListRepository.findByDomainAndTableAndTranId("1", "1", 4);
+
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(foundList);
 
