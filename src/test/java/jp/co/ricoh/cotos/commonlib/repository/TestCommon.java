@@ -95,10 +95,15 @@ public class TestCommon {
 
 		// Entity の各項目の値が null ではないことを確認
 		testTool.assertColumnsNotNull(found);
+		
 		MailControlMaster mailControlMaster = mailControlMasterRepository.findOne(1L);
 		MailSendHistory found2 = mailSendHistoryRepository.findByTargetDataIdAndMailControlMasterAndMailSendType(1L, mailControlMaster, MailSendType.完了);
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found2);
+		
+		List<MailSendHistory> found3 = mailSendHistoryRepository.findByMailControlMasterAndMailSendType(mailControlMaster, MailSendType.完了);
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found3);
 	}
 
 	@Test
