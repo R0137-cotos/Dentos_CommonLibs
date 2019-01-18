@@ -1,5 +1,7 @@
 package jp.co.ricoh.cotos.commonlib.repository.common;
 
+import java.util.List;
+
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,4 +13,6 @@ import jp.co.ricoh.cotos.commonlib.entity.master.MailControlMaster;
 public interface MailSendHistoryRepository extends CrudRepository<MailSendHistory, Long> {
 
 	public MailSendHistory findByTargetDataIdAndMailControlMasterAndMailSendType(long targetDataId, MailControlMaster mailControlMaster, MailSendType mailSendType);
+	
+	public List<MailSendHistory> findByMailControlMasterAndMailSendType(MailControlMaster mailControlMaster, MailSendType mailSendType);
 }
