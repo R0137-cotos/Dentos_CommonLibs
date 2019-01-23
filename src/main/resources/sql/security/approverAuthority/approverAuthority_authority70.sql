@@ -6,7 +6,7 @@ WHERE
  HANSH_CD IN (SELECT
                 REF_HANSH.REF_HANSH_CD
               FROM
-                JMOW001_JPI_ST.REF_HANSH_SELC_TBL_MCL@MOMLINKORG REF_HANSH
+                MV_REF_HANSH_SELC_TBL_MCL
               WHERE
                 REF_HANSH.HANSH_CD IN (SELECT
                                          REF_HANSH_SELC.HANSH_CD
