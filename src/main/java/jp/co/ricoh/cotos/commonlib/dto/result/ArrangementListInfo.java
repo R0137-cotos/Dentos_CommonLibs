@@ -11,6 +11,7 @@ import javax.persistence.TemporalType;
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangementWork;
 import jp.co.ricoh.cotos.commonlib.entity.contract.Contract.ContractType;
+import jp.co.ricoh.cotos.commonlib.entity.contract.Contract.LifecycleStatus;
 import lombok.Data;
 
 /**
@@ -62,9 +63,9 @@ public class ArrangementListInfo {
 	 * 契約状態
 	 */
 	@ApiModelProperty(value = "契約状態<br />" //
-			+ "状態遷移上のワークフロー状態を表す。", //
+			+ "状態遷移上のライフサイクル状態を表す。", //
 			required = false, position = 7) //
-	private jp.co.ricoh.cotos.commonlib.entity.contract.Contract.WorkflowStatus contractCondition;
+	private LifecycleStatus lifecycleStatus;
 
 	/**
 	 * 契約種別

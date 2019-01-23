@@ -155,9 +155,9 @@ public class ArrangementSearchParameter {
 	 */
 	@ApiParam(value = "契約状態", required = false)
 	@ApiModelProperty(value = "契約状態<br />" //
-			+ "状態遷移上のワークフローステータスを表す。", //
+			+ "状態遷移上のライフサイクル状態を表す。", //
 			required = false) //
-	private String contractCondition;
+	private String lifecycleStatus;
 
 	/**
 	 * サービス開始日(前)
@@ -306,9 +306,9 @@ public class ArrangementSearchParameter {
 	 */
 	@ApiParam(value = "契約ステータス", required = false)
 	@ApiModelProperty(value = "契約ステータス<br />" //
-			+ "状態遷移上のライフサイクル状態を表す。", //
+			+ "状態遷移上のワークフローステータスを表す。", //
 			required = false) //
-	private String contractStatus;
+	private String workflowStatus;
 
 	/**
 	 * 契約種別
