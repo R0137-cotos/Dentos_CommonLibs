@@ -56,17 +56,17 @@ public class ContractListInfo {
 	 * 契約ステータス
 	 */
 	@ApiModelProperty(value = "契約ステータス<br />" //
-			+ "状態遷移上のライフサイクル状態を表す。", //
+			+ "状態遷移上のワークフローステータスを表す。", //
 			required = false, position = 6) //
-	private LifecycleStatus contractStatus;
+	private WorkflowStatus workflowStatus;
 
 	/**
 	 * 契約状態
 	 */
 	@ApiModelProperty(value = "契約状態<br />" //
-			+ "状態遷移上のワークフロー状態を表す。", //
+			+ "状態遷移上のライフサイクル状態を表す。", //
 			required = false, position = 7) //
-	private WorkflowStatus contractCondition;
+	private LifecycleStatus lifecycleStatus;
 
 	/**
 	 * 見積ID
