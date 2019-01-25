@@ -9,6 +9,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import io.swagger.annotations.ApiModelProperty;
+import jp.co.ricoh.cotos.commonlib.entity.arrangement.Arrangement;
 import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangementWork;
 import jp.co.ricoh.cotos.commonlib.entity.contract.Contract.ContractType;
 import jp.co.ricoh.cotos.commonlib.entity.contract.Contract.LifecycleStatus;
@@ -158,6 +159,14 @@ public class ArrangementListInfo {
 	 */
 	@ApiModelProperty(value = "保留フラグ", required = true, position = 21)
 	private int holdingFlg;
+
+	/**
+	 * 手配ステータス
+	 */
+	@ApiModelProperty(value = "手配ステータス<br />" //
+			+ "状態遷移上のワークフロー状態を表す。", //
+			required = false, position = 22) //
+	private Arrangement.WorkflowStatus arrangementStatus;
 
 	@PrePersist
 	public void prePersist() {
