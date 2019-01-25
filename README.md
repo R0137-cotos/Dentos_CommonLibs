@@ -139,3 +139,4 @@
 |181|契約検索用Parameter、Result修正|
 |182|手配検索用Parameter、Result修正|
 |183|承認時のエラーメッセージを追加|
+|184|見積検索用Result修正|
