@@ -53,7 +53,7 @@ public class DBUtil {
 	 * @return
 	 */
 	public <T> List<T> loadFromSQLFile(String sqlFilePathOnClasspath, Class<T> responseClass, Map<String, Object> params) {
-		Query query = createQuery(sqlFilePathOnClasspath, responseClass, params);
+		Query query = createQuery(sqlFilePathOnClasspath, responseClass, params, false);
 		@SuppressWarnings("unchecked")
 		List<T> results = query.getResultList();
 		return results;
@@ -79,7 +79,7 @@ public class DBUtil {
 	 * @return
 	 */
 	public <T> T loadSingleFromSQLFile(String sqlFilePathOnClasspath, Class<T> responseClass, Map<String, Object> params) {
-		Query query = createQuery(sqlFilePathOnClasspath, responseClass, params);
+		Query query = createQuery(sqlFilePathOnClasspath, responseClass, params, false);
 		try {
 			@SuppressWarnings("unchecked")
 			T results = (T) query.getSingleResult();
@@ -89,7 +89,7 @@ public class DBUtil {
 		}
 	}
 
-	private <T> Query createQuery(String sqlFilePathOnClasspath, Class<T> responseClass, Map<String, Object> params) {
+	private <T> Query createQuery(String sqlFilePathOnClasspath, Class<T> responseClass, Map<String, Object> params, boolean isCount) {
 		Map<String, Object> paramForMustacheIndex = params.entrySet().stream().map(e -> {
 			if (e.getValue() instanceof Collection<?>) {
 				return new MappedEntry<String, Object>(e.getKey(), new DecoratedCollection<>((Collection<?>) e.getValue()));
@@ -97,6 +97,10 @@ public class DBUtil {
 			return e;
 		}).collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
 		String sql = loadSQLFromClasspath(sqlFilePathOnClasspath, paramForMustacheIndex);
+		// CountするSQLを生成
+		if(isCount) {
+			sql = "select count(*) from (" + sql + ")";
+		}
 		Query query = null != responseClass ? entityManager.createNativeQuery(sql, responseClass) : entityManager.createNativeQuery(sql);
 		params.entrySet().stream().filter(e -> null != e.getValue()).map(e -> {
 			if ((e.getValue() instanceof Collection<?>)) {
@@ -221,7 +225,7 @@ public class DBUtil {
 	 * @return
 	 */
 	public long loadCountFromSQLFile(String sqlFilePathOnClasspath, Map<String, Object> params) {
-		Query query = createQuery(sqlFilePathOnClasspath, null, params);
+		Query query = createQuery(sqlFilePathOnClasspath, null, params, true);
 		return ((Number) query.getSingleResult()).longValue();
 	}
 

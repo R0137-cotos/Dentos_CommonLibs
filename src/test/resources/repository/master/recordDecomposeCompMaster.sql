@@ -1,0 +1,2 @@
+INSERT INTO record_decompose_comp_master (id,created_at,created_user_id,updated_at,updated_user_id,version,item_master_id,target_contract_type,disengagement_flg,record_decompose_master_id,seq_number) VALUES (1,'2018/09/19 12:09:10','COTOS','2018/09/19 12:09:10','COTOS',1,1,'1',0,1,1);
+INSERT INTO record_decompose_comp_master (id,created_at,created_user_id,updated_at,updated_user_id,version,item_master_id,target_contract_type,disengagement_flg,record_decompose_master_id,seq_number) VALUES (2,'2018/09/19 12:09:10','COTOS','2018/09/19 12:09:10','COTOS',1,2,'1',1,1,2);

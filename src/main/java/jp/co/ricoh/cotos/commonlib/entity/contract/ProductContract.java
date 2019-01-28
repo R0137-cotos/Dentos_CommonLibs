@@ -1,0 +1,88 @@
+package jp.co.ricoh.cotos.commonlib.entity.contract;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import io.swagger.annotations.ApiModelProperty;
+import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+/**
+ * 商品（契約用）を表すEntity
+ */
+@Entity
+@EqualsAndHashCode(callSuper = true)
+@EntityListeners(ProductContractListener.class)
+@Data
+@Table(name = "product_contract")
+public class ProductContract extends EntityBase {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_contract_seq")
+	@SequenceGenerator(name = "product_contract_seq", sequenceName = "product_contract_seq", allocationSize = 1)
+	@ApiModelProperty(value = "ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	private long id;
+
+	/**
+	 * 商品マスタID
+	 */
+	@Column(nullable = false)
+	@ApiModelProperty(value = "商品マスタID", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
+	private long productMasterId;
+
+	/**
+	 * 商品名
+	 */
+	@Column(nullable = false)
+	@NotEmpty
+	@Size(max = 255)
+	@ApiModelProperty(value = "商品名", required = true, position = 3, allowableValues = "range[0,255]")
+	private String productContractName;
+
+	/**
+	 * 代表品種マスタID
+	 */
+	@ApiModelProperty(value = "代表品種マスタID", required = false, position = 4, allowableValues = "range[0,9999999999999999999]")
+	private Long repItemMasterId;
+
+	/**
+	 * サービス識別番号
+	 */
+	@Column(nullable = false)
+	@NotEmpty
+	@Size(max = 255)
+	@ApiModelProperty(value = "サービス識別番号", required = true, position = 5, allowableValues = "range[0,255]")
+	private String serviceIdentNumber;
+
+	/**
+	 * 契約
+	 */
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "contract_id", referencedColumnName = "id")
+	@JsonIgnore
+	@ApiModelProperty(value = "契約", required = true, position = 6)
+	private Contract contract;
+
+	/**
+	 * 拡張項目
+	 */
+	@ApiModelProperty(value = "拡張項目", required = false, position = 7)
+	@Lob
+	private String extendsParameter;
+
+}

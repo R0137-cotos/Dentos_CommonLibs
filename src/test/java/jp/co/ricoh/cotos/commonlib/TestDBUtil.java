@@ -29,7 +29,7 @@ public class TestDBUtil {
 	public void DBUtilでSQLを発行できる() {
 		IntStream.range(0, 10).forEach((i) -> {
 			long beforeCount = dbUtil.loadFromSQLFile("sql/testLoadAll.sql", TestData.class).size();
-			long beforeCountWithCountSql = dbUtil.loadCountFromSQLFile("sql/testCount.sql", Collections.emptyMap());
+			long beforeCountWithCountSql = dbUtil.loadCountFromSQLFile("sql/testLoadAll.sql", Collections.emptyMap());
 			Assert.assertEquals("listで取ったものと、Countで取ったものと件数が一致する。", beforeCount, beforeCountWithCountSql);
 
 			Map<String, Object> testParam = new HashMap<>();
