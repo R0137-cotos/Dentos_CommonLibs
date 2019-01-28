@@ -12,9 +12,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import jp.co.ricoh.cotos.commonlib.util.DBUtil;
+import jp.co.ricoh.cotos.commonlib.db.DBUtil;
 import lombok.val;
 
 @RunWith(SpringRunner.class)
@@ -24,9 +25,26 @@ public class TestDBUtil {
 	@Autowired
 	DBUtil dbUtil;
 
+	static ConfigurableApplicationContext context;
+
+	@Autowired
+	public void injectContext(ConfigurableApplicationContext injectContext) {
+		context = injectContext;
+	}
+
+	private static boolean isH2() {
+		return "org.h2.Driver".equals(context.getEnvironment().getProperty("spring.datasource.driverClassName"));
+	}
+	
 	@Test
 	@Transactional
 	public void DBUtilでSQLを発行できる() {
+		
+		// h2以外ならスルー
+		if (!isH2()) {
+			return;
+		}
+		
 		IntStream.range(0, 10).forEach((i) -> {
 			long beforeCount = dbUtil.loadFromSQLFile("sql/testLoadAll.sql", TestData.class).size();
 			long beforeCountWithCountSql = dbUtil.loadCountFromSQLFile("sql/testLoadAll.sql", Collections.emptyMap());
@@ -50,6 +68,11 @@ public class TestDBUtil {
 	@Transactional
 	public void Like句のエスケープが正常に実施されることを確認() {
 
+		// h2以外ならスルー
+		if (!isH2()) {
+			return;
+		}
+		
 		Map<String, Object> testDataUnderscore = new HashMap<>();
 		testDataUnderscore.put("moji", "半角アンダースコア");
 		testDataUnderscore.put("likeSearchString", "ai_eo");
