@@ -1,0 +1,2 @@
+INSERT INTO business_calendar (calendar_date,business_holiday,business_day) VALUES ('2018/09/20',0,'2018/09/20');
+INSERT INTO business_calendar (calendar_date,business_holiday,business_day) VALUES ('2018/09/21',0,'2018/09/20');

@@ -1,0 +1,2 @@
+INSERT INTO arrangement_checklist_comp_master (id,created_at,created_user_id,updated_at,updated_user_id,version,arrangement_work_type_master_id,gp_check_matter_master_id,display_order) VALUES (1,'2018/09/19 12:09:10','COTOS','2018/09/19 12:09:10','COTOS',1,1,1,1);
+INSERT INTO arrangement_checklist_comp_master (id,created_at,created_user_id,updated_at,updated_user_id,version,arrangement_work_type_master_id,gp_check_matter_master_id,display_order) VALUES (2,'2018/09/19 12:09:10','COTOS','2018/09/19 12:09:10','COTOS',1,1,2,2);

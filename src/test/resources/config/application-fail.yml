@@ -1,0 +1,17 @@
+spring:
+  mail:
+    default-encoding: UTF-8
+    host: shipyard.cotos.ricoh.co.jpa
+    port: 1025
+    username: koike.shinichi
+    password: koike.shinichia
+cotos:
+  file:
+    uploadFileDir: ./build/testTemp
+    fileMaxSize: 122
+    fileNmMaxSize: 14
+    extension:
+       - xls
+       - csv
+       - txt
+       - docx
