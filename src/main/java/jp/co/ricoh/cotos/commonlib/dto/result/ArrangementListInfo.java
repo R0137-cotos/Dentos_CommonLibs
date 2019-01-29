@@ -9,8 +9,10 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import io.swagger.annotations.ApiModelProperty;
+import jp.co.ricoh.cotos.commonlib.entity.arrangement.Arrangement;
 import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangementWork;
 import jp.co.ricoh.cotos.commonlib.entity.contract.Contract.ContractType;
+import jp.co.ricoh.cotos.commonlib.entity.contract.Contract.LifecycleStatus;
 import lombok.Data;
 
 /**
@@ -25,7 +27,7 @@ public class ArrangementListInfo {
 	@Id
 	@ApiModelProperty(value = "連番", required = true, position = 1)
 	private long seqNo;
-	
+
 	/**
 	 * 契約ID
 	 */
@@ -62,9 +64,9 @@ public class ArrangementListInfo {
 	 * 契約状態
 	 */
 	@ApiModelProperty(value = "契約状態<br />" //
-			+ "状態遷移上のワークフロー状態を表す。", //
+			+ "状態遷移上のライフサイクル状態を表す。", //
 			required = false, position = 7) //
-	private jp.co.ricoh.cotos.commonlib.entity.contract.Contract.WorkflowStatus contractCondition;
+	private LifecycleStatus lifecycleStatus;
 
 	/**
 	 * 契約種別
@@ -105,7 +107,7 @@ public class ArrangementListInfo {
 	@ApiModelProperty(value = "業務受理日時", required = false, position = 13)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date businessAcceptanceDateTime;
-	
+
 	/**
 	 * 手配業務担当者
 	 */
@@ -151,6 +153,20 @@ public class ArrangementListInfo {
 	@ApiModelProperty(value = "サービス終了日", required = false, position = 20)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date serviceTermEnd;
+
+	/**
+	 * 保留フラグ
+	 */
+	@ApiModelProperty(value = "保留フラグ", required = true, position = 21)
+	private int holdingFlg;
+
+	/**
+	 * 手配ステータス
+	 */
+	@ApiModelProperty(value = "手配ステータス<br />" //
+			+ "状態遷移上のワークフロー状態を表す。", //
+			required = false, position = 22) //
+	private Arrangement.WorkflowStatus arrangementStatus;
 
 	@PrePersist
 	public void prePersist() {

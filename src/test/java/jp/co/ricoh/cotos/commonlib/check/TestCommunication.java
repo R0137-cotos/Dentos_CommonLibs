@@ -262,8 +262,9 @@ public class TestCommunication {
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setContactFromEmpId(STR_256);
 		testTarget.setTitle(STR_256);
+		testTarget.setContactFromEmpName(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(result.getErrorInfoList().size() == 3);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 
 	}
@@ -296,8 +297,9 @@ public class TestCommunication {
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setContactToEmpId(STR_256);
 		testTarget.setContactToEmail(STR_256);
+		testTarget.setContactToEmpName(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(result.getErrorInfoList().size() == 3);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 
 	}

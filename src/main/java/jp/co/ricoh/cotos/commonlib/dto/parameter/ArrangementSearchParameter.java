@@ -81,7 +81,7 @@ public class ArrangementSearchParameter {
 			+ "日付フォーマット:yyyy/MM/dd", //
 			required = false) //
 	private Date desiredDeliveryDateTo;
-	
+
 	/**
 	 * 業務受理日時
 	 */
@@ -155,9 +155,9 @@ public class ArrangementSearchParameter {
 	 */
 	@ApiParam(value = "契約状態", required = false)
 	@ApiModelProperty(value = "契約状態<br />" //
-			+ "状態遷移上のワークフローステータスを表す。", //
+			+ "状態遷移上のライフサイクル状態を表す。", //
 			required = false) //
-	private String contractCondition;
+	private String lifecycleStatus;
 
 	/**
 	 * サービス開始日(前)
@@ -306,9 +306,9 @@ public class ArrangementSearchParameter {
 	 */
 	@ApiParam(value = "契約ステータス", required = false)
 	@ApiModelProperty(value = "契約ステータス<br />" //
-			+ "状態遷移上のライフサイクル状態を表す。", //
+			+ "状態遷移上のワークフローステータスを表す。", //
 			required = false) //
-	private String contractStatus;
+	private String workflowStatus;
 
 	/**
 	 * 契約種別
@@ -325,6 +325,13 @@ public class ArrangementSearchParameter {
 	@ApiParam(value = "商品マスタID", required = false)
 	@ApiModelProperty(value = "商品マスタID", required = false)
 	private Long productId;
+
+	/**
+	 * 保留フラグ
+	 */
+	@ApiParam(value = "保留フラグ", required = true)
+	@ApiModelProperty(value = "保留フラグ", required = true)
+	private int holdingFlg;
 
 	// ===========================
 
@@ -350,7 +357,8 @@ public class ArrangementSearchParameter {
 			+ "12:担当営業<br />"//
 			+ "13:担当支社<br />" //
 			+ "14:サービス開始日<br />" //
-			+ "15:サービス終了日<br />", //
+			+ "15:サービス終了日<br />" //
+			+ "16:保留フラグ<br />", //
 			required = true, allowableValues = "range[0,14]") //
 	private int sortColumn;
 

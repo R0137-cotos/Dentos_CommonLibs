@@ -1,8 +1,8 @@
 spring:
   datasource:
     url: jdbc:oracle:thin:@dev-db.cotos.ricoh.co.jp:1521/pdb1
-    username: cotos_ci_commonlibs
-    password: cotos_ci_commonlibs
+    username: COTOS_CI_CMNLIB_2ND_ADD
+    password: COTOS_CI_CMNLIB_2ND_ADD
     driverClassName: oracle.jdbc.OracleDriver
   jpa:
     database-platform: org.hibernate.dialect.Oracle12cDialect
@@ -13,4 +13,4 @@ spring:
         show_sql: true
         use_sql_comments: false
         format_sql: false
-        default_schema: cotos_ci_commonlibs
+        default_schema: COTOS_CI_CMNLIB_2ND_ADD

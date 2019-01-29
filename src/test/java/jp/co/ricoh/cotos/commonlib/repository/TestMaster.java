@@ -2,6 +2,7 @@ package jp.co.ricoh.cotos.commonlib.repository;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -32,6 +33,8 @@ import jp.co.ricoh.cotos.commonlib.entity.master.EstimationChecklistCompMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.GpCheckMatterMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.ItemMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.JwtSysAuthMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.MailControlMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.MailConvertValueMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.MailTemplateMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvEmployeeMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmci101Master;
@@ -65,6 +68,8 @@ import jp.co.ricoh.cotos.commonlib.repository.master.EstimationChecklistCompMast
 import jp.co.ricoh.cotos.commonlib.repository.master.GpCheckMatterMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ItemMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.JwtSysAuthMasterRepository;
+import jp.co.ricoh.cotos.commonlib.repository.master.MailControlMasterRepository;
+import jp.co.ricoh.cotos.commonlib.repository.master.MailConvertValueMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MailTemplateMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvEmployeeMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTJmci101MasterRepository;
@@ -158,6 +163,10 @@ public class TestMaster {
 	private VPicAffiliateMasterRepository vPicAffiliateMasterRepository;
 	@Autowired
 	private VPicAffiliateMasterFullRepository vPicAffiliateMasterFullRepository;
+	@Autowired
+	private MailControlMasterRepository mailControlMasterRepository;
+	@Autowired
+	private MailConvertValueMasterRepository mailConvertValueMasterRepository;
 
 	@Autowired
 	TestTools testTool = null;
@@ -239,6 +248,8 @@ public class TestMaster {
 
 		// テストデータ登録
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/mailTemplateMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/mailControlMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/mailConvertValueMaster.sql");
 
 		Long id = 1L;
 		MailTemplateMaster found = mailTemplateMasterRepository.findOne(id);
@@ -869,4 +880,51 @@ public class TestMaster {
 		Assert.assertNotNull(found);
 	}
 
+	@Test
+	public void MailControlMasterのテスト() throws Exception {
+
+		// テストデータ登録
+
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/mailTemplateMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/mailControlMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/mailConvertValueMaster.sql");
+		// エンティティの取得
+		Long id = 1L;
+		MailControlMaster found = mailControlMasterRepository.findOne(id);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		testTool.assertColumnsNotNull(found);
+	}
+
+	@Test
+	public void MailConvertValueMasterのテスト() throws Exception {
+
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/mailTemplateMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/mailControlMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/mailConvertValueMaster.sql");
+
+		// エンティティの取得
+		Long id = 1L;
+		MailConvertValueMaster found = mailConvertValueMasterRepository.findOne(id);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		testTool.assertColumnsNotNull(found);
+
+		// Entity の リストとエンティティクラスの項目の値が null ではないことを確認
+		if (found.getMailControlMaster() == null)
+			Assert.assertTrue(false);
+
+		// メール制御マスタからデータ取得
+		MailControlMaster found2 = mailControlMasterRepository.findOne(id);
+		List<MailConvertValueMaster> result = mailConvertValueMasterRepository.findByMailControlMaster(found2);
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(result);
+	}
 }

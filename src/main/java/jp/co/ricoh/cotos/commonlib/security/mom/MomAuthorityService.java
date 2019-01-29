@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +24,7 @@ import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.AccessType;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.ActionDiv;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.AuthDiv;
 import jp.co.ricoh.cotos.commonlib.entity.master.VKjbMaster;
+import jp.co.ricoh.cotos.commonlib.logic.message.MessageUtil;
 import jp.co.ricoh.cotos.commonlib.util.DatasourceProperties;
 import jp.co.ricoh.cotos.commonlib.util.RemoteMomProperties;
 import jp.co.ricoh.jmo.cache.AuthoritySearch;
@@ -34,6 +37,12 @@ import jp.co.ricoh.jmo.service.KengenServiceServiceLocator;
 
 @Component
 public class MomAuthorityService {
+
+	/** ロガー */
+	private static final Log log = LogFactory.getLog(MomAuthorityService.class);
+
+	@Autowired
+	MessageUtil messageUtil;
 
 	@Autowired
 	RemoteMomProperties remoteMomProperties;
@@ -103,7 +112,11 @@ public class MomAuthorityService {
 	 */
 	public boolean hasAuthority(AuthorityJudgeParameter authParam, ActionDiv actionDiv, AuthDiv authDiv, AccessType accessType) throws Exception {
 
+		// 権限レベルを取得
 		AuthLevel authLevel = this.searchMomAuthority(authParam.getActorMvEmployeeMaster().getSingleUserId(), actionDiv, authDiv);
+
+		// 認可判定処理開始
+		log.info(messageUtil.createMessageInfo("AuthorizeProcessJudgeStartInfo", Arrays.asList(accessType.name(), authLevel.name()).toArray(new String[0])).getMsg());
 
 		// 参照・編集処理、承認処理により認可処理を分岐
 		if (AccessType.参照.equals(accessType) || AccessType.編集.equals(accessType)) {

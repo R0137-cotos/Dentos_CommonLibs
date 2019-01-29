@@ -1,7 +1,9 @@
 package jp.co.ricoh.cotos.commonlib.repository;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -20,6 +22,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import jp.co.ricoh.cotos.commonlib.DBConfig;
 import jp.co.ricoh.cotos.commonlib.TestTools;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
+import jp.co.ricoh.cotos.commonlib.entity.contract.Contract;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractApprovalRoute;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractApprovalRouteNode;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractAddedEditorEmpRepository;
@@ -30,6 +33,8 @@ import jp.co.ricoh.cotos.commonlib.repository.contract.ContractAttachedFileRepos
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractCheckResultRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractDetailRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractOperationLogRepository;
+import jp.co.ricoh.cotos.commonlib.repository.contract.ContractPicCeEmpRepository;
+import jp.co.ricoh.cotos.commonlib.repository.contract.ContractPicMntSsOrgRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractPicSaEmpRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.CustomerContractRepository;
@@ -82,6 +87,12 @@ public class TestContract {
 
 	@Autowired
 	ProductContractRepository productContractRepository;
+
+	@Autowired
+	ContractPicCeEmpRepository contractPicCeEmpRepository;
+
+	@Autowired
+	ContractPicMntSsOrgRepository contractPicMntSsOrgRepository;
 
 	@Autowired
 	TestTools testTools;
@@ -174,6 +185,16 @@ public class TestContract {
 	}
 
 	@Test
+	public void 全てのカラムがNullではないことを確認_契約担当CE社員() {
+		全てのカラムがNullではないことを確認_共通(contractPicCeEmpRepository, 401L, 501L);
+	}
+
+	@Test
+	public void 全てのカラムがNullではないことを確認_契約保守担当SS組織() {
+		全てのカラムがNullではないことを確認_共通(contractPicMntSsOrgRepository, 401L, 501L);
+	}
+
+	@Test
 	public void 契約承認ルート条件取得確認() {
 		// テストデータ登録
 		context.getBean(DBConfig.class).initTargetTestData("repository/attachedFile.sql");
@@ -191,6 +212,18 @@ public class TestContract {
 
 		ContractApprovalRouteNode found = contractApprovalRouteNodeRepository.findByContractApprovalRouteIdAndApprovalOrderAndApproverEmpId(401L, 1, "00808347");
 		Assert.assertNotNull(found);
+	}
+
+	@Test
+	public void 契約条件取得確認() throws Exception {
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/attachedFile.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/contract.sql");
+
+		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+		Date date = format.parse("2019/12/01 01:23:45");
+		List<Contract> list = contractRepository.findByContractTypeAndChangePreferredDate(date);
+		Assert.assertTrue(list.size() != 0);
 	}
 
 	@Transactional

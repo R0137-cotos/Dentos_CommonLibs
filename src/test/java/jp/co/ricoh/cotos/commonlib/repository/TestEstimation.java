@@ -1,5 +1,7 @@
 package jp.co.ricoh.cotos.commonlib.repository;
 
+import java.util.List;
+
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Test;
@@ -12,6 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import jp.co.ricoh.cotos.commonlib.DBConfig;
 import jp.co.ricoh.cotos.commonlib.TestTools;
+import jp.co.ricoh.cotos.commonlib.db.DBUtil;
 import jp.co.ricoh.cotos.commonlib.entity.estimation.CustomerEstimation;
 import jp.co.ricoh.cotos.commonlib.entity.estimation.DealerEstimation;
 import jp.co.ricoh.cotos.commonlib.entity.estimation.Estimation;
@@ -97,6 +100,9 @@ public class TestEstimation {
 
 	@Autowired
 	EstimationRepository estimationRepository;
+	
+	@Autowired
+	DBUtil dbutil;
 
 	@Autowired
 	public void injectContext(ConfigurableApplicationContext injectContext) {
@@ -295,6 +301,20 @@ public class TestEstimation {
 
 		// Entity の各項目の値が null ではないことを確認
 		testTool.assertColumnsNotNull(found);
+
+	}
+	
+	@Test
+	public void DBUtilのメソッドテスト() throws Exception {
+
+		String sql = "SELECT * FROM ESTIMATION";
+		List<Estimation> foundList = dbutil.executeSelectWithSQL(sql);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(foundList);
+
+		// Entity 1件以上取得できていることを確認
+		Assert.assertNotEquals(foundList.size(), 0);
 
 	}
 
