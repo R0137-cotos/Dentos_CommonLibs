@@ -56,17 +56,17 @@ public class ContractListInfo {
 	 * 契約ステータス
 	 */
 	@ApiModelProperty(value = "契約ステータス<br />" //
-			+ "状態遷移上のライフサイクル状態を表す。", //
+			+ "状態遷移上のワークフローステータスを表す。", //
 			required = false, position = 6) //
-	private LifecycleStatus contractStatus;
+	private WorkflowStatus workflowStatus;
 
 	/**
 	 * 契約状態
 	 */
 	@ApiModelProperty(value = "契約状態<br />" //
-			+ "状態遷移上のワークフロー状態を表す。", //
+			+ "状態遷移上のライフサイクル状態を表す。", //
 			required = false, position = 7) //
-	private WorkflowStatus contractCondition;
+	private LifecycleStatus lifecycleStatus;
 
 	/**
 	 * 見積ID
@@ -149,6 +149,18 @@ public class ContractListInfo {
 	 */
 	@ApiModelProperty(value = "担当支社名", required = false, position = 20, allowableValues = "range[0,255]")
 	private String picAffiliateName;
+
+	/**
+	 * 担当SS氏名
+	 */
+	@ApiModelProperty(value = "担当SS氏名", required = false, position = 21, allowableValues = "range[0,255]")
+	private String picSsName;
+
+	/**
+	 * 担当CE氏名
+	 */
+	@ApiModelProperty(value = "担当CE氏名", required = false, position = 22, allowableValues = "range[0,255]")
+	private String picCeName;
 
 	@PrePersist
 	public void prePersist() {

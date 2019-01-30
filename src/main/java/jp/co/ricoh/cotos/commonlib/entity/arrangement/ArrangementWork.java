@@ -15,6 +15,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -94,17 +95,25 @@ public class ArrangementWork extends EntityBase {
 	private String memo;
 
 	/**
+	 * 保留フラグ
+	 */
+	@Column(nullable = false)
+	@Max(9)
+	@ApiModelProperty(value = "保留フラグ", required = true, position = 6, allowableValues = "range[0,9]")
+	private int holdingFlg;
+
+	/**
 	 * 手配業務承認ルート
 	 */
 	@OneToOne(mappedBy = "arrangementWork")
-	@ApiModelProperty(value = "手配業務承認ルート", required = false, position = 6)
+	@ApiModelProperty(value = "手配業務承認ルート", required = false, position = 7)
 	private ArrangementWorkApprovalRoute arrangementWorkApprovalRoute;
 
 	/**
 	 * 担当作業者社員
 	 */
 	@OneToOne(mappedBy = "arrangementWork")
-	@ApiModelProperty(value = "担当作業者社員", required = false, position = 7)
+	@ApiModelProperty(value = "担当作業者社員", required = false, position = 8)
 	private ArrangementPicWorkerEmp arrangementPicWorkerEmp;
 
 	/**
@@ -112,14 +121,14 @@ public class ArrangementWork extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "arrangementWork")
 	@OrderBy("operatedAt ASC")
-	@ApiModelProperty(value = "手配業務操作履歴", required = false, position = 8, readOnly = true)
+	@ApiModelProperty(value = "手配業務操作履歴", required = false, position = 9, readOnly = true)
 	private List<ArrangementWorkOperationLog> arrangementWorkOperationLogList;
 
 	/**
 	 * 手配業務添付ファイル
 	 */
 	@OneToMany(mappedBy = "arrangementWork")
-	@ApiModelProperty(value = "手配業務添付ファイル", required = false, position = 9)
+	@ApiModelProperty(value = "手配業務添付ファイル", required = false, position = 10)
 	private List<ArrangementWorkAttachedFile> workAttachedFileList;
 
 	/**
@@ -127,7 +136,7 @@ public class ArrangementWork extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "arrangementWork")
 	@OrderBy("displayOrder ASC")
-	@ApiModelProperty(value = "手配業務チェック結果", required = false, position = 10)
+	@ApiModelProperty(value = "手配業務チェック結果", required = false, position = 11)
 	private List<ArrangementWorkCheckResult> arrangementWorkCheckResultList;
 
 }

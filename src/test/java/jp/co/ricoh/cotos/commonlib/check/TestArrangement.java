@@ -132,12 +132,11 @@ public class TestArrangement {
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 
-		// 異常系（@Size(max) ：momOrgId orgHierarchyLevel orgName salesCompanyName
+		// 異常系（@Size(max) ：momOrgId orgName salesCompanyName
 		// orgPhoneNumber employeeName salesDepartmentName postNumber address
 		// phoneNumber faxNumber mailAddress）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setMomOrgId(STR_256);
-		testTarget.setOrgHierarchyLevel(STR_256);
 		testTarget.setOrgName(STR_256);
 		testTarget.setSalesCompanyName(STR_256);
 		testTarget.setOrgPhoneNumber(STR_256);
@@ -148,8 +147,15 @@ public class TestArrangement {
 		testTarget.setPhoneNumber(STR_256);
 		testTarget.setFaxNumber(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 11);
+		Assert.assertTrue(result.getErrorInfoList().size() == 10);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+
+		// 異常系（@Max ： approvalOrder orgHierarchyLevel）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setOrgHierarchyLevel(10);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
 	}
 
 	@Test
@@ -454,6 +460,12 @@ public class TestArrangement {
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 
+		// 異常系（@Max ：orgHierarchyLevel）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setHoldingFlg(10);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
 	}
 
 }

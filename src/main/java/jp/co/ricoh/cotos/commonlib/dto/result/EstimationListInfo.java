@@ -10,6 +10,7 @@ import javax.persistence.TemporalType;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.estimation.Estimation.EstimationType;
+import jp.co.ricoh.cotos.commonlib.entity.estimation.Estimation.LifecycleStatus;
 import jp.co.ricoh.cotos.commonlib.entity.estimation.Estimation.WorkflowStatus;
 import lombok.Data;
 
@@ -25,7 +26,7 @@ public class EstimationListInfo {
 	@Id
 	@ApiModelProperty(value = "連番", required = true, position = 1)
 	private long seqNo;
-	
+
 	@ApiModelProperty(value = "見積ID", required = true, position = 2)
 	private long id;
 
@@ -105,6 +106,14 @@ public class EstimationListInfo {
 	 */
 	@ApiModelProperty(value = "担当支社名", required = false, position = 14, allowableValues = "range[0,255]")
 	private String picAffiliateName;
+
+	/**
+	 * 見積状態
+	 */
+	@ApiModelProperty(value = "見積状態<br />" //
+			+ "状態遷移上のライフサイクル状態を表す。", //
+			required = false, position = 15) //
+	private LifecycleStatus lifecycleStatus;
 
 	@PrePersist
 	public void prePersist() {

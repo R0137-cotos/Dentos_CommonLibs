@@ -17,6 +17,7 @@ cotos:
       requireDispAuthorize: X-Cotos-Require-Disp-Authorize
       dispAuthorization: X-Cotos-Disp-Authorization
       contentType: Content-type
+      filename: filename
   file:
     uploadFileDir: ./build/testTemp
     fileMaxSize: 616110
@@ -34,8 +35,8 @@ cotos:
 spring:
   datasource:
     url: jdbc:oracle:thin:@dev-db.cotos.ricoh.co.jp:1521/pdb1
-    username: cotos_onsite
-    password: cotos_onsite
+    username: cotos_ci_commonlibs
+    password: cotos_ci_commonlibs
     driverClassName: oracle.jdbc.OracleDriver
   jpa:
     database-platform: org.hibernate.dialect.Oracle12cDialect
@@ -46,7 +47,7 @@ spring:
         show_sql: true
         use_sql_comments: true
         format_sql: true
-        default_schema: cotos_onsite
+        default_schema: cotos_ci_commonlibs
         proc:
           param_null_passing: true
         enable_lazy_load_no_trans: true

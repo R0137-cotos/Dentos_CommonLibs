@@ -108,11 +108,18 @@ public class Contact extends EntityBase {
 	private Date sendAt;
 
 	/**
+	 * 送信者氏名
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "送信者氏名", required = false, position = 9, allowableValues = "range[0,255]")
+	private String contactFromEmpName;
+
+	/**
 	 * 宛先
 	 */
 	@OneToMany(mappedBy = "contact")
 	@NotNull
-	@ApiModelProperty(value = "宛先", required = true, position = 9)
+	@ApiModelProperty(value = "宛先", required = true, position = 10)
 	private List<ContactTo> contactToList;
 
 	@PrePersist

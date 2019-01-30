@@ -91,4 +91,11 @@ public class ContactTo extends EntityBase {
 	@Size(max = 255)
 	@ApiModelProperty(value = "宛先メールアドレス", required = false, position = 5, allowableValues = "range[0,255]", readOnly = true)
 	private String contactToEmail;
+
+	/**
+	 * 宛先氏名
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "宛先氏名", required = false, position = 6, allowableValues = "range[0,255]")
+	private String contactToEmpName;
 }
