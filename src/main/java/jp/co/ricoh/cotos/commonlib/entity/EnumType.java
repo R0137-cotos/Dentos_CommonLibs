@@ -5,6 +5,8 @@ import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
+import jp.co.ricoh.cotos.commonlib.entity.contract.Contract.ContractType;
+
 /**
  * 共通区分定義
  */
@@ -58,6 +60,21 @@ public class EnumType {
 		public static TargetContractType fromString(String string) {
 			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
+
+		public static TargetContractType fromContractType(ContractType contractType) {
+
+			// TargetContractType と ContractType 間で区分値構造が異なることによる変換処理
+			switch (contractType) {
+			case 新規:
+				return TargetContractType.新規;
+			case プラン変更:
+				return TargetContractType.プラン変更;
+			case 情報変更:
+				return TargetContractType.情報変更;
+			default:
+				throw new IllegalArgumentException(String.valueOf(contractType.toString()));
+			}
+		};
 	}
 
 	/**
@@ -234,7 +251,7 @@ public class EnumType {
 			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
-	
+
 	/**
 	 * 汎用マスタ明細区分
 	 */
@@ -243,7 +260,7 @@ public class EnumType {
 		お客様担当者, 接点店担当者, 母店接点店担当者;
 
 	}
-	
+
 	/**
 	 * 汎用マスタカラム名区分
 	 */
