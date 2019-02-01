@@ -18,6 +18,8 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
+import jp.co.ricoh.cotos.commonlib.entity.estimation.Estimation.EstimationType;
+import jp.co.ricoh.cotos.commonlib.entity.estimation.Estimation.LifecycleStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -50,6 +52,19 @@ public class EstimationChecklistCompMaster extends EntityBaseMaster {
 		public static TargetEstimationType fromString(String string) {
 			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
+
+		public static TargetEstimationType fromContractType(EstimationType estimationType) {
+
+			// TargetEstimationType と EstimationType 間で区分値構造が異なることによる変換処理
+			switch (estimationType) {
+			case 新規:
+				return TargetEstimationType.新規;
+			case プラン変更:
+				return TargetEstimationType.プラン変更;
+			default:
+				throw new IllegalArgumentException(String.valueOf(estimationType.toString()));
+			}
+		};
 	}
 
 	public enum TargetLifecycleStatus {
@@ -72,6 +87,16 @@ public class EstimationChecklistCompMaster extends EntityBaseMaster {
 		public static TargetLifecycleStatus fromString(String string) {
 			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
+
+		public static TargetLifecycleStatus fromLifeCycleStatus(LifecycleStatus lifeCycleStatus) {
+			// TargetLifecycleStatus と LifecycleStatus 間で区分値構造が異なることによる変換処理
+			switch (lifeCycleStatus) {
+			case 作成中:
+				return TargetLifecycleStatus.作成中;
+			default:
+				throw new IllegalArgumentException(String.valueOf(lifeCycleStatus.toString()));
+			}
+		};
 	}
 
 	@Id
@@ -94,7 +119,7 @@ public class EstimationChecklistCompMaster extends EntityBaseMaster {
 	 */
 	@Column(nullable = false)
 	@ApiModelProperty(value = "対象見積種別<br /> "//
-			+ "共通/新規/プラン変更<br /> ", required = true, allowableValues  = "共通(\"1\"), 新規(\"2\"), プラン変更(\"3\")", example = "1", position = 3)
+			+ "共通/新規/プラン変更<br /> ", required = true, allowableValues = "共通(\"1\"), 新規(\"2\"), プラン変更(\"3\")", example = "1", position = 3)
 	private TargetEstimationType targetEstimationType;
 
 	/**

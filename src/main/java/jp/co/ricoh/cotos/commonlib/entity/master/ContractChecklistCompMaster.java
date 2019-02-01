@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import jp.co.ricoh.cotos.commonlib.entity.EnumType.TargetContractType;
+import jp.co.ricoh.cotos.commonlib.entity.contract.Contract.LifecycleStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -51,6 +52,21 @@ public class ContractChecklistCompMaster extends EntityBaseMaster {
 		public static TargetLifecycleStatus fromString(String string) {
 			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
+
+		public static TargetLifecycleStatus fromLifeCycleStatus(LifecycleStatus lifeCycleStatus) {
+
+			// TargetLifecycleStatus と LifecycleStatus 間で区分値構造が異なることによる変換処理
+			switch (lifeCycleStatus) {
+			case 作成中:
+				return TargetLifecycleStatus.作成中;
+			case キャンセル手続き中:
+				return TargetLifecycleStatus.キャンセル手続き中;
+			case 解約手続き中:
+				return TargetLifecycleStatus.解約手続き中;
+			default:
+				throw new IllegalArgumentException(String.valueOf(lifeCycleStatus.toString()));
+			}
+		};
 	}
 
 	@Id
