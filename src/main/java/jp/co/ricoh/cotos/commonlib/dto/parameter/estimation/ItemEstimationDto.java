@@ -79,6 +79,6 @@ public class ItemEstimationDto {
 	 */
 	@NotNull
 	@DecimalMax("9999999999999999999.99")
-	@ApiModelProperty(value = "仕切価格", required = true, position = 8, allowableValues = "range[0.00,9999999999999999999.99]")
+	@ApiModelProperty(value = "仕切価格", required = true, position = 9, allowableValues = "range[0.00,9999999999999999999.99]")
 	private BigDecimal partitionPrice;
 }
