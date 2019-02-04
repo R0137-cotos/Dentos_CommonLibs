@@ -3,6 +3,7 @@ package jp.co.ricoh.cotos.commonlib.dto.parameter.estimation;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -25,6 +26,7 @@ public class EstimationAttachedFileDto {
 	/**
 	 * version
 	 */
+	@Version
 	@ApiModelProperty(value = "version", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
 	private long version;
 
