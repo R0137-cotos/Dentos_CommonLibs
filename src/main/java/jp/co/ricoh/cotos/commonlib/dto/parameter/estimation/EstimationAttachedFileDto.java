@@ -3,7 +3,6 @@ package jp.co.ricoh.cotos.commonlib.dto.parameter.estimation;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
-import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -11,24 +10,14 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
 
 import io.swagger.annotations.ApiModelProperty;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.common.DtoBase;
 import jp.co.ricoh.cotos.commonlib.entity.common.AttachedFile;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = false)
 @Data
-public class EstimationAttachedFileDto {
-
-	/**
-	 * ID
-	 */
-	@ApiModelProperty(value = "ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
-	private long id;
-
-	/**
-	 * version
-	 */
-	@Version
-	@ApiModelProperty(value = "version", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
-	private long version;
+public class EstimationAttachedFileDto extends DtoBase {
 
 	/**
 	 * ファイル名

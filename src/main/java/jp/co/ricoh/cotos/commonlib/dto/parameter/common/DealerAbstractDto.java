@@ -8,9 +8,11 @@ import org.hibernate.validator.constraints.NotEmpty;
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EnumType.DealerFlowOrder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = false)
 @Data
-public class DealerAbstractDto {
+public class DealerAbstractDto extends DtoBase {
 
 	/**
 	 * MoM企事部システム連携ID

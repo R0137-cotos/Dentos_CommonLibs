@@ -4,32 +4,20 @@ import java.math.BigDecimal;
 
 import javax.persistence.Lob;
 import javax.persistence.OneToOne;
-import javax.persistence.Version;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import io.swagger.annotations.ApiModelProperty;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.common.DtoBase;
 import jp.co.ricoh.cotos.commonlib.entity.EnumType.DetailStatus;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = false)
 @Data
-public class EstimationDetailDto {
-
-	/**
-	 * ID
-	 */
-	@ApiModelProperty(value = "ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
-	private long id;
-
-	/**
-	 * version
-	 */
-	@Version
-	@ApiModelProperty(value = "version", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
-	private long version;
-
+public class EstimationDetailDto extends DtoBase {
 	/**
 	 * 状態
 	 */

@@ -3,7 +3,6 @@ package jp.co.ricoh.cotos.commonlib.dto.parameter.estimation;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
-import javax.persistence.Version;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -11,25 +10,15 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import io.swagger.annotations.ApiModelProperty;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.common.DtoBase;
 import jp.co.ricoh.cotos.commonlib.entity.master.ItemMaster.CostType;
 import jp.co.ricoh.cotos.commonlib.entity.master.ItemMaster.ItemType;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = false)
 @Data
-public class ItemEstimationDto {
-
-	/**
-	 * ID
-	 */
-	@ApiModelProperty(value = "ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
-	private long id;
-
-	/**
-	 * version
-	 */
-	@Version
-	@ApiModelProperty(value = "version", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
-	private long version;
+public class ItemEstimationDto extends DtoBase {
 
 	/**
 	 * 品種マスタID

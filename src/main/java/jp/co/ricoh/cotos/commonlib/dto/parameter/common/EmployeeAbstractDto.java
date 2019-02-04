@@ -7,9 +7,11 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = false)
 @Data
-public class EmployeeAbstractDto {
+public class EmployeeAbstractDto extends DtoBase {
 
 	/**
 	 * MoM社員ID
