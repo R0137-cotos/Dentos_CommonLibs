@@ -33,7 +33,7 @@ public class EntityBase {
 	private String updatedUserId;
 
 	@Version
-	@ApiModelProperty(value = "version", required = true, position = 105, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "version", required = true, position = 105, allowableValues = "range[0,9999999999999999999]", readOnly = true)
 	private long version;
 
 	@PrePersist

@@ -96,7 +96,7 @@ public class EstimationAttachedFile extends EntityBase {
 	@Column(nullable = false)
 	@NotEmpty
 	@Size(max = 255)
-	@ApiModelProperty(value = "添付者MoM社員ID", required = true, position = 7, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "添付者MoM社員ID", required = true, position = 7, allowableValues = "range[0,255]", readOnly = true)
 	private String attachedEmpId;
 
 	/**
@@ -105,14 +105,14 @@ public class EstimationAttachedFile extends EntityBase {
 	@Column(nullable = false)
 	@NotEmpty
 	@Size(max = 255)
-	@ApiModelProperty(value = "添付者氏名", required = true, position = 8, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "添付者氏名", required = true, position = 8, allowableValues = "range[0,255]", readOnly = true)
 	private String attachedEmpName;
 
 	/**
 	 * 添付者組織名
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "添付者組織名", required = false, position = 9, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "添付者組織名", required = false, position = 9, allowableValues = "range[0,255]", readOnly = true)
 	private String attachedOrgName;
 
 	/**

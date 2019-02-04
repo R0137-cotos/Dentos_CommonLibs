@@ -1,4 +1,4 @@
-package jp.co.ricoh.cotos.commonlib.dto.parameter;
+package jp.co.ricoh.cotos.commonlib.dto.parameter.estimation;
 
 import java.math.BigDecimal;
 
