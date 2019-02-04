@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.persistence.Version;
+import javax.validation.constraints.Max;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -20,12 +22,14 @@ public class EstimationApprovalRouteDto {
 	/**
 	 * version
 	 */
+	@Version
 	@ApiModelProperty(value = "version", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
 	private long version;
 
 	/**
 	 * 特価承認対象フラグ
 	 */
+	@Max(9)
 	@ApiModelProperty(value = "特価承認対象フラグ", required = true, position = 3, allowableValues = "range[0,9]")
 	private int specialPriceApprovalFlg;
 
