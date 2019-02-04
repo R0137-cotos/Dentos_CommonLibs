@@ -91,7 +91,7 @@ public class EstimationApprovalRoute extends EntityBase {
 	@OneToMany(mappedBy = "estimationApprovalRoute")
 	@OrderBy("approvalOrder ASC")
 	@NotNull
-	@ApiModelProperty(value = "見積承認ルートノード", required = true, position = 8)
+	@ApiModelProperty(value = "見積承認ルートノード", required = true, position = 8, readOnly = true)
 	private List<EstimationApprovalRouteNode> estimationApprovalRouteNodeList;
 
 }

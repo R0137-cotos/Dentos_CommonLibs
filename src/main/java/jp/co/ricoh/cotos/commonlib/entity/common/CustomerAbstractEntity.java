@@ -15,6 +15,8 @@ import lombok.EqualsAndHashCode;
 
 /**
  * COTOS顧客エンティティー共通項目 COTOSの顧客情報を管理するエンティティーはこのクラスのサブクラスとしてください。
+ * 当クラスに項目追加する場合は、以下のクラスにも同様の項目を追加してください。
+ * jp.co.ricoh.cotos.commonlib.dto.parameter.common.CustomerAbstractDto
  */
 @EqualsAndHashCode(callSuper = false)
 @MappedSuperclass
@@ -33,7 +35,7 @@ public class CustomerAbstractEntity extends EntityBase {
 	@Column(nullable = false)
 	@NotEmpty
 	@Size(max = 255)
-	@ApiModelProperty(value = "MoM企事部ID", required = true, position = 52, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "MoM企事部ID", required = true, position = 52, allowableValues = "range[0,255]", readOnly = true)
 	private String momCustId;
 
 	/**
@@ -42,7 +44,7 @@ public class CustomerAbstractEntity extends EntityBase {
 	@Column(nullable = false)
 	@NotEmpty
 	@Size(max = 255)
-	@ApiModelProperty(value = "MoM企業ID", required = true, position = 53, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "MoM企業ID", required = true, position = 53, allowableValues = "range[0,255]", readOnly = true)
 	private String companyId;
 
 	/**
@@ -51,7 +53,7 @@ public class CustomerAbstractEntity extends EntityBase {
 	@Column(nullable = false)
 	@NotEmpty
 	@Size(max = 255)
-	@ApiModelProperty(value = "MoM事業所ID", required = true, position = 54, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "MoM事業所ID", required = true, position = 54, allowableValues = "range[0,255]", readOnly = true)
 	private String officeId;
 
 	/**
@@ -59,7 +61,7 @@ public class CustomerAbstractEntity extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@NotNull
-	@ApiModelProperty(value = "企事部設定区分", required = true, allowableValues = "企事(\"1\"), 企事部(\"2\")", example = "1", position = 55)
+	@ApiModelProperty(value = "企事部設定区分", required = true, allowableValues = "企事(\"1\"), 企事部(\"2\")", example = "1", position = 55, readOnly = true)
 	private DepartmentDiv departmentDiv;
 
 	/**
@@ -68,70 +70,70 @@ public class CustomerAbstractEntity extends EntityBase {
 	@Column(nullable = false)
 	@NotEmpty
 	@Size(max = 255)
-	@ApiModelProperty(value = "顧客名", required = true, position = 56, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "顧客名", required = true, position = 56, allowableValues = "range[0,255]", readOnly = true)
 	private String customerName;
 
 	/**
 	 * 企業名
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "企業名", required = false, position = 57, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "企業名", required = false, position = 57, allowableValues = "range[0,255]", readOnly = true)
 	private String companyName;
 
 	/**
 	 * 企業名（カナ）
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "企業名（カナ）", required = false, position = 58, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "企業名（カナ）", required = false, position = 58, allowableValues = "range[0,255]", readOnly = true)
 	private String companyNameKana;
 
 	/**
 	 * 事業所名
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "事業所名", required = false, position = 59, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "事業所名", required = false, position = 59, allowableValues = "range[0,255]", readOnly = true)
 	private String officeName;
 
 	/**
 	 * 部門名
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "部門名", required = false, position = 60, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "部門名", required = false, position = 60, allowableValues = "range[0,255]", readOnly = true)
 	private String departmentName;
 
 	/**
 	 * 郵便番号
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "郵便番号", required = false, position = 61, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "郵便番号", required = false, position = 61, allowableValues = "range[0,255]", readOnly = true)
 	private String postNumber;
 
 	/**
 	 * 住所
 	 */
 	@Size(max = 1000)
-	@ApiModelProperty(value = "住所", required = false, position = 62, allowableValues = "range[0,1000]")
+	@ApiModelProperty(value = "住所", required = false, position = 62, allowableValues = "range[0,1000]", readOnly = true)
 	private String address;
 
 	/**
 	 * 電話番号
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "電話番号", required = false, position = 63, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "電話番号", required = false, position = 63, allowableValues = "range[0,255]", readOnly = true)
 	private String phoneNumber;
 
 	/**
 	 * FAX番号
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "FAX番号", required = false, position = 64, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "FAX番号", required = false, position = 64, allowableValues = "range[0,255]", readOnly = true)
 	private String faxNumber;
 
 	/**
 	 * 企業代表者名
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "企業代表者名", required = false, position = 65, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "企業代表者名", required = false, position = 65, allowableValues = "range[0,255]", readOnly = true)
 	private String companyRepresentativeName;
 
 	/**

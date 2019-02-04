@@ -131,7 +131,7 @@ public class Estimation extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@NotNull
-	@ApiModelProperty(value = "ライフサイクル状態", required = true, allowableValues = "作成中(\"1\"), 作成完了(\"2\"), 受注(\"3\"), 失注(\"4\"), 破棄(\"5\")", example = "1", position = 3)
+	@ApiModelProperty(value = "ライフサイクル状態", required = true, allowableValues = "作成中(\"1\"), 作成完了(\"2\"), 受注(\"3\"), 失注(\"4\"), 破棄(\"5\")", example = "1", position = 3, readOnly = true)
 	private LifecycleStatus lifecycleStatus;
 
 	/**
@@ -139,14 +139,14 @@ public class Estimation extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@NotNull
-	@ApiModelProperty(value = "ワークフロー状態", required = true, allowableValues = "作成中(\"1\"), 業務依頼中(\"2\"), 業務処理完了(\"3\"), 承認依頼中(\"4\"), 承認済(\"5\"), 顧客提示済(\"6\")", example = "1", position = 4)
+	@ApiModelProperty(value = "ワークフロー状態", required = true, allowableValues = "作成中(\"1\"), 業務依頼中(\"2\"), 業務処理完了(\"3\"), 承認依頼中(\"4\"), 承認済(\"5\"), 顧客提示済(\"6\")", example = "1", position = 4, readOnly = true)
 	private WorkflowStatus workflowStatus;
 
 	/**
 	 * 恒久契約識別番号
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "恒久契約識別番号", required = false, position = 5, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "恒久契約識別番号", required = false, position = 5, allowableValues = "range[0,255]", readOnly = true)
 	private String immutableContIdentNumber;
 
 	/**
@@ -192,7 +192,7 @@ public class Estimation extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@NotNull
-	@ApiModelProperty(value = "見積種別", required = true, allowableValues = "新規(\"1\"), プラン変更(\"2\")", example = "1", position = 11)
+	@ApiModelProperty(value = "見積種別", required = true, allowableValues = "新規(\"1\"), プラン変更(\"2\")", example = "1", position = 11, readOnly = true)
 	private EstimationType estimationType;
 
 	/**
@@ -411,7 +411,7 @@ public class Estimation extends EntityBase {
 	 * 見積承認ルート
 	 */
 	@OneToOne(mappedBy = "estimation")
-	@ApiModelProperty(value = "見積承認ルート", required = false, position = 43)
+	@ApiModelProperty(value = "見積承認ルート", required = false, position = 43, readOnly = true)
 	private EstimationApprovalRoute estimationApprovalRoute;
 
 	/**
@@ -462,7 +462,7 @@ public class Estimation extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "estimation")
 	@OrderBy("displayOrder ASC")
-	@ApiModelProperty(value = "見積チェック結果", required = false, position = 50)
+	@ApiModelProperty(value = "見積チェック結果", required = false, position = 50, readOnly = true)
 	private List<EstimationCheckResult> estimationCheckResultList;
 
 	/**
@@ -476,7 +476,7 @@ public class Estimation extends EntityBase {
 	 * 商品（見積用）
 	 */
 	@OneToMany(mappedBy = "estimation")
-	@ApiModelProperty(value = "商品（見積用）", required = false, position = 52)
+	@ApiModelProperty(value = "商品（見積用）", required = false, position = 52, readOnly = true)
 	private List<ProductEstimation> productEstimationList;
 
 	@PreUpdate
