@@ -24,10 +24,16 @@ public class EstimationApprovalRouteDto {
 	private long version;
 
 	/**
+	 * 特価承認対象フラグ
+	 */
+	@ApiModelProperty(value = "特価承認対象フラグ", required = true, position = 3, allowableValues = "range[0,9]")
+	private int specialPriceApprovalFlg;
+
+	/**
 	 * 見積承認ルートノード
 	 */
 	@OneToMany(mappedBy = "estimationApprovalRoute")
 	@OrderBy("approvalOrder ASC")
-	@ApiModelProperty(value = "見積承認ルートノード", required = true, position = 3)
+	@ApiModelProperty(value = "見積承認ルートノード", required = true, position = 4)
 	private List<EstimationApprovalRouteNodeDto> estimationApprovalRouteNodeList;
 }
