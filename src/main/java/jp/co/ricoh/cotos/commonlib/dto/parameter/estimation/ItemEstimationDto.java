@@ -49,7 +49,7 @@ public class ItemEstimationDto {
 	 */
 	@NotEmpty
 	@Size(max = 255)
-	@ApiModelProperty(value = "品種名", required = true, position = 4, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "品種名", required = true, position = 5, allowableValues = "range[0,255]")
 	private String itemEstimationName;
 
 	/**
@@ -57,21 +57,21 @@ public class ItemEstimationDto {
 	 */
 	@NotEmpty
 	@Size(max = 255)
-	@ApiModelProperty(value = "リコー品種コード", required = true, position = 5, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "リコー品種コード", required = true, position = 6, allowableValues = "range[0,255]")
 	private String ricohItemCode;
 
 	/**
 	 * 品種区分
 	 */
 	@NotNull
-	@ApiModelProperty(value = "品種区分", required = true, allowableValues = "なし(\"0\"), 基本(\"1\"), オプション(\"2\")", example = "1", position = 6)
+	@ApiModelProperty(value = "品種区分", required = true, allowableValues = "なし(\"0\"), 基本(\"1\"), オプション(\"2\")", example = "1", position = 7)
 	private ItemType itemType;
 
 	/**
 	 * 費用種別
 	 */
 	@NotNull
-	@ApiModelProperty(value = "費用種別", required = true, allowableValues = "初期費(\"1\"), 月額(\"2\"), 年額(\"3\")", example = "1", position = 7)
+	@ApiModelProperty(value = "費用種別", required = true, allowableValues = "初期費(\"1\"), 月額(\"2\"), 年額(\"3\")", example = "1", position = 8)
 	private CostType costType;
 
 	/**
