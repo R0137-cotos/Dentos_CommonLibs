@@ -171,7 +171,7 @@ public class CommunicationHistory extends EntityBase {
 	 */
 	@Size(max = 255)
 	@ApiModelProperty(value = "商品グループ名<br />" //
-			+ "商品グループマスタの商品グループ名を設定", required = false, position = 15, allowableValues = "range[0,255]") //
+			+ "商品グループマスタの商品グループ名を設定", required = false, position = 15, allowableValues = "range[0,255]", readOnly = true) //
 	private String productGrpName;
 
 	/**
