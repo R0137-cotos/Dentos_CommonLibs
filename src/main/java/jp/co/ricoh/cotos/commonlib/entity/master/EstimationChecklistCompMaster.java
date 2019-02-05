@@ -53,7 +53,7 @@ public class EstimationChecklistCompMaster extends EntityBaseMaster {
 			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 
-		public static TargetEstimationType fromContractType(EstimationType estimationType) {
+		public static TargetEstimationType fromEstimationType(EstimationType estimationType) {
 
 			// TargetEstimationType と EstimationType 間で区分値構造が異なることによる変換処理
 			switch (estimationType) {
