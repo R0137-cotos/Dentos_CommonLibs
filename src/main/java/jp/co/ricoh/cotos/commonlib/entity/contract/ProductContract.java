@@ -35,7 +35,7 @@ public class ProductContract extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_contract_seq")
 	@SequenceGenerator(name = "product_contract_seq", sequenceName = "product_contract_seq", allocationSize = 1)
-	@ApiModelProperty(value = "ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
+	@ApiModelProperty(value = "ID(作成時不要)", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
 	private long id;
 
 	/**
@@ -51,7 +51,7 @@ public class ProductContract extends EntityBase {
 	@Column(nullable = false)
 	@NotEmpty
 	@Size(max = 255)
-	@ApiModelProperty(value = "商品名", required = true, position = 3, allowableValues = "range[0,255]", readOnly = true)
+	@ApiModelProperty(value = "商品名(作成時不要)", required = true, position = 3, allowableValues = "range[0,255]", readOnly = true)
 	private String productContractName;
 
 	/**
@@ -66,7 +66,7 @@ public class ProductContract extends EntityBase {
 	@Column(nullable = false)
 	@NotEmpty
 	@Size(max = 255)
-	@ApiModelProperty(value = "サービス識別番号", required = true, position = 5, allowableValues = "range[0,255]", readOnly = true)
+	@ApiModelProperty(value = "サービス識別番号(作成時不要)", required = true, position = 5, allowableValues = "range[0,255]", readOnly = true)
 	private String serviceIdentNumber;
 
 	/**

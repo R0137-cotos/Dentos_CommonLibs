@@ -1,4 +1,4 @@
-package jp.co.ricoh.cotos.commonlib.dto.parameter;
+package jp.co.ricoh.cotos.commonlib.dto.parameter.arrangement;
 
 import java.util.List;
 

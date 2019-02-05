@@ -1,17 +1,9 @@
-package jp.co.ricoh.cotos.commonlib.entity.arrangement;
+package jp.co.ricoh.cotos.commonlib.dto.parameter.arrangement;
 
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OrderBy;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Max;
@@ -19,36 +11,14 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import io.swagger.annotations.ApiModelProperty;
-import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.common.DtoBase;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-/**
- * 手配業務Entity作成時のチェック結果を表すEntity
- */
-@Entity
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 @Data
-@Table(name = "arrangement_work_check_result")
-public class ArrangementWorkCheckResult extends EntityBase {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "arrangement_work_check_result_seq")
-	@SequenceGenerator(name = "arrangement_work_check_result_seq", sequenceName = "arrangement_work_check_result_seq", allocationSize = 1)
-	@ApiModelProperty(value = "手配業務チェック結果ID (作成時不要)", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
-	private long id;
-
-	/**
-	 * 手配業務
-	 */
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "arrangement_work_id", referencedColumnName = "id")
-	@ApiModelProperty(value = "手配業務", required = true, position = 2)
-	@JsonIgnore
-	private ArrangementWork arrangementWork;
+public class ArrangementWorkCheckResultDto extends DtoBase {
 
 	/**
 	 * チェック事項コード
@@ -81,7 +51,7 @@ public class ArrangementWorkCheckResult extends EntityBase {
 	 * チェック実施者MoM社員ID
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "チェック実施者MoM社員ID)", required = false, position = 6, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "チェック実施者MoM社員ID", required = false, position = 6, allowableValues = "range[0,255]")
 	private String checkedUserId;
 
 	/**
@@ -104,5 +74,4 @@ public class ArrangementWorkCheckResult extends EntityBase {
 	@ApiModelProperty(value = "チェック実施日時", required = false, position = 9)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date checkedAt;
-
 }
