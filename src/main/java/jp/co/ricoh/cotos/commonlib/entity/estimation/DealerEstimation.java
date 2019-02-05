@@ -31,7 +31,7 @@ public class DealerEstimation extends DealerAbstractEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dealer_estimation_seq")
 	@SequenceGenerator(name = "dealer_estimation_seq", sequenceName = "dealer_estimation_seq", allocationSize = 1)
-	@ApiModelProperty(value = "ID", required = true, position = 1)
+	@ApiModelProperty(value = "ID", required = true, position = 1, readOnly = true)
 	private long id;
 
 	/**

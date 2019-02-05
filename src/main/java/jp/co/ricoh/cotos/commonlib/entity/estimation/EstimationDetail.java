@@ -37,7 +37,7 @@ public class EstimationDetail extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "estimation_detail_seq")
 	@SequenceGenerator(name = "estimation_detail_seq", sequenceName = "estimation_detail_seq", allocationSize = 1)
-	@ApiModelProperty(value = "見積明細ID", required = true, position = 1)
+	@ApiModelProperty(value = "見積明細ID", required = true, position = 1, readOnly = true)
 	private long id;
 
 	/**
