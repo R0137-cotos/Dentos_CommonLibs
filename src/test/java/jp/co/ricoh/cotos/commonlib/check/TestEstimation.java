@@ -248,7 +248,6 @@ public class TestEstimation {
 		Estimation entity = estimationRepository.findOne(4L);
 		Estimation testTarget = new Estimation();
 
-
 		// 正常系
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setEstimationApprovalRoute(null);

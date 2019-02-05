@@ -123,7 +123,6 @@ public class Estimation extends EntityBase {
 	/**
 	 * 商品グループマスタID
 	 */
-
 	@Min(0)
 	@Column(nullable = false)
 	@ApiModelProperty(value = "商品グループマスタID", required = true, position = 2, allowableValues = "range[0,9223372036854775807]")
