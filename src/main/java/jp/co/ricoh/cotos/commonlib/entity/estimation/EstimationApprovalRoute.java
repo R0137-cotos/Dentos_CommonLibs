@@ -36,7 +36,7 @@ public class EstimationApprovalRoute extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "estimation_approval_route_seq")
 	@SequenceGenerator(name = "estimation_approval_route_seq", sequenceName = "estimation_approval_route_seq", allocationSize = 1)
-	@ApiModelProperty(value = "見積承認ルートID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "見積承認ルートID(作成時不要)", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
 	private long id;
 
 	/**
@@ -82,7 +82,7 @@ public class EstimationApprovalRoute extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "estimationApprovalRoute")
 	@OrderBy("processedAt ASC")
-	@ApiModelProperty(value = "見積承認実績", required = false, position = 7, readOnly = true)
+	@ApiModelProperty(value = "見積承認実績(作成時不要)", required = false, position = 7, readOnly = true)
 	private List<EstimationApprovalResult> estimationApprovalResultList;
 
 	/**
@@ -91,7 +91,7 @@ public class EstimationApprovalRoute extends EntityBase {
 	@OneToMany(mappedBy = "estimationApprovalRoute")
 	@OrderBy("approvalOrder ASC")
 	@NotNull
-	@ApiModelProperty(value = "見積承認ルートノード", required = true, position = 8)
+	@ApiModelProperty(value = "見積承認ルートノード(作成時不要)", required = true, position = 8, readOnly = true)
 	private List<EstimationApprovalRouteNode> estimationApprovalRouteNodeList;
 
 }

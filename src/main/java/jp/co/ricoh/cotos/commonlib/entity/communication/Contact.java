@@ -74,7 +74,7 @@ public class Contact extends EntityBase {
 	@Column(nullable = false)
 	@NotEmpty
 	@Size(max = 255)
-	@ApiModelProperty(value = "送信者MoM社員ID", required = true, position = 4, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "送信者MoM社員ID", required = true, position = 4, allowableValues = "range[0,255]", readOnly = true)
 	private String contactFromEmpId;
 
 	/**
@@ -111,7 +111,7 @@ public class Contact extends EntityBase {
 	 * 送信者氏名
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "送信者氏名", required = false, position = 9, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "送信者氏名", required = false, position = 9, allowableValues = "range[0,255]", readOnly = true)
 	private String contactFromEmpName;
 
 	/**

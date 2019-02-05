@@ -1,32 +1,22 @@
-package jp.co.ricoh.cotos.commonlib.entity.common;
+package jp.co.ricoh.cotos.commonlib.dto.parameter.common;
 
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
 import io.swagger.annotations.ApiModelProperty;
-import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import jp.co.ricoh.cotos.commonlib.entity.EnumType.DealerFlowOrder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-/**
- * COTOS販売店エンティティー共通項目 COTOSの販売店情報を管理するエンティティーはこのクラスのサブクラスとしてください。
- * 当クラスに項目追加する場合は、以下のクラスにも同様の項目を追加してください。
- * jp.co.ricoh.cotos.commonlib.dto.parameter.common.DealerAbstractDto
- */
 @EqualsAndHashCode(callSuper = false)
-@MappedSuperclass
 @Data
-public class DealerAbstractEntity extends EntityBase {
+public class DealerAbstractDto extends DtoBase {
 
 	/**
 	 * MoM企事部システム連携ID
 	 */
-	@Column(nullable = false)
 	@NotEmpty
 	@ApiModelProperty(value = "MoM企事部システム連携ID", required = true, position = 51, allowableValues = "range[0,15]")
 	private String momKjbSystemId;
@@ -35,28 +25,28 @@ public class DealerAbstractEntity extends EntityBase {
 	 * 販売店名
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "販売店名(作成時不要)", required = false, position = 52, allowableValues = "range[0,255]", readOnly = true)
+	@ApiModelProperty(value = "販売店名", required = false, position = 52, allowableValues = "range[0,255]")
 	private String dealerName;
 
 	/**
 	 * 郵便番号
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "郵便番号(作成時不要)", required = false, position = 53, allowableValues = "range[0,255]", readOnly = true)
+	@ApiModelProperty(value = "郵便番号", required = false, position = 53, allowableValues = "range[0,255]")
 	private String postNumber;
 
 	/**
 	 * 住所
 	 */
 	@Size(max = 1000)
-	@ApiModelProperty(value = "住所(作成時不要)", required = false, position = 54, allowableValues = "range[0,1000]", readOnly = true)
+	@ApiModelProperty(value = "住所", required = false, position = 54, allowableValues = "range[0,1000]")
 	private String address;
 
 	/**
 	 * 会社代表電話番号
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "会社代表電話番号(作成時不要)", required = false, position = 55, allowableValues = "range[0,255]", readOnly = true)
+	@ApiModelProperty(value = "会社代表電話番号", required = false, position = 55, allowableValues = "range[0,255]")
 	private String orgPhoneNumber;
 
 	/**
@@ -90,7 +80,6 @@ public class DealerAbstractEntity extends EntityBase {
 	/**
 	 * 販売店商流順
 	 */
-	@Column(nullable = false)
 	@NotNull
 	@ApiModelProperty(value = "販売店商流順", required = true, allowableValues = "販売店(\"1\"), 母店(\"2\")", example = "1", position = 60)
 	private DealerFlowOrder dealerFlowOrder;
