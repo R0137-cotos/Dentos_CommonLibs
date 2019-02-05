@@ -20,7 +20,7 @@ public class TestTools {
 
 	/**
 	 * パラメータチェックで使用するエラーID
-	 * 
+	 *
 	 * @author hideto.yamanaka
 	 *
 	 */
@@ -30,7 +30,9 @@ public class TestTools {
 		/** Size：EntityCheckStringSizeError（{0}は最大文字数（{1}）を超えています。） */
 		ROT00014,
 		/** Max：EntityCheckNumberMaxError（{0}は最大値（{1}）を超えています。） */
-		ROT00015;
+		ROT00015,
+		/** Min：EntityCheckNumberMaxError（{0}は最小値（{1}）を下回っています。） */
+		ROT00026;
 	}
 
 	public <T> String findNullProperties(T entity) throws Exception {
@@ -98,7 +100,7 @@ public class TestTools {
 
 	/**
 	 * 入力チェックエラーが発生しなことを確認するアサーション
-	 * 
+	 *
 	 * @param result
 	 *            Entity のパラメータチェックの実行結果
 	 */
@@ -108,7 +110,7 @@ public class TestTools {
 
 	/**
 	 * 入力チェックエラーが発生するを確認するアサーション
-	 * 
+	 *
 	 * @param result
 	 *            Entity のパラメータチェックの実行結果
 	 */
@@ -118,7 +120,7 @@ public class TestTools {
 
 	/**
 	 * ErrorInfo のエラー ID が全て指定したものと同じであるかどうかを判定する
-	 * 
+	 *
 	 * @param errorInfoList
 	 *            ErrorInfo のリスト
 	 * @param paramterErrorId

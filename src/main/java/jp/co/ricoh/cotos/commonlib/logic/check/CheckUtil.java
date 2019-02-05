@@ -62,12 +62,19 @@ public class CheckUtil {
 				String fieldNm = messageUtil.convertSingleValue(fieldError.getField());
 				String errCode = fieldError.getCode();
 				String max = null;
+				String min = null;
 				if (fieldError.getArguments() != null && fieldError.getArguments().length > 0) {
 					if ("Max".equals(errCode) || "Size".equals(errCode)) {
 						max = fieldError.getArguments()[1].toString();
 					}
+					if ("Min".equals(errCode)) {
+						min = fieldError.getArguments()[1].toString();
+					}
 					if ("DecimalMax".equals(errCode)) {
 						max = fieldError.getArguments()[2].toString();
+					}
+					if ("DecimalMin".equals(errCode)) {
+						min = fieldError.getArguments()[2].toString();
 					}
 				}
 
@@ -87,6 +94,11 @@ public class CheckUtil {
 				if ("Max".equals(errCode) || "DecimalMax".equals(errCode)) {
 					errKey = "EntityCheckNumberMaxError";
 					regexList = new String[] { fieldNm, max };
+				}
+				// 数値桁数チェック
+				if ("Min".equals(errCode) || "DecimalMin".equals(errCode)) {
+					errKey = "EntityCheckNumberMaxError";
+					regexList = new String[] { fieldNm, min };
 				}
 				MessageInfo messageInfo = messageUtil.createMessageInfo(errKey, regexList);
 				ErrorInfo errorInfo = new ErrorInfo();
