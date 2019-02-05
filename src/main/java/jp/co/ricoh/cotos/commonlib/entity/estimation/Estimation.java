@@ -19,12 +19,13 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
 
@@ -116,14 +117,15 @@ public class Estimation extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "estimation_seq")
 	@SequenceGenerator(name = "estimation_seq", sequenceName = "estimation_seq", allocationSize = 1)
-	@ApiModelProperty(value = "見積ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "見積ID", required = true, position = 1, allowableValues = "range[0,9223372036854775807]")
 	private long id;
 
 	/**
 	 * 商品グループマスタID
 	 */
+	@Min(0)
 	@Column(nullable = false)
-	@ApiModelProperty(value = "商品グループマスタID", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "商品グループマスタID", required = true, position = 2, allowableValues = "range[0,9223372036854775807]")
 	private long productGrpMasterId;
 
 	/**
@@ -166,7 +168,7 @@ public class Estimation extends EntityBase {
 	/**
 	 * 見積番号
 	 */
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@Column(nullable = false)
 	@ApiModelProperty(value = "見積番号", required = true, position = 8, allowableValues = "range[0,255]", readOnly = true)
@@ -177,6 +179,7 @@ public class Estimation extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@Max(99)
+	@Min(0)
 	@ApiModelProperty(value = "見積番号枝番", required = true, position = 9, allowableValues = "range[0,99]", readOnly = true)
 	private int estimationBranchNumber;
 
@@ -198,6 +201,7 @@ public class Estimation extends EntityBase {
 	/**
 	 * 見積作成元システム区分
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "見積作成元システム区分", required = false, position = 12)
 	private String estimatedSystemDiv;
 
@@ -212,13 +216,15 @@ public class Estimation extends EntityBase {
 	 * 変更元契約番号枝番
 	 */
 	@Max(99)
+	@Min(0)
 	@ApiModelProperty(value = "変更元契約番号枝番", required = false, position = 14, allowableValues = "range[0,99]")
 	private Integer originContractBranchNumber;
 
 	/**
 	 * 変更元契約ID
 	 */
-	@ApiModelProperty(value = "変更元契約ID", required = false, position = 15, allowableValues = "range[0,9999999999999999999]")
+	@Min(0)
+	@ApiModelProperty(value = "変更元契約ID", required = false, position = 15, allowableValues = "range[0,9223372036854775807]")
 	private Long originContractId;
 
 	/**
@@ -397,8 +403,9 @@ public class Estimation extends EntityBase {
 	/**
 	 * 競合先基本料金
 	 */
-	@DecimalMax("9999999999999999999.99")
-	@ApiModelProperty(value = "競合先基本料金", required = false, position = 41, allowableValues = "range[0.00,9999999999999999999.99]")
+	@Digits(integer = 19, fraction = 2)
+	@DecimalMin("0.00")
+	@ApiModelProperty(value = "競合先基本料金", required = false, position = 41, allowableValues = "range[0.00,9223372036854775807.99]")
 	private BigDecimal competitionAmount;
 
 	/**
@@ -432,6 +439,7 @@ public class Estimation extends EntityBase {
 	/**
 	 * 見積担当SA社員
 	 */
+	@NotNull
 	@OneToOne(mappedBy = "estimation")
 	@ApiModelProperty(value = "見積担当SA社員", required = true, position = 46)
 	private EstimationPicSaEmp estimationPicSaEmp;
@@ -453,6 +461,7 @@ public class Estimation extends EntityBase {
 	/**
 	 * 顧客（見積用）
 	 */
+	@NotNull
 	@OneToOne(mappedBy = "estimation")
 	@ApiModelProperty(value = "顧客(見積用)", required = true, position = 49)
 	private CustomerEstimation customerEstimation;

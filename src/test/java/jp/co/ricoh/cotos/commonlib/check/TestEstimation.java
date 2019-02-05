@@ -250,7 +250,7 @@ public class TestEstimation {
 
 		// 正常系
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setCustomerEstimation(null);
+		testTarget.setEstimationApprovalRoute(null);
 		testTarget.setOperationLogList(null);
 		testTarget.setEstimationAttachedFileList(null);
 		testTarget.setEstimationAddedEditorEmpList(null);
@@ -261,40 +261,26 @@ public class TestEstimation {
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
-		// 異常系（@NotNull、@NotEmptyの null チェック：）
+		// 異常系（@NotNullの null チェック：）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setCustomerEstimation(null);
-		testTarget.setOperationLogList(null);
-		testTarget.setEstimationAttachedFileList(null);
-		testTarget.setEstimationAddedEditorEmpList(null);
-		testTarget.setDealerEstimationList(null);
-		testTarget.setEstimationCheckResultList(null);
-		testTarget.setEstimationDetailList(null);
-		testTarget.setProductEstimationList(null);
-
 		testTarget.setLifecycleStatus(null);
 		testTarget.setEstimationType(null);
 		testTarget.setWorkflowStatus(null);
+		testTarget.setEstimationNumber(null);
+		testTarget.setEstimationPicSaEmp(null);
+		testTarget.setCustomerEstimation(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 3);
+		Assert.assertTrue(result.getErrorInfoList().size() == 6);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 
 		// 異常系（@Size(max) ：）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setCustomerEstimation(null);
-		testTarget.setOperationLogList(null);
-		testTarget.setEstimationAttachedFileList(null);
-		testTarget.setEstimationAddedEditorEmpList(null);
-		testTarget.setDealerEstimationList(null);
-		testTarget.setEstimationCheckResultList(null);
-		testTarget.setEstimationDetailList(null);
-		testTarget.setProductEstimationList(null);
-
 		testTarget.setImmutableContIdentNumber(STR_256);
 		testTarget.setCaseNumber(STR_256);
 		testTarget.setCaseTitle(STR_256);
 		testTarget.setEstimationNumber(STR_256);
 		testTarget.setEstimationTitle(STR_256);
+		testTarget.setEstimatedSystemDiv(STR_256);
 		testTarget.setOriginContractNumber(STR_256);
 		testTarget.setCommercialFlowDiv(STR_256);
 		testTarget.setIssueFormat(STR_256);
@@ -309,6 +295,7 @@ public class TestEstimation {
 		testTarget.setPublishDepartment(STR_256);
 		testTarget.setPublishPostNumber(STR_256);
 		testTarget.setPublishAddress(STR_1001);
+		testTarget.setPublishTel(STR_256);
 		testTarget.setPublishFax(STR_256);
 		testTarget.setPublishEmployee(STR_256);
 		testTarget.setSpPriceApplyReason(STR_256);
@@ -317,20 +304,11 @@ public class TestEstimation {
 		testTarget.setCompetitionInfo(STR_256);
 		testTarget.setCompetitionContractDiv(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 26);
+		Assert.assertTrue(result.getErrorInfoList().size() == 28);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 
 		// 異常系（@Max ：）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setCustomerEstimation(null);
-		testTarget.setOperationLogList(null);
-		testTarget.setEstimationAttachedFileList(null);
-		testTarget.setEstimationAddedEditorEmpList(null);
-		testTarget.setDealerEstimationList(null);
-		testTarget.setEstimationCheckResultList(null);
-		testTarget.setEstimationDetailList(null);
-		testTarget.setProductEstimationList(null);
-
 		testTarget.setEstimationBranchNumber(INT_100);
 		testTarget.setOriginContractBranchNumber(INT_100);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
