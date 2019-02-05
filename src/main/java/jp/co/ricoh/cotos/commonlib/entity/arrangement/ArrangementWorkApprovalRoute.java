@@ -49,7 +49,7 @@ public class ArrangementWorkApprovalRoute extends EntityBase {
 	 * 承認依頼者MoM社員ID
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "承認依頼者MoM社員ID (作成時不要)", required = true, position = 3, allowableValues = "range[0,255]", readOnly = true)
+	@ApiModelProperty(value = "承認依頼者MoM社員ID", required = true, position = 3, allowableValues = "range[0,255]")
 	private String approvalRequesterEmpId;
 
 	/**
@@ -71,7 +71,7 @@ public class ArrangementWorkApprovalRoute extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "arrangementWorkApprovalRoute")
 	@OrderBy("processedAt ASC")
-	@ApiModelProperty(value = "手配業務承認実績 (作成時不要)", required = false, position = 6, readOnly = true)
+	@ApiModelProperty(value = "手配業務承認実績", required = false, position = 6)
 	private List<ArrangementWorkApprovalResult> arrangementWorkApprovalResultList;
 
 	/**

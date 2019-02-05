@@ -81,7 +81,7 @@ public class ArrangementWorkCheckResult extends EntityBase {
 	 * チェック実施者MoM社員ID
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "チェック実施者MoM社員ID (作成時不要)", required = false, position = 6, allowableValues = "range[0,255]", readOnly = true)
+	@ApiModelProperty(value = "チェック実施者MoM社員ID)", required = false, position = 6, allowableValues = "range[0,255]")
 	private String checkedUserId;
 
 	/**

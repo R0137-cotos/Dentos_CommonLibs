@@ -73,7 +73,7 @@ public class ArrangementWorkOperationLog extends EntityBase {
 	@Column(nullable = false)
 	@NotEmpty
 	@Size(max = 255)
-	@ApiModelProperty(value = "操作者MoM社員ID (作成時不要)", required = true, position = 4, allowableValues = "range[0,255]", readOnly = true)
+	@ApiModelProperty(value = "操作者MoM社員ID", required = true, position = 4, allowableValues = "range[0,255]")
 	private String operatorEmpId;
 
 	/**
@@ -97,7 +97,7 @@ public class ArrangementWorkOperationLog extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@NotNull
-	@ApiModelProperty(value = "実施日時 (作成時不要)", required = true, position = 7, readOnly = true)
+	@ApiModelProperty(value = "実施日時", required = true, position = 7)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date operatedAt;
 

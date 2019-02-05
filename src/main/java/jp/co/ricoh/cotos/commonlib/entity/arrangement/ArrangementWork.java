@@ -76,7 +76,7 @@ public class ArrangementWork extends EntityBase {
 	 * 手配業務タイプマスタID
 	 */
 	@Column(nullable = false)
-	@ApiModelProperty(value = "手配業務タイプマスタID (作成時不要)", required = true, position = 3, allowableValues = "range[0,9999999999999999999]", readOnly = true)
+	@ApiModelProperty(value = "手配業務タイプマスタID", required = true, position = 3, allowableValues = "range[0,9999999999999999999]")
 	private long arrangementWorkTypeMasterId;
 
 	/**
@@ -121,7 +121,7 @@ public class ArrangementWork extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "arrangementWork")
 	@OrderBy("operatedAt ASC")
-	@ApiModelProperty(value = "手配業務操作履歴 (作成時不要)", required = false, position = 9, readOnly = true)
+	@ApiModelProperty(value = "手配業務操作履歴", required = false, position = 9)
 	private List<ArrangementWorkOperationLog> arrangementWorkOperationLogList;
 
 	/**

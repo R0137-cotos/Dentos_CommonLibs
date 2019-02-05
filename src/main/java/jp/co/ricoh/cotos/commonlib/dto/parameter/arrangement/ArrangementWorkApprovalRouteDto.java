@@ -1,5 +1,9 @@
 package jp.co.ricoh.cotos.commonlib.dto.parameter.arrangement;
 
+import java.util.List;
+
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.validation.constraints.Size;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -31,4 +35,12 @@ public class ArrangementWorkApprovalRouteDto extends DtoBase {
 	@Size(max = 255)
 	@ApiModelProperty(value = "承認依頼者組織名", required = false, position = 5, allowableValues = "range[0,255]")
 	private String approvalRequesterOrgName;
+
+	/**
+	 * 手配業務承認ルートノード
+	 */
+	@OneToMany(mappedBy = "arrangementWorkApprovalRoute")
+	@OrderBy("approvalOrder ASC")
+	@ApiModelProperty(value = "手配業務承認ルートノード", required = true, position = 6)
+	private List<ArrangementWorkApprovalRouteNodeDto> arrangementWorkApprovalRouteNodeList;
 }

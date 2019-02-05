@@ -68,7 +68,7 @@ public class ArrangementWorkApprovalRouteNode extends EntityBase {
 	@Column(nullable = false)
 	@NotEmpty
 	@Size(max = 255)
-	@ApiModelProperty(value = "承認者MoM社員ID (作成時不要)", required = true, position = 5, allowableValues = "range[0,255]", readOnly = true)
+	@ApiModelProperty(value = "承認者MoM社員ID", required = true, position = 5, allowableValues = "range[0,255]")
 	private String approverEmpId;
 
 	/**
@@ -91,7 +91,7 @@ public class ArrangementWorkApprovalRouteNode extends EntityBase {
 	 * 代理承認者MoM社員ID
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "代理承認者MoM社員ID (作成時不要)", required = false, position = 8, allowableValues = "range[0,255]", readOnly = true)
+	@ApiModelProperty(value = "代理承認者MoM社員ID", required = false, position = 8, allowableValues = "range[0,255]")
 	private String subApproverEmpId;
 
 	/**

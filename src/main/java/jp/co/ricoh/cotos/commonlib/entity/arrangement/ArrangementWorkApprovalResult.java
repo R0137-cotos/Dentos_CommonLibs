@@ -56,7 +56,7 @@ public class ArrangementWorkApprovalResult extends EntityBase {
 	/**
 	 * 手配業務承認ルートノードID
 	 */
-	@ApiModelProperty(value = "手配業務承認ルートノードID (作成時不要)", required = false, position = 3, readOnly = true)
+	@ApiModelProperty(value = "手配業務承認ルートノードID", required = false, position = 3)
 	private Long arrangementWorkApprovalRouteNodeId;
 
 	/**
@@ -73,7 +73,7 @@ public class ArrangementWorkApprovalResult extends EntityBase {
 	@Column(nullable = false)
 	@NotEmpty
 	@Size(max = 255)
-	@ApiModelProperty(value = "処理実施者MoM社員ID (作成時不要)", required = true, position = 5, allowableValues = "range[0,255]", readOnly = true)
+	@ApiModelProperty(value = "処理実施者MoM社員ID", required = true, position = 5, allowableValues = "range[0,255]")
 	private String actualEmpId;
 
 	/**
@@ -104,7 +104,7 @@ public class ArrangementWorkApprovalResult extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@NotNull
-	@ApiModelProperty(value = "実施日時 (作成時不要)", required = true, position = 9, readOnly = true)
+	@ApiModelProperty(value = "実施日時", required = true, position = 9)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date processedAt;
 

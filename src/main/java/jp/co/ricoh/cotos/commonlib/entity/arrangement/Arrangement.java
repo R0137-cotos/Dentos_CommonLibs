@@ -63,7 +63,7 @@ public class Arrangement extends EntityBase {
 	 * 契約ID
 	 */
 	@Column(nullable = false)
-	@ApiModelProperty(value = "契約ID (作成時不要)", required = true, position = 2, allowableValues = "range[0,9999999999999999999]", readOnly = true)
+	@ApiModelProperty(value = "契約ID", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
 	private long contractId;
 
 	/**
