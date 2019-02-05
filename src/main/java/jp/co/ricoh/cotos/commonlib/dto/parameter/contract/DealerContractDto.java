@@ -3,13 +3,13 @@ package jp.co.ricoh.cotos.commonlib.dto.parameter.contract;
 import javax.validation.constraints.Size;
 
 import io.swagger.annotations.ApiModelProperty;
-import jp.co.ricoh.cotos.commonlib.dto.parameter.common.DtoBase;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.common.DealerAbstractDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = false)
 @Data
-public class DealerContractDto extends DtoBase {
+public class DealerContractDto extends DealerAbstractDto {
 
 	/**
 	 * 販売店コード

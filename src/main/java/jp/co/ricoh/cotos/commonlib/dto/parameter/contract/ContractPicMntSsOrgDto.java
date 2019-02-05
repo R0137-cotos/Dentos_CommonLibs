@@ -20,4 +20,11 @@ public class ContractPicMntSsOrgDto extends DtoBase {
 	@Size(max = 255)
 	@ApiModelProperty(value = "MoM組織ID", required = false, position = 3, allowableValues = "range[0,255]")
 	private String momOrgId;
+
+	/**
+	 * 課所名
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "課所名", required = false, position = 4, allowableValues = "range[0,255]")
+	private String serviceOrgName;
 }

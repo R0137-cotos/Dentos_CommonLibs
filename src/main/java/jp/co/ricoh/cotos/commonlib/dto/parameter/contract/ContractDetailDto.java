@@ -23,7 +23,7 @@ public class ContractDetailDto extends DtoBase {
 	 * 状態
 	 */
 	@NotNull
-	@ApiModelProperty(value = "状態", required = true, allowableValues = "NOUPDATE(\"1\"), ADD(\"2\"), DELETE(\"3\")", example = "1", position = 3)
+	@ApiModelProperty(value = "状態", required = true, allowableValues = "NONE(\"1\"), ADD(\"2\"), DELETE(\"3\")", example = "", position = 3)
 	private DetailStatus state;
 
 	/**
@@ -34,11 +34,12 @@ public class ContractDetailDto extends DtoBase {
 	private int quantity;
 
 	/**
-	 * 見積金額
+	 * 金額
 	 */
+	@NotNull
 	@DecimalMax("9999999999999999999.99")
-	@ApiModelProperty(value = "見積金額", required = false, position = 5, allowableValues = "range[0.00,9999999999999999999.99]")
-	private BigDecimal estimationAmountSummary;
+	@ApiModelProperty(value = "金額", required = true, position = 5, allowableValues = "range[0.00,9999999999999999999.99]")
+	private BigDecimal amountSummary;
 
 	/**
 	 * 摘要
@@ -50,8 +51,8 @@ public class ContractDetailDto extends DtoBase {
 	/**
 	 * 拡張項目
 	 */
-	@Lob
 	@ApiModelProperty(value = "拡張項目", required = false, position = 7)
+	@Lob
 	private String extendsParameter;
 
 	@OneToOne(mappedBy = "contractDetail")
