@@ -111,7 +111,7 @@ public class EstimationCheckResult extends EntityBase {
 	/**
 	 * チェック実施者日時
 	 */
-	@ApiModelProperty(value = "チェック実施者日時", required = false, position = 10)
+	@ApiModelProperty(value = "チェック実施日時", required = false, position = 10)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date checkedAt;
 }
