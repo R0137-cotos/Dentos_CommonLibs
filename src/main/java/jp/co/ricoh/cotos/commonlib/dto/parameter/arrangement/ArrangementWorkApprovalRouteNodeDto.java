@@ -1,4 +1,4 @@
-package jp.co.ricoh.cotos.commonlib.dto.parameter.estimation;
+package jp.co.ricoh.cotos.commonlib.dto.parameter.arrangement;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Size;
@@ -12,14 +12,14 @@ import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = false)
 @Data
-public class EstimationApprovalRouteNodeDto extends DtoBase {
+public class ArrangementWorkApprovalRouteNodeDto extends DtoBase {
 
 	/**
 	 * 承認順
 	 */
-	@Max(999)
+	@Max(999L)
 	@ApiModelProperty(value = "承認順", required = true, position = 3, allowableValues = "range[0,999]")
-	private int approvalOrder;
+	private long approvalOrder;
 
 	/**
 	 * 承認者組織階層レベル

@@ -1,5 +1,7 @@
 package jp.co.ricoh.cotos.commonlib.dto.parameter.estimation;
 
+import javax.validation.constraints.Size;
+
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.common.DealerAbstractDto;
 import lombok.Data;
@@ -10,14 +12,9 @@ import lombok.EqualsAndHashCode;
 public class DealerEstimationDto extends DealerAbstractDto {
 
 	/**
-	 * ID
+	 * 担当者メールアドレス
 	 */
-	@ApiModelProperty(value = "ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
-	private long id;
-
-	/**
-	 * version
-	 */
-	@ApiModelProperty(value = "version", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
-	private long version;
+	@Size(max = 255)
+	@ApiModelProperty(value = "担当者メールアドレス", required = false, position = 3, allowableValues = "range[0,255]")
+	private String picMailAddress;
 }

@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = false)
 @Data
-public class ArrangementWorkDto extends DtoBase{
+public class ArrangementWorkDto extends DtoBase {
 
 	/**
 	 * 手配業務タイプマスタID

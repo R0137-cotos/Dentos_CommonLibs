@@ -16,20 +16,20 @@ public class ArrangementDto extends DtoBase {
 	/**
 	 * 契約ID
 	 */
-	@ApiModelProperty(value = "契約ID", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "契約ID", required = true, position = 3, allowableValues = "range[0,9999999999999999999]")
 	private long contractId;
 
 	/**
 	 * 解約フラグ
 	 */
 	@Max(9L)
-	@ApiModelProperty(value = "解約フラグ", required = true, position = 3, allowableValues = "range[0,9]")
+	@ApiModelProperty(value = "解約フラグ", required = true, position = 4, allowableValues = "range[0,9]")
 	private int disengagementFlg;
 
 	/**
 	 * ワークフロー状態
 	 */
 	@NotNull
-	@ApiModelProperty(value = "ワークフロー状態", required = true, allowableValues = "手配中(\"1\"), 手配完了(\"2\")", example = "1", position = 4)
+	@ApiModelProperty(value = "ワークフロー状態", required = true, allowableValues = "手配中(\"1\"), 手配完了(\"2\")", example = "1", position = 5)
 	private WorkflowStatus workflowStatus;
 }
