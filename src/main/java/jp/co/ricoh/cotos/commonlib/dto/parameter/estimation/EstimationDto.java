@@ -354,16 +354,23 @@ public class EstimationDto extends DtoBase {
 	private CustomerEstimationDto customerEstimation;
 
 	/**
+	 * 見積チェック結果
+	 */
+	@OneToMany(mappedBy = "estimation")
+	@ApiModelProperty(value = "見積チェック結果(作成時不要)", required = false, position = 50)
+	private List<EstimationCheckResultDto> estimationCheckResultList;
+
+	/**
 	 * 見積明細
 	 */
 	@OneToMany(mappedBy = "estimation")
-	@ApiModelProperty(value = "見積明細", required = false, position = 50)
+	@ApiModelProperty(value = "見積明細", required = false, position = 51)
 	private List<EstimationDetailDto> estimationDetailList;
 
 	/**
 	 * 商品（見積用）
 	 */
 	@OneToMany(mappedBy = "estimation")
-	@ApiModelProperty(value = "商品（見積用）", required = false, position = 51)
+	@ApiModelProperty(value = "商品（見積用）", required = false, position = 52)
 	private List<ProductEstimationDto> productEstimationList;
 }
