@@ -1,6 +1,10 @@
 package jp.co.ricoh.cotos.commonlib.dto.parameter.arrangement;
 
+import java.util.Date;
+
 import javax.persistence.Column;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -46,6 +50,15 @@ public class ArrangementWorkAttachedFileDto extends DtoBase {
 	private String attachedComment;
 
 	/**
+	 * 添付者MoM社員ID
+	 */
+	@Column(nullable = false)
+	@NotEmpty
+	@Size(max = 255)
+	@ApiModelProperty(value = "添付者MoM社員ID", required = true, position = 7, allowableValues = "range[0,255]", readOnly = true)
+	private String attachedEmpId;
+
+	/**
 	 * 添付者氏名
 	 */
 	@Column(nullable = false)
@@ -60,4 +73,13 @@ public class ArrangementWorkAttachedFileDto extends DtoBase {
 	@Size(max = 255)
 	@ApiModelProperty(value = "添付者組織名", required = false, position = 9, allowableValues = "range[0,255]", readOnly = true)
 	private String attachedOrgName;
+
+	/**
+	 * 添付日時
+	 */
+	@Column(nullable = false)
+	@NotNull
+	@ApiModelProperty(value = "添付日時", required = true, position = 10, readOnly = true)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date attachedAt;
 }

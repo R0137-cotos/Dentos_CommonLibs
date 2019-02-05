@@ -33,7 +33,7 @@ public class ArrangementWorkApprovalRoute extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "arrangement_work_approval_route_seq")
 	@SequenceGenerator(name = "arrangement_work_approval_route_seq", sequenceName = "arrangement_work_approval_route_seq", allocationSize = 1)
-	@ApiModelProperty(value = "手配業務承認ルートID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "手配業務承認ルートID (作成時不要)", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
 	private long id;
 
 	/**
@@ -49,7 +49,7 @@ public class ArrangementWorkApprovalRoute extends EntityBase {
 	 * 承認依頼者MoM社員ID
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "承認依頼者MoM社員ID", required = true, position = 3, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "承認依頼者MoM社員ID (作成時不要)", required = true, position = 3, allowableValues = "range[0,255]", readOnly = true)
 	private String approvalRequesterEmpId;
 
 	/**
@@ -71,7 +71,7 @@ public class ArrangementWorkApprovalRoute extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "arrangementWorkApprovalRoute")
 	@OrderBy("processedAt ASC")
-	@ApiModelProperty(value = "手配業務承認実績", required = false, position = 6, readOnly = true)
+	@ApiModelProperty(value = "手配業務承認実績 (作成時不要)", required = false, position = 6, readOnly = true)
 	private List<ArrangementWorkApprovalResult> arrangementWorkApprovalResultList;
 
 	/**

@@ -34,7 +34,7 @@ public class ArrangementWorkApprovalRouteNode extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "arrangement_work_approval_route_node_seq")
 	@SequenceGenerator(name = "arrangement_work_approval_route_node_seq", sequenceName = "arrangement_work_approval_route_node_seq", allocationSize = 1)
-	@ApiModelProperty(value = "手配業務承認ルートノードID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "手配業務承認ルートノードID (作成時不要)", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
 	private long id;
 
 	/**
@@ -68,7 +68,7 @@ public class ArrangementWorkApprovalRouteNode extends EntityBase {
 	@Column(nullable = false)
 	@NotEmpty
 	@Size(max = 255)
-	@ApiModelProperty(value = "承認者MoM社員ID", required = true, position = 5, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "承認者MoM社員ID (作成時不要)", required = true, position = 5, allowableValues = "range[0,255]", readOnly = true)
 	private String approverEmpId;
 
 	/**
@@ -91,7 +91,7 @@ public class ArrangementWorkApprovalRouteNode extends EntityBase {
 	 * 代理承認者MoM社員ID
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "代理承認者MoM社員ID", required = false, position = 8, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "代理承認者MoM社員ID (作成時不要)", required = false, position = 8, allowableValues = "range[0,255]", readOnly = true)
 	private String subApproverEmpId;
 
 	/**

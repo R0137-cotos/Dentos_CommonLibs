@@ -42,14 +42,14 @@ public class Contact extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contact_seq")
 	@SequenceGenerator(name = "contact_seq", sequenceName = "contact_seq", allocationSize = 1)
-	@ApiModelProperty(value = "問い合わせID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "問い合わせID (作成時不要)", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
 	private long id;
 
 	/**
 	 * 見積ID
 	 */
 	@Column(nullable = false)
-	@ApiModelProperty(value = "見積ID", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "見積ID (作成時不要)", required = true, position = 2, allowableValues = "range[0,9999999999999999999]", readOnly = true)
 	private long estimationId;
 
 	/**
@@ -74,7 +74,7 @@ public class Contact extends EntityBase {
 	@Column(nullable = false)
 	@NotEmpty
 	@Size(max = 255)
-	@ApiModelProperty(value = "送信者MoM社員ID", required = true, position = 4, allowableValues = "range[0,255]", readOnly = true)
+	@ApiModelProperty(value = "送信者MoM社員ID (作成時不要)", required = true, position = 4, allowableValues = "range[0,255]", readOnly = true)
 	private String contactFromEmpId;
 
 	/**
@@ -103,7 +103,7 @@ public class Contact extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@NotNull
-	@ApiModelProperty(value = "送信日時", required = true, position = 8, readOnly = true)
+	@ApiModelProperty(value = "送信日時 (作成時不要)", required = true, position = 8, readOnly = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date sendAt;
 
@@ -111,7 +111,7 @@ public class Contact extends EntityBase {
 	 * 送信者氏名
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "送信者氏名", required = false, position = 9, allowableValues = "range[0,255]", readOnly = true)
+	@ApiModelProperty(value = "送信者氏名 (作成時不要)", required = false, position = 9, allowableValues = "range[0,255]", readOnly = true)
 	private String contactFromEmpName;
 
 	/**

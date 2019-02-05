@@ -38,7 +38,7 @@ public class ArrangementWorkCheckResult extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "arrangement_work_check_result_seq")
 	@SequenceGenerator(name = "arrangement_work_check_result_seq", sequenceName = "arrangement_work_check_result_seq", allocationSize = 1)
-	@ApiModelProperty(value = "手配業務チェック結果ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "手配業務チェック結果ID (作成時不要)", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
 	private long id;
 
 	/**
@@ -81,7 +81,7 @@ public class ArrangementWorkCheckResult extends EntityBase {
 	 * チェック実施者MoM社員ID
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "チェック実施者MoM社員ID", required = false, position = 6, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "チェック実施者MoM社員ID (作成時不要)", required = false, position = 6, allowableValues = "range[0,255]", readOnly = true)
 	private String checkedUserId;
 
 	/**
@@ -101,7 +101,7 @@ public class ArrangementWorkCheckResult extends EntityBase {
 	/**
 	 * チェック実施日時
 	 */
-	@ApiModelProperty(value = "チェック実施日時", required = false, position = 9, readOnly = true)
+	@ApiModelProperty(value = "チェック実施日時", required = false, position = 9)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date checkedAt;
 
