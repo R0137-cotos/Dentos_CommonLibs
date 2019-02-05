@@ -46,7 +46,7 @@ public class OperationLog extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "operation_log_seq")
 	@SequenceGenerator(name = "operation_log_seq", sequenceName = "operation_log_seq", allocationSize = 1)
-	@ApiModelProperty(value = "操作履歴ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "操作履歴ID(作成時不要)", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
 	private long id;
 
 	/**
@@ -94,7 +94,7 @@ public class OperationLog extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@NotNull
-	@ApiModelProperty(value = "実施日時", required = true, position = 7, readOnly = true)
+	@ApiModelProperty(value = "実施日時(作成時不要)", required = true, position = 7, readOnly = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date operatedAt;
 

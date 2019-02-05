@@ -35,28 +35,28 @@ public class DealerAbstractEntity extends EntityBase {
 	 * 販売店名
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "販売店名", required = false, position = 52, allowableValues = "range[0,255]", readOnly = true)
+	@ApiModelProperty(value = "販売店名(作成時不要)", required = false, position = 52, allowableValues = "range[0,255]", readOnly = true)
 	private String dealerName;
 
 	/**
 	 * 郵便番号
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "郵便番号", required = false, position = 53, allowableValues = "range[0,255]", readOnly = true)
+	@ApiModelProperty(value = "郵便番号(作成時不要)", required = false, position = 53, allowableValues = "range[0,255]", readOnly = true)
 	private String postNumber;
 
 	/**
 	 * 住所
 	 */
 	@Size(max = 1000)
-	@ApiModelProperty(value = "住所", required = false, position = 54, allowableValues = "range[0,1000]", readOnly = true)
+	@ApiModelProperty(value = "住所(作成時不要)", required = false, position = 54, allowableValues = "range[0,1000]", readOnly = true)
 	private String address;
 
 	/**
 	 * 会社代表電話番号
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "会社代表電話番号", required = false, position = 55, allowableValues = "range[0,255]", readOnly = true)
+	@ApiModelProperty(value = "会社代表電話番号(作成時不要)", required = false, position = 55, allowableValues = "range[0,255]", readOnly = true)
 	private String orgPhoneNumber;
 
 	/**

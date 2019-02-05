@@ -30,7 +30,7 @@ public class CustomerEstimation extends CustomerAbstractEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_estimation_seq")
 	@SequenceGenerator(name = "customer_estimation_seq", sequenceName = "customer_estimation_seq", allocationSize = 1)
-	@ApiModelProperty(value = "ID", required = true, position = 1)
+	@ApiModelProperty(value = "ID(作成時不要)", required = true, position = 1, readOnly = true)
 	private long id;
 
 	/**
