@@ -46,7 +46,7 @@ public class ArrangementWorkOperationLog extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "arrangement_work_operation_log_seq")
 	@SequenceGenerator(name = "arrangement_work_operation_log_seq", sequenceName = "arrangement_work_operation_log_seq", allocationSize = 1)
-	@ApiModelProperty(value = "手配業務操作履歴ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "手配業務操作履歴ID (作成時不要)", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
 	private long id;
 
 	/**
@@ -97,7 +97,7 @@ public class ArrangementWorkOperationLog extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@NotNull
-	@ApiModelProperty(value = "実施日時", required = true, position = 7, readOnly = true)
+	@ApiModelProperty(value = "実施日時", required = true, position = 7)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date operatedAt;
 

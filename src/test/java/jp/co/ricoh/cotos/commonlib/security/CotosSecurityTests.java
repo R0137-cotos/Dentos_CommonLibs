@@ -31,7 +31,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import jp.co.ricoh.cotos.commonlib.DBConfig;
-import jp.co.ricoh.cotos.commonlib.dto.parameter.AuthorityJudgeParameter;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.common.AuthorityJudgeParameter;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvEmployeeMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.SuperUserMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster;

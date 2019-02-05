@@ -25,4 +25,6 @@ public class DtoBase {
 	@Version
 	@ApiModelProperty(value = "version", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
 	private long version;
+
 }
+
