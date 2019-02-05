@@ -32,7 +32,7 @@ public class ContractPicMntSsOrg extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_pic_mnt_ss_org_seq")
 	@SequenceGenerator(name = "contract_pic_mnt_ss_org_seq", sequenceName = "contract_pic_mnt_ss_org_seq", allocationSize = 1)
-	@ApiModelProperty(value = "ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "ID(作成時不要)", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
 	private long id;
 
 	/**

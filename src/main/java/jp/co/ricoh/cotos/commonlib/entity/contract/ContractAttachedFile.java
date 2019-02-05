@@ -44,7 +44,7 @@ public class ContractAttachedFile extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_attached_file_seq")
 	@SequenceGenerator(name = "contract_attached_file_seq", sequenceName = "contract_attached_file_seq", allocationSize = 1)
-	@ApiModelProperty(value = "契約添付ファイルID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "契約添付ファイルID(作成時不要)", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
 	private long id;
 
 	/**
@@ -118,7 +118,7 @@ public class ContractAttachedFile extends EntityBase {
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@NotNull
-	@ApiModelProperty(value = "添付日時", required = true, position = 10, readOnly = true)
+	@ApiModelProperty(value = "添付日時(作成時不要)", required = true, position = 10, readOnly = true)
 	private Date attachedAt;
 
 	/**
