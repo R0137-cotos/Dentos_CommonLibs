@@ -1,4 +1,4 @@
-package jp.co.ricoh.cotos.commonlib.dto.parameter;
+package jp.co.ricoh.cotos.commonlib.dto.parameter.contract;
 
 import io.swagger.annotations.ApiParam;
 import lombok.Data;

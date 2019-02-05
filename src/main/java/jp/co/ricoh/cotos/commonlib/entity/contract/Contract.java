@@ -111,7 +111,7 @@ public class Contract extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_seq")
 	@SequenceGenerator(name = "contract_seq", sequenceName = "contract_seq", allocationSize = 1)
-	@ApiModelProperty(value = "契約ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "契約ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
 	private long id;
 
 	/**
@@ -133,7 +133,7 @@ public class Contract extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@NotNull
-	@ApiModelProperty(value = "ライフサイクル状態", required = true, allowableValues = "作成中(\"1\"), 作成完了(\"2\"), キャンセル手続き中(\"3\"), 破棄(\"4\"), 予定日待ち(\"5\"), 締結中(\"6\"), 解約手続き中(\"7\"), 解約予定日待ち(\"8\"), 解約(\"9\"), 旧契約(\"10\")", example = "1", position = 4)
+	@ApiModelProperty(value = "ライフサイクル状態", required = true, allowableValues = "作成中(\"1\"), 作成完了(\"2\"), キャンセル手続き中(\"3\"), 破棄(\"4\"), 予定日待ち(\"5\"), 締結中(\"6\"), 解約手続き中(\"7\"), 解約予定日待ち(\"8\"), 解約(\"9\"), 旧契約(\"10\")", example = "1", position = 4, readOnly = true)
 	private LifecycleStatus lifecycleStatus;
 
 	/**
@@ -141,14 +141,14 @@ public class Contract extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@NotNull
-	@ApiModelProperty(value = "ワークフロー状態", required = true, allowableValues = "作成中(\"1\"), 承認依頼中(\"2\"), 承認済(\"3\"), 業務依頼中(\"4\"), 業務処理完了(\"5\"), キャンセル申請中(\"6\"), 売上可能(\"7\"), 解約申請中(\"8\")", example = "1", position = 5)
+	@ApiModelProperty(value = "ワークフロー状態", required = true, allowableValues = "作成中(\"1\"), 承認依頼中(\"2\"), 承認済(\"3\"), 業務依頼中(\"4\"), 業務処理完了(\"5\"), キャンセル申請中(\"6\"), 売上可能(\"7\"), 解約申請中(\"8\")", example = "1", position = 5, readOnly = true)
 	private WorkflowStatus workflowStatus;
 
 	/**
 	 * 恒久契約識別番号
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "恒久契約識別番号", required = false, position = 6, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "恒久契約識別番号", required = false, position = 6, allowableValues = "range[0,255]", readOnly = true)
 	private String immutableContIdentNumber;
 
 	/**
@@ -233,7 +233,7 @@ public class Contract extends EntityBase {
 	 */
 	@Max(9)
 	@Column(nullable = false)
-	@ApiModelProperty(value = "売上計上フラグ", required = true, position = 18, allowableValues = "range[0,9]")
+	@ApiModelProperty(value = "売上計上フラグ", required = true, position = 18, allowableValues = "range[0,9]", readOnly = true)
 	private int accountSalesFlg;
 
 	/**
@@ -394,21 +394,21 @@ public class Contract extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "contract")
 	@OrderBy("displayOrder ASC")
-	@ApiModelProperty(value = "契約チェック結果", required = false, position = 41)
+	@ApiModelProperty(value = "契約チェック結果", required = false, position = 41, readOnly = true)
 	private List<ContractCheckResult> contractCheckResultList;
 
 	/**
 	 * 契約承認ルート
 	 */
 	@OneToMany(mappedBy = "contract")
-	@ApiModelProperty(value = "契約承認ルート", required = false, position = 42)
+	@ApiModelProperty(value = "契約承認ルート", required = false, position = 42, readOnly = true)
 	private List<ContractApprovalRoute> contractApprovalRouteList;
 
 	/**
 	 * 契約添付ファイル
 	 */
 	@OneToMany(mappedBy = "contract")
-	@ApiModelProperty(value = "契約添付ファイル", required = false, position = 43)
+	@ApiModelProperty(value = "契約添付ファイル", required = false, position = 43, readOnly = true)
 	private List<ContractAttachedFile> contractAttachedFileList;
 
 	/**
@@ -422,7 +422,7 @@ public class Contract extends EntityBase {
 	 * 契約追加編集者社員
 	 */
 	@OneToMany(mappedBy = "contract")
-	@ApiModelProperty(value = "契約追加編集者社員", required = false, position = 45)
+	@ApiModelProperty(value = "契約追加編集者社員", required = false, position = 45, readOnly = true)
 	private List<ContractAddedEditorEmp> contractAddedEditorEmpList;
 
 	/**
@@ -458,13 +458,13 @@ public class Contract extends EntityBase {
 	 * 契約担当CE社員
 	 */
 	@OneToOne(mappedBy = "contract")
-	@ApiModelProperty(value = "契約担当CE社員", required = false, position = 50)
+	@ApiModelProperty(value = "契約担当CE社員", required = false, position = 50, readOnly = true)
 	private ContractPicCeEmp contractPicCeEmp;
 
 	/**
 	 * 契約保守担当SS組織
 	 */
 	@OneToOne(mappedBy = "contract")
-	@ApiModelProperty(value = "契約保守担当SS組織", required = false, position = 51)
+	@ApiModelProperty(value = "契約保守担当SS組織", required = false, position = 51, readOnly = true)
 	private ContractPicMntSsOrg contractPicMntSsOrg;
 }

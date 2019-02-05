@@ -37,7 +37,7 @@ public class ContractApprovalRoute extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_approval_route_seq")
 	@SequenceGenerator(name = "contract_approval_route_seq", sequenceName = "contract_approval_route_seq", allocationSize = 1)
-	@ApiModelProperty(value = "契約承認ルートID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "契約承認ルートID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
 	private long id;
 
 	/**
@@ -98,7 +98,7 @@ public class ContractApprovalRoute extends EntityBase {
 	 * 契約承認ルートノード
 	 */
 	@OneToMany(mappedBy = "contractApprovalRoute")
-	@ApiModelProperty(value = "契約承認ルートノード", required = true, position = 9)
+	@ApiModelProperty(value = "契約承認ルートノード", required = true, position = 9, readOnly = true)
 	@OrderBy("approvalOrder ASC")
 	private List<ContractApprovalRouteNode> contractApprovalRouteNodeList;
 }
