@@ -2,8 +2,6 @@ package jp.co.ricoh.cotos.commonlib.dto.parameter.arrangement;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.OrderBy;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Max;
@@ -23,7 +21,6 @@ public class ArrangementWorkCheckResultDto extends DtoBase {
 	/**
 	 * チェック事項コード
 	 */
-	@Column(nullable = false)
 	@NotEmpty
 	@Size(max = 255)
 	@ApiModelProperty(value = "チェック事項コード", required = true, position = 3, allowableValues = "range[0,255]")
@@ -32,7 +29,6 @@ public class ArrangementWorkCheckResultDto extends DtoBase {
 	/**
 	 * チェック事項文面
 	 */
-	@Column(nullable = false)
 	@NotEmpty
 	@Size(max = 255)
 	@ApiModelProperty(value = "チェック事項文面", required = true, position = 4, allowableValues = "range[0,255]")
@@ -41,8 +37,6 @@ public class ArrangementWorkCheckResultDto extends DtoBase {
 	/**
 	 * 表示順
 	 */
-	@Column(nullable = false)
-	@OrderBy("desc")
 	@Max(999)
 	@ApiModelProperty(value = "表示順", required = true, position = 5, allowableValues = "range[0,999]")
 	private int displayOrder;
