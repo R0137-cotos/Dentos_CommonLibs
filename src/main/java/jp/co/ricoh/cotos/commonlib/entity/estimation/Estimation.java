@@ -19,6 +19,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Max;
@@ -417,6 +418,7 @@ public class Estimation extends EntityBase {
 	/**
 	 * 見積承認ルート
 	 */
+	@Valid
 	@OneToOne(mappedBy = "estimation")
 	@ApiModelProperty(value = "見積承認ルート(作成時不要)", required = false, position = 43, readOnly = true)
 	private EstimationApprovalRoute estimationApprovalRoute;
@@ -424,6 +426,7 @@ public class Estimation extends EntityBase {
 	/**
 	 * 見積操作履歴
 	 */
+	@Valid
 	@OneToMany(mappedBy = "estimation")
 	@OrderBy("operatedAt ASC")
 	@ApiModelProperty(value = "見積操作履歴(作成時不要)", required = false, position = 44, readOnly = true)
@@ -432,6 +435,7 @@ public class Estimation extends EntityBase {
 	/**
 	 * 見積添付ファイル
 	 */
+	@Valid
 	@OneToMany(mappedBy = "estimation")
 	@ApiModelProperty(value = "見積添付ファイル", required = false, position = 45)
 	private List<EstimationAttachedFile> estimationAttachedFileList;
@@ -439,6 +443,7 @@ public class Estimation extends EntityBase {
 	/**
 	 * 見積担当SA社員
 	 */
+	@Valid
 	@NotNull
 	@OneToOne(mappedBy = "estimation")
 	@ApiModelProperty(value = "見積担当SA社員", required = true, position = 46)
@@ -447,6 +452,7 @@ public class Estimation extends EntityBase {
 	/**
 	 * 見積追加編集者社員
 	 */
+	@Valid
 	@OneToMany(mappedBy = "estimation")
 	@ApiModelProperty(value = "見積追加編集者社員", required = false, position = 47)
 	private List<EstimationAddedEditorEmp> estimationAddedEditorEmpList;
@@ -454,6 +460,7 @@ public class Estimation extends EntityBase {
 	/**
 	 * 販売店（見積用）
 	 */
+	@Valid
 	@OneToMany(mappedBy = "estimation")
 	@ApiModelProperty(value = "販売店(見積用)", required = false, position = 48)
 	private List<DealerEstimation> dealerEstimationList;
@@ -461,6 +468,7 @@ public class Estimation extends EntityBase {
 	/**
 	 * 顧客（見積用）
 	 */
+	@Valid
 	@NotNull
 	@OneToOne(mappedBy = "estimation")
 	@ApiModelProperty(value = "顧客(見積用)", required = true, position = 49)
@@ -469,6 +477,7 @@ public class Estimation extends EntityBase {
 	/**
 	 * 見積チェック結果
 	 */
+	@Valid
 	@OneToMany(mappedBy = "estimation")
 	@OrderBy("displayOrder ASC")
 	@ApiModelProperty(value = "見積チェック結果(作成時不要)", required = false, position = 50, readOnly = true)
@@ -477,6 +486,7 @@ public class Estimation extends EntityBase {
 	/**
 	 * 見積明細
 	 */
+	@Valid
 	@OneToMany(mappedBy = "estimation")
 	@ApiModelProperty(value = "見積明細", required = false, position = 51)
 	private List<EstimationDetail> estimationDetailList;
@@ -484,6 +494,7 @@ public class Estimation extends EntityBase {
 	/**
 	 * 商品（見積用）
 	 */
+	@Valid
 	@OneToMany(mappedBy = "estimation")
 	@ApiModelProperty(value = "商品（見積用）(作成時不要)", required = false, position = 52, readOnly = true)
 	private List<ProductEstimation> productEstimationList;
