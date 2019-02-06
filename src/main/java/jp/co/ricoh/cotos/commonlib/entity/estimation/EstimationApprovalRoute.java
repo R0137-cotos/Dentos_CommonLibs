@@ -13,7 +13,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.Valid;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -74,6 +76,7 @@ public class EstimationApprovalRoute extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@Max(9)
+	@Min(0)
 	@ApiModelProperty(value = "特価承認対象フラグ", required = true, position = 6, allowableValues = "range[0,9]")
 	private int specialPriceApprovalFlg;
 
@@ -82,15 +85,17 @@ public class EstimationApprovalRoute extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "estimationApprovalRoute")
 	@OrderBy("processedAt ASC")
+	@Valid
 	@ApiModelProperty(value = "見積承認実績(作成時不要)", required = false, position = 7, readOnly = true)
 	private List<EstimationApprovalResult> estimationApprovalResultList;
 
 	/**
 	 * 見積承認ルートノード
 	 */
+	@NotNull
 	@OneToMany(mappedBy = "estimationApprovalRoute")
 	@OrderBy("approvalOrder ASC")
-	@NotNull
+	@Valid
 	@ApiModelProperty(value = "見積承認ルートノード(作成時不要)", required = true, position = 8, readOnly = true)
 	private List<EstimationApprovalRouteNode> estimationApprovalRouteNodeList;
 

@@ -11,6 +11,7 @@ import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -52,6 +53,7 @@ public class EstimationApprovalRouteNode extends EntityBase {
 	@Column(nullable = false)
 	@OrderBy("desc")
 	@Max(999)
+	@Min(0)
 	@ApiModelProperty(value = "承認順", required = true, position = 3, allowableValues = "range[0,999]")
 	private int approvalOrder;
 
@@ -59,6 +61,7 @@ public class EstimationApprovalRouteNode extends EntityBase {
 	 * 承認者組織階層レベル
 	 */
 	@Max(9)
+	@Min(0)
 	@ApiModelProperty(value = "承認者組織階層レベル", required = false, position = 4, allowableValues = "range[0,9]")
 	private Integer approverOrgLevel;
 

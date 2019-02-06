@@ -134,6 +134,19 @@ public class TestTools {
 	}
 
 	/**
+	 * ErrorInfo のエラー ID が全て指定したものと同じ物が一つだけ存在するかどうかを判定する
+	 *
+	 * @param errorInfoList
+	 *            ErrorInfo のリスト
+	 * @param paramterErrorId
+	 *            エラーID
+	 * @return boolean 判定結果（true：全て一致 false：不一致あり）
+	 */
+	public boolean errorIdMatchesOne(List<ErrorInfo> errorInfoList, ParameterErrorIds paramterErrorId) {
+		return (1 == (int) errorInfoList.stream().filter(info -> info != null && paramterErrorId.toString().equals(info.getErrorId())).count());
+	}
+
+	/**
 	 * ErrorInfo のエラー メッセージ が指定したものと同じ物が一つだけ存在するかどうかを判定する
 	 *
 	 * @param errorInfoList

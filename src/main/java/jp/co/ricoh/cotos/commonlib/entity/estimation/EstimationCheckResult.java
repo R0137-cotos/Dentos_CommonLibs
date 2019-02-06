@@ -15,6 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -82,6 +83,7 @@ public class EstimationCheckResult extends EntityBase {
 	 * 表示順
 	 */
 	@Max(999)
+	@Min(0)
 	@OrderBy("desc")
 	@Column(nullable = false)
 	@ApiModelProperty(value = "表示順", required = true, position = 6, allowableValues = "range[0,999]")
