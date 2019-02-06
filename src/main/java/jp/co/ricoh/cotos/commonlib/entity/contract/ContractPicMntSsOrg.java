@@ -15,6 +15,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import lombok.Data;
@@ -27,6 +28,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Table(name = "contract_pic_mnt_ss_org")
+@ApiModel(description = "契約保守担当SS組織(作成時不要)")
 public class ContractPicMntSsOrg extends EntityBase {
 
 	@Id
