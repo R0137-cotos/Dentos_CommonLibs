@@ -61,12 +61,13 @@ public class TestEstimation {
 
 	private static final String STR_256 = "0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345";
 	private static final String STR_1001 = "01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
-	private static final int INT_0 = 0;
+	private static final int INT_MINUS_1 = -1;
 	private static final int INT_10 = 10;
 	private static final int INT_100 = 100;
 	private static final int INT_1000 = 1000;
 	private static final int INT_100000 = 100000;
-	private static final BigDecimal DECIMAL_0 = new BigDecimal("0.00");
+	private static final BigDecimal DECIMAL_MINUS_001 = new BigDecimal("-0.01");
+	private static final BigDecimal DECIMAL_0001 = new BigDecimal("0.001");
 	private static final BigDecimal DECIMAL_10000000000000000000 = new BigDecimal("10000000000000000000.00");
 
 	static ConfigurableApplicationContext context;
@@ -319,20 +320,27 @@ public class TestEstimation {
 
 		// 異常系（@Min ：）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setProductGrpMasterId(INT_0);
-		testTarget.setEstimationBranchNumber(INT_0);
-		testTarget.setOriginContractBranchNumber(INT_0);
-		testTarget.setOriginContractId((long) INT_0);
+		testTarget.setProductGrpMasterId(INT_MINUS_1);
+		testTarget.setEstimationBranchNumber(INT_MINUS_1);
+		testTarget.setOriginContractBranchNumber(INT_MINUS_1);
+		testTarget.setOriginContractId((long) INT_MINUS_1);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 4);
-		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00026));
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
 
 		// 異常系（@DecimalMin ：）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setCompetitionAmount(DECIMAL_0);
+		testTarget.setCompetitionAmount(DECIMAL_MINUS_001);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
-		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00026));
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
+
+		// 異常系（@Digits ：）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setCompetitionAmount(DECIMAL_0001);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00028));
 	}
 
 	@Test

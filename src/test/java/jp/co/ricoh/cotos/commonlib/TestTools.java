@@ -31,8 +31,10 @@ public class TestTools {
 		ROT00014,
 		/** Max：EntityCheckNumberMaxError（{0}は最大値（{1}）を超えています。） */
 		ROT00015,
-		/** Min：EntityCheckNumberMaxError（{0}は最小値（{1}）を下回っています。） */
-		ROT00026;
+		/** Min：EntityCheckNumberMinError（{0}は最小値（{1}）を下回っています。） */
+		ROT00027,
+		/** Digits：EntityCheckNumberDigitsError（{0}は小数点以下{2}桁を超えています。）*/
+		ROT00028;
 	}
 
 	public <T> String findNullProperties(T entity) throws Exception {
