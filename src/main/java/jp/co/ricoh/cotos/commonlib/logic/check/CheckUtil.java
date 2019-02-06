@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSourceResolvable;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
@@ -72,10 +73,10 @@ public class CheckUtil {
 						min = fieldError.getArguments()[1].toString();
 					}
 					if ("DecimalMax".equals(errCode)) {
-						max = fieldError.getArguments()[2].toString();
+						max = ((MessageSourceResolvable)fieldError.getArguments()[2]).getDefaultMessage();
 					}
 					if ("DecimalMin".equals(errCode)) {
-						min = fieldError.getArguments()[2].toString();
+						min = ((MessageSourceResolvable)fieldError.getArguments()[2]).getDefaultMessage();
 					}
 					if ("Digits".equals(errCode)) {
 						digits = fieldError.getArguments()[1].toString();
