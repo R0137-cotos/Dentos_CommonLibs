@@ -133,4 +133,17 @@ public class TestTools {
 		return (errorInfoList.size() == (int) errorInfoList.stream().filter(info -> info != null && paramterErrorId.toString().equals(info.getErrorId())).count());
 	}
 
+	/**
+	 * ErrorInfo のエラー メッセージ が指定したものと同じ物が一つだけ存在するかどうかを判定する
+	 *
+	 * @param errorInfoList
+	 *            ErrorInfo のリスト
+	 * @param paramterErrorMessage
+	 *            エラーメッセージ
+	 * @return boolean 判定結果（true：一つ一致 false：一致無しまたは二つ以上一致）
+	 */
+	public boolean errorMessageMatchesOne(List<ErrorInfo> errorInfoList, String paramterErrorMessage) {
+		return (1 == (int) errorInfoList.stream().filter(info -> info != null && paramterErrorMessage.toString().equals(info.getErrorMessage())).count());
+	}
+
 }
