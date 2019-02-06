@@ -2,6 +2,10 @@ package jp.co.ricoh.cotos.commonlib.dto.parameter.arrangement;
 
 import java.util.List;
 
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -19,6 +23,8 @@ public class ArrangementWorkDto extends DtoBase {
 	/**
 	 * 手配
 	 */
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "arrangement_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "手配", required = true, position = 3)
 	private ArrangementDto arrangement;
 
@@ -52,24 +58,28 @@ public class ArrangementWorkDto extends DtoBase {
 	/**
 	 * 手配業務承認ルート
 	 */
+	@OneToOne(mappedBy = "arrangementWork")
 	@ApiModelProperty(value = "手配業務承認ルート", required = false, position = 8)
 	private ArrangementWorkApprovalRouteDto arrangementWorkApprovalRoute;
 
 	/**
 	 * 担当作業者社員
 	 */
+	@OneToOne(mappedBy = "arrangementWork")
 	@ApiModelProperty(value = "担当作業者社員", required = false, position = 9)
 	private ArrangementPicWorkerEmpDto arrangementPicWorkerEmp;
 
 	/**
 	 * 手配業務添付ファイル
 	 */
+	@OneToMany(mappedBy = "arrangementWork")
 	@ApiModelProperty(value = "手配業務添付ファイル", required = false, position = 10)
 	private List<ArrangementWorkAttachedFileDto> workAttachedFileList;
 
 	/**
 	 * 手配業務チェック結果
 	 */
+	@OneToMany(mappedBy = "arrangementWork")
 	@ApiModelProperty(value = "手配業務チェック結果", required = false, position = 11)
 	private List<ArrangementWorkCheckResultDto> arrangementWorkCheckResultList;
 }

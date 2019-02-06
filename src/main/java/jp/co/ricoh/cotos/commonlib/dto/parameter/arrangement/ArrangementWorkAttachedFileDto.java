@@ -1,6 +1,11 @@
 package jp.co.ricoh.cotos.commonlib.dto.parameter.arrangement;
 
-import javax.persistence.Column;
+import java.util.Date;
+
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -34,7 +39,9 @@ public class ArrangementWorkAttachedFileDto extends DtoBase {
 	/**
 	 * 添付ファイル
 	 */
+	@OneToOne(optional = false)
 	@NotNull
+	@JoinColumn(name = "attached_file_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "添付ファイル", required = true, position = 5)
 	private AttachedFile attachedFile;
 
@@ -48,25 +55,31 @@ public class ArrangementWorkAttachedFileDto extends DtoBase {
 	/**
 	 * 添付者MoM社員ID
 	 */
-	@Column(nullable = false)
 	@NotEmpty
 	@Size(max = 255)
-	@ApiModelProperty(value = "添付者MoM社員ID", required = true, position = 7, allowableValues = "range[0,255]", readOnly = true)
+	@ApiModelProperty(value = "添付者MoM社員ID", required = true, position = 7, allowableValues = "range[0,255]")
 	private String attachedEmpId;
 
 	/**
 	 * 添付者氏名
 	 */
-	@Column(nullable = false)
 	@NotEmpty
 	@Size(max = 255)
-	@ApiModelProperty(value = "添付者氏名", required = true, position = 8, allowableValues = "range[0,255]", readOnly = true)
+	@ApiModelProperty(value = "添付者氏名", required = true, position = 8, allowableValues = "range[0,255]")
 	private String attachedEmpName;
 
 	/**
 	 * 添付者組織名
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "添付者組織名", required = false, position = 9, allowableValues = "range[0,255]", readOnly = true)
+	@ApiModelProperty(value = "添付者組織名", required = false, position = 9, allowableValues = "range[0,255]")
 	private String attachedOrgName;
+
+	/**
+	 * 添付日時
+	 */
+	@NotNull
+	@ApiModelProperty(value = "添付日時", required = true, position = 10)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date attachedAt;
 }
