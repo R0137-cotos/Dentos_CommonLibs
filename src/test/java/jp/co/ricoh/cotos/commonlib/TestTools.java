@@ -33,7 +33,7 @@ public class TestTools {
 		ROT00015,
 		/** Min：EntityCheckNumberMinError（{0}は最小値（{1}）を下回っています。） */
 		ROT00027,
-		/** Digits：EntityCheckNumberDigitsError（{0}は小数点以下{2}桁を超えています。）*/
+		/** Digits：EntityCheckNumberDigitsError（{0}は小数点以下{1}桁を超えています。）*/
 		ROT00028;
 	}
 
