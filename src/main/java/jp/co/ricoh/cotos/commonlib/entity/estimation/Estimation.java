@@ -426,6 +426,7 @@ public class Estimation extends EntityBase {
 	/**
 	 * 見積操作履歴
 	 */
+	@Valid
 	@OneToMany(mappedBy = "estimation")
 	@OrderBy("operatedAt ASC")
 	@ApiModelProperty(value = "見積操作履歴(作成時不要)", required = false, position = 44, readOnly = true)
