@@ -196,6 +196,7 @@ public class TestEstimation {
 
 		// 異常系（@Size(max) ：）
 		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setMomKjbSystemId(STR_256);
 		testTarget.setPicName(STR_256);
 		testTarget.setPicDeptName(STR_256);
 		testTarget.setPicPhoneNumber(STR_256);
