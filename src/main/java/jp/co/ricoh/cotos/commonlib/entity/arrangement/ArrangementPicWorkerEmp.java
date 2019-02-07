@@ -12,6 +12,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.common.EmployeeAbstractEntity;
 import lombok.Data;
@@ -25,6 +26,7 @@ import lombok.EqualsAndHashCode;
 @EntityListeners(ArrangementPicWorkerEmpListener.class)
 @Data
 @Table(name = "arrangement_pic_worker_emp")
+@ApiModel(description = "担当作業者社員(作成時不要)")
 public class ArrangementPicWorkerEmp extends EmployeeAbstractEntity {
 
 	@Id
