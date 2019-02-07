@@ -1,9 +1,9 @@
 package jp.co.ricoh.cotos.commonlib.dto.parameter.common;
 
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.NotEmpty;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -16,8 +16,9 @@ public class EmployeeAbstractDto extends DtoBase {
 	/**
 	 * MoM社員ID
 	 */
-	@NotEmpty
-	@ApiModelProperty(value = "MoM社員ID", required = true, position = 51, allowableValues = "range[0,24]")
+	@Size(max = 255)
+	@NotNull
+	@ApiModelProperty(value = "MoM社員ID", required = true, position = 51, allowableValues = "range[0,255]")
 	private String momEmployeeId;
 
 	/**
@@ -30,6 +31,7 @@ public class EmployeeAbstractDto extends DtoBase {
 	/**
 	 * 所属組織階層レベル
 	 */
+	@Min(0)
 	@Max(9)
 	@ApiModelProperty(value = "所属組織階層レベル", required = false, position = 53, allowableValues = "range[0,9]")
 	private Integer orgHierarchyLevel;
@@ -58,7 +60,7 @@ public class EmployeeAbstractDto extends DtoBase {
 	/**
 	 * 社員名
 	 */
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "社員名", required = true, position = 57, allowableValues = "range[0,255]")
 	private String employeeName;

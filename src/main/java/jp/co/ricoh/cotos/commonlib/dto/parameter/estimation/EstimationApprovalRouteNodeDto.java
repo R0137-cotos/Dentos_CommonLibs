@@ -1,9 +1,9 @@
 package jp.co.ricoh.cotos.commonlib.dto.parameter.estimation;
 
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.NotEmpty;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.common.DtoBase;
@@ -17,6 +17,7 @@ public class EstimationApprovalRouteNodeDto extends DtoBase {
 	/**
 	 * 承認順
 	 */
+	@Min(0)
 	@Max(999)
 	@ApiModelProperty(value = "承認順", required = true, position = 3, allowableValues = "range[0,999]")
 	private int approvalOrder;
@@ -24,6 +25,7 @@ public class EstimationApprovalRouteNodeDto extends DtoBase {
 	/**
 	 * 承認者組織階層レベル
 	 */
+	@Min(0)
 	@Max(9)
 	@ApiModelProperty(value = "承認者組織階層レベル", required = false, position = 4, allowableValues = "range[0,9]")
 	private Integer approverOrgLevel;
@@ -31,7 +33,7 @@ public class EstimationApprovalRouteNodeDto extends DtoBase {
 	/**
 	 * 承認者MoM社員ID
 	 */
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "承認者MoM社員ID", required = true, position = 5, allowableValues = "range[0,255]")
 	private String approverEmpId;
@@ -39,7 +41,7 @@ public class EstimationApprovalRouteNodeDto extends DtoBase {
 	/**
 	 * 承認者氏名
 	 */
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "承認者氏名", required = true, position = 6, allowableValues = "range[0,255]")
 	private String approverName;

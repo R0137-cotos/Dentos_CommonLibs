@@ -20,8 +20,6 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -65,36 +63,36 @@ public class Contact extends EntityBase {
 	 * 子問い合わせリスト
 	 */
 	@OneToMany(mappedBy = "parent")
-	@ApiModelProperty(value = "子問い合わせリスト", required = false, position = 3)
+	@ApiModelProperty(value = "子問い合わせリスト", required = false, position = 4)
 	private List<Contact> children;
 
 	/**
 	 * 送信者MoM社員ID
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
-	@ApiModelProperty(value = "送信者MoM社員ID (作成時不要)", required = true, position = 4, allowableValues = "range[0,255]", readOnly = true)
+	@ApiModelProperty(value = "送信者MoM社員ID (作成時不要)", required = true, position = 5, allowableValues = "range[0,255]", readOnly = true)
 	private String contactFromEmpId;
 
 	/**
 	 * サービスカテゴリ
 	 */
 	@Column(nullable = false)
-	@ApiModelProperty(value = "サービスカテゴリ", required = false, allowableValues = "見積(\"1\"), 契約(\"2\"), 手配(\"3\")", example = "1", position = 5)
+	@ApiModelProperty(value = "サービスカテゴリ", required = false, allowableValues = "見積(\"1\"), 契約(\"2\"), 手配(\"3\")", example = "1", position = 6)
 	private ServiceCategory serviceCategory;
 
 	/**
 	 * タイトル
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "タイトル", required = false, position = 6, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "タイトル", required = false, position = 7, allowableValues = "range[0,255]")
 	private String title;
 
 	/**
 	 * 内容
 	 */
-	@ApiModelProperty(value = "内容", required = false, position = 7)
+	@ApiModelProperty(value = "内容", required = false, position = 8)
 	@Lob
 	private String content;
 
@@ -103,7 +101,7 @@ public class Contact extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@NotNull
-	@ApiModelProperty(value = "送信日時 (作成時不要)", required = true, position = 8, readOnly = true)
+	@ApiModelProperty(value = "送信日時 (作成時不要)", required = true, position = 9, readOnly = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date sendAt;
 
@@ -111,7 +109,7 @@ public class Contact extends EntityBase {
 	 * 送信者氏名
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "送信者氏名 (作成時不要)", required = false, position = 9, allowableValues = "range[0,255]", readOnly = true)
+	@ApiModelProperty(value = "送信者氏名 (作成時不要)", required = false, position = 10, allowableValues = "range[0,255]", readOnly = true)
 	private String contactFromEmpName;
 
 	/**
@@ -119,7 +117,7 @@ public class Contact extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "contact")
 	@NotNull
-	@ApiModelProperty(value = "宛先", required = true, position = 10)
+	@ApiModelProperty(value = "宛先", required = true, position = 11)
 	private List<ContactTo> contactToList;
 
 	@PrePersist

@@ -23,8 +23,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import jp.co.ricoh.cotos.commonlib.dto.parameter.estimation.CustomerEstimationDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.estimation.DealerEstimationDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.estimation.EstimationAddedEditorEmpDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.estimation.EstimationApprovalRouteDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.estimation.EstimationApprovalRouteNodeDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.estimation.EstimationAttachedFileDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.estimation.EstimationCancelParameter;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.estimation.EstimationCheckResultDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.estimation.EstimationDetailDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.estimation.EstimationDetailRegisterParameter;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.estimation.EstimationDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.estimation.EstimationPicSaEmpDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.estimation.EstimationRegisterParameter;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.estimation.ItemEstimationDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.estimation.ProductEstimationDto;
 import jp.co.ricoh.cotos.commonlib.entity.accounting.Accounting;
 import jp.co.ricoh.cotos.commonlib.entity.arrangement.Arrangement;
 import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangementPicWorkerEmp;
@@ -322,8 +335,18 @@ public class TestSecurityController {
 		return createParameterCheckResult(result);
 	}
 
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/CustomerEstimationDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated CustomerEstimationDto dto, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
 	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/DealerEstimation")
 	public ParamterCheckResult callParamterCheck(@RequestBody @Validated DealerEstimation entity, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/DealerEstimationDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated DealerEstimationDto dto, BindingResult result) {
 		return createParameterCheckResult(result);
 	}
 
@@ -342,6 +365,11 @@ public class TestSecurityController {
 		return createParameterCheckResult(result);
 	}
 
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/EstimationAddedEditorEmpDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated EstimationAddedEditorEmpDto dto, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
 	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/EstimationApprovalResult")
 	public ParamterCheckResult callParamterCheck(@RequestBody @Validated EstimationApprovalResult entity, BindingResult result) {
 		return createParameterCheckResult(result);
@@ -352,8 +380,18 @@ public class TestSecurityController {
 		return createParameterCheckResult(result);
 	}
 
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/EstimationApprovalRouteDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated EstimationApprovalRouteDto dto, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
 	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/EstimationApprovalRouteNode")
 	public ParamterCheckResult callParamterCheck(@RequestBody @Validated EstimationApprovalRouteNode entity, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/EstimationApprovalRouteNodeDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated EstimationApprovalRouteNodeDto dto, BindingResult result) {
 		return createParameterCheckResult(result);
 	}
 
@@ -362,8 +400,18 @@ public class TestSecurityController {
 		return createParameterCheckResult(result);
 	}
 
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/EstimationAttachedFileDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated EstimationAttachedFileDto dto, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
 	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/EstimationCheckResult")
 	public ParamterCheckResult callParamterCheck(@RequestBody @Validated EstimationCheckResult entity, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/EstimationCheckResultDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated EstimationCheckResultDto dto, BindingResult result) {
 		return createParameterCheckResult(result);
 	}
 
@@ -382,8 +430,18 @@ public class TestSecurityController {
 		return createParameterCheckResult(result);
 	}
 
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/EstimationPicSaEmpDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated EstimationPicSaEmpDto dto, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
 	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ItemEstimation")
 	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ItemEstimation entity, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ItemEstimationDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ItemEstimationDto dto, BindingResult result) {
 		return createParameterCheckResult(result);
 	}
 
@@ -394,6 +452,11 @@ public class TestSecurityController {
 
 	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ProductEstimation")
 	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ProductEstimation entity, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ProductEstimationDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ProductEstimationDto dto, BindingResult result) {
 		return createParameterCheckResult(result);
 	}
 
@@ -414,6 +477,21 @@ public class TestSecurityController {
 
 	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractPicMntSsOrg")
 	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractPicMntSsOrg entity, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/EstimationRegisterParameter")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated EstimationRegisterParameter dto, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/EstimationDetailRegisterParameter")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated EstimationDetailRegisterParameter dto, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/EstimationCancelParameter")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated EstimationCancelParameter dto, BindingResult result) {
 		return createParameterCheckResult(result);
 	}
 }
