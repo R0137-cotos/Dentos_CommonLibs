@@ -35,7 +35,7 @@ public class EstimationApprovalRouteNode extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "estimation_approval_route_node_seq")
 	@SequenceGenerator(name = "estimation_approval_route_node_seq", sequenceName = "estimation_approval_route_node_seq", allocationSize = 1)
-	@ApiModelProperty(value = "見積承認ルートノードID(作成時不要)", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
+	@ApiModelProperty(value = "見積承認ルートノードID(作成時不要)", required = true, position = 1, allowableValues = "range[0,9223372036854775807]", readOnly = true)
 	private long id;
 
 	/**
@@ -69,7 +69,6 @@ public class EstimationApprovalRouteNode extends EntityBase {
 	 * 承認者MoM社員ID
 	 */
 	@Column(nullable = false)
-	@NotEmpty
 	@Size(max = 255)
 	@ApiModelProperty(value = "承認者MoM社員ID", required = true, position = 5, allowableValues = "range[0,255]")
 	private String approverEmpId;

@@ -43,7 +43,7 @@ public class ItemEstimation extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "item_estimation_seq")
 	@SequenceGenerator(name = "item_estimation_seq", sequenceName = "item_estimation_seq", allocationSize = 1)
-	@ApiModelProperty(value = "ID(作成時不要)", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
+	@ApiModelProperty(value = "ID(作成時不要)", required = true, position = 1, allowableValues = "range[0,9223372036854775807]", readOnly = true)
 	private long id;
 
 	/**
@@ -51,14 +51,14 @@ public class ItemEstimation extends EntityBase {
 	 */
 	@Min(0)
 	@Column(nullable = false)
-	@ApiModelProperty(value = "品種マスタID", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "品種マスタID", required = true, position = 2, allowableValues = "range[0,9223372036854775807]")
 	private long itemMasterId;
 
 	/**
 	 * 商品マスタ
 	 */
 	@Min(0)
-	@ApiModelProperty(value = "商品マスタ", required = true, position = 3, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "商品マスタ", required = true, position = 3, allowableValues = "range[0,9223372036854775807]")
 	private long productMasterId;
 
 	/**
