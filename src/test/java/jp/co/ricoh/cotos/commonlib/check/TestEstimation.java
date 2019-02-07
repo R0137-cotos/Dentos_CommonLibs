@@ -534,6 +534,15 @@ public class TestEstimation {
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "コメントは最大文字数（1000）を超えています。"));
 
+		// 異常系（@Valid ：添付ファイル）
+		entity = estimationAttachedFileRepository.findOne(401L);
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.getAttachedFile().setFilePhysicsName(null);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "物理ファイル名が設定されていません。"));
+
 	}
 
 	@Test
