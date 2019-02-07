@@ -14,9 +14,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -45,6 +45,7 @@ public class ProductEstimation extends EntityBase {
 	/**
 	 * 商品マスタID
 	 */
+	@Min(0)
 	@Column(nullable = false)
 	@ApiModelProperty(value = "商品マスタID", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
 	private long productMasterId;
@@ -53,7 +54,7 @@ public class ProductEstimation extends EntityBase {
 	 * 商品名
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "商品名", required = true, position = 3, allowableValues = "range[0,255]")
 	private String productEstimationName;
@@ -62,6 +63,7 @@ public class ProductEstimation extends EntityBase {
 	 * 代表品種マスタID
 	 */
 	@Column(nullable = false)
+	@Min(0)
 	@ApiModelProperty(value = "代表品種マスタID", required = true, position = 4, allowableValues = "range[0,9999999999999999999]")
 	private long repItemMasterId;
 
