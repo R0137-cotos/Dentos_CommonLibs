@@ -13,10 +13,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -85,17 +83,14 @@ public class EstimationApprovalRoute extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "estimationApprovalRoute")
 	@OrderBy("processedAt ASC")
-	@Valid
 	@ApiModelProperty(value = "見積承認実績(作成時不要)", required = false, position = 7, readOnly = true)
 	private List<EstimationApprovalResult> estimationApprovalResultList;
 
 	/**
 	 * 見積承認ルートノード
 	 */
-	@NotNull
 	@OneToMany(mappedBy = "estimationApprovalRoute")
 	@OrderBy("approvalOrder ASC")
-	@Valid
 	@ApiModelProperty(value = "見積承認ルートノード(作成時不要)", required = true, position = 8, readOnly = true)
 	private List<EstimationApprovalRouteNode> estimationApprovalRouteNodeList;
 

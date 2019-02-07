@@ -18,8 +18,6 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -71,7 +69,7 @@ public class EstimationApprovalResult extends EntityBase {
 	 * 処理実施者MoM社員ID
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "処理実施者MoM社員ID", required = true, position = 5, allowableValues = "range[0,255]")
 	private String actualEmpId;
@@ -80,7 +78,7 @@ public class EstimationApprovalResult extends EntityBase {
 	 * 処理実施者社員名
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "処理実施者社員名", required = true, position = 6, allowableValues = "range[0,255]")
 	private String actualUserName;
@@ -103,7 +101,6 @@ public class EstimationApprovalResult extends EntityBase {
 	 * 実施日時
 	 */
 	@Column(nullable = false)
-	@NotNull
 	@ApiModelProperty(value = "実施日時(作成時不要)", required = true, position = 9, readOnly = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date processedAt;

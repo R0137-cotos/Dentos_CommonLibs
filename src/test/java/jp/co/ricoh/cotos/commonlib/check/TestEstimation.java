@@ -251,36 +251,26 @@ public class TestEstimation {
 
 		// 正常系
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setEstimationApprovalRoute(null);
-		testTarget.setOperationLogList(null);
 		testTarget.setEstimationAttachedFileList(null);
 		testTarget.setEstimationAddedEditorEmpList(null);
 		testTarget.setDealerEstimationList(null);
-		testTarget.setEstimationCheckResultList(null);
 		testTarget.setEstimationDetailList(null);
-		testTarget.setProductEstimationList(null);
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
 		// 異常系（@NotNullの null チェック：）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setLifecycleStatus(null);
-		testTarget.setEstimationType(null);
-		testTarget.setWorkflowStatus(null);
-		testTarget.setEstimationNumber(null);
 		testTarget.setEstimationPicSaEmp(null);
 		testTarget.setCustomerEstimation(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 6);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "見積担当SA社員が設定されていません。"));
 
 		// 異常系（@Size(max) ：）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setImmutableContIdentNumber(STR_256);
 		testTarget.setCaseNumber(STR_256);
 		testTarget.setCaseTitle(STR_256);
-		testTarget.setEstimationNumber(STR_256);
 		testTarget.setEstimationTitle(STR_256);
 		testTarget.setEstimatedSystemDiv(STR_256);
 		testTarget.setOriginContractNumber(STR_256);
@@ -306,27 +296,25 @@ public class TestEstimation {
 		testTarget.setCompetitionInfo(STR_256);
 		testTarget.setCompetitionContractDiv(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 28);
+		Assert.assertTrue(result.getErrorInfoList().size() == 26);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "見積発行元FAX番号は最大文字数（255）を超えています。"));
 
 		// 異常系（@Max ：）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setEstimationBranchNumber(INT_100);
 		testTarget.setOriginContractBranchNumber(INT_100);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "変更元契約番号枝番は最大値（99）を超えています。"));
 
 		// 異常系（@Min ：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setProductGrpMasterId(INT_MINUS_1);
-		testTarget.setEstimationBranchNumber(INT_MINUS_1);
 		testTarget.setOriginContractBranchNumber(INT_MINUS_1);
 		testTarget.setOriginContractId((long) INT_MINUS_1);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 4);
+		Assert.assertTrue(result.getErrorInfoList().size() == 3);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "商品グループマスタIDは最小値（0）を下回っています。"));
 
@@ -385,23 +373,13 @@ public class TestEstimation {
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
-		// 異常系（@NotNull、@NotEmptyの null チェック：）
+		// 異常系（@NotNullの null チェック：）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setProcessedAt(null);
 		testTarget.setApprovalProcessCategory(null);
 		testTarget.setActualEmpId(null);
 		testTarget.setActualUserName(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 4);
-		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
-		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "処理実施者氏名が設定されていません。"));
-
-		// 異常系（@NotEmptyの空文字列チェック：）
-		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setActualEmpId("");
-		testTarget.setActualUserName("");
-		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(result.getErrorInfoList().size() == 3);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "処理実施者氏名が設定されていません。"));
 
@@ -425,17 +403,8 @@ public class TestEstimation {
 
 		// 正常系
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setEstimationApprovalResultList(null);
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
-
-		// 異常系（@NotNull、@NotEmptyの null チェック：）
-		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setEstimationApprovalRouteNodeList(null);
-		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 1);
-		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
-		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "見積承認ルートノードが設定されていません。"));
 
 		// 異常系（@Size(max) ：）
 		BeanUtils.copyProperties(testTarget, entity);
@@ -475,7 +444,7 @@ public class TestEstimation {
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
-		// 異常系（@NotNull、@NotEmptyの null チェック：）
+		// 異常系（@NotNullの null チェック：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setApproverEmpId(null);
 		testTarget.setApproverName(null);
@@ -536,7 +505,7 @@ public class TestEstimation {
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
-		// 異常系（@NotNull、@NotEmptyの null チェック：id、attachedAt、attachedFilePath
+		// 異常系（@NotNullの null チェック：id、attachedAt、attachedFilePath
 		// ※idはプリミティブ型で試験実施できない）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setFileName(null);
@@ -568,22 +537,13 @@ public class TestEstimation {
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
-		// 異常系（@NotNull、@NotEmptyの null チェック：）
+		// 異常系（@NotNullの null チェック：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setTargetLifecycleStatus(null);
 		testTarget.setCheckMatterCode(null);
 		testTarget.setCheckMatterText(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 3);
-		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
-		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "チェック事項文面が設定されていません。"));
-
-		// 異常系（@NotEmptyの空文字列チェック：）
-		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setCheckMatterCode("");
-		testTarget.setCheckMatterText("");
-		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "チェック事項文面が設定されていません。"));
 
@@ -766,18 +726,9 @@ public class TestEstimation {
 
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
-		// 異常系（@NotNull、@NotEmptyの null チェック：）
+		// 異常系（@NotNullのnull チェック：）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setOperatedAt(null);
 		testTarget.setOperatorEmpId(null);
-		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 2);
-		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
-		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "操作者MoM社員IDが設定されていません。"));
-
-		// 異常系（@NotEmptyの空文字列チェック：）
-		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setOperatorEmpId("");
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));

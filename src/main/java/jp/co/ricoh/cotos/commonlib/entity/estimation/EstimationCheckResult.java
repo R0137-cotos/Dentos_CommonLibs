@@ -19,8 +19,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -65,7 +63,7 @@ public class EstimationCheckResult extends EntityBase {
 	 * チェック事項コード
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "チェック事項コード", required = true, position = 4, allowableValues = "range[0,255]")
 	private String checkMatterCode;
@@ -74,7 +72,7 @@ public class EstimationCheckResult extends EntityBase {
 	 * チェック事項文面
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "チェック事項文面", required = true, position = 5, allowableValues = "range[0,255]")
 	private String checkMatterText;

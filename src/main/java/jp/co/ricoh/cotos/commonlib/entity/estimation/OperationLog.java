@@ -20,8 +20,6 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -70,7 +68,7 @@ public class OperationLog extends EntityBase {
 	/**
 	 * 操作者MoM社員ID
 	 */
-	@NotEmpty
+	@NotNull
 	@Column(nullable = false)
 	@ApiModelProperty(value = "操作者MoM社員ID", required = true, position = 4)
 	private String operatorEmpId;
@@ -93,7 +91,6 @@ public class OperationLog extends EntityBase {
 	 * 実施日時
 	 */
 	@Column(nullable = false)
-	@NotNull
 	@ApiModelProperty(value = "実施日時(作成時不要)", required = true, position = 7, readOnly = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date operatedAt;
