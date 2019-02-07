@@ -12,9 +12,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -70,6 +69,7 @@ public class EstimationApprovalRouteNode extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@Size(max = 255)
+	@NotNull
 	@ApiModelProperty(value = "承認者MoM社員ID", required = true, position = 5, allowableValues = "range[0,255]")
 	private String approverEmpId;
 
@@ -77,7 +77,7 @@ public class EstimationApprovalRouteNode extends EntityBase {
 	 * 承認者氏名
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "承認者氏名", required = true, position = 6, allowableValues = "range[0,255]")
 	private String approverName;
