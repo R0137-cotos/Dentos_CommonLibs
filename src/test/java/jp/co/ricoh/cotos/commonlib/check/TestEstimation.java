@@ -299,6 +299,7 @@ public class TestEstimation {
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00028));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "競合先基本料金は小数点以下2桁を超えています。"));
 
+		// 異常系（@Valid ：顧客（見積用））
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.getCustomerEstimation().setMomKjbSystemId(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
@@ -319,6 +320,33 @@ public class TestEstimation {
 		entity = estimationRepository.findOne(4L);
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.getEstimationPicSaEmp().setMomEmployeeId(null);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "MoM社員IDが設定されていません。"));
+
+		// 異常系（@Valid ：見積明細）
+		entity = estimationRepository.findOne(4L);
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.getEstimationDetailList().get(0).setState(null);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "状態が設定されていません。"));
+
+		// 異常系（@Valid ：販売店（見積用））
+		entity = estimationRepository.findOne(4L);
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.getDealerEstimationList().get(0).setPicMailAddress(STR_256);;
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "MoM非連携_担当者メールアドレスは最大文字数（255）を超えています。"));
+
+		// 異常系（@Valid ：見積追加編集者社員）
+		entity = estimationRepository.findOne(4L);
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.getEstimationAddedEditorEmpList().get(0).setMomEmployeeId(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
