@@ -251,13 +251,6 @@ public class TestCommunication {
 		Assert.assertTrue(result.getErrorInfoList().size() == 3);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 
-		// 異常系（@NotEmptyの空文字列チェック：contactFromEmpId）
-		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setContactFromEmpId("");
-		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 1);
-		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
-
 		// 異常系（@Size(max) ：contactFromEmpId title）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setContactFromEmpId(STR_256);
