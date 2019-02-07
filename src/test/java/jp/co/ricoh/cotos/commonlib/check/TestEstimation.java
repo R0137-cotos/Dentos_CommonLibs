@@ -61,11 +61,13 @@ public class TestEstimation {
 
 	private static final String STR_256 = "0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345";
 	private static final String STR_1001 = "01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
+	private static final int INT_MINUS_1 = -1;
 	private static final int INT_10 = 10;
 	private static final int INT_100 = 100;
 	private static final int INT_1000 = 1000;
 	private static final int INT_100000 = 100000;
-	private static final BigDecimal DECIMAL_10000000000000000000 = new BigDecimal("10000000000000000000.00");
+	private static final BigDecimal DECIMAL_MINUS_001 = new BigDecimal("-0.01");
+	private static final BigDecimal DECIMAL_0001 = new BigDecimal("0.001");
 
 	static ConfigurableApplicationContext context;
 
@@ -146,56 +148,20 @@ public class TestEstimation {
 		BeanUtils.copyProperties(testTarget, entity);
 
 		// 正常系
-		testTarget.setMomKjbSystemId(null);
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
-		// 異常系（@NotNull、@NotEmptyの null チェック：momCustId companyId officeId departmentDiv
-		// customerName phoneNumber）
+		// 異常系（@NotNullの null チェック）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setMomKjbSystemId(null);
-
-		testTarget.setMomCustId(null);
-		testTarget.setCompanyId(null);
-		testTarget.setOfficeId(null);
-		testTarget.setDepartmentDiv(null);
-		testTarget.setCustomerName(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		//
-		Assert.assertTrue(result.getErrorInfoList().size() == 5);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "MoM企事部システム連携IDが設定されていません。"));
 
-		// 異常系（@NotEmptyの空文字列チェック：momCustId companyId officeId departmentDiv
-		// customerName phoneNumber）
+		// 異常系（@Size(max)）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setMomKjbSystemId(null);
-
-		testTarget.setMomCustId("");
-		testTarget.setCompanyId("");
-		testTarget.setOfficeId("");
-		testTarget.setCustomerName("");
-		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 4);
-		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
-
-		// 異常系（@Size(max) ：momCustId companyId officeId customerName companyName
-		// officeName departmentName postNumber address faxNumber）
-		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setMomKjbSystemId(null);
-
-		testTarget.setMomCustId(STR_256);
-		testTarget.setCompanyId(STR_256);
-		testTarget.setOfficeId(STR_256);
-		testTarget.setCustomerName(STR_256);
-		testTarget.setCompanyName(STR_256);
-		testTarget.setCompanyNameKana(STR_256);
-		testTarget.setOfficeName(STR_256);
-		testTarget.setDepartmentName(STR_256);
-		testTarget.setPostNumber(STR_256);
-		testTarget.setAddress(STR_1001);
-		testTarget.setPhoneNumber(STR_256);
-		testTarget.setFaxNumber(STR_256);
-		testTarget.setCompanyRepresentativeName(STR_256);
+		testTarget.setMomKjbSystemId(STR_256);
 		testTarget.setPicName(STR_256);
 		testTarget.setPicNameKana(STR_256);
 		testTarget.setPicDeptName(STR_256);
@@ -203,8 +169,9 @@ public class TestEstimation {
 		testTarget.setPicFaxNumber(STR_256);
 		testTarget.setPicMailAddress(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 19);
+		Assert.assertTrue(result.getErrorInfoList().size() == 7);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "MoM企事部システム連携IDは最大文字数（255）を超えています。"));
 
 	}
 
@@ -218,28 +185,27 @@ public class TestEstimation {
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
-		// 異常系（@NotNull、@NotEmptyの null チェック：）
+		// 異常系（@NotNullの null チェック：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setMomKjbSystemId(null);
 		testTarget.setDealerFlowOrder(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "販売店商流順が設定されていません。"));
 
 		// 異常系（@Size(max) ：）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setDealerName(STR_256);
-		testTarget.setPostNumber(STR_256);
-		testTarget.setAddress(STR_1001);
-		testTarget.setOrgPhoneNumber(STR_256);
+		testTarget.setMomKjbSystemId(STR_256);
 		testTarget.setPicName(STR_256);
 		testTarget.setPicDeptName(STR_256);
 		testTarget.setPicPhoneNumber(STR_256);
 		testTarget.setPicFaxNumber(STR_256);
 		testTarget.setPicMailAddress(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 9);
+		Assert.assertTrue(result.getErrorInfoList().size() == 6);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "MoM非連携_担当者メールアドレスは最大文字数（255）を超えています。"));
 
 	}
 
@@ -250,51 +216,28 @@ public class TestEstimation {
 
 		// 正常系
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setCustomerEstimation(null);
-		testTarget.setOperationLogList(null);
 		testTarget.setEstimationAttachedFileList(null);
 		testTarget.setEstimationAddedEditorEmpList(null);
 		testTarget.setDealerEstimationList(null);
-		testTarget.setEstimationCheckResultList(null);
 		testTarget.setEstimationDetailList(null);
-		testTarget.setProductEstimationList(null);
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
-		// 異常系（@NotNull、@NotEmptyの null チェック：）
+		// 異常系（@NotNullの null チェック：）
 		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setEstimationPicSaEmp(null);
 		testTarget.setCustomerEstimation(null);
-		testTarget.setOperationLogList(null);
-		testTarget.setEstimationAttachedFileList(null);
-		testTarget.setEstimationAddedEditorEmpList(null);
-		testTarget.setDealerEstimationList(null);
-		testTarget.setEstimationCheckResultList(null);
-		testTarget.setEstimationDetailList(null);
-		testTarget.setProductEstimationList(null);
-
-		testTarget.setLifecycleStatus(null);
-		testTarget.setEstimationType(null);
-		testTarget.setWorkflowStatus(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 3);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "見積担当SA社員が設定されていません。"));
 
 		// 異常系（@Size(max) ：）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setCustomerEstimation(null);
-		testTarget.setOperationLogList(null);
-		testTarget.setEstimationAttachedFileList(null);
-		testTarget.setEstimationAddedEditorEmpList(null);
-		testTarget.setDealerEstimationList(null);
-		testTarget.setEstimationCheckResultList(null);
-		testTarget.setEstimationDetailList(null);
-		testTarget.setProductEstimationList(null);
-
-		testTarget.setImmutableContIdentNumber(STR_256);
 		testTarget.setCaseNumber(STR_256);
 		testTarget.setCaseTitle(STR_256);
-		testTarget.setEstimationNumber(STR_256);
 		testTarget.setEstimationTitle(STR_256);
+		testTarget.setEstimatedSystemDiv(STR_256);
 		testTarget.setOriginContractNumber(STR_256);
 		testTarget.setCommercialFlowDiv(STR_256);
 		testTarget.setIssueFormat(STR_256);
@@ -309,6 +252,7 @@ public class TestEstimation {
 		testTarget.setPublishDepartment(STR_256);
 		testTarget.setPublishPostNumber(STR_256);
 		testTarget.setPublishAddress(STR_1001);
+		testTarget.setPublishTel(STR_256);
 		testTarget.setPublishFax(STR_256);
 		testTarget.setPublishEmployee(STR_256);
 		testTarget.setSpPriceApplyReason(STR_256);
@@ -319,23 +263,94 @@ public class TestEstimation {
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 26);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "見積発行元FAX番号は最大文字数（255）を超えています。"));
 
 		// 異常系（@Max ：）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setCustomerEstimation(null);
-		testTarget.setOperationLogList(null);
-		testTarget.setEstimationAttachedFileList(null);
-		testTarget.setEstimationAddedEditorEmpList(null);
-		testTarget.setDealerEstimationList(null);
-		testTarget.setEstimationCheckResultList(null);
-		testTarget.setEstimationDetailList(null);
-		testTarget.setProductEstimationList(null);
-
-		testTarget.setEstimationBranchNumber(INT_100);
 		testTarget.setOriginContractBranchNumber(INT_100);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "変更元契約番号枝番は最大値（99）を超えています。"));
+
+		// 異常系（@Min ：）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setProductGrpMasterId(INT_MINUS_1);
+		testTarget.setOriginContractBranchNumber(INT_MINUS_1);
+		testTarget.setOriginContractId((long) INT_MINUS_1);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 3);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "商品グループマスタIDは最小値（0）を下回っています。"));
+
+		// 異常系（@DecimalMin ：）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setCompetitionAmount(DECIMAL_MINUS_001);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "競合先基本料金は最小値（0.00）を下回っています。"));
+
+		// 異常系（@Digits ：）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setCompetitionAmount(DECIMAL_0001);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00028));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "競合先基本料金は小数点以下2桁を超えています。"));
+
+		// 異常系（@Valid ：顧客（見積用））
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.getCustomerEstimation().setMomKjbSystemId(null);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "MoM企事部システム連携IDが設定されていません。"));
+
+		// 異常系（@Valid：見積添付ファイル）
+		entity = estimationRepository.findOne(4L);
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.getEstimationAttachedFileList().get(0).setFileName(null);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "ファイル名が設定されていません。"));
+
+		// 異常系（@Valid：見積担当SA社員）
+		entity = estimationRepository.findOne(4L);
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.getEstimationPicSaEmp().setMomEmployeeId(null);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "MoM社員IDが設定されていません。"));
+
+		// 異常系（@Valid ：見積明細）
+		entity = estimationRepository.findOne(4L);
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.getEstimationDetailList().get(0).setState(null);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "状態が設定されていません。"));
+
+		// 異常系（@Valid ：販売店（見積用））
+		entity = estimationRepository.findOne(4L);
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.getDealerEstimationList().get(0).setPicMailAddress(STR_256);;
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "MoM非連携_担当者メールアドレスは最大文字数（255）を超えています。"));
+
+		// 異常系（@Valid ：見積追加編集者社員）
+		entity = estimationRepository.findOne(4L);
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.getEstimationAddedEditorEmpList().get(0).setMomEmployeeId(null);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "MoM社員IDが設定されていません。"));
 
 	}
 
@@ -349,45 +364,21 @@ public class TestEstimation {
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
-		// 異常系（@NotNull、@NotEmptyの null チェック：）
+		// 異常系（@NotNullの null チェック：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setMomEmployeeId(null);
-		testTarget.setEmployeeName(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
-
-		// 異常系（@NotEmptyの空文字列チェック：）
-		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setMomEmployeeId("");
-		testTarget.setEmployeeName("");
-		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 2);
-		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "MoM社員IDが設定されていません。"));
 
 		// 異常系（@Size(max) ：）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setMomOrgId(STR_256);
-		testTarget.setOrgName(STR_256);
-		testTarget.setSalesCompanyName(STR_256);
-		testTarget.setOrgPhoneNumber(STR_256);
-		testTarget.setEmployeeName(STR_256);
-		testTarget.setSalesDepartmentName(STR_256);
-		testTarget.setPostNumber(STR_256);
-		testTarget.setAddress(STR_1001);
-		testTarget.setPhoneNumber(STR_256);
-		testTarget.setFaxNumber(STR_256);
-		testTarget.setMailAddress(STR_256);
-		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 11);
-		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
-
-		// 異常系（@Max ：）
-		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setOrgHierarchyLevel(INT_10);
+		testTarget.setMomEmployeeId(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
-		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "MoM社員IDは最大文字数（255）を超えています。"));
 
 	}
 
@@ -401,23 +392,15 @@ public class TestEstimation {
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
-		// 異常系（@NotNull、@NotEmptyの null チェック：）
+		// 異常系（@NotNullの null チェック：）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setProcessedAt(null);
 		testTarget.setApprovalProcessCategory(null);
 		testTarget.setActualEmpId(null);
 		testTarget.setActualUserName(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 4);
+		Assert.assertTrue(result.getErrorInfoList().size() == 3);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
-
-		// 異常系（@NotEmptyの空文字列チェック：）
-		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setActualEmpId("");
-		testTarget.setActualUserName("");
-		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 2);
-		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "処理実施者氏名が設定されていません。"));
 
 		// 異常系（@Size(max) ：）
 		BeanUtils.copyProperties(testTarget, entity);
@@ -428,6 +411,7 @@ public class TestEstimation {
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 4);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "コメントは最大文字数（255）を超えています。"));
 
 	}
 
@@ -441,13 +425,6 @@ public class TestEstimation {
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
-		// 異常系（@NotNull、@NotEmptyの null チェック：）
-		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setEstimationApprovalRouteNodeList(null);
-		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 1);
-		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
-
 		// 異常系（@Size(max) ：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setApprovalRequesterEmpId(STR_256);
@@ -456,6 +433,7 @@ public class TestEstimation {
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 3);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "承認依頼者組織名は最大文字数（255）を超えています。"));
 
 		// 異常系（@Max ：）
 		BeanUtils.copyProperties(testTarget, entity);
@@ -463,6 +441,15 @@ public class TestEstimation {
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "特価承認対象フラグは最大値（9）を超えています。"));
+
+		// 異常系（@Min ：）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setSpecialPriceApprovalFlg(INT_MINUS_1);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "特価承認対象フラグは最小値（0）を下回っています。"));
 
 	}
 
@@ -476,20 +463,15 @@ public class TestEstimation {
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
-		// 異常系（@NotNull、@NotEmptyの null チェック：）
+		// 異常系（@NotNullの null チェック：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setApproverEmpId(null);
 		testTarget.setApproverName(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
-		// 異常系（@NotEmptyの空文字列チェック：）
-		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setApproverEmpId("");
-		testTarget.setApproverName("");
-		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 2);
-		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "承認者氏名が設定されていません。"));
+
 		// 異常系（@Size(max) ：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setApproverEmpId(STR_256);
@@ -501,6 +483,8 @@ public class TestEstimation {
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 6);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "代理承認者組織名は最大文字数（255）を超えています。"));
+
 		// 異常系（@Max ：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setApprovalOrder(INT_1000);
@@ -508,6 +492,16 @@ public class TestEstimation {
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "承認順は最大値（999）を超えています。"));
+
+		// 異常系（@Min ：）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setApprovalOrder(INT_MINUS_1);
+		testTarget.setApproverOrgLevel(INT_MINUS_1);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "承認者組織階層レベルは最小値（0）を下回っています。"));
 	}
 
 	@Test
@@ -521,38 +515,33 @@ public class TestEstimation {
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
-		// 異常系（@NotNull、@NotEmptyの null チェック：id、attachedAt、attachedFilePath
-		// ※idはプリミティブ型で試験実施できない）
+		// 異常系（@NotNullの null チェック：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setFileName(null);
 		testTarget.setAttachedFile(null);
-		testTarget.setAttachedAt(null);
-		testTarget.setAttachedEmpId(null);
-		testTarget.setAttachedEmpName(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 5);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "添付ファイルが設定されていません。"));
 
-		// 異常系（@NotEmptyの空文字列チェック：fileName attachedEmpId attachedEmpName）
-		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setFileName("");
-		testTarget.setAttachedEmpId("");
-		testTarget.setAttachedEmpName("");
-		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 3);
-		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
-
-		// 異常系（@Size(max) ：fileKind attachedFilePath attachedEmpId attachedEmpName）
+		// 異常系（@Size(max) ：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setFileName(STR_256);
 		testTarget.setFileKind(STR_256);
 		testTarget.setAttachedComment(STR_1001);
-		testTarget.setAttachedEmpId(STR_256);
-		testTarget.setAttachedEmpName(STR_256);
-		testTarget.setAttachedOrgName(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 6);
+		Assert.assertTrue(result.getErrorInfoList().size() == 3);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "コメントは最大文字数（1000）を超えています。"));
+
+		// 異常系（@Valid ：添付ファイル）
+		entity = estimationAttachedFileRepository.findOne(401L);
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.getAttachedFile().setFilePhysicsName(null);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "物理ファイル名が設定されていません。"));
 
 	}
 
@@ -566,7 +555,7 @@ public class TestEstimation {
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
-		// 異常系（@NotNull、@NotEmptyの null チェック：）
+		// 異常系（@NotNullの null チェック：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setTargetLifecycleStatus(null);
 		testTarget.setCheckMatterCode(null);
@@ -574,14 +563,7 @@ public class TestEstimation {
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 3);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
-
-		// 異常系（@NotEmptyの空文字列チェック：）
-		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setCheckMatterCode("");
-		testTarget.setCheckMatterText("");
-		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 2);
-		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "チェック事項文面が設定されていません。"));
 
 		// 異常系（@Size(max) ：）
 		BeanUtils.copyProperties(testTarget, entity);
@@ -593,6 +575,7 @@ public class TestEstimation {
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 5);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "チェック事項文面は最大文字数（255）を超えています。"));
 
 		// 異常系（@Max ：）
 		BeanUtils.copyProperties(testTarget, entity);
@@ -600,6 +583,15 @@ public class TestEstimation {
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "表示順は最大値（999）を超えています。"));
+
+		// 異常系（@Min ：）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setDisplayOrder(INT_MINUS_1);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "表示順は最小値（0）を下回っています。"));
 
 	}
 
@@ -613,30 +605,53 @@ public class TestEstimation {
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
-		// 異常系（@NotNull、@NotEmptyの null チェック：）
+		// 異常系（@NotNullの null チェック：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setState(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "状態が設定されていません。"));
+
 		// 異常系（@Size(max) ：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setDetailAbstract(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "摘要は最大文字数（255）を超えています。"));
+
 		// 異常系（@Max ：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setQuantity(INT_100000);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
-		// 異常系（@DecimalMax：）
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "数量は最大値（99999）を超えています。"));
+
+		// 異常系（@Min ：）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setEstimationAmountSummary(DECIMAL_10000000000000000000);
+		testTarget.setQuantity(INT_MINUS_1);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
-		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "数量は最小値（0）を下回っています。"));
+
+		// 異常系（@DecimalMin：）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setEstimationAmountSummary(DECIMAL_MINUS_001);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "見積金額は最小値（0.00）を下回っています。"));
+
+		// 異常系（@Digits：）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setEstimationAmountSummary(DECIMAL_0001);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00028));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "見積金額は小数点以下2桁を超えています。"));
 	}
 
 	@Test
@@ -649,43 +664,21 @@ public class TestEstimation {
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
-		// 異常系（@NotNull、@NotEmptyの null チェック：）
+		// 異常系（@NotNullの null チェック：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setMomEmployeeId(null);
-		testTarget.setEmployeeName(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
-
-		// 異常系（@NotEmptyの空文字列チェック：）
-		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setMomEmployeeId("");
-		testTarget.setEmployeeName("");
-		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 2);
-		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "MoM社員IDが設定されていません。"));
 
 		// 異常系（@Size(max) ：）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setMomOrgId(STR_256);
-		testTarget.setOrgName(STR_256);
-		testTarget.setSalesCompanyName(STR_256);
-		testTarget.setOrgPhoneNumber(STR_256);
-		testTarget.setEmployeeName(STR_256);
-		testTarget.setSalesDepartmentName(STR_256);
-		testTarget.setPostNumber(STR_256);
-		testTarget.setPhoneNumber(STR_256);
-		testTarget.setFaxNumber(STR_256);
-		testTarget.setMailAddress(STR_256);
-		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 10);
-		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
-		// 異常系（@Max ：）
-		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setOrgHierarchyLevel(INT_10);
+		testTarget.setMomEmployeeId(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
-		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "MoM社員IDは最大文字数（255）を超えています。"));
 	}
 
 	@Test
@@ -698,7 +691,7 @@ public class TestEstimation {
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
-		// 異常系（@NotNull、@NotEmptyの null チェック：）
+		// 異常系（@NotNullの null チェック：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setItemType(null);
 		testTarget.setCostType(null);
@@ -708,26 +701,32 @@ public class TestEstimation {
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 5);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
-		// 異常系（@NotEmptyの空文字列チェック：）
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "品種名が設定されていません。"));
+
+		// 異常系（@Min ：）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setItemEstimationName("");
-		testTarget.setRicohItemCode("");
+		testTarget.setItemMasterId(INT_MINUS_1);
+		testTarget.setProductMasterId(INT_MINUS_1);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 2);
-		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
-		// 異常系（@Size(max) ：）
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "商品マスタIDは最小値（0）を下回っています。"));
+
+		// 異常系（@DecimalMin：）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setItemEstimationName(STR_256);
-		testTarget.setRicohItemCode(STR_256);
-		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 2);
-		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
-		// 異常系（@DecimalMax：）
-		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setPartitionPrice(DECIMAL_10000000000000000000);
+		testTarget.setPartitionPrice(DECIMAL_MINUS_001);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
-		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "仕切価格は最小値（0.00）を下回っています。"));
+
+		// 異常系（@Digits：）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setPartitionPrice(DECIMAL_0001);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00028));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "仕切価格は小数点以下2桁を超えています。"));
 
 	}
 
@@ -742,19 +741,14 @@ public class TestEstimation {
 
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
-		// 異常系（@NotNull、@NotEmptyの null チェック：）
+		// 異常系（@NotNullのnull チェック：）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setOperatedAt(null);
 		testTarget.setOperatorEmpId(null);
-		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 2);
-		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
-		// 異常系（@NotEmptyの空文字列チェック：）
-		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setOperatorEmpId("");
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "操作者MoM社員IDが設定されていません。"));
+
 		// 異常系（@Size(max) ：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setOperatorName(STR_256);
@@ -762,6 +756,7 @@ public class TestEstimation {
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "操作者組織名は最大文字数（255）を超えています。"));
 	}
 
 	@Test
@@ -773,12 +768,15 @@ public class TestEstimation {
 		BeanUtils.copyProperties(testTarget, entity);
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
-		// 異常系（@NotNull、@NotEmptyの null チェック：）
+
+		// 異常系（@NotNullの null チェック：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setProductEstimationName(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "商品名が設定されていません。"));
+
 		// 異常系（@Size(max) ：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setProductEstimationName(STR_256);
@@ -786,6 +784,16 @@ public class TestEstimation {
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "商品名は最大文字数（255）を超えています。"));
+
+		// 異常系（@Size(max) ：）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setProductMasterId(INT_MINUS_1);
+		testTarget.setRepItemMasterId(INT_MINUS_1);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "商品マスタIDは最小値（0）を下回っています。"));
 	}
 
 }

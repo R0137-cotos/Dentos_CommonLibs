@@ -20,7 +20,7 @@ public class TestTools {
 
 	/**
 	 * パラメータチェックで使用するエラーID
-	 * 
+	 *
 	 * @author hideto.yamanaka
 	 *
 	 */
@@ -30,7 +30,11 @@ public class TestTools {
 		/** Size：EntityCheckStringSizeError（{0}は最大文字数（{1}）を超えています。） */
 		ROT00014,
 		/** Max：EntityCheckNumberMaxError（{0}は最大値（{1}）を超えています。） */
-		ROT00015;
+		ROT00015,
+		/** Min：EntityCheckNumberMinError（{0}は最小値（{1}）を下回っています。） */
+		ROT00027,
+		/** Digits：EntityCheckNumberDigitsError（{0}は小数点以下{1}桁を超えています。）*/
+		ROT00028;
 	}
 
 	public <T> String findNullProperties(T entity) throws Exception {
@@ -98,7 +102,7 @@ public class TestTools {
 
 	/**
 	 * 入力チェックエラーが発生しなことを確認するアサーション
-	 * 
+	 *
 	 * @param result
 	 *            Entity のパラメータチェックの実行結果
 	 */
@@ -108,7 +112,7 @@ public class TestTools {
 
 	/**
 	 * 入力チェックエラーが発生するを確認するアサーション
-	 * 
+	 *
 	 * @param result
 	 *            Entity のパラメータチェックの実行結果
 	 */
@@ -118,7 +122,7 @@ public class TestTools {
 
 	/**
 	 * ErrorInfo のエラー ID が全て指定したものと同じであるかどうかを判定する
-	 * 
+	 *
 	 * @param errorInfoList
 	 *            ErrorInfo のリスト
 	 * @param paramterErrorId
@@ -127,6 +131,32 @@ public class TestTools {
 	 */
 	public boolean errorIdMatchesAll(List<ErrorInfo> errorInfoList, ParameterErrorIds paramterErrorId) {
 		return (errorInfoList.size() == (int) errorInfoList.stream().filter(info -> info != null && paramterErrorId.toString().equals(info.getErrorId())).count());
+	}
+
+	/**
+	 * ErrorInfo のエラー ID が全て指定したものと同じ物が一つだけ存在するかどうかを判定する
+	 *
+	 * @param errorInfoList
+	 *            ErrorInfo のリスト
+	 * @param paramterErrorId
+	 *            エラーID
+	 * @return boolean 判定結果（true：全て一致 false：不一致あり）
+	 */
+	public boolean errorIdMatchesOne(List<ErrorInfo> errorInfoList, ParameterErrorIds paramterErrorId) {
+		return (1 == (int) errorInfoList.stream().filter(info -> info != null && paramterErrorId.toString().equals(info.getErrorId())).count());
+	}
+
+	/**
+	 * ErrorInfo のエラー メッセージ が指定したものと同じ物が一つだけ存在するかどうかを判定する
+	 *
+	 * @param errorInfoList
+	 *            ErrorInfo のリスト
+	 * @param paramterErrorMessage
+	 *            エラーメッセージ
+	 * @return boolean 判定結果（true：一つ一致 false：一致無しまたは二つ以上一致）
+	 */
+	public boolean errorMessageMatchesOne(List<ErrorInfo> errorInfoList, String paramterErrorMessage) {
+		return (1 == (int) errorInfoList.stream().filter(info -> info != null && paramterErrorMessage.toString().equals(info.getErrorMessage())).count());
 	}
 
 }
