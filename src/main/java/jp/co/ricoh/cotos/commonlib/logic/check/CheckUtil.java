@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSourceResolvable;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
@@ -62,12 +63,23 @@ public class CheckUtil {
 				String fieldNm = messageUtil.convertSingleValue(fieldError.getField());
 				String errCode = fieldError.getCode();
 				String max = null;
+				String min = null;
+				String digits = null;
 				if (fieldError.getArguments() != null && fieldError.getArguments().length > 0) {
 					if ("Max".equals(errCode) || "Size".equals(errCode)) {
 						max = fieldError.getArguments()[1].toString();
 					}
+					if ("Min".equals(errCode)) {
+						min = fieldError.getArguments()[1].toString();
+					}
 					if ("DecimalMax".equals(errCode)) {
-						max = fieldError.getArguments()[2].toString();
+						max = ((MessageSourceResolvable)fieldError.getArguments()[2]).getDefaultMessage();
+					}
+					if ("DecimalMin".equals(errCode)) {
+						min = ((MessageSourceResolvable)fieldError.getArguments()[2]).getDefaultMessage();
+					}
+					if ("Digits".equals(errCode)) {
+						digits = fieldError.getArguments()[1].toString();
 					}
 				}
 
@@ -87,6 +99,16 @@ public class CheckUtil {
 				if ("Max".equals(errCode) || "DecimalMax".equals(errCode)) {
 					errKey = "EntityCheckNumberMaxError";
 					regexList = new String[] { fieldNm, max };
+				}
+				// 数値桁数チェック
+				if ("Min".equals(errCode) || "DecimalMin".equals(errCode)) {
+					errKey = "EntityCheckNumberMinError";
+					regexList = new String[] { fieldNm, min };
+				}
+				// 数値桁数チェック
+				if ("Digits".equals(errCode) ) {
+					errKey = "EntityCheckNumberDigitsError";
+					regexList = new String[] { fieldNm, digits };
 				}
 				MessageInfo messageInfo = messageUtil.createMessageInfo(errKey, regexList);
 				ErrorInfo errorInfo = new ErrorInfo();
