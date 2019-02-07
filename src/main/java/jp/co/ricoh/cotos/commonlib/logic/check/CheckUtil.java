@@ -80,10 +80,10 @@ public class CheckUtil {
 						min = fieldError.getArguments()[1].toString();
 					}
 					if ("DecimalMax".equals(errCode)) {
-						max = ((MessageSourceResolvable)fieldError.getArguments()[2]).getDefaultMessage();
+						max = ((MessageSourceResolvable) fieldError.getArguments()[2]).getDefaultMessage();
 					}
 					if ("DecimalMin".equals(errCode)) {
-						min = ((MessageSourceResolvable)fieldError.getArguments()[2]).getDefaultMessage();
+						min = ((MessageSourceResolvable) fieldError.getArguments()[2]).getDefaultMessage();
 					}
 					if ("Digits".equals(errCode)) {
 						digits = fieldError.getArguments()[1].toString();
@@ -113,7 +113,7 @@ public class CheckUtil {
 					regexList = new String[] { fieldNm, min };
 				}
 				// 数値桁数チェック
-				if ("Digits".equals(errCode) ) {
+				if ("Digits".equals(errCode)) {
 					errKey = "EntityCheckNumberDigitsError";
 					regexList = new String[] { fieldNm, digits };
 				}

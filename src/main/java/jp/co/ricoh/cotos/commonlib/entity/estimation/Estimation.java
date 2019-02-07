@@ -19,12 +19,14 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.DecimalMax;
+import javax.validation.Valid;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
 
@@ -116,21 +118,21 @@ public class Estimation extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "estimation_seq")
 	@SequenceGenerator(name = "estimation_seq", sequenceName = "estimation_seq", allocationSize = 1)
-	@ApiModelProperty(value = "見積ID(作成時不要)", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
+	@ApiModelProperty(value = "見積ID(作成時不要)", required = true, position = 1, allowableValues = "range[0,9223372036854775807]", readOnly = true)
 	private long id;
 
 	/**
 	 * 商品グループマスタID
 	 */
+	@Min(0)
 	@Column(nullable = false)
-	@ApiModelProperty(value = "商品グループマスタID", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "商品グループマスタID", required = true, position = 2, allowableValues = "range[0,9223372036854775807]")
 	private long productGrpMasterId;
 
 	/**
 	 * ライフサイクル状態
 	 */
 	@Column(nullable = false)
-	@NotNull
 	@ApiModelProperty(value = "ライフサイクル状態(作成時不要)", required = true, allowableValues = "作成中(\"1\"), 作成完了(\"2\"), 受注(\"3\"), 失注(\"4\"), 破棄(\"5\")", example = "1", position = 3, readOnly = true)
 	private LifecycleStatus lifecycleStatus;
 
@@ -138,14 +140,12 @@ public class Estimation extends EntityBase {
 	 * ワークフロー状態
 	 */
 	@Column(nullable = false)
-	@NotNull
 	@ApiModelProperty(value = "ワークフロー状態(作成時不要)", required = true, allowableValues = "作成中(\"1\"), 業務依頼中(\"2\"), 業務処理完了(\"3\"), 承認依頼中(\"4\"), 承認済(\"5\"), 顧客提示済(\"6\")", example = "1", position = 4, readOnly = true)
 	private WorkflowStatus workflowStatus;
 
 	/**
 	 * 恒久契約識別番号
 	 */
-	@Size(max = 255)
 	@ApiModelProperty(value = "恒久契約識別番号(作成時不要)", required = false, position = 5, allowableValues = "range[0,255]", readOnly = true)
 	private String immutableContIdentNumber;
 
@@ -166,8 +166,6 @@ public class Estimation extends EntityBase {
 	/**
 	 * 見積番号
 	 */
-	@NotEmpty
-	@Size(max = 255)
 	@Column(nullable = false)
 	@ApiModelProperty(value = "見積番号(作成時不要)", required = true, position = 8, allowableValues = "range[0,255]", readOnly = true)
 	private String estimationNumber;
@@ -176,7 +174,6 @@ public class Estimation extends EntityBase {
 	 * 見積番号枝番
 	 */
 	@Column(nullable = false)
-	@Max(99)
 	@ApiModelProperty(value = "見積番号枝番(作成時不要)", required = true, position = 9, allowableValues = "range[0,99]", readOnly = true)
 	private int estimationBranchNumber;
 
@@ -191,13 +188,13 @@ public class Estimation extends EntityBase {
 	 * 見積種別
 	 */
 	@Column(nullable = false)
-	@NotNull
 	@ApiModelProperty(value = "見積種別(作成時不要)", required = true, allowableValues = "新規(\"1\"), プラン変更(\"2\")", example = "1", position = 11, readOnly = true)
 	private EstimationType estimationType;
 
 	/**
 	 * 見積作成元システム区分
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "見積作成元システム区分", required = false, position = 12)
 	private String estimatedSystemDiv;
 
@@ -212,13 +209,15 @@ public class Estimation extends EntityBase {
 	 * 変更元契約番号枝番
 	 */
 	@Max(99)
+	@Min(0)
 	@ApiModelProperty(value = "変更元契約番号枝番", required = false, position = 14, allowableValues = "range[0,99]")
 	private Integer originContractBranchNumber;
 
 	/**
 	 * 変更元契約ID
 	 */
-	@ApiModelProperty(value = "変更元契約ID", required = false, position = 15, allowableValues = "range[0,9999999999999999999]")
+	@Min(0)
+	@ApiModelProperty(value = "変更元契約ID", required = false, position = 15, allowableValues = "range[0,9223372036854775807]")
 	private Long originContractId;
 
 	/**
@@ -397,8 +396,9 @@ public class Estimation extends EntityBase {
 	/**
 	 * 競合先基本料金
 	 */
-	@DecimalMax("9999999999999999999.99")
-	@ApiModelProperty(value = "競合先基本料金", required = false, position = 41, allowableValues = "range[0.00,9999999999999999999.99]")
+	@Digits(integer = 19, fraction = 2)
+	@DecimalMin("0.00")
+	@ApiModelProperty(value = "競合先基本料金", required = false, position = 41, allowableValues = "range[0.00,9223372036854775807.99]")
 	private BigDecimal competitionAmount;
 
 	/**
@@ -425,6 +425,7 @@ public class Estimation extends EntityBase {
 	/**
 	 * 見積添付ファイル
 	 */
+	@Valid
 	@OneToMany(mappedBy = "estimation")
 	@ApiModelProperty(value = "見積添付ファイル", required = false, position = 45)
 	private List<EstimationAttachedFile> estimationAttachedFileList;
@@ -432,6 +433,8 @@ public class Estimation extends EntityBase {
 	/**
 	 * 見積担当SA社員
 	 */
+	@Valid
+	@NotNull
 	@OneToOne(mappedBy = "estimation")
 	@ApiModelProperty(value = "見積担当SA社員", required = true, position = 46)
 	private EstimationPicSaEmp estimationPicSaEmp;
@@ -439,6 +442,7 @@ public class Estimation extends EntityBase {
 	/**
 	 * 見積追加編集者社員
 	 */
+	@Valid
 	@OneToMany(mappedBy = "estimation")
 	@ApiModelProperty(value = "見積追加編集者社員", required = false, position = 47)
 	private List<EstimationAddedEditorEmp> estimationAddedEditorEmpList;
@@ -446,6 +450,7 @@ public class Estimation extends EntityBase {
 	/**
 	 * 販売店（見積用）
 	 */
+	@Valid
 	@OneToMany(mappedBy = "estimation")
 	@ApiModelProperty(value = "販売店(見積用)", required = false, position = 48)
 	private List<DealerEstimation> dealerEstimationList;
@@ -453,6 +458,8 @@ public class Estimation extends EntityBase {
 	/**
 	 * 顧客（見積用）
 	 */
+	@Valid
+	@NotNull
 	@OneToOne(mappedBy = "estimation")
 	@ApiModelProperty(value = "顧客(見積用)", required = true, position = 49)
 	private CustomerEstimation customerEstimation;
@@ -468,6 +475,7 @@ public class Estimation extends EntityBase {
 	/**
 	 * 見積明細
 	 */
+	@Valid
 	@OneToMany(mappedBy = "estimation")
 	@ApiModelProperty(value = "見積明細", required = false, position = 51)
 	private List<EstimationDetail> estimationDetailList;
