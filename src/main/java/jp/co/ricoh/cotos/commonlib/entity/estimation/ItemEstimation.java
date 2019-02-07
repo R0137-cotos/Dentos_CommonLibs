@@ -14,11 +14,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -49,6 +49,7 @@ public class ItemEstimation extends EntityBase {
 	/**
 	 * 品種マスタID
 	 */
+	@Min(0)
 	@Column(nullable = false)
 	@ApiModelProperty(value = "品種マスタID", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
 	private long itemMasterId;
@@ -56,13 +57,14 @@ public class ItemEstimation extends EntityBase {
 	/**
 	 * 商品マスタ
 	 */
+	@Min(0)
 	@ApiModelProperty(value = "商品マスタ", required = true, position = 3, allowableValues = "range[0,9999999999999999999]")
 	private long productMasterId;
 
 	/**
 	 * 品種名
 	 */
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "品種名", required = true, position = 4, allowableValues = "range[0,255]")
 	private String itemEstimationName;
@@ -70,7 +72,7 @@ public class ItemEstimation extends EntityBase {
 	/**
 	 * リコー品種コード
 	 */
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "リコー品種コード", required = true, position = 5, allowableValues = "range[0,255]")
 	private String ricohItemCode;
@@ -93,7 +95,8 @@ public class ItemEstimation extends EntityBase {
 	 * 仕切価格
 	 */
 	@NotNull
-	@DecimalMax("9999999999999999999.99")
+	@DecimalMin("0.00")
+	@Digits(integer = 19, fraction = 2)
 	@ApiModelProperty(value = "仕切価格", required = true, position = 8, allowableValues = "range[0.00,9999999999999999999.99]")
 	private BigDecimal partitionPrice;
 
