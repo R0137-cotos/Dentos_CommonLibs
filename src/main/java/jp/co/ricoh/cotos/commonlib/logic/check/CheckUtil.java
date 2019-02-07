@@ -3,6 +3,8 @@ package jp.co.ricoh.cotos.commonlib.logic.check;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.regex.Pattern;
 
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +62,12 @@ public class CheckUtil {
 					continue;
 				}
 
-				String fieldNm = messageUtil.convertSingleValue(fieldError.getField());
+				// 親エンティティから子エンティティのフィールド名は「子エンティティ名.項目名」となっているため、項目名のみ抜き出す
+				String fieldOrigNm = Optional.of(fieldError.getField()).filter(s -> s.contains(".")).map(s -> {
+					return Optional.of(s.split(Pattern.quote("."))).map(m -> m[m.length - 1]).get();
+				}).orElse(fieldError.getField());
+
+				String fieldNm = messageUtil.convertSingleValue(fieldOrigNm);
 				String errCode = fieldError.getCode();
 				String max = null;
 				String min = null;
@@ -73,10 +80,10 @@ public class CheckUtil {
 						min = fieldError.getArguments()[1].toString();
 					}
 					if ("DecimalMax".equals(errCode)) {
-						max = ((MessageSourceResolvable)fieldError.getArguments()[2]).getDefaultMessage();
+						max = ((MessageSourceResolvable) fieldError.getArguments()[2]).getDefaultMessage();
 					}
 					if ("DecimalMin".equals(errCode)) {
-						min = ((MessageSourceResolvable)fieldError.getArguments()[2]).getDefaultMessage();
+						min = ((MessageSourceResolvable) fieldError.getArguments()[2]).getDefaultMessage();
 					}
 					if ("Digits".equals(errCode)) {
 						digits = fieldError.getArguments()[1].toString();
@@ -106,7 +113,7 @@ public class CheckUtil {
 					regexList = new String[] { fieldNm, min };
 				}
 				// 数値桁数チェック
-				if ("Digits".equals(errCode) ) {
+				if ("Digits".equals(errCode)) {
 					errKey = "EntityCheckNumberDigitsError";
 					regexList = new String[] { fieldNm, digits };
 				}
