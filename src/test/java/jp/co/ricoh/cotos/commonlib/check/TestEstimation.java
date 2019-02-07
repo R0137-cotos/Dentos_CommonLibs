@@ -68,7 +68,6 @@ public class TestEstimation {
 	private static final int INT_100000 = 100000;
 	private static final BigDecimal DECIMAL_MINUS_001 = new BigDecimal("-0.01");
 	private static final BigDecimal DECIMAL_0001 = new BigDecimal("0.001");
-	private static final BigDecimal DECIMAL_10000000000000000000 = new BigDecimal("10000000000000000000.00");
 
 	static ConfigurableApplicationContext context;
 
@@ -186,7 +185,7 @@ public class TestEstimation {
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
-		// 異常系（@NotNull、@NotEmptyの null チェック：）
+		// 異常系（@NotNullの null チェック：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setMomKjbSystemId(null);
 		testTarget.setDealerFlowOrder(null);
@@ -364,7 +363,7 @@ public class TestEstimation {
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
-		// 異常系（@NotNull、@NotEmptyの null チェック：）
+		// 異常系（@NotNullの null チェック：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setMomEmployeeId(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
@@ -472,15 +471,6 @@ public class TestEstimation {
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "承認者氏名が設定されていません。"));
 
-		// 異常系（@NotEmptyの空文字列チェック：）
-		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setApproverEmpId("");
-		testTarget.setApproverName("");
-		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 2);
-		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
-		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "承認者MoM社員IDが設定されていません。"));
-
 		// 異常系（@Size(max) ：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setApproverEmpId(STR_256);
@@ -524,8 +514,7 @@ public class TestEstimation {
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
-		// 異常系（@NotNullの null チェック：id、attachedAt、attachedFilePath
-		// ※idはプリミティブ型で試験実施できない）
+		// 異常系（@NotNullの null チェック：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setFileName(null);
 		testTarget.setAttachedFile(null);
@@ -534,7 +523,7 @@ public class TestEstimation {
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "添付ファイルが設定されていません。"));
 
-		// 異常系（@Size(max) ：fileKind attachedFilePath attachedEmpId attachedEmpName）
+		// 異常系（@Size(max) ：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setFileName(STR_256);
 		testTarget.setFileKind(STR_256);
@@ -606,7 +595,7 @@ public class TestEstimation {
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
-		// 異常系（@NotNull、@NotEmptyの null チェック：）
+		// 異常系（@NotNullの null チェック：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setState(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
@@ -629,15 +618,6 @@ public class TestEstimation {
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "数量は最大値（99999）を超えています。"));
-
-		// 異常系（@DecimalMax：）
-		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setEstimationAmountSummary(DECIMAL_10000000000000000000);
-		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 2);
-		Assert.assertTrue(testTool.errorIdMatchesOne(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
-		Assert.assertTrue(testTool.errorIdMatchesOne(result.getErrorInfoList(), ParameterErrorIds.ROT00028));
-		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "見積金額は最大値（9999999999999999999.99）を超えています。"));
 
 		// 異常系（@Min ：）
 		BeanUtils.copyProperties(testTarget, entity);
@@ -674,7 +654,7 @@ public class TestEstimation {
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
-		// 異常系（@NotNull、@NotEmptyの null チェック：）
+		// 異常系（@NotNullの null チェック：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setMomEmployeeId(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
@@ -779,7 +759,7 @@ public class TestEstimation {
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
-		// 異常系（@NotNull、@NotEmptyの null チェック：）
+		// 異常系（@NotNullの null チェック：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setProductEstimationName(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
