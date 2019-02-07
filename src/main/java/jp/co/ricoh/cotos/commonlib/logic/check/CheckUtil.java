@@ -3,6 +3,8 @@ package jp.co.ricoh.cotos.commonlib.logic.check;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.regex.Pattern;
 
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +62,12 @@ public class CheckUtil {
 					continue;
 				}
 
-				String fieldNm = messageUtil.convertSingleValue(fieldError.getField());
+				// 親エンティティから子エンティティのフィールド名は「子エンティティ名.項目名」となっているため、項目名のみ抜き出す
+				String fieldOrigNm = Optional.of(fieldError.getField()).filter(s -> s.contains(".")).map(s -> {
+					return Optional.of(s.split(Pattern.quote("."))).map(m -> m[m.length - 1]).get();
+				}).orElse(fieldError.getField());
+
+				String fieldNm = messageUtil.convertSingleValue(fieldOrigNm);
 				String errCode = fieldError.getCode();
 				String max = null;
 				String min = null;

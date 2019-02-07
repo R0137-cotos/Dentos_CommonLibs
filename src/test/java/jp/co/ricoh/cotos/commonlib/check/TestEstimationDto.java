@@ -2,11 +2,11 @@ package jp.co.ricoh.cotos.commonlib.check;
 
 import java.math.BigDecimal;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,7 +17,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import jp.co.ricoh.cotos.commonlib.DBConfig;
 import jp.co.ricoh.cotos.commonlib.TestTools;
 import jp.co.ricoh.cotos.commonlib.TestTools.ParameterErrorIds;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.estimation.EstimationDetailDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.estimation.EstimationDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.estimation.ItemEstimationDto;
 import jp.co.ricoh.cotos.commonlib.entity.estimation.CustomerEstimation;
 import jp.co.ricoh.cotos.commonlib.entity.estimation.DealerEstimation;
 import jp.co.ricoh.cotos.commonlib.entity.estimation.Estimation;
@@ -551,7 +553,6 @@ public class TestEstimationDto {
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "承認者組織階層レベルは最小値（0）を下回っています。"));
 	}
 
-
 	@Test
 	public void EstimationAttachedFileのテスト() throws Exception {
 
@@ -658,25 +659,32 @@ public class TestEstimationDto {
 	}
 
 	@Test
-	public void EstimationDetailのテスト() throws Exception {
+	public void EstimationDetailDtoのテスト() throws Exception {
 		EstimationDetail entity = estimationDetailRepository.findOne(401L);
-		EstimationDetail testTarget = new EstimationDetail();
-		BeanUtils.copyProperties(testTarget, entity);
+		EstimationDetailDto dto = new EstimationDetailDto();
+		EstimationDetailDto testTarget = new EstimationDetailDto();
+		BeanUtils.copyProperties(entity, dto);
+
+		ItemEstimationDto itemEstimation = new ItemEstimationDto();
+		BeanUtils.copyProperties(entity.getItemEstimation(), itemEstimation);
+		dto.setItemEstimation(itemEstimation);
 
 		// 正常系
+		BeanUtils.copyProperties(dto, testTarget);
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
-		// 異常系（@NotNull、@NotEmptyの null チェック：）
-		BeanUtils.copyProperties(testTarget, entity);
+		// 異常系（@NotNull：）
+		BeanUtils.copyProperties(dto, testTarget);
 		testTarget.setState(null);
+		testTarget.setEstimationAmountSummary(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "状態が設定されていません。"));
 
 		// 異常系（@Size(max) ：）
-		BeanUtils.copyProperties(testTarget, entity);
+		BeanUtils.copyProperties(dto, testTarget);
 		testTarget.setDetailAbstract(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
@@ -684,24 +692,15 @@ public class TestEstimationDto {
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "摘要は最大文字数（255）を超えています。"));
 
 		// 異常系（@Max ：）
-		BeanUtils.copyProperties(testTarget, entity);
+		BeanUtils.copyProperties(dto, testTarget);
 		testTarget.setQuantity(INT_100000);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "数量は最大値（99999）を超えています。"));
 
-		// 異常系（@DecimalMax：）
-		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setEstimationAmountSummary(DECIMAL_10000000000000000000);
-		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 2);
-		Assert.assertTrue(testTool.errorIdMatchesOne(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
-		Assert.assertTrue(testTool.errorIdMatchesOne(result.getErrorInfoList(), ParameterErrorIds.ROT00028));
-		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "見積金額は最大値（9999999999999999999.99）を超えています。"));
-
 		// 異常系（@Min ：）
-		BeanUtils.copyProperties(testTarget, entity);
+		BeanUtils.copyProperties(dto, testTarget);
 		testTarget.setQuantity(INT_MINUS_1);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
@@ -709,7 +708,7 @@ public class TestEstimationDto {
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "数量は最小値（0）を下回っています。"));
 
 		// 異常系（@DecimalMin：）
-		BeanUtils.copyProperties(testTarget, entity);
+		BeanUtils.copyProperties(dto, testTarget);
 		testTarget.setEstimationAmountSummary(DECIMAL_MINUS_001);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
@@ -717,12 +716,20 @@ public class TestEstimationDto {
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "見積金額は最小値（0.00）を下回っています。"));
 
 		// 異常系（@Digits：）
-		BeanUtils.copyProperties(testTarget, entity);
+		BeanUtils.copyProperties(dto, testTarget);
 		testTarget.setEstimationAmountSummary(DECIMAL_0001);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00028));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "見積金額は小数点以下2桁を超えています。"));
+
+		// 異常系（@Valid：）
+		BeanUtils.copyProperties(dto, testTarget);
+		testTarget.getItemEstimation().setRicohItemCode(STR_256);;
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "リコー品種コードは最大文字数（255）を超えています。"));
 	}
 
 	@Test

@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import jp.co.ricoh.cotos.commonlib.dto.parameter.estimation.EstimationDetailDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.estimation.EstimationDto;
 import jp.co.ricoh.cotos.commonlib.entity.accounting.Accounting;
 import jp.co.ricoh.cotos.commonlib.entity.arrangement.Arrangement;
 import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangementPicWorkerEmp;
@@ -156,7 +158,7 @@ public class TestSecurityController {
 
 	/**
 	 * パラメータチェックの URL を取得
-	 * 
+	 *
 	 * @param entity
 	 *            パラメータチェック対象のエンティティ
 	 * @param localServerPort
@@ -330,6 +332,11 @@ public class TestSecurityController {
 		return createParameterCheckResult(result);
 	}
 
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/EstimationDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated EstimationDto dto, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
 	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/EstimationAddedEditorEmp")
 	public ParamterCheckResult callParamterCheck(@RequestBody @Validated EstimationAddedEditorEmp entity, BindingResult result) {
 		return createParameterCheckResult(result);
@@ -362,6 +369,11 @@ public class TestSecurityController {
 
 	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/EstimationDetail")
 	public ParamterCheckResult callParamterCheck(@RequestBody @Validated EstimationDetail entity, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/EstimationDetailDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated EstimationDetailDto dto, BindingResult result) {
 		return createParameterCheckResult(result);
 	}
 
