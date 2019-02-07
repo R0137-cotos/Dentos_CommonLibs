@@ -24,8 +24,8 @@ public class EmployeeAbstractEntity extends EntityBase {
 	 * MoM社員ID
 	 */
 	@NotNull
-	@Size(max=255)
-	@ApiModelProperty(value = "MoM社員ID", required = true, position = 51, allowableValues = "range[0,24]")
+	@Size(max = 255)
+	@ApiModelProperty(value = "MoM社員ID", required = true, position = 51, allowableValues = "range[0,255]")
 	private String momEmployeeId;
 
 	/**

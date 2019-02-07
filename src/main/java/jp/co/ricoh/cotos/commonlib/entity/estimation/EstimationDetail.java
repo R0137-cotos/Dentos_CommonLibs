@@ -15,7 +15,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Max;
@@ -72,7 +71,6 @@ public class EstimationDetail extends EntityBase {
 	/**
 	 * 見積金額
 	 */
-	@DecimalMax("9999999999999999999.99")
 	@Digits(integer = 19, fraction = 2)
 	@DecimalMin("0.00")
 	@ApiModelProperty(value = "見積金額", required = false, position = 5, allowableValues = "range[0.00,9999999999999999999.99]")
