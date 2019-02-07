@@ -16,6 +16,7 @@ import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import lombok.Data;
@@ -28,12 +29,13 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Table(name = "arrangement_work_approval_route")
+@ApiModel(description = "手配業務承認ルート(作成時不要)")
 public class ArrangementWorkApprovalRoute extends EntityBase {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "arrangement_work_approval_route_seq")
 	@SequenceGenerator(name = "arrangement_work_approval_route_seq", sequenceName = "arrangement_work_approval_route_seq", allocationSize = 1)
-	@ApiModelProperty(value = "手配業務承認ルートID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "手配業務承認ルートID (作成時不要)", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
 	private long id;
 
 	/**
@@ -71,7 +73,7 @@ public class ArrangementWorkApprovalRoute extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "arrangementWorkApprovalRoute")
 	@OrderBy("processedAt ASC")
-	@ApiModelProperty(value = "手配業務承認実績", required = false, position = 6, readOnly = true)
+	@ApiModelProperty(value = "手配業務承認実績", required = false, position = 6)
 	private List<ArrangementWorkApprovalResult> arrangementWorkApprovalResultList;
 
 	/**

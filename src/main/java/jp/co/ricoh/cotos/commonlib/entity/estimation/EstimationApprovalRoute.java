@@ -19,6 +19,7 @@ import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import lombok.Data;
@@ -31,6 +32,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Table(name = "estimation_approval_route")
+@ApiModel(description = "見積承認ルート(作成時不要)")
 public class EstimationApprovalRoute extends EntityBase {
 
 	@Id

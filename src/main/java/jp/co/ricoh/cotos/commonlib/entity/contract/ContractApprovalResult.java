@@ -41,7 +41,7 @@ public class ContractApprovalResult extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_approval_result_seq")
 	@SequenceGenerator(name = "contract_approval_result_seq", sequenceName = "contract_approval_result_seq", allocationSize = 1)
-	@ApiModelProperty(value = "契約承認実績ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "契約承認実績ID(作成時不要)", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
 	private long id;
 
 	/**
@@ -105,7 +105,7 @@ public class ContractApprovalResult extends EntityBase {
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	@NotNull
-	@ApiModelProperty(value = "実施日時", required = true, position = 9, readOnly = true)
+	@ApiModelProperty(value = "実施日時(作成時不要)", required = true, position = 9, readOnly = true)
 	private Date processedAt;
 
 	@PrePersist

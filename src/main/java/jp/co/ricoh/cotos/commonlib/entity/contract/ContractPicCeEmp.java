@@ -12,6 +12,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.common.EmployeeAbstractEntity;
 import lombok.Data;
@@ -25,12 +26,13 @@ import lombok.EqualsAndHashCode;
 @EntityListeners(ContractPicCeEmpListener.class)
 @Data
 @Table(name = "contract_pic_ce_emp")
+@ApiModel(description = "契約担当CE社員(作成時不要)")
 public class ContractPicCeEmp extends EmployeeAbstractEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_pic_ce_emp_seq")
 	@SequenceGenerator(name = "contract_pic_ce_emp_seq", sequenceName = "contract_pic_ce_emp_seq", allocationSize = 1)
-	@ApiModelProperty(value = "ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "ID(作成時不要)", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
 	private long id;
 
 	/**

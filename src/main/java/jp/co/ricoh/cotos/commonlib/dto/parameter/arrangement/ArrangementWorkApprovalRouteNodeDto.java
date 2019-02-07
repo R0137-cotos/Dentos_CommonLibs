@@ -1,56 +1,22 @@
-package jp.co.ricoh.cotos.commonlib.entity.arrangement;
+package jp.co.ricoh.cotos.commonlib.dto.parameter.arrangement;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OrderBy;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import io.swagger.annotations.ApiModelProperty;
-import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.common.DtoBase;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-/**
- * 手配業務ルートノードを表すEntity
- */
-@Entity
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 @Data
-@Table(name = "arrangement_work_approval_route_node")
-public class ArrangementWorkApprovalRouteNode extends EntityBase {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "arrangement_work_approval_route_node_seq")
-	@SequenceGenerator(name = "arrangement_work_approval_route_node_seq", sequenceName = "arrangement_work_approval_route_node_seq", allocationSize = 1)
-	@ApiModelProperty(value = "手配業務承認ルートノードID (作成時不要)", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
-	private long id;
-
-	/**
-	 * 手配業務承認ルート
-	 */
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "arrangement_work_approval_route_id", referencedColumnName = "id")
-	@JsonIgnore
-	@ApiModelProperty(value = "手配業務承認ルート", required = true, position = 2)
-	private ArrangementWorkApprovalRoute arrangementWorkApprovalRoute;
+public class ArrangementWorkApprovalRouteNodeDto extends DtoBase {
 
 	/**
 	 * 承認順
 	 */
-	@Column(nullable = false)
-	@OrderBy("desc")
 	@Max(999L)
 	@ApiModelProperty(value = "承認順", required = true, position = 3, allowableValues = "range[0,999]")
 	private long approvalOrder;
@@ -65,7 +31,6 @@ public class ArrangementWorkApprovalRouteNode extends EntityBase {
 	/**
 	 * 承認者MoM社員ID
 	 */
-	@Column(nullable = false)
 	@NotEmpty
 	@Size(max = 255)
 	@ApiModelProperty(value = "承認者MoM社員ID", required = true, position = 5, allowableValues = "range[0,255]")
@@ -74,7 +39,6 @@ public class ArrangementWorkApprovalRouteNode extends EntityBase {
 	/**
 	 * 承認者氏名
 	 */
-	@Column(nullable = false)
 	@NotEmpty
 	@Size(max = 255)
 	@ApiModelProperty(value = "承認者氏名", required = true, position = 6, allowableValues = "range[0,255]")
@@ -107,5 +71,4 @@ public class ArrangementWorkApprovalRouteNode extends EntityBase {
 	@Size(max = 255)
 	@ApiModelProperty(value = "代理承認者組織名", required = false, position = 10, allowableValues = "range[0,255]")
 	private String subApproverOrgName;
-
 }

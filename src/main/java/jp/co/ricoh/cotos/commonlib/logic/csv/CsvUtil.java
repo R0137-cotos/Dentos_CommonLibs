@@ -19,7 +19,7 @@ import com.fasterxml.jackson.dataformat.csv.CsvGenerator;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 
-import jp.co.ricoh.cotos.commonlib.dto.parameter.CsvParameter;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.common.CsvParameter;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorCheckException;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorInfo;
 import jp.co.ricoh.cotos.commonlib.logic.check.CheckUtil;

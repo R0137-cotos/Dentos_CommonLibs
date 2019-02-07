@@ -3,7 +3,7 @@ package jp.co.ricoh.cotos.commonlib.logic.check;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import jp.co.ricoh.cotos.commonlib.dto.parameter.AuthorityJudgeParameter;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.common.AuthorityJudgeParameter;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvEmployeeMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.AccessType;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.ActionDiv;

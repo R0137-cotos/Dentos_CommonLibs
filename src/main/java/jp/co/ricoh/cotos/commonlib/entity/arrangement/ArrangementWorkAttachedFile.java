@@ -44,7 +44,7 @@ public class ArrangementWorkAttachedFile extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "arrangement_work_attached_file_seq")
 	@SequenceGenerator(name = "arrangement_work_attached_file_seq", sequenceName = "arrangement_work_attached_file_seq", allocationSize = 1)
-	@ApiModelProperty(value = "手配業務添付ファイルID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "手配業務添付ファイルID (作成時不要)", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
 	private long id;
 
 	/**
@@ -118,7 +118,7 @@ public class ArrangementWorkAttachedFile extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@NotNull
-	@ApiModelProperty(value = "添付日時", required = true, position = 10, readOnly = true)
+	@ApiModelProperty(value = "添付日時", required = true, position = 10)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date attachedAt;
 
