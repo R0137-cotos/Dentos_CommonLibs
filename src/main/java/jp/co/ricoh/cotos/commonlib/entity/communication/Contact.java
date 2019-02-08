@@ -17,6 +17,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -46,8 +48,9 @@ public class Contact extends EntityBase {
 	/**
 	 * 見積ID
 	 */
+	@Min(0)
 	@Column(nullable = false)
-	@ApiModelProperty(value = "見積ID", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "見積ID", required = true, position = 2, allowableValues = "range[0,9223372036854775807]")
 	private long estimationId;
 
 	/**
@@ -62,6 +65,7 @@ public class Contact extends EntityBase {
 	/**
 	 * 子問い合わせリスト
 	 */
+	@Valid
 	@OneToMany(mappedBy = "parent")
 	@ApiModelProperty(value = "子問い合わせリスト", required = false, position = 4)
 	private List<Contact> children;
@@ -72,13 +76,12 @@ public class Contact extends EntityBase {
 	@Column(nullable = false)
 	@NotNull
 	@Size(max = 255)
-	@ApiModelProperty(value = "送信者MoM社員ID (作成時不要)", required = true, position = 5, allowableValues = "range[0,255]", readOnly = true)
+	@ApiModelProperty(value = "送信者MoM社員ID", required = true, position = 5, allowableValues = "range[0,255]")
 	private String contactFromEmpId;
 
 	/**
 	 * サービスカテゴリ
 	 */
-	@Column(nullable = false)
 	@ApiModelProperty(value = "サービスカテゴリ", required = false, allowableValues = "見積(\"1\"), 契約(\"2\"), 手配(\"3\")", example = "1", position = 6)
 	private ServiceCategory serviceCategory;
 
@@ -100,7 +103,6 @@ public class Contact extends EntityBase {
 	 * 送信日時
 	 */
 	@Column(nullable = false)
-	@NotNull
 	@ApiModelProperty(value = "送信日時 (作成時不要)", required = true, position = 9, readOnly = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date sendAt;
@@ -109,12 +111,13 @@ public class Contact extends EntityBase {
 	 * 送信者氏名
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "送信者氏名 (作成時不要)", required = false, position = 10, allowableValues = "range[0,255]", readOnly = true)
+	@ApiModelProperty(value = "送信者氏名", required = false, position = 10, allowableValues = "range[0,255]")
 	private String contactFromEmpName;
 
 	/**
 	 * 宛先
 	 */
+	@Valid
 	@OneToMany(mappedBy = "contact")
 	@NotNull
 	@ApiModelProperty(value = "宛先", required = true, position = 11)
