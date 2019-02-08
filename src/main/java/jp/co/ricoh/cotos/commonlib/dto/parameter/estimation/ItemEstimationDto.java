@@ -3,11 +3,11 @@ package jp.co.ricoh.cotos.commonlib.dto.parameter.estimation;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
-import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.NotEmpty;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.common.DtoBase;
@@ -23,20 +23,22 @@ public class ItemEstimationDto extends DtoBase {
 	/**
 	 * 品種マスタID
 	 */
+	@Min(0)
 	@Column(nullable = false)
-	@ApiModelProperty(value = "品種マスタID", required = true, position = 3, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "品種マスタID", required = true, position = 3, allowableValues = "range[0,9223372036854775807]")
 	private long itemMasterId;
 
 	/**
 	 * 商品マスタ
 	 */
-	@ApiModelProperty(value = "商品マスタ", required = true, position = 4, allowableValues = "range[0,9999999999999999999]")
+	@Min(0)
+	@ApiModelProperty(value = "商品マスタ", required = true, position = 4, allowableValues = "range[0,9223372036854775807]")
 	private long productMasterId;
 
 	/**
 	 * 品種名
 	 */
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "品種名", required = true, position = 5, allowableValues = "range[0,255]")
 	private String itemEstimationName;
@@ -44,7 +46,7 @@ public class ItemEstimationDto extends DtoBase {
 	/**
 	 * リコー品種コード
 	 */
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "リコー品種コード", required = true, position = 6, allowableValues = "range[0,255]")
 	private String ricohItemCode;
@@ -67,7 +69,8 @@ public class ItemEstimationDto extends DtoBase {
 	 * 仕切価格
 	 */
 	@NotNull
-	@DecimalMax("9999999999999999999.99")
-	@ApiModelProperty(value = "仕切価格", required = true, position = 9, allowableValues = "range[0.00,9999999999999999999.99]")
+	@DecimalMin("0.00")
+	@Digits(integer = 19, fraction = 2)
+	@ApiModelProperty(value = "仕切価格", required = true, position = 9, allowableValues = "range[0.00,9223372036854775807.99]")
 	private BigDecimal partitionPrice;
 }
