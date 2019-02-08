@@ -312,7 +312,7 @@ public class TestArrangementDto {
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
-		// 異常系（@NotNull、@NotEmptyの null チェック：）
+		// 異常系（@NotNull：）
 		BeanUtils.copyProperties(entity, testTarget);
 		testTarget.setApproverEmpId(null);
 		testTarget.setApproverName(null);

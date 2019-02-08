@@ -16,6 +16,7 @@ import jp.co.ricoh.cotos.commonlib.DBConfig;
 import jp.co.ricoh.cotos.commonlib.TestTools;
 import jp.co.ricoh.cotos.commonlib.TestTools.ParameterErrorIds;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.common.AttachedFileDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.common.CheckResultUpdateParameter;
 import jp.co.ricoh.cotos.commonlib.entity.common.AttachedFile;
 import jp.co.ricoh.cotos.commonlib.repository.common.AttachedFileRepository;
 import jp.co.ricoh.cotos.commonlib.security.TestSecurityController;
@@ -28,6 +29,7 @@ public class TestCommonDto {
 
 	private static final String STR_256 = "0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345";
 	private static final String STR_1001 = "01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
+	private static final int INT_MINUS_1 = -1;
 
 	static ConfigurableApplicationContext context;
 
@@ -90,5 +92,26 @@ public class TestCommonDto {
 		Assert.assertTrue(result.getErrorInfoList().size() == 3);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "サーバーパスは最大文字数（1000）を超えています。"));
+	}
+
+	@Test
+	public void CheckResultUpdateParameterのテスト() throws Exception {
+		CheckResultUpdateParameter dto = new CheckResultUpdateParameter();
+		dto.setCheckResultId(11L);
+		dto.setUpdateStatus(true);
+
+		CheckResultUpdateParameter testTarget = new CheckResultUpdateParameter();
+
+		// 正常系
+		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		testTool.assertValidationOk(result);
+
+		// 異常系（@Min ：）
+		BeanUtils.copyProperties(dto, testTarget);
+		testTarget.setCheckResultId(INT_MINUS_1);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "チェック結果IDは最小値（0）を下回っています。"));
 	}
 }
