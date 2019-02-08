@@ -264,15 +264,16 @@ public class EstimationSearchParameter {
 			+ "1:見積種別<br />" //
 			+ "2:見積件名<br />" //
 			+ "3:見積ステータス<br />" //
-			+ "4:案件番号<br />" //
-			+ "5:事業所名<br />" //
-			+ "6:企業名<br />" //
-			+ "7:部門名<br />" //
-			+ "8:担当営業<br />" //
-			+ "9:商品名称<br />" //
-			+ "10:提示日<br />" //
-			+ "11:担当支社", //
-			required = true, allowableValues = "range[0,11]")
+			+ "4:見積状態<br />" //
+			+ "5:案件番号<br />" //
+			+ "6:事業所名<br />" //
+			+ "7:企業名<br />" //
+			+ "8:部門名<br />" //
+			+ "9:担当営業<br />" //
+			+ "10:商品名称<br />" //
+			+ "11:提示日<br />" //
+			+ "12:担当支社", //
+			required = true, allowableValues = "range[0,12]")
 	private int sortColumn;
 
 	/**
