@@ -15,9 +15,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -54,7 +54,7 @@ public class ArrangementWorkCheckResult extends EntityBase {
 	 * チェック事項コード
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "チェック事項コード", required = true, position = 3, allowableValues = "range[0,255]")
 	private String checkMatterCode;
@@ -63,7 +63,7 @@ public class ArrangementWorkCheckResult extends EntityBase {
 	 * チェック事項文面
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "チェック事項文面", required = true, position = 4, allowableValues = "range[0,255]")
 	private String checkMatterText;
@@ -71,17 +71,18 @@ public class ArrangementWorkCheckResult extends EntityBase {
 	/**
 	 * 表示順
 	 */
-	@Column(nullable = false)
-	@OrderBy("desc")
 	@Max(999)
+	@Min(0)
+	@OrderBy("desc")
+	@Column(nullable = false)
 	@ApiModelProperty(value = "表示順", required = true, position = 5, allowableValues = "range[0,999]")
 	private int displayOrder;
 
 	/**
-	 * チェック実施者MoM社員ID
+	 * チェック実施者
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "チェック実施者MoM社員ID)", required = false, position = 6, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "チェック実施者", required = false, position = 6, allowableValues = "range[0,255]")
 	private String checkedUserId;
 
 	/**

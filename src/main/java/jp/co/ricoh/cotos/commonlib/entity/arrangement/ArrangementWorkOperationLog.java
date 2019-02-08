@@ -20,8 +20,6 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -70,19 +68,16 @@ public class ArrangementWorkOperationLog extends EntityBase {
 	/**
 	 * 操作者MoM社員ID
 	 */
+	@NotNull
 	@Column(nullable = false)
-	@NotEmpty
-	@Size(max = 255)
-	@ApiModelProperty(value = "操作者MoM社員ID", required = true, position = 4, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "操作者MoM社員ID", required = true, position = 4)
 	private String operatorEmpId;
 
 	/**
 	 * 操作者氏名
 	 */
-	@Column(nullable = false)
-	@NotEmpty
 	@Size(max = 255)
-	@ApiModelProperty(value = "操作者氏名", required = true, position = 5, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "操作者氏名", required = false, position = 5, allowableValues = "range[0,255]")
 	private String operatorName;
 
 	/**
@@ -96,8 +91,7 @@ public class ArrangementWorkOperationLog extends EntityBase {
 	 * 実施日時
 	 */
 	@Column(nullable = false)
-	@NotNull
-	@ApiModelProperty(value = "実施日時", required = true, position = 7)
+	@ApiModelProperty(value = "実施日時(作成時不要)", required = true, position = 7, readOnly = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date operatedAt;
 

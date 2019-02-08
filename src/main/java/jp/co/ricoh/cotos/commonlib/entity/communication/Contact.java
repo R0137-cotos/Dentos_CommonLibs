@@ -47,7 +47,7 @@ public class Contact extends EntityBase {
 	 * 見積ID
 	 */
 	@Column(nullable = false)
-	@ApiModelProperty(value = "見積ID (作成時不要)", required = true, position = 2, allowableValues = "range[0,9999999999999999999]", readOnly = true)
+	@ApiModelProperty(value = "見積ID", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
 	private long estimationId;
 
 	/**
