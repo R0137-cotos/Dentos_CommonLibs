@@ -7,7 +7,6 @@ import javax.validation.constraints.Size;
 
 import io.swagger.annotations.ApiParam;
 import jp.co.ricoh.cotos.commonlib.entity.EnumType.TargetDirectionType;
-import jp.co.ricoh.cotos.commonlib.entity.communication.Contact;
 import lombok.Data;
 
 /**
@@ -20,7 +19,7 @@ public class ContactComponentsParameter {
 	 * 親問い合わせエンティティ
 	 */
 	@ApiParam(value = "親問い合わせエンティティ", required = false)
-	private Contact parentContact;
+	private ContactDto parentContact;
 
 	/**
 	 * 問い合わせタイトル
