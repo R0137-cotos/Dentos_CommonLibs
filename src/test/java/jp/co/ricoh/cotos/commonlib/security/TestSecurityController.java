@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import jp.co.ricoh.cotos.commonlib.dto.parameter.communication.ContactDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.communication.ContactToDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.estimation.CustomerEstimationDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.estimation.DealerEstimationDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.estimation.EstimationAddedEditorEmpDto;
@@ -255,6 +257,16 @@ public class TestSecurityController {
 
 	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContactTo")
 	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContactTo entity, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContactDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContactDto entity, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContactToDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContactToDto entity, BindingResult result) {
 		return createParameterCheckResult(result);
 	}
 

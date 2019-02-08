@@ -7,6 +7,7 @@ import javax.persistence.Lob;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -23,7 +24,8 @@ public class ContactDto extends DtoBase {
 	/**
 	 * 見積ID
 	 */
-	@ApiModelProperty(value = "見積ID", required = true, position = 3, allowableValues = "range[0,9999999999999999999]")
+	@Min(0)
+	@ApiModelProperty(value = "見積ID", required = true, position = 3, allowableValues = "range[0,9223372036854775807]")
 	private long estimationId;
 
 	/**
