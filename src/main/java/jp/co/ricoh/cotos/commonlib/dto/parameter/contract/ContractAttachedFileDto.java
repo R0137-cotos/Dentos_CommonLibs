@@ -12,8 +12,8 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import io.swagger.annotations.ApiModelProperty;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.common.AttachedFileDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.common.DtoBase;
-import jp.co.ricoh.cotos.commonlib.entity.common.AttachedFile;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -43,7 +43,7 @@ public class ContractAttachedFileDto extends DtoBase {
 	@NotNull
 	@JoinColumn(name = "attached_file_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "添付ファイル", required = true, position = 5)
-	private AttachedFile attachedFile;
+	private AttachedFileDto attachedFile;
 
 	/**
 	 * コメント
