@@ -925,7 +925,7 @@ public class TestEstimationDto {
 		detailParam.setStatus("dummy_status");
 		detailParam.setRicohItemCode("dummy_item_code");
 		detailParam.setQuantity(11);
-		detailParam.setEstimationAmountSummary(new BigDecimal("11.11"));
+		detailParam.setAmountSummary(new BigDecimal("11.11"));
 		detailParam.setExtendsParameter("dummy_extends_param");
 		dto.getEstimationDetailRegisterParameterList().add(detailParam);
 
@@ -978,7 +978,7 @@ public class TestEstimationDto {
 		dto.setStatus("dummy_status");
 		dto.setRicohItemCode("dummy_item_code");
 		dto.setQuantity(11);
-		dto.setEstimationAmountSummary(new BigDecimal("11.11"));
+		dto.setAmountSummary(new BigDecimal("11.11"));
 		dto.setExtendsParameter("dummy_extends_param");
 
 		EstimationDetailRegisterParameter testTarget = new EstimationDetailRegisterParameter();
@@ -992,7 +992,7 @@ public class TestEstimationDto {
 		BeanUtils.copyProperties(dto, testTarget);
 		testTarget.setStatus(null);
 		testTarget.setRicohItemCode(null);
-		testTarget.setEstimationAmountSummary(null);
+		testTarget.setAmountSummary(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 3);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
@@ -1017,19 +1017,19 @@ public class TestEstimationDto {
 
 		// 異常系（@DecimalMin：）
 		BeanUtils.copyProperties(dto, testTarget);
-		testTarget.setEstimationAmountSummary(DECIMAL_MINUS_001);
+		testTarget.setAmountSummary(DECIMAL_MINUS_001);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
-		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "見積金額は最小値（0.00）を下回っています。"));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "金額は最小値（0.00）を下回っています。"));
 
 		// 異常系（@Digits：）
 		BeanUtils.copyProperties(dto, testTarget);
-		testTarget.setEstimationAmountSummary(DECIMAL_0001);
+		testTarget.setAmountSummary(DECIMAL_0001);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00028));
-		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "見積金額は小数点以下2桁を超えています。"));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "金額は小数点以下2桁を超えています。"));
 	}
 
 	@Test
