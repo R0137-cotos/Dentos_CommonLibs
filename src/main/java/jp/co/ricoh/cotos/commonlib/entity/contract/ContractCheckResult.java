@@ -13,10 +13,9 @@ import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -38,7 +37,7 @@ public class ContractCheckResult extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_check_result_seq")
 	@SequenceGenerator(name = "contract_check_result_seq", sequenceName = "contract_check_result_seq", allocationSize = 1)
-	@ApiModelProperty(value = "契約チェック結果ID(作成時不要)", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
+	@ApiModelProperty(value = "契約チェック結果ID(作成時不要)", required = true, position = 1, allowableValues = "range[0,9223372036854775807]", readOnly = true)
 	private long id;
 
 	/**
@@ -62,7 +61,7 @@ public class ContractCheckResult extends EntityBase {
 	 * チェック事項コード
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "チェック事項コード", required = true, position = 4, allowableValues = "range[0,255]")
 	private String checkMatterCode;
@@ -70,7 +69,7 @@ public class ContractCheckResult extends EntityBase {
 	/**
 	 * チェック事項文面
 	 */
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@Column(nullable = false)
 	@ApiModelProperty(value = "チェック事項文面", required = true, position = 5, allowableValues = "range[0,255]")
@@ -82,12 +81,14 @@ public class ContractCheckResult extends EntityBase {
 	@Column(nullable = false)
 	@OrderBy("desc")
 	@Max(999)
+	@Min(0)
 	@ApiModelProperty(value = "表示順", required = true, position = 6, allowableValues = "range[0,999]")
 	private int displayOrder;
 
 	/**
 	 * チェック実施者MoM社員ID
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "チェック実施者MoM社員ID", required = false, position = 7)
 	private String checkedUserId;
 
