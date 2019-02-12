@@ -11,9 +11,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.NotEmpty;
+import javax.validation.constraints.Min;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -35,37 +33,35 @@ public class ProductContract extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_contract_seq")
 	@SequenceGenerator(name = "product_contract_seq", sequenceName = "product_contract_seq", allocationSize = 1)
-	@ApiModelProperty(value = "ID(作成時不要)", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
+	@ApiModelProperty(value = "ID(作成時不要)", required = true, position = 1, allowableValues = "range[0,9223372036854775807]", readOnly = true)
 	private long id;
 
 	/**
 	 * 商品マスタID
 	 */
+	@Min(0)
 	@Column(nullable = false)
-	@ApiModelProperty(value = "商品マスタID", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "商品マスタID", required = true, position = 2, allowableValues = "range[0,9223372036854775807]")
 	private long productMasterId;
 
 	/**
 	 * 商品名
 	 */
 	@Column(nullable = false)
-	@NotEmpty
-	@Size(max = 255)
 	@ApiModelProperty(value = "商品名(作成時不要)", required = true, position = 3, allowableValues = "range[0,255]", readOnly = true)
 	private String productContractName;
 
 	/**
 	 * 代表品種マスタID
 	 */
-	@ApiModelProperty(value = "代表品種マスタID", required = false, position = 4, allowableValues = "range[0,9999999999999999999]")
+	@Min(0)
+	@ApiModelProperty(value = "代表品種マスタID", required = false, position = 4, allowableValues = "range[0,9223372036854775807]")
 	private Long repItemMasterId;
 
 	/**
 	 * サービス識別番号
 	 */
 	@Column(nullable = false)
-	@NotEmpty
-	@Size(max = 255)
 	@ApiModelProperty(value = "サービス識別番号(作成時不要)", required = true, position = 5, allowableValues = "range[0,255]", readOnly = true)
 	private String serviceIdentNumber;
 

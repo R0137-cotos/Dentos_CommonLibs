@@ -20,7 +20,6 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -44,7 +43,7 @@ public class ContractAttachedFile extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_attached_file_seq")
 	@SequenceGenerator(name = "contract_attached_file_seq", sequenceName = "contract_attached_file_seq", allocationSize = 1)
-	@ApiModelProperty(value = "契約添付ファイルID(作成時不要)", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
+	@ApiModelProperty(value = "契約添付ファイルID(作成時不要)", required = true, position = 1, allowableValues = "range[0,9223372036854775807]", readOnly = true)
 	private long id;
 
 	/**
@@ -60,7 +59,7 @@ public class ContractAttachedFile extends EntityBase {
 	 * ファイル名
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "ファイル名", required = true, position = 3, allowableValues = "range[0,255]")
 	private String fileName;
@@ -92,7 +91,7 @@ public class ContractAttachedFile extends EntityBase {
 	 * 添付者MoM社員ID
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "添付者MoM社員ID", required = true, position = 7, allowableValues = "range[0,255]")
 	private String attachedEmpId;
@@ -101,7 +100,7 @@ public class ContractAttachedFile extends EntityBase {
 	 * 添付者氏名
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "添付者氏名", required = true, position = 8, allowableValues = "range[0,255]")
 	private String attachedEmpName;
@@ -117,7 +116,6 @@ public class ContractAttachedFile extends EntityBase {
 	 * 添付日時
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
-	@NotNull
 	@ApiModelProperty(value = "添付日時(作成時不要)", required = true, position = 10, readOnly = true)
 	private Date attachedAt;
 
