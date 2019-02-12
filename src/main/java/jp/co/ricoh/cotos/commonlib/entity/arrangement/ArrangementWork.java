@@ -15,7 +15,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.Valid;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -67,6 +69,8 @@ public class ArrangementWork extends EntityBase {
 	/**
 	 * 手配
 	 */
+	@Valid
+	@NotNull
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "arrangement_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "手配", required = true, position = 2)
@@ -76,6 +80,7 @@ public class ArrangementWork extends EntityBase {
 	 * 手配業務タイプマスタID
 	 */
 	@Column(nullable = false)
+	@Min(0)
 	@ApiModelProperty(value = "手配業務タイプマスタID", required = true, position = 3, allowableValues = "range[0,9999999999999999999]")
 	private long arrangementWorkTypeMasterId;
 
@@ -99,6 +104,7 @@ public class ArrangementWork extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@Max(9)
+	@Min(0)
 	@ApiModelProperty(value = "保留フラグ", required = true, position = 6, allowableValues = "range[0,9]")
 	private int holdingFlg;
 

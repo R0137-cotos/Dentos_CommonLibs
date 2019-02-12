@@ -11,9 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -80,16 +79,16 @@ public class ContactTo extends EntityBase {
 	 * 宛先MoM社員ID
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
-	@ApiModelProperty(value = "宛先MoM社員ID (作成時不要)", required = true, position = 4, allowableValues = "range[0,255]", readOnly = true)
+	@ApiModelProperty(value = "宛先MoM社員ID", required = true, position = 4, allowableValues = "range[0,255]")
 	private String contactToEmpId;
 
 	/**
 	 * 宛先メールアドレス
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "宛先メールアドレス (作成時不要)", required = false, position = 5, allowableValues = "range[0,255]", readOnly = true)
+	@ApiModelProperty(value = "宛先メールアドレス", required = false, position = 5, allowableValues = "range[0,255]")
 	private String contactToEmail;
 
 	/**

@@ -5,11 +5,8 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 import io.swagger.annotations.ApiParam;
 import jp.co.ricoh.cotos.commonlib.entity.EnumType.TargetDirectionType;
-import jp.co.ricoh.cotos.commonlib.entity.communication.Contact;
 import lombok.Data;
 
 /**
@@ -22,28 +19,28 @@ public class ContactComponentsParameter {
 	 * 親問い合わせエンティティ
 	 */
 	@ApiParam(value = "親問い合わせエンティティ", required = false)
-	private Contact parentContact;
+	private ContactDto parentContact;
 
 	/**
 	 * 問い合わせタイトル
 	 */
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
-	@ApiParam(value = "問い合わせタイトル", required = true)
+	@ApiParam(value = "問い合わせタイトル", allowableValues = "range[0,255]", required = true)
 	private String contactTitle;
 
 	/**
 	 * 問い合わせ内容
 	 */
-	@NotEmpty
-	@ApiParam(value = "問い合わせ内容", required = true)
+	@NotNull
+	@ApiParam(value = "問い合わせ内容", allowableValues = "range[0,255]", required = true)
 	private String contactMessage;
 
 	/**
 	 * 宛先種別
 	 */
 	@NotNull
-	@ApiParam(value = "宛先種別", required = true)
+	@ApiParam(value = "宛先種別", allowableValues = "担当CE(\"1\"), 担当SA(\"2\"), 全担当者(\"98\"), その他(\"99\");", required = true)
 	private TargetDirectionType targetDirectionType;
 
 	/**

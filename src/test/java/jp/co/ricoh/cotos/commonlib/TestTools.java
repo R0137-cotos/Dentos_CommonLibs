@@ -158,5 +158,4 @@ public class TestTools {
 	public boolean errorMessageMatchesOne(List<ErrorInfo> errorInfoList, String paramterErrorMessage) {
 		return (1 == (int) errorInfoList.stream().filter(info -> info != null && paramterErrorMessage.toString().equals(info.getErrorMessage())).count());
 	}
-
 }

@@ -12,10 +12,10 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.NotEmpty;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
@@ -61,7 +61,7 @@ public class CommunicationHistory extends EntityBase {
 	 * 対象文書キー
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "対象文書キー<br />コミュニケーションの対象情報を一意に特定するためのキー情報を格納<br />" //
 			+ "見積⇒見積ID<br />" //
@@ -91,7 +91,7 @@ public class CommunicationHistory extends EntityBase {
 	 * 対象文書画面URL
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@Size(max = 1000)
 	@ApiModelProperty(value = "対象文書画面URL<br />Home画面でレコードクリック時の画面遷移先URLを格納<br />" //
 			+ "見積⇒対象文書キーで特定される見積情報画面のURL<br />" //
@@ -103,45 +103,45 @@ public class CommunicationHistory extends EntityBase {
 	 * 依頼者
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "依頼者 (作成時不要)<br />" //
-			+ "ワークフローの起点となったユーザーのMoM社員IDを設定", required = true, position = 8, allowableValues = "range[0,255]", readOnly = true) //
+			+ "ワークフローの起点となったユーザーのMoM社員IDを設定", required = true, position = 8, allowableValues = "range[0,255]") //
 	private String requestOriginId;
 
 	/**
 	 * 伝達者
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
-	@ApiModelProperty(value = "伝達者 (作成時不要)<br />" //
-			+ "ユーザー識別子としてMoM社員IDを設定", required = true, position = 9, allowableValues = "range[0,255]", readOnly = true) //
+	@ApiModelProperty(value = "伝達者<br />" //
+			+ "ユーザー識別子としてMoM社員IDを設定", required = true, position = 9, allowableValues = "range[0,255]") //
 	private String requestFromId;
 
 	/**
 	 * 被伝達者
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
-	@ApiModelProperty(value = "被伝達者 (作成時不要)<br />" //
-			+ "ユーザー識別子としてMoM社員IDを設定", required = true, position = 10, allowableValues = "range[0,255]", readOnly = true) //
+	@ApiModelProperty(value = "被伝達者<br />" //
+			+ "ユーザー識別子としてMoM社員IDを設定", required = true, position = 10, allowableValues = "range[0,255]") //
 	private String requestToId;
 
 	/**
 	 * 被伝達者候補
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "被伝達者候補 (作成時不要)<br />" //
-			+ "ユーザー識別子としてMoM社員IDを設定", required = false, position = 11, allowableValues = "range[0,255]", readOnly = true) //
+	@ApiModelProperty(value = "被伝達者候補<br />" //
+			+ "ユーザー識別子としてMoM社員IDを設定", required = false, position = 11, allowableValues = "range[0,255]") //
 	private String requestToCandidateId;
 
 	/**
 	 * 対象文書番号
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "対象文書番号<br />" //
 			+ "見積⇒見積番号を設定<br />" //
@@ -151,6 +151,8 @@ public class CommunicationHistory extends EntityBase {
 	/**
 	 * 対象文書番号枝番
 	 */
+	@Max(99)
+	@Min(0)
 	@Column(nullable = false)
 	@ApiModelProperty(value = "対象文書番号枝番<br />" //
 			+ "見積⇒見積番号枝番を設定<br />" //
@@ -160,9 +162,9 @@ public class CommunicationHistory extends EntityBase {
 	/**
 	 * 顧客名
 	 */
-	@NotEmpty
-	@Size(max = 255)
 	@Column(nullable = false)
+	@NotNull
+	@Size(max = 255)
 	@ApiModelProperty(value = "顧客名", required = true, position = 14, allowableValues = "range[0,255]")
 	private String customerName;
 
@@ -194,7 +196,6 @@ public class CommunicationHistory extends EntityBase {
 	 * 伝達日時
 	 */
 	@Column(nullable = false)
-	@NotNull
 	@ApiModelProperty(value = "伝達日時 (作成時不要)", required = true, position = 18, readOnly = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date communicatedAt;
@@ -202,34 +203,30 @@ public class CommunicationHistory extends EntityBase {
 	/**
 	 * 商品グループマスタID
 	 */
-	@ApiModelProperty(value = "商品グループマスタID (作成時不要)", required = false, position = 19, allowableValues = "range[0,9999999999999999999]", readOnly = true)
+	@ApiModelProperty(value = "商品グループマスタID", required = false, position = 19, allowableValues = "range[0,9999999999999999999]")
 	private Long productGrpMasterId;
 
 	/**
 	 * 依頼者氏名
 	 */
-	@Size(max = 255)
 	@ApiModelProperty(value = "依頼者氏名 (作成時不要)", required = false, position = 20, allowableValues = "range[0,255]", readOnly = true)
 	private String requestOriginName;
 
 	/**
 	 * 伝達者
 	 */
-	@Size(max = 255)
 	@ApiModelProperty(value = "伝達者 (作成時不要)", required = false, position = 21, allowableValues = "range[0,255]", readOnly = true)
 	private String requestFromName;
 
 	/**
 	 * 被伝達者
 	 */
-	@Size(max = 255)
 	@ApiModelProperty(value = "被伝達者 (作成時不要)", required = false, position = 22, allowableValues = "range[0,255]", readOnly = true)
 	private String requestToName;
 
 	/**
 	 * 被伝達者候補
 	 */
-	@Size(max = 255)
 	@ApiModelProperty(value = "被伝達者候補 (作成時不要)", required = false, position = 23, allowableValues = "range[0,255]", readOnly = true)
 	private String requestToCandidateName;
 
