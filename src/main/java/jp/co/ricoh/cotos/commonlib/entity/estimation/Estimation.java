@@ -24,7 +24,6 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -434,7 +433,6 @@ public class Estimation extends EntityBase {
 	 * 見積担当SA社員
 	 */
 	@Valid
-	@NotNull
 	@OneToOne(mappedBy = "estimation")
 	@ApiModelProperty(value = "見積担当SA社員", required = true, position = 46)
 	private EstimationPicSaEmp estimationPicSaEmp;
@@ -459,7 +457,6 @@ public class Estimation extends EntityBase {
 	 * 顧客（見積用）
 	 */
 	@Valid
-	@NotNull
 	@OneToOne(mappedBy = "estimation")
 	@ApiModelProperty(value = "顧客(見積用)", required = true, position = 49)
 	private CustomerEstimation customerEstimation;
