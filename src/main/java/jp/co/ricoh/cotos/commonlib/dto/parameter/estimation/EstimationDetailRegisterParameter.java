@@ -47,7 +47,7 @@ public class EstimationDetailRegisterParameter {
 	@DecimalMin("0.00")
 	@Digits(integer = 19, fraction = 2)
 	@ApiParam(value = "見積金額", allowableValues = "range[0.00,9999999999999999999.99]", required = true)
-	private BigDecimal estimationAmountSummary;
+	private BigDecimal amountSummary;
 
 	/**
 	 * 拡張項目

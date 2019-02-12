@@ -27,7 +27,7 @@ public class AttachedFileDto extends DtoBase {
 	 * ファイルサイズ
 	 */
 	@Min(0)
-	@ApiModelProperty(value = "ファイルサイズ", required = true, position = 3, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "ファイルサイズ", required = true, position = 3, allowableValues = "range[0,9223372036854775807]")
 	private long fileSize;
 
 	/**

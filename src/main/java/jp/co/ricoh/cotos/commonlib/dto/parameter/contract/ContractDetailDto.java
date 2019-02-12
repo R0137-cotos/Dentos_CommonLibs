@@ -4,8 +4,11 @@ import java.math.BigDecimal;
 
 import javax.persistence.Lob;
 import javax.persistence.OneToOne;
-import javax.validation.constraints.DecimalMax;
+import javax.validation.Valid;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -29,6 +32,7 @@ public class ContractDetailDto extends DtoBase {
 	/**
 	 * 数量
 	 */
+	@Min(0)
 	@Max(99999)
 	@ApiModelProperty(value = "数量", required = true, position = 4, allowableValues = "range[0,99999]")
 	private int quantity;
@@ -37,7 +41,8 @@ public class ContractDetailDto extends DtoBase {
 	 * 金額
 	 */
 	@NotNull
-	@DecimalMax("9999999999999999999.99")
+	@DecimalMin("0.00")
+	@Digits(integer = 19, fraction = 2)
 	@ApiModelProperty(value = "金額", required = true, position = 5, allowableValues = "range[0.00,9999999999999999999.99]")
 	private BigDecimal amountSummary;
 
@@ -55,6 +60,8 @@ public class ContractDetailDto extends DtoBase {
 	@Lob
 	private String extendsParameter;
 
+	@Valid
+	@NotNull
 	@OneToOne(mappedBy = "contractDetail")
 	@ApiModelProperty(value = "品種(契約用)", required = true, position = 8)
 	private ItemContractDto itemContract;

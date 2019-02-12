@@ -4,7 +4,9 @@ import java.util.List;
 
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.validation.Valid;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -49,6 +51,7 @@ public class ContractApprovalRouteDto extends DtoBase {
 	/**
 	 * 特価承認対象フラグ
 	 */
+	@Min(0)
 	@Max(9)
 	@ApiModelProperty(value = "特価承認対象フラグ", required = true, position = 7, allowableValues = "range[0,9]")
 	private int specialPriceApprovalFlg;
@@ -56,6 +59,8 @@ public class ContractApprovalRouteDto extends DtoBase {
 	/**
 	 * 契約承認ルートノード
 	 */
+	@NotNull
+	@Valid
 	@OneToMany(mappedBy = "contractApprovalRoute")
 	@ApiModelProperty(value = "契約承認ルートノード", required = true, position = 8)
 	@OrderBy("approvalOrder ASC")
