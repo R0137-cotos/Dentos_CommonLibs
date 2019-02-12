@@ -20,8 +20,6 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -46,7 +44,7 @@ public class ContractOperationLog extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_operation_log_seq")
 	@SequenceGenerator(name = "contract_operation_log_seq", sequenceName = "contract_operation_log_seq", allocationSize = 1)
-	@ApiModelProperty(value = "操作履歴ID(作成時不要)", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
+	@ApiModelProperty(value = "操作履歴ID(作成時不要)", required = true, position = 1, allowableValues = "range[0,9223372036854775807]", readOnly = true)
 	private long id;
 
 	/**
@@ -71,7 +69,7 @@ public class ContractOperationLog extends EntityBase {
 	 * 操作者MoM社員ID
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "操作者MoM社員ID", required = true, position = 4, allowableValues = "range[0,255]")
 	private String operatorEmpId;
@@ -80,7 +78,7 @@ public class ContractOperationLog extends EntityBase {
 	 * 操作者氏名
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "操作者氏名", required = true, position = 5, allowableValues = "range[0,255]")
 	private String operatorName;

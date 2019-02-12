@@ -3,8 +3,6 @@ package jp.co.ricoh.cotos.commonlib.dto.parameter.common;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.master.VKjbMaster.DepartmentDiv;
 import lombok.Data;
@@ -17,13 +15,15 @@ public class CustomerAbstractDto extends DtoBase {
 	/**
 	 * MoM企事部システム連携ID
 	 */
-	@ApiModelProperty(value = "MoM企事部システム連携ID", required = true, position = 51, allowableValues = "range[0,15]")
+	@NotNull
+	@Size(max = 255)
+	@ApiModelProperty(value = "MoM企事部システム連携ID", required = true, position = 51, allowableValues = "range[0,255]")
 	private String momKjbSystemId;
 
 	/**
 	 * MoM企事部ID
 	 */
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "MoM企事部ID", required = true, position = 52, allowableValues = "range[0,255]")
 	private String momCustId;
@@ -31,7 +31,7 @@ public class CustomerAbstractDto extends DtoBase {
 	/**
 	 * MoM企業ID
 	 */
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "MoM企業ID", required = true, position = 53, allowableValues = "range[0,255]")
 	private String companyId;
@@ -39,7 +39,7 @@ public class CustomerAbstractDto extends DtoBase {
 	/**
 	 * MoM事業所ID
 	 */
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "MoM事業所ID", required = true, position = 54, allowableValues = "range[0,255]")
 	private String officeId;
@@ -54,7 +54,7 @@ public class CustomerAbstractDto extends DtoBase {
 	/**
 	 * 顧客名
 	 */
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "顧客名", required = true, position = 56, allowableValues = "range[0,255]")
 	private String customerName;

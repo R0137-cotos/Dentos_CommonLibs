@@ -8,12 +8,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.DecimalMax;
+import javax.validation.Valid;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.NotEmpty;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.common.DtoBase;
@@ -30,7 +31,8 @@ public class EstimationDto extends DtoBase {
 	/**
 	 * 商品グループマスタID
 	 */
-	@ApiModelProperty(value = "商品グループマスタID", required = true, position = 3, allowableValues = "range[0,9999999999999999999]")
+	@Min(0)
+	@ApiModelProperty(value = "商品グループマスタID", required = true, position = 3, allowableValues = "range[0,9223372036854775807]")
 	private long productGrpMasterId;
 
 	/**
@@ -71,7 +73,7 @@ public class EstimationDto extends DtoBase {
 	/**
 	 * 見積番号
 	 */
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "見積番号", required = true, position = 9, allowableValues = "range[0,255]")
 	private String estimationNumber;
@@ -79,6 +81,7 @@ public class EstimationDto extends DtoBase {
 	/**
 	 * 見積番号枝番
 	 */
+	@Min(0)
 	@Max(99)
 	@ApiModelProperty(value = "見積番号枝番", required = true, position = 10, allowableValues = "range[0,99]")
 	private int estimationBranchNumber;
@@ -100,6 +103,7 @@ public class EstimationDto extends DtoBase {
 	/**
 	 * 見積作成元システム区分
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "見積作成元システム区分", required = false, position = 13)
 	private String estimatedSystemDiv;
 
@@ -113,6 +117,7 @@ public class EstimationDto extends DtoBase {
 	/**
 	 * 変更元契約番号枝番
 	 */
+	@Min(0)
 	@Max(99)
 	@ApiModelProperty(value = "変更元契約番号枝番", required = false, position = 15, allowableValues = "range[0,99]")
 	private Integer originContractBranchNumber;
@@ -120,7 +125,8 @@ public class EstimationDto extends DtoBase {
 	/**
 	 * 変更元契約ID
 	 */
-	@ApiModelProperty(value = "変更元契約ID", required = false, position = 16, allowableValues = "range[0,9999999999999999999]")
+	@Min(0)
+	@ApiModelProperty(value = "変更元契約ID", required = false, position = 16, allowableValues = "range[0,9223372036854775807]")
 	private Long originContractId;
 
 	/**
@@ -301,8 +307,9 @@ public class EstimationDto extends DtoBase {
 	/**
 	 * 競合先基本料金
 	 */
-	@DecimalMax("9999999999999999999.99")
-	@ApiModelProperty(value = "競合先基本料金", required = false, position = 42, allowableValues = "range[0.00,9999999999999999999.99]")
+	@DecimalMin("0.00")
+	@Digits(integer = 19, fraction = 2)
+	@ApiModelProperty(value = "競合先基本料金", required = false, position = 42, allowableValues = "range[0.00,9223372036854775807.99]")
 	private BigDecimal competitionAmount;
 
 	/**
@@ -314,6 +321,7 @@ public class EstimationDto extends DtoBase {
 	/**
 	 * 見積承認ルート
 	 */
+	@Valid
 	@OneToOne(mappedBy = "estimation")
 	@ApiModelProperty(value = "見積承認ルート", required = false, position = 44)
 	private EstimationApprovalRouteDto estimationApprovalRoute;
@@ -321,6 +329,7 @@ public class EstimationDto extends DtoBase {
 	/**
 	 * 見積添付ファイル
 	 */
+	@Valid
 	@OneToMany(mappedBy = "estimation")
 	@ApiModelProperty(value = "見積添付ファイル", required = false, position = 45)
 	private List<EstimationAttachedFileDto> estimationAttachedFileList;
@@ -328,6 +337,8 @@ public class EstimationDto extends DtoBase {
 	/**
 	 * 見積担当SA社員
 	 */
+	@Valid
+	@NotNull
 	@OneToOne(mappedBy = "estimation")
 	@ApiModelProperty(value = "見積担当SA社員", required = true, position = 46)
 	private EstimationPicSaEmpDto estimationPicSaEmp;
@@ -335,6 +346,7 @@ public class EstimationDto extends DtoBase {
 	/**
 	 * 見積追加編集者社員
 	 */
+	@Valid
 	@OneToMany(mappedBy = "estimation")
 	@ApiModelProperty(value = "見積追加編集者社員", required = false, position = 47)
 	private List<EstimationAddedEditorEmpDto> estimationAddedEditorEmpList;
@@ -342,6 +354,7 @@ public class EstimationDto extends DtoBase {
 	/**
 	 * 販売店（見積用）
 	 */
+	@Valid
 	@OneToMany(mappedBy = "estimation")
 	@ApiModelProperty(value = "販売店(見積用)", required = false, position = 48)
 	private List<DealerEstimationDto> dealerEstimationList;
@@ -349,6 +362,8 @@ public class EstimationDto extends DtoBase {
 	/**
 	 * 顧客（見積用）
 	 */
+	@Valid
+	@NotNull
 	@OneToOne(mappedBy = "estimation")
 	@ApiModelProperty(value = "顧客(見積用)", required = true, position = 49)
 	private CustomerEstimationDto customerEstimation;
@@ -356,6 +371,7 @@ public class EstimationDto extends DtoBase {
 	/**
 	 * 見積チェック結果
 	 */
+	@Valid
 	@OneToMany(mappedBy = "estimation")
 	@ApiModelProperty(value = "見積チェック結果(作成時不要)", required = false, position = 50)
 	private List<EstimationCheckResultDto> estimationCheckResultList;
@@ -363,6 +379,7 @@ public class EstimationDto extends DtoBase {
 	/**
 	 * 見積明細
 	 */
+	@Valid
 	@OneToMany(mappedBy = "estimation")
 	@ApiModelProperty(value = "見積明細", required = false, position = 51)
 	private List<EstimationDetailDto> estimationDetailList;
@@ -370,6 +387,7 @@ public class EstimationDto extends DtoBase {
 	/**
 	 * 商品（見積用）
 	 */
+	@Valid
 	@OneToMany(mappedBy = "estimation")
 	@ApiModelProperty(value = "商品（見積用）", required = false, position = 52)
 	private List<ProductEstimationDto> productEstimationList;

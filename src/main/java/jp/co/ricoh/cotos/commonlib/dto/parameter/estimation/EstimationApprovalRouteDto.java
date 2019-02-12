@@ -2,9 +2,10 @@ package jp.co.ricoh.cotos.commonlib.dto.parameter.estimation;
 
 import java.util.List;
 
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
+import javax.validation.Valid;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -40,6 +41,7 @@ public class EstimationApprovalRouteDto extends DtoBase {
 	/**
 	 * 特価承認対象フラグ
 	 */
+	@Min(0)
 	@Max(9)
 	@ApiModelProperty(value = "特価承認対象フラグ", required = true, position = 6, allowableValues = "range[0,9]")
 	private int specialPriceApprovalFlg;
@@ -47,8 +49,8 @@ public class EstimationApprovalRouteDto extends DtoBase {
 	/**
 	 * 見積承認ルートノード
 	 */
-	@OneToMany(mappedBy = "estimationApprovalRoute")
-	@OrderBy("approvalOrder ASC")
+	@NotNull
+	@Valid
 	@ApiModelProperty(value = "見積承認ルートノード", required = true, position = 7)
 	private List<EstimationApprovalRouteNodeDto> estimationApprovalRouteNodeList;
 }
