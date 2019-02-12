@@ -398,7 +398,7 @@ public class Estimation extends EntityBase {
 	 */
 	@Digits(integer = 19, fraction = 2)
 	@DecimalMin("0.00")
-	@ApiModelProperty(value = "競合先基本料金", required = false, position = 41, allowableValues = "range[0.00,9223372036854775807.99]")
+	@ApiModelProperty(value = "競合先基本料金", required = false, position = 41, allowableValues = "range[0.00,9999999999999999999.99]")
 	private BigDecimal competitionAmount;
 
 	/**

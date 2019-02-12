@@ -3,6 +3,8 @@ package jp.co.ricoh.cotos.commonlib.dto.parameter.arrangement;
 import java.util.List;
 
 import javax.persistence.OneToMany;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -38,6 +40,8 @@ public class ArrangementWorkApprovalRouteDto extends DtoBase {
 	/**
 	 * 手配業務承認ルートノード
 	 */
+	@NotNull
+	@Valid
 	@OneToMany(mappedBy = "arrangementWorkApprovalRoute")
 	@ApiModelProperty(value = "手配業務承認ルートノード", required = true, position = 6)
 	private List<ArrangementWorkApprovalRouteNodeDto> arrangementWorkApprovalRouteNodeList;

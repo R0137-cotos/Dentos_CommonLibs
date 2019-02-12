@@ -2,11 +2,11 @@ package jp.co.ricoh.cotos.commonlib.dto.parameter.contract;
 
 import java.math.BigDecimal;
 
-import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.NotEmpty;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.common.DtoBase;
@@ -22,19 +22,21 @@ public class ItemContractDto extends DtoBase {
 	/**
 	 * 品種マスタID
 	 */
-	@ApiModelProperty(value = "品種マスタID", required = true, position = 3, allowableValues = "range[0,9999999999999999999]")
+	@Min(0)
+	@ApiModelProperty(value = "品種マスタID", required = true, position = 3, allowableValues = "range[0,9223372036854775807]")
 	private long itemMasterId;
 
 	/**
 	 * 商品マスタID
 	 */
-	@ApiModelProperty(value = "商品マスタID", required = true, position = 4, allowableValues = "range[0,9999999999999999999]")
+	@Min(0)
+	@ApiModelProperty(value = "商品マスタID", required = true, position = 4, allowableValues = "range[0,9223372036854775807]")
 	private long productMasterId;
 
 	/**
 	 * 品種名
 	 */
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "品種名", required = true, position = 5, allowableValues = "range[0,255]")
 	private String itemContractName;
@@ -42,7 +44,7 @@ public class ItemContractDto extends DtoBase {
 	/**
 	 * リコー品種コード
 	 */
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "リコー品種コード", required = true, position = 6, allowableValues = "range[0,255]")
 	private String ricohItemCode;
@@ -65,7 +67,8 @@ public class ItemContractDto extends DtoBase {
 	 * 仕切価格
 	 */
 	@NotNull
-	@DecimalMax("9999999999999999999.99")
+	@DecimalMin("0.00")
+	@Digits(integer = 19, fraction = 2)
 	@ApiModelProperty(value = "仕切価格", required = true, position = 9, allowableValues = "range[0.00,9999999999999999999.99]")
 	private BigDecimal partitionPrice;
 
@@ -79,28 +82,32 @@ public class ItemContractDto extends DtoBase {
 	/**
 	 * Ｒ原価
 	 */
-	@DecimalMax("9999999999999999999.99")
+	@DecimalMin("0.00")
+	@Digits(integer = 19, fraction = 2)
 	@ApiModelProperty(value = "Ｒ原価", required = false, position = 11, allowableValues = "range[0.00,9999999999999999999.99]")
 	private BigDecimal rCost;
 
 	/**
 	 * ＲＪ仕入価格
 	 */
-	@DecimalMax("9999999999999999999.99")
+	@DecimalMin("0.00")
+	@Digits(integer = 19, fraction = 2)
 	@ApiModelProperty(value = "ＲＪ仕入価格", required = false, position = 12, allowableValues = "range[0.00,9999999999999999999.99]")
 	private BigDecimal rjPurchasePrice;
 
 	/**
 	 * ＲＪ仕切価格
 	 */
-	@DecimalMax("9999999999999999999.99")
+	@DecimalMin("0.00")
+	@Digits(integer = 19, fraction = 2)
 	@ApiModelProperty(value = "ＲＪ仕切価格", required = false, position = 13, allowableValues = "range[0.00,9999999999999999999.99]")
 	private BigDecimal rjDividingPrice;
 
 	/**
 	 * 母店売価(接点店仕切)
 	 */
-	@DecimalMax("9999999999999999999.99")
+	@DecimalMin("0.00")
+	@Digits(integer = 19, fraction = 2)
 	@ApiModelProperty(value = "母店売価(接点店仕切)", required = false, position = 14, allowableValues = "range[0.00,9999999999999999999.99]")
 	private BigDecimal motherStorePrice;
 

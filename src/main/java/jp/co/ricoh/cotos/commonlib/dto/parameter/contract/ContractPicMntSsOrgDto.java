@@ -1,8 +1,7 @@
 package jp.co.ricoh.cotos.commonlib.dto.parameter.contract;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.NotEmpty;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.common.DtoBase;
@@ -16,7 +15,7 @@ public class ContractPicMntSsOrgDto extends DtoBase {
 	/**
 	 * MoM組織ID
 	 */
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "MoM組織ID", required = false, position = 3, allowableValues = "range[0,255]")
 	private String momOrgId;
