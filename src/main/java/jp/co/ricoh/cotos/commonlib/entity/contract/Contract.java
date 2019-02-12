@@ -18,11 +18,11 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -111,7 +111,7 @@ public class Contract extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_seq")
 	@SequenceGenerator(name = "contract_seq", sequenceName = "contract_seq", allocationSize = 1)
-	@ApiModelProperty(value = "契約ID(作成時不要)", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
+	@ApiModelProperty(value = "契約ID(作成時不要)", required = true, position = 1, allowableValues = "range[0,9223372036854775807]", readOnly = true)
 	private long id;
 
 	/**
@@ -125,14 +125,14 @@ public class Contract extends EntityBase {
 	/**
 	 * 商品グループマスタID
 	 */
-	@ApiModelProperty(value = "商品グループマスタID", required = false, position = 3, allowableValues = "range[0,9999999999999999999]")
+	@Min(0)
+	@ApiModelProperty(value = "商品グループマスタID", required = false, position = 3, allowableValues = "range[0,9223372036854775807]")
 	private long productGrpMasterId;
 
 	/**
 	 * ライフサイクル状態
 	 */
 	@Column(nullable = false)
-	@NotNull
 	@ApiModelProperty(value = "ライフサイクル状態(作成時不要)", required = true, allowableValues = "作成中(\"1\"), 作成完了(\"2\"), キャンセル手続き中(\"3\"), 破棄(\"4\"), 予定日待ち(\"5\"), 締結中(\"6\"), 解約手続き中(\"7\"), 解約予定日待ち(\"8\"), 解約(\"9\"), 旧契約(\"10\")", example = "1", position = 4, readOnly = true)
 	private LifecycleStatus lifecycleStatus;
 
@@ -140,22 +140,20 @@ public class Contract extends EntityBase {
 	 * ワークフロー状態
 	 */
 	@Column(nullable = false)
-	@NotNull
 	@ApiModelProperty(value = "ワークフロー状態(作成時不要)", required = true, allowableValues = "作成中(\"1\"), 承認依頼中(\"2\"), 承認済(\"3\"), 業務依頼中(\"4\"), 業務処理完了(\"5\"), キャンセル申請中(\"6\"), 売上可能(\"7\"), 解約申請中(\"8\")", example = "1", position = 5, readOnly = true)
 	private WorkflowStatus workflowStatus;
 
 	/**
 	 * 恒久契約識別番号
 	 */
-	@Size(max = 255)
 	@ApiModelProperty(value = "恒久契約識別番号(作成時不要)", required = false, position = 6, allowableValues = "range[0,255]", readOnly = true)
 	private String immutableContIdentNumber;
 
 	/**
 	 * 案件番号
 	 */
-	@Size(max = 255)
 	@ApiModelProperty(value = "案件番号", required = false, position = 7, allowableValues = "range[0,255]")
+	@Size(max = 255)
 	private String caseNumber;
 
 	/**
@@ -168,8 +166,6 @@ public class Contract extends EntityBase {
 	/**
 	 * 契約番号
 	 */
-	@NotEmpty
-	@Size(max = 255)
 	@Column(nullable = false)
 	@ApiModelProperty(value = "契約番号(作成時不要)", required = true, position = 9, allowableValues = "range[0,255]", readOnly = true)
 	private String contractNumber;
@@ -177,7 +173,6 @@ public class Contract extends EntityBase {
 	/**
 	 * 契約番号枝番
 	 */
-	@Max(99)
 	@Column(nullable = false)
 	@ApiModelProperty(value = "契約番号枝番(作成時不要)", required = true, position = 10, allowableValues = "range[0,99]", readOnly = true)
 	private int contractBranchNumber;
@@ -185,6 +180,7 @@ public class Contract extends EntityBase {
 	/**
 	 * 契約件名
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "契約件名", required = false, position = 11, allowableValues = "range[0,255]")
 	private String contractTitle;
 
@@ -198,13 +194,16 @@ public class Contract extends EntityBase {
 	/**
 	 * 変更元契約番号枝番
 	 */
+	@Max(99)
+	@Min(0)
 	@ApiModelProperty(value = "変更元契約番号枝番", required = false, position = 13, allowableValues = "range[0,99]")
 	private Integer originContractBranchNumber;
 
 	/**
 	 * 変更元契約ID
 	 */
-	@ApiModelProperty(value = "変更元契約ID", required = false, position = 14, allowableValues = "range[0,9999999999999999999]")
+	@Min(0)
+	@ApiModelProperty(value = "変更元契約ID", required = false, position = 14, allowableValues = "range[0,9223372036854775807]")
 	private Long originContractId;
 
 	/**
@@ -231,7 +230,6 @@ public class Contract extends EntityBase {
 	/**
 	 * 売上計上フラグ
 	 */
-	@Max(9)
 	@Column(nullable = false)
 	@ApiModelProperty(value = "売上計上フラグ(作成時不要)", required = true, position = 18, allowableValues = "range[0,9]", readOnly = true)
 	private int accountSalesFlg;
@@ -275,13 +273,15 @@ public class Contract extends EntityBase {
 	 * 見積番号枝番
 	 */
 	@Max(99)
+	@Min(0)
 	@ApiModelProperty(value = "見積番号枝番", required = false, position = 24, allowableValues = "range[0,99]")
 	private Integer estimationBranchNumber;
 
 	/**
 	 * 見積ID
 	 */
-	@ApiModelProperty(value = "見積ID", required = false, position = 25, allowableValues = "range[0,99999999999999999999]")
+	@Min(0)
+	@ApiModelProperty(value = "見積ID", required = false, position = 25, allowableValues = "range[0,9223372036854775807]")
 	private Long estimationId;
 
 	/**
@@ -385,6 +385,8 @@ public class Contract extends EntityBase {
 	/**
 	 * 契約明細
 	 */
+	@NotNull
+	@Valid
 	@OneToMany(mappedBy = "contract")
 	@ApiModelProperty(value = "契約明細", required = true, position = 40)
 	private List<ContractDetail> contractDetailList;
@@ -414,6 +416,8 @@ public class Contract extends EntityBase {
 	/**
 	 * 契約担当SA社員
 	 */
+	@NotNull
+	@Valid
 	@OneToOne(mappedBy = "contract")
 	@ApiModelProperty(value = "契約担当SA社員", required = true, position = 44)
 	private ContractPicSaEmp contractPicSaEmp;
@@ -428,6 +432,7 @@ public class Contract extends EntityBase {
 	/**
 	 * 販売店(契約用)
 	 */
+	@Valid
 	@OneToMany(mappedBy = "contract")
 	@ApiModelProperty(value = "販売店(契約用)", required = false, position = 46)
 	private List<DealerContract> dealerContractList;
@@ -435,6 +440,8 @@ public class Contract extends EntityBase {
 	/**
 	 * 顧客(契約用)
 	 */
+	@NotNull
+	@Valid
 	@OneToOne(mappedBy = "contract")
 	@ApiModelProperty(value = "顧客(契約用)", required = true, position = 47)
 	private CustomerContract customerContract;
@@ -450,6 +457,8 @@ public class Contract extends EntityBase {
 	/**
 	 * 商品(契約用)
 	 */
+	@NotNull
+	@Valid
 	@OneToMany(mappedBy = "contract")
 	@ApiModelProperty(value = "商品(契約用)", required = true, position = 49)
 	private List<ProductContract> productContractList;

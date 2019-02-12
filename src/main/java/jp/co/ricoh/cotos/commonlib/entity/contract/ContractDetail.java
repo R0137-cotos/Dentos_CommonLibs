@@ -13,8 +13,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.constraints.DecimalMax;
+import javax.validation.Valid;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -38,7 +41,7 @@ public class ContractDetail extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_detail_seq")
 	@SequenceGenerator(name = "contract_detail_seq", sequenceName = "contract_detail_seq", allocationSize = 1)
-	@ApiModelProperty(value = "契約明細ID(作成時不要)", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
+	@ApiModelProperty(value = "契約明細ID(作成時不要)", required = true, position = 1, allowableValues = "range[0,9223372036854775807]", readOnly = true)
 	private long id;
 
 	/**
@@ -63,6 +66,7 @@ public class ContractDetail extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@Max(99999)
+	@Min(0)
 	@ApiModelProperty(value = "数量", required = true, position = 4, allowableValues = "range[0,99999]")
 	private int quantity;
 
@@ -71,7 +75,8 @@ public class ContractDetail extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@NotNull
-	@DecimalMax("9999999999999999999.99")
+	@DecimalMin("0.00")
+	@Digits(integer = 19,fraction = 2)
 	@ApiModelProperty(value = "金額", required = true, position = 5, allowableValues = "range[0.00,9999999999999999999.99]")
 	private BigDecimal amountSummary;
 
@@ -92,6 +97,8 @@ public class ContractDetail extends EntityBase {
 	/**
 	 * 品種(契約用)
 	 */
+	@NotNull
+	@Valid
 	@OneToOne(mappedBy = "contractDetail")
 	@ApiModelProperty(value = "品種(契約用)", required = false, position = 8)
 	private ItemContract itemContract;
