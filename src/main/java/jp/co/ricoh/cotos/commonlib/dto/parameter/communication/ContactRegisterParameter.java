@@ -39,5 +39,4 @@ public class ContactRegisterParameter {
 	@NotNull
 	@ApiParam(value = "メール本文置換リスト", required = true)
 	private List<String> mailTextRepalceValueList;
-
 }
