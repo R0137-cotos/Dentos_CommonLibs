@@ -2,6 +2,8 @@ package jp.co.ricoh.cotos.commonlib.dto.parameter.communication;
 
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
 import io.swagger.annotations.ApiParam;
 import jp.co.ricoh.cotos.commonlib.entity.communication.Communication;
 import lombok.Data;
@@ -15,6 +17,7 @@ public class CommunicationRegisterParameter {
 	/**
 	 * コミュニケーションエンティティ
 	 */
+	@NotNull
 	@ApiParam(value = "コミュニケーションエンティティ", required = true)
 	private Communication communication;
 
@@ -27,12 +30,14 @@ public class CommunicationRegisterParameter {
 	/**
 	 * メール件名置換リスト
 	 */
+	@NotNull
 	@ApiParam(value = "メール件名置換リスト", required = true)
 	private List<String> mailSubjectRepalceValueList;
 
 	/**
 	 * メール本文置換リスト
 	 */
+	@NotNull
 	@ApiParam(value = "メール本文置換リスト", required = true)
 	private List<String> mailTextRepalceValueList;
 }
