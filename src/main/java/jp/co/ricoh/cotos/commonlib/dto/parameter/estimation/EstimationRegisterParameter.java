@@ -18,14 +18,14 @@ public class EstimationRegisterParameter {
 	 * 見積ID
 	 */
 	@Min(0)
-	@ApiParam(value = "見積ID", allowableValues = "range[0,9999999999999999999]", required = true)
+	@ApiParam(value = "見積ID", allowableValues = "range[0,9223372036854775807]", required = true)
 	private long estimationId;
 
 	/**
 	 * 商品グループマスタID
 	 */
 	@Min(0)
-	@ApiParam(value = "商品グループマスタID", allowableValues = "range[0,9999999999999999999]", required = true)
+	@ApiParam(value = "商品グループマスタID", allowableValues = "range[0,9223372036854775807]", required = true)
 	private long productGroupMasterId;
 
 	/**

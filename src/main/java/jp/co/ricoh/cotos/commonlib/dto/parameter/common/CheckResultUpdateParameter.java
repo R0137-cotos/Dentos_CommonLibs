@@ -1,5 +1,7 @@
 package jp.co.ricoh.cotos.commonlib.dto.parameter.common;
 
+import javax.validation.constraints.Min;
+
 import io.swagger.annotations.ApiParam;
 import lombok.Data;
 
@@ -12,7 +14,8 @@ public class CheckResultUpdateParameter {
 	/**
 	 * チェック結果ID
 	 */
-	@ApiParam(value = "チェック結果ID", allowableValues = "range[0,9999999999999999999]", required = true)
+	@Min(0)
+	@ApiParam(value = "チェック結果ID", allowableValues = "range[0,9223372036854775807]", required = true)
 	private long checkResultId;
 
 	/**
