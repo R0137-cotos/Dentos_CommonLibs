@@ -385,7 +385,6 @@ public class Contract extends EntityBase {
 	/**
 	 * 契約明細
 	 */
-	@NotNull
 	@Valid
 	@OneToMany(mappedBy = "contract")
 	@ApiModelProperty(value = "契約明細", required = true, position = 40)
@@ -416,7 +415,6 @@ public class Contract extends EntityBase {
 	/**
 	 * 契約担当SA社員
 	 */
-	@NotNull
 	@Valid
 	@OneToOne(mappedBy = "contract")
 	@ApiModelProperty(value = "契約担当SA社員", required = true, position = 44)
@@ -440,7 +438,6 @@ public class Contract extends EntityBase {
 	/**
 	 * 顧客(契約用)
 	 */
-	@NotNull
 	@Valid
 	@OneToOne(mappedBy = "contract")
 	@ApiModelProperty(value = "顧客(契約用)", required = true, position = 47)
@@ -457,7 +454,6 @@ public class Contract extends EntityBase {
 	/**
 	 * 商品(契約用)
 	 */
-	@NotNull
 	@Valid
 	@OneToMany(mappedBy = "contract")
 	@ApiModelProperty(value = "商品(契約用)", required = true, position = 49)
