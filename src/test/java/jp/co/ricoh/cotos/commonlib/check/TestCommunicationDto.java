@@ -1,5 +1,8 @@
 package jp.co.ricoh.cotos.commonlib.check;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.beanutils.BeanUtils;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -15,8 +18,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import jp.co.ricoh.cotos.commonlib.DBConfig;
 import jp.co.ricoh.cotos.commonlib.TestTools;
 import jp.co.ricoh.cotos.commonlib.TestTools.ParameterErrorIds;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.communication.CommunicationRegisterParameter;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.communication.ContactDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.communication.ContactRegisterParameter;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.communication.ContactToDto;
+import jp.co.ricoh.cotos.commonlib.entity.communication.Communication;
 import jp.co.ricoh.cotos.commonlib.entity.communication.Contact;
 import jp.co.ricoh.cotos.commonlib.entity.communication.ContactTo;
 import jp.co.ricoh.cotos.commonlib.repository.communication.CommunicationHistoryRepository;
@@ -154,6 +160,63 @@ public class TestCommunicationDto {
 		Assert.assertTrue(result.getErrorInfoList().size() == 3);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "宛先MoM社員IDは最大文字数（255）を超えています。"));
+
+	}
+
+	@Test
+	public void CommunicationRegisterParameterのテスト() throws Exception {
+		Communication entity = communicationRepository.findOne(1L);
+		CommunicationRegisterParameter dto = new CommunicationRegisterParameter();
+		dto.setCommunication(entity);
+		List<String> dummy_list = new ArrayList<String>();
+		dto.setMomEmpList(dummy_list);
+		dto.setMailSubjectRepalceValueList(dummy_list);
+		dto.setMailTextRepalceValueList(dummy_list);
+
+		CommunicationRegisterParameter testTarget = new CommunicationRegisterParameter();
+		BeanUtils.copyProperties(testTarget, dto);
+
+		// 正常系
+		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		testTool.assertValidationOk(result);
+
+		// 異常系（@NotNullの null チェック：）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setCommunication(null);
+		testTarget.setMailSubjectRepalceValueList(null);
+		testTarget.setMailTextRepalceValueList(null);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 3);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "コミュニケーションエンティティが設定されていません。"));
+
+	}
+
+	@Test
+	public void ContactRegisterParameterのテスト() throws Exception {
+		Contact entity = contactRepository.findOne(1L);
+		ContactRegisterParameter dto = new ContactRegisterParameter();
+		dto.setContact(entity);
+		dto.setParentContact(entity);
+		List<String> dummy_list = new ArrayList<String>();
+		dto.setMailSubjectRepalceValueList(dummy_list);
+		dto.setMailTextRepalceValueList(dummy_list);
+
+		ContactRegisterParameter testTarget = new ContactRegisterParameter();
+		BeanUtils.copyProperties(testTarget, dto);
+
+		// 正常系
+		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		testTool.assertValidationOk(result);
+
+		// 異常系（@NotNullの null チェック：）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setMailSubjectRepalceValueList(null);
+		testTarget.setMailTextRepalceValueList(null);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "メール本文置換リストが設定されていません。"));
 
 	}
 }

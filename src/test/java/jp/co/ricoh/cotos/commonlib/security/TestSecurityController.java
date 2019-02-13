@@ -32,7 +32,9 @@ import jp.co.ricoh.cotos.commonlib.dto.parameter.arrangement.ArrangementWorkChec
 import jp.co.ricoh.cotos.commonlib.dto.parameter.arrangement.ArrangementWorkDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.common.AttachedFileDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.common.CheckResultUpdateParameter;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.communication.CommunicationRegisterParameter;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.communication.ContactDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.communication.ContactRegisterParameter;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.communication.ContactToDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractAddedEditorEmpDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractApprovalRouteDto;
@@ -642,6 +644,16 @@ public class TestSecurityController {
 
 	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/CheckResultUpdateParameter")
 	public ParamterCheckResult callParamterCheck(@RequestBody @Validated CheckResultUpdateParameter dto, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/CommunicationRegisterParameter")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated CommunicationRegisterParameter dto, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContactRegisterParameter")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContactRegisterParameter dto, BindingResult result) {
 		return createParameterCheckResult(result);
 	}
 }
