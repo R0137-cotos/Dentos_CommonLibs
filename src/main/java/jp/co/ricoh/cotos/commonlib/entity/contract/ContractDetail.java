@@ -97,7 +97,6 @@ public class ContractDetail extends EntityBase {
 	/**
 	 * 品種(契約用)
 	 */
-	@NotNull
 	@Valid
 	@OneToOne(mappedBy = "contractDetail")
 	@ApiModelProperty(value = "品種(契約用)", required = false, position = 8)

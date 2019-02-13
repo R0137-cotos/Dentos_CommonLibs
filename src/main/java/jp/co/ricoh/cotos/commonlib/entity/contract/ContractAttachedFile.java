@@ -75,7 +75,6 @@ public class ContractAttachedFile extends EntityBase {
 	 * 添付ファイル
 	 */
 	@OneToOne(optional = false)
-	@NotNull
 	@JoinColumn(name = "attached_file_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "添付ファイル", required = true, position = 5)
 	private AttachedFile attachedFile;
