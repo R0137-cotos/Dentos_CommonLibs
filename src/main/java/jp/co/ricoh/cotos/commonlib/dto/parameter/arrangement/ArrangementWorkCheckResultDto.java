@@ -5,9 +5,9 @@ import java.util.Date;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.NotEmpty;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.common.DtoBase;
@@ -21,7 +21,7 @@ public class ArrangementWorkCheckResultDto extends DtoBase {
 	/**
 	 * チェック事項コード
 	 */
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "チェック事項コード", required = true, position = 3, allowableValues = "range[0,255]")
 	private String checkMatterCode;
@@ -29,7 +29,7 @@ public class ArrangementWorkCheckResultDto extends DtoBase {
 	/**
 	 * チェック事項文面
 	 */
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "チェック事項文面", required = true, position = 4, allowableValues = "range[0,255]")
 	private String checkMatterText;
@@ -37,6 +37,7 @@ public class ArrangementWorkCheckResultDto extends DtoBase {
 	/**
 	 * 表示順
 	 */
+	@Min(0)
 	@Max(999)
 	@ApiModelProperty(value = "表示順", required = true, position = 5, allowableValues = "range[0,999]")
 	private int displayOrder;

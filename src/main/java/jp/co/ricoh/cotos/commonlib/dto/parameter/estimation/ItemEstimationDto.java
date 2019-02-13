@@ -71,6 +71,6 @@ public class ItemEstimationDto extends DtoBase {
 	@NotNull
 	@DecimalMin("0.00")
 	@Digits(integer = 19, fraction = 2)
-	@ApiModelProperty(value = "仕切価格", required = true, position = 9, allowableValues = "range[0.00,9223372036854775807.99]")
+	@ApiModelProperty(value = "仕切価格", required = true, position = 9, allowableValues = "range[0.00,9999999999999999999.99]")
 	private BigDecimal partitionPrice;
 }

@@ -1,11 +1,12 @@
 package jp.co.ricoh.cotos.commonlib.dto.parameter.arrangement;
 
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.common.DtoBase;
-import jp.co.ricoh.cotos.commonlib.entity.estimation.Estimation.WorkflowStatus;
+import jp.co.ricoh.cotos.commonlib.entity.arrangement.Arrangement.WorkflowStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -22,6 +23,7 @@ public class ArrangementDto extends DtoBase {
 	/**
 	 * 解約フラグ
 	 */
+	@Min(0)
 	@Max(9L)
 	@ApiModelProperty(value = "解約フラグ", required = true, position = 4, allowableValues = "range[0,9]")
 	private int disengagementFlg;
