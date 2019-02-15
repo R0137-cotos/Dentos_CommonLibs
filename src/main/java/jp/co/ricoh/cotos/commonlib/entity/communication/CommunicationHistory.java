@@ -38,7 +38,7 @@ public class CommunicationHistory extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "communication_history_seq")
 	@SequenceGenerator(name = "communication_history_seq", sequenceName = "communication_history_seq", allocationSize = 1)
-	@ApiModelProperty(value = "ID (作成時不要)", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
+	@ApiModelProperty(value = "ID (作成時不要)", required = true, position = 1, allowableValues = "range[0,9223372036854775807]", readOnly = true)
 	private long id;
 
 	/**
@@ -203,7 +203,7 @@ public class CommunicationHistory extends EntityBase {
 	/**
 	 * 商品グループマスタID
 	 */
-	@ApiModelProperty(value = "商品グループマスタID", required = false, position = 19, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "商品グループマスタID", required = false, position = 19, allowableValues = "range[0,9223372036854775807]")
 	private Long productGrpMasterId;
 
 	/**

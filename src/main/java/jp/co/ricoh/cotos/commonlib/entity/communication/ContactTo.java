@@ -57,7 +57,7 @@ public class ContactTo extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contact_to_seq")
 	@SequenceGenerator(name = "contact_to_seq", sequenceName = "contact_to_seq", allocationSize = 1)
-	@ApiModelProperty(value = "宛先ID (作成時不要)", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
+	@ApiModelProperty(value = "宛先ID (作成時不要)", required = true, position = 1, allowableValues = "range[0,9223372036854775807]", readOnly = true)
 	private long id;
 
 	/**
