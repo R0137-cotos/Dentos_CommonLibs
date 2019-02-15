@@ -42,7 +42,7 @@ public class Contact extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contact_seq")
 	@SequenceGenerator(name = "contact_seq", sequenceName = "contact_seq", allocationSize = 1)
-	@ApiModelProperty(value = "問い合わせID (作成時不要)", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
+	@ApiModelProperty(value = "問い合わせID (作成時不要)", required = true, position = 1, allowableValues = "range[0,9223372036854775807]", readOnly = true)
 	private long id;
 
 	/**

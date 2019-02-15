@@ -78,7 +78,7 @@ public class EstimationAttachedFileDto extends DtoBase {
 	 * 添付日時
 	 */
 	@NotNull
-	@ApiModelProperty(value = "添付日時(作成時不要)", required = true, position = 10)
+	@ApiModelProperty(value = "添付日時", required = true, position = 10)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date attachedAt;
 }
