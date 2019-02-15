@@ -5,12 +5,14 @@ import java.util.Map;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 帳票ページDTO
  */
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class ReportSourcePageDto {
 
 	/**
