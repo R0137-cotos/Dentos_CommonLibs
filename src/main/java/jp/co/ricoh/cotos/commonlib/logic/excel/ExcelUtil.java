@@ -44,7 +44,7 @@ public class ExcelUtil {
 	 * @param entity マッピング用エンティティクラス
 	 * @param outputFilePath 出力エクセル帳票ファイルパス
 	 */
-	public <T> void outputExcelReports(String templateFilePath, T entity, String outputFilePath) throws ErrorCheckException, ErrorFatalException {
+	public <T> void outputExcelReports(String templateFilePath, T entity, String outputFilePath) throws ErrorCheckException {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		// 引数チェック
@@ -97,7 +97,7 @@ public class ExcelUtil {
 	 * @param filePath 入出力エクセル帳票ファイル
 	 * @param sheetNameList 削除シート名配列
 	 */
-	public void deleteExcelSheet(String filePath, List<String> sheetNameList) throws ErrorCheckException, ErrorFatalException {
+	public void deleteExcelSheet(String filePath, List<String> sheetNameList) throws ErrorCheckException {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 
 		//引数チェック

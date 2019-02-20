@@ -7,7 +7,5 @@ import lombok.Data;
 @AllArgsConstructor
 public class InitialDetail {
 	private String code;
-	private String name;
-	private int unitPrice;
 	private int count;
 }

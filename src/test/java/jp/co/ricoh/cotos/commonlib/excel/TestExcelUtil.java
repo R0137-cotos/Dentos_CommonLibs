@@ -68,7 +68,7 @@ public class TestExcelUtil {
 	// OutputExcelReports
 	// ============================================
 	@Test
-	public void 正常系_RITOS() throws Exception {
+	public void 正常系_RITOS帳票出力テスト() throws Exception {
 		Shinsei shinsei = new Shinsei();
 		shinsei.setItemName("Office365");
 		shinsei.setDocNumber("20101126130000");
@@ -76,15 +76,15 @@ public class TestExcelUtil {
 		shinsei.setPaymentFlagName("ランニング費用");
 
 		List<InitialDetail> initialDetailList = new ArrayList<>();
-		initialDetailList.add(new InitialDetail("CD001", "サーバー設定作業", 200000, 1));
-		initialDetailList.add(new InitialDetail("CD002", "インストールおよびセットアップ作業", 8000, 100));
-		initialDetailList.add(new InitialDetail("CD003", "ネットワーク設定作業", 3000, 100));
+		initialDetailList.add(new InitialDetail("CD001",1));
+		initialDetailList.add(new InitialDetail("CD002", 100));
+		initialDetailList.add(new InitialDetail("CD003", 100));
 		shinsei.setInitialDetailList(initialDetailList);
 
 		List<Detail> detailList = new ArrayList<>();
-		detailList.add(new Detail("CD001", "Office365 クライアントライセンス費用", 12000, 100));
-		detailList.add(new Detail("CD002", "Office365 サーバーライセンス費用", 230000, 1));
-		detailList.add(new Detail("CD003", "サーバーメンテナンス費用", 100000, 1));
+		detailList.add(new Detail("CD004", 100));
+		detailList.add(new Detail("CD005", 1));
+		detailList.add(new Detail("CD006", 1));
 		shinsei.setDetailList(detailList);
 
 		Dealer dealer = new Dealer();
