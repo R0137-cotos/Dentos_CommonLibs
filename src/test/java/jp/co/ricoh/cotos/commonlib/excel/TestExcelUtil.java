@@ -169,18 +169,6 @@ public class TestExcelUtil {
 	}
 
 	@Test
-	public void 正常系_メソッド結合() throws Exception {
-		// エクセル出力
-		excelUtil.outputExcelReports("src/test/resources/excel/template/both.xlsx", convertYaml2Entity("src/test/resources/excel/entityData/both.yml"), "outputExcel/output.xlsx");
-
-		// 不要シート削除
-		excelUtil.deleteExcelSheet("outputExcel/output.xlsx", Arrays.asList("複数シート出力テンプレート"));
-
-		// 印刷範囲設定
-		//excelUtil.setPrintAreaExcelSheet("outputExcel/output.xlsx", Arrays.asList("COTOS商材2018年"));
-	}
-
-	@Test
 	public void 異常系_テンプレートファイルパスNULL() throws ParseException, JsonParseException, JsonMappingException, IOException {
 		try {
 			// Action
@@ -188,8 +176,8 @@ public class TestExcelUtil {
 		} catch (ErrorCheckException e) {
 			// Check
 			Assert.assertTrue("エクセル帳票が出力されないこと", Files.notExists(Paths.get("outputExcel/output.xls")));
-			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00200", e.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメーター入力テンプレートエクセルファイルパスが未設定です。", e.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00001", e.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータ「入力テンプレートエクセルファイルパス」が設定されていません。", e.getErrorInfoList().get(0).getErrorMessage());
 		}
 	}
 
@@ -201,8 +189,8 @@ public class TestExcelUtil {
 		} catch (ErrorCheckException e) {
 			// Check
 			Assert.assertTrue("エクセル帳票が出力されないこと", Files.notExists(Paths.get("outputExcel/output.xls")));
-			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00200", e.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメーター入力テンプレートエクセルファイルパスが未設定です。", e.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00001", e.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータ「入力テンプレートエクセルファイルパス」が設定されていません。", e.getErrorInfoList().get(0).getErrorMessage());
 		}
 	}
 
@@ -214,8 +202,8 @@ public class TestExcelUtil {
 		} catch (ErrorCheckException e) {
 			// Check
 			Assert.assertTrue("エクセル帳票が出力されないこと", Files.notExists(Paths.get("outputExcel/output.xls")));
-			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00200", e.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメーターマッピング用エンティティクラスが未設定です。", e.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00001", e.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータ「マッピング用エンティティクラス」が設定されていません。", e.getErrorInfoList().get(0).getErrorMessage());
 		}
 	}
 
@@ -227,8 +215,8 @@ public class TestExcelUtil {
 		} catch (ErrorCheckException e) {
 			// Check
 			Assert.assertTrue("エクセル帳票が出力されないこと", Files.notExists(Paths.get("outputExcel/output.xls")));
-			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00200", e.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメーター出力エクセル帳票ファイルパスが未設定です。", e.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00001", e.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータ「出力エクセル帳票ファイルパス」が設定されていません。", e.getErrorInfoList().get(0).getErrorMessage());
 		}
 	}
 
@@ -240,8 +228,8 @@ public class TestExcelUtil {
 		} catch (ErrorCheckException e) {
 			// Check
 			Assert.assertTrue("エクセル帳票が出力されないこと", Files.notExists(Paths.get("outputExcel/output.xls")));
-			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00200", e.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメーター出力エクセル帳票ファイルパスが未設定です。", e.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00001", e.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータ「出力エクセル帳票ファイルパス」が設定されていません。", e.getErrorInfoList().get(0).getErrorMessage());
 		}
 	}
 
@@ -254,7 +242,7 @@ public class TestExcelUtil {
 			// Check
 			Assert.assertTrue("エクセル帳票が出力されないこと", Files.notExists(Paths.get("outputExcel/output.xls")));
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00100", e.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", (new File("dummy.xls")).getAbsolutePath() + "が存在しません。", e.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "指定されたファイルが存在しません。", e.getErrorInfoList().get(0).getErrorMessage());
 		}
 	}
 
@@ -339,8 +327,8 @@ public class TestExcelUtil {
 			excelUtil.deleteExcelSheet(null, Arrays.asList("Sheet1", "Sheet2"));
 		} catch (ErrorCheckException e) {
 			// Check
-			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00200", e.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメーター入出力エクセル帳票ファイルパスが未設定です。", e.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00001", e.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータ「入出力エクセル帳票ファイルパス」が設定されていません。", e.getErrorInfoList().get(0).getErrorMessage());
 		}
 	}
 
@@ -354,8 +342,8 @@ public class TestExcelUtil {
 			excelUtil.deleteExcelSheet("", Arrays.asList("Sheet1", "Sheet2"));
 		} catch (ErrorCheckException e) {
 			// Check
-			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00200", e.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメーター入出力エクセル帳票ファイルパスが未設定です。", e.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00001", e.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータ「入出力エクセル帳票ファイルパス」が設定されていません。", e.getErrorInfoList().get(0).getErrorMessage());
 		}
 	}
 
@@ -369,8 +357,8 @@ public class TestExcelUtil {
 			excelUtil.deleteExcelSheet("outputExcel/output.xlsx", null);
 		} catch (ErrorCheckException e) {
 			// Check
-			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00200", e.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメーター削除シート名配列が未設定です。", e.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00001", e.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータ「削除シート名配列」が設定されていません。", e.getErrorInfoList().get(0).getErrorMessage());
 
 			// ファイルが変わっていないこと
 			String resultExcelFilePath = "outputExcel/output.xlsx";
@@ -389,8 +377,8 @@ public class TestExcelUtil {
 			excelUtil.deleteExcelSheet("outputExcel/output.xlsx", new ArrayList<String>());
 		} catch (ErrorCheckException e) {
 			// Check
-			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00200", e.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメーター削除シート名配列が未設定です。", e.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00001", e.getErrorInfoList().get(0).getErrorId());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "パラメータ「削除シート名配列」が設定されていません。", e.getErrorInfoList().get(0).getErrorMessage());
 
 			// ファイルが変わっていないこと
 			String resultExcelFilePath = "outputExcel/output.xlsx";
@@ -407,7 +395,7 @@ public class TestExcelUtil {
 		} catch (ErrorCheckException e) {
 			// Check
 			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00100", e.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", (new File("dummy.xlsx")).getAbsolutePath() + "が存在しません。", e.getErrorInfoList().get(0).getErrorMessage());
+			Assert.assertEquals("エラーメッセージが正しく設定されること", "指定されたファイルが存在しません。", e.getErrorInfoList().get(0).getErrorMessage());
 		}
 	}
 
