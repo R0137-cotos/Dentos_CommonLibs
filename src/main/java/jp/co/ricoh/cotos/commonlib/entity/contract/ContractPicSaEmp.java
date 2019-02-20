@@ -42,9 +42,9 @@ public class ContractPicSaEmp extends EmployeeAbstractEntity {
 	private Contract contract;
 
 	/**
-     * 拡張項目
-     */
-    @ApiModelProperty(value = "拡張項目", required = false, position = 3)
-    @Lob
-    private String extendsParameter;
+	 * 拡張項目
+	 */
+	@ApiModelProperty(value = "拡張項目", required = false, position = 3)
+	@Lob
+	private String extendsParameter;
 }
