@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -39,4 +40,11 @@ public class ContractPicSaEmp extends EmployeeAbstractEntity {
 	@JsonIgnore
 	@ApiModelProperty(value = "契約", required = true, position = 2)
 	private Contract contract;
+
+	/**
+	 * 拡張項目
+	 */
+	@ApiModelProperty(value = "拡張項目", required = false, position = 3)
+	@Lob
+	private String extendsParameter;
 }
