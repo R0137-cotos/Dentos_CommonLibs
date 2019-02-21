@@ -329,9 +329,9 @@ public class ArrangementSearchParameter {
 	/**
 	 * 保留フラグ
 	 */
-	@ApiParam(value = "保留フラグ", required = true)
-	@ApiModelProperty(value = "保留フラグ", required = true)
-	private int holdingFlg;
+	@ApiParam(value = "保留フラグ", required = false)
+	@ApiModelProperty(value = "保留フラグ", required = false)
+	private Integer holdingFlg;
 
 	// ===========================
 
