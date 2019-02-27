@@ -372,11 +372,10 @@ public class TestArrangementDto {
 		BeanUtils.copyProperties(dto, testTarget);
 		testTarget.setFileName(null);
 		testTarget.setAttachedFile(null);
-		testTarget.setAttachedAt(null);
 		testTarget.setAttachedEmpId(null);
 		testTarget.setAttachedEmpName(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 5);
+		Assert.assertTrue(result.getErrorInfoList().size() == 4);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "添付者氏名が設定されていません。"));
 
@@ -392,15 +391,6 @@ public class TestArrangementDto {
 		Assert.assertTrue(result.getErrorInfoList().size() == 6);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "添付者MoM社員IDは最大文字数（255）を超えています。"));
-
-		// 異常系（@Valid：）
-		BeanUtils.copyProperties(dto, testTarget);
-		testTarget.getAttachedFile().setFilePhysicsName(STR_256);
-		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 1);
-		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
-		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "物理ファイル名は最大文字数（255）を超えています。"));
-
 	}
 
 	@Test

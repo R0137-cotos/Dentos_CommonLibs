@@ -15,9 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import jp.co.ricoh.cotos.commonlib.DBConfig;
 import jp.co.ricoh.cotos.commonlib.TestTools;
 import jp.co.ricoh.cotos.commonlib.TestTools.ParameterErrorIds;
-import jp.co.ricoh.cotos.commonlib.dto.parameter.common.AttachedFileDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.common.CheckResultUpdateParameter;
-import jp.co.ricoh.cotos.commonlib.entity.common.AttachedFile;
 import jp.co.ricoh.cotos.commonlib.repository.common.AttachedFileRepository;
 import jp.co.ricoh.cotos.commonlib.security.TestSecurityController;
 import jp.co.ricoh.cotos.commonlib.security.bean.ParamterCheckResult;
@@ -27,8 +25,6 @@ import jp.co.ricoh.cotos.commonlib.util.HeadersProperties;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class TestCommonDto {
 
-	private static final String STR_256 = "0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345";
-	private static final String STR_1001 = "01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
 	private static final int INT_MINUS_1 = -1;
 
 	static ConfigurableApplicationContext context;
@@ -61,37 +57,6 @@ public class TestCommonDto {
 			context.getBean(DBConfig.class).clearData();
 			context.stop();
 		}
-	}
-
-	@Test
-	public void AttachedFileDtoのテスト() throws Exception {
-		AttachedFile entity = attachedFileRepository.findOne(1L);
-		AttachedFileDto testTarget = new AttachedFileDto();
-		BeanUtils.copyProperties(testTarget, entity);
-
-		// 正常系
-		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		testTool.assertValidationOk(result);
-
-		// 異常系（@NotNullの null チェック）
-		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setFilePhysicsName(null);
-		testTarget.setContentType(null);
-		testTarget.setSavedPath(null);
-		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 3);
-		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
-		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "コンテンツタイプが設定されていません。"));
-
-		// 異常系（@Size(max)）
-		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setFilePhysicsName(STR_256);
-		testTarget.setContentType(STR_256);
-		testTarget.setSavedPath(STR_1001);
-		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 3);
-		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
-		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "サーバーパスは最大文字数（1000）を超えています。"));
 	}
 
 	@Test
