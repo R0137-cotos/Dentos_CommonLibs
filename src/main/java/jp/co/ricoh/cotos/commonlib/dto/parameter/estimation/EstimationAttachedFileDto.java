@@ -30,7 +30,6 @@ public class EstimationAttachedFileDto extends DtoBase {
 	/**
 	 * ファイル種類
 	 */
-	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "ファイル種類", required = false, position = 4, allowableValues = "range[0,255]")
 	private String fileKind;
