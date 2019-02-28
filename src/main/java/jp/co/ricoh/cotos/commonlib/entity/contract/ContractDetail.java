@@ -67,25 +67,32 @@ public class ContractDetail extends EntityBase {
 	private int quantity;
 
 	/**
+	 * 単価
+	 */
+	@DecimalMax("9999999999999999999.99")
+	@ApiModelProperty(value = "単価", required = true, position = 5, allowableValues = "range[0.00,9999999999999999999.99]")
+	private BigDecimal unitPrice;
+
+	/**
 	 * 金額
 	 */
 	@Column(nullable = false)
 	@NotNull
 	@DecimalMax("9999999999999999999.99")
-	@ApiModelProperty(value = "金額", required = true, position = 5, allowableValues = "range[0.00,9999999999999999999.99]")
+	@ApiModelProperty(value = "金額", required = true, position = 6, allowableValues = "range[0.00,9999999999999999999.99]")
 	private BigDecimal amountSummary;
 
 	/**
 	 * 摘要
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "摘要", required = false, position = 6, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "摘要", required = false, position = 7, allowableValues = "range[0,255]")
 	private String detailAbstract;
 
 	/**
 	 * 拡張項目
 	 */
-	@ApiModelProperty(value = "拡張項目", required = false, position = 7)
+	@ApiModelProperty(value = "拡張項目", required = false, position = 8)
 	@Lob
 	private String extendsParameter;
 
@@ -93,6 +100,6 @@ public class ContractDetail extends EntityBase {
 	 * 品種(契約用)
 	 */
 	@OneToOne(mappedBy = "contractDetail")
-	@ApiModelProperty(value = "品種(契約用)", required = false, position = 8)
+	@ApiModelProperty(value = "品種(契約用)", required = false, position = 9)
 	private ItemContract itemContract;
 }
