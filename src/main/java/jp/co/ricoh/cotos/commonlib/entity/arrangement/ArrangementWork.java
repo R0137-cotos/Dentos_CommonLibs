@@ -15,7 +15,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.Valid;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -61,12 +63,14 @@ public class ArrangementWork extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "arrangement_work_seq")
 	@SequenceGenerator(name = "arrangement_work_seq", sequenceName = "arrangement_work_seq", allocationSize = 1)
-	@ApiModelProperty(value = "手配業務ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "手配業務ID (作成時不要)", required = true, position = 1, allowableValues = "range[0,9223372036854775807]", readOnly = true)
 	private long id;
 
 	/**
 	 * 手配
 	 */
+	@Valid
+	@NotNull
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "arrangement_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "手配", required = true, position = 2)
@@ -76,7 +80,8 @@ public class ArrangementWork extends EntityBase {
 	 * 手配業務タイプマスタID
 	 */
 	@Column(nullable = false)
-	@ApiModelProperty(value = "手配業務タイプマスタID", required = true, position = 3, allowableValues = "range[0,9999999999999999999]")
+	@Min(0)
+	@ApiModelProperty(value = "手配業務タイプマスタID", required = true, position = 3, allowableValues = "range[0,9223372036854775807]")
 	private long arrangementWorkTypeMasterId;
 
 	/**
@@ -99,6 +104,7 @@ public class ArrangementWork extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@Max(9)
+	@Min(0)
 	@ApiModelProperty(value = "保留フラグ", required = true, position = 6, allowableValues = "range[0,9]")
 	private int holdingFlg;
 
@@ -121,7 +127,7 @@ public class ArrangementWork extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "arrangementWork")
 	@OrderBy("operatedAt ASC")
-	@ApiModelProperty(value = "手配業務操作履歴", required = false, position = 9, readOnly = true)
+	@ApiModelProperty(value = "手配業務操作履歴", required = false, position = 9)
 	private List<ArrangementWorkOperationLog> arrangementWorkOperationLogList;
 
 	/**
