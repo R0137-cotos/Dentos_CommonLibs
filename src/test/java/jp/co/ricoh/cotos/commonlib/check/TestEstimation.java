@@ -68,6 +68,7 @@ public class TestEstimation {
 	private static final int INT_100000 = 100000;
 	private static final BigDecimal DECIMAL_MINUS_001 = new BigDecimal("-0.01");
 	private static final BigDecimal DECIMAL_0001 = new BigDecimal("0.001");
+	private static final BigDecimal DECIMAL_10000000000000000000 = new BigDecimal("10000000000000000000.00");
 
 	static ConfigurableApplicationContext context;
 
@@ -328,7 +329,8 @@ public class TestEstimation {
 		// 異常系（@Valid ：販売店（見積用））
 		entity = estimationRepository.findOne(4L);
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.getDealerEstimationList().get(0).setPicMailAddress(STR_256);;
+		testTarget.getDealerEstimationList().get(0).setPicMailAddress(STR_256);
+		;
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
@@ -627,21 +629,12 @@ public class TestEstimation {
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "数量は最小値（0）を下回っています。"));
 
-		// 異常系（@DecimalMin：）
+		// 異常系（@DecimalMax：）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setEstimationAmountSummary(DECIMAL_MINUS_001);
+		testTarget.setEstimationAmountSummary(DECIMAL_10000000000000000000);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
-		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
-		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "見積金額は最小値（0.00）を下回っています。"));
-
-		// 異常系（@Digits：）
-		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setEstimationAmountSummary(DECIMAL_0001);
-		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 1);
-		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00028));
-		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "見積金額は小数点以下2桁を超えています。"));
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
 	}
 
 	@Test

@@ -446,22 +446,6 @@ public class TestContract {
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "数量は最小値（0）を下回っています。"));
 
-		// 異常系（@DecimalMin ：）
-		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setAmountSummary(DECIMAL_MINUS_001);
-		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 1);
-		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
-		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "金額は最小値（0.00）を下回っています。"));
-
-		// 異常系（@Digits ：）
-		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setAmountSummary(DECIMAL_0001);
-		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 1);
-		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00028));
-		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "金額は小数点以下2桁を超えています。"));
-
 		// 異常系（@Valid ：品種(契約用)）
 		entity = contractDetailRepository.findOne(401L);
 		BeanUtils.copyProperties(testTarget, entity);
@@ -470,6 +454,14 @@ public class TestContract {
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "品種名が設定されていません。"));
+
+		// 異常系（@DecimalMax：unitPrice, amountSummary）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setAmountSummary(BigDecimal.valueOf(99999999999999999999.99));
+		testTarget.getItemContract().setItemContractName("品種名");
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
 
 	}
 
@@ -546,7 +538,8 @@ public class TestContract {
 
 		// 異常系（@NotNullの null チェック：）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setContractType(null);;
+		testTarget.setContractType(null);
+		;
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
@@ -591,7 +584,7 @@ public class TestContract {
 		testTarget.setOriginContractBranchNumber(INT_MINUS_1);
 		testTarget.setOriginContractId((long) INT_MINUS_1);
 		testTarget.setEstimationBranchNumber(INT_MINUS_1);
-		testTarget.setEstimationId((long)INT_MINUS_1);
+		testTarget.setEstimationId((long) INT_MINUS_1);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 5);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
