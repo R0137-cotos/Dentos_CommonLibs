@@ -14,11 +14,12 @@ import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import lombok.Data;
@@ -31,12 +32,13 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Table(name = "estimation_approval_route")
+@ApiModel(description = "見積承認ルート(作成時不要)")
 public class EstimationApprovalRoute extends EntityBase {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "estimation_approval_route_seq")
 	@SequenceGenerator(name = "estimation_approval_route_seq", sequenceName = "estimation_approval_route_seq", allocationSize = 1)
-	@ApiModelProperty(value = "見積承認ルートID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "見積承認ルートID(作成時不要)", required = true, position = 1, allowableValues = "range[0,9999999999999999999]", readOnly = true)
 	private long id;
 
 	/**
@@ -74,6 +76,7 @@ public class EstimationApprovalRoute extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@Max(9)
+	@Min(0)
 	@ApiModelProperty(value = "特価承認対象フラグ", required = true, position = 6, allowableValues = "range[0,9]")
 	private int specialPriceApprovalFlg;
 
@@ -82,7 +85,7 @@ public class EstimationApprovalRoute extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "estimationApprovalRoute")
 	@OrderBy("processedAt ASC")
-	@ApiModelProperty(value = "見積承認実績", required = false, position = 7, readOnly = true)
+	@ApiModelProperty(value = "見積承認実績(作成時不要)", required = false, position = 7, readOnly = true)
 	private List<EstimationApprovalResult> estimationApprovalResultList;
 
 	/**
@@ -90,8 +93,7 @@ public class EstimationApprovalRoute extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "estimationApprovalRoute")
 	@OrderBy("approvalOrder ASC")
-	@NotNull
-	@ApiModelProperty(value = "見積承認ルートノード", required = true, position = 8)
+	@ApiModelProperty(value = "見積承認ルートノード(作成時不要)", required = true, position = 8, readOnly = true)
 	private List<EstimationApprovalRouteNode> estimationApprovalRouteNodeList;
 
 }
