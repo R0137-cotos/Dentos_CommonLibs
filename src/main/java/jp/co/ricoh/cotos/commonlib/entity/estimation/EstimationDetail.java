@@ -68,15 +68,19 @@ public class EstimationDetail extends EntityBase {
 	/**
 	 * 見積単価
 	 */
+	@Column(nullable = false)
+	@NotNull
 	@DecimalMax("9999999999999999999.99")
-	@ApiModelProperty(value = "見積単価", required = false, position = 5, allowableValues = "range[0.00,9999999999999999999.99]")
+	@ApiModelProperty(value = "見積単価", required = true, position = 5, allowableValues = "range[0.00,9999999999999999999.99]")
 	private BigDecimal estimationUnitPrice;
 
 	/**
 	 * 見積金額
 	 */
+	@Column(nullable = false)
+	@NotNull
 	@DecimalMax("9999999999999999999.99")
-	@ApiModelProperty(value = "見積金額", required = false, position = 6, allowableValues = "range[0.00,9999999999999999999.99]")
+	@ApiModelProperty(value = "見積金額", required = true, position = 6, allowableValues = "range[0.00,9999999999999999999.99]")
 	private BigDecimal estimationAmountSummary;
 
 	/**
