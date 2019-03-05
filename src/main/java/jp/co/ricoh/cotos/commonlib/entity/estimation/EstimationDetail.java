@@ -17,6 +17,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -37,7 +38,7 @@ public class EstimationDetail extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "estimation_detail_seq")
 	@SequenceGenerator(name = "estimation_detail_seq", sequenceName = "estimation_detail_seq", allocationSize = 1)
-	@ApiModelProperty(value = "見積明細ID", required = true, position = 1)
+	@ApiModelProperty(value = "見積明細ID(作成時不要)", required = true, position = 1, readOnly = true)
 	private long id;
 
 	/**
@@ -62,9 +63,10 @@ public class EstimationDetail extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@Max(99999)
+	@Min(0)
 	@ApiModelProperty(value = "数量", required = true, position = 4, allowableValues = "range[0,99999]")
 	private int quantity;
-	
+
 	/**
 	 * 見積単価
 	 */
@@ -98,7 +100,7 @@ public class EstimationDetail extends EntityBase {
 	private String extendsParameter;
 
 	@OneToOne(mappedBy = "estimationDetail")
-	@ApiModelProperty(value = "品種(見積用)", required = true, position = 9)
+	@ApiModelProperty(value = "品種(見積用)(作成時不要)", required = true, position = 9, readOnly = true)
 	private ItemEstimation itemEstimation;
 
 	@PrePersist

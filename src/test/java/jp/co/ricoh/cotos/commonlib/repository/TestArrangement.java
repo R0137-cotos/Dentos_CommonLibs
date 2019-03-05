@@ -152,7 +152,7 @@ public class TestArrangement {
 		context.getBean(DBConfig.class).initTargetTestData("repository/attachedFile.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/arrangement.sql");
 
-		ArrangementWorkApprovalRouteNode found = arrangmentWorkApprovalRouteNodeRepository.findByArrangementWorkApprovalRouteIdAndApprovalOrderAndApproverEmpId(401L, 1L, "00808347");
+		ArrangementWorkApprovalRouteNode found = arrangmentWorkApprovalRouteNodeRepository.findByArrangementWorkApprovalRouteIdAndApprovalOrderAndApproverEmpId(401L, 1, "00808347");
 		Assert.assertNotNull(found);
 	}
 

@@ -110,7 +110,7 @@ public class MailSendHistory extends EntityBase {
 	 * 送信日時
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
-	@ApiModelProperty(value = "実施日時", required = false, position = 8, readOnly = true)
+	@ApiModelProperty(value = "実施日時(作成時不要)", required = false, position = 8, readOnly = true)
 	private Date sendedAt;
 
 	@PrePersist

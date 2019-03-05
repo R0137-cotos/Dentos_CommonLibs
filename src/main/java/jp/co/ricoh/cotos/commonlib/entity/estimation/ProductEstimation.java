@@ -14,9 +14,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -39,21 +39,22 @@ public class ProductEstimation extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_estimation_seq")
 	@SequenceGenerator(name = "product_estimation_seq", sequenceName = "product_estimation_seq", allocationSize = 1)
-	@ApiModelProperty(value = "ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "ID(作成時不要)", required = true, position = 1, allowableValues = "range[0,9223372036854775807]", readOnly = true)
 	private long id;
 
 	/**
 	 * 商品マスタID
 	 */
+	@Min(0)
 	@Column(nullable = false)
-	@ApiModelProperty(value = "商品マスタID", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "商品マスタID", required = true, position = 2, allowableValues = "range[0,9223372036854775807]")
 	private long productMasterId;
 
 	/**
 	 * 商品名
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "商品名", required = true, position = 3, allowableValues = "range[0,255]")
 	private String productEstimationName;
@@ -62,7 +63,8 @@ public class ProductEstimation extends EntityBase {
 	 * 代表品種マスタID
 	 */
 	@Column(nullable = false)
-	@ApiModelProperty(value = "代表品種マスタID", required = true, position = 4, allowableValues = "range[0,9999999999999999999]")
+	@Min(0)
+	@ApiModelProperty(value = "代表品種マスタID", required = true, position = 4, allowableValues = "range[0,9223372036854775807]")
 	private long repItemMasterId;
 
 	/**

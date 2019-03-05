@@ -70,7 +70,7 @@ public class TestCommon {
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
-		// 異常系（@NotNull、@NotEmptyの null チェック）
+		// 異常系（@NotNullの null チェック）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setFilePhysicsName(null);
 		testTarget.setContentType(null);
@@ -78,15 +78,7 @@ public class TestCommon {
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 3);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
-
-		// 異常系（@NotEmptyの空文字列チェック）
-		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setFilePhysicsName("");
-		testTarget.setContentType("");
-		testTarget.setSavedPath("");
-		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 3);
-		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "コンテンツタイプが設定されていません。"));
 
 		// 異常系（@Size(max)）
 		BeanUtils.copyProperties(testTarget, entity);
@@ -96,5 +88,6 @@ public class TestCommon {
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 3);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "サーバーパスは最大文字数（1000）を超えています。"));
 	}
 }

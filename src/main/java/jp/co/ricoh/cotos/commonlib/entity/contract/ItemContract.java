@@ -11,11 +11,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -39,28 +39,30 @@ public class ItemContract extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "item_contract_seq")
 	@SequenceGenerator(name = "item_contract_seq", sequenceName = "item_contract_seq", allocationSize = 1)
-	@ApiModelProperty(value = "ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "ID(作成時不要)", required = true, position = 1, allowableValues = "range[0,9223372036854775807]", readOnly = true)
 	private long id;
 
 	/**
 	 * 品種マスタID
 	 */
+	@Min(0)
 	@Column(nullable = false)
-	@ApiModelProperty(value = "品種マスタID", required = true, position = 2, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "品種マスタID", required = true, position = 2, allowableValues = "range[0,9223372036854775807]")
 	private long itemMasterId;
 
 	/**
 	 * 商品マスタID
 	 */
+	@Min(0)
 	@Column(nullable = false)
-	@ApiModelProperty(value = "商品マスタID", required = true, position = 3, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "商品マスタID", required = true, position = 3, allowableValues = "range[0,9223372036854775807]")
 	private long productMasterId;
 
 	/**
 	 * 品種名
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "品種名", required = true, position = 4, allowableValues = "range[0,255]")
 	private String itemContractName;
@@ -69,7 +71,7 @@ public class ItemContract extends EntityBase {
 	 * リコー品種コード
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "リコー品種コード", required = true, position = 5, allowableValues = "range[0,255]")
 	private String ricohItemCode;
@@ -95,7 +97,8 @@ public class ItemContract extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@NotNull
-	@DecimalMax("9999999999999999999.99")
+	@DecimalMin("0.00")
+	@Digits(integer = 19, fraction = 2)
 	@ApiModelProperty(value = "仕切価格", required = true, position = 8, allowableValues = "range[0.00,9999999999999999999.99]")
 	private BigDecimal partitionPrice;
 
@@ -118,28 +121,32 @@ public class ItemContract extends EntityBase {
 	/**
 	 * Ｒ原価
 	 */
-	@DecimalMax("9999999999999999999.99")
+	@DecimalMin("0.00")
+	@Digits(integer = 19, fraction = 2)
 	@ApiModelProperty(value = "Ｒ原価", required = false, position = 11, allowableValues = "range[0.00,9999999999999999999.99]")
 	private BigDecimal rCost;
 
 	/**
 	 * ＲＪ仕入価格
 	 */
-	@DecimalMax("9999999999999999999.99")
+	@DecimalMin("0.00")
+	@Digits(integer = 19, fraction = 2)
 	@ApiModelProperty(value = "ＲＪ仕入価格", required = false, position = 12, allowableValues = "range[0.00,9999999999999999999.99]")
 	private BigDecimal rjPurchasePrice;
 
 	/**
 	 * ＲＪ仕切価格
 	 */
-	@DecimalMax("9999999999999999999.99")
+	@DecimalMin("0.00")
+	@Digits(integer = 19, fraction = 2)
 	@ApiModelProperty(value = "ＲＪ仕切価格", required = false, position = 13, allowableValues = "range[0.00,9999999999999999999.99]")
 	private BigDecimal rjDividingPrice;
 
 	/**
 	 * 母店売価(接点店仕切)
 	 */
-	@DecimalMax("9999999999999999999.99")
+	@DecimalMin("0.00")
+	@Digits(integer = 19, fraction = 2)
 	@ApiModelProperty(value = "母店売価(接点店仕切)", required = false, position = 14, allowableValues = "range[0.00,9999999999999999999.99]")
 	private BigDecimal motherStorePrice;
 

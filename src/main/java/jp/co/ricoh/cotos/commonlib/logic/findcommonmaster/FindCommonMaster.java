@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import jp.co.ricoh.cotos.commonlib.dto.parameter.CommonMasterSearchParameter;
-import jp.co.ricoh.cotos.commonlib.dto.parameter.MomCommonMasterSearchParameter;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.common.CommonMasterSearchParameter;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.common.MomCommonMasterSearchParameter;
 import jp.co.ricoh.cotos.commonlib.dto.result.CommonMasterDetailResult;
 import jp.co.ricoh.cotos.commonlib.dto.result.CommonMasterResult;
 import jp.co.ricoh.cotos.commonlib.entity.master.CommonMaster;

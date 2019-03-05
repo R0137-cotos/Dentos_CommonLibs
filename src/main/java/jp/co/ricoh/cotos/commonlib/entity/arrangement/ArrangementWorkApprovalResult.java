@@ -18,8 +18,6 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -41,7 +39,7 @@ public class ArrangementWorkApprovalResult extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "arrangement_work_approval_result_seq")
 	@SequenceGenerator(name = "arrangement_work_approval_result_seq", sequenceName = "arrangement_work_approval_result_seq", allocationSize = 1)
-	@ApiModelProperty(value = "手配業務承認実績ID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "手配業務承認実績ID (作成時不要)", required = true, position = 1, allowableValues = "range[0,9223372036854775807]", readOnly = true)
 	private long id;
 
 	/**
@@ -60,29 +58,29 @@ public class ArrangementWorkApprovalResult extends EntityBase {
 	private Long arrangementWorkApprovalRouteNodeId;
 
 	/**
-	 * 承認処理カテゴリ
+	 * 承認処理カテゴリー
 	 */
 	@Column(nullable = false)
 	@NotNull
-	@ApiModelProperty(value = "承認処理カテゴリ", required = true, position = 4, allowableValues = "承認依頼(\"1\"), 承認依頼差戻(\"2\"), 承認(\"3\"), 承認依頼取消(\"4\")", example = "1")
+	@ApiModelProperty(value = "承認処理カテゴリー", required = true, allowableValues = "承認依頼(\"1\"), 承認依頼差戻(\"2\"), 承認(\"3\"), 承認依頼取消(\"4\")", example = "1", position = 4)
 	private ApprovalProcessCategory approvalProcessCategory;
 
 	/**
 	 * 処理実施者MoM社員ID
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "処理実施者MoM社員ID", required = true, position = 5, allowableValues = "range[0,255]")
 	private String actualEmpId;
 
 	/**
-	 * 処理実施者氏名
+	 * 処理実施者社員名
 	 */
 	@Column(nullable = false)
-	@NotEmpty
+	@NotNull
 	@Size(max = 255)
-	@ApiModelProperty(value = "処理実施者氏名", required = true, position = 6, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "処理実施者社員名", required = true, position = 6, allowableValues = "range[0,255]")
 	private String actualUserName;
 
 	/**
@@ -103,8 +101,7 @@ public class ArrangementWorkApprovalResult extends EntityBase {
 	 * 実施日時
 	 */
 	@Column(nullable = false)
-	@NotNull
-	@ApiModelProperty(value = "実施日時", required = true, position = 9, readOnly = true)
+	@ApiModelProperty(value = "実施日時(作成時不要)", required = true, position = 9, readOnly = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date processedAt;
 

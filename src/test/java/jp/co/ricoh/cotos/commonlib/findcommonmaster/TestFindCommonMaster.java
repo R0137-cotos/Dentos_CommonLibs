@@ -16,8 +16,8 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import jp.co.ricoh.cotos.commonlib.DBConfig;
-import jp.co.ricoh.cotos.commonlib.dto.parameter.CommonMasterSearchParameter;
-import jp.co.ricoh.cotos.commonlib.dto.parameter.MomCommonMasterSearchParameter;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.common.CommonMasterSearchParameter;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.common.MomCommonMasterSearchParameter;
 import jp.co.ricoh.cotos.commonlib.dto.result.CommonMasterResult;
 import jp.co.ricoh.cotos.commonlib.entity.EnumType.ServiceCategory;
 import jp.co.ricoh.cotos.commonlib.logic.findcommonmaster.FindCommonMaster;

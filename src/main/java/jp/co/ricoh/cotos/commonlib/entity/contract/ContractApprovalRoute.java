@@ -14,6 +14,7 @@ import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -37,7 +38,7 @@ public class ContractApprovalRoute extends EntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_approval_route_seq")
 	@SequenceGenerator(name = "contract_approval_route_seq", sequenceName = "contract_approval_route_seq", allocationSize = 1)
-	@ApiModelProperty(value = "契約承認ルートID", required = true, position = 1, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "契約承認ルートID(作成時不要)", required = true, position = 1, allowableValues = "range[0,9223372036854775807]", readOnly = true)
 	private long id;
 
 	/**
@@ -83,6 +84,7 @@ public class ContractApprovalRoute extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@Max(9)
+	@Min(0)
 	@ApiModelProperty(value = "特価承認対象フラグ", required = true, position = 7, allowableValues = "range[0,9]")
 	private int specialPriceApprovalFlg;
 
@@ -91,14 +93,14 @@ public class ContractApprovalRoute extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "contractApprovalRoute")
 	@OrderBy("processedAt ASC")
-	@ApiModelProperty(value = "契約承認実績", required = false, position = 8, readOnly = true)
+	@ApiModelProperty(value = "契約承認実績(作成時不要)", required = false, position = 8, readOnly = true)
 	private List<ContractApprovalResult> contractApprovalResultList;
 
 	/**
 	 * 契約承認ルートノード
 	 */
 	@OneToMany(mappedBy = "contractApprovalRoute")
-	@ApiModelProperty(value = "契約承認ルートノード", required = true, position = 9)
+	@ApiModelProperty(value = "契約承認ルートノード(作成時不要)", required = true, position = 9, readOnly = true)
 	@OrderBy("approvalOrder ASC")
 	private List<ContractApprovalRouteNode> contractApprovalRouteNodeList;
 }
