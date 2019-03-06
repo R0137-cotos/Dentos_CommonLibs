@@ -72,6 +72,8 @@ public class ContractDetail extends EntityBase {
 	/**
 	 * 単価
 	 */
+	@Column(nullable = false)
+	@NotNull
 	@DecimalMax("9999999999999999999.99")
 	@ApiModelProperty(value = "単価", required = true, position = 5, allowableValues = "range[0.00,9999999999999999999.99]")
 	private BigDecimal unitPrice;
