@@ -63,8 +63,8 @@ public class ContractSearchParameter {
 	/**
 	 * RJ管理番号
 	 */
-	@ApiParam(value = "サービス識別番号", required = false)
-	@ApiModelProperty(value = "サービス識別番号", required = false, allowableValues = "range[0,20]")
+	@ApiParam(value = "RJ管理番号", required = false)
+	@ApiModelProperty(value = "RJ管理番号", required = false, allowableValues = "range[0,20]")
 	private String rjManageNumber;
 
 	/**
