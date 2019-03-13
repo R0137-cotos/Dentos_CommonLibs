@@ -66,7 +66,7 @@ public class Contract extends EntityBase {
 
 	public enum LifecycleStatus {
 
-		作成中("1"), 作成完了("2"), キャンセル手続き中("3"), 破棄("4"), 予定日待ち("5"), 締結中("6"), 解約手続き中("7"), 解約予定日待ち("8"), 解約("9"), 旧契約("10");
+		作成中("1"), 作成完了("2"), キャンセル手続き中("3"), 破棄("4"), 予定日待ち("5"), 締結中("6"), 解約手続き中("7"), 解約予定日待ち("8"), 解約("9"), 旧契約("10"), 締結待ち("11");
 
 		private final String text;
 
@@ -383,11 +383,18 @@ public class Contract extends EntityBase {
 	private String cancelOrderNo;
 
 	/**
+	 * 締結希望日
+	 */
+	@ApiModelProperty(value = "締結希望日", required = false, position = 40)
+	@Temporal(TemporalType.DATE)
+	private Date conclusionPreferredDate;
+
+	/**
 	 * 契約明細
 	 */
 	@Valid
 	@OneToMany(mappedBy = "contract")
-	@ApiModelProperty(value = "契約明細", required = true, position = 40)
+	@ApiModelProperty(value = "契約明細", required = true, position = 41)
 	private List<ContractDetail> contractDetailList;
 
 	/**
@@ -395,21 +402,21 @@ public class Contract extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "contract")
 	@OrderBy("displayOrder ASC")
-	@ApiModelProperty(value = "契約チェック結果(作成時不要)", required = false, position = 41, readOnly = true)
+	@ApiModelProperty(value = "契約チェック結果(作成時不要)", required = false, position = 42, readOnly = true)
 	private List<ContractCheckResult> contractCheckResultList;
 
 	/**
 	 * 契約承認ルート
 	 */
 	@OneToMany(mappedBy = "contract")
-	@ApiModelProperty(value = "契約承認ルート(作成時不要)", required = false, position = 42, readOnly = true)
+	@ApiModelProperty(value = "契約承認ルート(作成時不要)", required = false, position = 43, readOnly = true)
 	private List<ContractApprovalRoute> contractApprovalRouteList;
 
 	/**
 	 * 契約添付ファイル
 	 */
 	@OneToMany(mappedBy = "contract")
-	@ApiModelProperty(value = "契約添付ファイル(作成時不要)", required = false, position = 43, readOnly = true)
+	@ApiModelProperty(value = "契約添付ファイル(作成時不要)", required = false, position = 44, readOnly = true)
 	private List<ContractAttachedFile> contractAttachedFileList;
 
 	/**
@@ -417,14 +424,14 @@ public class Contract extends EntityBase {
 	 */
 	@Valid
 	@OneToOne(mappedBy = "contract")
-	@ApiModelProperty(value = "契約担当SA社員", required = true, position = 44)
+	@ApiModelProperty(value = "契約担当SA社員", required = true, position = 45)
 	private ContractPicSaEmp contractPicSaEmp;
 
 	/**
 	 * 契約追加編集者社員
 	 */
 	@OneToMany(mappedBy = "contract")
-	@ApiModelProperty(value = "契約追加編集者社員(作成時不要)", required = false, position = 45, readOnly = true)
+	@ApiModelProperty(value = "契約追加編集者社員(作成時不要)", required = false, position = 46, readOnly = true)
 	private List<ContractAddedEditorEmp> contractAddedEditorEmpList;
 
 	/**
@@ -432,7 +439,7 @@ public class Contract extends EntityBase {
 	 */
 	@Valid
 	@OneToMany(mappedBy = "contract")
-	@ApiModelProperty(value = "販売店(契約用)", required = false, position = 46)
+	@ApiModelProperty(value = "販売店(契約用)", required = false, position = 47)
 	private List<DealerContract> dealerContractList;
 
 	/**
@@ -440,7 +447,7 @@ public class Contract extends EntityBase {
 	 */
 	@Valid
 	@OneToOne(mappedBy = "contract")
-	@ApiModelProperty(value = "顧客(契約用)", required = true, position = 47)
+	@ApiModelProperty(value = "顧客(契約用)", required = true, position = 48)
 	private CustomerContract customerContract;
 
 	/**
@@ -448,7 +455,7 @@ public class Contract extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "contract")
 	@OrderBy("operatedAt ASC")
-	@ApiModelProperty(value = "契約操作履歴(作成時不要)", required = true, position = 48, readOnly = true)
+	@ApiModelProperty(value = "契約操作履歴(作成時不要)", required = true, position = 49, readOnly = true)
 	private List<ContractOperationLog> contractOperationLogList;
 
 	/**
@@ -456,20 +463,20 @@ public class Contract extends EntityBase {
 	 */
 	@Valid
 	@OneToMany(mappedBy = "contract")
-	@ApiModelProperty(value = "商品(契約用)", required = true, position = 49)
+	@ApiModelProperty(value = "商品(契約用)", required = true, position = 50)
 	private List<ProductContract> productContractList;
 
 	/**
 	 * 契約担当CE社員
 	 */
 	@OneToOne(mappedBy = "contract")
-	@ApiModelProperty(value = "契約担当CE社員(作成時不要)", required = false, position = 50, readOnly = true)
+	@ApiModelProperty(value = "契約担当CE社員(作成時不要)", required = false, position = 51, readOnly = true)
 	private ContractPicCeEmp contractPicCeEmp;
 
 	/**
 	 * 契約保守担当SS組織
 	 */
 	@OneToOne(mappedBy = "contract")
-	@ApiModelProperty(value = "契約保守担当SS組織(作成時不要)", required = false, position = 51, readOnly = true)
+	@ApiModelProperty(value = "契約保守担当SS組織(作成時不要)", required = false, position = 52, readOnly = true)
 	private ContractPicMntSsOrg contractPicMntSsOrg;
 }
