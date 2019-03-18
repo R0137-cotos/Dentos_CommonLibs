@@ -37,7 +37,7 @@ public class ContractListener {
 	}
 
 	@Autowired
-	public static void setCheckUtil(CheckUtil checkUtil) {
+	public void setCheckUtil(CheckUtil checkUtil) {
 		ContractListener.checkUtil = checkUtil;
 	}
 
