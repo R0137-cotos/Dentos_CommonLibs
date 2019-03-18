@@ -1,6 +1,7 @@
 package jp.co.ricoh.cotos.commonlib.entity.contract;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.persistence.PrePersist;
@@ -9,11 +10,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import jp.co.ricoh.cotos.commonlib.db.DBUtil;
+import jp.co.ricoh.cotos.commonlib.exception.ErrorCheckException;
+import jp.co.ricoh.cotos.commonlib.exception.ErrorInfo;
+import jp.co.ricoh.cotos.commonlib.logic.check.CheckUtil;
+import jp.co.ricoh.cotos.commonlib.repository.master.MvTJmci101MasterRepository;
 
 @Component
 public class ContractListener {
 	private static final String ID_PREFIX_CONT = "CC";
 	private static final String ID_PREFIX_IMMUTABLE = "CIC";
+
+	private static MvTJmci101MasterRepository mvTJmci101MasterRepository;
+
+	private static CheckUtil checkUtil;
 
 	private static DBUtil dbUtil;
 
@@ -22,8 +31,18 @@ public class ContractListener {
 		ContractListener.dbUtil = dbUtil;
 	}
 
+	@Autowired
+	public void setMvTJmci101MasterRepository(MvTJmci101MasterRepository mvTJmci101MasterRepository) {
+		ContractListener.mvTJmci101MasterRepository = mvTJmci101MasterRepository;
+	}
+
+	@Autowired
+	public static void setCheckUtil(CheckUtil checkUtil) {
+		ContractListener.checkUtil = checkUtil;
+	}
+
 	/**
-	 * 契約番号・恒久契約識別番号を付与する。
+	 * 契約番号・恒久契約識別番号を付与する。得意先コードについて、MoM請求売上先サイト情報マスタ上の存在チェックを行う。
 	 *
 	 * @param contract
 	 */
@@ -43,6 +62,14 @@ public class ContractListener {
 		if (null == contract.getImmutableContIdentNumber()) {
 			long sequenceImmutable = dbUtil.loadSingleFromSQLFile("sql/nextImmutableContIdentNumberSequence.sql", GeneratedNumber.class).getGeneratedNumber();
 			contract.setImmutableContIdentNumber(ID_PREFIX_IMMUTABLE + new SimpleDateFormat("yyyyMMdd").format(new Date()) + String.format("%04d", sequenceImmutable));
+		}
+
+		/**
+		 * 得意先コード
+		 */
+		if (null == mvTJmci101MasterRepository.findByOriginalSystemCode(contract.getBillingCustomerSpCode())) {
+			String[] regexList = { "得意先コード" };
+			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "MasterDoesNotExistMvTJmci101Master", regexList));
 		}
 	}
 }
