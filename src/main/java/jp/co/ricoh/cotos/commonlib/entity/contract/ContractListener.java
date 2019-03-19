@@ -67,7 +67,7 @@ public class ContractListener {
 		/**
 		 * 得意先コード
 		 */
-		if (null == mvTJmci101MasterRepository.findByOriginalSystemCode(contract.getBillingCustomerSpCode())) {
+		if (null != contract.getBillingCustomerSpCode() && null == mvTJmci101MasterRepository.findByOriginalSystemCode(contract.getBillingCustomerSpCode())) {
 			String[] regexList = { "得意先コード" };
 			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "MasterDoesNotExistMvTJmci101Master", regexList));
 		}
