@@ -1,6 +1,5 @@
 package jp.co.ricoh.cotos.commonlib.security;
 
-import java.util.Arrays;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -84,11 +83,14 @@ public class CotosUserDetailsService implements AuthenticationUserDetailsService
 			// シングルユーザーIDに紐づく権限情報を取得
 			Map<ActionDiv, Map<AuthDiv, AuthLevel>> momAuthorities = momAuthorityService.searchAllMomAuthorities(jwt.getClaim(claimsProperties.getSingleUserId()).asString());
 
-			// MoM権限情報が存在しない場合は、エラー
-			if (momAuthorities == null) {
-				log.error(messageUtil.createMessageInfo("NoMomAuthoritiesError", Arrays.asList(jwt.getClaim(claimsProperties.getSingleUserId()).asString()).toArray(new String[0])).getMsg());
-				throw new Exception();
-			}
+			// TODO: ダミーユーザーの場合を考慮
+			// // MoM権限情報が存在しない場合は、エラー
+			// if (momAuthorities == null) {
+			// log.error(messageUtil.createMessageInfo("NoMomAuthoritiesError",
+			// Arrays.asList(jwt.getClaim(claimsProperties.getSingleUserId()).asString()).toArray(new
+			// String[0])).getMsg());
+			// throw new Exception();
+			// }
 
 			return new CotosAuthenticationDetails(jwt.getClaim(claimsProperties.getMomEmpId()).asString(), jwt.getClaim(claimsProperties.getSingleUserId()).asString(), jwt.getClaim(claimsProperties.getOrigin()).asString(), jwtString, momAuthorities);
 		}
