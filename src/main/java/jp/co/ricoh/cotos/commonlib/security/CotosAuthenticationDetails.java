@@ -1,10 +1,14 @@
 package jp.co.ricoh.cotos.commonlib.security;
 
 import java.util.Collection;
+import java.util.Map;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.ActionDiv;
+import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.AuthDiv;
+import jp.co.ricoh.cotos.commonlib.security.mom.MomAuthorityService.AuthLevel;
 import lombok.Getter;
 
 /**
@@ -26,12 +30,16 @@ public class CotosAuthenticationDetails implements UserDetails {
 	@Getter
 	private String jwt;
 
-	public CotosAuthenticationDetails(String momEmployeeId, String singleUserId, String origin, String jwt) {
+	@Getter
+	private Map<ActionDiv, Map<AuthDiv, AuthLevel>> momAuthorities;
+
+	public CotosAuthenticationDetails(String momEmployeeId, String singleUserId, String origin, String jwt, Map<ActionDiv, Map<AuthDiv, AuthLevel>> momAuthorities) {
 		super();
 		this.momEmployeeId = momEmployeeId;
 		this.singleUserId = singleUserId;
 		this.origin = origin;
 		this.jwt = jwt;
+		this.momAuthorities = momAuthorities;
 	}
 
 	@Override

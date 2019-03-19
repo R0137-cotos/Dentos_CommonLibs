@@ -1,7 +1,9 @@
 package jp.co.ricoh.cotos.commonlib.security.mom;
 
+import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -10,6 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import javax.xml.rpc.ServiceException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -70,41 +74,67 @@ public class MomAuthorityService {
 	/**
 	 * MoM権限レベルを取得
 	 */
-	public AuthLevel searchMomAuthority(String singleUserId, ActionDiv actionDiv, AuthDiv authDiv) throws Exception {
+	public AuthLevel searchMomAuthority(String singleUserId, ActionDiv actionDiv, AuthDiv authDiv) throws RemoteException, SQLException, ServiceException {
 
-		// MoM権限取得用のコネクションを作成
-		Connection connection = DriverManager.getConnection(datasourceProperties.getUrl(), datasourceProperties.getUsername(), datasourceProperties.getPassword());
+		// MoM提供モジュール経由でMom権限情報を取得
+		List<AuthorityInfoActionDto> authorityInfoActionDtoList = this.searchMomAuthoritiesExternal(singleUserId);
 
-		// 権限情報取得用サービスを初期化
-		KengenServiceServiceLocator kengenServiceLocator = new KengenServiceServiceLocator();
-		kengenServiceLocator.setKengenServiceEndpointAddress(remoteMomProperties.getUrl());
-
-		// MoM提供モジュールから社員情報の取得
-		EmployeeInfoDto[] employeeInfoDtos = kengenServiceLocator.getKengenService().getContactEmpFromSUID(singleUserId, Calendar.getInstance(), false, remoteMomProperties.getRelatedid());
-		if (employeeInfoDtos.length != 1) {
-			return null;
-		}
-
-		// 社員情報から、権限分類を特定
-		List<EmployeeAuthInfoDto> empAuthInfoList = new ArrayList<>();
-		List<EmployeeOrgInfoDto> employeeOrgInfoDtoList = Arrays.asList(employeeInfoDtos[0].getOrgList());
-		employeeOrgInfoDtoList.stream().forEach(employeeOrgInfoDto -> Collections.addAll(empAuthInfoList, employeeOrgInfoDto.getClassifyList()));
-		List<String> classify = empAuthInfoList.stream().map(empAuthInfo -> empAuthInfo.getClassifyId()).collect(Collectors.toList());
-
-		// MoM提供モジュールから権限情報の取得
-		AuthoritySearch authoritySearch = new AuthoritySearch();
-		AuthorityInfoActionDto[] authorityInfoActionDtos = authoritySearch.getAuthSumFromEmpId((String[]) classify.toArray(new String[0]), remoteMomProperties.getRelatedid(), connection);
-		if (authorityInfoActionDtos == null || authorityInfoActionDtos.length == 0) {
+		// Mom権限情報wお取得できない場合、nullを返却
+		if (authorityInfoActionDtoList == null) {
 			return null;
 		}
 
 		// 引数のアクション区分、権限情報からっ権限レベルを取得
-		List<AuthorityInfoActionDto> authorityInfoActionDtoList = Arrays.asList(authorityInfoActionDtos);
 		List<AuthorityInfoLevelDto> authorityInfoLevelDtoList = Arrays.asList(authorityInfoActionDtoList.stream().filter(authorityInfoActionDto -> actionDiv.toString().equals(authorityInfoActionDto.getActionId())).findFirst().get().getLevelList());
 		String targetAuthLevel = authorityInfoLevelDtoList.stream().filter(authorityInfoLevelDto -> authDiv.toString().equals(authorityInfoLevelDto.getInfoId())).findFirst().get().getLevelId();
 
 		// 取得した権限レベルを返却する
 		return Arrays.asList(AuthLevel.values()).stream().filter(authLevel -> authLevel.value.equals(targetAuthLevel)).findFirst().get();
+	}
+
+	/**
+	 * シングルユーザーIDに紐づく、すべてのCOTOS用MoM権限レベルを取得
+	 * 
+	 * @throws Exception
+	 */
+	public Map<ActionDiv, Map<AuthDiv, AuthLevel>> searchAllMomAuthorities(String singleUserId) throws Exception {
+
+		// 外部ライブラリ経由でMom権限情報を取得
+		List<AuthorityInfoActionDto> authorityInfoActionDtoList;
+
+		try {
+			authorityInfoActionDtoList = this.searchMomAuthoritiesExternal(singleUserId);
+		} catch (RemoteException | SQLException | ServiceException e) {
+			log.error(messageUtil.createMessageInfo("ExternalModuleError").getMsg());
+			throw e;
+		}
+
+		// Mom権限情報wお取得できない場合、nullを返却
+		if (authorityInfoActionDtoList == null) {
+			return null;
+		}
+
+		// ユーザーの全MoM権限情報
+		Map<ActionDiv, Map<AuthDiv, AuthLevel>> allMomAuthorities = new HashMap<>();
+
+		// アクション区分「00：なし」を除外してループ
+		Arrays.asList(ActionDiv.values()).stream().filter(actionDiv -> actionDiv != ActionDiv.なし).forEach(actionDiv -> {
+
+			// 該当アクション区分のMoM権限情報を取得
+			List<AuthorityInfoLevelDto> authorityInfoLevelDtoList = Arrays.asList(authorityInfoActionDtoList.stream().filter(authorityInfoActionDto -> actionDiv.toString().equals(authorityInfoActionDto.getActionId())).findFirst().get().getLevelList());
+
+			// 権限区分区分「0：なし」を除外してループ
+			Map<AuthDiv, AuthLevel> authorities = Arrays.asList(AuthDiv.values()).stream().filter(authDiv -> authDiv != AuthDiv.なし).collect(Collectors.toMap(authDiv -> authDiv, authDiv -> {
+
+				// 該当権限区分のMoM権限レベルを取得
+				String targetAuthLevel = authorityInfoLevelDtoList.stream().filter(authorityInfoLevelDto -> authDiv.toString().equals(authorityInfoLevelDto.getInfoId())).findFirst().get().getLevelId();
+				return Arrays.asList(AuthLevel.values()).stream().filter(authLevel -> authLevel.value.equals(targetAuthLevel)).findFirst().get();
+			}));
+
+			allMomAuthorities.put(actionDiv, authorities);
+		});
+
+		return allMomAuthorities;
 	}
 
 	/**
@@ -221,5 +251,39 @@ public class MomAuthorityService {
 		long result = dbUtil.loadCountFromSQLFile("sql/security/editorAuthority/isRelatedOrg.sql", queryParams);
 
 		return result > 0;
+	}
+
+	/**
+	 * 外部ライブラリから、シングルユーザーIDに紐づく権限情報を取得する
+	 */
+	private List<AuthorityInfoActionDto> searchMomAuthoritiesExternal(String singleUserId) throws SQLException, RemoteException, ServiceException {
+
+		// MoM権限取得用のコネクションを作成
+		Connection connection = DriverManager.getConnection(datasourceProperties.getUrl(), datasourceProperties.getUsername(), datasourceProperties.getPassword());
+
+		// 権限情報取得用サービスを初期化
+		KengenServiceServiceLocator kengenServiceLocator = new KengenServiceServiceLocator();
+		kengenServiceLocator.setKengenServiceEndpointAddress(remoteMomProperties.getUrl());
+
+		// MoM提供モジュールから社員情報の取得
+		EmployeeInfoDto[] employeeInfoDtos = kengenServiceLocator.getKengenService().getContactEmpFromSUID(singleUserId, Calendar.getInstance(), false, remoteMomProperties.getRelatedid());
+		if (employeeInfoDtos.length != 1) {
+			return null;
+		}
+
+		// 社員情報から、権限分類を特定
+		List<EmployeeAuthInfoDto> empAuthInfoList = new ArrayList<>();
+		List<EmployeeOrgInfoDto> employeeOrgInfoDtoList = Arrays.asList(employeeInfoDtos[0].getOrgList());
+		employeeOrgInfoDtoList.stream().forEach(employeeOrgInfoDto -> Collections.addAll(empAuthInfoList, employeeOrgInfoDto.getClassifyList()));
+		List<String> classify = empAuthInfoList.stream().map(empAuthInfo -> empAuthInfo.getClassifyId()).collect(Collectors.toList());
+
+		// MoM提供モジュールから権限情報の取得
+		AuthoritySearch authoritySearch = new AuthoritySearch();
+		AuthorityInfoActionDto[] authorityInfoActionDtos = authoritySearch.getAuthSumFromEmpId((String[]) classify.toArray(new String[0]), remoteMomProperties.getRelatedid(), connection);
+		if (authorityInfoActionDtos == null || authorityInfoActionDtos.length == 0) {
+			return null;
+		}
+
+		return Arrays.asList(authorityInfoActionDtos);
 	}
 }

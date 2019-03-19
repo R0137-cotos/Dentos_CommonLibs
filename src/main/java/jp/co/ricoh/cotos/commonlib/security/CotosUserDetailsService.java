@@ -1,6 +1,10 @@
 package jp.co.ricoh.cotos.commonlib.security;
 
+import java.util.Map;
+
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,17 +17,31 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
+import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.ActionDiv;
+import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.AuthDiv;
+import jp.co.ricoh.cotos.commonlib.logic.message.MessageUtil;
+import jp.co.ricoh.cotos.commonlib.security.mom.MomAuthorityService;
+import jp.co.ricoh.cotos.commonlib.security.mom.MomAuthorityService.AuthLevel;
 import jp.co.ricoh.cotos.commonlib.util.ClaimsProperties;
 import jp.co.ricoh.cotos.commonlib.util.JwtProperties;
 
 @Component
 public class CotosUserDetailsService implements AuthenticationUserDetailsService<PreAuthenticatedAuthenticationToken> {
 
+	/** ロガー */
+	private static final Log log = LogFactory.getLog(CotosUserDetailsService.class);
+
 	@Autowired
 	JwtProperties jwtProperties;
 
 	@Autowired
 	ClaimsProperties claimsProperties;
+
+	@Autowired
+	MomAuthorityService momAuthorityService;
+
+	@Autowired
+	MessageUtil messageUtil;
 
 	@Override
 	public UserDetails loadUserDetails(PreAuthenticatedAuthenticationToken token) throws UsernameNotFoundException {
@@ -51,7 +69,7 @@ public class CotosUserDetailsService implements AuthenticationUserDetailsService
 		return cotosAuthenticationDetails;
 	}
 
-	private CotosAuthenticationDetails decodeAuthentication(String authenticationHeader) {
+	private CotosAuthenticationDetails decodeAuthentication(String authenticationHeader) throws Exception {
 
 		// Bearer属性を取得
 		if (authenticationHeader.startsWith("Bearer ")) {
@@ -61,11 +79,20 @@ public class CotosUserDetailsService implements AuthenticationUserDetailsService
 			Algorithm algorithm = Algorithm.HMAC256(jwtProperties.getSecretKey());
 			JWTVerifier verifier = JWT.require(algorithm).build();
 			DecodedJWT jwt = verifier.verify(jwtString);
-			jwt.getClaim(claimsProperties.getMomEmpId());
-			jwt.getClaim(claimsProperties.getSingleUserId());
-			jwt.getClaim(claimsProperties.getOrigin());
 
-			return new CotosAuthenticationDetails(jwt.getClaim(claimsProperties.getMomEmpId()).asString(), jwt.getClaim(claimsProperties.getSingleUserId()).asString(), jwt.getClaim(claimsProperties.getOrigin()).asString(), jwtString);
+			// シングルユーザーIDに紐づく権限情報を取得
+			Map<ActionDiv, Map<AuthDiv, AuthLevel>> momAuthorities = momAuthorityService.searchAllMomAuthorities(jwt.getClaim(claimsProperties.getSingleUserId()).asString());
+
+			// TODO: ダミーユーザーの場合を考慮
+			// // MoM権限情報が存在しない場合は、エラー
+			// if (momAuthorities == null) {
+			// log.error(messageUtil.createMessageInfo("NoMomAuthoritiesError",
+			// Arrays.asList(jwt.getClaim(claimsProperties.getSingleUserId()).asString()).toArray(new
+			// String[0])).getMsg());
+			// throw new Exception();
+			// }
+
+			return new CotosAuthenticationDetails(jwt.getClaim(claimsProperties.getMomEmpId()).asString(), jwt.getClaim(claimsProperties.getSingleUserId()).asString(), jwt.getClaim(claimsProperties.getOrigin()).asString(), jwtString, momAuthorities);
 		}
 
 		return null;
