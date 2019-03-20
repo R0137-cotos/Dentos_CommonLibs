@@ -56,7 +56,7 @@ public class CotosLogTests {
 	@Test
 	@Transactional
 	public void ログ出力_認証情報あり() throws Exception {
-		RestTemplate rest = initRest("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcmlnaW4iOiJjb3Rvcy5yaWNvaC5jby5qcCIsInNpbmdsZVVzZXJJZCI6InNpZCIsIm1vbUVtcElkIjoibWlkIiwiZXhwIjoyNTM0MDIyNjgzOTl9.Apmi4uDwtiscf9WgVIh5Rx1DjoZX2eS7H2YlAGayOsQ");
+		RestTemplate rest = initRest("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcmlnaW4iOiJjb3Rvcy5yaWNvaC5jby5qcCIsInNpbmdsZVVzZXJJZCI6InNpZCIsIm1vbUVtcElkIjoibWlkIiwiZXhwIjoyNTM0MDIyNjgzOTksImFwcGxpY2F0aW9uSWQiOiJjb3Rvc19kZXYifQ.qJBFsMJFZcLdF7jWwEafZSOQfmL1EqPVDcRuz6WvsCI");
 		ResponseEntity<String> response = rest.getForEntity(loadTopURL() + "test/api/log?isSuccess=true&hasBody=false", String.class);
 		Assert.assertEquals("正常終了", 200, response.getStatusCodeValue());
 		Assert.assertEquals("正常終了", "test", response.getBody());
