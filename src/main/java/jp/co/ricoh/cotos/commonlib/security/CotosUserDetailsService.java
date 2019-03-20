@@ -52,7 +52,7 @@ public class CotosUserDetailsService implements AuthenticationUserDetailsService
 
 		try {
 			cotosAuthenticationDetails = this.decodeAuthentication(authenticationHeader);
-			if (cotosAuthenticationDetails == null || StringUtils.isAnyBlank(cotosAuthenticationDetails.getMomEmployeeId(), cotosAuthenticationDetails.getSingleUserId(), cotosAuthenticationDetails.getOrigin())) {
+			if (cotosAuthenticationDetails == null || StringUtils.isAnyBlank(cotosAuthenticationDetails.getMomEmployeeId(), cotosAuthenticationDetails.getSingleUserId(), cotosAuthenticationDetails.getOrigin(), cotosAuthenticationDetails.getApplicationId())) {
 				throw new UsernameNotFoundException("user not found");
 			}
 		} catch (Exception e) {
