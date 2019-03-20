@@ -51,11 +51,11 @@ import lombok.val;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class CotosSecurityTests {
 
-	private static final String WITHIN_PERIOD_JWT = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcmlnaW4iOiJjb3Rvcy5yaWNvaC5jby5qcCIsInNpbmdsZVVzZXJJZCI6InNpZCIsIm1vbUVtcElkIjoibWlkIiwiZXhwIjoyNTM0MDIyNjgzOTl9.Apmi4uDwtiscf9WgVIh5Rx1DjoZX2eS7H2YlAGayOsQ";
+	private static final String WITHIN_PERIOD_JWT = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcmlnaW4iOiJjb3Rvcy5yaWNvaC5jby5qcCIsInNpbmdsZVVzZXJJZCI6InNpZCIsIm1vbUVtcElkIjoibWlkIiwiZXhwIjoyNTM0MDIyNjgzOTksImFwcGxpY2F0aW9uSWQiOiJjb3Rvc19kZXYifQ.qJBFsMJFZcLdF7jWwEafZSOQfmL1EqPVDcRuz6WvsCI";
 
-	private static final String WITHOUT_PERIOD_JWT = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcmlnaW4iOiJjb3Rvcy5yaWNvaC5jby5qcCIsInNpbmdsZVVzZXJJZCI6InNpZCIsIm1vbUVtcElkIjoibWlkIiwiZXhwIjoxNTM5NTY5MDQwfQ.TyKAZllpcbryn31Px4zqP48SYUAMOrGEspqGN50QQDQ";
+	private static final String WITHOUT_PERIOD_JWT = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcmlnaW4iOiJjb3Rvcy5yaWNvaC5jby5qcCIsInNpbmdsZVVzZXJJZCI6InNpZCIsIm1vbUVtcElkIjoibWlkIiwiZXhwIjoxNTM5NTY5MDQsImFwcGxpY2F0aW9uSWQiOiJjb3Rvc19kZXYifQ.NO_r4hID2vt3_fJWa4Mwmk1tKvZe5ndCwHF17wkv1Bo";
 
-	private static final String FALSIFICATION_JWT = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcmlnaW4iOiJjb3Rvcy5yaWNvaC5jby5qcCIsInNpbmdsZVVzZXJJZCI6ImZhbHNpZmljYXRpb24iLCJtb21FbXBJZCI6Im1pZCIsImV4cCI6MTUzOTU2OTA0MH0.YfBJJ1ajM-cV2fzgKXOoFRNw1dx-fxlYXmFC4bT6mpE";
+	private static final String FALSIFICATION_JWT = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcmlnaW4iOiJjb3Rvcy5yaWNvaC5jby5qcCIsInNpbmdsZVVzZXJJZCI6InNpZCIsIm1vbUVtcElkIjoibWlkIiwiZXhwIjoyNTM0MDIyNjgzOTksImFwcGxpY2F0aW9uSWQiOiJjb3Rvc19kZXYifQA.qJBFsMJFZcLdF7jWwEafZSOQfmL1EqPVDcRuz6WvsCI";
 
 	@SpyBean
 	MomAuthorityService momAuthorityService;
@@ -125,7 +125,7 @@ public class CotosSecurityTests {
 		RestTemplate rest = initRest(WITHIN_PERIOD_JWT);
 		ResponseEntity<String> response = rest.getForEntity(loadTopURL() + "test/api/test/1?isSuccess=true&hasBody=false", String.class);
 		Assert.assertEquals("正常終了", 200, response.getStatusCodeValue());
-		Assert.assertEquals("正常終了", "sid,mid,cotos.ricoh.co.jp," + WITHIN_PERIOD_JWT, response.getBody());
+		Assert.assertEquals("正常終了", "sid,mid,cotos.ricoh.co.jp,cotos_dev," + WITHIN_PERIOD_JWT, response.getBody());
 	}
 
 	@Test
@@ -158,7 +158,7 @@ public class CotosSecurityTests {
 		RestTemplate rest = initRest(WITHIN_PERIOD_JWT);
 		ResponseEntity<String> response = rest.getForEntity(loadTopURL() + "test/api/test/1?isSuccess=true&hasBody=false", String.class);
 		Assert.assertEquals("正常終了", 200, response.getStatusCodeValue());
-		Assert.assertEquals("正常終了", "sid,mid,cotos.ricoh.co.jp," + WITHIN_PERIOD_JWT, response.getBody());
+		Assert.assertEquals("正常終了", "sid,mid,cotos.ricoh.co.jp,cotos_dev," + WITHIN_PERIOD_JWT, response.getBody());
 	}
 
 	@Test
@@ -183,7 +183,7 @@ public class CotosSecurityTests {
 
 		ResponseEntity<String> response = rest.postForEntity(loadTopURL() + "test/api/test?isSuccess=true&hasBody=true", entity, String.class);
 		Assert.assertEquals("正常終了", 200, response.getStatusCodeValue());
-		Assert.assertEquals("正常終了", "sid,mid,cotos.ricoh.co.jp," + WITHIN_PERIOD_JWT, response.getBody());
+		Assert.assertEquals("正常終了", "sid,mid,cotos.ricoh.co.jp,cotos_dev," + WITHIN_PERIOD_JWT, response.getBody());
 	}
 
 	@Test

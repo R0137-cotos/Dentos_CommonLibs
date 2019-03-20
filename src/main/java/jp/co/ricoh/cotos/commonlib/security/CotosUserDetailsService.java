@@ -52,7 +52,7 @@ public class CotosUserDetailsService implements AuthenticationUserDetailsService
 
 		try {
 			cotosAuthenticationDetails = this.decodeAuthentication(authenticationHeader);
-			if (cotosAuthenticationDetails == null || StringUtils.isAnyBlank(cotosAuthenticationDetails.getMomEmployeeId(), cotosAuthenticationDetails.getSingleUserId(), cotosAuthenticationDetails.getOrigin())) {
+			if (cotosAuthenticationDetails == null || StringUtils.isAnyBlank(cotosAuthenticationDetails.getMomEmployeeId(), cotosAuthenticationDetails.getSingleUserId(), cotosAuthenticationDetails.getOrigin(), cotosAuthenticationDetails.getApplicationId())) {
 				throw new UsernameNotFoundException("user not found");
 			}
 		} catch (Exception e) {
@@ -92,7 +92,7 @@ public class CotosUserDetailsService implements AuthenticationUserDetailsService
 			// throw new Exception();
 			// }
 
-			return new CotosAuthenticationDetails(jwt.getClaim(claimsProperties.getMomEmpId()).asString(), jwt.getClaim(claimsProperties.getSingleUserId()).asString(), jwt.getClaim(claimsProperties.getOrigin()).asString(), jwtString, momAuthorities);
+			return new CotosAuthenticationDetails(jwt.getClaim(claimsProperties.getMomEmpId()).asString(), jwt.getClaim(claimsProperties.getSingleUserId()).asString(), jwt.getClaim(claimsProperties.getOrigin()).asString(), jwt.getClaim(claimsProperties.getApplicationId()).asString(), jwtString, momAuthorities);
 		}
 
 		return null;
