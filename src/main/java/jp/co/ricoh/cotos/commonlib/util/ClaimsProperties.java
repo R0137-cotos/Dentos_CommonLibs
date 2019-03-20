@@ -17,4 +17,6 @@ public class ClaimsProperties {
 	String singleUserId;
 
 	String origin;
+
+	String applicationId;
 }

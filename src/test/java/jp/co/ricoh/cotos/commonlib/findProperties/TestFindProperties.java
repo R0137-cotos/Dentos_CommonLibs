@@ -52,6 +52,7 @@ public class TestFindProperties {
 		Assert.assertEquals("権限:jwt用MoM社員IDが正しく取得されること", "momEmpId", appProperties.getAuthProperties().getJwtProperties().getClaimsProperties().getMomEmpId());
 		Assert.assertEquals("権限:jwt用シングルユーザーIDが正しく取得されること", "singleUserId", appProperties.getAuthProperties().getJwtProperties().getClaimsProperties().getSingleUserId());
 		Assert.assertEquals("権限:jwt用originが正しく取得されること", "origin", appProperties.getAuthProperties().getJwtProperties().getClaimsProperties().getOrigin());
+		Assert.assertEquals("権限:jwt用アプリケーションIDが正しく取得されること", "applicationId", appProperties.getAuthProperties().getJwtProperties().getClaimsProperties().getApplicationId());
 		Assert.assertEquals("権限:ヘッダーMoM社員IDが正しく取得されること", "headers_mom_emp_id", appProperties.getAuthProperties().getHeadersProperties().getMomEmpId());
 		Assert.assertEquals("権限:ヘッダーシングルユーザーIDが正しく取得されること", "headers_single_user_id", appProperties.getAuthProperties().getHeadersProperties().getSingleUserId());
 		Assert.assertEquals("権限:ヘッダーアプリケーションIDが正しく取得されること", "headers_applicationId", appProperties.getAuthProperties().getHeadersProperties().getApplicationId());
