@@ -21,7 +21,7 @@ public class WithMockCustomUserSecurityContextFactory implements WithSecurityCon
 	public SecurityContext createSecurityContext(WithMockCustomUser customUser) {
 		SecurityContext context = SecurityContextHolder.createEmptyContext();
 
-		CotosAuthenticationDetails principal = new CotosAuthenticationDetails(customUser.momEmployeeId(), customUser.singleUserId(), customUser.origin(), customUser.jwt(), createMomAuthorities());
+		CotosAuthenticationDetails principal = new CotosAuthenticationDetails(customUser.momEmployeeId(), customUser.singleUserId(), customUser.origin(), customUser.applicationId(), customUser.jwt(), createMomAuthorities());
 		Authentication auth = new PreAuthenticatedAuthenticationToken(principal, "password", principal.getAuthorities());
 		context.setAuthentication(auth);
 		return context;

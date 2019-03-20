@@ -26,6 +26,9 @@ public class CotosAuthenticationDetails implements UserDetails {
 
 	@Getter
 	private String origin;
+	
+	@Getter
+	private String applicationId;
 
 	@Getter
 	private String jwt;
@@ -33,11 +36,12 @@ public class CotosAuthenticationDetails implements UserDetails {
 	@Getter
 	private Map<ActionDiv, Map<AuthDiv, AuthLevel>> momAuthorities;
 
-	public CotosAuthenticationDetails(String momEmployeeId, String singleUserId, String origin, String jwt, Map<ActionDiv, Map<AuthDiv, AuthLevel>> momAuthorities) {
+	public CotosAuthenticationDetails(String momEmployeeId, String singleUserId, String origin, String applicationId, String jwt, Map<ActionDiv, Map<AuthDiv, AuthLevel>> momAuthorities) {
 		super();
 		this.momEmployeeId = momEmployeeId;
 		this.singleUserId = singleUserId;
 		this.origin = origin;
+		this.applicationId = applicationId;
 		this.jwt = jwt;
 		this.momAuthorities = momAuthorities;
 	}
