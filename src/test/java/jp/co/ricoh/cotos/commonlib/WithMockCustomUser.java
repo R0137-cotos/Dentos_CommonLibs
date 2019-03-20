@@ -17,5 +17,5 @@ public @interface WithMockCustomUser {
 	
 	String applicationId() default "cotos_dev";
 	
-	String jwt() default "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvcmlnaW4iOiJjb3Rvcy5yaWNvaC5jby5qcCIsInNpbmdsZVVzZXJJZCI6InNpZCIsIm1vbUVtcElkIjoibWlkIiwiYXBwbGljYXRpb25JZCI6ImNvdG9zX2RldiIsImV4cCI6MjUzNDAyMjY2ODM5OX0.9llyM40te3KdgDCpuUfZKnGAj6YuLe3X_1xET_8i4FA";
+	String jwt() default "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcmlnaW4iOiJjb3Rvcy5yaWNvaC5jby5qcCIsInNpbmdsZVVzZXJJZCI6InNpZCIsIm1vbUVtcElkIjoibWlkIiwiZXhwIjoyNTM0MDIyNjgzOTksImFwcGxpY2F0aW9uSWQiOiJjb3Rvc19kZXYifQ.qJBFsMJFZcLdF7jWwEafZSOQfmL1EqPVDcRuz6WvsCI";
 }
