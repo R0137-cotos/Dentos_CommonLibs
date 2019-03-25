@@ -354,6 +354,13 @@ public class ContractSearchParameter {
 	private SortOrder sortOrder;
 
 	/**
+	 * アプリケーションID
+	 */
+	@ApiParam(value = "アプリケーションID", required = true)
+	@ApiModelProperty(value = "アプリケーションID", required = true)
+	private String appId;
+
+	/**
 	 * パラメータをMapにする。
 	 */
 	public Map<String, Object> createParamaterMap() {
