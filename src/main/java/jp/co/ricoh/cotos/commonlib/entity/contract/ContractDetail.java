@@ -1,7 +1,6 @@
 package jp.co.ricoh.cotos.commonlib.entity.contract;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -24,13 +23,12 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import jp.co.ricoh.cotos.commonlib.entity.EnumType.DetailStatus;
+import jp.co.ricoh.cotos.commonlib.entity.EnumType.InitialAccountSalesStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -42,28 +40,6 @@ import lombok.EqualsAndHashCode;
 @Data
 @Table(name = "contract_detail")
 public class ContractDetail extends EntityBase {
-
-	public enum InitialAccountSalesStatus {
-
-		未計上("0"), 計上済み("1"), 処理不要("2"), 処理不可("3");
-
-		private final String text;
-
-		private InitialAccountSalesStatus(final String text) {
-			this.text = text;
-		}
-
-		@Override
-		@JsonValue
-		public String toString() {
-			return this.text;
-		}
-
-		@JsonCreator
-		public static InitialAccountSalesStatus fromString(String string) {
-			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
-		}
-	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_detail_seq")
