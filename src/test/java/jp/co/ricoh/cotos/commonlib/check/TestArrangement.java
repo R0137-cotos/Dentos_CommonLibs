@@ -413,8 +413,9 @@ public class TestArrangement {
 		// 異常系（@Size(max) ：memo）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setMemo(STR_4001);
+		testTarget.setAppId(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "メモは最大文字数（4000）を超えています。"));
 

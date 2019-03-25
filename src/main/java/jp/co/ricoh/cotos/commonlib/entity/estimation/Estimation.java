@@ -484,6 +484,13 @@ public class Estimation extends EntityBase {
 	@ApiModelProperty(value = "商品（見積用）(作成時不要)", required = false, position = 52, readOnly = true)
 	private List<ProductEstimation> productEstimationList;
 
+	/**
+	 * アプリケーションID
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "アプリケーションID", required = false, position = 53, allowableValues = "range[0,255]")
+	private String appId;
+
 	@PreUpdate
 	public void preUpdate() {
 		if (StringUtils.isEmpty(super.getUpdatedUserId())) {

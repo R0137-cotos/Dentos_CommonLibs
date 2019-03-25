@@ -252,8 +252,9 @@ public class TestEstimation {
 		testTarget.setMainCompetitorName(STR_256);
 		testTarget.setCompetitionInfo(STR_256);
 		testTarget.setCompetitionContractDiv(STR_256);
+		testTarget.setAppId(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 26);
+		Assert.assertTrue(result.getErrorInfoList().size() == 27);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "見積発行元FAX番号は最大文字数（255）を超えています。"));
 

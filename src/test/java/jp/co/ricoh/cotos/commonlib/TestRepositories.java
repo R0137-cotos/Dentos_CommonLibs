@@ -86,7 +86,7 @@ public class TestRepositories {
 
 		// リポジトリ作成
 		JwtSysAuthMasterRepository repository = context.getBean(JwtSysAuthMasterRepository.class);
-		JwtSysAuthMaster found = repository.findBySystemIdAndPassword("cotos_test", "cotosmightyoubehappy");
+		JwtSysAuthMaster found = repository.findByAppIdAndPassword("cotos_test", "cotosmightyoubehappy");
 		Assert.assertNotNull(found);
 
 		// 永続化コンテキストから除外
@@ -95,12 +95,12 @@ public class TestRepositories {
 		String newId = "test";
 
 		// 新規データ登録
-		found.setSystemId(newId);
+		found.setAppId(newId);
 		repository.save(found);
 
 		// 登録データを検索
 		JwtSysAuthMaster created = repository.findOne(newId);
-		Assert.assertEquals(newId, created.getSystemId());
+		Assert.assertEquals(newId, created.getAppId());
 	}
 
 	@Test

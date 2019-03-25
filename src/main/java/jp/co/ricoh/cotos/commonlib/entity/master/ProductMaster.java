@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -77,4 +78,10 @@ public class ProductMaster extends EntityBaseMaster {
 	@ApiModelProperty(value = "チェックリスト構成マスタ", required = false, position = 7)
 	private List<ContractChecklistCompMaster> contractChecklistCompMasterList;
 
+	/**
+	 * アプリケーションID
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "アプリケーションID", required = false, position = 8, allowableValues = "range[0,255]")
+	private String appId;
 }

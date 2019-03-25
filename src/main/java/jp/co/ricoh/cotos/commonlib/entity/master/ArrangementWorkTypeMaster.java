@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
@@ -68,4 +69,10 @@ public class ArrangementWorkTypeMaster extends EntityBaseMaster {
 	@ApiModelProperty(value = "手配チェックリスト構成マスタ", required = true, position = 6)
 	private List<ArrangementChecklistCompMaster> arrangementChecklistCompMasterList;
 
+	/**
+	 * アプリケーションID
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "アプリケーションID", required = false, position = 7, allowableValues = "range[0,255]")
+	private String appId;
 }

@@ -13,6 +13,8 @@ import jp.co.ricoh.cotos.commonlib.entity.contract.Contract;
 @Repository
 public interface ContractRepository extends CrudRepository<Contract, Long> {
 
+	public Contract findByIdAndAppId(Long id, String appId);
+
 	public List<Contract> findByContractNumber(String contractNumber);
 
 	public List<Contract> findByContractNumberAndContractBranchNumber(String contractNumber, int contractBranchNumber);

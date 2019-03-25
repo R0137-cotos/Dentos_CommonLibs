@@ -564,8 +564,9 @@ public class TestContract {
 		testTarget.setWebOrderNumber(STR_256);
 		testTarget.setRjManageNumber(STR_256);
 		testTarget.setCancelOrderNo(STR_256);
+		testTarget.setAppId(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 17);
+		Assert.assertTrue(result.getErrorInfoList().size() == 18);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "変更元契約番号は最大文字数（255）を超えています。"));
 
