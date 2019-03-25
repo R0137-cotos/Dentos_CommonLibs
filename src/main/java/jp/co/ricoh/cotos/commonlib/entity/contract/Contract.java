@@ -479,4 +479,11 @@ public class Contract extends EntityBase {
 	@OneToOne(mappedBy = "contract")
 	@ApiModelProperty(value = "契約保守担当SS組織(作成時不要)", required = false, position = 52, readOnly = true)
 	private ContractPicMntSsOrg contractPicMntSsOrg;
+
+	/**
+	 * システムID
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "システムID", required = false, position = 53, allowableValues = "range[0,255]")
+	private String systemId;
 }

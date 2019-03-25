@@ -128,8 +128,9 @@ public class TestCommunication {
 		testTarget.setProductGrpName(STR_256);
 		testTarget.setTitle(STR_256);
 		testTarget.setCommunicationComment(STR_256);
+		testTarget.setSystemId(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 11);
+		Assert.assertTrue(result.getErrorInfoList().size() == 12);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "対象文書キーは最大文字数（255）を超えています。"));
 
@@ -243,8 +244,9 @@ public class TestCommunication {
 		testTarget.setContactFromEmpId(STR_256);
 		testTarget.setTitle(STR_256);
 		testTarget.setContactFromEmpName(STR_256);
+		testTarget.setSystemId(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 3);
+		Assert.assertTrue(result.getErrorInfoList().size() == 4);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "送信者MoM社員IDは最大文字数（255）を超えています。"));
 

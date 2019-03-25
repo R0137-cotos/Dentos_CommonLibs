@@ -232,6 +232,13 @@ public class Communication extends EntityBase {
 	@ApiModelProperty(value = "被伝達者候補 (作成時不要)", required = false, position = 23, allowableValues = "range[0,255]", readOnly = true)
 	private String requestToCandidateName;
 
+	/**
+	 * システムID
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "システムID", required = false, position = 24, allowableValues = "range[0,255]")
+	private String systemId;
+
 	@PrePersist
 	public void prePersist() {
 		super.prePersist();

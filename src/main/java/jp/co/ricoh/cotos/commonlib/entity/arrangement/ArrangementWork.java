@@ -145,4 +145,11 @@ public class ArrangementWork extends EntityBase {
 	@ApiModelProperty(value = "手配業務チェック結果", required = false, position = 11)
 	private List<ArrangementWorkCheckResult> arrangementWorkCheckResultList;
 
+	/**
+	 * システムID
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "システムID", required = false, position = 12, allowableValues = "range[0,255]")
+	private String systemId;
+
 }

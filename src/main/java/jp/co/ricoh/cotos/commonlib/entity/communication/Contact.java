@@ -123,6 +123,13 @@ public class Contact extends EntityBase {
 	@ApiModelProperty(value = "宛先", required = true, position = 11)
 	private List<ContactTo> contactToList;
 
+	/**
+	 * システムID
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "システムID", required = false, position = 12, allowableValues = "range[0,255]")
+	private String systemId;
+
 	@PrePersist
 	public void prePersist() {
 		super.prePersist();

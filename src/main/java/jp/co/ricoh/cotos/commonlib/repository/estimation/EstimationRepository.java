@@ -10,6 +10,8 @@ import jp.co.ricoh.cotos.commonlib.entity.estimation.Estimation;
 @Repository
 public interface EstimationRepository extends CrudRepository<Estimation, Long> {
 
+	public Estimation findByIdAndSystemId(Long id, String systemId);
+
 	public List<Estimation> findByIdInOrderByEstimationNumber(List<Long> id);
 
 	public List<Estimation> findByOriginContractNumberInOrderByEstimationNumber(String originContractNumber);
