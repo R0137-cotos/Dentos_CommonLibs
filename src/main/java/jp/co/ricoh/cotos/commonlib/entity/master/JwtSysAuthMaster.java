@@ -20,8 +20,8 @@ import lombok.EqualsAndHashCode;
 public class JwtSysAuthMaster extends EntityBaseMaster {
 
 	@Id
-	@ApiModelProperty(value = "システムID", required = true, position = 1)
-	private String systemId;
+	@ApiModelProperty(value = "アプリケーションID", required = true, position = 1)
+	private String appId;
 
 	@Column(nullable = false)
 	@ApiModelProperty(value = "パスワード", required = true, position = 2)

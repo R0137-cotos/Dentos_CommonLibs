@@ -7,5 +7,5 @@ import jp.co.ricoh.cotos.commonlib.entity.master.JwtSysAuthMaster;
 
 @Repository
 public interface JwtSysAuthMasterRepository extends CrudRepository<JwtSysAuthMaster, String> {
-	public JwtSysAuthMaster findBySystemIdAndPassword(String systemId, String password);
+	public JwtSysAuthMaster findByAppIdAndPassword(String appId, String password);
 }

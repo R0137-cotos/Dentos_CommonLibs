@@ -128,7 +128,7 @@ public class TestCommunication {
 		testTarget.setProductGrpName(STR_256);
 		testTarget.setTitle(STR_256);
 		testTarget.setCommunicationComment(STR_256);
-		testTarget.setSystemId(STR_256);
+		testTarget.setAppId(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 12);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
@@ -244,7 +244,7 @@ public class TestCommunication {
 		testTarget.setContactFromEmpId(STR_256);
 		testTarget.setTitle(STR_256);
 		testTarget.setContactFromEmpName(STR_256);
-		testTarget.setSystemId(STR_256);
+		testTarget.setAppId(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 4);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));

@@ -9,5 +9,5 @@ import jp.co.ricoh.cotos.commonlib.entity.master.ArrangementWorkTypeMaster;
 
 @Repository
 public interface ArrangementWorkTypeMasterRepository extends CrudRepository<ArrangementWorkTypeMaster, Long> {
-	public List<ArrangementWorkTypeMaster> findBySystemIdOrderByIdAsc(String systemId);
+	public List<ArrangementWorkTypeMaster> findByAppIdOrderByIdAsc(String appId);
 }

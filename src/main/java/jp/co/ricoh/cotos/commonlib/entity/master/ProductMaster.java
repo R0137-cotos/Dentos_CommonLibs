@@ -79,9 +79,9 @@ public class ProductMaster extends EntityBaseMaster {
 	private List<ContractChecklistCompMaster> contractChecklistCompMasterList;
 
 	/**
-	 * システムID
+	 * アプリケーションID
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "システムID", required = false, position = 8, allowableValues = "range[0,255]")
-	private String systemId;
+	@ApiModelProperty(value = "アプリケーションID", required = false, position = 8, allowableValues = "range[0,255]")
+	private String appId;
 }

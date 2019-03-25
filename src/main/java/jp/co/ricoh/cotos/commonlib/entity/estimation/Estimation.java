@@ -485,11 +485,11 @@ public class Estimation extends EntityBase {
 	private List<ProductEstimation> productEstimationList;
 
 	/**
-	 * システムID
+	 * アプリケーションID
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "システムID", required = false, position = 53, allowableValues = "range[0,255]")
-	private String systemId;
+	@ApiModelProperty(value = "アプリケーションID", required = false, position = 53, allowableValues = "range[0,255]")
+	private String appId;
 
 	@PreUpdate
 	public void preUpdate() {

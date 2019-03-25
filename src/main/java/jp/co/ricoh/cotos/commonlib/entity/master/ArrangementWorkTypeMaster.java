@@ -70,9 +70,9 @@ public class ArrangementWorkTypeMaster extends EntityBaseMaster {
 	private List<ArrangementChecklistCompMaster> arrangementChecklistCompMasterList;
 
 	/**
-	 * システムID
+	 * アプリケーションID
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "システムID", required = false, position = 7, allowableValues = "range[0,255]")
-	private String systemId;
+	@ApiModelProperty(value = "アプリケーションID", required = false, position = 7, allowableValues = "range[0,255]")
+	private String appId;
 }

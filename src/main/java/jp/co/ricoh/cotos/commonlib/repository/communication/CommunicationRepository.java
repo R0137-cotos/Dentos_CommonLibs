@@ -15,6 +15,6 @@ import jp.co.ricoh.cotos.commonlib.entity.communication.Communication;
 public interface CommunicationRepository extends CrudRepository<Communication, Long> {
 	List<Communication> findByTargetDocKeyAndWorkflowTypeAndApprovalTargetType(String tartgetDocKey, WorkflowType workflowType, ApprovalTargetType approvalTargetType);
 
-	@Query(value = "FROM Communication WHERE process_category = :PROCESS_CATEGORY AND (request_to_id = :MOM_EMPLOYEE_ID OR request_to_candidate_id = :MOM_EMPLOYEE_ID) AND system_id = :SYSTEM_ID order by communicated_at")
-	public List<Communication> findByProcessCategoryAndLoginUserMomEmployeeIdAndSystemId(@Param("PROCESS_CATEGORY") String processCategory, @Param("MOM_EMPLOYEE_ID") String momEmployeeId, @Param("SYSTEM_ID") String systemId);
+	@Query(value = "FROM Communication WHERE process_category = :PROCESS_CATEGORY AND (request_to_id = :MOM_EMPLOYEE_ID OR request_to_candidate_id = :MOM_EMPLOYEE_ID) AND app_id = :APP_ID order by communicated_at")
+	public List<Communication> findByProcessCategoryAndLoginUserMomEmployeeIdAndAppId(@Param("PROCESS_CATEGORY") String processCategory, @Param("MOM_EMPLOYEE_ID") String momEmployeeId, @Param("APP_ID") String appId);
 }

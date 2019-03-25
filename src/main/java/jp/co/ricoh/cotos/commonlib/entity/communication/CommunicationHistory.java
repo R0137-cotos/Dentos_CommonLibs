@@ -231,11 +231,11 @@ public class CommunicationHistory extends EntityBase {
 	private String requestToCandidateName;
 
 	/**
-	 * システムID
+	 * アプリケーションID
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "システムID", required = false, position = 24, allowableValues = "range[0,255]")
-	private String systemId;
+	@ApiModelProperty(value = "アプリケーションID", required = false, position = 24, allowableValues = "range[0,255]")
+	private String appId;
 
 	@PrePersist
 	public void prePersist() {

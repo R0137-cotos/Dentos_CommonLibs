@@ -252,7 +252,7 @@ public class TestEstimation {
 		testTarget.setMainCompetitorName(STR_256);
 		testTarget.setCompetitionInfo(STR_256);
 		testTarget.setCompetitionContractDiv(STR_256);
-		testTarget.setSystemId(STR_256);
+		testTarget.setAppId(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 27);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));

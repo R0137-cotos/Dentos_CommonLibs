@@ -413,7 +413,7 @@ public class TestArrangement {
 		// 異常系（@Size(max) ：memo）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setMemo(STR_4001);
-		testTarget.setSystemId(STR_256);
+		testTarget.setAppId(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));

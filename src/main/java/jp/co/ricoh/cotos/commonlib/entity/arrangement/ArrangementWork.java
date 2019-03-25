@@ -146,10 +146,10 @@ public class ArrangementWork extends EntityBase {
 	private List<ArrangementWorkCheckResult> arrangementWorkCheckResultList;
 
 	/**
-	 * システムID
+	 * アプリケーションID
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "システムID", required = false, position = 12, allowableValues = "range[0,255]")
-	private String systemId;
+	@ApiModelProperty(value = "アプリケーションID", required = false, position = 12, allowableValues = "range[0,255]")
+	private String appId;
 
 }
