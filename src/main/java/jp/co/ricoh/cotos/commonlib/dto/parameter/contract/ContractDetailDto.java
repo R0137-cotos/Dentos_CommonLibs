@@ -1,9 +1,12 @@
 package jp.co.ricoh.cotos.commonlib.dto.parameter.contract;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import javax.persistence.Lob;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
@@ -15,6 +18,7 @@ import javax.validation.constraints.Size;
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.common.DtoBase;
 import jp.co.ricoh.cotos.commonlib.entity.EnumType.DetailStatus;
+import jp.co.ricoh.cotos.commonlib.entity.EnumType.InitialAccountSalesStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -60,9 +64,22 @@ public class ContractDetailDto extends DtoBase {
 	@Lob
 	private String extendsParameter;
 
+	/**
+	 * イニシャル売上計上処理状態
+	 */
+	@ApiModelProperty(value = "イニシャル売上計上処理状態", required = false, position = 8)
+	private InitialAccountSalesStatus initialAccountSalesStatus;
+
+	/**
+	 * イニシャル売上計上処理日
+	 */
+	@ApiModelProperty(value = "イニシャル売上計上処理日", required = false, position = 9)
+	@Temporal(TemporalType.DATE)
+	private Date initialAccountSalesDate;
+
 	@Valid
 	@NotNull
 	@OneToOne(mappedBy = "contractDetail")
-	@ApiModelProperty(value = "品種(契約用)", required = true, position = 8)
+	@ApiModelProperty(value = "品種(契約用)", required = true, position = 10)
 	private ItemContractDto itemContract;
 }

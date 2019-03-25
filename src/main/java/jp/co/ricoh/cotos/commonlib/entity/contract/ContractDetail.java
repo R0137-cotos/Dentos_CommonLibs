@@ -1,6 +1,7 @@
 package jp.co.ricoh.cotos.commonlib.entity.contract;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.Max;
@@ -25,6 +28,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import jp.co.ricoh.cotos.commonlib.entity.EnumType.DetailStatus;
+import jp.co.ricoh.cotos.commonlib.entity.EnumType.InitialAccountSalesStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -102,10 +106,23 @@ public class ContractDetail extends EntityBase {
 	private String extendsParameter;
 
 	/**
+	 * イニシャル売上計上処理状態
+	 */
+	@ApiModelProperty(value = "イニシャル売上計上処理状態", required = false, position = 9)
+	private InitialAccountSalesStatus initialAccountSalesStatus;
+
+	/**
+	 * イニシャル売上計上処理日
+	 */
+	@ApiModelProperty(value = "イニシャル売上計上処理日", required = false, position = 10)
+	@Temporal(TemporalType.DATE)
+	private Date initialAccountSalesDate;
+
+	/**
 	 * 品種(契約用)
 	 */
 	@Valid
 	@OneToOne(mappedBy = "contractDetail")
-	@ApiModelProperty(value = "品種(契約用)", required = false, position = 9)
+	@ApiModelProperty(value = "品種(契約用)", required = false, position = 11)
 	private ItemContract itemContract;
 }

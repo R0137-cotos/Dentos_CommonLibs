@@ -269,4 +269,29 @@ public class EnumType {
 		issue_format, commercial_flow_div, estimated_system_div, file_kind, cancel_reason, cost_type, sales_tax_rate, branch_custoemr_cd, process_category;
 
 	}
+
+	/**
+	 * イニシャル売上計上処理状態
+	 */
+	public enum InitialAccountSalesStatus {
+
+		未計上("0"), 計上済み("1"), 処理不要("2"), 処理不可("3");
+
+		private final String text;
+
+		private InitialAccountSalesStatus(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		@JsonValue
+		public String toString() {
+			return this.text;
+		}
+
+		@JsonCreator
+		public static InitialAccountSalesStatus fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+		}
+	}
 }
