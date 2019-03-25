@@ -1,6 +1,8 @@
 package jp.co.ricoh.cotos.commonlib.entity.contract;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.Max;
@@ -20,7 +24,9 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
@@ -36,6 +42,28 @@ import lombok.EqualsAndHashCode;
 @Data
 @Table(name = "contract_detail")
 public class ContractDetail extends EntityBase {
+
+	public enum InitialAccountSalesStatus {
+
+		未計上("0"), 計上済み("1"), 処理不要("2"), 処理不可("3");
+
+		private final String text;
+
+		private InitialAccountSalesStatus(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		@JsonValue
+		public String toString() {
+			return this.text;
+		}
+
+		@JsonCreator
+		public static InitialAccountSalesStatus fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+		}
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_detail_seq")
@@ -102,10 +130,23 @@ public class ContractDetail extends EntityBase {
 	private String extendsParameter;
 
 	/**
+	 * イニシャル売上計上処理状態
+	 */
+	@ApiModelProperty(value = "イニシャル売上計上処理状態", required = false, position = 9)
+	private InitialAccountSalesStatus initialAccountSalesStatus;
+
+	/**
+	 * イニシャル売上計上処理日
+	 */
+	@ApiModelProperty(value = "イニシャル売上計上処理日", required = false, position = 10)
+	@Temporal(TemporalType.DATE)
+	private Date initialAccountSalesDate;
+
+	/**
 	 * 品種(契約用)
 	 */
 	@Valid
 	@OneToOne(mappedBy = "contractDetail")
-	@ApiModelProperty(value = "品種(契約用)", required = false, position = 9)
+	@ApiModelProperty(value = "品種(契約用)", required = false, position = 11)
 	private ItemContract itemContract;
 }
