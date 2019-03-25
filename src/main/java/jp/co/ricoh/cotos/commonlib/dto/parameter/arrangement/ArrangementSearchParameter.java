@@ -114,6 +114,13 @@ public class ArrangementSearchParameter {
 	private String serviceIdentificationNumber;
 
 	/**
+	 * RJ管理番号
+	 */
+	@ApiParam(value = "RJ管理番号", required = false)
+	@ApiModelProperty(value = "RJ管理番号", required = false, allowableValues = "range[0,20]")
+	private String rjManageNumber;
+
+	/**
 	 * 見積書番号
 	 */
 	@ApiParam(value = "見積番号", required = false)
