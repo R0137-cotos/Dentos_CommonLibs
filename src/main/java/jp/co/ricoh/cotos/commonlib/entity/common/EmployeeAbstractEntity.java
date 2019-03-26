@@ -25,7 +25,7 @@ public class EmployeeAbstractEntity extends EntityBase {
 	 */
 	@NotNull
 	@Size(max = 255)
-	@ApiModelProperty(value = "MoM社員ID", required = true, position = 51, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "MoM社員ID<br/>※POST時「RJ社員情報マスタ」存在チェック実施", required = true, position = 51, allowableValues = "range[0,255]")
 	private String momEmployeeId;
 
 	/**
