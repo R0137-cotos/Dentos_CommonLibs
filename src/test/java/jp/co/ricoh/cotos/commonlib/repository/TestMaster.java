@@ -230,6 +230,7 @@ public class TestMaster {
 	public void AppMasterRepositoryのテスト() throws Exception {
 
 		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/systemMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/appMaster.sql");
 
 		String id = "cotos_test";

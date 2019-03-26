@@ -79,10 +79,11 @@ public class TestRepositories {
 	@Test
 	@WithMockCustomUser
 	@Transactional
-	public void JwtSysAuthMasterRepositoryのテスト() throws Exception {
+	public void AppMasterRepositoryのテスト() throws Exception {
 
 		// テストデータ登録
-		context.getBean(DBConfig.class).initTargetTestData("repository/jwtSysAuthMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/systemMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/appMaster.sql");
 
 		// リポジトリ作成
 		AppMasterRepository repository = context.getBean(AppMasterRepository.class);
