@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.swagger.util.ReflectionUtils;
 import jp.co.ricoh.cotos.commonlib.security.CotosAuthenticationDetails;
 import jp.co.ricoh.cotos.commonlib.security.mom.MomAuthorityService.AuthLevel;
 
@@ -35,13 +36,7 @@ public class CotosDisclosableMapCreator {
 		// 権限情報マップ
 		Map<String, Object> disclosableMap = new HashMap<>();
 
-		// スーパークラスの権限情報マップを取得
-		if (!clazz.getSuperclass().equals(Object.class)) {
-			Map<String, Object> superClassMap = this.create(clazz.getSuperclass());
-			disclosableMap.putAll(superClassMap);
-		}
-
-		for (Field field : clazz.getDeclaredFields()) {
+		for (Field field : ReflectionUtils.getDeclaredFields(clazz)) {
 
 			// trueなら表示可能
 			boolean disclosable = true;

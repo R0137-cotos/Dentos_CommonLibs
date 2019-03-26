@@ -3,21 +3,27 @@ package jp.co.ricoh.cotos.commonlib.entity.master;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
- * トークン発行権限マスタ
+ * アプリケーションマスタ
  */
 @Entity
 @Data
+@ToString(exclude = { "systemMaster" })
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "jwt_sys_auth_master")
-public class JwtSysAuthMaster extends EntityBaseMaster {
+@Table(name = "app_master")
+public class AppMaster extends EntityBaseMaster {
 
 	@Id
 	@ApiModelProperty(value = "アプリケーションID", required = true, position = 1)
@@ -30,4 +36,10 @@ public class JwtSysAuthMaster extends EntityBaseMaster {
 	@Column(nullable = false)
 	@ApiModelProperty(value = "オリジン", required = true, position = 3)
 	private String origin;
+
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "system_id", referencedColumnName = "systemId")
+	@ApiModelProperty(value = "システムマスタ", required = true, position = 2)
+	@JsonIgnore
+	private SystemMaster systemMaster;
 }

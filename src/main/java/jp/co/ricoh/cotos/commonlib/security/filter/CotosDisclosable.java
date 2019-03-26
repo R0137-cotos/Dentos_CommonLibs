@@ -11,7 +11,6 @@ import jp.co.ricoh.cotos.commonlib.security.mom.MomAuthorityService.AuthLevel;
 
 @Target({ ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
-
 public @interface CotosDisclosable {
 	ActionDiv momActionDiv();
 
