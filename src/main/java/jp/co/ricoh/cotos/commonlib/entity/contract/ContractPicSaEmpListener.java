@@ -6,6 +6,7 @@ import javax.persistence.PrePersist;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import jp.co.ricoh.cotos.commonlib.entity.master.MvEmployeeMaster;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorCheckException;
@@ -13,6 +14,7 @@ import jp.co.ricoh.cotos.commonlib.exception.ErrorInfo;
 import jp.co.ricoh.cotos.commonlib.logic.check.CheckUtil;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvEmployeeMasterRepository;
 
+@Component
 public class ContractPicSaEmpListener {
 	private static MvEmployeeMasterRepository mvEmployeeMasterRepository;
 	private static CheckUtil checkUtil;

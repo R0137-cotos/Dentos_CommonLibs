@@ -6,6 +6,7 @@ import javax.persistence.PrePersist;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import jp.co.ricoh.cotos.commonlib.entity.master.VKjbMaster;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorCheckException;
@@ -13,6 +14,7 @@ import jp.co.ricoh.cotos.commonlib.exception.ErrorInfo;
 import jp.co.ricoh.cotos.commonlib.logic.check.CheckUtil;
 import jp.co.ricoh.cotos.commonlib.repository.master.VKjbMasterRepository;
 
+@Component
 public class DealerContractListener {
 	private static VKjbMasterRepository vKjbMasterRepository;
 	private static CheckUtil checkUtil;
@@ -29,7 +31,7 @@ public class DealerContractListener {
 
 	@PrePersist
 	@Transactional
-	public void appendsCustomerEstimationFields(DealerContract dealerContract) {
+	public void appendsDealerContractFields(DealerContract dealerContract) {
 
 		VKjbMaster vKjbMaster = vKjbMasterRepository.findByMclMomRelId(dealerContract.getMomKjbSystemId());
 		if (vKjbMaster == null) {
