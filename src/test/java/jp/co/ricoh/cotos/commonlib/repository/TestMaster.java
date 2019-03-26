@@ -17,6 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import jp.co.ricoh.cotos.commonlib.DBConfig;
 import jp.co.ricoh.cotos.commonlib.TestTools;
+import jp.co.ricoh.cotos.commonlib.entity.master.AppMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.ApprovalRouteGrpMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.ApprovalRouteMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.ApprovalRouteNodeMaster;
@@ -32,7 +33,6 @@ import jp.co.ricoh.cotos.commonlib.entity.master.DispUrlAuthMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.EstimationChecklistCompMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.GpCheckMatterMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.ItemMaster;
-import jp.co.ricoh.cotos.commonlib.entity.master.JwtSysAuthMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.MailControlMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.MailConvertValueMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.MailTemplateMaster;
@@ -47,11 +47,13 @@ import jp.co.ricoh.cotos.commonlib.entity.master.ProductMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.RecordDecomposeCompMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.RecordDecomposeMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.SuperUserMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.SystemMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.Domain;
 import jp.co.ricoh.cotos.commonlib.entity.master.VKjbMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.VPicAffiliateMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.VPicAffiliateMasterFull;
+import jp.co.ricoh.cotos.commonlib.repository.master.AppMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ApprovalRouteGrpMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ApprovalRouteMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ApprovalRouteNodeMasterRepository;
@@ -67,7 +69,6 @@ import jp.co.ricoh.cotos.commonlib.repository.master.DispUrlAuthMasterRepository
 import jp.co.ricoh.cotos.commonlib.repository.master.EstimationChecklistCompMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.GpCheckMatterMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ItemMasterRepository;
-import jp.co.ricoh.cotos.commonlib.repository.master.JwtSysAuthMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MailControlMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MailConvertValueMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MailTemplateMasterRepository;
@@ -82,6 +83,7 @@ import jp.co.ricoh.cotos.commonlib.repository.master.ProductMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.RecordDecomposeCompMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.RecordDecomposeMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.SuperUserMasterRepository;
+import jp.co.ricoh.cotos.commonlib.repository.master.SystemMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.UrlAuthMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.VKjbMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.VPicAffiliateMasterFullRepository;
@@ -130,7 +132,9 @@ public class TestMaster {
 	@Autowired
 	private ItemMasterRepository itemMasterRepository;
 	@Autowired
-	private JwtSysAuthMasterRepository jwtSysAuthMasterRepository;
+	private SystemMasterRepository systemMasterRepository;
+	@Autowired
+	private AppMasterRepository appMasterRepository;
 	@Autowired
 	private MailTemplateMasterRepository mailTemplateMasterRepository;
 	@Autowired
@@ -207,13 +211,29 @@ public class TestMaster {
 	}
 
 	@Test
-	public void JwtSysAuthMasterRepositoryのテスト() throws Exception {
+	public void SystemMasterRepositoryのテスト() throws Exception {
 
 		// テストデータ登録
-		context.getBean(DBConfig.class).initTargetTestData("repository/master/jwtSysAuthMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/systemMaster.sql");
+
+		String id = "cotos";
+		SystemMaster found = systemMasterRepository.findOne(id);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		testTool.assertColumnsNotNull(found);
+	}
+
+	@Test
+	public void AppMasterRepositoryのテスト() throws Exception {
+
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/appMaster.sql");
 
 		String id = "cotos_test";
-		JwtSysAuthMaster found = jwtSysAuthMasterRepository.findOne(id);
+		AppMaster found = appMasterRepository.findOne(id);
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);

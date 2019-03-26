@@ -16,12 +16,12 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import jp.co.ricoh.cotos.commonlib.db.DBUtil;
+import jp.co.ricoh.cotos.commonlib.entity.master.AppMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.AuthPatternMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.DispUrlAuthMaster;
-import jp.co.ricoh.cotos.commonlib.entity.master.JwtSysAuthMaster;
+import jp.co.ricoh.cotos.commonlib.repository.master.AppMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.AuthPatternMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.DispUrlAuthMasterRepository;
-import jp.co.ricoh.cotos.commonlib.repository.master.JwtSysAuthMasterRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -85,8 +85,8 @@ public class TestRepositories {
 		context.getBean(DBConfig.class).initTargetTestData("repository/jwtSysAuthMaster.sql");
 
 		// リポジトリ作成
-		JwtSysAuthMasterRepository repository = context.getBean(JwtSysAuthMasterRepository.class);
-		JwtSysAuthMaster found = repository.findByAppIdAndPassword("cotos_test", "cotosmightyoubehappy");
+		AppMasterRepository repository = context.getBean(AppMasterRepository.class);
+		AppMaster found = repository.findByAppIdAndPassword("cotos_test", "cotosmightyoubehappy");
 		Assert.assertNotNull(found);
 
 		// 永続化コンテキストから除外
@@ -99,7 +99,7 @@ public class TestRepositories {
 		repository.save(found);
 
 		// 登録データを検索
-		JwtSysAuthMaster created = repository.findOne(newId);
+		AppMaster created = repository.findOne(newId);
 		Assert.assertEquals(newId, created.getAppId());
 	}
 
