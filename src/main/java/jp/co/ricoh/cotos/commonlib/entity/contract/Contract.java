@@ -309,7 +309,7 @@ public class Contract extends EntityBase {
 	 * 得意先コード
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "得意先コード", required = false, position = 29, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "得意先コード<br/>※POST時「MoM請求売上先サイト情報マスタ」存在チェック実施", required = false, position = 29, allowableValues = "range[0,255]")
 	private String billingCustomerSpCode;
 
 	/**
