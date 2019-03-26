@@ -1,6 +1,7 @@
 package jp.co.ricoh.cotos.commonlib.repository;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -947,5 +948,26 @@ public class TestMaster {
 		List<MailConvertValueMaster> result = mailConvertValueMasterRepository.findByMailControlMaster(found2);
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(result);
+	}
+
+	@Test
+	public void ProductMasterRepositoryの条件テスト() throws Exception {
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/productMaster.sql");
+		List<String> appId = Arrays.asList("electric");
+		List<ProductMaster> list = productMasterRepository.findByAppIdNotInOrderByIdAsc(appId);
+		Assert.assertNotEquals(0, list.size());
+	}
+
+	@Test
+	public void ArrangementWorkTypeMasterRepositoryの条件テスト() throws Exception {
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/arrangementWorkTypeMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/approvalRouteGrpMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/arrangementWorkCompMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/arrangementChecklistCompMaster.sql");
+		List<String> appId = Arrays.asList("electric");
+		List<ArrangementWorkTypeMaster> list = arrangementWorkTypeMasterRepository.findByAppIdNotInOrderByIdAsc(appId);
+		Assert.assertNotEquals(0, list.size());
 	}
 }
