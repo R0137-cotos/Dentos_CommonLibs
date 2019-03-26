@@ -1,5 +1,6 @@
 package jp.co.ricoh.cotos.commonlib.repository;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.AfterClass;
@@ -100,7 +101,7 @@ public class TestEstimation {
 
 	@Autowired
 	EstimationRepository estimationRepository;
-	
+
 	@Autowired
 	DBUtil dbutil;
 
@@ -303,7 +304,20 @@ public class TestEstimation {
 		testTool.assertColumnsNotNull(found);
 
 	}
-	
+
+	@Test
+	public void EstimationRepositoryの条件テスト() throws Exception {
+
+		List<String> appId = Arrays.asList("electric");
+		Estimation found = estimationRepository.findByIdAndAppIdNotIn(4L, appId);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		testTool.assertColumnsNotNull(found);
+	}
+
 	@Test
 	public void DBUtilのメソッドテスト() throws Exception {
 

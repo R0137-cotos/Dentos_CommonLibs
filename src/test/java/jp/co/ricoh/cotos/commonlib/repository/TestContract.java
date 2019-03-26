@@ -226,6 +226,22 @@ public class TestContract {
 		Assert.assertTrue(list.size() != 0);
 	}
 
+	@Test
+	public void ContractRepositoryの条件テスト() throws Exception {
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/attachedFile.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/contract.sql");
+
+		List<String> appId = Arrays.asList("electric");
+		Contract found = contractRepository.findByIdAndAppIdNotIn(4L, appId);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		testTools.assertColumnsNotNull(found);
+	}
+
 	@Transactional
 	private <T extends EntityBase, ID extends Serializable> void 全てのカラムがNullではないことを確認_共通(CrudRepository<T, ID> repository, @SuppressWarnings("unchecked") ID... ids) {
 		// テストデータ登録

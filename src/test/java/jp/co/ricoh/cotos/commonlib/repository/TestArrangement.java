@@ -20,6 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import jp.co.ricoh.cotos.commonlib.DBConfig;
 import jp.co.ricoh.cotos.commonlib.TestTools;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
+import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangementWork;
 import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangementWorkApprovalRoute;
 import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangementWorkApprovalRouteNode;
 import jp.co.ricoh.cotos.commonlib.repository.arrangement.ArrangementPicWorkerEmpRepository;
@@ -154,6 +155,22 @@ public class TestArrangement {
 
 		ArrangementWorkApprovalRouteNode found = arrangmentWorkApprovalRouteNodeRepository.findByArrangementWorkApprovalRouteIdAndApprovalOrderAndApproverEmpId(401L, 1, "00808347");
 		Assert.assertNotNull(found);
+	}
+
+	@Test
+	public void ArrangementWorkRepositoryの条件テスト() throws Exception {
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/attachedFile.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/arrangement.sql");
+
+		List<String> appId = Arrays.asList("electric");
+		ArrangementWork found = arrangementWorkRepository.findByIdAndAppIdNotIn(401L, appId);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		testTools.assertColumnsNotNull(found);
 	}
 
 	@Transactional

@@ -20,6 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import jp.co.ricoh.cotos.commonlib.DBConfig;
 import jp.co.ricoh.cotos.commonlib.TestTools;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
+import jp.co.ricoh.cotos.commonlib.entity.communication.Communication;
 import jp.co.ricoh.cotos.commonlib.entity.communication.Contact;
 import jp.co.ricoh.cotos.commonlib.repository.communication.CommunicationHistoryRepository;
 import jp.co.ricoh.cotos.commonlib.repository.communication.CommunicationRepository;
@@ -77,15 +78,31 @@ public class TestCommunication {
 	}
 
 	@Test
-	public void 親がいない場合には親がnullになることを確認_問い合わせ() {
+	public void CommunicationRepositoryの条件テスト() {
 		context.getBean(DBConfig.class).initTargetTestData("repository/communication.sql");
-		Contact child = contactRepository.findOne(4L);
-		Assert.assertNull(child.getParent());
+		List<String> appId = Arrays.asList("electric");
+		List<Communication> list = communicationRepository.findByProcessCategoryAndLoginUserMomEmployeeIdAndAppId("1", "dummy_request_to_id_1", appId);
+		Assert.assertNotEquals(0, list.size());
+	}
+
+	@Test
+	public void ContactRepositoryの条件テスト() {
+		context.getBean(DBConfig.class).initTargetTestData("repository/communication.sql");
+		List<String> appId = Arrays.asList("electric");
+		List<Contact> list = contactRepository.findByEstimationIdAndServiceCategoryAndParentIdIsNullAndAppIdOrderByIdDesc(4L, "1", appId);
+		Assert.assertNotEquals(0, list.size());
 	}
 
 	@Test
 	public void 全てのカラムがNullではないことを確認_問い合わせ宛先() {
 		全てのカラムがNullではないことを確認_共通(contactToRepository, 1L);
+	}
+
+	@Test
+	public void 親がいない場合には親がnullになることを確認_問い合わせ() {
+		context.getBean(DBConfig.class).initTargetTestData("repository/communication.sql");
+		Contact child = contactRepository.findOne(4L);
+		Assert.assertNull(child.getParent());
 	}
 
 	@Transactional
