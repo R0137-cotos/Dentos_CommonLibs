@@ -71,7 +71,7 @@ public class ArrangementWorkApprovalResult extends EntityBase {
 	@Column(nullable = false)
 	@NotNull
 	@Size(max = 255)
-	@ApiModelProperty(value = "処理実施者MoM社員ID", required = true, position = 5, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "処理実施者MoM社員ID<br/>※POST時「RJ社員情報マスタ」存在チェック実施", required = true, position = 5, allowableValues = "range[0,255]")
 	private String actualEmpId;
 
 	/**

@@ -70,7 +70,7 @@ public class ArrangementWorkOperationLog extends EntityBase {
 	 */
 	@NotNull
 	@Column(nullable = false)
-	@ApiModelProperty(value = "操作者MoM社員ID", required = true, position = 4)
+	@ApiModelProperty(value = "操作者MoM社員ID<br/>※POST時「RJ社員情報マスタ」存在チェック実施", required = true, position = 4)
 	private String operatorEmpId;
 
 	/**

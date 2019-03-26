@@ -47,7 +47,7 @@ public class ProductEstimation extends EntityBase {
 	 */
 	@Min(0)
 	@Column(nullable = false)
-	@ApiModelProperty(value = "商品マスタID", required = true, position = 2, allowableValues = "range[0,9223372036854775807]")
+	@ApiModelProperty(value = "商品マスタID<br/>※POST時「商品マスタ」存在チェック実施", required = true, position = 2, allowableValues = "range[0,9223372036854775807]")
 	private long productMasterId;
 
 	/**

@@ -108,7 +108,7 @@ public class Communication extends EntityBase {
 	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "依頼者 (作成時不要)<br />" //
-			+ "ワークフローの起点となったユーザーのMoM社員IDを設定", required = true, position = 8, allowableValues = "range[0,255]") //
+			+ "ワークフローの起点となったユーザーのMoM社員IDを設定<br/>※POST時「RJ社員情報マスタ」存在チェック実施", required = true, position = 8, allowableValues = "range[0,255]") //
 	private String requestOriginId;
 
 	/**
@@ -118,7 +118,7 @@ public class Communication extends EntityBase {
 	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "伝達者<br />" //
-			+ "ユーザー識別子としてMoM社員IDを設定", required = true, position = 9, allowableValues = "range[0,255]") //
+			+ "ユーザー識別子としてMoM社員IDを設定<br/>※POST時「RJ社員情報マスタ」存在チェック実施", required = true, position = 9, allowableValues = "range[0,255]") //
 	private String requestFromId;
 
 	/**
@@ -128,7 +128,7 @@ public class Communication extends EntityBase {
 	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "被伝達者<br />" //
-			+ "ユーザー識別子としてMoM社員IDを設定", required = true, position = 10, allowableValues = "range[0,255]") //
+			+ "ユーザー識別子としてMoM社員IDを設定<br/>※POST時「RJ社員情報マスタ」存在チェック実施", required = true, position = 10, allowableValues = "range[0,255]") //
 	private String requestToId;
 
 	/**
@@ -136,7 +136,7 @@ public class Communication extends EntityBase {
 	 */
 	@Size(max = 255)
 	@ApiModelProperty(value = "被伝達者候補<br />" //
-			+ "ユーザー識別子としてMoM社員IDを設定", required = false, position = 11, allowableValues = "range[0,255]") //
+			+ "ユーザー識別子としてMoM社員IDを設定<br/>※POST時「RJ社員情報マスタ」存在チェック実施", required = false, position = 11, allowableValues = "range[0,255]") //
 	private String requestToCandidateId;
 
 	/**

@@ -93,7 +93,7 @@ public class ArrangementWorkAttachedFile extends EntityBase {
 	 * 添付者MoM社員ID
 	 */
 	@Column(nullable = false)
-	@ApiModelProperty(value = "添付者MoM社員ID(作成時不要)", required = true, position = 7, allowableValues = "range[0,255]", readOnly = true)
+	@ApiModelProperty(value = "添付者MoM社員ID(作成時不要)<br/>※POST時「RJ社員情報マスタ」存在チェック実施", required = true, position = 7, allowableValues = "range[0,255]", readOnly = true)
 	private String attachedEmpId;
 
 	/**

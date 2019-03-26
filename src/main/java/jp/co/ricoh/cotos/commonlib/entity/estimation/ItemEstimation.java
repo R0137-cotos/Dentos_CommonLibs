@@ -74,7 +74,7 @@ public class ItemEstimation extends EntityBase {
 	 */
 	@NotNull
 	@Size(max = 255)
-	@ApiModelProperty(value = "リコー品種コード", required = true, position = 5, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "リコー品種コード<br/>※POST時「品種マスタ」存在チェック実施", required = true, position = 5, allowableValues = "range[0,255]")
 	private String ricohItemCode;
 
 	/**
