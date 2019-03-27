@@ -14,8 +14,10 @@ public @interface WithMockCustomUser {
 	String singleUserId() default "sid";
 
 	String origin() default "cotos.ricoh.co.jp";
-	
+
 	String applicationId() default "cotos_dev";
-	
+
+	boolean isSuperUser() default false;
+
 	String jwt() default "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcmlnaW4iOiJjb3Rvcy5yaWNvaC5jby5qcCIsInNpbmdsZVVzZXJJZCI6InNpZCIsIm1vbUVtcElkIjoibWlkIiwiZXhwIjoyNTM0MDIyNjgzOTksImFwcGxpY2F0aW9uSWQiOiJjb3Rvc19kZXYifQ.qJBFsMJFZcLdF7jWwEafZSOQfmL1EqPVDcRuz6WvsCI";
 }
