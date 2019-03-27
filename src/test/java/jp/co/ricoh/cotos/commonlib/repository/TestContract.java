@@ -240,6 +240,15 @@ public class TestContract {
 
 		// Entity の各項目の値が null ではないことを確認
 		testTools.assertColumnsNotNull(found);
+
+		appId = Arrays.asList("cotos_dev");
+		found = contractRepository.findByIdAndAppIdIn(4L, appId);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		testTools.assertColumnsNotNull(found);
 	}
 
 	@Transactional

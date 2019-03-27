@@ -83,7 +83,8 @@ public class TestCommunication {
 		List<String> appId = Arrays.asList("electric");
 		List<Communication> list = communicationRepository.findByProcessCategoryAndLoginUserMomEmployeeIdAndAppIdNotIn("1", "dummy_request_to_id_1", appId);
 		Assert.assertNotEquals(0, list.size());
-		list = communicationRepository.findByProcessCategoryAndLoginUserMomEmployeeIdAndAppId("1", "dummy_request_to_id_1", "cotos_dev");
+		appId = Arrays.asList("cotos_dev");
+		list = communicationRepository.findByProcessCategoryAndLoginUserMomEmployeeIdAndAppIdIn("1", "dummy_request_to_id_1", appId);
 		Assert.assertNotEquals(0, list.size());
 	}
 
@@ -93,7 +94,8 @@ public class TestCommunication {
 		List<String> appId = Arrays.asList("electric");
 		List<Contact> list = contactRepository.findByEstimationIdAndServiceCategoryAndParentIdIsNullAndAppIdNotInOrderByIdDesc(4L, "1", appId);
 		Assert.assertNotEquals(0, list.size());
-		list = contactRepository.findByEstimationIdAndServiceCategoryAndParentIdIsNullAndAppIdOrderByIdDesc(4L, "1", "cotos_dev");
+		appId = Arrays.asList("cotos_dev");
+		list = contactRepository.findByEstimationIdAndServiceCategoryAndParentIdIsNullAndAppIdInOrderByIdDesc(4L, "1", appId);
 		Assert.assertNotEquals(0, list.size());
 	}
 
