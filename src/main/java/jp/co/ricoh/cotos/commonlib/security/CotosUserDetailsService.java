@@ -1,5 +1,6 @@
 package jp.co.ricoh.cotos.commonlib.security;
 
+import java.util.Arrays;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -20,6 +21,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.ActionDiv;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.AuthDiv;
 import jp.co.ricoh.cotos.commonlib.logic.message.MessageUtil;
+import jp.co.ricoh.cotos.commonlib.repository.master.SuperUserMasterRepository;
 import jp.co.ricoh.cotos.commonlib.security.mom.MomAuthorityService;
 import jp.co.ricoh.cotos.commonlib.security.mom.MomAuthorityService.AuthLevel;
 import jp.co.ricoh.cotos.commonlib.util.ClaimsProperties;
@@ -42,6 +44,9 @@ public class CotosUserDetailsService implements AuthenticationUserDetailsService
 
 	@Autowired
 	MessageUtil messageUtil;
+
+	@Autowired
+	SuperUserMasterRepository superUserMasterRepository;
 
 	@Override
 	public UserDetails loadUserDetails(PreAuthenticatedAuthenticationToken token) throws UsernameNotFoundException {
@@ -80,19 +85,18 @@ public class CotosUserDetailsService implements AuthenticationUserDetailsService
 			JWTVerifier verifier = JWT.require(algorithm).build();
 			DecodedJWT jwt = verifier.verify(jwtString);
 
+			// スーパーユーザーか判定
+			boolean isSuperUser = superUserMasterRepository.existsByUserId(jwt.getClaim(claimsProperties.getMomEmpId()).asString());
 			// シングルユーザーIDに紐づく権限情報を取得
 			Map<ActionDiv, Map<AuthDiv, AuthLevel>> momAuthorities = momAuthorityService.searchAllMomAuthorities(jwt.getClaim(claimsProperties.getSingleUserId()).asString());
 
-			// TODO: ダミーユーザーの場合を考慮
-			// // MoM権限情報が存在しない場合は、エラー
-			// if (momAuthorities == null) {
-			// log.error(messageUtil.createMessageInfo("NoMomAuthoritiesError",
-			// Arrays.asList(jwt.getClaim(claimsProperties.getSingleUserId()).asString()).toArray(new
-			// String[0])).getMsg());
-			// throw new Exception();
-			// }
+			// 一般ユーザーで、MoM権限ユーザーが取得できない場合はエラー
+			if (!isSuperUser && momAuthorities == null) {
+				log.error(messageUtil.createMessageInfo("NoMomAuthoritiesError", Arrays.asList(jwt.getClaim(claimsProperties.getSingleUserId()).asString()).toArray(new String[0])).getMsg());
+				throw new Exception();
+			}
 
-			return new CotosAuthenticationDetails(jwt.getClaim(claimsProperties.getMomEmpId()).asString(), jwt.getClaim(claimsProperties.getSingleUserId()).asString(), jwt.getClaim(claimsProperties.getOrigin()).asString(), jwt.getClaim(claimsProperties.getApplicationId()).asString(), jwtString, momAuthorities);
+			return new CotosAuthenticationDetails(jwt.getClaim(claimsProperties.getMomEmpId()).asString(), jwt.getClaim(claimsProperties.getSingleUserId()).asString(), jwt.getClaim(claimsProperties.getOrigin()).asString(), jwt.getClaim(claimsProperties.getApplicationId()).asString(), jwtString, isSuperUser, momAuthorities);
 		}
 
 		return null;

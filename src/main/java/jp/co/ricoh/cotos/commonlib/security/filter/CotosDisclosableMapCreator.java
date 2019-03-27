@@ -48,16 +48,19 @@ public class CotosDisclosableMapCreator {
 			if (ignoreAnnotation != null)
 				continue;
 
-			// アノテーション取得
-			CotosDisclosable cotosDiscosableAnnotation = field.getAnnotation(CotosDisclosable.class);
+			// スーパーユーザーであれば、非表示制御は不要
+			if (!userInfo.isSuperUser()) {
+				// アノテーション取得
+				CotosDisclosable cotosDiscosableAnnotation = field.getAnnotation(CotosDisclosable.class);
 
-			// CotosDisclosableが指定されている場合、権限チェックを行う
-			if (cotosDiscosableAnnotation != null) {
-				// アノテーションに対応するユーザーのMoM権限を取得
-				AuthLevel userAuthLevel = userInfo.getMomAuthorities().get(cotosDiscosableAnnotation.momActionDiv()).get(cotosDiscosableAnnotation.momAuthInfoId());
+				// CotosDisclosableが指定されている場合、権限チェックを行う
+				if (cotosDiscosableAnnotation != null) {
+					// アノテーションに対応するユーザーのMoM権限を取得
+					AuthLevel userAuthLevel = userInfo.getMomAuthorities().get(cotosDiscosableAnnotation.momActionDiv()).get(cotosDiscosableAnnotation.momAuthInfoId());
 
-				// アノテーションに指定されたMoM権限レベル以上であれば、表示可能
-				disclosable = Integer.compare(Integer.valueOf(userAuthLevel.toValue()), Integer.valueOf(cotosDiscosableAnnotation.momAuthLevel().toValue())) >= 0;
+					// アノテーションに指定されたMoM権限レベル以上であれば、表示可能
+					disclosable = Integer.compare(Integer.valueOf(userAuthLevel.toValue()), Integer.valueOf(cotosDiscosableAnnotation.momAuthLevel().toValue())) >= 0;
+				}
 			}
 
 			// フィールドの型により、処理変更

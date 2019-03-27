@@ -20,22 +20,27 @@ public class CotosDisclosableFilter extends SimpleBeanPropertyFilter {
 		// ログインユーザーの認証情報を取得
 		CotosAuthenticationDetails userInfo = (CotosAuthenticationDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-		// シリアライズ対象のクラスを取得
-		Class<?> clazz = jgen.getOutputContext().getCurrentValue().getClass();
-
-		// シリアライズ対象のフィールドを特定し、フィルタリング対象のアノテーションを特定
-		CotosDisclosable targetFilterAnnotation = clazz.getDeclaredField(writer.getName()).getAnnotation(CotosDisclosable.class);
-
-		// フィルタリング対象のアノテーションが存在しなければ、シリアライズ処理を実施
-		if (targetFilterAnnotation == null) {
+		// スーパーユーザーならシリアライズ処理を実施
+		if (userInfo.isSuperUser()) {
 			super.serializeAsField(pojo, jgen, provider, writer);
 		} else {
-			// アノテーションに対応するユーザーのMoM権限を取得
-			AuthLevel userAuthLevel = userInfo.getMomAuthorities().get(targetFilterAnnotation.momActionDiv()).get(targetFilterAnnotation.momAuthInfoId());
+			// シリアライズ対象のクラスを取得
+			Class<?> clazz = jgen.getOutputContext().getCurrentValue().getClass();
 
-			// アノテーションに指定されたMoM権限レベル以上であれば、シリアライズ処理を実施
-			if (Integer.compare(Integer.valueOf(userAuthLevel.toValue()), Integer.valueOf(targetFilterAnnotation.momAuthLevel().toValue())) >= 0) {
+			// シリアライズ対象のフィールドを特定し、フィルタリング対象のアノテーションを特定
+			CotosDisclosable targetFilterAnnotation = clazz.getDeclaredField(writer.getName()).getAnnotation(CotosDisclosable.class);
+
+			// フィルタリング対象のアノテーションが存在しなければ、シリアライズ処理を実施
+			if (targetFilterAnnotation == null) {
 				super.serializeAsField(pojo, jgen, provider, writer);
+			} else {
+				// アノテーションに対応するユーザーのMoM権限を取得
+				AuthLevel userAuthLevel = userInfo.getMomAuthorities().get(targetFilterAnnotation.momActionDiv()).get(targetFilterAnnotation.momAuthInfoId());
+
+				// アノテーションに指定されたMoM権限レベル以上であれば、シリアライズ処理を実施
+				if (Integer.compare(Integer.valueOf(userAuthLevel.toValue()), Integer.valueOf(targetFilterAnnotation.momAuthLevel().toValue())) >= 0) {
+					super.serializeAsField(pojo, jgen, provider, writer);
+				}
 			}
 		}
 	}

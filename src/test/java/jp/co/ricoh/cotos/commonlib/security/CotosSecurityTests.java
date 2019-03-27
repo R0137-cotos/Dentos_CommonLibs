@@ -3,7 +3,9 @@ package jp.co.ricoh.cotos.commonlib.security;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -52,6 +54,8 @@ import lombok.val;
 public class CotosSecurityTests {
 
 	private static final String WITHIN_PERIOD_JWT = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcmlnaW4iOiJjb3Rvcy5yaWNvaC5jby5qcCIsInNpbmdsZVVzZXJJZCI6InNpZCIsIm1vbUVtcElkIjoibWlkIiwiZXhwIjoyNTM0MDIyNjgzOTksImFwcGxpY2F0aW9uSWQiOiJjb3Rvc19kZXYifQ.qJBFsMJFZcLdF7jWwEafZSOQfmL1EqPVDcRuz6WvsCI";
+
+	private static final String WITHIN_PERIOD_JWT_SUPER_USER = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcmlnaW4iOiJjb3Rvcy5yaWNvaC5jby5qcCIsInNpbmdsZVVzZXJJZCI6InNpZCIsIm1vbUVtcElkIjoiTU9NX0VNUExPWUVFX0lEIiwiZXhwIjoyNTM0MDIyNjgzOTksImFwcGxpY2F0aW9uSWQiOiJjb3Rvc19kZXYifQ.8INJ9gALA3thQ6iwvveYRmGIbZdZAvl2uZBXR8dqblk";
 
 	private static final String WITHOUT_PERIOD_JWT = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcmlnaW4iOiJjb3Rvcy5yaWNvaC5jby5qcCIsInNpbmdsZVVzZXJJZCI6InNpZCIsIm1vbUVtcElkIjoibWlkIiwiZXhwIjoxNTM5NTY5MDQsImFwcGxpY2F0aW9uSWQiOiJjb3Rvc19kZXYifQ.NO_r4hID2vt3_fJWa4Mwmk1tKvZe5ndCwHF17wkv1Bo";
 
@@ -121,11 +125,25 @@ public class CotosSecurityTests {
 
 	@Test
 	@Transactional
-	public void 認証_トークンあり_オリジンなし_正常() throws Exception {
+	public void 認証_トークンあり_オリジンなし_正常_通常ユーザー() throws Exception {
+
+		// MoM権限マップをMockにより差し替え
+		Mockito.doReturn(new HashMap<ActionDiv, Map<AuthDiv, AuthLevel>>()).when(momAuthorityService).searchAllMomAuthorities(Mockito.anyString());
+
 		RestTemplate rest = initRest(WITHIN_PERIOD_JWT);
 		ResponseEntity<String> response = rest.getForEntity(loadTopURL() + "test/api/test/1?isSuccess=true&hasBody=false", String.class);
 		Assert.assertEquals("正常終了", 200, response.getStatusCodeValue());
-		Assert.assertEquals("正常終了", "sid,mid,cotos.ricoh.co.jp,cotos_dev," + WITHIN_PERIOD_JWT, response.getBody());
+		Assert.assertEquals("正常終了", "sid,mid,cotos.ricoh.co.jp,cotos_dev," + WITHIN_PERIOD_JWT + ",false,true", response.getBody());
+	}
+
+	@Test
+	@Transactional
+	public void 認証_トークンあり_オリジンなし_正常_スーパーユーザー() throws Exception {
+
+		RestTemplate rest = initRest(WITHIN_PERIOD_JWT_SUPER_USER);
+		ResponseEntity<String> response = rest.getForEntity(loadTopURL() + "test/api/test/1?isSuccess=true&hasBody=false", String.class);
+		Assert.assertEquals("正常終了", 200, response.getStatusCodeValue());
+		Assert.assertEquals("正常終了", "sid,MOM_EMPLOYEE_ID,cotos.ricoh.co.jp,cotos_dev," + WITHIN_PERIOD_JWT_SUPER_USER + ",true,false", response.getBody());
 	}
 
 	@Test
@@ -154,16 +172,36 @@ public class CotosSecurityTests {
 
 	@Test
 	@Transactional
+	public void 認証_トークンあり_異常_MoM権限無し() throws Exception {
+		RestTemplate rest = initRest(WITHIN_PERIOD_JWT);
+		try {
+			rest.getForEntity(loadTopURL() + "test/api/test/1?isSuccess=true&hasBody=false", String.class);
+			Assert.fail("正常終了");
+		} catch (HttpClientErrorException e) {
+			Assert.assertEquals("アクセス不可であること", 401, e.getStatusCode().value());
+		}
+	}
+
+	@Test
+	@Transactional
 	public void 認可_許可_GET() throws Exception {
+
+		// MoM権限マップをMockにより差し替え
+		Mockito.doReturn(new HashMap<ActionDiv, Map<AuthDiv, AuthLevel>>()).when(momAuthorityService).searchAllMomAuthorities(Mockito.anyString());
+
 		RestTemplate rest = initRest(WITHIN_PERIOD_JWT);
 		ResponseEntity<String> response = rest.getForEntity(loadTopURL() + "test/api/test/1?isSuccess=true&hasBody=false", String.class);
 		Assert.assertEquals("正常終了", 200, response.getStatusCodeValue());
-		Assert.assertEquals("正常終了", "sid,mid,cotos.ricoh.co.jp,cotos_dev," + WITHIN_PERIOD_JWT, response.getBody());
+		Assert.assertEquals("正常終了", "sid,mid,cotos.ricoh.co.jp,cotos_dev," + WITHIN_PERIOD_JWT + ",false,true", response.getBody());
 	}
 
 	@Test
 	@Transactional
 	public void 認可_拒否_GET() throws Exception {
+
+		// MoM権限マップをMockにより差し替え
+		Mockito.doReturn(new HashMap<ActionDiv, Map<AuthDiv, AuthLevel>>()).when(momAuthorityService).searchAllMomAuthorities(Mockito.anyString());
+
 		RestTemplate rest = initRest(WITHIN_PERIOD_JWT);
 		try {
 			rest.getForEntity(loadTopURL() + "test/api/test/1?isSuccess=false&hasBody=false", String.class);
@@ -176,6 +214,10 @@ public class CotosSecurityTests {
 	@Test
 	@Transactional
 	public void 認可_許可_POST() throws Exception {
+
+		// MoM権限マップをMockにより差し替え
+		Mockito.doReturn(new HashMap<ActionDiv, Map<AuthDiv, AuthLevel>>()).when(momAuthorityService).searchAllMomAuthorities(Mockito.anyString());
+
 		RestTemplate rest = initRest(WITHIN_PERIOD_JWT);
 
 		TestEntity entity = new TestEntity();
@@ -183,12 +225,16 @@ public class CotosSecurityTests {
 
 		ResponseEntity<String> response = rest.postForEntity(loadTopURL() + "test/api/test?isSuccess=true&hasBody=true", entity, String.class);
 		Assert.assertEquals("正常終了", 200, response.getStatusCodeValue());
-		Assert.assertEquals("正常終了", "sid,mid,cotos.ricoh.co.jp,cotos_dev," + WITHIN_PERIOD_JWT, response.getBody());
+		Assert.assertEquals("正常終了", "sid,mid,cotos.ricoh.co.jp,cotos_dev," + WITHIN_PERIOD_JWT + ",false,true", response.getBody());
 	}
 
 	@Test
 	@Transactional
 	public void 認可_拒否_POST() throws Exception {
+
+		// MoM権限マップをMockにより差し替え
+		Mockito.doReturn(new HashMap<ActionDiv, Map<AuthDiv, AuthLevel>>()).when(momAuthorityService).searchAllMomAuthorities(Mockito.anyString());
+
 		RestTemplate rest = initRest(WITHIN_PERIOD_JWT);
 		TestEntity entity = new TestEntity();
 		entity.setTest("test");
@@ -551,6 +597,22 @@ public class CotosSecurityTests {
 
 		AuthLevel result = momAuthorityService.searchMomAuthority("u0200757", ActionDiv.更新, AuthDiv.見積_契約_手配);
 		Assert.assertEquals("正常にMoM権限情報を取得できること", AuthLevel.自社, result);
+	}
+
+	@Test
+	@Transactional
+	public void 正常_MoM権限マップを取得できること() throws Exception {
+
+		Map<ActionDiv, Map<AuthDiv, AuthLevel>> result = momAuthorityService.searchAllMomAuthorities("u0200757");
+		Assert.assertNotNull("正常にMoM権限マップを取得できること", result);
+	}
+	
+	@Test
+	@Transactional
+	public void 正常_MoM権限マップを取得できないこと() throws Exception {
+
+		Map<ActionDiv, Map<AuthDiv, AuthLevel>> result = momAuthorityService.searchAllMomAuthorities("test");
+		Assert.assertNull("正常にMoM権限マップを取得できないこと", result);
 	}
 
 	@Test

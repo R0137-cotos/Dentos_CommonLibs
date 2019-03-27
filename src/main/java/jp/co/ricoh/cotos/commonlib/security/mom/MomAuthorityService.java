@@ -29,6 +29,7 @@ import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.ActionDiv;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.AuthDiv;
 import jp.co.ricoh.cotos.commonlib.entity.master.VKjbMaster;
 import jp.co.ricoh.cotos.commonlib.logic.message.MessageUtil;
+import jp.co.ricoh.cotos.commonlib.repository.master.SuperUserMasterRepository;
 import jp.co.ricoh.cotos.commonlib.util.DatasourceProperties;
 import jp.co.ricoh.cotos.commonlib.util.RemoteMomProperties;
 import jp.co.ricoh.jmo.cache.AuthoritySearch;
@@ -56,6 +57,9 @@ public class MomAuthorityService {
 
 	@Autowired
 	DBUtil dbUtil;
+
+	@Autowired
+	SuperUserMasterRepository superUserMasterRepository;
 
 	public enum AuthLevel {
 		不可("00"), 自顧客("10"), 配下("30"), 自社("50"), 地域("70"), 東西("80"), すべて("90");
