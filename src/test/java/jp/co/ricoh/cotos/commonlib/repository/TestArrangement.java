@@ -171,6 +171,15 @@ public class TestArrangement {
 
 		// Entity の各項目の値が null ではないことを確認
 		testTools.assertColumnsNotNull(found);
+
+		appId = Arrays.asList("cotos_dev");
+		found = arrangementWorkRepository.findByIdAndAppIdIn(401L, appId);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		testTools.assertColumnsNotNull(found);
 	}
 
 	@Transactional

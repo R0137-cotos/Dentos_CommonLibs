@@ -9,5 +9,7 @@ import jp.co.ricoh.cotos.commonlib.entity.master.ProductMaster;
 
 @Repository
 public interface ProductMasterRepository extends CrudRepository<ProductMaster, Long> {
+	public List<ProductMaster> findByAppIdInOrderByIdAsc(List<String> appId);
+
 	public List<ProductMaster> findByAppIdNotInOrderByIdAsc(List<String> appId);
 }

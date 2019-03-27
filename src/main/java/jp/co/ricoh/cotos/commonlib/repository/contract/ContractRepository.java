@@ -12,6 +12,8 @@ import jp.co.ricoh.cotos.commonlib.entity.contract.Contract;
 
 @Repository
 public interface ContractRepository extends CrudRepository<Contract, Long> {
+	
+	public Contract findByIdAndAppIdIn(Long id, List<String> appId);
 
 	public Contract findByIdAndAppIdNotIn(Long id, List<String> appId);
 
