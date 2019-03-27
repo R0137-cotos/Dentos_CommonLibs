@@ -81,7 +81,9 @@ public class TestCommunication {
 	public void CommunicationRepositoryの条件テスト() {
 		context.getBean(DBConfig.class).initTargetTestData("repository/communication.sql");
 		List<String> appId = Arrays.asList("electric");
-		List<Communication> list = communicationRepository.findByProcessCategoryAndLoginUserMomEmployeeIdAndAppId("1", "dummy_request_to_id_1", appId);
+		List<Communication> list = communicationRepository.findByProcessCategoryAndLoginUserMomEmployeeIdAndAppIdNotIn("1", "dummy_request_to_id_1", appId);
+		Assert.assertNotEquals(0, list.size());
+		list = communicationRepository.findByProcessCategoryAndLoginUserMomEmployeeIdAndAppId("1", "dummy_request_to_id_1", "cotos_dev");
 		Assert.assertNotEquals(0, list.size());
 	}
 
@@ -89,7 +91,9 @@ public class TestCommunication {
 	public void ContactRepositoryの条件テスト() {
 		context.getBean(DBConfig.class).initTargetTestData("repository/communication.sql");
 		List<String> appId = Arrays.asList("electric");
-		List<Contact> list = contactRepository.findByEstimationIdAndServiceCategoryAndParentIdIsNullAndAppIdOrderByIdDesc(4L, "1", appId);
+		List<Contact> list = contactRepository.findByEstimationIdAndServiceCategoryAndParentIdIsNullAndAppIdNotInOrderByIdDesc(4L, "1", appId);
+		Assert.assertNotEquals(0, list.size());
+		list = contactRepository.findByEstimationIdAndServiceCategoryAndParentIdIsNullAndAppIdOrderByIdDesc(4L, "1", "cotos_dev");
 		Assert.assertNotEquals(0, list.size());
 	}
 
