@@ -3,6 +3,7 @@ package jp.co.ricoh.cotos.commonlib.dto.parameter.arrangement;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EnumType;
@@ -378,11 +379,18 @@ public class ArrangementSearchParameter {
 	private SortOrder sortOrder;
 
 	/**
-	 * アプリケーションID
+	 * アプリケーションIDリスト
 	 */
-	@ApiParam(value = "アプリケーションID", required = true)
-	@ApiModelProperty(value = "アプリケーションID", required = true)
-	private String appId;
+	@ApiParam(value = "アプリケーションIDリスト", required = true)
+	@ApiModelProperty(value = "アプリケーションIDリスト", required = true)
+	private List<String> appId;
+
+	/**
+	 * 他システムデータ排他フラグ
+	 */
+	@ApiParam(value = "他システムデータ排他フラグ", required = true)
+	@ApiModelProperty(value = "他システムデータ排他フラグ", required = true)
+	private int otherSysDataExcludeFlg;
 
 	/**
 	 * パラメータをMapにする。
