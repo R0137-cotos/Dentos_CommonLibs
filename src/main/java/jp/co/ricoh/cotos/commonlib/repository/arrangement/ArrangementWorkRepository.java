@@ -9,5 +9,7 @@ import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangementWork;
 
 @Repository
 public interface ArrangementWorkRepository extends CrudRepository<ArrangementWork, Long> {
+	public ArrangementWork findByIdAndAppId(Long id, String appId);
+
 	public ArrangementWork findByIdAndAppIdNotIn(Long id, List<String> appId);
 }
