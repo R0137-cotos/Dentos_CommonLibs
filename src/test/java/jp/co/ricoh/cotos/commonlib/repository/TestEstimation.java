@@ -316,6 +316,15 @@ public class TestEstimation {
 
 		// Entity の各項目の値が null ではないことを確認
 		testTool.assertColumnsNotNull(found);
+
+		appId = Arrays.asList("cotos_dev");
+		found = estimationRepository.findByIdAndAppIdIn(4L, appId);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		testTool.assertColumnsNotNull(found);
 	}
 
 	@Test

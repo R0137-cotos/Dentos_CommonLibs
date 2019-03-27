@@ -957,6 +957,9 @@ public class TestMaster {
 		List<String> appId = Arrays.asList("electric");
 		List<ProductMaster> list = productMasterRepository.findByAppIdNotInOrderByIdAsc(appId);
 		Assert.assertNotEquals(0, list.size());
+		appId = Arrays.asList("cotos_dev");
+		list = productMasterRepository.findByAppIdInOrderByIdAsc(appId);
+		Assert.assertNotEquals(0, list.size());
 	}
 
 	@Test
@@ -968,6 +971,9 @@ public class TestMaster {
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/arrangementChecklistCompMaster.sql");
 		List<String> appId = Arrays.asList("electric");
 		List<ArrangementWorkTypeMaster> list = arrangementWorkTypeMasterRepository.findByAppIdNotInOrderByIdAsc(appId);
+		Assert.assertNotEquals(0, list.size());
+		appId = Arrays.asList("cotos_dev");
+		list = arrangementWorkTypeMasterRepository.findByAppIdInOrderByIdAsc(appId);
 		Assert.assertNotEquals(0, list.size());
 	}
 }
