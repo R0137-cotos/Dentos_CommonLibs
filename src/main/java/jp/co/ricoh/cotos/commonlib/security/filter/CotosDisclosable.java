@@ -14,7 +14,7 @@ import jp.co.ricoh.cotos.commonlib.security.mom.MomAuthorityService.AuthLevel;
 public @interface CotosDisclosable {
 	ActionDiv momActionDiv();
 
-	AuthDiv momAuthInfoId();
+	AuthDiv momAuthDiv();
 
 	AuthLevel momAuthLevel();
 }

@@ -35,7 +35,7 @@ public class CotosDisclosableFilter extends SimpleBeanPropertyFilter {
 				super.serializeAsField(pojo, jgen, provider, writer);
 			} else {
 				// アノテーションに対応するユーザーのMoM権限を取得
-				AuthLevel userAuthLevel = userInfo.getMomAuthorities().get(targetFilterAnnotation.momActionDiv()).get(targetFilterAnnotation.momAuthInfoId());
+				AuthLevel userAuthLevel = userInfo.getMomAuthorities().get(targetFilterAnnotation.momActionDiv()).get(targetFilterAnnotation.momAuthDiv());
 
 				// アノテーションに指定されたMoM権限レベル以上であれば、シリアライズ処理を実施
 				if (Integer.compare(Integer.valueOf(userAuthLevel.toValue()), Integer.valueOf(targetFilterAnnotation.momAuthLevel().toValue())) >= 0) {
