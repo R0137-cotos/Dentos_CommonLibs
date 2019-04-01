@@ -193,17 +193,23 @@ public class ItemMaster extends EntityBaseMaster {
 	private String taxFlag;
 
 	/**
+	 * IFS連携フラグ
+	 */
+	@ApiModelProperty(value = "IFS連携フラグ", required = true, position = 16, allowableValues = "range[0,9]")
+	private Integer ifsLinkageFlg;
+
+	/**
 	 * 計上分解構成マスタ
 	 */
 	@OneToMany(mappedBy = "itemMaster")
-	@ApiModelProperty(value = "計上分解構成マスタ", required = false, position = 16)
+	@ApiModelProperty(value = "計上分解構成マスタ", required = false, position = 17)
 	private List<RecordDecomposeCompMaster> recordDecomposeCompMasterList;
 
 	/**
 	 * 手配業務構成マスタ
 	 */
 	@OneToMany(mappedBy = "itemMaster")
-	@ApiModelProperty(value = "手配業務構成マスタ", required = false, position = 17)
+	@ApiModelProperty(value = "手配業務構成マスタ", required = false, position = 18)
 	private List<ArrangementWorkCompMaster> arrangementWorkCompMasterList;
 
 }

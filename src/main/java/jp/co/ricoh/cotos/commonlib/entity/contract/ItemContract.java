@@ -157,4 +157,10 @@ public class ItemContract extends EntityBase {
 	@ApiModelProperty(value = "消費税区分", required = false, position = 15, allowableValues = "range[0,255]")
 	private String taxFlag;
 
+	/**
+	 * IFS連携フラグ
+	 */
+	@ApiModelProperty(value = "IFS連携フラグ", required = true, position = 16, allowableValues = "range[0,9]")
+	private Integer ifsLinkageFlg;
+
 }
