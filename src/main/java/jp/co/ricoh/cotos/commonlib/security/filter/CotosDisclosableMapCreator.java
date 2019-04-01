@@ -56,7 +56,7 @@ public class CotosDisclosableMapCreator {
 				// CotosDisclosableが指定されている場合、権限チェックを行う
 				if (cotosDiscosableAnnotation != null) {
 					// アノテーションに対応するユーザーのMoM権限を取得
-					AuthLevel userAuthLevel = userInfo.getMomAuthorities().get(cotosDiscosableAnnotation.momActionDiv()).get(cotosDiscosableAnnotation.momAuthInfoId());
+					AuthLevel userAuthLevel = userInfo.getMomAuthorities().get(cotosDiscosableAnnotation.momActionDiv()).get(cotosDiscosableAnnotation.momAuthDiv());
 
 					// アノテーションに指定されたMoM権限レベル以上であれば、表示可能
 					disclosable = Integer.compare(Integer.valueOf(userAuthLevel.toValue()), Integer.valueOf(cotosDiscosableAnnotation.momAuthLevel().toValue())) >= 0;
