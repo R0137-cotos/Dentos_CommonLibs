@@ -603,7 +603,7 @@ public class CotosSecurityTests {
 	@Transactional
 	public void 正常_MoM権限マップを取得できること() throws Exception {
 
-		Map<ActionDiv, Map<AuthDiv, AuthLevel>> result = momAuthorityService.searchAllMomAuthorities("u60100086");
+		Map<ActionDiv, Map<AuthDiv, AuthLevel>> result = momAuthorityService.searchAllMomAuthorities("u0200757");
 		Assert.assertNotNull("正常にMoM権限マップを取得できること", result);
 	}
 	
