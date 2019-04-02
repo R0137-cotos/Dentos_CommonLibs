@@ -42,7 +42,7 @@ public class ArrangementWorkDto extends DtoBase {
 	 * ワークフロー状態
 	 */
 	@NotNull
-	@ApiModelProperty(value = "ワークフロー状態", required = true, allowableValues = "受付待ち(\"1\"), 作業中(\"2\"), 作業完了報告(\"3\"), 承認依頼中(\"4\"), 作業完了(\"5\")", example = "1", position = 5)
+	@ApiModelProperty(value = "ワークフロー状態", required = true, allowableValues = "受付待ち(\"1\"), 作業中(\"2\"), 作業完了報告(\"3\"), 承認依頼中(\"4\"), 作業完了(\"5\"), エラー(\"6\")", example = "1", position = 5)
 	private WorkflowStatus workflowStatus;
 
 	/**
