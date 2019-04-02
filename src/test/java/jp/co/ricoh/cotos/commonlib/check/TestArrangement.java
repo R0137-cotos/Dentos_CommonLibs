@@ -31,6 +31,7 @@ import jp.co.ricoh.cotos.commonlib.repository.arrangement.ArrangementWorkApprova
 import jp.co.ricoh.cotos.commonlib.repository.arrangement.ArrangementWorkApprovalRouteRepository;
 import jp.co.ricoh.cotos.commonlib.repository.arrangement.ArrangementWorkAttachedFileRepository;
 import jp.co.ricoh.cotos.commonlib.repository.arrangement.ArrangementWorkCheckResultRepository;
+import jp.co.ricoh.cotos.commonlib.repository.arrangement.ArrangementWorkErrorLogRepository;
 import jp.co.ricoh.cotos.commonlib.repository.arrangement.ArrangementWorkOperationLogRepository;
 import jp.co.ricoh.cotos.commonlib.repository.arrangement.ArrangementWorkRepository;
 import jp.co.ricoh.cotos.commonlib.security.TestSecurityController;
@@ -85,6 +86,9 @@ public class TestArrangement {
 
 	@Autowired
 	ArrangementWorkRepository arrangementWorkRepository;
+
+	@Autowired
+	ArrangementWorkErrorLogRepository arrangementWorkErrorLogRepository;
 
 	@Autowired
 	TestTools testTool;
