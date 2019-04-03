@@ -74,6 +74,7 @@ import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangementWorkApprovalRou
 import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangementWorkApprovalRouteNode;
 import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangementWorkAttachedFile;
 import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangementWorkCheckResult;
+import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangementWorkErrorLog;
 import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangementWorkOperationLog;
 import jp.co.ricoh.cotos.commonlib.entity.common.AttachedFile;
 import jp.co.ricoh.cotos.commonlib.entity.communication.Communication;
@@ -261,6 +262,11 @@ public class TestSecurityController {
 
 	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ArrangementWorkOperationLog")
 	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ArrangementWorkOperationLog entity, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ArrangementWorkErrorLog")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ArrangementWorkErrorLog entity, BindingResult result) {
 		return createParameterCheckResult(result);
 	}
 

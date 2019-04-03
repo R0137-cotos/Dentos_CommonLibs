@@ -32,9 +32,9 @@ public class ArrangementWorkErrorLog extends EntityBase {
 
 	@Size(max = 255)
 	@ApiModelProperty(value = "エラー内容", required = true, position = 2, allowableValues = "range[0,255]")
-	private String errorMassage;
+	private String errorMessage;
 
 	@ApiModelProperty(value = "エラー発生日時", required = true, position = 3, readOnly = true)
-	private Date errorOccuredAt;
+	private Date errorOccurredAt;
 
 }
