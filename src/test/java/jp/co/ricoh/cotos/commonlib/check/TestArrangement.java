@@ -459,6 +459,15 @@ public class TestArrangement {
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
 
+		// 異常系（@NotNullのnull チェック：）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setErrorMessage(null);
+		testTarget.setErrorOccurredAt(null);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "エラー内容が設定されていません。"));
+
 		// 異常系（@Size(max) ：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setErrorMessage(STR_256);

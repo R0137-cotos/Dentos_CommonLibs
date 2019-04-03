@@ -146,10 +146,17 @@ public class ArrangementWork extends EntityBase {
 	private List<ArrangementWorkCheckResult> arrangementWorkCheckResultList;
 
 	/**
+	 * 手配業務エラー履歴
+	 */
+	@OneToMany(mappedBy = "arrangementWork")
+	@ApiModelProperty(value = "手配業務エラー履歴", required = false, position = 12)
+	private List<ArrangementWorkErrorLog> arrangementWorkErrorLogList;
+
+	/**
 	 * アプリケーションID
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "アプリケーションID", required = false, position = 12, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "アプリケーションID", required = false, position = 13, allowableValues = "range[0,255]")
 	private String appId;
 
 }
