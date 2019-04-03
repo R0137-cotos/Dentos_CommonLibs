@@ -9,8 +9,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -48,9 +51,15 @@ public class ArrangementWorkErrorLog extends EntityBase {
 	@ApiModelProperty(value = "エラー内容", required = true, position = 3, allowableValues = "range[0,255]")
 	private String errorMessage;
 
-	@NotNull
 	@Column(nullable = false)
 	@ApiModelProperty(value = "エラー発生日時", required = true, position = 4, readOnly = true)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date errorOccurredAt;
+
+	@PrePersist
+	public void prePersist() {
+		super.prePersist();
+		this.errorOccurredAt = super.getCreatedAt();
+	}
 
 }

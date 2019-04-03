@@ -462,9 +462,8 @@ public class TestArrangement {
 		// 異常系（@NotNullのnull チェック：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setErrorMessage(null);
-		testTarget.setErrorOccurredAt(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "エラー内容が設定されていません。"));
 

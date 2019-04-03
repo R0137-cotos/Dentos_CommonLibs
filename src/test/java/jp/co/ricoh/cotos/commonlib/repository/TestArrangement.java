@@ -142,6 +142,7 @@ public class TestArrangement {
 		全てのカラムがNullではないことを確認_共通(arrangementPicWorkerEmpRepository, 401L, 501L);
 	}
 
+	@Test
 	public void 全てのカラムがNullではないことを確認_手配業務エラー履歴() {
 		全てのカラムがNullではないことを確認_共通(arrangementWorkErrorLogRepository, 401L, 501L);
 	}
