@@ -14,6 +14,9 @@ import jp.co.ricoh.cotos.commonlib.security.mom.MomAuthorityService.AuthLevel;
 @Component
 public class CotosDisclosableFilter extends SimpleBeanPropertyFilter {
 
+	/** フィルター名 */
+	public static final String FILTER_NAME = "cotosDisclosableFilter";
+
 	@Override
 	public void serializeAsField(Object pojo, JsonGenerator jgen, SerializerProvider provider, PropertyWriter writer) throws Exception {
 
