@@ -50,6 +50,9 @@ import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.CustomerContractDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.DealerContractDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ItemContractDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ProductContractDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.external.ContractExtCancelParameter;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.external.ContractExtChangeDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.external.ContractExtCreateDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.estimation.CustomerEstimationDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.estimation.DealerEstimationDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.estimation.EstimationAddedEditorEmpDto;
@@ -660,6 +663,21 @@ public class TestSecurityController {
 
 	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContactRegisterParameter")
 	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContactRegisterParameter dto, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractExtCreateDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractExtCreateDto dto, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractExtChangeDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractExtChangeDto dto, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractExtCancelParameter")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractExtCancelParameter dto, BindingResult result) {
 		return createParameterCheckResult(result);
 	}
 }
