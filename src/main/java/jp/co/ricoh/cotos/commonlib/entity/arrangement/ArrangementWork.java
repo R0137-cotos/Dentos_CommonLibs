@@ -40,7 +40,7 @@ public class ArrangementWork extends EntityBase {
 
 	public enum WorkflowStatus {
 
-		受付待ち("1"), 作業中("2"), 作業完了報告("3"), 承認依頼中("4"), 作業完了("5");
+		受付待ち("1"), 作業中("2"), 作業完了報告("3"), 承認依頼中("4"), 作業完了("5"), エラー("6");
 
 		private final String text;
 
@@ -89,7 +89,7 @@ public class ArrangementWork extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@NotNull
-	@ApiModelProperty(value = "ワークフロー状態", required = true, allowableValues = "受付待ち(\"1\"), 作業中(\"2\"), 作業完了報告(\"3\"), 承認依頼中(\"4\"), 作業完了(\"5\")", example = "1", position = 4)
+	@ApiModelProperty(value = "ワークフロー状態", required = true, allowableValues = "受付待ち(\"1\"), 作業中(\"2\"), 作業完了報告(\"3\"), 承認依頼中(\"4\"), 作業完了(\"5\"), エラー(\"6\")", example = "1", position = 4)
 	private WorkflowStatus workflowStatus;
 
 	/**
@@ -146,10 +146,17 @@ public class ArrangementWork extends EntityBase {
 	private List<ArrangementWorkCheckResult> arrangementWorkCheckResultList;
 
 	/**
+	 * 手配業務エラー履歴
+	 */
+	@OneToMany(mappedBy = "arrangementWork")
+	@ApiModelProperty(value = "手配業務エラー履歴", required = false, position = 12)
+	private List<ArrangementWorkErrorLog> arrangementWorkErrorLogList;
+
+	/**
 	 * アプリケーションID
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "アプリケーションID", required = false, position = 12, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "アプリケーションID", required = false, position = 13, allowableValues = "range[0,255]")
 	private String appId;
 
 }

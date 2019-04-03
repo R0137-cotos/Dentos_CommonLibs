@@ -30,6 +30,7 @@ import jp.co.ricoh.cotos.commonlib.repository.arrangement.ArrangementWorkApprova
 import jp.co.ricoh.cotos.commonlib.repository.arrangement.ArrangementWorkApprovalRouteRepository;
 import jp.co.ricoh.cotos.commonlib.repository.arrangement.ArrangementWorkAttachedFileRepository;
 import jp.co.ricoh.cotos.commonlib.repository.arrangement.ArrangementWorkCheckResultRepository;
+import jp.co.ricoh.cotos.commonlib.repository.arrangement.ArrangementWorkErrorLogRepository;
 import jp.co.ricoh.cotos.commonlib.repository.arrangement.ArrangementWorkOperationLogRepository;
 import jp.co.ricoh.cotos.commonlib.repository.arrangement.ArrangementWorkRepository;
 
@@ -72,6 +73,10 @@ public class TestArrangement {
 	/** 担当作業者社員 */
 	@Autowired
 	ArrangementPicWorkerEmpRepository arrangementPicWorkerEmpRepository;
+
+	/** 手配業務エラー履歴 */
+	@Autowired
+	ArrangementWorkErrorLogRepository arrangementWorkErrorLogRepository;
 
 	@Autowired
 	TestTools testTools;
@@ -135,6 +140,11 @@ public class TestArrangement {
 	@Test
 	public void 全てのカラムがNullではないことを確認_担当作業者社員() {
 		全てのカラムがNullではないことを確認_共通(arrangementPicWorkerEmpRepository, 401L, 501L);
+	}
+
+	@Test
+	public void 全てのカラムがNullではないことを確認_手配業務エラー履歴() {
+		全てのカラムがNullではないことを確認_共通(arrangementWorkErrorLogRepository, 401L, 501L);
 	}
 
 	@Test
