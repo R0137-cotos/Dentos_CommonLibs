@@ -33,7 +33,7 @@ public class ProductEstimationDto extends DtoBase {
 	 * 代表品種マスタID
 	 */
 	@Min(0)
-	@ApiModelProperty(value = "代表品種マスタID", required = true, position = 5, allowableValues = "range[0,9223372036854775807]")
+	@ApiModelProperty(value = "代表品種マスタID", required = false, position = 5, allowableValues = "range[0,9223372036854775807]")
 	private long repItemMasterId;
 
 	/**
