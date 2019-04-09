@@ -73,7 +73,6 @@ public class ContractExtCreateDto extends DtoBase {
 	 * 契約番号
 	 */
 	@Size(max = 255)
-	@NotNull
 	@ApiModelProperty(value = "契約番号", required = true, position = 10, allowableValues = "range[0,255]")
 	private String contractNumber;
 
