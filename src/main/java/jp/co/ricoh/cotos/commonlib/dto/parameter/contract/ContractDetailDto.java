@@ -42,44 +42,53 @@ public class ContractDetailDto extends DtoBase {
 	private int quantity;
 
 	/**
+	 * 単価
+	 */
+	@NotNull
+	@DecimalMin("0.00")
+	@Digits(integer = 19, fraction = 2)
+	@ApiModelProperty(value = "単価", required = true, position = 5, allowableValues = "range[0.00,9999999999999999999.99]")
+	private BigDecimal unitPrice;
+
+	/**
 	 * 金額
 	 */
 	@NotNull
 	@DecimalMin("0.00")
 	@Digits(integer = 19, fraction = 2)
-	@ApiModelProperty(value = "金額", required = true, position = 5, allowableValues = "range[0.00,9999999999999999999.99]")
+	@ApiModelProperty(value = "金額", required = true, position = 6, allowableValues = "range[0.00,9999999999999999999.99]")
 	private BigDecimal amountSummary;
 
 	/**
 	 * 摘要
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "摘要", required = false, position = 6, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "摘要", required = false, position = 7, allowableValues = "range[0,255]")
 	private String detailAbstract;
 
 	/**
 	 * 拡張項目
 	 */
-	@ApiModelProperty(value = "拡張項目", required = false, position = 7)
+	@ApiModelProperty(value = "拡張項目", required = false, position = 8)
 	@Lob
 	private String extendsParameter;
 
 	/**
 	 * イニシャル売上計上処理状態
 	 */
-	@ApiModelProperty(value = "イニシャル売上計上処理状態", required = false, position = 8)
+	@ApiModelProperty(value = "イニシャル売上計上処理状態", required = false, position = 9)
 	private InitialAccountSalesStatus initialAccountSalesStatus;
 
 	/**
 	 * イニシャル売上計上処理日
 	 */
-	@ApiModelProperty(value = "イニシャル売上計上処理日", required = false, position = 9)
+	@ApiModelProperty(value = "イニシャル売上計上処理日", required = false, position = 10)
 	@Temporal(TemporalType.DATE)
 	private Date initialAccountSalesDate;
 
 	@Valid
 	@NotNull
 	@OneToOne(mappedBy = "contractDetail")
-	@ApiModelProperty(value = "品種(契約用)", required = true, position = 10)
+	@ApiModelProperty(value = "品種(契約用)", required = true, position = 11)
 	private ItemContractDto itemContract;
 }
