@@ -36,26 +36,35 @@ public class EstimationDetailDto extends DtoBase {
 	private int quantity;
 
 	/**
+	 * 見積単価
+	 */
+	@NotNull
+	@DecimalMin("0.00")
+	@Digits(integer = 19, fraction = 2)
+	@ApiModelProperty(value = "見積単価", required = true, position = 5, allowableValues = "range[0.00,9999999999999999999.99]")
+	private BigDecimal estimationUnitPrice;
+
+	/**
 	 * 見積金額
 	 */
 	@NotNull
 	@DecimalMin("0.00")
 	@Digits(integer = 19, fraction = 2)
-	@ApiModelProperty(value = "見積金額", required = true, position = 5, allowableValues = "range[0.00,9999999999999999999.99]")
+	@ApiModelProperty(value = "見積金額", required = true, position = 6, allowableValues = "range[0.00,9999999999999999999.99]")
 	private BigDecimal estimationAmountSummary;
 
 	/**
 	 * 摘要
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "摘要", required = false, position = 6, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "摘要", required = false, position = 7, allowableValues = "range[0,255]")
 	private String detailAbstract;
 
 	/**
 	 * 拡張項目
 	 */
 	@Lob
-	@ApiModelProperty(value = "拡張項目", required = false, position = 7)
+	@ApiModelProperty(value = "拡張項目", required = false, position = 8)
 	private String extendsParameter;
 
 	/**
@@ -63,6 +72,6 @@ public class EstimationDetailDto extends DtoBase {
 	 */
 	@Valid
 	@NotNull
-	@ApiModelProperty(value = "品種(見積用)", required = true, position = 8)
+	@ApiModelProperty(value = "品種(見積用)", required = true, position = 9)
 	private ItemEstimationDto itemEstimation;
 }
