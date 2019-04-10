@@ -195,3 +195,4 @@
 |237|Ext契約作成DTOの契約番号のNotNull外し|
 |238|Ext商品(契約用)作成DTO追加|
 |239|CheckUtilのcheckEntityメソッド修正|
+|240|Ext契約情報変更DTOの契約番号のNotNull外し|
