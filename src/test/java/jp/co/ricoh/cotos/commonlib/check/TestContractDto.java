@@ -1153,7 +1153,7 @@ public class TestContractDto {
 		dto.setDealerContractList(Arrays.asList(dealer));
 
 		// 商品（契約用）
-		ProductContractDto product = new ProductContractDto();
+		ProductContractExtCreateDto product = new ProductContractExtCreateDto();
 		BeanUtils.copyProperties(entity.getProductContractList().get(0), product);
 		dto.setProductContractList(Arrays.asList(product));
 
