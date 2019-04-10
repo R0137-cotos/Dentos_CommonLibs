@@ -194,3 +194,4 @@
 |236|見積、契約明細DTOに単価カラム追加|
 |237|Ext契約作成DTOの契約番号のNotNull外し|
 |238|Ext商品(契約用)作成DTO追加|
+|239|CheckUtilのcheckEntityメソッド修正|
