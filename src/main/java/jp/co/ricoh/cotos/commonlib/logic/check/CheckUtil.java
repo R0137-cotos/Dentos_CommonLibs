@@ -58,7 +58,7 @@ public class CheckUtil {
 		if (result.hasErrors()) {
 			for (FieldError fieldError : result.getFieldErrors()) {
 
-				if (Arrays.asList(ignoreFields).contains(fieldError.getField())) {
+				if (Arrays.asList(ignoreFields).stream().anyMatch(fieldError.getField()::contains)) {
 					continue;
 				}
 
