@@ -1153,7 +1153,7 @@ public class TestContractDto {
 		dto.setDealerContractList(Arrays.asList(dealer));
 
 		// 商品（契約用）
-		ProductContractDto product = new ProductContractDto();
+		ProductContractExtCreateDto product = new ProductContractExtCreateDto();
 		BeanUtils.copyProperties(entity.getProductContractList().get(0), product);
 		dto.setProductContractList(Arrays.asList(product));
 
@@ -1166,11 +1166,10 @@ public class TestContractDto {
 		BeanUtils.copyProperties(dto, testTarget);
 		testTarget.setLifecycleStatus(null);
 		testTarget.setWorkflowStatus(null);
-		testTarget.setContractNumber(null);
 		testTarget.setContractPicSaEmp(null);
 		testTarget.setCustomerContract(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 5);
+		Assert.assertTrue(result.getErrorInfoList().size() == 4);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "契約担当SA社員が設定されていません。"));
 
