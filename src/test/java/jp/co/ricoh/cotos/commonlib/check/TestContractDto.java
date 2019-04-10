@@ -37,6 +37,7 @@ import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ProductContractDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.external.ContractExtCancelParameter;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.external.ContractExtChangeDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.external.ContractExtCreateDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.external.ProductContractExtCreateDto;
 import jp.co.ricoh.cotos.commonlib.entity.contract.Contract;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractAddedEditorEmp;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractApprovalRoute;
@@ -1040,9 +1041,8 @@ public class TestContractDto {
 		BeanUtils.copyProperties(entity.getDealerContractList().get(0), dealer);
 		dto.setDealerContractList(Arrays.asList(dealer));
 
-
 		// 商品（契約用）
-		ProductContractDto product = new ProductContractDto();
+		ProductContractExtCreateDto product = new ProductContractExtCreateDto();
 		BeanUtils.copyProperties(entity.getProductContractList().get(0), product);
 		dto.setProductContractList(Arrays.asList(product));
 
@@ -1152,7 +1152,6 @@ public class TestContractDto {
 		BeanUtils.copyProperties(entity.getDealerContractList().get(0), dealer);
 		dto.setDealerContractList(Arrays.asList(dealer));
 
-
 		// 商品（契約用）
 		ProductContractDto product = new ProductContractDto();
 		BeanUtils.copyProperties(entity.getProductContractList().get(0), product);
@@ -1259,5 +1258,44 @@ public class TestContractDto {
 		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "RJ管理番号は最大文字数（255）を超えています。"));
+	}
+
+	@Test
+	public void ProductContractExtCreateDtoのテスト() throws Exception {
+		ProductContract entity = productContractRepository.findOne(401L);
+		ProductContractExtCreateDto dto = new ProductContractExtCreateDto();
+		ProductContractExtCreateDto testTarget = new ProductContractExtCreateDto();
+		BeanUtils.copyProperties(entity, dto);
+
+		// 正常系
+		BeanUtils.copyProperties(entity, testTarget);
+		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		testTool.assertValidationOk(result);
+
+		// 異常系（@NotNull：）
+		BeanUtils.copyProperties(entity, testTarget);
+		testTarget.setProductContractName(null);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "商品名が設定されていません。"));
+
+		// 異常系（@Size(max) ：）
+		BeanUtils.copyProperties(entity, testTarget);
+		testTarget.setProductContractName(STR_256);
+		testTarget.setServiceIdentNumber(STR_256);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "サービス識別番号は最大文字数（255）を超えています。"));
+
+		// 異常系（@Min ：）
+		BeanUtils.copyProperties(entity, testTarget);
+		testTarget.setProductMasterId(INT_MINUS_1);
+		testTarget.setRepItemMasterId(LONG_MINUS_1);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "代表品種マスタIDは最小値（0）を下回っています。"));
 	}
 }
