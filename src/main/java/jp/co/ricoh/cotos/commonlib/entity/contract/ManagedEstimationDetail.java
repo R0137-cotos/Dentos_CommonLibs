@@ -33,8 +33,8 @@ import lombok.EqualsAndHashCode;
 public class ManagedEstimationDetail extends EntityBase {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "estimation_detail_seq")
-	@SequenceGenerator(name = "estimation_detail_seq", sequenceName = "estimation_detail_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "managed_estimation_detail_seq")
+	@SequenceGenerator(name = "managed_estimation_detail_seq", sequenceName = "managed_estimation_detail_seq", allocationSize = 1)
 	@ApiModelProperty(value = "見積明細管理ID(作成時不要)", required = true, position = 1, readOnly = true)
 	private long id;
 
