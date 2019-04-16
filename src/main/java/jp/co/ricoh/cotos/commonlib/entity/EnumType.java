@@ -182,7 +182,7 @@ public class EnumType {
 	 */
 	public enum DetailStatus {
 
-		NOUPDATE("1"), ADD("2"), DELETE("3");
+		NOUPDATE("1"), ADD("2"), DELETE("3"), UPDATE("4");
 
 		private final String text;
 

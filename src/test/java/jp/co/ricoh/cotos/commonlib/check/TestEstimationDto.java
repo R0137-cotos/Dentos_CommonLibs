@@ -715,16 +715,18 @@ public class TestEstimationDto {
 		// 異常系（@Max ：）
 		BeanUtils.copyProperties(dto, testTarget);
 		testTarget.setQuantity(INT_100000);
+		testTarget.setBeforeQuantity(INT_100000);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "数量は最大値（99999）を超えています。"));
 
 		// 異常系（@Min ：）
 		BeanUtils.copyProperties(dto, testTarget);
 		testTarget.setQuantity(INT_MINUS_1);
+		testTarget.setBeforeQuantity(INT_MINUS_1);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "数量は最小値（0）を下回っています。"));
 

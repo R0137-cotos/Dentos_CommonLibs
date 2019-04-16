@@ -409,4 +409,13 @@ public class ContractDto extends DtoBase {
 	@OneToOne(mappedBy = "contract")
 	@ApiModelProperty(value = "契約保守担当SS組織", required = false, position = 54)
 	private ContractPicMntSsOrgDto contractPicMntSsOrg;
+
+	/**
+	 * 見積明細管理
+	 */
+	@Valid
+	@NotNull
+	@OneToMany(mappedBy = "contract")
+	@ApiModelProperty(value = "見積明細管理", required = true, position = 55)
+	private List<ManagedEstimationDetailDto> managedEstimationDetailList;
 }

@@ -10,6 +10,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiParam;
 import lombok.Data;
 
@@ -31,6 +32,14 @@ public class EstimationDetailRegisterParameter {
 	@Size(max = 255)
 	@ApiParam(value = "品種コード", allowableValues = "range[0,255]", required = true)
 	private String ricohItemCode;
+
+	/**
+	 * 変更前数量
+	 */
+	@Max(99999)
+	@Min(0)
+	@ApiModelProperty(value = "変更前数量", allowableValues = "range[0,99999]", required = true)
+	private int beforeQuantity;
 
 	/**
 	 * 数量

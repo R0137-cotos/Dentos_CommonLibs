@@ -21,6 +21,7 @@ import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractDetailDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractPicSaEmpDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.CustomerContractDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.DealerContractDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ManagedEstimationDetailDto;
 import jp.co.ricoh.cotos.commonlib.entity.contract.Contract.IfsLinkageCsvCreateStatus;
 import jp.co.ricoh.cotos.commonlib.entity.contract.Contract.LifecycleStatus;
 import jp.co.ricoh.cotos.commonlib.entity.contract.Contract.WorkflowStatus;
@@ -314,4 +315,13 @@ public class ContractExtChangeDto extends DtoBase {
 	@OneToMany(mappedBy = "contract")
 	@ApiModelProperty(value = "商品(契約用)", required = true, position = 52)
 	private List<ProductContractExtCreateDto> productContractList;
+
+	/**
+	 * 見積明細管理
+	 */
+	@Valid
+	@NotNull
+	@OneToMany(mappedBy = "contract")
+	@ApiModelProperty(value = "見積明細管理", required = true, position = 53)
+	private List<ManagedEstimationDetailDto> managedEstimationDetailList;
 }
