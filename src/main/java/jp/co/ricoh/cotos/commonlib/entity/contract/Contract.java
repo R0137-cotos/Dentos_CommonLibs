@@ -516,9 +516,17 @@ public class Contract extends EntityBase {
 	private ContractPicMntSsOrg contractPicMntSsOrg;
 
 	/**
+	 * 見積明細管理
+	 */
+	@Valid
+	@OneToMany(mappedBy = "contract")
+	@ApiModelProperty(value = "見積明細管理", required = true, position = 55)
+	private List<ManagedEstimationDetail> managedEstimationDetailList;
+
+	/**
 	 * アプリケーションID
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "アプリケーションID", required = false, position = 55, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "アプリケーションID", required = false, position = 56, allowableValues = "range[0,255]")
 	private String appId;
 }

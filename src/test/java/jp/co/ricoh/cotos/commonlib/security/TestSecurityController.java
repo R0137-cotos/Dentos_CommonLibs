@@ -49,6 +49,7 @@ import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractPicSaEmpDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.CustomerContractDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.DealerContractDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ItemContractDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ManagedEstimationDetailDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ProductContractDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.external.ContractExtCancelParameter;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.external.ContractExtChangeDto;
@@ -100,6 +101,7 @@ import jp.co.ricoh.cotos.commonlib.entity.contract.ContractPicSaEmp;
 import jp.co.ricoh.cotos.commonlib.entity.contract.CustomerContract;
 import jp.co.ricoh.cotos.commonlib.entity.contract.DealerContract;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ItemContract;
+import jp.co.ricoh.cotos.commonlib.entity.contract.ManagedEstimationDetail;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ProductContract;
 import jp.co.ricoh.cotos.commonlib.entity.estimation.CustomerEstimation;
 import jp.co.ricoh.cotos.commonlib.entity.estimation.DealerEstimation;
@@ -684,6 +686,16 @@ public class TestSecurityController {
 
 	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ProductContractExtCreateDto")
 	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ProductContractExtCreateDto dto, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ManagedEstimationDetail")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ManagedEstimationDetail entity, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ManagedEstimationDetailDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ManagedEstimationDetailDto dto, BindingResult result) {
 		return createParameterCheckResult(result);
 	}
 }

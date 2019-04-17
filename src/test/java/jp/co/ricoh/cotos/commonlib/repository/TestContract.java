@@ -40,6 +40,7 @@ import jp.co.ricoh.cotos.commonlib.repository.contract.ContractRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.CustomerContractRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.DealerContractRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ItemContractRepository;
+import jp.co.ricoh.cotos.commonlib.repository.contract.ManagedEstimationDetailRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ProductContractRepository;
 
 @RunWith(SpringRunner.class)
@@ -93,6 +94,9 @@ public class TestContract {
 
 	@Autowired
 	ContractPicMntSsOrgRepository contractPicMntSsOrgRepository;
+
+	@Autowired
+	ManagedEstimationDetailRepository managedEstimationDetailRepository;
 
 	@Autowired
 	TestTools testTools;
@@ -192,6 +196,11 @@ public class TestContract {
 	@Test
 	public void 全てのカラムがNullではないことを確認_契約保守担当SS組織() {
 		全てのカラムがNullではないことを確認_共通(contractPicMntSsOrgRepository, 401L, 501L);
+	}
+
+	@Test
+	public void 全てのカラムがNullではないことを確認_見積明細管理() {
+		全てのカラムがNullではないことを確認_共通(managedEstimationDetailRepository, 401L, 501L);
 	}
 
 	@Test

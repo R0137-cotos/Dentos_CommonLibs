@@ -33,6 +33,7 @@ import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractPicSaEmpDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.CustomerContractDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.DealerContractDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ItemContractDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ManagedEstimationDetailDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ProductContractDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.external.ContractExtCancelParameter;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.external.ContractExtChangeDto;
@@ -51,6 +52,7 @@ import jp.co.ricoh.cotos.commonlib.entity.contract.ContractPicSaEmp;
 import jp.co.ricoh.cotos.commonlib.entity.contract.CustomerContract;
 import jp.co.ricoh.cotos.commonlib.entity.contract.DealerContract;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ItemContract;
+import jp.co.ricoh.cotos.commonlib.entity.contract.ManagedEstimationDetail;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ProductContract;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractAddedEditorEmpRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractApprovalResultRepository;
@@ -67,6 +69,7 @@ import jp.co.ricoh.cotos.commonlib.repository.contract.ContractRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.CustomerContractRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.DealerContractRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ItemContractRepository;
+import jp.co.ricoh.cotos.commonlib.repository.contract.ManagedEstimationDetailRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ProductContractRepository;
 import jp.co.ricoh.cotos.commonlib.security.TestSecurityController;
 import jp.co.ricoh.cotos.commonlib.security.bean.ParamterCheckResult;
@@ -145,6 +148,9 @@ public class TestContractDto {
 
 	@Autowired
 	ContractPicCeEmpRepository contractPicCeEmpRepository;
+
+	@Autowired
+	ManagedEstimationDetailRepository managedEstimationDetailRepository;
 
 	@Autowired
 	TestTools testTool;
@@ -290,6 +296,11 @@ public class TestContractDto {
 		detail.setItemContract(item);
 		dto.setContractDetailList(Arrays.asList(detail));
 
+		// 見積明細管理
+		ManagedEstimationDetailDto estimationDetail = new ManagedEstimationDetailDto();
+		BeanUtils.copyProperties(entity.getManagedEstimationDetailList().get(0), estimationDetail);
+		dto.setManagedEstimationDetailList(Arrays.asList(estimationDetail));
+
 		// 契約担当SA社員
 		ContractPicSaEmpDto sa = new ContractPicSaEmpDto();
 		BeanUtils.copyProperties(entity.getContractPicSaEmp(), sa);
@@ -415,6 +426,7 @@ public class TestContractDto {
 		// 異常系（@Valid：）
 		BeanUtils.copyProperties(dto, testTarget);
 		testTarget.getContractDetailList().get(0).setDetailAbstract(STR_256);
+		testTarget.getManagedEstimationDetailList().get(0).setDetailAbstract(STR_256);
 		testTarget.getContractPicSaEmp().setPostNumber(STR_256);
 		testTarget.getCustomerContract().setCustomerName(STR_256);
 		testTarget.getDealerContractList().get(0).setDealerName(STR_256);
@@ -426,7 +438,7 @@ public class TestContractDto {
 		testTarget.getContractPicMntSsOrg().setServiceOrgName(STR_256);
 		testTarget.getContractPicCeEmp().setFaxNumber(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 11);
+		Assert.assertTrue(result.getErrorInfoList().size() == 12);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "商品名は最大文字数（255）を超えています。"));
 	}
@@ -728,16 +740,18 @@ public class TestContractDto {
 		// 異常系（@Max ：）
 		BeanUtils.copyProperties(dto, testTarget);
 		testTarget.setQuantity(INT_100000);
+		testTarget.setBeforeQuantity(INT_100000);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "数量は最大値（99999）を超えています。"));
 
 		// 異常系（@Min ：）
 		BeanUtils.copyProperties(dto, testTarget);
 		testTarget.setQuantity(INT_MINUS_1);
+		testTarget.setBeforeQuantity(INT_MINUS_1);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "数量は最小値（0）を下回っています。"));
 
@@ -1026,6 +1040,11 @@ public class TestContractDto {
 		detail.setItemContract(item);
 		dto.setContractDetailList(Arrays.asList(detail));
 
+		// 見積明細管理
+		ManagedEstimationDetailDto estimationDetail = new ManagedEstimationDetailDto();
+		BeanUtils.copyProperties(entity.getManagedEstimationDetailList().get(0), estimationDetail);
+		dto.setManagedEstimationDetailList(Arrays.asList(estimationDetail));
+
 		// 契約担当SA社員
 		ContractPicSaEmpDto sa = new ContractPicSaEmpDto();
 		BeanUtils.copyProperties(entity.getContractPicSaEmp(), sa);
@@ -1111,12 +1130,13 @@ public class TestContractDto {
 		// 異常系（@Valid：）
 		BeanUtils.copyProperties(dto, testTarget);
 		testTarget.getContractDetailList().get(0).setDetailAbstract(STR_256);
+		testTarget.getManagedEstimationDetailList().get(0).setDetailAbstract(STR_256);
 		testTarget.getContractPicSaEmp().setPostNumber(STR_256);
 		testTarget.getCustomerContract().setCustomerName(STR_256);
 		testTarget.getDealerContractList().get(0).setDealerName(STR_256);
 		testTarget.getProductContractList().get(0).setProductContractName(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 5);
+		Assert.assertTrue(result.getErrorInfoList().size() == 6);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "商品名は最大文字数（255）を超えています。"));
 	}
@@ -1136,6 +1156,11 @@ public class TestContractDto {
 		BeanUtils.copyProperties(entity.getContractDetailList().get(0).getItemContract(), item);
 		detail.setItemContract(item);
 		dto.setContractDetailList(Arrays.asList(detail));
+
+		// 見積明細管理
+		ManagedEstimationDetailDto estimationDetail = new ManagedEstimationDetailDto();
+		BeanUtils.copyProperties(entity.getManagedEstimationDetailList().get(0), estimationDetail);
+		dto.setManagedEstimationDetailList(Arrays.asList(estimationDetail));
 
 		// 契約担当SA社員
 		ContractPicSaEmpDto sa = new ContractPicSaEmpDto();
@@ -1218,12 +1243,13 @@ public class TestContractDto {
 		// 異常系（@Valid：）
 		BeanUtils.copyProperties(dto, testTarget);
 		testTarget.getContractDetailList().get(0).setDetailAbstract(STR_256);
+		testTarget.getManagedEstimationDetailList().get(0).setDetailAbstract(STR_256);
 		testTarget.getContractPicSaEmp().setPostNumber(STR_256);
 		testTarget.getCustomerContract().setCustomerName(STR_256);
 		testTarget.getDealerContractList().get(0).setDealerName(STR_256);
 		testTarget.getProductContractList().get(0).setProductContractName(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 5);
+		Assert.assertTrue(result.getErrorInfoList().size() == 6);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "商品名は最大文字数（255）を超えています。"));
 	}
@@ -1296,5 +1322,74 @@ public class TestContractDto {
 		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "代表品種マスタIDは最小値（0）を下回っています。"));
+	}
+
+	@Test
+	public void ManagedEstimationDetailDtoのテスト() throws Exception {
+		ManagedEstimationDetail entity = managedEstimationDetailRepository.findOne(401L);
+		ManagedEstimationDetailDto dto = new ManagedEstimationDetailDto();
+		ManagedEstimationDetailDto testTarget = new ManagedEstimationDetailDto();
+		BeanUtils.copyProperties(entity, dto);
+
+		// 正常系
+		BeanUtils.copyProperties(dto, testTarget);
+		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		testTool.assertValidationOk(result);
+
+		// 異常系（@NotNull：）
+		BeanUtils.copyProperties(dto, testTarget);
+		testTarget.setState(null);
+		testTarget.setEstimationUnitPrice(null);
+		testTarget.setEstimationAmountSummary(null);
+		testTarget.setRicohItemCode(null);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 4);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "状態が設定されていません。"));
+
+		// 異常系（@Size(max) ：）
+		BeanUtils.copyProperties(dto, testTarget);
+		testTarget.setDetailAbstract(STR_256);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "摘要は最大文字数（255）を超えています。"));
+
+		// 異常系（@Max ：）
+		BeanUtils.copyProperties(dto, testTarget);
+		testTarget.setQuantity(INT_100000);
+		testTarget.setBeforeQuantity(INT_100000);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "数量は最大値（99999）を超えています。"));
+
+		// 異常系（@Min ：）
+		BeanUtils.copyProperties(dto, testTarget);
+		testTarget.setQuantity(INT_MINUS_1);
+		testTarget.setBeforeQuantity(INT_MINUS_1);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "数量は最小値（0）を下回っています。"));
+
+		// 異常系（@DecimalMin：）
+		BeanUtils.copyProperties(dto, testTarget);
+		testTarget.setEstimationAmountSummary(DECIMAL_MINUS_001);
+		testTarget.setEstimationUnitPrice(DECIMAL_MINUS_001);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "見積金額は最小値（0.00）を下回っています。"));
+
+		// 異常系（@Digits：）
+		BeanUtils.copyProperties(dto, testTarget);
+		testTarget.setEstimationAmountSummary(DECIMAL_0001);
+		testTarget.setEstimationUnitPrice(DECIMAL_0001);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00028));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "見積金額は小数点以下2桁を超えています。"));
+
 	}
 }

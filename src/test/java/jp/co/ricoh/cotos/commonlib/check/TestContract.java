@@ -32,6 +32,7 @@ import jp.co.ricoh.cotos.commonlib.entity.contract.ContractPicSaEmp;
 import jp.co.ricoh.cotos.commonlib.entity.contract.CustomerContract;
 import jp.co.ricoh.cotos.commonlib.entity.contract.DealerContract;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ItemContract;
+import jp.co.ricoh.cotos.commonlib.entity.contract.ManagedEstimationDetail;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ProductContract;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractAddedEditorEmpRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractApprovalResultRepository;
@@ -48,6 +49,7 @@ import jp.co.ricoh.cotos.commonlib.repository.contract.ContractRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.CustomerContractRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.DealerContractRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ItemContractRepository;
+import jp.co.ricoh.cotos.commonlib.repository.contract.ManagedEstimationDetailRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ProductContractRepository;
 import jp.co.ricoh.cotos.commonlib.security.TestSecurityController;
 import jp.co.ricoh.cotos.commonlib.security.bean.ParamterCheckResult;
@@ -125,6 +127,9 @@ public class TestContract {
 
 	@Autowired
 	ContractPicCeEmpRepository contractPicCeEmpRepository;
+
+	@Autowired
+	ManagedEstimationDetailRepository managedEstimationDetailRepository;
 
 	@Autowired
 	TestTools testTool;
@@ -433,16 +438,18 @@ public class TestContract {
 		// 異常系（@Max ：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setQuantity(INT_100000);
+		testTarget.setBeforeQuantity(INT_100000);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "数量は最大値（99999）を超えています。"));
 
 		// 異常系（@Min ：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setQuantity(INT_MINUS_1);
+		testTarget.setBeforeQuantity(INT_MINUS_1);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "数量は最小値（0）を下回っています。"));
 
@@ -635,6 +642,15 @@ public class TestContract {
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "商品マスタIDは最小値（0）を下回っています。"));
+
+		// 異常系（@Valid：見積明細管理）
+		entity = contractRepository.findOne(4L);
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.getManagedEstimationDetailList().get(0).setState(null);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "状態が設定されていません。"));
 
 	}
 
@@ -857,5 +873,59 @@ public class TestContract {
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "課所名は最大文字数（255）を超えています。"));
 
+	}
+
+	@Test
+	public void ManagedEstimationDetailのテスト() throws Exception {
+		ManagedEstimationDetail entity = managedEstimationDetailRepository.findOne(401L);
+		ManagedEstimationDetail testTarget = new ManagedEstimationDetail();
+
+		// 正常系
+		BeanUtils.copyProperties(testTarget, entity);
+		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		testTool.assertValidationOk(result);
+
+		// 異常系（@NotNullの null チェック：）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setEstimationAmountSummary(null);
+		testTarget.setState(null);
+		testTarget.setRicohItemCode(null);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 3);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "状態が設定されていません。"));
+
+		// 異常系（@Size(max) ：）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setDetailAbstract(STR_256);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "摘要は最大文字数（255）を超えています。"));
+
+		// 異常系（@Max ：）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setQuantity(INT_100000);
+		testTarget.setBeforeQuantity(INT_100000);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "数量は最大値（99999）を超えています。"));
+
+		// 異常系（@Min ：）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setQuantity(INT_MINUS_1);
+		testTarget.setBeforeQuantity(INT_MINUS_1);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "数量は最小値（0）を下回っています。"));
+
+		// 異常系（@DecimalMax：unitPrice, amountSummary）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setEstimationAmountSummary(BigDecimal.valueOf(99999999999999999999.99));
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
 	}
 }

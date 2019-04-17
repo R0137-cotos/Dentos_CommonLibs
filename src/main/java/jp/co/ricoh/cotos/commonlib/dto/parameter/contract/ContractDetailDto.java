@@ -30,15 +30,23 @@ public class ContractDetailDto extends DtoBase {
 	 * 状態
 	 */
 	@NotNull
-	@ApiModelProperty(value = "状態", required = true, allowableValues = "NONE(\"1\"), ADD(\"2\"), DELETE(\"3\")", example = "", position = 3)
+	@ApiModelProperty(value = "状態", required = true, allowableValues = "NONE(\"1\"), ADD(\"2\"), DELETE(\"3\"), UPDATE(\"4\")", example = "", position = 3)
 	private DetailStatus state;
+
+	/**
+	 * 変更前数量
+	 */
+	@Max(99999)
+	@Min(0)
+	@ApiModelProperty(value = "変更前数量", required = true, position = 4, allowableValues = "range[0,99999]")
+	private int beforeQuantity;
 
 	/**
 	 * 数量
 	 */
 	@Min(0)
 	@Max(99999)
-	@ApiModelProperty(value = "数量", required = true, position = 4, allowableValues = "range[0,99999]")
+	@ApiModelProperty(value = "数量", required = true, position = 5, allowableValues = "range[0,99999]")
 	private int quantity;
 
 	/**
@@ -47,7 +55,7 @@ public class ContractDetailDto extends DtoBase {
 	@NotNull
 	@DecimalMin("0.00")
 	@Digits(integer = 19, fraction = 2)
-	@ApiModelProperty(value = "単価", required = true, position = 5, allowableValues = "range[0.00,9999999999999999999.99]")
+	@ApiModelProperty(value = "単価", required = true, position = 6, allowableValues = "range[0.00,9999999999999999999.99]")
 	private BigDecimal unitPrice;
 
 	/**
@@ -56,39 +64,39 @@ public class ContractDetailDto extends DtoBase {
 	@NotNull
 	@DecimalMin("0.00")
 	@Digits(integer = 19, fraction = 2)
-	@ApiModelProperty(value = "金額", required = true, position = 6, allowableValues = "range[0.00,9999999999999999999.99]")
+	@ApiModelProperty(value = "金額", required = true, position = 7, allowableValues = "range[0.00,9999999999999999999.99]")
 	private BigDecimal amountSummary;
 
 	/**
 	 * 摘要
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "摘要", required = false, position = 7, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "摘要", required = false, position = 8, allowableValues = "range[0,255]")
 	private String detailAbstract;
 
 	/**
 	 * 拡張項目
 	 */
-	@ApiModelProperty(value = "拡張項目", required = false, position = 8)
+	@ApiModelProperty(value = "拡張項目", required = false, position = 9)
 	@Lob
 	private String extendsParameter;
 
 	/**
 	 * イニシャル売上計上処理状態
 	 */
-	@ApiModelProperty(value = "イニシャル売上計上処理状態", required = false, position = 9)
+	@ApiModelProperty(value = "イニシャル売上計上処理状態", required = false, position = 10)
 	private InitialAccountSalesStatus initialAccountSalesStatus;
 
 	/**
 	 * イニシャル売上計上処理日
 	 */
-	@ApiModelProperty(value = "イニシャル売上計上処理日", required = false, position = 10)
+	@ApiModelProperty(value = "イニシャル売上計上処理日", required = false, position = 11)
 	@Temporal(TemporalType.DATE)
 	private Date initialAccountSalesDate;
 
 	@Valid
 	@NotNull
 	@OneToOne(mappedBy = "contractDetail")
-	@ApiModelProperty(value = "品種(契約用)", required = true, position = 11)
+	@ApiModelProperty(value = "品種(契約用)", required = true, position = 12)
 	private ItemContractDto itemContract;
 }

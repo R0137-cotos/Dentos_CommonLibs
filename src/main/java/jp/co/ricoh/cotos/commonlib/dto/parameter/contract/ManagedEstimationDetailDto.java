@@ -1,9 +1,8 @@
-package jp.co.ricoh.cotos.commonlib.dto.parameter.estimation;
+package jp.co.ricoh.cotos.commonlib.dto.parameter.contract;
 
 import java.math.BigDecimal;
 
 import javax.persistence.Lob;
-import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Max;
@@ -19,7 +18,7 @@ import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = false)
 @Data
-public class EstimationDetailDto extends DtoBase {
+public class ManagedEstimationDetailDto extends DtoBase {
 	/**
 	 * 状態
 	 */
@@ -76,10 +75,18 @@ public class EstimationDetailDto extends DtoBase {
 	private String extendsParameter;
 
 	/**
-	 * 品種(見積用)
+	 * 品種マスタID
 	 */
-	@Valid
+	@Min(0)
+	@ApiModelProperty(value = "品種マスタID", required = true, position = 10, allowableValues = "range[0,9223372036854775807]")
+	private long itemMasterId;
+
+	/**
+	 * リコー品種コード
+	 */
 	@NotNull
-	@ApiModelProperty(value = "品種(見積用)", required = true, position = 10)
-	private ItemEstimationDto itemEstimation;
+	@Size(max = 255)
+	@ApiModelProperty(value = "リコー品種コード", required = true, position = 11, allowableValues = "range[0,255]")
+	private String ricohItemCode;
+
 }

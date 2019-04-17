@@ -55,8 +55,17 @@ public class EstimationDetail extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@NotNull
-	@ApiModelProperty(value = "状態", required = true, allowableValues = "NOUPDATE(\"1\"), ADD(\"2\"), DELETE(\"3\")", example = "1", position = 3)
+	@ApiModelProperty(value = "状態", required = true, allowableValues = "NOUPDATE(\"1\"), ADD(\"2\"), DELETE(\"3\"), UPDATE(\"4\")", example = "1", position = 3)
 	private DetailStatus state;
+
+	/**
+	 * 変更前数量
+	 */
+	@Column(nullable = false)
+	@Max(99999)
+	@Min(0)
+	@ApiModelProperty(value = "変更前数量", required = true, position = 4, allowableValues = "range[0,99999]")
+	private int beforeQuantity;
 
 	/**
 	 * 数量
@@ -64,7 +73,7 @@ public class EstimationDetail extends EntityBase {
 	@Column(nullable = false)
 	@Max(99999)
 	@Min(0)
-	@ApiModelProperty(value = "数量", required = true, position = 4, allowableValues = "range[0,99999]")
+	@ApiModelProperty(value = "数量", required = true, position = 5, allowableValues = "range[0,99999]")
 	private int quantity;
 
 	/**
@@ -73,7 +82,7 @@ public class EstimationDetail extends EntityBase {
 	@Column(nullable = false)
 	@NotNull
 	@DecimalMax("9999999999999999999.99")
-	@ApiModelProperty(value = "見積単価", required = true, position = 5, allowableValues = "range[0.00,9999999999999999999.99]")
+	@ApiModelProperty(value = "見積単価", required = true, position = 6, allowableValues = "range[0.00,9999999999999999999.99]")
 	private BigDecimal estimationUnitPrice;
 
 	/**
@@ -82,25 +91,25 @@ public class EstimationDetail extends EntityBase {
 	@Column(nullable = false)
 	@NotNull
 	@DecimalMax("9999999999999999999.99")
-	@ApiModelProperty(value = "見積金額", required = true, position = 6, allowableValues = "range[0.00,9999999999999999999.99]")
+	@ApiModelProperty(value = "見積金額", required = true, position = 7, allowableValues = "range[0.00,9999999999999999999.99]")
 	private BigDecimal estimationAmountSummary;
 
 	/**
 	 * 摘要
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "摘要", required = false, position = 7, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "摘要", required = false, position = 8, allowableValues = "range[0,255]")
 	private String detailAbstract;
 
 	/**
 	 * 拡張項目
 	 */
 	@Lob
-	@ApiModelProperty(value = "拡張項目", required = false, position = 8)
+	@ApiModelProperty(value = "拡張項目", required = false, position = 9)
 	private String extendsParameter;
 
 	@OneToOne(mappedBy = "estimationDetail")
-	@ApiModelProperty(value = "品種(見積用)(作成時不要)", required = true, position = 9, readOnly = true)
+	@ApiModelProperty(value = "品種(見積用)(作成時不要)", required = true, position = 10, readOnly = true)
 	private ItemEstimation itemEstimation;
 
 	@PrePersist

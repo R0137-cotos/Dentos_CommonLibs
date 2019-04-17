@@ -14,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
+import jp.co.ricoh.cotos.commonlib.entity.EnumType.DetailStatus;
 import jp.co.ricoh.cotos.commonlib.entity.EnumType.TargetContractType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -76,5 +77,12 @@ public class ArrangementWorkCompMaster extends EntityBaseMaster {
 	@Column(nullable = false)
 	@ApiModelProperty(value = "明細番号", required = true, position = 6, allowableValues = "range[0,999]")
 	private int seqNumber;
+
+	/**
+	 * 明細状態
+	 */
+	@Column(nullable = true)
+	@ApiModelProperty(value = "明細状態", required = false, position = 7, allowableValues = "NOUPDATE(\"1\"), ADD(\"2\"), DELETE(\"3\"), UPDATE(\"4\")", example = "1")
+	private DetailStatus detailStatus;
 
 }
