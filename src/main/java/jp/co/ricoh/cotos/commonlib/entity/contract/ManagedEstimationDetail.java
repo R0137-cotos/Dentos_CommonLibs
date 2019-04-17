@@ -116,6 +116,7 @@ public class ManagedEstimationDetail extends EntityBase {
 	/**
 	 * リコー品種コード
 	 */
+	@Column(nullable = false)
 	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "リコー品種コード", required = true, position = 11, allowableValues = "range[0,255]")

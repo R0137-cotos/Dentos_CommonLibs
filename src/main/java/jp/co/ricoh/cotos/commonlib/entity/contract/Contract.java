@@ -516,7 +516,7 @@ public class Contract extends EntityBase {
 	private ContractPicMntSsOrg contractPicMntSsOrg;
 
 	/**
-	 * 契約明細
+	 * 見積明細管理
 	 */
 	@Valid
 	@OneToMany(mappedBy = "contract")

@@ -414,8 +414,7 @@ public class ContractDto extends DtoBase {
 	 * 見積明細管理
 	 */
 	@Valid
-	@NotNull
 	@OneToMany(mappedBy = "contract")
-	@ApiModelProperty(value = "見積明細管理", required = true, position = 55)
+	@ApiModelProperty(value = "見積明細管理", required = false, position = 55)
 	private List<ManagedEstimationDetailDto> managedEstimationDetailList;
 }
