@@ -318,6 +318,15 @@ public class TestMaster {
 
 		// Entity の各項目の値が null ではないことを確認
 		testTool.assertColumnsNotNull(found);
+
+		// エンティティ取得
+		found = superUserMasterRepository.findByUserId("MOM_EMPLOYEE_ID");
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		testTool.assertColumnsNotNull(found);
 	}
 
 	@Test
