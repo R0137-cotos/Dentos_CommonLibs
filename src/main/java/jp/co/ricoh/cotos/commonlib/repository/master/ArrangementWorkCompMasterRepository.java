@@ -12,7 +12,7 @@ public interface ArrangementWorkCompMasterRepository extends CrudRepository<Arra
 
 	public List<ArrangementWorkCompMaster>  findByItemMasterIn(List<ItemMaster> itemMaster);
 
-	public List<ArrangementWorkCompMaster> findByDisengagementFlgAndItemMasterIn(int disengagementFlg,List<ItemMaster> itemMaster);
+	public List<ArrangementWorkCompMaster>  findByDisengagementFlgAndItemMasterIn(int disengagementFlg,List<ItemMaster> itemMaster);
 
-	public List<ArrangementWorkCompMaster> findByDisengagementFlgAndDetailStatusAndItemMasterIn(int disengagementFlg,DetailStatus detailStatus,List<ItemMaster> itemMaster);
+	public List<ArrangementWorkCompMaster>  findByDisengagementFlgAndDetailStatusAndItemMasterIn(int disengagementFlg,DetailStatus detailStatus,List<ItemMaster> itemMaster);
 }
