@@ -67,7 +67,6 @@ public class ContractDetail extends EntityBase {
 	/**
 	 * 変更前数量
 	 */
-	@Column(nullable = true)
 	@Max(99999)
 	@Min(0)
 	@ApiModelProperty(value = "変更前数量", required = false, position = 4, allowableValues = "range[0,99999]")
