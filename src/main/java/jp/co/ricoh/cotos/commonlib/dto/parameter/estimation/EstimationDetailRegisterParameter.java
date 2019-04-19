@@ -38,8 +38,8 @@ public class EstimationDetailRegisterParameter {
 	 */
 	@Max(99999)
 	@Min(0)
-	@ApiModelProperty(value = "変更前数量", allowableValues = "range[0,99999]", required = true)
-	private int beforeQuantity;
+	@ApiModelProperty(value = "変更前数量", allowableValues = "range[0,99999]", required = false)
+	private Integer beforeQuantity;
 
 	/**
 	 * 数量
