@@ -6,6 +6,7 @@ import javax.persistence.PrePersist;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import jp.co.ricoh.cotos.commonlib.entity.master.DummyUserMaster;
@@ -15,6 +16,7 @@ import jp.co.ricoh.cotos.commonlib.exception.ErrorInfo;
 import jp.co.ricoh.cotos.commonlib.logic.check.CheckUtil;
 import jp.co.ricoh.cotos.commonlib.repository.master.DummyUserMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvEmployeeMasterRepository;
+import jp.co.ricoh.cotos.commonlib.security.CotosAuthenticationDetails;
 
 @Component
 public class ArrangementWorkOperationLogListener {
@@ -46,8 +48,11 @@ public class ArrangementWorkOperationLogListener {
 	@PrePersist
 	@Transactional
 	public void appendsEmployeeFields(ArrangementWorkOperationLog arrangementWorkOperationLog) {
-		if (dummyUserMasterRepository.existsByUserId(arrangementWorkOperationLog.getOperatorEmpId())) {
-			DummyUserMaster dummyUserMaster = dummyUserMasterRepository.findByUserId(arrangementWorkOperationLog.getOperatorEmpId());
+		CotosAuthenticationDetails userInfo = (CotosAuthenticationDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		if (userInfo.isDummyUser()) {
+			DummyUserMaster dummyUserMaster = dummyUserMasterRepository.findByUserId(userInfo.getMomEmployeeId());
+			arrangementWorkOperationLog.setOperatorEmpId(dummyUserMaster.getUserId());
 			arrangementWorkOperationLog.setOperatorName(dummyUserMaster.getEmpName());
 			arrangementWorkOperationLog.setOperatorOrgName(dummyUserMaster.getOrgName());
 			return;

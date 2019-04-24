@@ -34,6 +34,7 @@ import org.springframework.web.client.RestTemplate;
 
 import jp.co.ricoh.cotos.commonlib.DBConfig;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.common.AuthorityJudgeParameter;
+import jp.co.ricoh.cotos.commonlib.entity.master.DummyUserMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvEmployeeMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.SuperUserMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster;
@@ -41,6 +42,7 @@ import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.AccessType;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.ActionDiv;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.AuthDiv;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.Domain;
+import jp.co.ricoh.cotos.commonlib.repository.master.DummyUserMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvEmployeeMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.SuperUserMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.UrlAuthMasterRepository;
@@ -76,6 +78,9 @@ public class CotosSecurityTests {
 	@Autowired
 	HeadersProperties headersProperties;
 
+	@Autowired
+	DummyUserMasterRepository dummyUserMasterRepository;
+
 	@LocalServerPort
 	private int port;
 
@@ -91,6 +96,7 @@ public class CotosSecurityTests {
 		context.getBean(DBConfig.class).clearData();
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/superUserMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/urlAuthMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/dummyUserMaster.sql");
 	}
 
 	@AfterClass
@@ -606,7 +612,7 @@ public class CotosSecurityTests {
 		Map<ActionDiv, Map<AuthDiv, AuthLevel>> result = momAuthorityService.searchAllMomAuthorities("u0200757");
 		Assert.assertNotNull("正常にMoM権限マップを取得できること", result);
 	}
-	
+
 	@Test
 	@Transactional
 	public void 正常_MoM権限マップを取得できないこと() throws Exception {
@@ -631,6 +637,15 @@ public class CotosSecurityTests {
 		SuperUserMaster result = superUserMasterRepository.findOne(1L);
 
 		Assert.assertEquals("正常に取得できること", "MOM_EMPLOYEE_ID", result.getUserId());
+	}
+
+	@Test
+	@Transactional
+	public void 正常_ダミーユーザーマスターを取得できること() throws Exception {
+
+		DummyUserMaster result = dummyUserMasterRepository.findOne(1L);
+
+		Assert.assertEquals("正常に取得できること", "COTOS_BATCH_USER", result.getUserId());
 	}
 
 	private RestTemplate initRest(final String header) {
