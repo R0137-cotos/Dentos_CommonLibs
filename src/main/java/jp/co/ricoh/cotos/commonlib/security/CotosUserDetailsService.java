@@ -21,6 +21,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.ActionDiv;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.AuthDiv;
 import jp.co.ricoh.cotos.commonlib.logic.message.MessageUtil;
+import jp.co.ricoh.cotos.commonlib.repository.master.DummyUserMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.SuperUserMasterRepository;
 import jp.co.ricoh.cotos.commonlib.security.mom.MomAuthorityService;
 import jp.co.ricoh.cotos.commonlib.security.mom.MomAuthorityService.AuthLevel;
@@ -47,6 +48,9 @@ public class CotosUserDetailsService implements AuthenticationUserDetailsService
 
 	@Autowired
 	SuperUserMasterRepository superUserMasterRepository;
+
+	@Autowired
+	private DummyUserMasterRepository dummyUserMasterRepository;
 
 	@Override
 	public UserDetails loadUserDetails(PreAuthenticatedAuthenticationToken token) throws UsernameNotFoundException {
@@ -87,6 +91,8 @@ public class CotosUserDetailsService implements AuthenticationUserDetailsService
 
 			// スーパーユーザーか判定
 			boolean isSuperUser = superUserMasterRepository.existsByUserId(jwt.getClaim(claimsProperties.getMomEmpId()).asString());
+
+			boolean isDummyUser = dummyUserMasterRepository.existsByUserId(jwt.getClaim(claimsProperties.getMomEmpId()).asString());
 			// シングルユーザーIDに紐づく権限情報を取得
 			Map<ActionDiv, Map<AuthDiv, AuthLevel>> momAuthorities = momAuthorityService.searchAllMomAuthorities(jwt.getClaim(claimsProperties.getSingleUserId()).asString());
 
@@ -96,7 +102,7 @@ public class CotosUserDetailsService implements AuthenticationUserDetailsService
 				throw new Exception();
 			}
 
-			return new CotosAuthenticationDetails(jwt.getClaim(claimsProperties.getMomEmpId()).asString(), jwt.getClaim(claimsProperties.getSingleUserId()).asString(), jwt.getClaim(claimsProperties.getOrigin()).asString(), jwt.getClaim(claimsProperties.getApplicationId()).asString(), jwtString, isSuperUser, momAuthorities);
+			return new CotosAuthenticationDetails(jwt.getClaim(claimsProperties.getMomEmpId()).asString(), jwt.getClaim(claimsProperties.getSingleUserId()).asString(), jwt.getClaim(claimsProperties.getOrigin()).asString(), jwt.getClaim(claimsProperties.getApplicationId()).asString(), jwtString, isSuperUser, isDummyUser, momAuthorities);
 		}
 
 		return null;

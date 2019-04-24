@@ -8,5 +8,6 @@ import jp.co.ricoh.cotos.commonlib.entity.master.SuperUserMaster;
 @Repository
 public interface SuperUserMasterRepository extends CrudRepository<SuperUserMaster, Long> {
 	public boolean existsByUserId(String userId);
+
 	public SuperUserMaster findByUserId(String userId);
 }
