@@ -9,10 +9,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import jp.co.ricoh.cotos.commonlib.entity.master.DummyUserMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvEmployeeMaster;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorCheckException;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorInfo;
 import jp.co.ricoh.cotos.commonlib.logic.check.CheckUtil;
+import jp.co.ricoh.cotos.commonlib.repository.master.DummyUserMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvEmployeeMasterRepository;
 
 @Component
@@ -20,6 +22,7 @@ public class CommunicationListener {
 
 	private static MvEmployeeMasterRepository mvEmployeeMasterRepository;
 	private static CheckUtil checkUtil;
+	private static DummyUserMasterRepository dummyUserMasterRepository;
 
 	@Autowired
 	public void setMvEmployeeMasterRepository(MvEmployeeMasterRepository mvEmployeeMasterRepository) {
@@ -31,6 +34,11 @@ public class CommunicationListener {
 		CommunicationListener.checkUtil = checkUtil;
 	}
 
+	@Autowired
+	public void setDummyUserMasterRepository(DummyUserMasterRepository dummyUserMasterRepository) {
+		CommunicationListener.dummyUserMasterRepository = dummyUserMasterRepository;
+	}
+
 	/**
 	 * 社員マスタ情報をコミュニケーショントランザクションに焼き付けます。
 	 *
@@ -39,19 +47,30 @@ public class CommunicationListener {
 	@PrePersist
 	@Transactional
 	public void appendsEmployeeFields(Communication communication) {
-		MvEmployeeMaster emRequestOrigin = mvEmployeeMasterRepository.findByMomEmployeeId(communication.getRequestOriginId());
-		if (emRequestOrigin == null) {
-			String[] regexList = { "依頼者MoM社員ID" };
-			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "MasterDoesNotExistEmployeeMaster", regexList));
-		}
-		communication.setRequestOriginName(emRequestOrigin.getJobname1() + emRequestOrigin.getJobname2());
+		if (dummyUserMasterRepository.existsByUserId(communication.getRequestOriginId())) {
+			DummyUserMaster dummyUserMaster = dummyUserMasterRepository.findByUserId(communication.getRequestOriginId());
+			communication.setRequestOriginName(dummyUserMaster.getEmpName());
+		} else {
 
-		MvEmployeeMaster emRequestFrom = mvEmployeeMasterRepository.findByMomEmployeeId(communication.getRequestFromId());
-		if (emRequestFrom == null) {
-			String[] regexList = { "伝達者MoM社員ID" };
-			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "MasterDoesNotExistEmployeeMaster", regexList));
+			MvEmployeeMaster emRequestOrigin = mvEmployeeMasterRepository.findByMomEmployeeId(communication.getRequestOriginId());
+			if (emRequestOrigin == null) {
+				String[] regexList = { "依頼者MoM社員ID" };
+				throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "MasterDoesNotExistEmployeeMaster", regexList));
+			}
+			communication.setRequestOriginName(emRequestOrigin.getJobname1() + emRequestOrigin.getJobname2());
 		}
-		communication.setRequestFromName(emRequestFrom.getJobname1() + emRequestFrom.getJobname2());
+
+		if (dummyUserMasterRepository.existsByUserId(communication.getRequestFromId())) {
+			DummyUserMaster dummyUserMaster = dummyUserMasterRepository.findByUserId(communication.getRequestFromId());
+			communication.setRequestFromName(dummyUserMaster.getEmpName());
+		} else {
+			MvEmployeeMaster emRequestFrom = mvEmployeeMasterRepository.findByMomEmployeeId(communication.getRequestFromId());
+			if (emRequestFrom == null) {
+				String[] regexList = { "伝達者MoM社員ID" };
+				throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "MasterDoesNotExistEmployeeMaster", regexList));
+			}
+			communication.setRequestFromName(emRequestFrom.getJobname1() + emRequestFrom.getJobname2());
+		}
 
 		MvEmployeeMaster emRequestTo = mvEmployeeMasterRepository.findByMomEmployeeId(communication.getRequestToId());
 		if (emRequestTo == null) {

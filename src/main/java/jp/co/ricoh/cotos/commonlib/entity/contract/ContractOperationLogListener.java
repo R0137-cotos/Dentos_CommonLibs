@@ -8,19 +8,20 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import jp.co.ricoh.cotos.commonlib.entity.master.DummyUserMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvEmployeeMaster;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorCheckException;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorInfo;
 import jp.co.ricoh.cotos.commonlib.logic.check.CheckUtil;
+import jp.co.ricoh.cotos.commonlib.repository.master.DummyUserMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvEmployeeMasterRepository;
-import jp.co.ricoh.cotos.commonlib.util.BatchMomInfoProperties;
 
 @Component
 public class ContractOperationLogListener {
 
 	private static MvEmployeeMasterRepository mvEmployeeMasterRepository;
 	private static CheckUtil checkUtil;
-	private static BatchMomInfoProperties batchProperty;
+	private static DummyUserMasterRepository dummyUserMasterRepository;
 
 	@Autowired
 	public void setMvEmployeeMasterRepository(MvEmployeeMasterRepository mvEmployeeMasterRepository) {
@@ -33,8 +34,8 @@ public class ContractOperationLogListener {
 	}
 
 	@Autowired
-	public void setBatchMomInfoProperties(BatchMomInfoProperties batchProperty) {
-		ContractOperationLogListener.batchProperty = batchProperty;
+	public void setDummyUserMasterRepository(DummyUserMasterRepository dummyUserMasterRepository) {
+		ContractOperationLogListener.dummyUserMasterRepository = dummyUserMasterRepository;
 	}
 
 	/**
@@ -47,9 +48,10 @@ public class ContractOperationLogListener {
 	@Transactional
 	public void appendsEmployeeFields(ContractOperationLog contractOperationLog) {
 
-		if (contractOperationLog.getOperatorEmpId().equals(batchProperty.getMomEmpId())) {
-			contractOperationLog.setOperatorName(batchProperty.getOperatorName());
-			contractOperationLog.setOperatorOrgName(batchProperty.getOperatorOrgName());
+		if (dummyUserMasterRepository.existsByUserId(contractOperationLog.getOperatorEmpId())) {
+			DummyUserMaster dummyUserMaster = dummyUserMasterRepository.findByUserId(contractOperationLog.getOperatorEmpId());
+			contractOperationLog.setOperatorName(dummyUserMaster.getEmpName());
+			contractOperationLog.setOperatorOrgName(dummyUserMaster.getOrgName());
 			return;
 		}
 
