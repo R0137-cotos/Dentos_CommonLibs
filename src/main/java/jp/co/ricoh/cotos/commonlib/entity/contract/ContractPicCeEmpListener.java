@@ -10,10 +10,12 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import jp.co.ricoh.cotos.commonlib.entity.master.DummyUserMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvEmployeeMaster;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorCheckException;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorInfo;
 import jp.co.ricoh.cotos.commonlib.logic.check.CheckUtil;
+import jp.co.ricoh.cotos.commonlib.repository.master.DummyUserMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvEmployeeMasterRepository;
 
 @Component
@@ -21,6 +23,7 @@ public class ContractPicCeEmpListener {
 
 	private static MvEmployeeMasterRepository mvEmployeeMasterRepository;
 	private static CheckUtil checkUtil;
+	private static DummyUserMasterRepository dummyUserMasterRepository;
 
 	@Autowired
 	public void setMvEmployeeMasterRepository(MvEmployeeMasterRepository mvEmployeeMasterRepository) {
@@ -32,6 +35,11 @@ public class ContractPicCeEmpListener {
 		ContractPicCeEmpListener.checkUtil = checkUtil;
 	}
 
+	@Autowired
+	public void setDummyUserMasterRepository(DummyUserMasterRepository dummyUserMasterRepository) {
+		ContractPicCeEmpListener.dummyUserMasterRepository = dummyUserMasterRepository;
+	}
+
 	/**
 	 * 社員マスタ情報を契約担当CE社員トランザクションに紐づけます。
 	 *
@@ -40,6 +48,13 @@ public class ContractPicCeEmpListener {
 	@PrePersist
 	@Transactional
 	public void appendsEmployeeFields(ContractPicCeEmp contractPicCeEmp) {
+		if (dummyUserMasterRepository.existsByUserId(contractPicCeEmp.getMomEmployeeId())) {
+			DummyUserMaster dummyUserMaster = dummyUserMasterRepository.findByUserId(contractPicCeEmp.getMomEmployeeId());
+			contractPicCeEmp.setEmployeeName(dummyUserMaster.getEmpName());
+			contractPicCeEmp.setAddress(dummyUserMaster.getAddress());
+			return;
+		}
+
 		MvEmployeeMaster employeeMaster = mvEmployeeMasterRepository.findByMomEmployeeId(contractPicCeEmp.getMomEmployeeId());
 
 		if (employeeMaster == null) {

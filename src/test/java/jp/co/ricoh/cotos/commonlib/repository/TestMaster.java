@@ -31,6 +31,7 @@ import jp.co.ricoh.cotos.commonlib.entity.master.CommonMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.CommonMasterDetail;
 import jp.co.ricoh.cotos.commonlib.entity.master.ContractChecklistCompMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.DispUrlAuthMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.DummyUserMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.EstimationChecklistCompMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.ExtendsParameterCorrelationCheckMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.GpCheckMatterMaster;
@@ -69,6 +70,7 @@ import jp.co.ricoh.cotos.commonlib.repository.master.CommonMasterDetailRepositor
 import jp.co.ricoh.cotos.commonlib.repository.master.CommonMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ContractChecklistCompMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.DispUrlAuthMasterRepository;
+import jp.co.ricoh.cotos.commonlib.repository.master.DummyUserMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.EstimationChecklistCompMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ExtendsParameterCorrelationCheckMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.GpCheckMatterMasterRepository;
@@ -176,6 +178,8 @@ public class TestMaster {
 	private MailControlMasterRepository mailControlMasterRepository;
 	@Autowired
 	private MailConvertValueMasterRepository mailConvertValueMasterRepository;
+	@Autowired
+	private DummyUserMasterRepository dummyUserMasterRepository;
 	@Autowired
 	private JsonSchemaMasterRepository jsonSchemaMasterRepository;
 	@Autowired
@@ -998,6 +1002,32 @@ public class TestMaster {
 		appId = Arrays.asList("cotos_dev");
 		list = arrangementWorkTypeMasterRepository.findByAppIdInOrderByIdAsc(appId);
 		Assert.assertNotEquals(0, list.size());
+	}
+
+	@Test
+	public void DummyUserMasterのテスト() throws Exception {
+
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/dummyUserMaster.sql");
+
+		// エンティティの取得
+		Long id = 1L;
+		DummyUserMaster found = dummyUserMasterRepository.findOne(id);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		testTool.assertColumnsNotNull(found);
+
+		// エンティティ取得
+		found = dummyUserMasterRepository.findByUserId("COTOS_BATCH_USER");
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		testTool.assertColumnsNotNull(found);
 	}
 
 	@Test
