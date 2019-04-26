@@ -37,9 +37,12 @@ public class CotosAuthenticationDetails implements UserDetails {
 	private boolean isSuperUser;
 
 	@Getter
+	private boolean isDummyUser;
+
+	@Getter
 	private Map<ActionDiv, Map<AuthDiv, AuthLevel>> momAuthorities;
 
-	public CotosAuthenticationDetails(String momEmployeeId, String singleUserId, String origin, String applicationId, String jwt, boolean isSuperUser, Map<ActionDiv, Map<AuthDiv, AuthLevel>> momAuthorities) {
+	public CotosAuthenticationDetails(String momEmployeeId, String singleUserId, String origin, String applicationId, String jwt, boolean isSuperUser, boolean isDummyUser, Map<ActionDiv, Map<AuthDiv, AuthLevel>> momAuthorities) {
 		super();
 		this.momEmployeeId = momEmployeeId;
 		this.singleUserId = singleUserId;
@@ -47,6 +50,7 @@ public class CotosAuthenticationDetails implements UserDetails {
 		this.applicationId = applicationId;
 		this.jwt = jwt;
 		this.isSuperUser = isSuperUser;
+		this.isDummyUser = isDummyUser;
 		this.momAuthorities = momAuthorities;
 	}
 
