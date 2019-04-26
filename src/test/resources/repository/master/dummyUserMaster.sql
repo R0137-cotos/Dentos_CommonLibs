@@ -1,1 +1,1 @@
-INSERT INTO dummy_user_master (id,created_at,created_user_id,updated_at,updated_user_id,version,user_id,emp_name,org_name) VALUES (1,'2018/09/19 12:09:10','COTOS','2018/09/19 12:09:10','COTOS',1,'COTOS_BATCH_USER','dummy_batch_operator','dummy_batch_operator_org');
+INSERT INTO dummy_user_master (id,created_at,created_user_id,updated_at,updated_user_id,version,user_id,emp_name,org_name,address) VALUES (1,'2018/09/19 12:09:10','COTOS','2018/09/19 12:09:10','COTOS',1,'COTOS_BATCH_USER','dummy_batch_operator','dummy_batch_operator_org','dummy_batch_operator_address');

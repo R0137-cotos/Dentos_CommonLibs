@@ -72,20 +72,31 @@ public class CommunicationListener {
 			communication.setRequestFromName(emRequestFrom.getJobname1() + emRequestFrom.getJobname2());
 		}
 
-		MvEmployeeMaster emRequestTo = mvEmployeeMasterRepository.findByMomEmployeeId(communication.getRequestToId());
-		if (emRequestTo == null) {
-			String[] regexList = { "被伝達者MoM社員ID" };
-			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "MasterDoesNotExistEmployeeMaster", regexList));
-		}
-		communication.setRequestToName(emRequestTo.getJobname1() + emRequestTo.getJobname2());
-
-		if (!StringUtils.isEmpty(communication.getRequestToCandidateId())) {
-			MvEmployeeMaster emRequestToCandidate = mvEmployeeMasterRepository.findByMomEmployeeId(communication.getRequestToCandidateId());
-			if (emRequestToCandidate == null) {
-				String[] regexList = { "被伝達者候補MoM社員ID" };
+		if (dummyUserMasterRepository.existsByUserId(communication.getRequestToId())) {
+			DummyUserMaster dummyUserMaster = dummyUserMasterRepository.findByUserId(communication.getRequestOriginId());
+			communication.setRequestToName(dummyUserMaster.getEmpName());
+		} else {
+			MvEmployeeMaster emRequestTo = mvEmployeeMasterRepository.findByMomEmployeeId(communication.getRequestToId());
+			if (emRequestTo == null) {
+				String[] regexList = { "被伝達者MoM社員ID" };
 				throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "MasterDoesNotExistEmployeeMaster", regexList));
 			}
-			communication.setRequestToCandidateName(emRequestToCandidate.getJobname1() + emRequestToCandidate.getJobname2());
+			communication.setRequestToName(emRequestTo.getJobname1() + emRequestTo.getJobname2());
+		}
+
+		if (!StringUtils.isEmpty(communication.getRequestToCandidateId())) {
+
+			if (dummyUserMasterRepository.existsByUserId(communication.getRequestToCandidateId())) {
+				DummyUserMaster dummyUserMaster = dummyUserMasterRepository.findByUserId(communication.getRequestToCandidateId());
+				communication.setRequestToCandidateName(dummyUserMaster.getEmpName());
+			} else {
+				MvEmployeeMaster emRequestToCandidate = mvEmployeeMasterRepository.findByMomEmployeeId(communication.getRequestToCandidateId());
+				if (emRequestToCandidate == null) {
+					String[] regexList = { "被伝達者候補MoM社員ID" };
+					throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "MasterDoesNotExistEmployeeMaster", regexList));
+				}
+				communication.setRequestToCandidateName(emRequestToCandidate.getJobname1() + emRequestToCandidate.getJobname2());
+			}
 		}
 
 	}

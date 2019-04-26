@@ -15,9 +15,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- *
  * ダミーユーザーを管理するマスタ
- *
  */
 @Entity
 @Data
@@ -45,4 +43,8 @@ public class DummyUserMaster extends EntityBaseMaster{
 	@Size(max=255)
 	@ApiModelProperty(value = "ダミー組織名", required = false, position = 4, allowableValues = "range[0,255]")
 	private String orgName;
+
+	@Size(max=1000)
+	@ApiModelProperty(value = "ダミー住所", required = false, position = 5, allowableValues = "range[0,1000]")
+	private String address;
 }
