@@ -5,12 +5,9 @@ import java.util.ArrayList;
 import javax.persistence.PrePersist;
 import javax.transaction.Transactional;
 
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import jp.co.ricoh.cotos.commonlib.entity.master.DummyUserMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvEmployeeMaster;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorCheckException;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorInfo;
@@ -42,10 +39,8 @@ public class ContractPicSaEmpListener {
 	@PrePersist
 	@Transactional
 	public void appendsEmployeeFields(ContractPicSaEmp contractPicSaEmp) {
+		//ダミーユーザーであるかどうかのチェック
 		if (dummyUserMasterRepository.existsByUserId(contractPicSaEmp.getMomEmployeeId())) {
-			DummyUserMaster dummyUserMaster = dummyUserMasterRepository.findByUserId(contractPicSaEmp.getMomEmployeeId());
-			contractPicSaEmp.setEmployeeName(dummyUserMaster.getEmpName());
-			contractPicSaEmp.setAddress(dummyUserMaster.getAddress());
 			return;
 		}
 
@@ -56,23 +51,6 @@ public class ContractPicSaEmpListener {
 			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "MasterDoesNotExistEmployeeMaster", regexList));
 		}
 
-		BeanUtils.copyProperties(employeeMaster, contractPicSaEmp);
-		contractPicSaEmp.setEmployeeName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
-		contractPicSaEmp.setAddress(convertJoinedAddress(employeeMaster));
-	}
-
-	private String convertJoinedAddress(MvEmployeeMaster master) {
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(StringUtils.defaultIfEmpty(master.getTdhknNmKnji(), StringUtils.EMPTY));
-		sb.append(StringUtils.defaultIfEmpty(master.getSkugnchosnKnji(), StringUtils.EMPTY));
-		sb.append(StringUtils.defaultIfEmpty(master.getOwaTusyoKnji(), StringUtils.EMPTY));
-		sb.append(StringUtils.defaultIfEmpty(master.getKowChomeKnji(), StringUtils.EMPTY));
-		sb.append(StringUtils.defaultIfEmpty(master.getStreet(), StringUtils.EMPTY));
-		sb.append(StringUtils.defaultIfEmpty(master.getBuilding(), StringUtils.EMPTY));
-
-		return sb.toString();
 	}
 
 }
