@@ -2,8 +2,10 @@ package jp.co.ricoh.cotos.commonlib.entity.master;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,6 +13,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -84,4 +89,25 @@ public class ProductMaster extends EntityBaseMaster {
 	@Size(max = 255)
 	@ApiModelProperty(value = "アプリケーションID", required = false, position = 8, allowableValues = "range[0,255]")
 	private String appId;
+
+	/**
+	 * 商品固有項目VIEW識別子
+	 */
+	@ApiModelProperty(value = "商品固有項目VIEW識別子", required = false, position = 9)
+	private String viewNameSuffix;
+
+	/**
+	 * JSONスキーママスタ
+	 */
+	@OneToMany(mappedBy = "productMaster")
+	@ApiModelProperty(value = "JSONスキーママスタ", required = false, position = 10)
+	private List<JsonSchemaMaster> jsonSchemaMasterList;
+
+	/**
+	 * 拡張項目相関チェックマスタ
+	 */
+	@OneToMany(mappedBy = "productMaster", orphanRemoval = true, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SUBSELECT)
+	@ApiModelProperty(value = "拡張項目相関チェックマスタ", required = false, position = 11)
+	private List<ExtendsParameterCorrelationCheckMaster> extendsParameterCorrelationCheckMasterList;
 }
