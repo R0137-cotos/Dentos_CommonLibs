@@ -33,8 +33,10 @@ import jp.co.ricoh.cotos.commonlib.entity.master.ContractChecklistCompMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.DispUrlAuthMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.DummyUserMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.EstimationChecklistCompMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.ExtendsParameterCorrelationCheckMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.GpCheckMatterMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.ItemMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.JsonSchemaMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.MailControlMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.MailConvertValueMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.MailTemplateMaster;
@@ -70,8 +72,10 @@ import jp.co.ricoh.cotos.commonlib.repository.master.ContractChecklistCompMaster
 import jp.co.ricoh.cotos.commonlib.repository.master.DispUrlAuthMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.DummyUserMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.EstimationChecklistCompMasterRepository;
+import jp.co.ricoh.cotos.commonlib.repository.master.ExtendsParameterCorrelationCheckMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.GpCheckMatterMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ItemMasterRepository;
+import jp.co.ricoh.cotos.commonlib.repository.master.JsonSchemaMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MailControlMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MailConvertValueMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MailTemplateMasterRepository;
@@ -176,6 +180,10 @@ public class TestMaster {
 	private MailConvertValueMasterRepository mailConvertValueMasterRepository;
 	@Autowired
 	private DummyUserMasterRepository dummyUserMasterRepository;
+	@Autowired
+	private JsonSchemaMasterRepository jsonSchemaMasterRepository;
+	@Autowired
+	private ExtendsParameterCorrelationCheckMasterRepository extendsParameterCorrelationCheckMasterRepository;
 
 	@Autowired
 	TestTools testTool = null;
@@ -703,6 +711,8 @@ public class TestMaster {
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/productCompMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/gpCheckMatterMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/productGrpMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/jsonMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/extendsParameterCorrelationCheckMaster.sql");
 
 		// エンティティの取得
 		Long id = 1L;
@@ -720,6 +730,10 @@ public class TestMaster {
 		if (found.getEstimationChecklistCompMasterList() == null || found.getEstimationChecklistCompMasterList().size() == 0)
 			Assert.assertTrue(false);
 		if (found.getItemMasterList() == null || found.getItemMasterList().size() == 0)
+			Assert.assertTrue(false);
+		if (found.getJsonSchemaMasterList() == null || found.getJsonSchemaMasterList().size() == 0)
+			Assert.assertTrue(false);
+		if (found.getExtendsParameterCorrelationCheckMasterList() == null || found.getExtendsParameterCorrelationCheckMasterList().size() == 0)
 			Assert.assertTrue(false);
 	}
 
@@ -1008,6 +1022,39 @@ public class TestMaster {
 
 		// エンティティ取得
 		found = dummyUserMasterRepository.findByUserId("COTOS_BATCH_USER");
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		testTool.assertColumnsNotNull(found);
+	}
+
+	@Test
+	public void JsonSchemaMasterのテスト() throws Exception {
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/productMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/jsonMaster.sql");
+
+		// エンティティの取得
+		Long id = 1L;
+		JsonSchemaMaster found = jsonSchemaMasterRepository.findOne(id);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		testTool.assertColumnsNotNull(found);
+	}
+
+	@Test
+	public void ExtendsParameterCorrelationCheckMasterのテスト() throws Exception {
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/productMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/extendsParameterCorrelationCheckMaster.sql");
+
+		// エンティティの取得
+		ExtendsParameterCorrelationCheckMaster found = extendsParameterCorrelationCheckMasterRepository.findByProductMasterIdAndDomain(1L, "1");
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
