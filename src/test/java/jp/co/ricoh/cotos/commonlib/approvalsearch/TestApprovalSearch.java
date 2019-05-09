@@ -37,7 +37,7 @@ public class TestApprovalSearch {
 	@AfterClass
 	public static void stopAPServer() throws InterruptedException {
 		if (null != context) {
-			//context.getBean(DBConfig.class).clearData();
+			context.getBean(DBConfig.class).clearData();
 			context.stop();
 		}
 	}
