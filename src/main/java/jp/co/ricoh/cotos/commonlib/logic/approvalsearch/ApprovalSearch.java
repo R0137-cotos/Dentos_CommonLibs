@@ -3,7 +3,9 @@ package jp.co.ricoh.cotos.commonlib.logic.approvalsearch;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.script.ScriptEngine;
@@ -74,6 +76,46 @@ public class ApprovalSearch {
 		reslut.setApprovalRouteMaster(applyApprovalRouteMaster);
 
 		return reslut;
+	}
+
+	/**
+	 * 複数承認ルート特定
+	 * 
+	 * <pre>
+	 * 【処理内容】
+	 * ・引数の承認ルートグループIDを元に承認ルートグループマスタTBL(APPROVAL_ROUTE_GRP_MASTER)から承認ルートグループマスタ情報取得
+	 * ・引数のエンティティを元にJavaScriptエンジン「Nashorn」を使用し、承認ルートマスタTBL(APPROVAL_ROUTE_MASTER)からルート条件式に一致にする承認ルートマスタ情報取得
+	 *  ※上記処理で失敗した場合は、処理結果ステータスに「警告」または「異常」を設定し戻り値返却
+	 * ・承認ルートマスタ情報に紐づく承認ルードノード情報は各ドメインの共通処理で取得
+	 * </pre>
+	 * 
+	 * @param approvalRouteGrpId
+	 *            承認ルートグループID
+	 * @param entity
+	 *            エンティティ
+	 * @param domain
+	 *            ドメイン(estimation・contract・arrangementのいずれかを設定)
+	 * @return 承認ルート
+	 */
+	@SuppressWarnings("hiding")
+	public <T> List<ApprovalRouteMasterResult> findApprovalRouteMasterCandidate(long approvalRouteGrpId, T entity, String domain) {
+
+		List<ApprovalRouteMasterResult> resultList = new ArrayList<>();
+		ApprovalRouteGrpMaster approvalRouteGrpMaster = approvalRouteGrpMasterRepository.findOne(approvalRouteGrpId);
+
+		// ルート特定、または条件式実行結果ステータスの異常・警告が発生するまでループ
+		approvalRouteGrpMaster.getApprovalRouteMasterList().stream().filter(approvalRouteMaster -> {
+			// 条件式実行
+			RouteFormulaResult formulaResult = this.execRouteFormula(entity, domain, approvalRouteMaster);
+			return (RouteFormulaStatus.正常.equals(formulaResult.getStatus()) && formulaResult.isApplyRoute()) || RouteFormulaStatus.異常.equals(formulaResult.getStatus()) || RouteFormulaStatus.警告.equals(formulaResult.getStatus());
+		}).forEach(approvalRouteMaster -> {
+			ApprovalRouteMasterResult approvalRouteMasterResult = new ApprovalRouteMasterResult();
+			approvalRouteMasterResult.setApprovalRouteMaster(approvalRouteMaster);
+			approvalRouteMasterResult.setRouteFormulaResult(this.execRouteFormula(entity, domain, approvalRouteMaster));
+			resultList.add(approvalRouteMasterResult);
+		});
+
+		return resultList;
 	}
 
 	/**

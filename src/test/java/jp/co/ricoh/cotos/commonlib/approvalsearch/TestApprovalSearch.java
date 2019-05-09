@@ -1,5 +1,7 @@
 package jp.co.ricoh.cotos.commonlib.approvalsearch;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.junit.AfterClass;
@@ -35,7 +37,7 @@ public class TestApprovalSearch {
 	@AfterClass
 	public static void stopAPServer() throws InterruptedException {
 		if (null != context) {
-			context.getBean(DBConfig.class).clearData();
+			//context.getBean(DBConfig.class).clearData();
 			context.stop();
 		}
 	}
@@ -79,6 +81,60 @@ public class TestApprovalSearch {
 			Assert.assertEquals("ステータスが警告であること", RouteFormulaStatus.警告, result.getRouteFormulaResult().getStatus());
 			Assert.assertEquals("承認ルートが特定できないこと", true, result.getRouteFormulaResult().isApplyRoute());
 			Assert.assertEquals("エラー項目数", 1, result.getRouteFormulaResult().getErrorPropertyList().size());
+		} catch (Exception e) {
+			Assert.fail("異常終了");
+		}
+	}
+
+	@Test
+	@Transactional
+	public void 複数承認ルート取得確認_正常() {
+		テストデータ作成();
+
+		try {
+			List<ApprovalRouteMasterResult> resultList = approvalSearch.findApprovalRouteMasterCandidate(1L, テストエンティティ作成(false), "test");
+			resultList.stream().forEach(result -> {
+				Assert.assertEquals("ステータスが正常であること", RouteFormulaStatus.正常, result.getRouteFormulaResult().getStatus());
+				Assert.assertEquals("承認ルートマスタが正しく取得されること", 1L, result.getApprovalRouteMaster().getApprovalRouteGrpMaster().getId());
+			});
+		} catch (Exception e) {
+			Assert.fail("異常終了");
+		}
+	}
+
+	@Test
+	@Transactional
+	public void 複数承認ルート取得確認_正常異常混在() {
+		テストデータ作成();
+
+		try {
+			List<ApprovalRouteMasterResult> resultList = approvalSearch.findApprovalRouteMasterCandidate(2L, テストエンティティ作成(false), "test");
+			resultList.stream().filter(result -> RouteFormulaStatus.異常 == result.getRouteFormulaResult().getStatus()).forEach(result -> {
+				Assert.assertEquals("承認ルートが特定できないこと", false, result.getRouteFormulaResult().isApplyRoute());
+				Assert.assertEquals("エラー項目数", 1, result.getRouteFormulaResult().getErrorPropertyList().size());
+			});
+			resultList.stream().filter(result -> RouteFormulaStatus.正常 == result.getRouteFormulaResult().getStatus()).forEach(result -> {
+				Assert.assertEquals("承認ルートマスタが正しく取得されること", 5L, result.getApprovalRouteMaster().getId());
+			});
+		} catch (Exception e) {
+			Assert.fail("異常終了");
+		}
+	}
+
+	@Test
+	@Transactional
+	public void 複数承認ルート取得確認_正常警告混在() {
+		テストデータ作成();
+
+		try {
+			List<ApprovalRouteMasterResult> resultList = approvalSearch.findApprovalRouteMasterCandidate(3L, テストエンティティ作成(true), "test");
+			resultList.stream().filter(result -> RouteFormulaStatus.警告 == result.getRouteFormulaResult().getStatus()).forEach(result -> {
+				Assert.assertEquals("承認ルートが特定できないこと", true, result.getRouteFormulaResult().isApplyRoute());
+				Assert.assertEquals("エラー項目数", 1, result.getRouteFormulaResult().getErrorPropertyList().size());
+			});
+			resultList.stream().filter(result -> RouteFormulaStatus.正常 == result.getRouteFormulaResult().getStatus()).forEach(result -> {
+				Assert.assertEquals("承認ルートマスタが正しく取得されること", 6L, result.getApprovalRouteMaster().getId());
+			});
 		} catch (Exception e) {
 			Assert.fail("異常終了");
 		}
