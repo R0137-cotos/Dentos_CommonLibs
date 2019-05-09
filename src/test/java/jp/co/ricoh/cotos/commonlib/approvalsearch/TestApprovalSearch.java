@@ -93,6 +93,7 @@ public class TestApprovalSearch {
 
 		try {
 			List<ApprovalRouteMasterResult> resultList = approvalSearch.findApprovalRouteMasterCandidate(1L, テストエンティティ作成(false), "test");
+			Assert.assertEquals("承認ルートが複数取れること", 2, resultList.size());
 			resultList.stream().forEach(result -> {
 				Assert.assertEquals("ステータスが正常であること", RouteFormulaStatus.正常, result.getRouteFormulaResult().getStatus());
 				Assert.assertEquals("承認ルートマスタが正しく取得されること", 1L, result.getApprovalRouteMaster().getApprovalRouteGrpMaster().getId());
