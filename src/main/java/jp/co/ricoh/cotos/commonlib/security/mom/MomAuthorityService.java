@@ -169,7 +169,7 @@ public class MomAuthorityService {
 	/**
 	 * 参照・編集権限が存在するか判定する
 	 */
-	private boolean hasEditAuthority(AuthLevel authLevel, MvEmployeeMaster editor, VKjbMaster customer, List<MvEmployeeMaster> targetEmployeeMasterList) {
+	protected boolean hasEditAuthority(AuthLevel authLevel, MvEmployeeMaster editor, VKjbMaster customer, List<MvEmployeeMaster> targetEmployeeMasterList) {
 
 		// 権限レベルによる認可処理を実施
 		switch (authLevel) {
@@ -198,7 +198,7 @@ public class MomAuthorityService {
 	/**
 	 * 承認権限があるか判定する
 	 */
-	private boolean hasApproveAuthority(AuthLevel authLevel, MvEmployeeMaster approver, MvEmployeeMaster requester) {
+	protected boolean hasApproveAuthority(AuthLevel authLevel, MvEmployeeMaster approver, MvEmployeeMaster requester) {
 
 		// 権限レベルによる認可処理を実施
 		switch (authLevel) {
@@ -224,7 +224,7 @@ public class MomAuthorityService {
 	/**
 	 * 対象の組織が下位組織か判定する
 	 */
-	private boolean isLowerOrg(String targetOrgId, String rootOrgId, Integer rootOrgHierarchyLevel) {
+	protected boolean isLowerOrg(String targetOrgId, String rootOrgId, Integer rootOrgHierarchyLevel) {
 
 		Map<String, Object> queryParams = new HashMap<>();
 		queryParams.put("orgId", rootOrgId);
@@ -246,7 +246,7 @@ public class MomAuthorityService {
 	/**
 	 * 関連組織に所属するか判定する
 	 */
-	private boolean isRelatedOrg(String targetSingleUserId, String editorSingleUserId) {
+	protected boolean isRelatedOrg(String targetSingleUserId, String editorSingleUserId) {
 
 		Map<String, Object> queryParams = new HashMap<>();
 		queryParams.put("editorSingleUserId", editorSingleUserId);
@@ -260,7 +260,7 @@ public class MomAuthorityService {
 	/**
 	 * 外部ライブラリから、シングルユーザーIDに紐づく権限情報を取得する
 	 */
-	private List<AuthorityInfoActionDto> searchMomAuthoritiesExternal(String singleUserId) throws SQLException, RemoteException, ServiceException {
+	protected List<AuthorityInfoActionDto> searchMomAuthoritiesExternal(String singleUserId) throws SQLException, RemoteException, ServiceException {
 
 		// MoM権限取得用のコネクションを作成
 		Connection connection = DriverManager.getConnection(datasourceProperties.getUrl(), datasourceProperties.getUsername(), datasourceProperties.getPassword());
