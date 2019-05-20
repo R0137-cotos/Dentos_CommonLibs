@@ -7,6 +7,7 @@ import javax.validation.constraints.Size;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.common.DtoBase;
+import jp.co.ricoh.cotos.commonlib.entity.master.ApprovalRouteNodeMaster.ApproverDeriveMethodDiv;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -73,4 +74,10 @@ public class ContractApprovalRouteNodeDto extends DtoBase {
 	@Size(max = 255)
 	@ApiModelProperty(value = "代理承認者組織名", required = false, position = 10, allowableValues = "range[0,255]")
 	private String subApproverOrgName;
+	
+	/**
+	 * 承認者導出方式区分
+	 */
+	@ApiModelProperty(value = "承認者導出方式区分", required = false, allowableValues = "直属上司指定(\"1\"), 組織絶対階層指定(\"2\"), 組織直接指定(\"3\"), ユーザー直接指定(\"4\")", example = "1", position = 11)
+	private ApproverDeriveMethodDiv approverDeriveMethodDiv;
 }
