@@ -27,7 +27,7 @@ import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractAttachedFileDt
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractCheckResultDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractDetailDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractDto;
-import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractPicCeEmpDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractPicMntCeEmpDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractPicMntSsOrgDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractPicSaEmpDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.CustomerContractDto;
@@ -46,7 +46,7 @@ import jp.co.ricoh.cotos.commonlib.entity.contract.ContractApprovalRouteNode;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractAttachedFile;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractCheckResult;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractDetail;
-import jp.co.ricoh.cotos.commonlib.entity.contract.ContractPicCeEmp;
+import jp.co.ricoh.cotos.commonlib.entity.contract.ContractPicMntCeEmp;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractPicMntSsOrg;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractPicSaEmp;
 import jp.co.ricoh.cotos.commonlib.entity.contract.CustomerContract;
@@ -62,7 +62,7 @@ import jp.co.ricoh.cotos.commonlib.repository.contract.ContractAttachedFileRepos
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractCheckResultRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractDetailRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractOperationLogRepository;
-import jp.co.ricoh.cotos.commonlib.repository.contract.ContractPicCeEmpRepository;
+import jp.co.ricoh.cotos.commonlib.repository.contract.ContractPicMntCeEmpRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractPicMntSsOrgRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractPicSaEmpRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractRepository;
@@ -147,7 +147,7 @@ public class TestContractDto {
 	ContractPicMntSsOrgRepository contractPicMntSsOrgRepository;
 
 	@Autowired
-	ContractPicCeEmpRepository contractPicCeEmpRepository;
+	ContractPicMntCeEmpRepository contractPicMntCeEmpRepository;
 
 	@Autowired
 	ManagedEstimationDetailRepository managedEstimationDetailRepository;
@@ -344,10 +344,10 @@ public class TestContractDto {
 		BeanUtils.copyProperties(entity.getContractCheckResultList().get(0), check);
 		dto.setContractCheckResultList(Arrays.asList(check));
 
-		// 契約担当CE社員
-		ContractPicCeEmpDto ce = new ContractPicCeEmpDto();
-		BeanUtils.copyProperties(entity.getContractPicCeEmp(), ce);
-		dto.setContractPicCeEmp(ce);
+		// 契約保守担当CE社員
+		ContractPicMntCeEmpDto ce = new ContractPicMntCeEmpDto();
+		BeanUtils.copyProperties(entity.getContractPicMntCeEmp(), ce);
+		dto.setContractPicMntCeEmp(ce);
 
 		// 契約保守担当SS組織
 		ContractPicMntSsOrgDto ss = new ContractPicMntSsOrgDto();
@@ -436,7 +436,7 @@ public class TestContractDto {
 		testTarget.getContractApprovalRouteList().get(0).setApprovalRequesterName(STR_256);
 		testTarget.getContractCheckResultList().get(0).setCheckedUserName(STR_256);
 		testTarget.getContractPicMntSsOrg().setServiceOrgName(STR_256);
-		testTarget.getContractPicCeEmp().setFaxNumber(STR_256);
+		testTarget.getContractPicMntCeEmp().setFaxNumber(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 12);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
@@ -838,9 +838,9 @@ public class TestContractDto {
 	}
 
 	@Test
-	public void ContractPicCeEmpDtoのテスト() throws Exception {
-		ContractPicCeEmp entity = contractPicCeEmpRepository.findOne(401L);
-		ContractPicCeEmpDto testTarget = new ContractPicCeEmpDto();
+	public void ContractPicMntCeEmpDtoのテスト() throws Exception {
+		ContractPicMntCeEmp entity = contractPicMntCeEmpRepository.findOne(401L);
+		ContractPicMntCeEmpDto testTarget = new ContractPicMntCeEmpDto();
 
 		// 正常系
 		BeanUtils.copyProperties(entity, testTarget);

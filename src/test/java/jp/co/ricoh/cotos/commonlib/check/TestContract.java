@@ -26,7 +26,7 @@ import jp.co.ricoh.cotos.commonlib.entity.contract.ContractAttachedFile;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractCheckResult;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractDetail;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractOperationLog;
-import jp.co.ricoh.cotos.commonlib.entity.contract.ContractPicCeEmp;
+import jp.co.ricoh.cotos.commonlib.entity.contract.ContractPicMntCeEmp;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractPicMntSsOrg;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractPicSaEmp;
 import jp.co.ricoh.cotos.commonlib.entity.contract.CustomerContract;
@@ -42,7 +42,7 @@ import jp.co.ricoh.cotos.commonlib.repository.contract.ContractAttachedFileRepos
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractCheckResultRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractDetailRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractOperationLogRepository;
-import jp.co.ricoh.cotos.commonlib.repository.contract.ContractPicCeEmpRepository;
+import jp.co.ricoh.cotos.commonlib.repository.contract.ContractPicMntCeEmpRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractPicMntSsOrgRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractPicSaEmpRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractRepository;
@@ -126,7 +126,7 @@ public class TestContract {
 	ContractPicMntSsOrgRepository contractPicMntSsOrgRepository;
 
 	@Autowired
-	ContractPicCeEmpRepository contractPicCeEmpRepository;
+	ContractPicMntCeEmpRepository contractPicMntCeEmpRepository;
 
 	@Autowired
 	ManagedEstimationDetailRepository managedEstimationDetailRepository;
@@ -820,8 +820,8 @@ public class TestContract {
 
 	@Test
 	public void ContractPicCeEmpのテスト() throws Exception {
-		ContractPicCeEmp entity = contractPicCeEmpRepository.findOne(401L);
-		ContractPicCeEmp testTarget = new ContractPicCeEmp();
+		ContractPicMntCeEmp entity = contractPicMntCeEmpRepository.findOne(401L);
+		ContractPicMntCeEmp testTarget = new ContractPicMntCeEmp();
 
 		// 正常系
 		BeanUtils.copyProperties(testTarget, entity);

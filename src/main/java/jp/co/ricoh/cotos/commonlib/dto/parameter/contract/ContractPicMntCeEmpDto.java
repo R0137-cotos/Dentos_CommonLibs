@@ -6,5 +6,5 @@ import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = false)
 @Data
-public class ContractPicCeEmpDto extends EmployeeAbstractDto {
+public class ContractPicMntCeEmpDto extends EmployeeAbstractDto {
 }

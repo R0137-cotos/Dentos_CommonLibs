@@ -19,15 +19,15 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * 契約情報の中で保持する契約担当CE社員情報を表すEntity
+ * 契約情報の中で保持する契約保守担当CE社員情報を表すEntity
  */
 @Entity
 @EqualsAndHashCode(callSuper = true)
-@EntityListeners(ContractPicCeEmpListener.class)
+@EntityListeners(ContractPicMntCeEmpListener.class)
 @Data
 @Table(name = "contract_pic_ce_emp")
-@ApiModel(description = "契約担当CE社員(作成時不要)")
-public class ContractPicCeEmp extends EmployeeAbstractEntity {
+@ApiModel(description = "契約保守担当CE社員(作成時不要)")
+public class ContractPicMntCeEmp extends EmployeeAbstractEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_pic_ce_emp_seq")

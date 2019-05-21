@@ -129,6 +129,27 @@ public class Contract extends EntityBase {
 			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
+	
+	public enum SsWorkRequestCreateStatus {
+		未作成("0"),	作成済み("1"),作成エラー("2");
+		
+		private final String text;
+
+		private SsWorkRequestCreateStatus (final String text) {
+			this.text = text;
+		}
+		
+		@Override
+		@JsonValue
+		public String toString() {
+			return this.text;
+		}
+
+		@JsonCreator
+		public static SsWorkRequestCreateStatus fromString(final String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+		}
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_seq")
@@ -502,11 +523,11 @@ public class Contract extends EntityBase {
 	private List<ProductContract> productContractList;
 
 	/**
-	 * 契約担当CE社員
+	 * 契約保守担当CE社員
 	 */
 	@OneToOne(mappedBy = "contract")
 	@ApiModelProperty(value = "契約担当CE社員(作成時不要)", required = false, position = 53, readOnly = true)
-	private ContractPicCeEmp contractPicCeEmp;
+	private ContractPicMntCeEmp contractPicMntCeEmp;
 
 	/**
 	 * 契約保守担当SS組織
@@ -522,11 +543,32 @@ public class Contract extends EntityBase {
 	@OneToMany(mappedBy = "contract")
 	@ApiModelProperty(value = "見積明細管理", required = true, position = 55)
 	private List<ManagedEstimationDetail> managedEstimationDetailList;
+	
+	/**
+	 * 設置先(契約用)
+	 */
+	@Valid
+	@OneToMany(mappedBy = "contract")
+	@ApiModelProperty(value = "設置先(契約用)", required = true, position = 56)
+	private List<ContractInstallationLocation> contractInstallationLocationList;
 
 	/**
 	 * アプリケーションID
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "アプリケーションID", required = false, position = 56, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "アプリケーションID", required = false, position = 57, allowableValues = "range[0,255]")
 	private String appId;
+	
+	/**
+	 * お問い合わせ番号
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "お問い合わせ番号", required = false, position = 58, allowableValues = "range[0,255]")
+	private String contactNo;
+	
+	/**
+	 * S&S作業依頼作成状態
+	 */
+	@ApiModelProperty(value = "S&S作業依頼作成状態", required = false, position = 59, allowableValues = "未作成(\"0\"),作成済み(\"1\"),作成エラー(\"2\")", example = "1")
+	private SsWorkRequestCreateStatus ssWorkRequestCreateStatus;
 }

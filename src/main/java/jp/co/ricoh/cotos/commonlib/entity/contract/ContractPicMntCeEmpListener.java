@@ -19,7 +19,7 @@ import jp.co.ricoh.cotos.commonlib.repository.master.DummyUserMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvEmployeeMasterRepository;
 
 @Component
-public class ContractPicCeEmpListener {
+public class ContractPicMntCeEmpListener {
 
 	private static MvEmployeeMasterRepository mvEmployeeMasterRepository;
 	private static CheckUtil checkUtil;
@@ -27,17 +27,17 @@ public class ContractPicCeEmpListener {
 
 	@Autowired
 	public void setMvEmployeeMasterRepository(MvEmployeeMasterRepository mvEmployeeMasterRepository) {
-		ContractPicCeEmpListener.mvEmployeeMasterRepository = mvEmployeeMasterRepository;
+		ContractPicMntCeEmpListener.mvEmployeeMasterRepository = mvEmployeeMasterRepository;
 	}
 
 	@Autowired
 	public void setCheckUtil(CheckUtil checkUtil) {
-		ContractPicCeEmpListener.checkUtil = checkUtil;
+		ContractPicMntCeEmpListener.checkUtil = checkUtil;
 	}
 
 	@Autowired
 	public void setDummyUserMasterRepository(DummyUserMasterRepository dummyUserMasterRepository) {
-		ContractPicCeEmpListener.dummyUserMasterRepository = dummyUserMasterRepository;
+		ContractPicMntCeEmpListener.dummyUserMasterRepository = dummyUserMasterRepository;
 	}
 
 	/**
@@ -47,24 +47,24 @@ public class ContractPicCeEmpListener {
 	 */
 	@PrePersist
 	@Transactional
-	public void appendsEmployeeFields(ContractPicCeEmp contractPicCeEmp) {
-		if (dummyUserMasterRepository.existsByUserId(contractPicCeEmp.getMomEmployeeId())) {
-			DummyUserMaster dummyUserMaster = dummyUserMasterRepository.findByUserId(contractPicCeEmp.getMomEmployeeId());
-			contractPicCeEmp.setEmployeeName(dummyUserMaster.getEmpName());
-			contractPicCeEmp.setAddress(dummyUserMaster.getAddress());
+	public void appendsEmployeeFields(ContractPicMntCeEmp contractPicMntCeEmp) {
+		if (dummyUserMasterRepository.existsByUserId(contractPicMntCeEmp.getMomEmployeeId())) {
+			DummyUserMaster dummyUserMaster = dummyUserMasterRepository.findByUserId(contractPicMntCeEmp.getMomEmployeeId());
+			contractPicMntCeEmp.setEmployeeName(dummyUserMaster.getEmpName());
+			contractPicMntCeEmp.setAddress(dummyUserMaster.getAddress());
 			return;
 		}
 
-		MvEmployeeMaster employeeMaster = mvEmployeeMasterRepository.findByMomEmployeeId(contractPicCeEmp.getMomEmployeeId());
+		MvEmployeeMaster employeeMaster = mvEmployeeMasterRepository.findByMomEmployeeId(contractPicMntCeEmp.getMomEmployeeId());
 
 		if (employeeMaster == null) {
 			String[] regexList = { "契約担当CE社員" };
 			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "MasterDoesNotExistEmployeeMaster", regexList));
 		}
 
-		BeanUtils.copyProperties(employeeMaster, contractPicCeEmp);
-		contractPicCeEmp.setEmployeeName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
-		contractPicCeEmp.setAddress(convertJoinedAddress(employeeMaster));
+		BeanUtils.copyProperties(employeeMaster, contractPicMntCeEmp);
+		contractPicMntCeEmp.setEmployeeName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
+		contractPicMntCeEmp.setAddress(convertJoinedAddress(employeeMaster));
 	}
 
 	private String convertJoinedAddress(MvEmployeeMaster master) {

@@ -33,7 +33,7 @@ import jp.co.ricoh.cotos.commonlib.repository.contract.ContractAttachedFileRepos
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractCheckResultRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractDetailRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractOperationLogRepository;
-import jp.co.ricoh.cotos.commonlib.repository.contract.ContractPicCeEmpRepository;
+import jp.co.ricoh.cotos.commonlib.repository.contract.ContractPicMntCeEmpRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractPicMntSsOrgRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractPicSaEmpRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractRepository;
@@ -90,7 +90,7 @@ public class TestContract {
 	ProductContractRepository productContractRepository;
 
 	@Autowired
-	ContractPicCeEmpRepository contractPicCeEmpRepository;
+	ContractPicMntCeEmpRepository contractPicMntCeEmpRepository;
 
 	@Autowired
 	ContractPicMntSsOrgRepository contractPicMntSsOrgRepository;
@@ -190,7 +190,7 @@ public class TestContract {
 
 	@Test
 	public void 全てのカラムがNullではないことを確認_契約担当CE社員() {
-		全てのカラムがNullではないことを確認_共通(contractPicCeEmpRepository, 401L, 501L);
+		全てのカラムがNullではないことを確認_共通(contractPicMntCeEmpRepository, 401L, 501L);
 	}
 
 	@Test

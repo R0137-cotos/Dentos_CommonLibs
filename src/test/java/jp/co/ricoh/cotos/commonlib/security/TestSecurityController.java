@@ -43,7 +43,7 @@ import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractAttachedFileDt
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractCheckResultDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractDetailDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractDto;
-import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractPicCeEmpDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractPicMntCeEmpDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractPicMntSsOrgDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractPicSaEmpDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.CustomerContractDto;
@@ -95,7 +95,7 @@ import jp.co.ricoh.cotos.commonlib.entity.contract.ContractAttachedFile;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractCheckResult;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractDetail;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractOperationLog;
-import jp.co.ricoh.cotos.commonlib.entity.contract.ContractPicCeEmp;
+import jp.co.ricoh.cotos.commonlib.entity.contract.ContractPicMntCeEmp;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractPicMntSsOrg;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractPicSaEmp;
 import jp.co.ricoh.cotos.commonlib.entity.contract.CustomerContract;
@@ -433,8 +433,8 @@ public class TestSecurityController {
 		return createParameterCheckResult(result);
 	}
 
-	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractPicCeEmpDto")
-	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractPicCeEmpDto dto, BindingResult result) {
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractPicMntCeEmpDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractPicMntCeEmpDto dto, BindingResult result) {
 		return createParameterCheckResult(result);
 	}
 
@@ -624,8 +624,8 @@ public class TestSecurityController {
 		return createParameterCheckResult(result);
 	}
 
-	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractPicCeEmp")
-	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractPicCeEmp entity, BindingResult result) {
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractPicMntCeEmp")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractPicMntCeEmp entity, BindingResult result) {
 		return createParameterCheckResult(result);
 	}
 
