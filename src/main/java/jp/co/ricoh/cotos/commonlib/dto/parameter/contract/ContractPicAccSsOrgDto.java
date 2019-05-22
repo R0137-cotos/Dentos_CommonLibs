@@ -12,9 +12,9 @@ import lombok.EqualsAndHashCode;
 public class ContractPicAccSsOrgDto extends DtoBase{
 	
 	/**
-	 * 科所名
+	 * 課所名
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "科所名", required = false, position = 3, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "課所名", required = false, position = 3, allowableValues = "range[0,255]")
 	private String serviceOrgName;
 }

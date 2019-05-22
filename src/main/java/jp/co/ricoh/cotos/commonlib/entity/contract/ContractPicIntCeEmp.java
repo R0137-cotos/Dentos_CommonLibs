@@ -28,7 +28,7 @@ public class ContractPicIntCeEmp extends EmployeeAbstractEntity {
 	 * ID
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contarct_equipment_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_pic_int_ce_emp_seq")
 	@SequenceGenerator(name = "contract_pic_int_ce_emp_seq", sequenceName = "contract_pic_int_ce_emp_seq", allocationSize = 1)
 	@ApiModelProperty(value = "ID(作成時不要)", required = true, position = 1, allowableValues = "range[0,9223372036854775807]", readOnly = true)
 	private long Id;

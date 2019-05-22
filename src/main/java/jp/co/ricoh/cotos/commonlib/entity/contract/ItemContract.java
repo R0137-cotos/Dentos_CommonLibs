@@ -170,7 +170,7 @@ public class ItemContract extends EntityBase {
 	 * 品種明細(契約用)
 	 */
 	@Valid
-	@OneToMany(mappedBy = "contract")
+	@OneToMany(mappedBy = "itemContract")
 	@ApiModelProperty(value = "品種明細(契約用)", required = false, position = 17)
 	private List<ItemDetailContract> itemDetailContractList; 
 

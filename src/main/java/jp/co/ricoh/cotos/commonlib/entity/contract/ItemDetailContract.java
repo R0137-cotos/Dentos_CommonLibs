@@ -31,11 +31,11 @@ import lombok.EqualsAndHashCode;
 @Data
 @Table(name = "item_detail_contract")
 public class ItemDetailContract extends EntityBase {
-	
+
 	public enum InitialRunningDiv {
-		
-		イニシャル("1"), ランニング("2");
-		
+
+		イニシャル("1"), ランニング("2"), 期間売("3");
+
 		private final String text;
 
 		private InitialRunningDiv(final String text) {
@@ -53,7 +53,7 @@ public class ItemDetailContract extends EntityBase {
 			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
-	
+
 	/**
 	 * 品種明細ID
 	 */
@@ -62,41 +62,41 @@ public class ItemDetailContract extends EntityBase {
 	@SequenceGenerator(name = "item_detail_contract_seq", sequenceName = "item_detail_contract_seq", allocationSize = 1)
 	@ApiModelProperty(value = "品種明細ID(作成時不要)", required = true, position = 1, allowableValues = "range[0,9223372036854775807]", readOnly = true)
 	private long id;
-	
+
 	/**
 	 * 原価
 	 */
 	@DecimalMax("9999999999999999999.99")
 	@ApiModelProperty(value = "原価", required = false, position = 2, allowableValues = "range[0.00,9999999999999999999.99]")
 	private BigDecimal price;
-	
+
 	/**
 	 * 振替先課所コード
 	 */
 	@Size(max = 255)
 	@ApiModelProperty(value = "振替先課所コード", required = false, position = 3, allowableValues = "range[0,255]")
 	private String transToServiceOrgCode;
-	
+
 	/**
 	 * 振替先課所名
 	 */
 	@Size(max = 255)
 	@ApiModelProperty(value = "振替先課所名", required = false, position = 4, allowableValues = "range[0,255]")
 	private String transToServiceOrgName;
-	
+
 	/**
 	 * イニシャル/ランニング区分
 	 */
-	@ApiModelProperty(value = "イニシャル/ランニング区分", required = false, position = 4, allowableValues = "イニシャル(\"1\"), ランニング(\"2\")")
+	@ApiModelProperty(value = "イニシャル/ランニング区分", required = false, position = 5, allowableValues = "イニシャル(\"1\"), ランニング(\"2\")")
 	private InitialRunningDiv initialRunningDiv;
-	
+
 	/**
 	 * 品種ID
 	 */
 	@ManyToOne(optional = false)
 	@JsonIgnore
 	@JoinColumn(name = "item_contract_id", referencedColumnName = "id")
-	@ApiModelProperty(value = "品種(契約用)", required = true, position = 5)
+	@ApiModelProperty(value = "品種(契約用)", required = true, position = 6)
 	private ItemContract itemContract;
 
 }
