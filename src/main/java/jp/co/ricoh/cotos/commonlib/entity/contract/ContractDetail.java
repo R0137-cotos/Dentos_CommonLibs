@@ -188,7 +188,6 @@ public class ContractDetail extends EntityBase {
 	/**
 	 * FFM内部振替処理状態
 	 */
-	@Size(max = 255)
 	@ApiModelProperty(value = "FFM内部振替処理状態", required = false, position = 14, allowableValues = "range[0,255]")
 	private FfmInsideTransStatus ffmInsideTransStatus;
 	
@@ -202,7 +201,6 @@ public class ContractDetail extends EntityBase {
 	/**
 	 * 統合契約内部振替処理状態
 	 */
-	@Size(max = 255)
 	@ApiModelProperty(value = "統合契約内部振替処理状態", required = false, position = 16, allowableValues = "range[0,255]")
 	private AbsConInsideTransStatus absConInsideTransStatus;
 	

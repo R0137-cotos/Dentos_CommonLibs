@@ -29,10 +29,17 @@ import jp.co.ricoh.cotos.commonlib.repository.contract.ContractAddedEditorEmpRep
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractApprovalResultRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractApprovalRouteNodeRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractApprovalRouteRepository;
+import jp.co.ricoh.cotos.commonlib.repository.contract.ContractAttachedFileHistoryRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractAttachedFileRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractCheckResultRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractDetailRepository;
+import jp.co.ricoh.cotos.commonlib.repository.contract.ContractEquipmentRepository;
+import jp.co.ricoh.cotos.commonlib.repository.contract.ContractInstallationLocationRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractOperationLogRepository;
+import jp.co.ricoh.cotos.commonlib.repository.contract.ContractPicAccCeEmpRepository;
+import jp.co.ricoh.cotos.commonlib.repository.contract.ContractPicAccSsOrgRepository;
+import jp.co.ricoh.cotos.commonlib.repository.contract.ContractPicIntCeEmpRepository;
+import jp.co.ricoh.cotos.commonlib.repository.contract.ContractPicIntSsOrgRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractPicMntCeEmpRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractPicMntSsOrgRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractPicSaEmpRepository;
@@ -40,6 +47,7 @@ import jp.co.ricoh.cotos.commonlib.repository.contract.ContractRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.CustomerContractRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.DealerContractRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ItemContractRepository;
+import jp.co.ricoh.cotos.commonlib.repository.contract.ItemDetailContractRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ManagedEstimationDetailRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ProductContractRepository;
 
@@ -72,6 +80,9 @@ public class TestContract {
 	ContractDetailRepository contractDetailRepository;
 
 	@Autowired
+	ContractEquipmentRepository contractEquipmentRepository;
+
+	@Autowired
 	ContractOperationLogRepository contractOperationLogRepository;
 
 	@Autowired
@@ -87,13 +98,34 @@ public class TestContract {
 	ItemContractRepository itemContractRepository;
 
 	@Autowired
+	ItemDetailContractRepository itemDetailContractRepository;
+
+	@Autowired
 	ProductContractRepository productContractRepository;
 
 	@Autowired
 	ContractPicMntCeEmpRepository contractPicMntCeEmpRepository;
 
 	@Autowired
+	ContractPicIntCeEmpRepository contractPicIntCeEmpRepository;
+
+	@Autowired
+	ContractPicAccCeEmpRepository contractPicAccCeEmpRepository;
+
+	@Autowired
 	ContractPicMntSsOrgRepository contractPicMntSsOrgRepository;
+
+	@Autowired
+	ContractPicAccSsOrgRepository contractPicAccSsOrgRepository;
+
+	@Autowired
+	ContractPicIntSsOrgRepository contractPicIntSsOrgRepository;
+
+	@Autowired
+	ContractInstallationLocationRepository contractInstallationLocationRepository;
+
+	@Autowired
+	ContractAttachedFileHistoryRepository contractAttachedFileHistoryRepository;
 
 	@Autowired
 	ManagedEstimationDetailRepository managedEstimationDetailRepository;
@@ -158,6 +190,11 @@ public class TestContract {
 	}
 
 	@Test
+	public void 全てのカラムがNullではないことを確認_契約機種() {
+		全てのカラムがNullではないことを確認_共通(contractEquipmentRepository, 401L, 501L);
+	}
+
+	@Test
 	public void 全てのカラムがNullではないことを確認_契約操作履歴() {
 		全てのカラムがNullではないことを確認_共通(contractOperationLogRepository, 401L, 501L);
 	}
@@ -182,9 +219,18 @@ public class TestContract {
 		全てのカラムがNullではないことを確認_共通(itemContractRepository, 401L, 501L);
 	}
 
+	/**
+	 *  TODO:イニシャル/ランニング区分がEnumの順番で取得している。
+	 *  順番は0,1,2となっているため3を設定した場合例外が発生する。
+	 *  原因要調査
+	 */
+	@Test
+	public void 全てのカラムがNullではないことを確認_品種明細_契約用() {
+		全てのカラムがNullではないことを確認_共通(itemDetailContractRepository, 401L, 501L);
+	}
+
 	@Test
 	public void 全てのカラムがNullではないことを確認_商品_契約用() {
-
 		全てのカラムがNullではないことを確認_共通(productContractRepository, 401L, 501L);
 	}
 
@@ -194,8 +240,38 @@ public class TestContract {
 	}
 
 	@Test
+	public void 全てのカラムがNullではないことを確認_契約導入担当CE社員() {
+		全てのカラムがNullではないことを確認_共通(contractPicIntCeEmpRepository, 401L, 501L);
+	}
+
+	@Test
+	public void 全てのカラムがNullではないことを確認_契約受付担当CE社員() {
+		全てのカラムがNullではないことを確認_共通(contractPicAccCeEmpRepository, 401L, 501L);
+	}
+
+	@Test
 	public void 全てのカラムがNullではないことを確認_契約保守担当SS組織() {
 		全てのカラムがNullではないことを確認_共通(contractPicMntSsOrgRepository, 401L, 501L);
+	}
+
+	@Test
+	public void 全てのカラムがNullではないことを確認_契約導入担当SS組織() {
+		全てのカラムがNullではないことを確認_共通(contractPicIntSsOrgRepository, 401L, 501L);
+	}
+
+	@Test
+	public void 全てのカラムがNullではないことを確認_設置先_契約用() {
+		全てのカラムがNullではないことを確認_共通(contractInstallationLocationRepository, 401L, 501L);
+	}
+
+	@Test
+	public void 全てのカラムがNullではないことを確認_契約受付担当SS組織() {
+		全てのカラムがNullではないことを確認_共通(contractPicAccSsOrgRepository, 401L, 501L);
+	}
+
+	@Test
+	public void 全てのカラムがNullではないことを確認_契約添付ファイル履歴() {
+		全てのカラムがNullではないことを確認_共通(contractAttachedFileHistoryRepository, 401L, 501L);
 	}
 
 	@Test

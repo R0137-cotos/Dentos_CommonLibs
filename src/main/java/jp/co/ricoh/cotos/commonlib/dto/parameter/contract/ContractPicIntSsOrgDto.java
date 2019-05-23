@@ -1,5 +1,6 @@
 package jp.co.ricoh.cotos.commonlib.dto.parameter.contract;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -9,12 +10,20 @@ import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = false)
 @Data
-public class ContractPicIntSsOrgDto extends DtoBase{
-	
+public class ContractPicIntSsOrgDto extends DtoBase {
+
+	/**
+	 * MoM組織ID
+	 */
+	@NotNull
+	@Size(max = 255)
+	@ApiModelProperty(value = "MoM組織ID", required = false, position = 3, allowableValues = "range[0,255]")
+	private String momOrgId;
+
 	/**
 	 * 課所名
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "課所名", required = false, position = 3, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "課所名", required = false, position = 4, allowableValues = "range[0,255]")
 	private String serviceOrgName;
 }

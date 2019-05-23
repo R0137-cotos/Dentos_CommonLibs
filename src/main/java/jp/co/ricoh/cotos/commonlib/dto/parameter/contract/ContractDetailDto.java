@@ -95,12 +95,6 @@ public class ContractDetailDto extends DtoBase {
 	@ApiModelProperty(value = "イニシャル売上計上処理日", required = false, position = 11)
 	@Temporal(TemporalType.DATE)
 	private Date initialAccountSalesDate;
-
-	@Valid
-	@NotNull
-	@OneToOne(mappedBy = "contractDetail")
-	@ApiModelProperty(value = "品種(契約用)", required = true, position = 12)
-	private ItemContractDto itemContract;
 	
 	/**
 	 * 注文番号
@@ -134,4 +128,10 @@ public class ContractDetailDto extends DtoBase {
 	@Temporal(TemporalType.DATE)
 	@ApiModelProperty(value = "統合契約内部振替連携日", required = false, position = 17)
 	private Date absConInsideLinkDate;
+
+	@Valid
+	@NotNull
+	@OneToOne(mappedBy = "contractDetail")
+	@ApiModelProperty(value = "品種(契約用)", required = true, position = 12)
+	private ItemContractDto itemContract;
 }

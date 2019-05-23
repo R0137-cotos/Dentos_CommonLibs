@@ -33,49 +33,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Table(name = "contarct_equipment")
-public class ContarctEquipment extends EntityBase {
-	
-	public enum BodyFlg {
-		オプション(0),本体(1);
-		
-		private final Integer num;
-		
-		private BodyFlg(final Integer num) {
-			this.num = num;
-		}
-		
-		@Override
-		@JsonValue
-		public String toString() {
-			return this.num.toString();
-		}
-
-		@JsonCreator
-		public static BodyFlg fromString(final Integer num) {
-			return Arrays.stream(values()).filter(v -> v.num.equals(num)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(num)));
-		}
-	}
-	
-	public enum ServiceMachineFlg {
-		本体機器(0),サービス機器(1);
-		
-		private final Integer num;
-		
-		private ServiceMachineFlg(final Integer num) {
-			this.num = num;
-		}
-		
-		@Override
-		@JsonValue
-		public String toString() {
-			return this.num.toString();
-		}
-
-		@JsonCreator
-		public static ServiceMachineFlg fromString(final Integer num) {
-			return Arrays.stream(values()).filter(v -> v.num.equals(num)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(num)));
-		}
-	}
+public class ContractEquipment extends EntityBase {
 	
 	public enum IsysoneProcStatus {
 		未処理("0"),CSV作成済み("1"),連携済み("2"),連携エラー("3");
@@ -146,14 +104,14 @@ public class ContarctEquipment extends EntityBase {
 	/**
 	 * 本体フラグ
 	 */
-	@ApiModelProperty(value = "本体フラグ", required = false, position = 4, allowableValues = "オプション(0),本体(1)")
-	private BodyFlg bodyFlg;
+	@ApiModelProperty(value = "本体フラグ", required = false, position = 4, allowableValues = "range[0,9]")
+	private Integer bodyFlg;
 	
 	/**
 	 * サービス機器フラグ
 	 */
-	@ApiModelProperty(value = "サービス機器フラグ", required = false, position = 5, allowableValues = "本体機器(0),サービス機器(1)")
-	private ServiceMachineFlg serviceMachineFlg;
+	@ApiModelProperty(value = "サービス機器フラグ", required = false, position = 5, allowableValues = "range[0,9]")
+	private Integer serviceMachineFlg;
 	
 	/**
 	 * 設置日

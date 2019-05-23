@@ -25,7 +25,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @EntityListeners(ContractPicMntCeEmpListener.class)
 @Data
-@Table(name = "contract_pic_ce_emp")
+@Table(name = "contract_pic_mnt_ce_emp")
 @ApiModel(description = "契約保守担当CE社員(作成時不要)")
 public class ContractPicMntCeEmp extends EmployeeAbstractEntity {
 

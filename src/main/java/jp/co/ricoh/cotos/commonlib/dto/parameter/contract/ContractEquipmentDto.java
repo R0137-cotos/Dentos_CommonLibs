@@ -9,16 +9,14 @@ import javax.validation.constraints.Size;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.common.DtoBase;
-import jp.co.ricoh.cotos.commonlib.entity.contract.ContarctEquipment.BodyFlg;
-import jp.co.ricoh.cotos.commonlib.entity.contract.ContarctEquipment.IsysoneProcStatus;
-import jp.co.ricoh.cotos.commonlib.entity.contract.ContarctEquipment.MaintenanceLinkageCsvCreateStatus;
-import jp.co.ricoh.cotos.commonlib.entity.contract.ContarctEquipment.ServiceMachineFlg;
+import jp.co.ricoh.cotos.commonlib.entity.contract.ContractEquipment.IsysoneProcStatus;
+import jp.co.ricoh.cotos.commonlib.entity.contract.ContractEquipment.MaintenanceLinkageCsvCreateStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = false)
 @Data
-public class ContarctEquipmentDto extends DtoBase {
+public class ContractEquipmentDto extends DtoBase {
 	
 	/**
 	 * 機種コード
@@ -39,13 +37,13 @@ public class ContarctEquipmentDto extends DtoBase {
 	 * 本体フラグ
 	 */
 	@ApiModelProperty(value = "本体フラグ", required = false, position = 5, allowableValues = "オプション(0),本体(1)")
-	private BodyFlg bodyFlg;
+	private Integer bodyFlg;
 	
 	/**
 	 * サービス機器フラグ
 	 */
 	@ApiModelProperty(value = "サービス機器フラグ", required = false, position = 6, allowableValues = "本体機器(0),サービス機器(1)")
-	private ServiceMachineFlg serviceMachineFlg;
+	private Integer serviceMachineFlg;
 	
 	/**
 	 * 設置日

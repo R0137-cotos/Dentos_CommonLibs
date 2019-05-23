@@ -1,17 +1,19 @@
 package jp.co.ricoh.cotos.commonlib.dto.parameter.contract;
 
 import java.math.BigDecimal;
-import java.util.List;
-
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.Size;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.common.DtoBase;
-import jp.co.ricoh.cotos.commonlib.entity.contract.ItemDetailContract.InitialRunningDiv;
+import jp.co.ricoh.cotos.commonlib.entity.EnumType.InitialRunningDiv;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = false)
+@Data
 public class ItemDetailContractDto extends DtoBase {
 
 	/**
@@ -38,14 +40,14 @@ public class ItemDetailContractDto extends DtoBase {
 	/**
 	 * イニシャル/ランニング区分
 	 */
-	@ApiModelProperty(value = "イニシャル/ランニング区分", required = false, position = 6, allowableValues = "イニシャル(\"1\"), ランニング(\"2\")")
+	@ApiModelProperty(value = "イニシャル/ランニング区分", required = false, position = 6, allowableValues = "イニシャル(\"1\"), ランニング(\"2\"), 期間売(\"3\")")
 	private InitialRunningDiv initialRunningDiv;
 
 	/**
-	 * 品種明細(契約用)
+	 * 品種(契約用)
 	 */
 	@Valid
-	@OneToMany(mappedBy = "item_detail_contract")
+	@ManyToOne(optional = false)
 	@ApiModelProperty(value = "品種明細(契約用)", required = false, position = 7)
-	private List<ItemDetailContractDto> itemDetailContractDtoList;
+	private ItemContractDto itemDetailContractDto;
 }
