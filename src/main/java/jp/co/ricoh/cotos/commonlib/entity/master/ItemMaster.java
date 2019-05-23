@@ -211,5 +211,18 @@ public class ItemMaster extends EntityBaseMaster {
 	@OneToMany(mappedBy = "itemMaster")
 	@ApiModelProperty(value = "手配業務構成マスタ", required = false, position = 18)
 	private List<ArrangementWorkCompMaster> arrangementWorkCompMasterList;
-
+	
+	/**
+	 * 機種構成マスタ
+	 */
+	@OneToMany(mappedBy = "itemMaster")
+	@ApiModelProperty(value = "機種構成マスタ", required = false, position = 19)
+	private List<EquipmentCompMaster> equipmentCompMasterList;
+	
+	/**
+	 * 品種振替構成マスタ
+	 */
+	@OneToMany(mappedBy = "itemMaster")
+	@ApiModelProperty(value = "品種振替構成マスタ", required = false, position = 20)
+	private List<ItemTransCompMaster> itemTransCompMasterList;
 }
