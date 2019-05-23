@@ -37,20 +37,20 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "product_master")
 public class ProductMaster extends EntityBaseMaster {
-	
+
 	/**
 	 * 契約種類区分
 	 */
-	public enum contractClassDiv {
-		
+	public enum ContractClassDiv {
+
 		年間保守契約_RP("100"), 年間保守契約_PC_NW機器_その他("101"), 受託保守("102");
-		
+
 		private final String text;
 
-		private contractClassDiv(final String text) {
+		private ContractClassDiv(final String text) {
 			this.text = text;
 		}
-		
+
 		@Override
 		@JsonValue
 		public String toString() {
@@ -58,7 +58,7 @@ public class ProductMaster extends EntityBaseMaster {
 		}
 
 		@JsonCreator
-		public static contractClassDiv fromString(String string) {
+		public static ContractClassDiv fromString(String string) {
 			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
@@ -135,21 +135,27 @@ public class ProductMaster extends EntityBaseMaster {
 	 * 拡張項目相関チェックマスタ
 	 */
 	@OneToMany(mappedBy = "productMaster", orphanRemoval = true, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @Fetch(FetchMode.SUBSELECT)
+	@Fetch(FetchMode.SUBSELECT)
 	@ApiModelProperty(value = "拡張項目相関チェックマスタ", required = false, position = 11)
 	private List<ExtendsParameterCorrelationCheckMaster> extendsParameterCorrelationCheckMasterList;
-	
+
+	/**
+	 * 契約種類区分
+	 */
+	@ApiModelProperty(value = "契約種類区分", required = false, position = 12)
+	private ContractClassDiv contractClassDiv;
+
 	/**
 	 * SBU区分
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "SBU区分", required = false, position = 12, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "SBU区分", required = false, position = 13, allowableValues = "range[0,255]")
 	private String sbuDiv;
-	
+
 	/**
 	 * 商品種類区分
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "商品種類区分", required = false, position = 13, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "商品種類区分", required = false, position = 14, allowableValues = "range[0,255]")
 	private String productClassDiv;
 }

@@ -28,20 +28,20 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "report_template_master")
 public class ReportTemplateMaster extends EntityBaseMaster {
-	
+
 	/**
 	 * 出力形式
 	 */
-	public enum outputType {
-		
+	public enum OutputType {
+
 		PDF("1"), Excel("2");
-		
+
 		private final String text;
 
-		private outputType(final String text) {
+		private OutputType(final String text) {
 			this.text = text;
 		}
-		
+
 		@Override
 		@JsonValue
 		public String toString() {
@@ -49,24 +49,24 @@ public class ReportTemplateMaster extends EntityBaseMaster {
 		}
 
 		@JsonCreator
-		public static outputType fromString(String string) {
+		public static OutputType fromString(String string) {
 			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
-	
+
 	/**
 	 * サービスカテゴリ
 	 */
-	public enum serviceCategory {
-		
+	public enum ServiceCategory {
+
 		見積("1"), 契約("2");
-		
+
 		private final String text;
 
-		private serviceCategory(final String text) {
+		private ServiceCategory(final String text) {
 			this.text = text;
 		}
-		
+
 		@Override
 		@JsonValue
 		public String toString() {
@@ -74,49 +74,24 @@ public class ReportTemplateMaster extends EntityBaseMaster {
 		}
 
 		@JsonCreator
-		public static serviceCategory fromString(String string) {
+		public static ServiceCategory fromString(String string) {
 			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
-	
-	/**
-	 * 対象種別(見積)
-	 */
-	public enum targetTypeEstimation {
-		
-		新規("1"), プラン変更("2");
-		
-		private final String text;
 
-		private targetTypeEstimation(final String text) {
-			this.text = text;
-		}
-		
-		@Override
-		@JsonValue
-		public String toString() {
-			return this.text;
-		}
-
-		@JsonCreator
-		public static targetTypeEstimation fromString(String string) {
-			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
-		}
-	}
-	
 	/**
-	 * 対象種別(契約)
+	 * 対象種別
 	 */
-	public enum targetTypeContract {
-		
+	public enum TargetType {
+
 		新規("1"), プラン変更("2"), 情報変更("3"), 解約("4");
-		
+
 		private final String text;
 
-		private targetTypeContract(final String text) {
+		private TargetType(final String text) {
 			this.text = text;
 		}
-		
+
 		@Override
 		@JsonValue
 		public String toString() {
@@ -124,7 +99,7 @@ public class ReportTemplateMaster extends EntityBaseMaster {
 		}
 
 		@JsonCreator
-		public static targetTypeContract fromString(String string) {
+		public static TargetType fromString(String string) {
 			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
@@ -137,45 +112,63 @@ public class ReportTemplateMaster extends EntityBaseMaster {
 	@SequenceGenerator(name = "report_template_master_seq", sequenceName = "report_template_master_seq", allocationSize = 1)
 	@ApiModelProperty(value = "テンプレートID", required = true, position = 1, allowableValues = "range[0,9999999999999999999999999999]")
 	private long id;
-	
+
 	/**
 	 * テンプレート名
 	 */
 	@Size(max = 255)
 	@ApiModelProperty(value = "テンプレート名", required = false, position = 2, allowableValues = "range[0,255]")
 	private String templateName;
-	
+
 	/**
 	 * テンプレート区分
 	 */
 	@Size(max = 255)
 	@ApiModelProperty(value = "テンプレート区分", required = false, position = 3, allowableValues = "range[0,255]")
 	private String templateType;
-	
+
+	/**
+	 * 出力形式
+	 */
+	@ApiModelProperty(value = "出力形式", required = false, position = 4)
+	private OutputType outputType;
+
 	/**
 	 * テンプレートパス
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "テンプレート名", required = false, position = 4, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "テンプレート名", required = false, position = 5, allowableValues = "range[0,255]")
 	private String templatePath;
-	
+
+	/**
+	 * サービスカテゴリ
+	 */
+	@ApiModelProperty(value = "サービスカテゴリ", required = false, position = 6)
+	private ServiceCategory serviceCategory;
+
+	/**
+	 * 対象種別
+	 */
+	@ApiModelProperty(value = "対象種別", required = false, position = 6)
+	private TargetType targetType;
+
 	/**
 	 * 商流区分
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "商流区分", required = false, position = 5, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "商流区分", required = false, position = 7, allowableValues = "range[0,255]")
 	private String commercialFlowDiv;
-	
+
 	/**
 	 * 商品マスタID
 	 */
-	@ApiModelProperty(value = "テンプレート名", required = false, position = 6, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "テンプレート名", required = false, position = 8, allowableValues = "range[0,9999999999999999999]")
 	private Long productMasterId;
-	
+
 	/**
 	 * 帳票ページ管理マスタ
 	 */
 	@OneToMany(mappedBy = "reportTemplateMaster")
-	@ApiModelProperty(value = "帳票ページ管理マスタ", required = false, position = 7)
+	@ApiModelProperty(value = "帳票ページ管理マスタ", required = false, position = 9)
 	private List<ReportPageMaster> reportPageMasterList;
 }

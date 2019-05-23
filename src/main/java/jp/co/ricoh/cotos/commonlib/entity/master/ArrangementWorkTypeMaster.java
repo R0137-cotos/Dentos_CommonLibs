@@ -75,7 +75,7 @@ public class ArrangementWorkTypeMaster extends EntityBaseMaster {
 	@Size(max = 255)
 	@ApiModelProperty(value = "アプリケーションID", required = false, position = 7, allowableValues = "range[0,255]")
 	private String appId;
-	
+
 	/**
 	 * 手配業務タイプ区分
 	 */

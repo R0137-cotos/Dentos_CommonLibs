@@ -33,20 +33,20 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "item_trans_comp_master")
 public class ItemTransCompMaster extends EntityBaseMaster {
-	
+
 	/**
 	 * イニシャル/ランニング区分
 	 */
 	public enum initialRunningDiv {
-		
+
 		イニシャル("1"), ランニング("2"), 期間売("3");
-		
+
 		private final String text;
 
 		private initialRunningDiv(final String text) {
 			this.text = text;
 		}
-		
+
 		@Override
 		@JsonValue
 		public String toString() {
@@ -58,7 +58,7 @@ public class ItemTransCompMaster extends EntityBaseMaster {
 			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
-	
+
 	/**
 	 * 品種振替構成マスタID
 	 */
@@ -67,21 +67,21 @@ public class ItemTransCompMaster extends EntityBaseMaster {
 	@SequenceGenerator(name = "item_trans_comp_master_seq", sequenceName = "item_trans_comp_master_seq", allocationSize = 1)
 	@ApiModelProperty(value = "ID", required = true, position = 1, allowableValues = "range[0,9223372036854775807]")
 	private long id;
-	
+
 	/**
 	 * 原価
 	 */
 	@DecimalMax("9999999999999999999.99")
 	@ApiModelProperty(value = "原価", required = false, position = 2, allowableValues = "range[0.00,9999999999999999999.99]")
 	private BigDecimal price;
-	
+
 	/**
 	 * 振替先課所コード
 	 */
 	@Size(max = 255)
 	@ApiModelProperty(value = "振替先課所コード", required = false, position = 3, allowableValues = "range[0,255]")
 	private String transToServiceOrgCode;
-	
+
 	/**
 	 * 品種マスタ
 	 */
