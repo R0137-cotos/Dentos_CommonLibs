@@ -142,7 +142,7 @@ public class ProductMaster extends EntityBaseMaster {
 	/**
 	 * 契約種類区分
 	 */
-	@ApiModelProperty(value = "契約種類区分", required = false, position = 12)
+	@ApiModelProperty(value = "契約種類区分", required = false, allowableValues = "年間保守契約_RP(\"100\"), 年間保守契約_PC_NW機器_その他(\"101\"), 受託保守(\"102\")", position = 12)
 	private ContractClassDiv contractClassDiv;
 
 	/**

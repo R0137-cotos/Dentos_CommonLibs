@@ -130,7 +130,7 @@ public class ReportTemplateMaster extends EntityBaseMaster {
 	/**
 	 * 出力形式
 	 */
-	@ApiModelProperty(value = "出力形式", required = false, position = 4)
+	@ApiModelProperty(value = "出力形式", required = false, allowableValues = "PDF(\"1\"), Excel(\"2\")", position = 4)
 	private OutputType outputType;
 
 	/**
@@ -143,13 +143,13 @@ public class ReportTemplateMaster extends EntityBaseMaster {
 	/**
 	 * サービスカテゴリ
 	 */
-	@ApiModelProperty(value = "サービスカテゴリ", required = false, position = 6)
+	@ApiModelProperty(value = "サービスカテゴリ", required = false, allowableValues = "見積(\"1\"), 契約(\"2\")", position = 6)
 	private ServiceCategory serviceCategory;
 
 	/**
 	 * 対象種別
 	 */
-	@ApiModelProperty(value = "対象種別", required = false, position = 6)
+	@ApiModelProperty(value = "対象種別", required = false, allowableValues = "新規(\"1\"), プラン変更(\"2\"), 情報変更(\"3\"), 解約(\"4\")", position = 6)
 	private TargetType targetType;
 
 	/**

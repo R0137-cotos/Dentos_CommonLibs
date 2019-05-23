@@ -93,7 +93,7 @@ public class ReportPageMaster extends EntityBaseMaster {
 	/**
 	 * 状態
 	 */
-	@ApiModelProperty(value = "状態", required = false, position = 5)
+	@ApiModelProperty(value = "状態", required = false, allowableValues = "NOUPDATE(\"1\"), ADD(\"2\"), DELETE(\"3\")", position = 5)
 	private Status status;
 
 	/**

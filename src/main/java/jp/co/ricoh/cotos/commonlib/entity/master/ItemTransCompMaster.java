@@ -1,7 +1,6 @@
 package jp.co.ricoh.cotos.commonlib.entity.master;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,9 +13,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
@@ -33,31 +30,6 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "item_trans_comp_master")
 public class ItemTransCompMaster extends EntityBaseMaster {
-
-	/**
-	 * イニシャル/ランニング区分
-	 */
-	public enum initialRunningDiv {
-
-		イニシャル("1"), ランニング("2"), 期間売("3");
-
-		private final String text;
-
-		private initialRunningDiv(final String text) {
-			this.text = text;
-		}
-
-		@Override
-		@JsonValue
-		public String toString() {
-			return this.text;
-		}
-
-		@JsonCreator
-		public static initialRunningDiv fromString(String string) {
-			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
-		}
-	}
 
 	/**
 	 * 品種振替構成マスタID
