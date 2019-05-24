@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Size;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -19,6 +21,8 @@ public class ItemDetailContractDto extends DtoBase {
 	/**
 	 * 原価
 	 */
+	@Digits(integer = 19, fraction = 2)
+	@DecimalMin("0.00")
 	@DecimalMax("9999999999999999999.99")
 	@ApiModelProperty(value = "原価", required = false, position = 3, allowableValues = "range[0.00,9999999999999999999.99]")
 	private BigDecimal price;

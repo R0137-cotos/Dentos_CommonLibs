@@ -300,7 +300,7 @@ public class EnumType {
 	 */
 	public enum InitialRunningDiv {
 
-		イニシャル("1"), ランニング("2"), 期間売("3");
+		イニシャル("1"), ランニング("2"), 期間売り("3");
 
 		private final String text;
 
@@ -319,4 +319,5 @@ public class EnumType {
 			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
+
 }

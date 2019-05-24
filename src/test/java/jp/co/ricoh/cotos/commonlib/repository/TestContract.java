@@ -219,11 +219,6 @@ public class TestContract {
 		全てのカラムがNullではないことを確認_共通(itemContractRepository, 401L, 501L);
 	}
 
-	/**
-	 *  TODO:イニシャル/ランニング区分がEnumの順番で取得している。
-	 *  順番は0,1,2となっているため3を設定した場合例外が発生する。
-	 *  原因要調査
-	 */
 	@Test
 	public void 全てのカラムがNullではないことを確認_品種明細_契約用() {
 		全てのカラムがNullではないことを確認_共通(itemDetailContractRepository, 401L, 501L);

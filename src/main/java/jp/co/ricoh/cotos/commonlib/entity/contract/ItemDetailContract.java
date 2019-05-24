@@ -1,7 +1,6 @@
 package jp.co.ricoh.cotos.commonlib.entity.contract;
 
 import java.math.BigDecimal;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +11,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -44,6 +44,7 @@ public class ItemDetailContract extends EntityBase {
 	 * 原価
 	 */
 	@DecimalMin("0.00")
+	@Digits(integer = 19, fraction = 2)
 	@DecimalMax("9999999999999999999.99")
 	@ApiModelProperty(value = "原価", required = false, position = 2, allowableValues = "range[0.00,9999999999999999999.99]")
 	private BigDecimal price;
@@ -76,5 +77,4 @@ public class ItemDetailContract extends EntityBase {
 	@JoinColumn(name = "item_contract_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "品種(契約用)", required = true, position = 6)
 	private ItemContract itemContract;
-
 }

@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -22,6 +23,7 @@ public class ContractEquipmentDto extends DtoBase {
 	 * 機種コード
 	 */
 	@Size(max = 255)
+	@NotNull
 	@Column(nullable = false)
 	@ApiModelProperty(value = "機種コード", required = true, position = 3, allowableValues = "range[0,255]")
 	private String equipmentCode;

@@ -438,7 +438,7 @@ public class ContractDto extends DtoBase {
 	@Valid
 	@OneToMany(mappedBy = "contract")
 	@ApiModelProperty(value = "契約機種", required = false, position = 58)
-	private List<ContractEquipmentDto> contarctEquipmentDtoList;
+	private List<ContractEquipmentDto> contarctEquipmentList;
 	
 	/**
 	 * 契約受付担当SS組織
@@ -446,7 +446,7 @@ public class ContractDto extends DtoBase {
 	@Valid
 	@OneToOne(mappedBy = "contract")
 	@ApiModelProperty(value = "契約受付担当SS組織", required = false, position = 59)
-	private ContractPicAccSsOrgDto contractPicAccSsOrgDto;
+	private ContractPicAccSsOrgDto contractPicAccSsOrg;
 	
 	/**
 	 * 契約導入担当SS組織
@@ -454,7 +454,7 @@ public class ContractDto extends DtoBase {
 	@Valid
 	@OneToOne(mappedBy = "contract")
 	@ApiModelProperty(value = "契約導入担当SS組織", required = false, position = 60)
-	private ContractPicIntSsOrgDto contractPicIntSsOrgDto;
+	private ContractPicIntSsOrgDto contractPicIntSsOrg;
 	
 	/**
 	 * 契約導入担当CE社員
@@ -462,7 +462,7 @@ public class ContractDto extends DtoBase {
 	@Valid
 	@OneToOne(mappedBy = "contract")
 	@ApiModelProperty(value = "契約導入担当CE社員", required = false, position = 61)
-	private ContractPicIntCeEmpDto contractPicIntCeEmpDto;
+	private ContractPicIntCeEmpDto contractPicIntCeEmp;
 	
 	/**
 	 * 契約受付担当CE社員
@@ -470,7 +470,7 @@ public class ContractDto extends DtoBase {
 	@Valid
 	@OneToOne(mappedBy = "contract")
 	@ApiModelProperty(value = "契約受付担当CE社員", required = false, position = 62)
-	private ContractPicAccCeEmpDto contractPicAccCeEmpDto;
+	private ContractPicAccCeEmpDto contractPicAccCeEmp;
 	
 	/**
 	 * 設置先(契約用)
@@ -478,6 +478,6 @@ public class ContractDto extends DtoBase {
 	@Valid
 	@OneToOne(mappedBy = "contract")
 	@ApiModelProperty(value = "設置先(契約用)", required = false, position = 63)
-	private ContractInstallationLocationDto contractInstallationLocationDto;
+	private ContractInstallationLocationDto contractInstallationLocation;
 	
 }

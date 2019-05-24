@@ -597,9 +597,9 @@ public class Contract extends EntityBase {
 	 * 設置先(契約用)
 	 */
 	@Valid
-	@OneToMany(mappedBy = "contract")
+	@OneToOne(mappedBy = "contract")
 	@ApiModelProperty(value = "設置先(契約用)", required = true, position = 58)
-	private List<ContractInstallationLocation> contractInstallationLocationList;
+	private ContractInstallationLocation contractInstallationLocation;
 
 	/**
 	 * アプリケーションID
