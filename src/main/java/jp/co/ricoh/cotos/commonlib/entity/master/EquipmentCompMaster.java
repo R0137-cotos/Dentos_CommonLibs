@@ -19,12 +19,14 @@ import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * 機種構成マスタ
  */
 @Entity
 @Data
+@ToString(exclude = { "itemMaster" })
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "equipment_comp_master")
 public class EquipmentCompMaster extends EntityBaseMaster {
@@ -81,11 +83,11 @@ public class EquipmentCompMaster extends EntityBaseMaster {
 	 * 品種マスタ
 	 */
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "ricoh_item_code", referencedColumnName = "ricoh_item_code")
+	@JoinColumn(name = "ricohItemCode", referencedColumnName = "ricohItemCode")
 	@JsonIgnore
 	@ApiModelProperty(value = "品種マスタ", required = true, position = 7)
 	private ItemMaster itemMaster;
-
+	
 	/**
 	 * 点検診断月指定
 	 */

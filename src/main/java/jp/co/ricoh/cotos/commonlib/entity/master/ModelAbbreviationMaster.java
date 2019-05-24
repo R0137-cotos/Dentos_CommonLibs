@@ -3,6 +3,7 @@ package jp.co.ricoh.cotos.commonlib.entity.master;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -321,6 +322,7 @@ public class ModelAbbreviationMaster extends EntityBaseMaster {
 	 * Hシリーズ請求区分
 	 */
 	@Size(max = 255)
+	@Column(name = "n_h_series_inv_type")
 	@ApiModelProperty(value = "Hシリーズ請求区分", required = false, position = 39, allowableValues = "range[0,255]")
 	private String nHSeriesInvType;
 
@@ -406,7 +408,7 @@ public class ModelAbbreviationMaster extends EntityBaseMaster {
 	 */
 	@Size(max = 255)
 	@ApiModelProperty(value = "PCリンク区分", required = false, position = 51, allowableValues = "range[0,255]")
-	private String nPCLinkType;
+	private String nPcLinkType;
 
 	/**
 	 * 可能保守形態
@@ -468,6 +470,7 @@ public class ModelAbbreviationMaster extends EntityBaseMaster {
 	 * L保守開始年月
 	 */
 	@Size(max = 255)
+	@Column(name = "n_l_maint_start_month")
 	@ApiModelProperty(value = "L保守開始年月", required = false, position = 60, allowableValues = "range[0,255]")
 	private String nLMaintStartMonth;
 

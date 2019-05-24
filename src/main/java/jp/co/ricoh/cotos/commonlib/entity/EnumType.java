@@ -82,7 +82,7 @@ public class EnumType {
 	 */
 	public enum ServiceCategory {
 
-		見積("1"), 契約("2"), 手配("3");
+		共通("0"), 見積("1"), 契約("2"), 手配("3");
 
 		private final String text;
 

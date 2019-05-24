@@ -17,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
+import jp.co.ricoh.cotos.commonlib.entity.EnumType.ServiceCategory;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -50,31 +51,6 @@ public class ReportTemplateMaster extends EntityBaseMaster {
 
 		@JsonCreator
 		public static OutputType fromString(String string) {
-			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
-		}
-	}
-
-	/**
-	 * サービスカテゴリ
-	 */
-	public enum ServiceCategory {
-
-		見積("1"), 契約("2");
-
-		private final String text;
-
-		private ServiceCategory(final String text) {
-			this.text = text;
-		}
-
-		@Override
-		@JsonValue
-		public String toString() {
-			return this.text;
-		}
-
-		@JsonCreator
-		public static ServiceCategory fromString(String string) {
 			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}

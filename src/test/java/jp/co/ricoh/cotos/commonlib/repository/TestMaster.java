@@ -27,19 +27,23 @@ import jp.co.ricoh.cotos.commonlib.entity.master.ArrangementWorkCompMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.ArrangementWorkTypeMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.AuthPatternMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.BusinessCalendar;
+import jp.co.ricoh.cotos.commonlib.entity.master.CeMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.CommonMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.CommonMasterDetail;
 import jp.co.ricoh.cotos.commonlib.entity.master.ContractChecklistCompMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.DispUrlAuthMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.DummyUserMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.EquipmentCompMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.EstimationChecklistCompMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.ExtendsParameterCorrelationCheckMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.GpCheckMatterMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.ItemMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.ItemTransCompMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.JsonSchemaMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.MailControlMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.MailConvertValueMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.MailTemplateMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.ModelAbbreviationMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvEmployeeMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmci101Master;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmci105Master;
@@ -50,6 +54,8 @@ import jp.co.ricoh.cotos.commonlib.entity.master.ProductGrpMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.ProductMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.RecordDecomposeCompMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.RecordDecomposeMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.ReportPageMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.ReportTemplateMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.SuperUserMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.SystemMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster;
@@ -66,19 +72,23 @@ import jp.co.ricoh.cotos.commonlib.repository.master.ArrangementWorkCompMasterRe
 import jp.co.ricoh.cotos.commonlib.repository.master.ArrangementWorkTypeMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.AuthPatternMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.BusinessCalendarRepository;
+import jp.co.ricoh.cotos.commonlib.repository.master.CeMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.CommonMasterDetailRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.CommonMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ContractChecklistCompMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.DispUrlAuthMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.DummyUserMasterRepository;
+import jp.co.ricoh.cotos.commonlib.repository.master.EquipmentCompMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.EstimationChecklistCompMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ExtendsParameterCorrelationCheckMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.GpCheckMatterMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ItemMasterRepository;
+import jp.co.ricoh.cotos.commonlib.repository.master.ItemTransCompMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.JsonSchemaMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MailControlMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MailConvertValueMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MailTemplateMasterRepository;
+import jp.co.ricoh.cotos.commonlib.repository.master.ModelAbbreviationMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvEmployeeMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTJmci101MasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTJmci105Repository;
@@ -89,6 +99,8 @@ import jp.co.ricoh.cotos.commonlib.repository.master.ProductGrpMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ProductMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.RecordDecomposeCompMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.RecordDecomposeMasterRepository;
+import jp.co.ricoh.cotos.commonlib.repository.master.ReportPageMasterRepository;
+import jp.co.ricoh.cotos.commonlib.repository.master.ReportTemplateMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.SuperUserMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.SystemMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.UrlAuthMasterRepository;
@@ -184,6 +196,18 @@ public class TestMaster {
 	private JsonSchemaMasterRepository jsonSchemaMasterRepository;
 	@Autowired
 	private ExtendsParameterCorrelationCheckMasterRepository extendsParameterCorrelationCheckMasterRepository;
+	@Autowired
+	private CeMasterRepository ceMasterRepository;
+	@Autowired
+	private ModelAbbreviationMasterRepository modelAbbreviationMasterRepository;
+	@Autowired
+	private EquipmentCompMasterRepository equipmentCompMasterRepository;
+	@Autowired
+	private ItemTransCompMasterRepository itemTransCompMasterRepository;
+	@Autowired
+	private ReportTemplateMasterRepository reportTemplateMasterRepository;
+	@Autowired
+	private ReportPageMasterRepository reportPageMasterRepository;
 
 	@Autowired
 	TestTools testTool = null;
@@ -1055,6 +1079,107 @@ public class TestMaster {
 
 		// エンティティの取得
 		ExtendsParameterCorrelationCheckMaster found = extendsParameterCorrelationCheckMasterRepository.findByProductMasterIdAndDomain(1L, "1");
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		testTool.assertColumnsNotNull(found);
+	}
+
+	@Test
+	public void CeMasterのテスト() throws Exception {
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/ceMaster.sql");
+
+		// エンティティの取得
+		Long id = 1L;
+		CeMaster found = ceMasterRepository.findOne(id);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		testTool.assertColumnsNotNull(found);
+	}
+	
+	@Test
+	public void ModelAbbreviationMasterのテスト() throws Exception {
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/modelAbbreviationMaster.sql");
+
+		// エンティティの取得
+		Long id = 1L;
+		ModelAbbreviationMaster found = modelAbbreviationMasterRepository.findOne(id);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		testTool.assertColumnsNotNull(found);
+	}
+	
+	@Test
+	public void EquipmentCompMasterのテスト() throws Exception {
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/productMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/itemMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/equipmentCompMaster.sql");
+
+		// エンティティの取得
+		Long id = 1L;
+		EquipmentCompMaster found = equipmentCompMasterRepository.findOne(id);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		testTool.assertColumnsNotNull(found);
+	}
+	
+	@Test
+	public void ItemTransCompMasterのテスト() throws Exception {
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/productMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/itemMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/itemTransCompMaster.sql");
+
+		// エンティティの取得
+		Long id = 1L;
+		ItemTransCompMaster found = itemTransCompMasterRepository.findOne(id);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		testTool.assertColumnsNotNull(found);
+	}
+	
+	@Test
+	public void ReportTemplateMasterのテスト() throws Exception {
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/reportTemplateMaster.sql");
+
+		// エンティティの取得
+		Long id = 1L;
+		ReportTemplateMaster found = reportTemplateMasterRepository.findOne(id);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		testTool.assertColumnsNotNull(found);
+	}
+	
+	@Test
+	public void ReportPageMasterのテスト() throws Exception {
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/reportTemplateMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/reportPageMaster.sql");
+
+		// エンティティの取得
+		Long id = 1L;
+		ReportPageMaster found = reportPageMasterRepository.findOne(id);
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
