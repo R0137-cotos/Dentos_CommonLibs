@@ -83,11 +83,11 @@ public class EquipmentCompMaster extends EntityBaseMaster {
 	 * 品種マスタ
 	 */
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "ricohItemCode", referencedColumnName = "ricohItemCode")
+	@JoinColumn(name = "item_master_id", referencedColumnName = "id")
 	@JsonIgnore
 	@ApiModelProperty(value = "品種マスタ", required = true, position = 7)
 	private ItemMaster itemMaster;
-	
+
 	/**
 	 * 点検診断月指定
 	 */

@@ -40,15 +40,23 @@ import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractAddedEditorEmp
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractApprovalRouteDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractApprovalRouteNodeDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractAttachedFileDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractAttachedFileHistoryDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractCheckResultDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractDetailDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractDto;
-import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractPicCeEmpDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractEquipmentDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractInstallationLocationDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractPicAccCeEmpDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractPicAccSsOrgDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractPicIntCeEmpDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractPicIntSsOrgDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractPicMntCeEmpDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractPicMntSsOrgDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractPicSaEmpDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.CustomerContractDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.DealerContractDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ItemContractDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ItemDetailContractDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ManagedEstimationDetailDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ProductContractDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.external.ContractExtCancelParameter;
@@ -92,15 +100,23 @@ import jp.co.ricoh.cotos.commonlib.entity.contract.ContractApprovalResult;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractApprovalRoute;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractApprovalRouteNode;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractAttachedFile;
+import jp.co.ricoh.cotos.commonlib.entity.contract.ContractAttachedFileHistory;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractCheckResult;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractDetail;
+import jp.co.ricoh.cotos.commonlib.entity.contract.ContractEquipment;
+import jp.co.ricoh.cotos.commonlib.entity.contract.ContractInstallationLocation;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractOperationLog;
-import jp.co.ricoh.cotos.commonlib.entity.contract.ContractPicCeEmp;
+import jp.co.ricoh.cotos.commonlib.entity.contract.ContractPicAccCeEmp;
+import jp.co.ricoh.cotos.commonlib.entity.contract.ContractPicAccSsOrg;
+import jp.co.ricoh.cotos.commonlib.entity.contract.ContractPicIntCeEmp;
+import jp.co.ricoh.cotos.commonlib.entity.contract.ContractPicIntSsOrg;
+import jp.co.ricoh.cotos.commonlib.entity.contract.ContractPicMntCeEmp;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractPicMntSsOrg;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractPicSaEmp;
 import jp.co.ricoh.cotos.commonlib.entity.contract.CustomerContract;
 import jp.co.ricoh.cotos.commonlib.entity.contract.DealerContract;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ItemContract;
+import jp.co.ricoh.cotos.commonlib.entity.contract.ItemDetailContract;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ManagedEstimationDetail;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ProductContract;
 import jp.co.ricoh.cotos.commonlib.entity.estimation.CustomerEstimation;
@@ -397,6 +413,16 @@ public class TestSecurityController {
 	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractAttachedFileDto dto, BindingResult result) {
 		return createParameterCheckResult(result);
 	}
+	
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractAttachedFileHistory")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractAttachedFileHistory entity, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractAttachedFileHistoryDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractAttachedFileHistoryDto dto, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
 
 	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractCheckResult")
 	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractCheckResult entity, BindingResult result) {
@@ -418,6 +444,16 @@ public class TestSecurityController {
 		return createParameterCheckResult(result);
 	}
 
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractEquipment")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractEquipment entity, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractEquipmentDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractEquipmentDto dto, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
 	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractOperationLog")
 	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractOperationLog entity, BindingResult result) {
 		return createParameterCheckResult(result);
@@ -433,8 +469,19 @@ public class TestSecurityController {
 		return createParameterCheckResult(result);
 	}
 
-	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractPicCeEmpDto")
-	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractPicCeEmpDto dto, BindingResult result) {
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractPicMntCeEmpDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractPicMntCeEmpDto dto, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+	
+	//TODO
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractPicIntCeEmpDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractPicIntCeEmpDto dto, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractPicAccCeEmpDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractPicAccCeEmpDto dto, BindingResult result) {
 		return createParameterCheckResult(result);
 	}
 
@@ -445,6 +492,16 @@ public class TestSecurityController {
 
 	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/CustomerContractDto")
 	public ParamterCheckResult callParamterCheck(@RequestBody @Validated CustomerContractDto dto, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractInstallationLocation")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractInstallationLocation entity, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractInstallationLocationDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractInstallationLocationDto dto, BindingResult result) {
 		return createParameterCheckResult(result);
 	}
 
@@ -465,6 +522,16 @@ public class TestSecurityController {
 
 	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ItemContractDto")
 	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ItemContractDto dto, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ItemDetailContract")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ItemDetailContract entity, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ItemDetailContractDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ItemDetailContractDto dto, BindingResult result) {
 		return createParameterCheckResult(result);
 	}
 
@@ -553,7 +620,7 @@ public class TestSecurityController {
 	public ParamterCheckResult callParamterCheck(@RequestBody @Validated EstimationAttachedFileDto dto, BindingResult result) {
 		return createParameterCheckResult(result);
 	}
-
+	
 	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/EstimationCheckResult")
 	public ParamterCheckResult callParamterCheck(@RequestBody @Validated EstimationCheckResult entity, BindingResult result) {
 		return createParameterCheckResult(result);
@@ -624,8 +691,18 @@ public class TestSecurityController {
 		return createParameterCheckResult(result);
 	}
 
-	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractPicCeEmp")
-	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractPicCeEmp entity, BindingResult result) {
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractPicMntCeEmp")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractPicMntCeEmp entity, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractPicIntCeEmp")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractPicIntCeEmp entity, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractPicAccCeEmp")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractPicAccCeEmp entity, BindingResult result) {
 		return createParameterCheckResult(result);
 	}
 
@@ -636,6 +713,25 @@ public class TestSecurityController {
 
 	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractPicMntSsOrgDto")
 	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractPicMntSsOrgDto dto, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractPicAccSsOrg")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractPicAccSsOrg entity, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractPicAccSsOrgDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractPicAccSsOrgDto dto, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractPicIntSsOrg")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractPicIntSsOrg entity, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractPicIntSsOrgDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractPicIntSsOrgDto dto, BindingResult result) {
 		return createParameterCheckResult(result);
 	}
 

@@ -19,6 +19,8 @@ import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.common.DtoBase;
 import jp.co.ricoh.cotos.commonlib.entity.EnumType.DetailStatus;
 import jp.co.ricoh.cotos.commonlib.entity.EnumType.InitialAccountSalesStatus;
+import jp.co.ricoh.cotos.commonlib.entity.contract.ContractDetail.AbsConInsideTransStatus;
+import jp.co.ricoh.cotos.commonlib.entity.contract.ContractDetail.FfmInsideTransStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -93,6 +95,39 @@ public class ContractDetailDto extends DtoBase {
 	@ApiModelProperty(value = "イニシャル売上計上処理日", required = false, position = 11)
 	@Temporal(TemporalType.DATE)
 	private Date initialAccountSalesDate;
+	
+	/**
+	 * 注文番号
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "注文番号", required = false, position = 13, allowableValues = "range[0,255]")
+	private String orderNo;
+
+	/**
+	 * FFM内部振替処理状態
+	 */
+	@ApiModelProperty(value = "FFM内部振替処理状態", required = false, position = 14)
+	private FfmInsideTransStatus ffmInsideTransStatus;
+	
+	/**
+	 * FFM内部振替連携日
+	 */
+	@Temporal(TemporalType.DATE)
+	@ApiModelProperty(value = "FFM内部振替連携日", required = false, position = 15)
+	private Date ffmInsideLinkDate;
+	
+	/**
+	 * 統合契約内部振替処理状態
+	 */
+	@ApiModelProperty(value = "統合契約内部振替処理状態", required = false, position = 16)
+	private AbsConInsideTransStatus absConInsideTransStatus;
+	
+	/**
+	 * 統合契約内部振替連携日
+	 */
+	@Temporal(TemporalType.DATE)
+	@ApiModelProperty(value = "統合契約内部振替連携日", required = false, position = 17)
+	private Date absConInsideLinkDate;
 
 	@Valid
 	@NotNull

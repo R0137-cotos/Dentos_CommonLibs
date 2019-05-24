@@ -130,6 +130,27 @@ public class Contract extends EntityBase {
 		}
 	}
 
+	public enum SsWorkRequestCreateStatus {
+		未作成("0"), 作成済み("1"), 作成エラー("2");
+
+		private final String text;
+
+		private SsWorkRequestCreateStatus(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		@JsonValue
+		public String toString() {
+			return this.text;
+		}
+
+		@JsonCreator
+		public static SsWorkRequestCreateStatus fromString(final String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+		}
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_seq")
 	@SequenceGenerator(name = "contract_seq", sequenceName = "contract_seq", allocationSize = 1)
@@ -502,31 +523,101 @@ public class Contract extends EntityBase {
 	private List<ProductContract> productContractList;
 
 	/**
-	 * 契約担当CE社員
+	 * 契約保守担当CE社員
 	 */
+	@Valid
 	@OneToOne(mappedBy = "contract")
 	@ApiModelProperty(value = "契約担当CE社員(作成時不要)", required = false, position = 53, readOnly = true)
-	private ContractPicCeEmp contractPicCeEmp;
+	private ContractPicMntCeEmp contractPicMntCeEmp;
 
 	/**
 	 * 契約保守担当SS組織
 	 */
+	@Valid
 	@OneToOne(mappedBy = "contract")
 	@ApiModelProperty(value = "契約保守担当SS組織(作成時不要)", required = false, position = 54, readOnly = true)
 	private ContractPicMntSsOrg contractPicMntSsOrg;
+
+	/**
+	 * 契約受付担当SS組織
+	 */
+	@Valid
+	@OneToOne(mappedBy = "contract")
+	@ApiModelProperty(value = "契約受付担当SS組織(作成時不要)", required = false, position = 54, readOnly = true)
+	private ContractPicAccSsOrg contractPicAccSsOrg;
+
+	/**
+	 * 契約導入担当SS組織
+	 */
+	@Valid
+	@OneToOne(mappedBy = "contract")
+	@ApiModelProperty(value = "契約導入担当SS組織(作成時不要)", required = false, position = 54, readOnly = true)
+	private ContractPicIntSsOrg contractPicIntSsOrg;
+
+	/**
+	 * 契約添付ファイル履歴
+	 */
+	@OneToMany(mappedBy = "contract")
+	@ApiModelProperty(value = "契約添付ファイル履歴(作成時不要)", required = true, position = 52)
+	private List<ContractAttachedFileHistory> contractAttachedFileHistoryList;
+
+	/**
+	 * 契約受付担当CE社員
+	 */
+	@Valid
+	@OneToOne(mappedBy = "contract")
+	@ApiModelProperty(value = "契約受付担当CE社員(作成時不要)", required = false, position = 55, readOnly = true)
+	private ContractPicAccCeEmp contractPicAccCeEmp;
+
+	/**
+	 * 契約導入担当CE社員
+	 */
+	@Valid
+	@OneToOne(mappedBy = "contract")
+	@ApiModelProperty(value = "契約導入担当CE社員(作成時不要)", required = false, position = 56, readOnly = true)
+	private ContractPicIntCeEmp contractPicIntCeEmp;
+
+	/**
+	 * 契約機種
+	 */
+	@Valid
+	@OneToMany(mappedBy = "contract")
+	@ApiModelProperty(value = "契約機種(作成時不要)", required = false, position = 56, readOnly = true)
+	private List<ContractEquipment> contarctEquipmentList;
 
 	/**
 	 * 見積明細管理
 	 */
 	@Valid
 	@OneToMany(mappedBy = "contract")
-	@ApiModelProperty(value = "見積明細管理", required = true, position = 55)
+	@ApiModelProperty(value = "見積明細管理", required = true, position = 57)
 	private List<ManagedEstimationDetail> managedEstimationDetailList;
+
+	/**
+	 * 設置先(契約用)
+	 */
+	@Valid
+	@OneToOne(mappedBy = "contract")
+	@ApiModelProperty(value = "設置先(契約用)", required = true, position = 58)
+	private ContractInstallationLocation contractInstallationLocation;
 
 	/**
 	 * アプリケーションID
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "アプリケーションID", required = false, position = 56, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "アプリケーションID", required = false, position = 59, allowableValues = "range[0,255]")
 	private String appId;
+
+	/**
+	 * お問い合わせ番号
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "お問い合わせ番号", required = false, position = 60, allowableValues = "range[0,255]")
+	private String contactNo;
+
+	/**
+	 * S&S作業依頼作成状態
+	 */
+	@ApiModelProperty(value = "S&S作業依頼作成状態", required = false, position = 61, allowableValues = "未作成(\"0\"),作成済み(\"1\"),作成エラー(\"2\")")
+	private SsWorkRequestCreateStatus ssWorkRequestCreateStatus;
 }
