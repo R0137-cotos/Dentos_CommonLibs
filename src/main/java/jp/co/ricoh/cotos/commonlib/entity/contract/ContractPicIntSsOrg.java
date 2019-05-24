@@ -57,7 +57,6 @@ public class ContractPicIntSsOrg extends EntityBase {
 	 * 契約
 	 */
 	@OneToOne(optional = false)
-	@NotNull
 	@JsonIgnore
 	@JoinColumn(name = "contract_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "契約", required = true, position = 4)

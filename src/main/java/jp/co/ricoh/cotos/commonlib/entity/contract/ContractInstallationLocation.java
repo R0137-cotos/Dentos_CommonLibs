@@ -8,7 +8,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -46,12 +45,11 @@ public class ContractInstallationLocation extends CustomerAbstractEntity {
 	 */
 	@ApiModelProperty(value = "MoM非連携_住所(手入力)", required = false, position = 73, allowableValues = "range[0,1000]")
 	private String inputAddress;
-	
+
 	/**
 	 * 契約
 	 */
 	@OneToOne(optional = false)
-	@NotNull
 	@JsonIgnore
 	@JoinColumn(name = "contract_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "契約", required = true, position = 74)

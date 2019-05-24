@@ -182,13 +182,14 @@ public class ContractDetail extends EntityBase {
 	/**
 	 * 注文番号
 	 */
-	@ApiModelProperty(value = "注文番号", required = false, position = 13)
+	@Size(max = 255)
+	@ApiModelProperty(value = "注文番号", required = false, position = 13, allowableValues = "range[0,255]")
 	private String orderNo;
 
 	/**
 	 * FFM内部振替処理状態
 	 */
-	@ApiModelProperty(value = "FFM内部振替処理状態", required = false, position = 14, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "FFM内部振替処理状態", required = true, allowableValues = "未処理中(\"0\"), 作成完了(\"1\"), 連携済み(\"2\")", position = 14)
 	private FfmInsideTransStatus ffmInsideTransStatus;
 	
 	/**
@@ -201,7 +202,7 @@ public class ContractDetail extends EntityBase {
 	/**
 	 * 統合契約内部振替処理状態
 	 */
-	@ApiModelProperty(value = "統合契約内部振替処理状態", required = false, position = 16, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "統合契約内部振替処理状態", required = true, allowableValues = "未処理中(\"0\"), TSV作成済み(\"1\"), 連携済み(\"2\"), 連携エラー(\"3\")", position = 16)
 	private AbsConInsideTransStatus absConInsideTransStatus;
 	
 	/**
