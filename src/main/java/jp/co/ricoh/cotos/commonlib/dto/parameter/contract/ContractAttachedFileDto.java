@@ -1,7 +1,6 @@
 package jp.co.ricoh.cotos.commonlib.dto.parameter.contract;
 
 import java.util.Date;
-
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -81,4 +80,5 @@ public class ContractAttachedFileDto extends DtoBase {
 	@ApiModelProperty(value = "添付日時", required = true, position = 10)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date attachedAt;
+
 }
