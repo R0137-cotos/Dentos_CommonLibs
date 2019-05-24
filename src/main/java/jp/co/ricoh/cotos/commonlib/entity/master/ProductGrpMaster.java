@@ -16,6 +16,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -91,4 +92,10 @@ public class ProductGrpMaster extends EntityBaseMaster {
 	@ApiModelProperty(value = "積上げ可能期間(終了日)", required = true, position = 7)
 	private Date effectiveTo;
 
+	/**
+	 * 商品グループコード
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "商品グループコード", required = false, position = 8, allowableValues = "range[0,255]")
+	private String productGrpCode;
 }
