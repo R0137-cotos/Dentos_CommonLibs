@@ -1,7 +1,5 @@
 package jp.co.ricoh.cotos.commonlib.entity.master;
 
-import java.util.Arrays;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,12 +12,11 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
+import jp.co.ricoh.cotos.commonlib.entity.EnumType.DetailStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -31,31 +28,6 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "report_page_master")
 public class ReportPageMaster extends EntityBaseMaster {
-
-	/**
-	 * 状態
-	 */
-	public enum Status {
-
-		NOUPDATE("1"), ADD("2"), DELETE("3");
-
-		private final String text;
-
-		private Status(final String text) {
-			this.text = text;
-		}
-
-		@Override
-		@JsonValue
-		public String toString() {
-			return this.text;
-		}
-
-		@JsonCreator
-		public static Status fromString(String string) {
-			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
-		}
-	}
 
 	/**
 	 * ページID
@@ -93,8 +65,8 @@ public class ReportPageMaster extends EntityBaseMaster {
 	/**
 	 * 状態
 	 */
-	@ApiModelProperty(value = "状態", required = false, allowableValues = "NOUPDATE(\"1\"), ADD(\"2\"), DELETE(\"3\")", position = 5)
-	private Status status;
+	@ApiModelProperty(value = "状態", required = false, allowableValues = "NOUPDATE(\"1\"), ADD(\"2\"), DELETE(\"3\"), UPDATE(\"4\")", position = 5)
+	private DetailStatus status;
 
 	/**
 	 * リコー品種コード
