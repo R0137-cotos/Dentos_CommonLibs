@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -195,34 +196,42 @@ public class ItemMaster extends EntityBaseMaster {
 	/**
 	 * IFS連携フラグ
 	 */
-	@ApiModelProperty(value = "IFS連携フラグ", required = true, position = 16, allowableValues = "range[0,9]")
+	@Max(9)
+	@ApiModelProperty(value = "IFS連携フラグ", required = false, position = 16, allowableValues = "range[0,9]")
 	private Integer ifsLinkageFlg;
+
+	/**
+	 * 最短納期日数
+	 */
+	@Max(99)
+	@ApiModelProperty(value = "最短納期日数", required = false, position = 17, allowableValues = "range[0,99]")
+	private Integer shortestDeliveryDate;
 
 	/**
 	 * 計上分解構成マスタ
 	 */
 	@OneToMany(mappedBy = "itemMaster")
-	@ApiModelProperty(value = "計上分解構成マスタ", required = false, position = 17)
+	@ApiModelProperty(value = "計上分解構成マスタ", required = false, position = 18)
 	private List<RecordDecomposeCompMaster> recordDecomposeCompMasterList;
 
 	/**
 	 * 手配業務構成マスタ
 	 */
 	@OneToMany(mappedBy = "itemMaster")
-	@ApiModelProperty(value = "手配業務構成マスタ", required = false, position = 18)
+	@ApiModelProperty(value = "手配業務構成マスタ", required = false, position = 19)
 	private List<ArrangementWorkCompMaster> arrangementWorkCompMasterList;
 
 	/**
 	 * 機種構成マスタ
 	 */
 	@OneToMany(mappedBy = "itemMaster")
-	@ApiModelProperty(value = "機種構成マスタ", required = false, position = 19)
+	@ApiModelProperty(value = "機種構成マスタ", required = false, position = 20)
 	private List<EquipmentCompMaster> equipmentCompMasterList;
 
 	/**
 	 * 品種振替構成マスタ
 	 */
 	@OneToMany(mappedBy = "itemMaster")
-	@ApiModelProperty(value = "品種振替構成マスタ", required = false, position = 20)
+	@ApiModelProperty(value = "品種振替構成マスタ", required = false, position = 21)
 	private List<ItemTransCompMaster> itemTransCompMasterList;
 }
