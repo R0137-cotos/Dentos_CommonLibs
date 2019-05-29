@@ -306,7 +306,7 @@ public class ContractSearchParameter {
 	 */
 	@ApiParam(value = "契約種別", required = false)
 	@ApiModelProperty(value = "契約種別<br />" //
-			+ "新規, プラン変更, 解約などの契約種別を表す。", //
+			+ "新規, 契約変更, 解約などの契約種別を表す。", //
 			required = false)
 	private String contractType;
 
