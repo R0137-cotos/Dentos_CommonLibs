@@ -97,7 +97,7 @@ public class EstimationDto extends DtoBase {
 	 * 見積種別
 	 */
 	@NotNull
-	@ApiModelProperty(value = "見積種別", required = true, allowableValues = "新規(\"1\"), プラン変更(\"2\")", example = "1", position = 12)
+	@ApiModelProperty(value = "見積種別", required = true, allowableValues = "新規(\"1\"), 契約変更(\"2\")", example = "1", position = 12)
 	private EstimationType estimationType;
 
 	/**

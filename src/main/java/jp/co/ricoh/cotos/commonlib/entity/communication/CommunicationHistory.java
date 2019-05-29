@@ -83,8 +83,8 @@ public class CommunicationHistory extends EntityBase {
 	@Column(nullable = false)
 	@NotNull
 	@ApiModelProperty(value = "承認対象種別<br />" //
-			+ "承認フロー⇒新規/情報変更/プラン変更/キャンセル/解約/作業完了報告<br />" //
-			+ "タスクフロー⇒非承認", required = true, allowableValues = "新規(\"1\"), 情報変更(\"2\"), プラン変更(\"3\"), キャンセル(\"4\"), 解約(\"5\"), 作業完了報告(\"6\"), 非承認(\"7\")", example = "1", position = 6) //
+			+ "承認フロー⇒新規/情報変更/契約変更/キャンセル/解約/作業完了報告<br />" //
+			+ "タスクフロー⇒非承認", required = true, allowableValues = "新規(\"1\"), 情報変更(\"2\"), 契約変更(\"3\"), キャンセル(\"4\"), 解約(\"5\"), 作業完了報告(\"6\"), 非承認(\"7\")", example = "1", position = 6) //
 	private ApprovalTargetType approvalTargetType;
 
 	/**

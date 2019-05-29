@@ -109,7 +109,7 @@ public class ReportTemplateMaster extends EntityBaseMaster {
 	 */
 	public enum TargetType {
 
-		新規("1"), プラン変更("2"), 情報変更("3"), 解約("4");
+		新規("1"), 契約変更("2"), 情報変更("3"), 解約("4");
 
 		private final String text;
 
@@ -199,7 +199,7 @@ public class ReportTemplateMaster extends EntityBaseMaster {
 	/**
 	 * 対象種別
 	 */
-	@ApiModelProperty(value = "対象種別", required = false, allowableValues = "新規(\"1\"), プラン変更(\"2\"), 情報変更(\"3\"), 解約(\"4\")", position = 6)
+	@ApiModelProperty(value = "対象種別", required = false, allowableValues = "新規(\"1\"), 契約変更(\"2\"), 情報変更(\"3\"), 解約(\"4\")", position = 6)
 	private TargetType targetType;
 
 	/**

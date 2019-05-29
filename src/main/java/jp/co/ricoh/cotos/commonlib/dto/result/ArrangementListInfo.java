@@ -72,7 +72,7 @@ public class ArrangementListInfo {
 	 * 契約種別
 	 */
 	@ApiModelProperty(value = "契約種別<br />" //
-			+ "新規, プラン変更, 解約などの契約種別を表す。", //
+			+ "新規, 契約変更, 解約などの契約種別を表す。", //
 			required = false, position = 8) //
 	private ContractType contractType;
 
