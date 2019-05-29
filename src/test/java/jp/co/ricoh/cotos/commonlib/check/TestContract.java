@@ -566,8 +566,24 @@ public class TestContract {
 		// 異常系（@Size(max) ：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setMomEmployeeId(STR_256);
+		testTarget.setMomOrgId(STR_256);
+		testTarget.setOrgName(STR_256);
+		testTarget.setSalesCompanyName(STR_256);
+		testTarget.setOrgPhoneNumber(STR_256);
+		testTarget.setEmployeeName(STR_256);
+		testTarget.setSalesDepartmentName(STR_256);
+		testTarget.setPostNumber(STR_256);
+		testTarget.setAddress(STR_1001);
+		testTarget.setPhoneNumber(STR_256);
+		testTarget.setFaxNumber(STR_256);
+		testTarget.setMailAddress(STR_256);
+		testTarget.setMomKjbSystemId(STR_256);
+		testTarget.setMomKjbId(STR_256);
+		testTarget.setSalesCompanyNameKana(STR_256);
+		testTarget.setCompanyRepresentativeName(STR_256);
+		testTarget.setCompanyRepresentativeNameKana(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(result.getErrorInfoList().size() == 17);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "MoM社員IDは最大文字数（255）を超えています。"));
 
@@ -613,8 +629,9 @@ public class TestContract {
 		testTarget.setCancelOrderNo(STR_256);
 		testTarget.setAppId(STR_256);
 		testTarget.setContactNo(STR_256);
+		testTarget.setIssueTaxCodeValue(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 19);
+		Assert.assertTrue(result.getErrorInfoList().size() == 20);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "変更元契約番号は最大文字数（255）を超えています。"));
 
@@ -673,7 +690,7 @@ public class TestContract {
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
-		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "MoM非連携_企業代表者名（カナ）は最大文字数（255）を超えています。"));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "MoM非連携_企業代表者名(カナ)は最大文字数（255）を超えています。"));
 
 		// 異常系（@Valid：商品(契約用)）
 		entity = contractRepository.findOne(4L);
@@ -840,16 +857,19 @@ public class TestContract {
 
 		// 異常系（@NotNullの null チェック：）
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.setMomKjbSystemId(null);
 		testTarget.setDealerFlowOrder(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
-		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "MoM企事部システム連携IDが設定されていません。"));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "販売店商流順が設定されていません。"));
 
 		// 異常系（@Size(max) ：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setMomKjbSystemId(STR_256);
+		testTarget.setDealerName(STR_256);
+		testTarget.setPostNumber(STR_256);
+		testTarget.setAddress(STR_1001);
+		testTarget.setOrgPhoneNumber(STR_256);
 		testTarget.setPicName(STR_256);
 		testTarget.setPicDeptName(STR_256);
 		testTarget.setPicPhoneNumber(STR_256);
@@ -864,8 +884,13 @@ public class TestContract {
 		testTarget.setDistributorMomSoshikiId(STR_256);
 		testTarget.setDistributorMomDepoCd(STR_256);
 		testTarget.setOrbSendSiteId(STR_256);
+		testTarget.setPicNameKana(STR_256);
+		testTarget.setDealerNameKana(STR_256);
+		testTarget.setCompanyRepresentativeName(STR_256);
+		testTarget.setCompanyRepresentativeNameKana(STR_256);
+		testTarget.setMomCustId(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 15);
+		Assert.assertTrue(result.getErrorInfoList().size() == 24);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "Rings得意先コードは最大文字数（255）を超えています。"));
 

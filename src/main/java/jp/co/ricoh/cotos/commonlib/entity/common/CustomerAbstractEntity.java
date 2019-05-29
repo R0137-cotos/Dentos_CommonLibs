@@ -25,6 +25,7 @@ public class CustomerAbstractEntity extends EntityBase {
 	 * MoM企事部システム連携ID
 	 */
 	@NotNull
+	@Column(nullable = false)
 	@Size(max = 255)
 	@ApiModelProperty(value = "MoM企事部システム連携ID<br/>※POST時「企事部マスタ」存在チェック実施", required = true, position = 51, allowableValues = "range[0,255]")
 	private String momKjbSystemId;
@@ -32,27 +33,34 @@ public class CustomerAbstractEntity extends EntityBase {
 	/**
 	 * MoM企事部ID
 	 */
+	@NotNull
 	@Column(nullable = false)
+	@Size(max = 255)
 	@ApiModelProperty(value = "MoM企事部ID(作成時不要)", required = true, position = 52, allowableValues = "range[0,255]", readOnly = true)
 	private String momCustId;
 
 	/**
 	 * MoM企業ID
 	 */
+	@NotNull
 	@Column(nullable = false)
+	@Size(max = 255)
 	@ApiModelProperty(value = "MoM企業ID(作成時不要)", required = true, position = 53, allowableValues = "range[0,255]", readOnly = true)
 	private String companyId;
 
 	/**
 	 * MoM事業所ID
 	 */
+	@NotNull
 	@Column(nullable = false)
+	@Size(max = 255)
 	@ApiModelProperty(value = "MoM事業所ID(作成時不要)", required = true, position = 54, allowableValues = "range[0,255]", readOnly = true)
 	private String officeId;
 
 	/**
 	 * 企事部設定区分
 	 */
+	@NotNull
 	@Column(nullable = false)
 	@ApiModelProperty(value = "企事部設定区分(作成時不要)", required = true, allowableValues = "企事(\"1\"), 企事部(\"2\")", example = "1", position = 55, readOnly = true)
 	private DepartmentDiv departmentDiv;
@@ -60,61 +68,72 @@ public class CustomerAbstractEntity extends EntityBase {
 	/**
 	 * 顧客名
 	 */
+	@NotNull
 	@Column(nullable = false)
+	@Size(max = 255)
 	@ApiModelProperty(value = "顧客名(作成時不要)", required = true, position = 56, allowableValues = "range[0,255]", readOnly = true)
 	private String customerName;
 
 	/**
 	 * 企業名
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "企業名(作成時不要)", required = false, position = 57, allowableValues = "range[0,255]", readOnly = true)
 	private String companyName;
 
 	/**
 	 * 企業名（カナ）
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "企業名（カナ）(作成時不要)", required = false, position = 58, allowableValues = "range[0,255]", readOnly = true)
 	private String companyNameKana;
 
 	/**
 	 * 事業所名
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "事業所名(作成時不要)", required = false, position = 59, allowableValues = "range[0,255]", readOnly = true)
 	private String officeName;
 
 	/**
 	 * 部門名
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "部門名(作成時不要)", required = false, position = 60, allowableValues = "range[0,255]", readOnly = true)
 	private String departmentName;
 
 	/**
 	 * 郵便番号
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "郵便番号(作成時不要)", required = false, position = 61, allowableValues = "range[0,255]", readOnly = true)
 	private String postNumber;
 
 	/**
 	 * 住所
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "住所(作成時不要)", required = false, position = 62, allowableValues = "range[0,1000]", readOnly = true)
 	private String address;
 
 	/**
 	 * 電話番号
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "電話番号(作成時不要)", required = false, position = 63, allowableValues = "range[0,255]", readOnly = true)
 	private String phoneNumber;
 
 	/**
 	 * FAX番号
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "FAX番号(作成時不要)", required = false, position = 64, allowableValues = "range[0,255]", readOnly = true)
 	private String faxNumber;
 
 	/**
 	 * 企業代表者名
 	 */
+	@Size(max = 255)
 	@ApiModelProperty(value = "企業代表者名(作成時不要)", required = false, position = 65, allowableValues = "range[0,255]", readOnly = true)
 	private String companyRepresentativeName;
 
