@@ -44,7 +44,7 @@ public class ReportSpecificParameter {
 	/**
 	 * 対象種別
 	 */
-	@ApiModelProperty(value = "対象種別", required = false, allowableValues = "新規(\"1\"), プラン変更(\"2\"), 情報変更(\"3\"), 解約(\"4\")", example = "1")
+	@ApiModelProperty(value = "対象種別", required = false, allowableValues = "新規(\"1\"), 契約変更(\"2\"), 情報変更(\"3\"), 解約(\"4\")", example = "1")
 	private TargetType targetType;
 
 	/**
