@@ -49,6 +49,7 @@ import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmci101Master;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmci105Master;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTjmmb010UtlItem;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTjmmb020UtlCd;
+import jp.co.ricoh.cotos.commonlib.entity.master.MvWjmoc020OrgAllInfoCom;
 import jp.co.ricoh.cotos.commonlib.entity.master.ProductCompMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.ProductGrpMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.ProductMaster;
@@ -94,6 +95,7 @@ import jp.co.ricoh.cotos.commonlib.repository.master.MvTJmci101MasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTJmci105Repository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTjmmb010UtlItemRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTjmmb020UtlCdRepository;
+import jp.co.ricoh.cotos.commonlib.repository.master.MvWjmoc020OrgAllInfoComRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ProductCompMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ProductGrpMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ProductMasterRepository;
@@ -208,6 +210,8 @@ public class TestMaster {
 	private ReportTemplateMasterRepository reportTemplateMasterRepository;
 	@Autowired
 	private ReportPageMasterRepository reportPageMasterRepository;
+	@Autowired
+	private MvWjmoc020OrgAllInfoComRepository mvWjmoc020OrgAllInfoComRepository;
 
 	@Autowired
 	TestTools testTool = null;
@@ -1102,7 +1106,7 @@ public class TestMaster {
 		// Entity の各項目の値が null ではないことを確認
 		testTool.assertColumnsNotNull(found);
 	}
-	
+
 	@Test
 	public void ModelAbbreviationMasterのテスト() throws Exception {
 		// テストデータ登録
@@ -1118,7 +1122,7 @@ public class TestMaster {
 		// Entity の各項目の値が null ではないことを確認
 		testTool.assertColumnsNotNull(found);
 	}
-	
+
 	@Test
 	public void EquipmentCompMasterのテスト() throws Exception {
 		// テストデータ登録
@@ -1136,7 +1140,7 @@ public class TestMaster {
 		// Entity の各項目の値が null ではないことを確認
 		testTool.assertColumnsNotNull(found);
 	}
-	
+
 	@Test
 	public void ItemTransCompMasterのテスト() throws Exception {
 		// テストデータ登録
@@ -1154,7 +1158,7 @@ public class TestMaster {
 		// Entity の各項目の値が null ではないことを確認
 		testTool.assertColumnsNotNull(found);
 	}
-	
+
 	@Test
 	public void ReportTemplateMasterのテスト() throws Exception {
 		// テストデータ登録
@@ -1170,7 +1174,7 @@ public class TestMaster {
 		// Entity の各項目の値が null ではないことを確認
 		testTool.assertColumnsNotNull(found);
 	}
-	
+
 	@Test
 	public void ReportPageMasterのテスト() throws Exception {
 		// テストデータ登録
@@ -1186,5 +1190,19 @@ public class TestMaster {
 
 		// Entity の各項目の値が null ではないことを確認
 		testTool.assertColumnsNotNull(found);
+	}
+
+	@Test
+	public void MvWjmoc020OrgAllInfoComのテスト() throws Exception {
+
+		// テストデータはなし
+
+		// エンティティの取得
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		Date formatDate = sdf.parse("2019/01/01");
+		MvWjmoc020OrgAllInfoCom found = mvWjmoc020OrgAllInfoComRepository.findByOrgId("0913849", formatDate);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
 	}
 }
