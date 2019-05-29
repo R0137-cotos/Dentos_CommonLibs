@@ -17,7 +17,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
-import jp.co.ricoh.cotos.commonlib.entity.EnumType.ServiceCategory;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -29,6 +28,56 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "report_template_master")
 public class ReportTemplateMaster extends EntityBaseMaster {
+
+	/**
+	 * 見積と契約のライフサイクル状態をマージしたステータス
+	 */
+	public enum LifecycleStatus {
+
+		作成中("1"), 作成完了("2"), 受注("3"), 失注("4"), 破棄("5"), キャンセル手続き中("6"), 予定日待ち("7"), 締結中("8"), 解約手続き中("9"), 解約予定日待ち("10"), 解約("11"), 旧契約("12"), 締結待ち("13");
+
+		private final String text;
+
+		private LifecycleStatus(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		@JsonValue
+		public String toString() {
+			return this.text;
+		}
+
+		@JsonCreator
+		public static LifecycleStatus fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+		}
+	}
+
+	/**
+	 * 見積と契約のワークフロー状態をマージしたステータス
+	 */
+	public enum WorkflowStatus {
+
+		作成中("1"), 業務依頼中("2"), 業務処理完了("3"), 承認依頼中("4"), 承認済("5"), 顧客提示済("6"), キャンセル申請中("7"), 売上可能("8"), 解約申請中("9");
+
+		private final String text;
+
+		private WorkflowStatus(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		@JsonValue
+		public String toString() {
+			return this.text;
+		}
+
+		@JsonCreator
+		public static WorkflowStatus fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+		}
+	}
 
 	/**
 	 * 出力形式
@@ -81,6 +130,31 @@ public class ReportTemplateMaster extends EntityBaseMaster {
 	}
 
 	/**
+	 * サービスカテゴリ
+	 */
+	public enum ServiceCategory {
+
+		見積("1"), 契約("2");
+
+		private final String text;
+
+		private ServiceCategory(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		@JsonValue
+		public String toString() {
+			return this.text;
+		}
+
+		@JsonCreator
+		public static ServiceCategory fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+		}
+	}
+
+	/**
 	 * テンプレートID
 	 */
 	@Id
@@ -113,7 +187,7 @@ public class ReportTemplateMaster extends EntityBaseMaster {
 	 * テンプレートパス
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "テンプレート名", required = false, position = 5, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "テンプレートパス", required = false, position = 5, allowableValues = "range[0,255]")
 	private String templatePath;
 
 	/**
@@ -138,7 +212,7 @@ public class ReportTemplateMaster extends EntityBaseMaster {
 	/**
 	 * 商品マスタID
 	 */
-	@ApiModelProperty(value = "テンプレート名", required = false, position = 8, allowableValues = "range[0,9999999999999999999]")
+	@ApiModelProperty(value = "商品マスタID", required = false, position = 8, allowableValues = "range[0,9999999999999999999]")
 	private Long productMasterId;
 
 	/**
