@@ -19,9 +19,9 @@ public class ReportPageSpecificParameter {
 	private DetailStatus status;
 
 	/**
-	 * テンプレート区分
+	 * リコー品種コード
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "テンプレート区分", required = false, allowableValues = "range[0,255]")
-	private String templateType;
+	@ApiModelProperty(value = "リコー品種コード", required = false, allowableValues = "range[0,255]")
+	private String ricohItemCode;
 }
