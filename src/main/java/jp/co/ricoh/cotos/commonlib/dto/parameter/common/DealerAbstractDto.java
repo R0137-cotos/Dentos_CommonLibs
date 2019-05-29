@@ -84,4 +84,39 @@ public class DealerAbstractDto extends DtoBase {
 	@NotNull
 	@ApiModelProperty(value = "販売店商流順", required = true, allowableValues = "販売店(\"1\"), 母店(\"2\")", example = "1", position = 60)
 	private DealerFlowOrder dealerFlowOrder;
+	
+	/**
+	 * 担当者名（カナ）
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "担当者名（カナ）", required = false, position = 61, allowableValues = "range[0,255]")
+	private String picNameKana;
+
+	/**
+	 * 販売店名（カナ）
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "販売店名（カナ）", required = false, position = 62, allowableValues = "range[0,255]")
+	private String dealerNameKana;
+
+	/**
+	 * MoM非連携_企業代表者名
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "MoM非連携_企業代表者名", required = false, position = 63, allowableValues = "range[0,255]")
+	private String companyRepresentativeName;
+
+	/**
+	 * MoM非連携_企業代表者名(カナ)
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "MoM非連携_企業代表者名(カナ)", required = false, position = 64, allowableValues = "range[0,255]")
+	private String companyRepresentativeNameKana;
+
+	/**
+	 * MoM企事部ID
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "MoM企事部ID", required = false, position = 65, allowableValues = "range[0,255]")
+	private String momCustId;
 }

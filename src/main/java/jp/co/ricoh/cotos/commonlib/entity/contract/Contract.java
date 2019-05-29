@@ -446,11 +446,31 @@ public class Contract extends EntityBase {
 	private Date ifsLinkageCsvCreateDate;
 
 	/**
+	 * お問い合わせ番号
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "お問い合わせ番号", required = false, position = 43, allowableValues = "range[0,255]")
+	private String contactNo;
+
+	/**
+	 * S&S作業依頼作成状態
+	 */
+	@ApiModelProperty(value = "S&S作業依頼作成状態", required = false, position = 44, allowableValues = "未作成(\"0\"),作成済み(\"1\"),作成エラー(\"2\")")
+	private SsWorkRequestCreateStatus ssWorkRequestCreateStatus;
+
+	/**
+	 * 帳票用消費税率区分
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "帳票用消費税率区分", required = false, position = 45, allowableValues = "range[0,255]")
+	private String issueTaxCodeValue;
+
+	/**
 	 * 契約明細
 	 */
 	@Valid
 	@OneToMany(mappedBy = "contract")
-	@ApiModelProperty(value = "契約明細", required = true, position = 43)
+	@ApiModelProperty(value = "契約明細", required = true, position = 46)
 	private List<ContractDetail> contractDetailList;
 
 	/**
@@ -458,21 +478,21 @@ public class Contract extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "contract")
 	@OrderBy("displayOrder ASC")
-	@ApiModelProperty(value = "契約チェック結果(作成時不要)", required = false, position = 44, readOnly = true)
+	@ApiModelProperty(value = "契約チェック結果(作成時不要)", required = false, position = 47, readOnly = true)
 	private List<ContractCheckResult> contractCheckResultList;
 
 	/**
 	 * 契約承認ルート
 	 */
 	@OneToMany(mappedBy = "contract")
-	@ApiModelProperty(value = "契約承認ルート(作成時不要)", required = false, position = 45, readOnly = true)
+	@ApiModelProperty(value = "契約承認ルート(作成時不要)", required = false, position = 48, readOnly = true)
 	private List<ContractApprovalRoute> contractApprovalRouteList;
 
 	/**
 	 * 契約添付ファイル
 	 */
 	@OneToMany(mappedBy = "contract")
-	@ApiModelProperty(value = "契約添付ファイル(作成時不要)", required = false, position = 46, readOnly = true)
+	@ApiModelProperty(value = "契約添付ファイル(作成時不要)", required = false, position = 49, readOnly = true)
 	private List<ContractAttachedFile> contractAttachedFileList;
 
 	/**
@@ -480,14 +500,14 @@ public class Contract extends EntityBase {
 	 */
 	@Valid
 	@OneToOne(mappedBy = "contract")
-	@ApiModelProperty(value = "契約担当SA社員", required = true, position = 47)
+	@ApiModelProperty(value = "契約担当SA社員", required = true, position = 50)
 	private ContractPicSaEmp contractPicSaEmp;
 
 	/**
 	 * 契約追加編集者社員
 	 */
 	@OneToMany(mappedBy = "contract")
-	@ApiModelProperty(value = "契約追加編集者社員(作成時不要)", required = false, position = 48, readOnly = true)
+	@ApiModelProperty(value = "契約追加編集者社員(作成時不要)", required = false, position = 51, readOnly = true)
 	private List<ContractAddedEditorEmp> contractAddedEditorEmpList;
 
 	/**
@@ -495,7 +515,7 @@ public class Contract extends EntityBase {
 	 */
 	@Valid
 	@OneToMany(mappedBy = "contract")
-	@ApiModelProperty(value = "販売店(契約用)", required = false, position = 49)
+	@ApiModelProperty(value = "販売店(契約用)", required = false, position = 52)
 	private List<DealerContract> dealerContractList;
 
 	/**
@@ -503,7 +523,7 @@ public class Contract extends EntityBase {
 	 */
 	@Valid
 	@OneToOne(mappedBy = "contract")
-	@ApiModelProperty(value = "顧客(契約用)", required = true, position = 50)
+	@ApiModelProperty(value = "顧客(契約用)", required = true, position = 53)
 	private CustomerContract customerContract;
 
 	/**
@@ -511,7 +531,7 @@ public class Contract extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "contract")
 	@OrderBy("operatedAt ASC")
-	@ApiModelProperty(value = "契約操作履歴(作成時不要)", required = true, position = 51, readOnly = true)
+	@ApiModelProperty(value = "契約操作履歴(作成時不要)", required = true, position = 54, readOnly = true)
 	private List<ContractOperationLog> contractOperationLogList;
 
 	/**
@@ -519,7 +539,7 @@ public class Contract extends EntityBase {
 	 */
 	@Valid
 	@OneToMany(mappedBy = "contract")
-	@ApiModelProperty(value = "商品(契約用)", required = true, position = 52)
+	@ApiModelProperty(value = "商品(契約用)", required = true, position = 55)
 	private List<ProductContract> productContractList;
 
 	/**
@@ -527,7 +547,7 @@ public class Contract extends EntityBase {
 	 */
 	@Valid
 	@OneToOne(mappedBy = "contract")
-	@ApiModelProperty(value = "契約担当CE社員(作成時不要)", required = false, position = 53, readOnly = true)
+	@ApiModelProperty(value = "契約担当CE社員(作成時不要)", required = false, position = 56, readOnly = true)
 	private ContractPicMntCeEmp contractPicMntCeEmp;
 
 	/**
@@ -535,7 +555,7 @@ public class Contract extends EntityBase {
 	 */
 	@Valid
 	@OneToOne(mappedBy = "contract")
-	@ApiModelProperty(value = "契約保守担当SS組織(作成時不要)", required = false, position = 54, readOnly = true)
+	@ApiModelProperty(value = "契約保守担当SS組織(作成時不要)", required = false, position = 57, readOnly = true)
 	private ContractPicMntSsOrg contractPicMntSsOrg;
 
 	/**
@@ -543,7 +563,7 @@ public class Contract extends EntityBase {
 	 */
 	@Valid
 	@OneToOne(mappedBy = "contract")
-	@ApiModelProperty(value = "契約受付担当SS組織(作成時不要)", required = false, position = 54, readOnly = true)
+	@ApiModelProperty(value = "契約受付担当SS組織(作成時不要)", required = false, position = 58, readOnly = true)
 	private ContractPicAccSsOrg contractPicAccSsOrg;
 
 	/**
@@ -551,14 +571,14 @@ public class Contract extends EntityBase {
 	 */
 	@Valid
 	@OneToOne(mappedBy = "contract")
-	@ApiModelProperty(value = "契約導入担当SS組織(作成時不要)", required = false, position = 54, readOnly = true)
+	@ApiModelProperty(value = "契約導入担当SS組織(作成時不要)", required = false, position = 59, readOnly = true)
 	private ContractPicIntSsOrg contractPicIntSsOrg;
 
 	/**
 	 * 契約添付ファイル履歴
 	 */
 	@OneToMany(mappedBy = "contract")
-	@ApiModelProperty(value = "契約添付ファイル履歴(作成時不要)", required = true, position = 52)
+	@ApiModelProperty(value = "契約添付ファイル履歴(作成時不要)", required = true, position = 60)
 	private List<ContractAttachedFileHistory> contractAttachedFileHistoryList;
 
 	/**
@@ -566,7 +586,7 @@ public class Contract extends EntityBase {
 	 */
 	@Valid
 	@OneToOne(mappedBy = "contract")
-	@ApiModelProperty(value = "契約受付担当CE社員(作成時不要)", required = false, position = 55, readOnly = true)
+	@ApiModelProperty(value = "契約受付担当CE社員(作成時不要)", required = false, position = 61, readOnly = true)
 	private ContractPicAccCeEmp contractPicAccCeEmp;
 
 	/**
@@ -574,7 +594,7 @@ public class Contract extends EntityBase {
 	 */
 	@Valid
 	@OneToOne(mappedBy = "contract")
-	@ApiModelProperty(value = "契約導入担当CE社員(作成時不要)", required = false, position = 56, readOnly = true)
+	@ApiModelProperty(value = "契約導入担当CE社員(作成時不要)", required = false, position = 62, readOnly = true)
 	private ContractPicIntCeEmp contractPicIntCeEmp;
 
 	/**
@@ -582,7 +602,7 @@ public class Contract extends EntityBase {
 	 */
 	@Valid
 	@OneToMany(mappedBy = "contract")
-	@ApiModelProperty(value = "契約機種(作成時不要)", required = false, position = 56, readOnly = true)
+	@ApiModelProperty(value = "契約機種(作成時不要)", required = false, position = 63, readOnly = true)
 	private List<ContractEquipment> contarctEquipmentList;
 
 	/**
@@ -590,7 +610,7 @@ public class Contract extends EntityBase {
 	 */
 	@Valid
 	@OneToMany(mappedBy = "contract")
-	@ApiModelProperty(value = "見積明細管理", required = true, position = 57)
+	@ApiModelProperty(value = "見積明細管理", required = true, position = 64)
 	private List<ManagedEstimationDetail> managedEstimationDetailList;
 
 	/**
@@ -598,26 +618,13 @@ public class Contract extends EntityBase {
 	 */
 	@Valid
 	@OneToOne(mappedBy = "contract")
-	@ApiModelProperty(value = "設置先(契約用)", required = true, position = 58)
+	@ApiModelProperty(value = "設置先(契約用)", required = true, position = 65)
 	private ContractInstallationLocation contractInstallationLocation;
 
 	/**
 	 * アプリケーションID
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "アプリケーションID", required = false, position = 59, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "アプリケーションID", required = false, position = 67, allowableValues = "range[0,255]")
 	private String appId;
-
-	/**
-	 * お問い合わせ番号
-	 */
-	@Size(max = 255)
-	@ApiModelProperty(value = "お問い合わせ番号", required = false, position = 60, allowableValues = "range[0,255]")
-	private String contactNo;
-
-	/**
-	 * S&S作業依頼作成状態
-	 */
-	@ApiModelProperty(value = "S&S作業依頼作成状態", required = false, position = 61, allowableValues = "未作成(\"0\"),作成済み(\"1\"),作成エラー(\"2\")")
-	private SsWorkRequestCreateStatus ssWorkRequestCreateStatus;
 }

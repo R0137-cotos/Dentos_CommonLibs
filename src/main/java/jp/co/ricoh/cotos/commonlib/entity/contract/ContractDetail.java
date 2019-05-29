@@ -43,16 +43,16 @@ import lombok.EqualsAndHashCode;
 @Data
 @Table(name = "contract_detail")
 public class ContractDetail extends EntityBase {
-	
+
 	public enum FfmInsideTransStatus {
-		未処理("0"),CSV作成済み("1"),連携済み("2");
-		
+		未処理("0"), CSV作成済み("1"), 連携済み("2");
+
 		private final String text;
-		
+
 		private FfmInsideTransStatus(final String text) {
 			this.text = text;
 		}
-		
+
 		@Override
 		@JsonValue
 		public String toString() {
@@ -64,16 +64,16 @@ public class ContractDetail extends EntityBase {
 			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
-	
+
 	public enum AbsConInsideTransStatus {
-		未処理("0"),TSV作成済み("1"),連携済み("2"),連携エラー("3");
-		
+		未処理("0"), TSV作成済み("1"), 連携済み("2"), 連携エラー("3");
+
 		private final String text;
-		
+
 		private AbsConInsideTransStatus(final String text) {
 			this.text = text;
 		}
-		
+
 		@Override
 		@JsonValue
 		public String toString() {
@@ -82,6 +82,27 @@ public class ContractDetail extends EntityBase {
 
 		@JsonCreator
 		public static AbsConInsideTransStatus fromString(final String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+		}
+	}
+
+	public enum RunningAccountSalesStatus {
+		正常("0"), 処理エラー("1");
+
+		private final String text;
+
+		private RunningAccountSalesStatus(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		@JsonValue
+		public String toString() {
+			return this.text;
+		}
+
+		@JsonCreator
+		public static RunningAccountSalesStatus fromString(final String string) {
 			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
@@ -178,7 +199,7 @@ public class ContractDetail extends EntityBase {
 	@OneToOne(mappedBy = "contractDetail")
 	@ApiModelProperty(value = "品種(契約用)", required = false, position = 12)
 	private ItemContract itemContract;
-	
+
 	/**
 	 * 注文番号
 	 */
@@ -189,26 +210,39 @@ public class ContractDetail extends EntityBase {
 	/**
 	 * FFM内部振替処理状態
 	 */
-	@ApiModelProperty(value = "FFM内部振替処理状態", required = true, allowableValues = "未処理中(\"0\"), 作成完了(\"1\"), 連携済み(\"2\")", position = 14)
+	@ApiModelProperty(value = "FFM内部振替処理状態", required = false, allowableValues = "未処理中(\"0\"), 作成完了(\"1\"), 連携済み(\"2\")", position = 14)
 	private FfmInsideTransStatus ffmInsideTransStatus;
-	
+
 	/**
 	 * FFM内部振替連携日
 	 */
 	@Temporal(TemporalType.DATE)
 	@ApiModelProperty(value = "FFM内部振替連携日", required = false, position = 15)
 	private Date ffmInsideLinkDate;
-	
+
 	/**
 	 * 統合契約内部振替処理状態
 	 */
-	@ApiModelProperty(value = "統合契約内部振替処理状態", required = true, allowableValues = "未処理中(\"0\"), TSV作成済み(\"1\"), 連携済み(\"2\"), 連携エラー(\"3\")", position = 16)
+	@ApiModelProperty(value = "統合契約内部振替処理状態", required = false, allowableValues = "未処理中(\"0\"), TSV作成済み(\"1\"), 連携済み(\"2\"), 連携エラー(\"3\")", position = 16)
 	private AbsConInsideTransStatus absConInsideTransStatus;
-	
+
 	/**
 	 * 統合契約内部振替連携日
 	 */
 	@Temporal(TemporalType.DATE)
 	@ApiModelProperty(value = "統合契約内部振替連携日", required = false, position = 17)
 	private Date absConInsideLinkDate;
+
+	/**
+	 * ランニング売上計上処理状態
+	 */
+	@ApiModelProperty(value = "ランニング売上計上処理状態", required = false, allowableValues = "正常(\"0\"), 処理エラー(\"1\")", position = 18)
+	private RunningAccountSalesStatus runningAccountSalesStatus;
+
+	/**
+	 * ランニング売上計上処理日
+	 */
+	@Temporal(TemporalType.DATE)
+	@ApiModelProperty(value = "ランニング売上計上処理日", required = false, position = 19)
+	private Date runningAccountSalesDate;
 }

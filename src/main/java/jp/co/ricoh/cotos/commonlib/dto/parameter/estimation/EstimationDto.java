@@ -317,13 +317,20 @@ public class EstimationDto extends DtoBase {
 	 */
 	@ApiModelProperty(value = "拡張項目", required = false, position = 43)
 	private String extendsParameter;
+	
+	/**
+	 * 帳票用消費税率区分
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "帳票用消費税率区分", required = false, position = 44, allowableValues = "range[0,255]")
+	private String issueTaxCodeValue;
 
 	/**
 	 * 見積承認ルート
 	 */
 	@Valid
 	@OneToOne(mappedBy = "estimation")
-	@ApiModelProperty(value = "見積承認ルート", required = false, position = 44)
+	@ApiModelProperty(value = "見積承認ルート", required = false, position = 45)
 	private EstimationApprovalRouteDto estimationApprovalRoute;
 
 	/**
@@ -331,7 +338,7 @@ public class EstimationDto extends DtoBase {
 	 */
 	@Valid
 	@OneToMany(mappedBy = "estimation")
-	@ApiModelProperty(value = "見積添付ファイル", required = false, position = 45)
+	@ApiModelProperty(value = "見積添付ファイル", required = false, position = 46)
 	private List<EstimationAttachedFileDto> estimationAttachedFileList;
 
 	/**
@@ -340,7 +347,7 @@ public class EstimationDto extends DtoBase {
 	@Valid
 	@NotNull
 	@OneToOne(mappedBy = "estimation")
-	@ApiModelProperty(value = "見積担当SA社員", required = true, position = 46)
+	@ApiModelProperty(value = "見積担当SA社員", required = true, position = 47)
 	private EstimationPicSaEmpDto estimationPicSaEmp;
 
 	/**
@@ -348,7 +355,7 @@ public class EstimationDto extends DtoBase {
 	 */
 	@Valid
 	@OneToMany(mappedBy = "estimation")
-	@ApiModelProperty(value = "見積追加編集者社員", required = false, position = 47)
+	@ApiModelProperty(value = "見積追加編集者社員", required = false, position = 48)
 	private List<EstimationAddedEditorEmpDto> estimationAddedEditorEmpList;
 
 	/**
@@ -356,7 +363,7 @@ public class EstimationDto extends DtoBase {
 	 */
 	@Valid
 	@OneToMany(mappedBy = "estimation")
-	@ApiModelProperty(value = "販売店(見積用)", required = false, position = 48)
+	@ApiModelProperty(value = "販売店(見積用)", required = false, position = 49)
 	private List<DealerEstimationDto> dealerEstimationList;
 
 	/**
@@ -365,7 +372,7 @@ public class EstimationDto extends DtoBase {
 	@Valid
 	@NotNull
 	@OneToOne(mappedBy = "estimation")
-	@ApiModelProperty(value = "顧客(見積用)", required = true, position = 49)
+	@ApiModelProperty(value = "顧客(見積用)", required = true, position = 50)
 	private CustomerEstimationDto customerEstimation;
 
 	/**
@@ -373,7 +380,7 @@ public class EstimationDto extends DtoBase {
 	 */
 	@Valid
 	@OneToMany(mappedBy = "estimation")
-	@ApiModelProperty(value = "見積チェック結果(作成時不要)", required = false, position = 50)
+	@ApiModelProperty(value = "見積チェック結果(作成時不要)", required = false, position = 51)
 	private List<EstimationCheckResultDto> estimationCheckResultList;
 
 	/**
@@ -381,7 +388,7 @@ public class EstimationDto extends DtoBase {
 	 */
 	@Valid
 	@OneToMany(mappedBy = "estimation")
-	@ApiModelProperty(value = "見積明細", required = false, position = 51)
+	@ApiModelProperty(value = "見積明細", required = false, position = 52)
 	private List<EstimationDetailDto> estimationDetailList;
 
 	/**
@@ -389,6 +396,6 @@ public class EstimationDto extends DtoBase {
 	 */
 	@Valid
 	@OneToMany(mappedBy = "estimation")
-	@ApiModelProperty(value = "商品（見積用）", required = false, position = 52)
+	@ApiModelProperty(value = "商品（見積用）", required = false, position = 53)
 	private List<ProductEstimationDto> productEstimationList;
 }
