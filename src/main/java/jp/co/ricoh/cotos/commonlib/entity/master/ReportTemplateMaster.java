@@ -30,7 +30,7 @@ import lombok.EqualsAndHashCode;
 public class ReportTemplateMaster extends EntityBaseMaster {
 
 	/**
-	 * 見積と契約のライフサイクル状態をマージしたステータス
+	 * 主要ドメインのライフサイクル状態をマージしたステータス
 	 */
 	public enum LifecycleStatus {
 
@@ -55,11 +55,11 @@ public class ReportTemplateMaster extends EntityBaseMaster {
 	}
 
 	/**
-	 * 見積と契約のワークフロー状態をマージしたステータス
+	 * 主要ドメインのワークフロー状態をマージしたステータス
 	 */
 	public enum WorkflowStatus {
 
-		作成中("1"), 業務依頼中("2"), 業務処理完了("3"), 承認依頼中("4"), 承認済("5"), 顧客提示済("6"), キャンセル申請中("7"), 売上可能("8"), 解約申請中("9");
+		作成中("1"), 業務依頼中("2"), 業務処理完了("3"), 承認依頼中("4"), 承認済("5"), 顧客提示済("6"), キャンセル申請中("7"), 売上可能("8"), 解約申請中("9"), 手配中("10"), 手配完了("11"), 受付待ち("12"), 作業中("13"), 作業完了報告("14"), 作業完了("15"), エラー("16");
 
 		private final String text;
 
@@ -134,7 +134,7 @@ public class ReportTemplateMaster extends EntityBaseMaster {
 	 */
 	public enum ServiceCategory {
 
-		見積("1"), 契約("2");
+		見積("1"), 契約("2"), 手配("3");
 
 		private final String text;
 
@@ -193,7 +193,7 @@ public class ReportTemplateMaster extends EntityBaseMaster {
 	/**
 	 * サービスカテゴリ
 	 */
-	@ApiModelProperty(value = "サービスカテゴリ", required = false, allowableValues = "見積(\"1\"), 契約(\"2\")", position = 6)
+	@ApiModelProperty(value = "サービスカテゴリ", required = false, allowableValues = "見積(\"1\"), 契約(\"2\"),  手配(\"3\")", position = 6)
 	private ServiceCategory serviceCategory;
 
 	/**
