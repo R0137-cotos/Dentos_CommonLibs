@@ -25,7 +25,7 @@ public class DealerAbstractEntity extends EntityBase {
 	 * MoM企事部システム連携ID
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "MoM企事部システム連携ID<br/>※POST時「企事部マスタ」存在チェック実施", position = 51, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "MoM企事部システム連携ID<br/>※POST時「企事部マスタ」存在チェック実施", required = false, position = 51, allowableValues = "range[0,255]")
 	private String momKjbSystemId;
 
 	/**
