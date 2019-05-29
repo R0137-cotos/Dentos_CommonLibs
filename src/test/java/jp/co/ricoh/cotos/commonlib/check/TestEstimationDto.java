@@ -203,8 +203,9 @@ public class TestEstimationDto {
 		testTarget.setPicPhoneNumber(STR_256);
 		testTarget.setPicFaxNumber(STR_256);
 		testTarget.setPicMailAddress(STR_256);
+		testTarget.setCompanyRepresentativeNameKana(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 20);
+		Assert.assertTrue(result.getErrorInfoList().size() == 21);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "住所は最大文字数（1000）を超えています。"));
 	}
@@ -221,12 +222,11 @@ public class TestEstimationDto {
 
 		// 異常系（@NotNull：）
 		BeanUtils.copyProperties(entity, testTarget);
-		testTarget.setMomKjbSystemId(null);
 		testTarget.setDealerFlowOrder(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
-		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "MoM企事部システム連携IDが設定されていません。"));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "販売店商流順が設定されていません。"));
 
 		// 異常系（@Size(max) ：）
 		BeanUtils.copyProperties(entity, testTarget);
@@ -240,8 +240,13 @@ public class TestEstimationDto {
 		testTarget.setPicPhoneNumber(STR_256);
 		testTarget.setPicFaxNumber(STR_256);
 		testTarget.setPicMailAddress(STR_256);
+		testTarget.setPicNameKana(STR_256);
+		testTarget.setDealerNameKana(STR_256);
+		testTarget.setCompanyRepresentativeName(STR_256);
+		testTarget.setCompanyRepresentativeNameKana(STR_256);
+		testTarget.setMomCustId(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 10);
+		Assert.assertTrue(result.getErrorInfoList().size() == 15);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "住所は最大文字数（1000）を超えています。"));
 	}
@@ -360,8 +365,9 @@ public class TestEstimationDto {
 		testTarget.setMainCompetitorName(STR_256);
 		testTarget.setCompetitionInfo(STR_256);
 		testTarget.setCompetitionContractDiv(STR_256);
+		testTarget.setIssueTaxCodeValue(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 28);
+		Assert.assertTrue(result.getErrorInfoList().size() == 29);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "見積発行元FAX番号は最大文字数（255）を超えています。"));
 
@@ -790,8 +796,13 @@ public class TestEstimationDto {
 		testTarget.setPhoneNumber(STR_256);
 		testTarget.setFaxNumber(STR_256);
 		testTarget.setMailAddress(STR_256);
+		testTarget.setMomKjbSystemId(STR_256);
+		testTarget.setMomKjbId(STR_256);
+		testTarget.setSalesCompanyNameKana(STR_256);
+		testTarget.setCompanyRepresentativeName(STR_256);
+		testTarget.setCompanyRepresentativeNameKana(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 12);
+		Assert.assertTrue(result.getErrorInfoList().size() == 17);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "MoM社員IDは最大文字数（255）を超えています。"));
 
