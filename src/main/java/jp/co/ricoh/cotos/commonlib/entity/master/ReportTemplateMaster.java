@@ -224,7 +224,7 @@ public class ReportTemplateMaster extends EntityBaseMaster {
 	/**
 	 * ワークフロー状態
 	 */
-	@ApiModelProperty(value = "ワークフロー状態", required = false, allowableValues = "作成中(\"1\"), 業務依頼中(\"2\"), 業務処理完了(\"3\"), 承認依頼中(\"4\"), 承認済(\"5\"), 顧客提示済(\"6\"), キャンセル申請中(\"7\"), 売上可能(\"8\"), 解約申請中(\"9\")", example = "1", position = 10)
+	@ApiModelProperty(value = "ワークフロー状態", required = false, allowableValues = "作成中(\"1\"), 業務依頼中(\"2\"), 業務処理完了(\"3\"), 承認依頼中(\"4\"), 承認済(\"5\"), 顧客提示済(\"6\"), キャンセル申請中(\"7\"), 売上可能(\"8\"), 解約申請中(\"9\"), 手配中(\"10\"), 手配完了(\"11\"), 受付待ち(\"12\"), 作業中(\"13\"), 作業完了報告(\"14\"), 作業完了(\"15\"), エラー(\"16\")", example = "1", position = 10)
 	private WorkflowStatus workflowStatus;
 
 	/**
