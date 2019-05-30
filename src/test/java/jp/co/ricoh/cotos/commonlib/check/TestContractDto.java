@@ -1065,6 +1065,11 @@ public class TestContractDto {
 		BeanUtils.copyProperties(entity.getProductContractList().get(0), product);
 		dto.setProductContractList(Arrays.asList(product));
 
+		// 追加編集者
+		ContractAddedEditorEmpDto editor = new ContractAddedEditorEmpDto();
+		BeanUtils.copyProperties(entity.getContractAddedEditorEmpList().get(0), editor);
+		dto.setContractAddedEditorEmpDtoList(Arrays.asList(editor));
+
 		// 正常系
 		BeanUtils.copyProperties(dto, testTarget);
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
@@ -1181,6 +1186,11 @@ public class TestContractDto {
 		ProductContractExtCreateDto product = new ProductContractExtCreateDto();
 		BeanUtils.copyProperties(entity.getProductContractList().get(0), product);
 		dto.setProductContractList(Arrays.asList(product));
+
+		// 追加編集者
+		ContractAddedEditorEmpDto editor = new ContractAddedEditorEmpDto();
+		BeanUtils.copyProperties(entity.getContractAddedEditorEmpList().get(0), editor);
+		dto.setContractAddedEditorEmpDtoList(Arrays.asList(editor));
 
 		// 正常系
 		BeanUtils.copyProperties(dto, testTarget);
