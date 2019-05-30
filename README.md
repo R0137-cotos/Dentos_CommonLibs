@@ -220,3 +220,4 @@
 |262|（V-UP遷移用）見積一覧指定取得Parameter作成|
 |263|帳票一覧取得Parameter作成|
 |264|顧客エンティティのNotNull制約修正|
+|265|契約検索用Parameter、Dto修正|
