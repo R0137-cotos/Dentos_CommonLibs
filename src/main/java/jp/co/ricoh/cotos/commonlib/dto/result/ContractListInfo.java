@@ -151,16 +151,40 @@ public class ContractListInfo {
 	private String picAffiliateName;
 
 	/**
-	 * 担当SS氏名
+	 * 受付担当SS組織
 	 */
-	@ApiModelProperty(value = "担当SS氏名", required = false, position = 21, allowableValues = "range[0,255]")
-	private String picSsName;
+	@ApiModelProperty(value = "受付担当SS組織", required = false, position = 21, allowableValues = "range[0,255]")
+	private String picAccSsName;
 
 	/**
-	 * 担当CE氏名
+	 * 受付担当CE氏名
 	 */
-	@ApiModelProperty(value = "担当CE氏名", required = false, position = 22, allowableValues = "range[0,255]")
-	private String picCeName;
+	@ApiModelProperty(value = "受付担当CE氏名", required = false, position = 22, allowableValues = "range[0,255]")
+	private String picAccCeName;
+
+	/**
+	 * 導入担当SS組織
+	 */
+	@ApiModelProperty(value = "導入担当SS組織", required = false, position = 21, allowableValues = "range[0,255]")
+	private String picIntSsName;
+
+	/**
+	 * 導入担当CE氏名
+	 */
+	@ApiModelProperty(value = "導入担当CE氏名", required = false, position = 22, allowableValues = "range[0,255]")
+	private String picIntCeName;
+
+	/**
+	 * 保守担当SS組織
+	 */
+	@ApiModelProperty(value = "保守担当SS組織", required = false, position = 21, allowableValues = "range[0,255]")
+	private String picMntSsName;
+
+	/**
+	 * 保守担当CE氏名
+	 */
+	@ApiModelProperty(value = "保守担当CE氏名", required = false, position = 22, allowableValues = "range[0,255]")
+	private String picMntCeName;
 
 	/**
 	 * 登録日時
