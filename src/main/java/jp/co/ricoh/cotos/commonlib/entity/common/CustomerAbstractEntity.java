@@ -33,7 +33,6 @@ public class CustomerAbstractEntity extends EntityBase {
 	/**
 	 * MoM企事部ID
 	 */
-	@NotNull
 	@Column(nullable = false)
 	@Size(max = 255)
 	@ApiModelProperty(value = "MoM企事部ID(作成時不要)", required = true, position = 52, allowableValues = "range[0,255]", readOnly = true)
@@ -42,7 +41,6 @@ public class CustomerAbstractEntity extends EntityBase {
 	/**
 	 * MoM企業ID
 	 */
-	@NotNull
 	@Column(nullable = false)
 	@Size(max = 255)
 	@ApiModelProperty(value = "MoM企業ID(作成時不要)", required = true, position = 53, allowableValues = "range[0,255]", readOnly = true)
@@ -51,7 +49,6 @@ public class CustomerAbstractEntity extends EntityBase {
 	/**
 	 * MoM事業所ID
 	 */
-	@NotNull
 	@Column(nullable = false)
 	@Size(max = 255)
 	@ApiModelProperty(value = "MoM事業所ID(作成時不要)", required = true, position = 54, allowableValues = "range[0,255]", readOnly = true)
@@ -60,7 +57,6 @@ public class CustomerAbstractEntity extends EntityBase {
 	/**
 	 * 企事部設定区分
 	 */
-	@NotNull
 	@Column(nullable = false)
 	@ApiModelProperty(value = "企事部設定区分(作成時不要)", required = true, allowableValues = "企事(\"1\"), 企事部(\"2\")", example = "1", position = 55, readOnly = true)
 	private DepartmentDiv departmentDiv;
@@ -68,7 +64,6 @@ public class CustomerAbstractEntity extends EntityBase {
 	/**
 	 * 顧客名
 	 */
-	@NotNull
 	@Column(nullable = false)
 	@Size(max = 255)
 	@ApiModelProperty(value = "顧客名(作成時不要)", required = true, position = 56, allowableValues = "range[0,255]", readOnly = true)
