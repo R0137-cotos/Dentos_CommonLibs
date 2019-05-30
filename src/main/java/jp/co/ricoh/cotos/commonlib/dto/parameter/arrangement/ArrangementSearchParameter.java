@@ -393,6 +393,60 @@ public class ArrangementSearchParameter {
 	private int otherSysDataExcludeFlg;
 
 	/**
+	 * 受付担当SS
+	 */
+	@ApiParam(value = "受付担当SS：MoM組織IDを指定", required = false)
+	@ApiModelProperty(value = "受付担当SS<br />" //
+			+ "受付担当SSにはMoM組織IDを指定する。", //
+			required = false, allowableValues = "range[0,255]") //
+	private String picAccSsId;
+
+	/**
+	 * 受付担当CE
+	 */
+	@ApiParam(value = "受付担当CE：MoM社員IDを指定", required = false)
+	@ApiModelProperty(value = "受付担当CE<br />" //
+			+ "受付担当CEにはMoM社員IDを指定する。", //
+			required = false, allowableValues = "range[0,255]") //
+	private String picAccCeId;
+
+	/**
+	 * 導入担当SS
+	 */
+	@ApiParam(value = "導入担当SS：MoM組織IDを指定", required = false)
+	@ApiModelProperty(value = "導入担当SS<br />" //
+			+ "導入担当SSにはMoM組織IDを指定する。", //
+			required = false, allowableValues = "range[0,255]") //
+	private String picIntSsId;
+
+	/**
+	 * 導入担当CE
+	 */
+	@ApiParam(value = "導入担当CE：MoM社員IDを指定", required = false)
+	@ApiModelProperty(value = "導入担当CE<br />" //
+			+ "導入担当CEにはMoM社員IDを指定する。", //
+			required = false, allowableValues = "range[0,255]") //
+	private String picIntCeId;
+
+	/**
+	 * 保守担当SS
+	 */
+	@ApiParam(value = "保守担当SS：MoM組織IDを指定", required = false)
+	@ApiModelProperty(value = "保守担当SS<br />" //
+			+ "保守担当SSにはMoM組織IDを指定する。", //
+			required = false, allowableValues = "range[0,255]") //
+	private String picMntSsId;
+
+	/**
+	 * 保守担当CE
+	 */
+	@ApiParam(value = "保守担当CE：MoM社員IDを指定", required = false)
+	@ApiModelProperty(value = "保守担当CE<br />" //
+			+ "保守担当CEにはMoM社員IDを指定する。", //
+			required = false, allowableValues = "range[0,255]") //
+	private String picMntCeId;
+
+	/**
 	 * パラメータをMapにする。
 	 */
 	public Map<String, Object> createParamaterMap() {
