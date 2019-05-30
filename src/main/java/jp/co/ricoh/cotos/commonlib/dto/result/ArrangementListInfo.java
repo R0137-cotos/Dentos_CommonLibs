@@ -168,6 +168,20 @@ public class ArrangementListInfo {
 			required = false, position = 22) //
 	private Arrangement.WorkflowStatus arrangementStatus;
 
+	/**
+	 * 登録日時
+	 */
+	@ApiModelProperty(value = "登録日時", required = false, position = 23)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createdAt;
+
+	/**
+	 * 更新日時
+	 */
+	@ApiModelProperty(value = "更新日時", required = false, position = 24)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date updatedAt;
+
 	@PrePersist
 	public void prePersist() {
 		throw new IllegalAccessError();
