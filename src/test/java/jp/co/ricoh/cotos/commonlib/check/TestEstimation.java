@@ -155,13 +155,8 @@ public class TestEstimation {
 		// 異常系（@NotNullの null チェック）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setMomKjbSystemId(null);
-		testTarget.setMomCustId(null);
-		testTarget.setCompanyId(null);
-		testTarget.setOfficeId(null);
-		testTarget.setDepartmentDiv(null);
-		testTarget.setCustomerName(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 6);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "MoM企事部システム連携IDが設定されていません。"));
 
