@@ -337,7 +337,7 @@ public class EstimationDto extends DtoBase {
 	 */
 	@Max(9)
 	@Min(0)
-	@ApiModelProperty(value = "V-UP連携フラグ(", required = false, position = 46, allowableValues = "range[0,9]")
+	@ApiModelProperty(value = "V-UP連携フラグ", required = false, position = 46, allowableValues = "range[0,9]")
 	private Integer vupLinkageFlg;
 
 	/**
