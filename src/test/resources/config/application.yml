@@ -61,6 +61,9 @@ spring:
     port: 1025
     username: koike.shinichi
     password: koike.shinichi
+  messages:
+    basename: Messages
+    defaultEncoding: UTF-8
 remote:
   momauthority:
     url: http://165.96.254.183:10110/jmo/services/KengenService

@@ -17,6 +17,7 @@ import javax.validation.constraints.Size;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.common.DtoBase;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractAddedEditorEmpDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractDetailDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractPicSaEmpDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.CustomerContractDto;
@@ -323,4 +324,12 @@ public class ContractExtChangeDto extends DtoBase {
 	@OneToMany(mappedBy = "contract")
 	@ApiModelProperty(value = "見積明細管理", required = false, position = 53)
 	private List<ManagedEstimationDetailDto> managedEstimationDetailList;
+	
+	/**
+	 * 追加編集者
+	 */
+	@Valid
+	@OneToMany(mappedBy = "contract")
+	@ApiModelProperty(value = "追加編集者", required = false, position = 54)
+	private List<ContractAddedEditorEmpDto> contractAddedEditorEmpDtoList;
 }
