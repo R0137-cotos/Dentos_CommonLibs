@@ -38,7 +38,7 @@ import lombok.EqualsAndHashCode;
 public class ArrangementWorkOperationLog extends EntityBase {
 
 	public enum Operation {
-		業務受付, 業務受付取消, 作業完了報告, 新規作成, 担当作業者設定, 更新, 作業完了, 業務完了取消, 保留更新,エラー発生,エラー解消,
+		業務受付, 業務受付取消, 作業完了報告, 新規作成, 担当作業者設定, 更新, 作業完了, 業務完了取消, 保留更新, エラー発生, エラー解消, 業務指定作成
 	}
 
 	@Id
