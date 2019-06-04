@@ -17,4 +17,7 @@ public interface CommonMasterRepository extends CrudRepository<CommonMaster, Lon
 	// 受注完了時のメール送信でのみ使用可能
 	@Query(value = "SELECT * FROM common_master WHERE SERVICE_CATEGORY = :SERVICE_CATEGORY AND COLUMN_NAME = :COLUMN_NAME AND DELETE_FLG = 0", nativeQuery = true)
 	public CommonMaster findByServiceCategoryAndColumnName(@Param("SERVICE_CATEGORY") String serviceCategory, @Param("COLUMN_NAME") String columnName);
+
+	@Query(value = "SELECT CM.* FROM common_master CM INNER JOIN common_master_detail CMD ON CM.ID = CMD.COMMON_MASTER_ID WHERE CM.COLUMN_NAME = :COLUMN_NAME AND CM.SERVICE_CATEGORY = :SERVICE_CATEGORY AND CMD.CODE_VALUE IN (:CODE_VALUES)", nativeQuery = true)
+	public List<CommonMaster> findByColumnNameAndServiceCategoryAndDetailCodeValues(@Param("COLUMN_NAME") String columnName, @Param("SERVICE_CATEGORY") String serviceCategory, @Param("CODE_VALUES") List<String> codeValues);
 }
