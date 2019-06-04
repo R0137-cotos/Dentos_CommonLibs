@@ -1205,4 +1205,38 @@ public class TestMaster {
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
 	}
+
+	@Test
+	public void CommonMaster_findByColumnNameAndServiceCategoryAndDetailCodeValuesのテスト() {
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/commonMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/commonMasterDetail.sql");
+
+		List<CommonMaster> foundList = commonMasterRepository.findByColumnNameAndServiceCategoryAndDetailCodeValues("issue_format", "1", Arrays.asList("1"));
+		// データが取得できていることを確認
+		Assert.assertTrue(foundList.size() > 0);
+
+		// Entity の各項目の値が null ではないことを確認
+		try {
+			testTool.assertColumnsNotNull(foundList.get(0));
+		} catch (Exception e) {
+			Assert.fail("throw Exception :" + e.getMessage());
+		}
+	}
+
+	@Test
+	public void ReportTemplateMasterRepository_findByReportListParameterのテスト() {
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/reportTemplateMaster.sql");
+		List<ReportTemplateMaster> foundList = reportTemplateMasterRepository.findByReportListParameter("1", "1", "1", "1", 1L, "1", "2");
+		// データが取得できていることを確認
+		Assert.assertTrue(foundList.size() > 0);
+
+		// Entity の各項目の値が null ではないことを確認
+		try {
+			testTool.assertColumnsNotNull(foundList.get(0));
+		} catch (Exception e) {
+			Assert.fail("throw Exception :" + e.getMessage());
+		}
+	}
 }
