@@ -298,6 +298,20 @@ public class EstimationSearchParameter {
 	@ApiParam(value = "他システムデータ排他フラグ", required = true)
 	@ApiModelProperty(value = "他システムデータ排他フラグ", required = true)
 	private int otherSysDataExcludeFlg;
+	
+	/**
+	 * 見積番号
+	 */
+	@ApiParam(value = "見積番号", required = true)
+	@ApiModelProperty(value = "見積番号", required = true)
+	private List<String> estimationNumberList;
+	
+	/**
+	 * 見積番号枝番
+	 */
+	@ApiParam(value = "見積番号枝番", required = true)
+	@ApiModelProperty(value = "見積番号枝番", required = true)
+	private List<Integer> estimationBranchNumberList;
 
 	/**
 	 * パラメータをMapにする。
