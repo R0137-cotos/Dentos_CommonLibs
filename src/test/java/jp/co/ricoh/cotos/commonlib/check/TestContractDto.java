@@ -409,6 +409,14 @@ public class TestContractDto {
 		esAttached.setAttachedFile(attached);
 		dto.setContractAttachedFileList(Arrays.asList(esAttached));
 
+		// 契約添付ファイル履歴
+		ContractAttachedFileHistoryDto attachedFileHistory = new ContractAttachedFileHistoryDto();
+		BeanUtils.copyProperties(entity.getContractAttachedFileHistoryList().get(0), attachedFileHistory);
+		AttachedFileDto attachedHistory = new AttachedFileDto();
+		BeanUtils.copyProperties(entity.getContractAttachedFileHistoryList().get(0).getAttachedFile(), attachedHistory);
+		attachedFileHistory.setAttachedFile(attachedHistory);
+		dto.setContractAttachedFileHistoryList(Arrays.asList(attachedFileHistory));
+
 		// 商品（契約用）
 		ProductContractDto product = new ProductContractDto();
 		BeanUtils.copyProperties(entity.getProductContractList().get(0), product);
