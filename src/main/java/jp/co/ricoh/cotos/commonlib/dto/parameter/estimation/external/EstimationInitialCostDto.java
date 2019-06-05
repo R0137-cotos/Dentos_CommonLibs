@@ -20,7 +20,7 @@ public class EstimationInitialCostDto {
 	 */
 	@NotNull
 	@Size(max = 8)
-	@ApiModelProperty(value = "ログインMoM社員Id", required = true, position = 1, allowableValues = "range[0,8]")
+	@ApiModelProperty(value = "ログインMoM社員ID", required = true, position = 1, allowableValues = "range[0,8]")
 	private String loginMoMId;
 
 	/**
@@ -61,7 +61,7 @@ public class EstimationInitialCostDto {
 	@NotNull
 	@Size(max = 25)
 	@ApiModelProperty(value = "初期費 品種コード", required = true, position = 6, allowableValues = "range[0,25]")
-	private String productCd;
+	private String initialProductCd;
 
 	/**
 	 * 初期費 標準価格
@@ -70,7 +70,7 @@ public class EstimationInitialCostDto {
 	@DecimalMin("0.00")
 	@Digits(integer = 19, fraction = 2)
 	@ApiModelProperty(value = "初期費 標準価格", required = true, position = 7, allowableValues = "range[0.00,9999999999999999999.99]")
-	private BigDecimal unitPrice;
+	private BigDecimal initialUnitPrice;
 
 	/**
 	 * 初期費 見積り単価
@@ -79,7 +79,7 @@ public class EstimationInitialCostDto {
 	@DecimalMin("0.00")
 	@Digits(integer = 19, fraction = 2)
 	@ApiModelProperty(value = "初期費 見積り単価", required = true, position = 8, allowableValues = "range[0.00,9999999999999999999.99]")
-	private Integer estimatedUnitPrice;
+	private BigDecimal initialEstimatedUnitPrice;
 
 	/**
 	 * 初期費 数量
@@ -88,16 +88,16 @@ public class EstimationInitialCostDto {
 	@Min(0)
 	@Max(99999)
 	@ApiModelProperty(value = "初期費 数量", required = true, position = 9, allowableValues = "range[0,99999]")
-	private Integer amt;
+	private Integer initialAmt;
 
 	/**
-	 * 初期費　見積り金額
+	 * 初期費 見積り金額
 	 */
 	@NotNull
 	@DecimalMin("0.00")
 	@Digits(integer = 19, fraction = 2)
 	@ApiModelProperty(value = "初期費 見積り金額", required = true, position = 10, allowableValues = "range[0.00,9999999999999999999.99]")
-	private Integer estimatedPrice;
+	private BigDecimal initialEstimatedPrice;
 
 	/**
 	 * 販社CD
