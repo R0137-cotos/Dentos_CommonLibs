@@ -35,6 +35,7 @@ import jp.co.ricoh.cotos.commonlib.dto.parameter.estimation.EstimationPicSaEmpDt
 import jp.co.ricoh.cotos.commonlib.dto.parameter.estimation.EstimationRegisterParameter;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.estimation.ItemEstimationDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.estimation.ProductEstimationDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.estimation.external.EstimationInitialCostDto;
 import jp.co.ricoh.cotos.commonlib.entity.estimation.CustomerEstimation;
 import jp.co.ricoh.cotos.commonlib.entity.estimation.DealerEstimation;
 import jp.co.ricoh.cotos.commonlib.entity.estimation.Estimation;
@@ -1062,5 +1063,88 @@ public class TestEstimationDto {
 		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "再見積IDは最小値（0）を下回っています。"));
+	}
+
+	@Test
+	public void EstimationInitialCostDtoのテスト() throws Exception {
+		EstimationInitialCostDto dto = new EstimationInitialCostDto();
+		dto.setLoginMoMId("MoM社員Id");
+		dto.setLoginSingleUserid("ログインシングルユーザID");
+		dto.setOeProductRoot("0");
+		dto.setCustInfoCpmpanyId("お客様企事部ID");
+		dto.setEstimatedNoRts("CE2018091900401-1");
+		dto.setInitialProductCd("FB4901");
+		dto.setInitialUnitPrice(new BigDecimal(510));
+		dto.setInitialEstimatedUnitPrice(new BigDecimal(1020));
+		dto.setInitialAmt(1);
+		dto.setInitialEstimatedPrice(new BigDecimal(1020));
+		dto.setHanshCd("0");
+
+		EstimationInitialCostDto testTarget = new EstimationInitialCostDto();
+
+		// 正常系
+		BeanUtils.copyProperties(dto, testTarget);
+		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		testTool.assertValidationOk(result);
+
+		// 異常系（@NotNull ：）
+		BeanUtils.copyProperties(dto, testTarget);
+		testTarget.setLoginMoMId(null);
+		testTarget.setLoginSingleUserid(null);
+		testTarget.setOeProductRoot(null);
+		testTarget.setCustInfoCpmpanyId(null);
+		testTarget.setEstimatedNoRts(null);
+		testTarget.setInitialProductCd(null);
+		testTarget.setInitialUnitPrice(null);
+		testTarget.setInitialEstimatedUnitPrice(null);
+		testTarget.setInitialAmt(null);
+		testTarget.setInitialEstimatedPrice(null);
+		testTarget.setHanshCd(null);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 11);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "ログインMoM社員IDが設定されていません。"));
+
+		// 異常系（@Size ：）
+		BeanUtils.copyProperties(dto, testTarget);
+		testTarget.setLoginMoMId("012345678");
+		testTarget.setLoginSingleUserid("01234567890123456789012345678901234567890123456789012345678901234");
+		testTarget.setOeProductRoot("012");
+		testTarget.setCustInfoCpmpanyId("0123456789012345");
+		testTarget.setEstimatedNoRts("01234567890123456789012345");
+		testTarget.setInitialProductCd("01234567890123456789012345");
+		testTarget.setHanshCd("0123");
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 7);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "ログインMoM社員IDは最大文字数（8）を超えています。"));
+
+		// 異常系（@Min ：）
+		BeanUtils.copyProperties(dto, testTarget);
+		testTarget.setInitialAmt(INT_MINUS_1);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "初期費　数量は最小値（0）を下回っています。"));
+
+		// 異常系（@DecimalMin ：）
+		BeanUtils.copyProperties(dto, testTarget);
+		testTarget.setInitialUnitPrice(DECIMAL_MINUS_001);
+		testTarget.setInitialEstimatedUnitPrice(DECIMAL_MINUS_001);
+		testTarget.setInitialEstimatedPrice(DECIMAL_MINUS_001);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 3);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "初期費　標準価格は最小値（0.00）を下回っています。"));
+
+		// 異常系（@Digits ：）
+		BeanUtils.copyProperties(dto, testTarget);
+		testTarget.setInitialUnitPrice(DECIMAL_0001);
+		testTarget.setInitialEstimatedUnitPrice(DECIMAL_0001);
+		testTarget.setInitialEstimatedPrice(DECIMAL_0001);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 3);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00028));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "初期費　見積り金額は小数点以下2桁を超えています。"));
 	}
 }
