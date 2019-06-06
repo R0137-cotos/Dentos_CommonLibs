@@ -11,16 +11,9 @@ import lombok.Data;
 public class EstimationVupSearchParameter {
 
 	/**
-	 * 見積番号
+	 * 見積番号＋見積番号枝番(ハイフン繋ぎ)
 	 */
 	@NotNull
-	@ApiModelProperty(value = "見積番号", required = true, position = 1)
+	@ApiModelProperty(value = "見積番号＋見積番号枝番(ハイフン繋ぎ)", required = true, position = 1)
 	private List<String> estimationNumberList;
-
-	/**
-	 * 見積番号枝番
-	 */
-	@NotNull
-	@ApiModelProperty(value = "見積番号枝番", required = true, position = 2)
-	private List<Integer> estimationBranchNumberList;
 }
