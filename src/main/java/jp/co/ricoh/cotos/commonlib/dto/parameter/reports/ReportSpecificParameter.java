@@ -6,9 +6,9 @@ import javax.validation.Valid;
 import javax.validation.constraints.Size;
 
 import io.swagger.annotations.ApiModelProperty;
+import jp.co.ricoh.cotos.commonlib.entity.EnumType.ServiceCategory;
 import jp.co.ricoh.cotos.commonlib.entity.master.ReportTemplateMaster.LifecycleStatus;
 import jp.co.ricoh.cotos.commonlib.entity.master.ReportTemplateMaster.OutputType;
-import jp.co.ricoh.cotos.commonlib.entity.master.ReportTemplateMaster.ServiceCategory;
 import jp.co.ricoh.cotos.commonlib.entity.master.ReportTemplateMaster.TargetType;
 import jp.co.ricoh.cotos.commonlib.entity.master.ReportTemplateMaster.WorkflowStatus;
 import lombok.Data;
