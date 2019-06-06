@@ -210,3 +210,4 @@
 |252|企事部情報取得用DTO削除|
 |253|ContractExtCreateDto、ContractExtChangeDtoに追加編集者追加|
 |254|日付チェック用メソッドを追加|
+|255|DBコネクションクローズ処理を追加|
