@@ -288,6 +288,7 @@ public class MomAuthorityService {
 			return null;
 		}
 
+		connection.close();
 		return Arrays.asList(authorityInfoActionDtos);
 	}
 }
