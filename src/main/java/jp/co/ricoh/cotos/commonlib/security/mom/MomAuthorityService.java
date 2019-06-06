@@ -262,9 +262,6 @@ public class MomAuthorityService {
 	 */
 	protected List<AuthorityInfoActionDto> searchMomAuthoritiesExternal(String singleUserId) throws SQLException, RemoteException, ServiceException {
 
-		// MoM権限取得用のコネクションを作成
-		Connection connection = DriverManager.getConnection(datasourceProperties.getUrl(), datasourceProperties.getUsername(), datasourceProperties.getPassword());
-
 		// 権限情報取得用サービスを初期化
 		KengenServiceServiceLocator kengenServiceLocator = new KengenServiceServiceLocator();
 		kengenServiceLocator.setKengenServiceEndpointAddress(remoteMomProperties.getUrl());
@@ -281,14 +278,17 @@ public class MomAuthorityService {
 		employeeOrgInfoDtoList.stream().forEach(employeeOrgInfoDto -> Collections.addAll(empAuthInfoList, employeeOrgInfoDto.getClassifyList()));
 		List<String> classify = empAuthInfoList.stream().map(empAuthInfo -> empAuthInfo.getClassifyId()).collect(Collectors.toList());
 
-		// MoM提供モジュールから権限情報の取得
-		AuthoritySearch authoritySearch = new AuthoritySearch();
-		AuthorityInfoActionDto[] authorityInfoActionDtos = authoritySearch.getAuthSumFromEmpId((String[]) classify.toArray(new String[0]), remoteMomProperties.getRelatedid(), connection);
+		AuthorityInfoActionDto[] authorityInfoActionDtos = null;
+		try (Connection connection = DriverManager.getConnection(datasourceProperties.getUrl(), datasourceProperties.getUsername(), datasourceProperties.getPassword())) {
+			// MoM提供モジュールから権限情報の取得
+			AuthoritySearch authoritySearch = new AuthoritySearch();
+			authorityInfoActionDtos = authoritySearch.getAuthSumFromEmpId((String[]) classify.toArray(new String[0]), remoteMomProperties.getRelatedid(), connection);
+		}
+		
 		if (authorityInfoActionDtos == null || authorityInfoActionDtos.length == 0) {
 			return null;
 		}
 
-		connection.close();
 		return Arrays.asList(authorityInfoActionDtos);
 	}
 }
