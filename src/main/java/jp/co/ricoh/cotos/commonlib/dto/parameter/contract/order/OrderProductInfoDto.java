@@ -30,7 +30,6 @@ public class OrderProductInfoDto extends DtoBase {
 	/**
 	 * 課金制約ルール
 	 */
-	@Size(max = 255)
 	@ApiModelProperty(value = "課金制約ルール", required = false, position = 3, allowableValues = "range[0,]")
 	private ChargeRule chargeRule;
 
@@ -51,7 +50,6 @@ public class OrderProductInfoDto extends DtoBase {
 	/**
 	 * 提供方法
 	 */
-	@Size(max = 255)
 	@ApiModelProperty(value = "提供方法", required = false, position = 6, allowableValues = "range[0,]")
 	private ProvideMethod provideMethod;
 

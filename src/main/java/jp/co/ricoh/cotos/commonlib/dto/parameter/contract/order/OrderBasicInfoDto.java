@@ -37,7 +37,6 @@ public class OrderBasicInfoDto extends DtoBase {
 	 * 注文タイプ
 	 */
 	@NotNull
-	@Size(max = 255)
 	@ApiModelProperty(value = "注文タイプ", required = false, position = 3, allowableValues = "range[0,]")
 	private OrdererType ordererType;
 
@@ -45,7 +44,6 @@ public class OrderBasicInfoDto extends DtoBase {
 	 * 商品種別
 	 */
 	@NotNull
-	@Size(max = 255)
 	@ApiModelProperty(value = "商品種別", required = false, position = 4, allowableValues = "range[0,]")
 	private ProductType productType;
 
@@ -67,7 +65,6 @@ public class OrderBasicInfoDto extends DtoBase {
 	 * 商流区分（代直区分）
 	 */
 	@NotNull
-	@Size(max = 255)
 	@ApiModelProperty(value = "商流区分（代直区分）", required = false, position = 7, allowableValues = "range[0,]")
 	private CommercialFlowDiv commercialFlowDiv;
 
