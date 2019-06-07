@@ -722,8 +722,13 @@ public class TestContract {
 		testTarget.setDistributorMomSoshikiId(STR_256);
 		testTarget.setDistributorMomDepoCd(STR_256);
 		testTarget.setOrbSendSiteId(STR_256);
+		testTarget.setPicNameKana(STR_256);
+		testTarget.setDealerNameKana(STR_256);
+		testTarget.setCompanyRepresentativeName(STR_256);
+		testTarget.setCompanyRepresentativeNameKana(STR_256);
+		testTarget.setMomCustId(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 15);
+		Assert.assertTrue(result.getErrorInfoList().size() == 20);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "Rings得意先コードは最大文字数（255）を超えています。"));
 

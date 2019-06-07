@@ -491,6 +491,20 @@ public class Estimation extends EntityBase {
 	@ApiModelProperty(value = "アプリケーションID", required = false, position = 53, allowableValues = "range[0,255]")
 	private String appId;
 
+	/**
+	 * RJ管理番号
+	 */
+	@Column
+	@ApiModelProperty(value = "RJ管理番号", required = false, position = 54, allowableValues = "range[0,255]")
+	private String rjManageNumber;
+
+	/**
+	 * 帳票用消費税率区分
+	 */
+	@Column
+	@ApiModelProperty(value = "帳票用消費税率区分", required = false, position = 55, allowableValues = "range[0,255]")
+	private String issueTaxCodeValue;
+
 	@PreUpdate
 	public void preUpdate() {
 		if (StringUtils.isEmpty(super.getUpdatedUserId())) {

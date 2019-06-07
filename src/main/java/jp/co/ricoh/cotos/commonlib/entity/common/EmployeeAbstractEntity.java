@@ -100,4 +100,6 @@ public class EmployeeAbstractEntity extends EntityBase {
 	 */
 	@ApiModelProperty(value = "メールアドレス(作成時不要)", required = false, position = 63, allowableValues = "range[0,255]", readOnly = true)
 	private String mailAddress;
+
+
 }

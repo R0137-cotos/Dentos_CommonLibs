@@ -110,4 +110,10 @@ public class ProductMaster extends EntityBaseMaster {
     @Fetch(FetchMode.SUBSELECT)
 	@ApiModelProperty(value = "拡張項目相関チェックマスタ", required = false, position = 11)
 	private List<ExtendsParameterCorrelationCheckMaster> extendsParameterCorrelationCheckMasterList;
+	
+	/**
+	 * 商品種類区分
+	 */
+	@ApiModelProperty(value = "商品種類区分", required = false, position = 12)
+	private String productClassDiv;
 }
