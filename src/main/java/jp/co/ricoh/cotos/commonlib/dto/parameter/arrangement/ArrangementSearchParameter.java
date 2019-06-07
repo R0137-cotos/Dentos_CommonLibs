@@ -366,7 +366,15 @@ public class ArrangementSearchParameter {
 			+ "13:担当支社<br />" //
 			+ "14:サービス開始日<br />" //
 			+ "15:サービス終了日<br />" //
-			+ "16:保留フラグ<br />", //
+			+ "16:保留フラグ<br />" //
+			+ "17:受付担当SS組織<br />" //
+			+ "18:受付担当CE氏名<br />" //
+			+ "19:導入担当SS組織<br />" //
+			+ "20:導入担当CE氏名<br />" //
+			+ "21:保守担当SS組織<br />" //
+			+ "22:保守担当CE氏名<br />" //
+			+ "23:登録日時<br />" //
+			+ "24:更新日時<br />", //
 			required = true, allowableValues = "range[0,14]") //
 	private int sortColumn;
 
