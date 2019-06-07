@@ -224,13 +224,11 @@ public class TestOrderDto {
 		// 異常系（@Size(max))
 		BeanUtils.copyProperties(entity, testTarget);
 		testTarget.setProductCd(STR_256);
-		testTarget.setChargeRule(STR_256);
 		testTarget.setFreePeriod(STR_256);
 		testTarget.setProductName(STR_256);
-		testTarget.setProvideMethod(STR_256);
 
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 5);
+		Assert.assertTrue(result.getErrorInfoList().size() == 3);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 	}
 
@@ -405,14 +403,11 @@ public class TestOrderDto {
 		// 異常系（@Size(max))
 		BeanUtils.copyProperties(entity, testTarget);
 		testTarget.setOrdererNumber(STR_256);
-		testTarget.setOrdererType(STR_256);
-		testTarget.setProductType(STR_256);
-		testTarget.setCommercialFlowDiv(STR_256);
 		testTarget.setRjManageNumber(STR_256);
 		testTarget.setMakerManageNumber(STR_256);
 
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 6);
+		Assert.assertTrue(result.getErrorInfoList().size() == 3);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 	}
 

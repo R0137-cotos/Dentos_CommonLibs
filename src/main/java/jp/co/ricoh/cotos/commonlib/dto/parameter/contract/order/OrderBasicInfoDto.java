@@ -12,6 +12,9 @@ import javax.validation.constraints.Size;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.common.DtoBase;
+import jp.co.ricoh.cotos.commonlib.entity.contract.order.OrderBasicInfo.CommercialFlowDiv;
+import jp.co.ricoh.cotos.commonlib.entity.contract.order.OrderBasicInfo.OrdererType;
+import jp.co.ricoh.cotos.commonlib.entity.contract.order.OrderBasicInfo.ProductType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -36,7 +39,7 @@ public class OrderBasicInfoDto extends DtoBase {
 	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "注文タイプ", required = false, position = 3, allowableValues = "range[0,]")
-	private String ordererType;
+	private OrdererType ordererType;
 
 	/**
 	 * 商品種別
@@ -44,7 +47,7 @@ public class OrderBasicInfoDto extends DtoBase {
 	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "商品種別", required = false, position = 4, allowableValues = "range[0,]")
-	private String productType;
+	private ProductType productType;
 
 	/**
 	 * 契約番号
@@ -66,7 +69,7 @@ public class OrderBasicInfoDto extends DtoBase {
 	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "商流区分（代直区分）", required = false, position = 7, allowableValues = "range[0,]")
-	private String commercialFlowDiv;
+	private CommercialFlowDiv commercialFlowDiv;
 
 	/**
 	 * 申込日時

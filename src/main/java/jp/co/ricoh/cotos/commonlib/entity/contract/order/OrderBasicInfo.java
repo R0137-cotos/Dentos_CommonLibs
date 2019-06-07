@@ -1,6 +1,7 @@
 package jp.co.ricoh.cotos.commonlib.entity.contract.order;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +17,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import lombok.Data;
@@ -29,6 +33,72 @@ import lombok.EqualsAndHashCode;
 @Data
 @Table(name = "order_basic_info")
 public class OrderBasicInfo extends EntityBase {
+
+	public enum OrdererType {
+
+		新規("1"), 変更("2"), 解約("3");
+
+		private final String text;
+
+		private OrdererType(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		@JsonValue
+		public String toString() {
+			return this.text;
+		}
+
+		@JsonCreator
+		public static OrdererType fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+		}
+	}
+
+	public enum ProductType {
+
+		RSI("1");
+
+		private final String text;
+
+		private ProductType(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		@JsonValue
+		public String toString() {
+			return this.text;
+		}
+
+		@JsonCreator
+		public static ProductType fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+		}
+	}
+
+	public enum CommercialFlowDiv {
+
+		代売("1"), 直売("2");
+
+		private final String text;
+
+		private CommercialFlowDiv(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		@JsonValue
+		public String toString() {
+			return this.text;
+		}
+
+		@JsonCreator
+		public static CommercialFlowDiv fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+		}
+	}
 
 	/**
 	 * ID
@@ -51,14 +121,14 @@ public class OrderBasicInfo extends EntityBase {
 	 */
 	@Column
 	@ApiModelProperty(value = "注文タイプ", required = false, position = 3, allowableValues = "range[0,]")
-	private String ordererType;
+	private OrdererType ordererType;
 
 	/**
 	 * 商品種別
 	 */
 	@Column
 	@ApiModelProperty(value = "商品種別", required = false, position = 4, allowableValues = "range[0,]")
-	private String productType;
+	private ProductType productType;
 
 	/**
 	 * 契約番号
@@ -79,7 +149,7 @@ public class OrderBasicInfo extends EntityBase {
 	 */
 	@Column
 	@ApiModelProperty(value = "商流区分（代直区分）", required = false, position = 7, allowableValues = "range[0,]")
-	private String commercialFlowDiv;
+	private CommercialFlowDiv commercialFlowDiv;
 
 	/**
 	 * 申込日時

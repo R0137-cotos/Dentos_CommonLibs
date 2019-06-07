@@ -7,6 +7,8 @@ import javax.validation.constraints.Size;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.common.DtoBase;
+import jp.co.ricoh.cotos.commonlib.entity.contract.order.OrderProductInfo.ChargeRule;
+import jp.co.ricoh.cotos.commonlib.entity.contract.order.OrderProductInfo.ProvideMethod;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -30,7 +32,7 @@ public class OrderProductInfoDto extends DtoBase {
 	 */
 	@Size(max = 255)
 	@ApiModelProperty(value = "課金制約ルール", required = false, position = 3, allowableValues = "range[0,]")
-	private String chargeRule;
+	private ChargeRule chargeRule;
 
 	/**
 	 * 無料期間
@@ -51,7 +53,7 @@ public class OrderProductInfoDto extends DtoBase {
 	 */
 	@Size(max = 255)
 	@ApiModelProperty(value = "提供方法", required = false, position = 6, allowableValues = "range[0,]")
-	private String provideMethod;
+	private ProvideMethod provideMethod;
 
 	/**
 	 * 変更後数量

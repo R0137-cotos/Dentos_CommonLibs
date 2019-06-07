@@ -1,6 +1,7 @@
 package jp.co.ricoh.cotos.commonlib.entity.contract.order;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,10 +13,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
+import jp.co.ricoh.cotos.commonlib.entity.contract.order.OrderManagementInfo.CaptureStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -27,7 +31,48 @@ import lombok.EqualsAndHashCode;
 @Data
 @Table(name = "order_product_info")
 public class OrderProductInfo extends EntityBase {
+	public enum ChargeRule {
 
+		有料("0"), 初月無料("1"), 無料期間指定("2");
+
+		private final String text;
+
+		private ChargeRule(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		@JsonValue
+		public String toString() {
+			return this.text;
+		}
+
+		@JsonCreator
+		public static ChargeRule fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+		}
+	}
+	
+	public enum ProvideMethod {
+		初期("1"), 月額("2"), 年額("3");
+
+		private final String text;
+
+		private ProvideMethod(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		@JsonValue
+		public String toString() {
+			return this.text;
+		}
+
+		@JsonCreator
+		public static ProvideMethod fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+		}
+	}
 	/**
 	 * ID
 	 */
@@ -57,7 +102,7 @@ public class OrderProductInfo extends EntityBase {
 	 */
 	@Column
 	@ApiModelProperty(value = "課金制約ルール", required = false, position = 3, allowableValues = "range[0,]")
-	private String chargeRule;
+	private ChargeRule chargeRule;
 
 	/**
 	 * 無料期間
@@ -78,7 +123,7 @@ public class OrderProductInfo extends EntityBase {
 	 */
 	@Column
 	@ApiModelProperty(value = "提供方法", required = false, position = 6, allowableValues = "range[0,]")
-	private String provideMethod;
+	private ProvideMethod provideMethod;
 
 	/**
 	 * 変更後数量

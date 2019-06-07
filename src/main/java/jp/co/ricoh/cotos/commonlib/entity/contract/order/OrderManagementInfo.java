@@ -1,5 +1,6 @@
 package jp.co.ricoh.cotos.commonlib.entity.contract.order;
 
+import java.util.Arrays;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -14,7 +15,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
@@ -29,6 +32,27 @@ import lombok.EqualsAndHashCode;
 @Data
 @Table(name = "order_management_info")
 public class OrderManagementInfo extends EntityBase {
+	public enum CaptureStatus {
+
+		未取込("0"), 取込済("1"), 取込対象外("9"), 処理不可("E");
+
+		private final String text;
+
+		private CaptureStatus(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		@JsonValue
+		public String toString() {
+			return this.text;
+		}
+
+		@JsonCreator
+		public static CaptureStatus fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+		}
+	}
 
 	/**
 	 * ID
@@ -52,7 +76,7 @@ public class OrderManagementInfo extends EntityBase {
 	 */
 	@Column
 	@ApiModelProperty(value = "契約取込状況", required = true, position = 2, allowableValues = "range[0,]")
-	private String contractCaptureStatus;
+	private CaptureStatus contractCaptureStatus;
 
 	/**
 	 * 契約取込日時
