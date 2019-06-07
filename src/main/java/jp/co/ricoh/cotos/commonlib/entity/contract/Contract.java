@@ -529,4 +529,32 @@ public class Contract extends EntityBase {
 	@Size(max = 255)
 	@ApiModelProperty(value = "アプリケーションID", required = false, position = 56, allowableValues = "range[0,255]")
 	private String appId;
+
+	/**
+	 * 契約自動更新日
+	 */
+	@Column
+	@ApiModelProperty(value = "契約自動更新日", required = false, position = 57)
+	private Date contractAutoUpdateDate;
+
+	/**
+	 * 届先コード
+	 */
+	@Column
+	@ApiModelProperty(value = "届先コード", required = false, position = 58, allowableValues = "range[0,]")
+	private String deliveryCd;
+
+	/**
+	 * 届先名
+	 */
+	@Column
+	@ApiModelProperty(value = "届先名", required = false, position = 59, allowableValues = "range[0,]")
+	private String deliveryName;
+
+	/**
+	 * 帳票用消費税率区分
+	 */
+	@Column
+	@ApiModelProperty(value = "帳票用消費税率区分", required = false, position = 60, allowableValues = "range[0,]")
+	private String issueTaxCodeValue;
 }

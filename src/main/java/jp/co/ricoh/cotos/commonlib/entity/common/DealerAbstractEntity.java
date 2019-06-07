@@ -33,30 +33,39 @@ public class DealerAbstractEntity extends EntityBase {
 	/**
 	 * 販売店名
 	 */
+	@Column
+	@Size(max = 255)
 	@ApiModelProperty(value = "販売店名(作成時不要)", required = false, position = 52, allowableValues = "range[0,255]", readOnly = true)
 	private String dealerName;
 
 	/**
 	 * 郵便番号
 	 */
+	@Column
+	@Size(max = 255)
 	@ApiModelProperty(value = "郵便番号(作成時不要)", required = false, position = 53, allowableValues = "range[0,255]", readOnly = true)
 	private String postNumber;
 
 	/**
 	 * 住所
 	 */
+	@Column
+	@Size(max = 1001)
 	@ApiModelProperty(value = "住所(作成時不要)", required = false, position = 54, allowableValues = "range[0,1000]", readOnly = true)
 	private String address;
 
 	/**
 	 * 会社代表電話番号
 	 */
+	@Column
+	@Size(max = 255)
 	@ApiModelProperty(value = "会社代表電話番号(作成時不要)", required = false, position = 55, allowableValues = "range[0,255]", readOnly = true)
 	private String orgPhoneNumber;
 
 	/**
 	 * 担当者名
 	 */
+	@Column
 	@Size(max = 255)
 	@ApiModelProperty(value = "担当者名", required = false, position = 56, allowableValues = "range[0,255]")
 	private String picName;
@@ -64,6 +73,7 @@ public class DealerAbstractEntity extends EntityBase {
 	/**
 	 * 担当者部署名
 	 */
+	@Column
 	@Size(max = 255)
 	@ApiModelProperty(value = "担当者部署名", required = false, position = 57, allowableValues = "range[0,255]")
 	private String picDeptName;
@@ -89,4 +99,85 @@ public class DealerAbstractEntity extends EntityBase {
 	@NotNull
 	@ApiModelProperty(value = "販売店商流順", required = true, allowableValues = "販売店(\"1\"), 母店(\"2\")", example = "1", position = 60)
 	private DealerFlowOrder dealerFlowOrder;
+	
+	/**
+	 * MoM会社ID
+	 */
+	@Column
+	@Size(max = 255)
+	@ApiModelProperty(value = "MoM会社ID", required = false, position = 61, allowableValues = "range[0,255]")
+	private String distributorMomCmpId;
+
+	/**
+	 * MoM販売店識別コード
+	 */
+	@Column
+	@Size(max = 255)
+	@ApiModelProperty(value = "MoM販売店識別コード", required = false, position = 62, allowableValues = "range[0,255]")
+	private String distributorMomShikiCd;
+
+	/**
+	 * MoM組織ID
+	 */
+	@Column
+	@Size(max = 255)
+	@ApiModelProperty(value = "MoM組織ID", required = false, position = 63, allowableValues = "range[0,255]")
+	private String distributorMomSoshikiId;
+
+	/**
+	 * MoMデポコード
+	 */
+	@Column
+	@Size(max = 255)
+	@ApiModelProperty(value = "MoMデポコード", required = false, position = 64, allowableValues = "range[0,255]")
+	private String distributorMomDepoCd;
+
+	/**
+	 * MoM設置届先サイトID
+	 */
+	@Column
+	@Size(max = 255)
+	@ApiModelProperty(value = "MoM設置届先サイトID", required = false, position = 65, allowableValues = "range[0,255]")
+	private String orbSendSiteId;
+
+	/**
+	 * 担当者名（カナ）
+	 */
+	@Column
+	@Size(max = 255)
+	@ApiModelProperty(value = "担当者名（カナ）", required = false, position = 66, allowableValues = "range[0,255]")
+	private String picNameKana;
+
+	/**
+	 * 販売店名（カナ）
+	 */
+	@Column
+	@Size(max = 255)
+	@ApiModelProperty(value = "販売店名（カナ）", required = false, position = 67, allowableValues = "range[0,255]")
+	private String dealerNameKana;
+
+	/**
+	 * MoM非連携_企業代表者名
+	 */
+	@Column
+	@Size(max = 255)
+	@ApiModelProperty(value = "MoM非連携_企業代表者名", required = false, position = 68, allowableValues = "range[0,255]")
+	private String companyRepresentativeName;
+
+	/**
+	 * MoM非連携_企業代表者名（カナ）
+	 */
+	@Column
+	@Size(max = 255)
+	@ApiModelProperty(value = "MoM非連携_企業代表者名（カナ）", required = false, position = 69, allowableValues = "range[0,255]")
+	private String companyRepresentativeNameKana;
+
+	/**
+	 * MoM企事部ID
+	 */
+	@Column
+	@Size(max = 255)
+	@ApiModelProperty(value = "MoM企事部ID", required = false, position = 70, allowableValues = "range[0,255]")
+	private String momCustId;
+	
 }

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -391,4 +392,28 @@ public class EstimationDto extends DtoBase {
 	@OneToMany(mappedBy = "estimation")
 	@ApiModelProperty(value = "商品（見積用）", required = false, position = 52)
 	private List<ProductEstimationDto> productEstimationList;
+
+	/**
+	 * アプリケーションID
+	 */
+	@Valid
+	@Size(max = 255)
+	@ApiModelProperty(value = "アプリケーションID", required = false, position = 53, allowableValues = "range[0,255]")
+	private String appId;
+
+	/**
+	 * RJ管理番号
+	 */
+	@Valid
+	@Size(max = 255)
+	@ApiModelProperty(value = "RJ管理番号", required = false, position = 54, allowableValues = "range[0,255]")
+	private String rjManageNumber;
+
+	/**
+	 * 帳票用消費税率区分
+	 */
+	@Valid
+	@Size(max = 255)
+	@ApiModelProperty(value = "帳票用消費税率区分", required = false, position = 55, allowableValues = "range[0,255]")
+	private String issueTaxCodeValue;
 }

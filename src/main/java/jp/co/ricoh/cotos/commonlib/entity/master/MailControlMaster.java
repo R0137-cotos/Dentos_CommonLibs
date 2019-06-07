@@ -158,4 +158,11 @@ public class MailControlMaster extends EntityBaseMaster {
 	@OneToMany(mappedBy = "mailControlMaster")
 	@ApiModelProperty(value = "メール変換値マスタ", required = false, position = 11)
 	private List<MailConvertValueMaster> MailConvertValueMasterList;
+
+	/**
+	 *  通知メール対象商材マスタ
+	 */
+	@OneToMany(mappedBy = "mailControlMaster")
+	@ApiModelProperty(value = "通知メール対象商材マスタ", required = false, position = 12)
+	private List<MailProductMaster> mailProductMasterList;
 }
