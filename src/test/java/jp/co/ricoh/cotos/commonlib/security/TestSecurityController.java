@@ -55,6 +55,15 @@ import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.external.ContractExtCa
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.external.ContractExtChangeDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.external.ContractExtCreateDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.external.ProductContractExtCreateDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.order.OrderBasicInfoDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.order.OrderBranchCustomerInfoDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.order.OrderContractorInfoDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.order.OrderDistributorInfoDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.order.OrderProductGroupInfoDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.order.OrderProductInfoDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.order.OrderServiceInnerInfoDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.order.OrderSetupInfoDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.order.OrdererInfoDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.estimation.CustomerEstimationDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.estimation.DealerEstimationDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.estimation.EstimationAddedEditorEmpDto;
@@ -696,6 +705,51 @@ public class TestSecurityController {
 
 	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ManagedEstimationDetailDto")
 	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ManagedEstimationDetailDto dto, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/OrderSetupInfoDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated OrderSetupInfoDto dto, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/OrderServiceInnerInfoDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated OrderServiceInnerInfoDto dto, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/OrderProductInfoDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated OrderProductInfoDto dto, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/OrderProductGroupInfoDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated OrderProductGroupInfoDto dto, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/OrdererInfoDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated OrdererInfoDto dto, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/OrderDistributorInfoDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated OrderDistributorInfoDto dto, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/OrderContractorInfoDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated OrderContractorInfoDto dto, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/OrderBranchCustomerInfoDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated OrderBranchCustomerInfoDto dto, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/OrderBasicInfoDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated OrderBasicInfoDto dto, BindingResult result) {
 		return createParameterCheckResult(result);
 	}
 }

@@ -1,90 +1,76 @@
-package jp.co.ricoh.cotos.commonlib.entity.contract.order;
+package jp.co.ricoh.cotos.commonlib.dto.parameter.contract.order;
 
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import io.swagger.annotations.ApiModelProperty;
-import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.common.DtoBase;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * 注文基本情報
+ * 注文基本情報DTO
  */
-@Entity
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 @Data
-@Table(name = "order_basic_info")
-public class OrderBasicInfo extends EntityBase {
-
-	/**
-	 * ID
-	 */
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_basic_info_seq")
-	@SequenceGenerator(name = "order_basic_info_seq", sequenceName = "order_basic_info_seq", allocationSize = 1)
-	@ApiModelProperty(value = "ID", required = true, position = 1)
-	private long id;
+public class OrderBasicInfoDto extends DtoBase {
 
 	/**
 	 * 注文番号
 	 */
-	@Column
+	@NotNull
+	@Size(max = 255)
 	@ApiModelProperty(value = "注文番号", required = false, position = 2, allowableValues = "range[0,]")
 	private String ordererNumber;
 
 	/**
 	 * 注文タイプ
 	 */
-	@Column
+	@NotNull
+	@Size(max = 255)
 	@ApiModelProperty(value = "注文タイプ", required = false, position = 3, allowableValues = "range[0,]")
 	private String ordererType;
 
 	/**
 	 * 商品種別
 	 */
-	@Column
+	@NotNull
+	@Size(max = 255)
 	@ApiModelProperty(value = "商品種別", required = false, position = 4, allowableValues = "range[0,]")
 	private String productType;
 
 	/**
 	 * 契約番号
 	 */
-	@Column
+	@Size(max = 255)
 	@ApiModelProperty(value = "契約番号", required = false, position = 5, allowableValues = "range[0,]")
 	private String rjManageNumber;
 
 	/**
 	 * メーカー契約番号
 	 */
-	@Column
+	@Size(max = 255)
 	@ApiModelProperty(value = "メーカー契約番号", required = false, position = 6, allowableValues = "range[0,]")
 	private String makerManageNumber;
 
 	/**
 	 * 商流区分（代直区分）
 	 */
-	@Column
+	@NotNull
+	@Size(max = 255)
 	@ApiModelProperty(value = "商流区分（代直区分）", required = false, position = 7, allowableValues = "range[0,]")
 	private String commercialFlowDiv;
 
 	/**
 	 * 申込日時
 	 */
-	@Column
 	@Temporal(TemporalType.TIMESTAMP)
 	@ApiModelProperty(value = "申込日時", required = false, position = 8)
 	private Date ordererDateTime;
@@ -92,65 +78,53 @@ public class OrderBasicInfo extends EntityBase {
 	/**
 	 * 解約予定日
 	 */
-	@Column
+	@Column(nullable = false)
 	@ApiModelProperty(value = "解約予定日", required = false, position = 9)
 	private Date cancelScheduledDate;
 
 	/**
 	 * 初期費合計
 	 */
-	@Column
+	@Column(nullable = false)
 	@ApiModelProperty(value = "初期費合計", required = false, position = 10)
 	private BigDecimal initialTotalAmount;
 
 	/**
 	 * 月額費合計
 	 */
-	@Column
+	@Column(nullable = false)
 	@ApiModelProperty(value = "月額費合計", required = false, position = 11)
 	private BigDecimal monthlyTotalAmount;
 
 	/**
 	 * 年額費合計
 	 */
-	@Column
+	@Column(nullable = false)
 	@ApiModelProperty(value = "年額費合計", required = false, position = 12)
 	private BigDecimal yearlyTotalAmount;
 
-	@OneToOne(mappedBy = "orderBasicInfo")
 	@ApiModelProperty(value = "注文商品グループ情報", required = false, position = 13)
-	private OrderProductGroupInfo orderProductGroupInfo;
+	private OrderProductGroupInfoDto orderProductGroupInfoDTO;
 
-	@OneToOne(mappedBy = "orderBasicInfo")
 	@ApiModelProperty(value = "注文サービス固有情報", required = false, position = 14)
-	private OrderServiceInnerInfo orderServiceInnerInfo;
+	private OrderServiceInnerInfoDto orderServiceInnerInfoDTO;
 
-	@OneToOne(mappedBy = "orderBasicInfo")
 	@ApiModelProperty(value = "注文販売店情報", required = false, position = 15)
-	private OrderDistributorInfo orderDistributorInfo;
+	private OrderDistributorInfoDto orderDistributorInfoDTO;
 
-	@OneToOne(mappedBy = "orderBasicInfo")
 	@ApiModelProperty(value = "注文セットアップ先情報", required = false, position = 16)
-	private OrderSetupInfo orderSetupInfo;
+	private OrderSetupInfoDto orderSetupInfoDTO;
 
-	@OneToOne(mappedBy = "orderBasicInfo")
 	@ApiModelProperty(value = "注文者情報", required = false, position = 17)
-	private OrdererInfo ordererInfo;
+	private OrdererInfoDto ordererInfoDTO;
 
-	@OneToMany(mappedBy = "orderBasicInfo")
 	@ApiModelProperty(value = "注文商品情報", required = false, position = 18)
-	private List<OrderProductInfo> orderProductInfoList;
+	private List<OrderProductInfoDto> orderProductInfoDTOList;
 
-	@OneToOne(mappedBy = "orderBasicInfo")
 	@ApiModelProperty(value = "注文担当支社情報", required = false, position = 19)
-	private OrderBranchCustomerInfo orderBranchCustomerInfo;
+	private OrderBranchCustomerInfoDto orderBranchCustomerInfoDTO;
 
-	@OneToOne(mappedBy = "orderBasicInfo")
 	@ApiModelProperty(value = "注文顧客情報", required = false, position = 20)
-	private OrderContractorInfo orderContractorInfo;
-
-	@OneToOne(mappedBy = "orderBasicInfo")
-	@ApiModelProperty(value = "注文管理情報", required = false, position = 21)
-	private OrderManagementInfo orderManagementInfo;
+	private OrderContractorInfoDto orderContractorInfoDTO;
 
 }
