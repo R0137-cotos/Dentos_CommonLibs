@@ -209,3 +209,5 @@
 |251|商材個別Commonlibsのメッセージファイルを読込可能とする|
 |252|企事部情報取得用DTO削除|
 |253|ContractExtCreateDto、ContractExtChangeDtoに追加編集者追加|
+|254|DBコネクションクローズ処理を追加|
+|255|RSIのERD追加を反映
