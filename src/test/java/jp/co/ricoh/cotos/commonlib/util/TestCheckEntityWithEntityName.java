@@ -21,7 +21,7 @@ import jp.co.ricoh.cotos.commonlib.security.bean.ParamterCheckResult;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class TestNotOmittedCheckEntity {
+public class TestCheckEntityWithEntityName {
 	private static final int INT_100 = 100;
 
 	static ConfigurableApplicationContext context;
