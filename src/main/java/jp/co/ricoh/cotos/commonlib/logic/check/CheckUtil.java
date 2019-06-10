@@ -140,7 +140,7 @@ public class CheckUtil {
 	 * @throws ErrorCheckException
 	 *             エラーチェックException
 	 */
-	public void notOmittedCheckEntity(BindingResult result, String... ignoreFields) throws ErrorCheckException {
+	public void checkEntityWithEntityName(BindingResult result, String... ignoreFields) throws ErrorCheckException {
 		List<ErrorInfo> errorInfoList = new ArrayList<>();
 		if (result.hasErrors()) {
 			for (FieldError fieldError : result.getFieldErrors()) {

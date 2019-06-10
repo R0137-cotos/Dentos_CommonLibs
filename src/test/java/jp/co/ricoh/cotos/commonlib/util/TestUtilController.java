@@ -36,7 +36,7 @@ public class TestUtilController {
 		if (result == null)
 			return paramterCheckResult;
 		try {
-			checkUtil.notOmittedCheckEntity(result);
+			checkUtil.checkEntityWithEntityName(result);
 		} catch (ErrorCheckException ex) {
 			paramterCheckResult.setErrorInfoList(ex.getErrorInfoList());
 			return paramterCheckResult;
