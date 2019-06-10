@@ -211,3 +211,4 @@
 |253|ContractExtCreateDto、ContractExtChangeDtoに追加編集者追加|
 |254|DBコネクションクローズ処理を追加|
 |255|RSIのERD追加を反映
+|256|DTOチェック修正・変数名微修正
