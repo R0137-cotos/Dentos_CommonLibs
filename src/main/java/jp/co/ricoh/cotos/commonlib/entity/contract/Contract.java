@@ -547,7 +547,7 @@ public class Contract extends EntityBase {
 	 */
 	@Valid
 	@OneToOne(mappedBy = "contract")
-	@ApiModelProperty(value = "契約担当CE社員(作成時不要)", required = false, position = 56, readOnly = true)
+	@ApiModelProperty(value = "契約保守担当CE社員(作成時不要)", required = false, position = 56, readOnly = true)
 	private ContractPicMntCeEmp contractPicMntCeEmp;
 
 	/**
