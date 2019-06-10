@@ -12,7 +12,7 @@ import jp.co.ricoh.cotos.commonlib.entity.contract.Contract;
 
 @Repository
 public interface ContractRepository extends CrudRepository<Contract, Long> {
-	
+
 	public Contract findByIdAndAppIdIn(Long id, List<String> appId);
 
 	public Contract findByIdAndAppIdNotIn(Long id, List<String> appId);
@@ -27,6 +27,8 @@ public interface ContractRepository extends CrudRepository<Contract, Long> {
 	public List<Contract> findByLifecycleAndCancelScheduledDate(@Param("opDate") String opDate);
 
 	public List<Contract> findByRjManageNumber(String rjManageNumber);
+
+	public List<Contract> findByWebOrderNumber(String webOrderNumber);
 
 	public List<Contract> findByEstimationIdOrderByContractBranchNumberAsc(long estimationId);
 
