@@ -215,11 +215,7 @@ public class TestOrderDto {
 		testTool.assertValidationOk(result);
 
 		// 異常系（@NotNull）
-		testTarget.setProductCd(null);
-		testTarget.setQuantity(null);
-		testTarget.setUnitPrice(null);
-		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 3);
+		// なし
 
 		// 異常系（@Size(max))
 		BeanUtils.copyProperties(entity, testTarget);
@@ -243,9 +239,7 @@ public class TestOrderDto {
 		testTool.assertValidationOk(result);
 
 		// 異常系（@NotNull）
-		testTarget.setProductGroupCd(null);
-		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		// なし
 
 		// 異常系（@Size(max))
 		BeanUtils.copyProperties(entity, testTarget);
@@ -361,10 +355,7 @@ public class TestOrderDto {
 		testTool.assertValidationOk(result);
 
 		// 異常系（@NotNull）
-		testTarget.setBranchCustomerCd(null);
-		testTarget.setEmployeeCd(null);
-		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		// なし
 
 		// 異常系（@Size(max))
 		BeanUtils.copyProperties(entity, testTarget);
@@ -393,12 +384,7 @@ public class TestOrderDto {
 		testTool.assertValidationOk(result);
 
 		// 異常系（@NotNull）
-		testTarget.setOrdererNumber(null);
-		testTarget.setOrdererType(null);
-		testTarget.setProductType(null);
-		testTarget.setCommercialFlowDiv(null);
-		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 4);
+		// なし
 
 		// 異常系（@Size(max))
 		BeanUtils.copyProperties(entity, testTarget);
