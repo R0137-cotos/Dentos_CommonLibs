@@ -210,4 +210,5 @@
 |252|企事部情報取得用DTO削除|
 |253|ContractExtCreateDto、ContractExtChangeDtoに追加編集者追加|
 |254|DBコネクションクローズ処理を追加|
-|255|RSIのERD追加を反映,DTOチェック修正・変数名微修正
+|255|RSIのERD追加を反映,DTOチェック修正・変数名微修正|
+|256|ContractRepositoryにweb受注番号を取得するメソッド定義追加|
