@@ -131,6 +131,100 @@ public class CheckUtil {
 	}
 
 	/**
+	 * 子エンティティ名も含めたメッセージを返すEntityチェック
+	 *
+	 * @param result
+	 *            Entityチェック結果
+	 * @param ignoreFields
+	 *            Entityチェック対象外項目名配列(未指定可)
+	 * @throws ErrorCheckException
+	 *             エラーチェックException
+	 */
+	public void notOmittedCheckEntity(BindingResult result, String... ignoreFields) throws ErrorCheckException {
+		List<ErrorInfo> errorInfoList = new ArrayList<>();
+		if (result.hasErrors()) {
+			for (FieldError fieldError : result.getFieldErrors()) {
+
+				if (Arrays.asList(ignoreFields).stream().anyMatch(fieldError.getField()::contains)) {
+					continue;
+				}
+
+				// 親エンティティから子エンティティのフィールド名は「子エンティティ名.項目名」となっているため、項目名のみ抜き出す
+				String fieldOrigNm = Optional.of(fieldError.getField()).filter(s -> s.contains(".")).map(s -> {
+					return Optional.of(s.split(Pattern.quote("."))).map(m -> m[m.length - 1]).get();
+				}).orElse(fieldError.getField());
+
+				String entityOrigNm = Optional.of(fieldError.getField()).filter(s -> s.contains(".")).map(s -> {
+					return Optional.of(s.split(Pattern.quote("."))).map(m -> m[m.length - 2]).get().replaceAll("\\[\\d+\\]", "");
+				}).orElse(null);
+
+				String fieldNm = messageUtil.convertSingleValue(fieldOrigNm);
+				if (null != entityOrigNm) {
+					fieldNm = messageUtil.convertSingleValue(entityOrigNm) + "の" + fieldNm;
+				}
+				String errCode = fieldError.getCode();
+				String max = null;
+				String min = null;
+				String digits = null;
+				if (fieldError.getArguments() != null && fieldError.getArguments().length > 0) {
+					if ("Max".equals(errCode) || "Size".equals(errCode)) {
+						max = fieldError.getArguments()[1].toString();
+					}
+					if ("Min".equals(errCode)) {
+						min = fieldError.getArguments()[1].toString();
+					}
+					if ("DecimalMax".equals(errCode)) {
+						max = ((MessageSourceResolvable) fieldError.getArguments()[2]).getDefaultMessage();
+					}
+					if ("DecimalMin".equals(errCode)) {
+						min = ((MessageSourceResolvable) fieldError.getArguments()[2]).getDefaultMessage();
+					}
+					if ("Digits".equals(errCode)) {
+						digits = fieldError.getArguments()[1].toString();
+					}
+				}
+
+				String errKey = null;
+				String[] regexList = null;
+				// 必須チェック
+				if ("NotNull".equals(errCode) || "NotEmpty".equals(errCode)) {
+					errKey = "EntityCheckNotNullError";
+					regexList = new String[] { fieldNm };
+				}
+				// 文字列桁数チェック
+				if ("Size".equals(errCode)) {
+					errKey = "EntityCheckStringSizeError";
+					regexList = new String[] { fieldNm, max };
+				}
+				// 数値桁数チェック
+				if ("Max".equals(errCode) || "DecimalMax".equals(errCode)) {
+					errKey = "EntityCheckNumberMaxError";
+					regexList = new String[] { fieldNm, max };
+				}
+				// 数値桁数チェック
+				if ("Min".equals(errCode) || "DecimalMin".equals(errCode)) {
+					errKey = "EntityCheckNumberMinError";
+					regexList = new String[] { fieldNm, min };
+				}
+				// 数値桁数チェック
+				if ("Digits".equals(errCode)) {
+					errKey = "EntityCheckNumberDigitsError";
+					regexList = new String[] { fieldNm, digits };
+				}
+				MessageInfo messageInfo = messageUtil.createMessageInfo(errKey, regexList);
+				ErrorInfo errorInfo = new ErrorInfo();
+				errorInfo.setErrorId(messageInfo.getId());
+				errorInfo.setErrorMessage(messageInfo.getMsg());
+				errorInfoList.add(errorInfo);
+			}
+
+			if (!errorInfoList.isEmpty()) {
+				throw new ErrorCheckException(errorInfoList);
+			}
+		}
+	}
+
+	/**
 	 * リストサイズチェック
 	 *
 	 * @param list
