@@ -1,6 +1,8 @@
 package jp.co.ricoh.cotos.commonlib.check;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -21,6 +23,7 @@ import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.order.OrderBasicInfoDt
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.order.OrderBranchCustomerInfoDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.order.OrderContractorInfoDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.order.OrderDistributorInfoDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.order.OrderListDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.order.OrderProductGroupInfoDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.order.OrderProductInfoDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.order.OrderServiceInnerInfoDto;
@@ -49,7 +52,7 @@ import jp.co.ricoh.cotos.commonlib.security.bean.ParamterCheckResult;
 import jp.co.ricoh.cotos.commonlib.util.HeadersProperties;
 
 /**
- * パラメータチェック（見積ドメイン）のテストクラス
+ * パラメータチェック（契約ドメイン・注文）のテストクラス
  *
  * @author kentaro.kakuhana
  *
@@ -394,6 +397,76 @@ public class TestOrderDto {
 
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 3);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+	}
+	
+	@Test
+	public void OrderListDtoのテスト() throws Exception {
+		
+		//子DTOのチェックが走っているかどうかの確認
+		
+		//トップレベルDTO
+		OrderListDto testTopTarget = new OrderListDto();
+		
+		//親
+		OrderBasicInfo entity = orderBasicInfoRepository.findOne(4L);
+		OrderBasicInfoDto testTarget = new OrderBasicInfoDto();
+		BeanUtils.copyProperties(entity, testTarget);
+		
+		//子
+		OrderSetupInfoDto testOrderSetupInfoTarget = new OrderSetupInfoDto();
+		BeanUtils.copyProperties(entity.getOrderSetupInfo(), testOrderSetupInfoTarget);
+		testTarget.setOrderSetupInfoDto(testOrderSetupInfoTarget);
+		
+		OrderServiceInnerInfoDto testOrderServiceInnerInfoTarget = new OrderServiceInnerInfoDto();
+		BeanUtils.copyProperties(entity.getOrderServiceInnerInfo(), testOrderServiceInnerInfoTarget);
+		testTarget.setOrderServiceInnerInfoDto(testOrderServiceInnerInfoTarget);
+		
+		OrderProductInfoDto testOrderProductInfoTarget = new OrderProductInfoDto();
+		BeanUtils.copyProperties(entity.getOrderProductInfoList().get(0), testOrderProductInfoTarget);
+		List<OrderProductInfoDto> testOrderProductInfoTargetList = new ArrayList<>();
+		testOrderProductInfoTargetList.add(testOrderProductInfoTarget);
+		testTarget.setOrderProductInfoDtoList(testOrderProductInfoTargetList);
+		
+		OrderProductGroupInfoDto testOrderProductGroupInfoTarget = new OrderProductGroupInfoDto();
+		BeanUtils.copyProperties(entity.getOrderProductGroupInfo(), testOrderProductGroupInfoTarget);
+		testTarget.setOrderProductGroupInfoDto(testOrderProductGroupInfoTarget);
+		
+		OrdererInfoDto testOrdererInfoTarget = new OrdererInfoDto();
+		BeanUtils.copyProperties(entity.getOrdererInfo(), testOrdererInfoTarget);
+		testTarget.setOrdererInfoDto(testOrdererInfoTarget);
+		
+		OrderDistributorInfoDto testOrderDistributorInfoTarget = new OrderDistributorInfoDto();
+		BeanUtils.copyProperties(entity.getOrderDistributorInfo(), testOrderDistributorInfoTarget);
+		testTarget.setOrderDistributorInfoDto(testOrderDistributorInfoTarget);
+		
+		OrderContractorInfoDto testOrderContractorInfoTarget = new OrderContractorInfoDto();
+		BeanUtils.copyProperties(entity.getOrderContractorInfo(), testOrderContractorInfoTarget);
+		testTarget.setOrderContractorInfoDto(testOrderContractorInfoTarget);
+		
+		OrderBranchCustomerInfoDto testOrderBranchCustomerInfoTarget = new OrderBranchCustomerInfoDto();
+		BeanUtils.copyProperties(entity.getOrderBranchCustomerInfo(), testOrderBranchCustomerInfoTarget);
+		testTarget.setOrderBranchCustomerInfoDto(testOrderBranchCustomerInfoTarget);
+		
+		// 正常系
+		testTopTarget.setOrderList(new ArrayList<>());
+		testTopTarget.getOrderList().add(testTarget);
+		ParamterCheckResult result = testSecurityController.callParameterCheck(testTopTarget, headersProperties, localServerPort);
+		testTool.assertValidationOk(result);
+		
+		// 異常系（@Size(max))
+		testTarget.setOrdererNumber(STR_256);
+		testTarget.getOrderSetupInfoDto().setSetupCompanyName(STR_256);
+		testTarget.getOrderServiceInnerInfoDto().setItem1(STR_256);
+		testTarget.getOrderProductInfoDtoList().get(0).setFreePeriod(STR_256);;
+		testTarget.getOrderProductGroupInfoDto().setProductGroupCd(STR_256);;
+		testTarget.getOrdererInfoDto().setOrdererCompanyName(STR_256);;
+		testTarget.getOrderDistributorInfoDto().setDistributorEmployeeName(STR_256);;
+		testTarget.getOrderContractorInfoDto().setContractorCompanyName(STR_256);;
+		testTarget.getOrderBranchCustomerInfoDto().setEmployeeName(STR_256);;
+		
+		result = testSecurityController.callParameterCheck(testTopTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 9);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 	}
 

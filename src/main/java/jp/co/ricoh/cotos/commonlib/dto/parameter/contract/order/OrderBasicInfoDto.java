@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Size;
@@ -103,27 +104,35 @@ public class OrderBasicInfoDto extends DtoBase {
 	private BigDecimal yearlyTotalAmount;
 
 	@ApiModelProperty(value = "注文商品グループ情報", required = false, position = 13)
+	@Valid
 	private OrderProductGroupInfoDto orderProductGroupInfoDto;
 
 	@ApiModelProperty(value = "注文サービス固有情報", required = false, position = 14)
+	@Valid
 	private OrderServiceInnerInfoDto orderServiceInnerInfoDto;
 
 	@ApiModelProperty(value = "注文販売店情報", required = false, position = 15)
+	@Valid
 	private OrderDistributorInfoDto orderDistributorInfoDto;
 
 	@ApiModelProperty(value = "注文セットアップ先情報", required = false, position = 16)
+	@Valid
 	private OrderSetupInfoDto orderSetupInfoDto;
 
 	@ApiModelProperty(value = "注文者情報", required = false, position = 17)
+	@Valid
 	private OrdererInfoDto ordererInfoDto;
 
 	@ApiModelProperty(value = "注文商品情報", required = false, position = 18)
+	@Valid
 	private List<OrderProductInfoDto> orderProductInfoDtoList;
 
 	@ApiModelProperty(value = "注文担当支社情報", required = false, position = 19)
+	@Valid
 	private OrderBranchCustomerInfoDto orderBranchCustomerInfoDto;
 
 	@ApiModelProperty(value = "注文顧客情報", required = false, position = 20)
+	@Valid
 	private OrderContractorInfoDto orderContractorInfoDto;
 
 }
