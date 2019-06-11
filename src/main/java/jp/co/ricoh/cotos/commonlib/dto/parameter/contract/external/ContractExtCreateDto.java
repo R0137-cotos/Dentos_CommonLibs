@@ -259,8 +259,7 @@ public class ContractExtCreateDto extends DtoBase {
 	 * RJ管理番号
 	 */
 	@Size(max = 255)
-	@NotNull
-	@ApiModelProperty(value = "RJ管理番号", required = true, position = 37, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "RJ管理番号", required = false, position = 37, allowableValues = "range[0,255]")
 	private String rjManageNumber;
 
 	/**
@@ -346,7 +345,7 @@ public class ContractExtCreateDto extends DtoBase {
 	@OneToMany(mappedBy = "contract")
 	@ApiModelProperty(value = "見積明細管理", required = false, position = 53)
 	private List<ManagedEstimationDetailDto> managedEstimationDetailList;
-	
+
 	/**
 	 * 追加編集者
 	 */
