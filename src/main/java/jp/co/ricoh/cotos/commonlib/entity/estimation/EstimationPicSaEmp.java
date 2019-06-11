@@ -1,5 +1,6 @@
 package jp.co.ricoh.cotos.commonlib.entity.estimation;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
@@ -42,4 +43,39 @@ public class EstimationPicSaEmp extends EmployeeAbstractEntity {
 	@ApiModelProperty(value = "見積", required = true, position = 2)
 	private Estimation estimation;
 
+	/**
+	 * MoM企事部システム連携ID
+	 */
+	@Column
+	@ApiModelProperty(value = "MoM企事部システム連携ID", required = false, position = 64, allowableValues = "range[0,]")
+	private String momKjbSystemId;
+
+	/**
+	 * MoM企事部ID
+	 */
+	@Column
+	@ApiModelProperty(value = "MoM企事部ID", required = false, position = 65, allowableValues = "range[0,]")
+	private String momCustId;
+
+	/**
+	 * 販売会社名（カナ）
+	 */
+	@Column
+	@ApiModelProperty(value = "販売会社名（カナ）", required = false, position = 66, allowableValues = "range[0,]")
+	private String salesCompanyNameKana;
+
+	/**
+	 * MoM非連携_企業代表者名
+	 */
+	@Column
+	@ApiModelProperty(value = "MoM非連携_企業代表者名", required = false, position = 67, allowableValues = "range[0,]")
+	private String companyRepresentativeName;
+
+	/**
+	 * MoM非連携_企業代表者名（カナ）
+	 */
+	@Column
+	@ApiModelProperty(value = "MoM非連携_企業代表者名（カナ）", required = false, position = 68, allowableValues = "range[0,]")
+	private String companyRepresentativeNameKana;
+	
 }

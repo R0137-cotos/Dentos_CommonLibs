@@ -357,6 +357,22 @@ public class CotosSecurityTests {
 
 		Mockito.reset(momAuthorityService);
 	}
+	
+	@Test
+	@Transactional
+	public void 正常_MoM権限_承認_直接指定() throws Exception {
+
+		Mockito.doReturn(AuthLevel.地域).when(momAuthorityService).searchMomAuthority(Mockito.anyString(), Mockito.any(), Mockito.any());
+
+		AuthorityJudgeParameter authParam = new AuthorityJudgeParameter();
+		authParam.setActorMvEmployeeMaster(mvEmployeeMasterRepository.findOne("00220552"));
+		authParam.setManualApprover(true);
+
+		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.見積_契約_手配, AccessType.承認);
+		Assert.assertTrue("対象の権限があること", result);
+
+		Mockito.reset(momAuthorityService);
+	}
 
 	@Test
 	@Transactional
