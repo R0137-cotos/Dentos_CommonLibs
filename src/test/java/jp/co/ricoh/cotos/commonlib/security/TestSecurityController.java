@@ -59,6 +59,7 @@ import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.order.OrderBasicInfoDt
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.order.OrderBranchCustomerInfoDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.order.OrderContractorInfoDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.order.OrderDistributorInfoDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.order.OrderListDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.order.OrderProductGroupInfoDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.order.OrderProductInfoDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.order.OrderServiceInnerInfoDto;
@@ -750,6 +751,11 @@ public class TestSecurityController {
 
 	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/OrderBasicInfoDto")
 	public ParamterCheckResult callParamterCheck(@RequestBody @Validated OrderBasicInfoDto dto, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/OrderListDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated OrderListDto dto, BindingResult result) {
 		return createParameterCheckResult(result);
 	}
 }
