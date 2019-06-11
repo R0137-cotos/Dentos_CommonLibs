@@ -214,3 +214,4 @@
 |256|ContractRepositoryにweb受注番号を取得するメソッド定義追加|
 |257|注文を複数受け取るためのトップレベルDTOの追加・子DTOバリデーションチェックのためのアノテーション・メッセージの追加|
 |258|ContractListenerにRJ管理番号を付与する処理追加・ConractExtCreateDtoのRJ管理番号のNotNull外し
+|259|Entityチェックメソッド追加|
