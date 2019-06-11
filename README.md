@@ -211,3 +211,4 @@
 |253|ContractExtCreateDto、ContractExtChangeDtoに追加編集者追加|
 |254|日付チェック用メソッドを追加|
 |255|DBコネクションクローズ処理を追加|
+|256|Reports改良に伴うエンティティ、DTO、メッセージ追加|

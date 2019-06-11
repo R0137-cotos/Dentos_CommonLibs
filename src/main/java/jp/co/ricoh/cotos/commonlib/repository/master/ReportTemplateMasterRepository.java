@@ -1,0 +1,17 @@
+package jp.co.ricoh.cotos.commonlib.repository.master;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+import jp.co.ricoh.cotos.commonlib.entity.master.ReportTemplateMaster;
+
+@Repository
+public interface ReportTemplateMasterRepository extends CrudRepository<ReportTemplateMaster, Long> {
+
+	@Query(value = "SELECT * FROM REPORT_TEMPLATE_MASTER WHERE OUTPUT_TYPE = :OUTPUT_TYPE AND SERVICE_CATEGORY = :SERVICE_CATEGORY AND TARGET_TYPE = :TARGET_TYPE AND COMMERCIAL_FLOW_DIV = :COMMERCIAL_FLOW_DIV AND PRODUCT_MASTER_ID = :PRODUCT_MASTER_ID AND LIFECYCLE_STATUS = :LIFECYCLE_STATUS AND WORKFLOW_STATUS = :WORKFLOW_STATUS", nativeQuery = true)
+	List<ReportTemplateMaster> findByReportListParameter(@Param("OUTPUT_TYPE") String outputType, @Param("SERVICE_CATEGORY") String serviceCategory, @Param("TARGET_TYPE") String targetType, @Param("COMMERCIAL_FLOW_DIV") String commercialFlowDiv, @Param("PRODUCT_MASTER_ID") Long productMasterId, @Param("LIFECYCLE_STATUS") String lifecycleStatus, @Param("WORKFLOW_STATUS") String workflowStatus);
+}

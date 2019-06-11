@@ -50,6 +50,8 @@ import jp.co.ricoh.cotos.commonlib.entity.master.ProductGrpMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.ProductMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.RecordDecomposeCompMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.RecordDecomposeMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.ReportPageMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.ReportTemplateMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.SuperUserMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.SystemMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster;
@@ -89,6 +91,8 @@ import jp.co.ricoh.cotos.commonlib.repository.master.ProductGrpMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ProductMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.RecordDecomposeCompMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.RecordDecomposeMasterRepository;
+import jp.co.ricoh.cotos.commonlib.repository.master.ReportPageMasterRepository;
+import jp.co.ricoh.cotos.commonlib.repository.master.ReportTemplateMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.SuperUserMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.SystemMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.UrlAuthMasterRepository;
@@ -184,6 +188,10 @@ public class TestMaster {
 	private JsonSchemaMasterRepository jsonSchemaMasterRepository;
 	@Autowired
 	private ExtendsParameterCorrelationCheckMasterRepository extendsParameterCorrelationCheckMasterRepository;
+	@Autowired
+	private ReportTemplateMasterRepository reportTemplateMasterRepository;
+	@Autowired
+	private ReportPageMasterRepository reportPageMasterRepository;
 
 	@Autowired
 	TestTools testTool = null;
@@ -1055,6 +1063,39 @@ public class TestMaster {
 
 		// エンティティの取得
 		ExtendsParameterCorrelationCheckMaster found = extendsParameterCorrelationCheckMasterRepository.findByProductMasterIdAndDomain(1L, "1");
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		testTool.assertColumnsNotNull(found);
+	}
+
+	@Test
+	public void ReportTemplateMasterのテスト() throws Exception {
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/reportTemplateMaster.sql");
+
+		// エンティティの取得
+		Long id = 1L;
+		ReportTemplateMaster found = reportTemplateMasterRepository.findOne(id);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		testTool.assertColumnsNotNull(found);
+	}
+
+	@Test
+	public void ReportPageMasterのテスト() throws Exception {
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/reportTemplateMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/reportPageMaster.sql");
+
+		// エンティティの取得
+		Long id = 1L;
+		ReportPageMaster found = reportPageMasterRepository.findOne(id);
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
