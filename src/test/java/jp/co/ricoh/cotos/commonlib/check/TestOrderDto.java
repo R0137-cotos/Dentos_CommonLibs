@@ -229,6 +229,45 @@ public class TestOrderDto {
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 3);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+
+		// 異常系（@Max ：）
+		BeanUtils.copyProperties(entity, testTarget);
+		testTarget.setQuantity(INT_100000);
+		testTarget.setBeforeQuantity(INT_100000);
+		testTarget.setDifferenceQuantity(INT_100000);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 3);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "変更前数量は最大値（99999）を超えています。"));
+
+		// 異常系（@Min ：）
+		BeanUtils.copyProperties(entity, testTarget);
+		testTarget.setQuantity(INT_MINUS_1);
+		testTarget.setBeforeQuantity(INT_MINUS_1);
+		testTarget.setDifferenceQuantity(INT_MINUS_1);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 3);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "変更前数量は最小値（0）を下回っています。"));
+
+		// 異常系（@DecimalMin：）
+		BeanUtils.copyProperties(entity, testTarget);
+		testTarget.setUnitPrice(DECIMAL_MINUS_001);
+		testTarget.setAmountSummary(DECIMAL_MINUS_001);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "単価は最小値（0.00）を下回っています。"));
+
+		// 異常系（@Digits：）
+		BeanUtils.copyProperties(entity, testTarget);
+		testTarget.setUnitPrice(DECIMAL_0001);
+		testTarget.setAmountSummary(DECIMAL_0001);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00028));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "単価は小数点以下2桁を超えています。"));
+
 	}
 
 	@Test
@@ -375,7 +414,7 @@ public class TestOrderDto {
 		Assert.assertTrue(result.getErrorInfoList().size() == 8);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 	}
-	
+
 	@Test
 	public void OrderBasicInfoDtoのテスト() throws Exception {
 		OrderBasicInfo entity = orderBasicInfoRepository.findOne(4L);
@@ -398,73 +437,100 @@ public class TestOrderDto {
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 3);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+
+		// 異常系（@DecimalMin：）
+		BeanUtils.copyProperties(entity, testTarget);
+		testTarget.setInitialTotalAmount(DECIMAL_MINUS_001);
+		testTarget.setMonthlyTotalAmount(DECIMAL_MINUS_001);
+		testTarget.setYearlyTotalAmount(DECIMAL_MINUS_001);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 3);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "初期費合計は最小値（0.00）を下回っています。"));
+
+		// 異常系（@Digits：）
+		BeanUtils.copyProperties(entity, testTarget);
+		testTarget.setInitialTotalAmount(DECIMAL_0001);
+		testTarget.setMonthlyTotalAmount(DECIMAL_0001);
+		testTarget.setYearlyTotalAmount(DECIMAL_0001);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 3);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00028));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "初期費合計は小数点以下2桁を超えています。"));
+
 	}
-	
+
 	@Test
 	public void OrderListDtoのテスト() throws Exception {
-		
+
 		//子DTOのチェックが走っているかどうかの確認
-		
+
 		//トップレベルDTO
 		OrderListDto testTopTarget = new OrderListDto();
-		
+
 		//親
 		OrderBasicInfo entity = orderBasicInfoRepository.findOne(4L);
 		OrderBasicInfoDto testTarget = new OrderBasicInfoDto();
 		BeanUtils.copyProperties(entity, testTarget);
-		
+
 		//子
 		OrderSetupInfoDto testOrderSetupInfoTarget = new OrderSetupInfoDto();
 		BeanUtils.copyProperties(entity.getOrderSetupInfo(), testOrderSetupInfoTarget);
 		testTarget.setOrderSetupInfoDto(testOrderSetupInfoTarget);
-		
+
 		OrderServiceInnerInfoDto testOrderServiceInnerInfoTarget = new OrderServiceInnerInfoDto();
 		BeanUtils.copyProperties(entity.getOrderServiceInnerInfo(), testOrderServiceInnerInfoTarget);
 		testTarget.setOrderServiceInnerInfoDto(testOrderServiceInnerInfoTarget);
-		
+
 		OrderProductInfoDto testOrderProductInfoTarget = new OrderProductInfoDto();
 		BeanUtils.copyProperties(entity.getOrderProductInfoList().get(0), testOrderProductInfoTarget);
 		List<OrderProductInfoDto> testOrderProductInfoTargetList = new ArrayList<>();
 		testOrderProductInfoTargetList.add(testOrderProductInfoTarget);
 		testTarget.setOrderProductInfoDtoList(testOrderProductInfoTargetList);
-		
+
 		OrderProductGroupInfoDto testOrderProductGroupInfoTarget = new OrderProductGroupInfoDto();
 		BeanUtils.copyProperties(entity.getOrderProductGroupInfo(), testOrderProductGroupInfoTarget);
 		testTarget.setOrderProductGroupInfoDto(testOrderProductGroupInfoTarget);
-		
+
 		OrdererInfoDto testOrdererInfoTarget = new OrdererInfoDto();
 		BeanUtils.copyProperties(entity.getOrdererInfo(), testOrdererInfoTarget);
 		testTarget.setOrdererInfoDto(testOrdererInfoTarget);
-		
+
 		OrderDistributorInfoDto testOrderDistributorInfoTarget = new OrderDistributorInfoDto();
 		BeanUtils.copyProperties(entity.getOrderDistributorInfo(), testOrderDistributorInfoTarget);
 		testTarget.setOrderDistributorInfoDto(testOrderDistributorInfoTarget);
-		
+
 		OrderContractorInfoDto testOrderContractorInfoTarget = new OrderContractorInfoDto();
 		BeanUtils.copyProperties(entity.getOrderContractorInfo(), testOrderContractorInfoTarget);
 		testTarget.setOrderContractorInfoDto(testOrderContractorInfoTarget);
-		
+
 		OrderBranchCustomerInfoDto testOrderBranchCustomerInfoTarget = new OrderBranchCustomerInfoDto();
 		BeanUtils.copyProperties(entity.getOrderBranchCustomerInfo(), testOrderBranchCustomerInfoTarget);
 		testTarget.setOrderBranchCustomerInfoDto(testOrderBranchCustomerInfoTarget);
-		
+
 		// 正常系
 		testTopTarget.setOrderList(new ArrayList<>());
 		testTopTarget.getOrderList().add(testTarget);
 		ParamterCheckResult result = testSecurityController.callParameterCheck(testTopTarget, headersProperties, localServerPort);
 		testTool.assertValidationOk(result);
-		
+
 		// 異常系（@Size(max))
 		testTarget.setOrdererNumber(STR_256);
 		testTarget.getOrderSetupInfoDto().setSetupCompanyName(STR_256);
 		testTarget.getOrderServiceInnerInfoDto().setItem1(STR_256);
-		testTarget.getOrderProductInfoDtoList().get(0).setFreePeriod(STR_256);;
-		testTarget.getOrderProductGroupInfoDto().setProductGroupCd(STR_256);;
-		testTarget.getOrdererInfoDto().setOrdererCompanyName(STR_256);;
-		testTarget.getOrderDistributorInfoDto().setDistributorEmployeeName(STR_256);;
-		testTarget.getOrderContractorInfoDto().setContractorCompanyName(STR_256);;
-		testTarget.getOrderBranchCustomerInfoDto().setEmployeeName(STR_256);;
-		
+		testTarget.getOrderProductInfoDtoList().get(0).setFreePeriod(STR_256);
+		;
+		testTarget.getOrderProductGroupInfoDto().setProductGroupCd(STR_256);
+		;
+		testTarget.getOrdererInfoDto().setOrdererCompanyName(STR_256);
+		;
+		testTarget.getOrderDistributorInfoDto().setDistributorEmployeeName(STR_256);
+		;
+		testTarget.getOrderContractorInfoDto().setContractorCompanyName(STR_256);
+		;
+		testTarget.getOrderBranchCustomerInfoDto().setEmployeeName(STR_256);
+		;
+
 		result = testSecurityController.callParameterCheck(testTopTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 9);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
