@@ -36,6 +36,6 @@ public class ReportCreateParameter {
 	 */
 	@NotNull
 	@ApiModelProperty(value = "帳票データ部マッピングリスト", required = true, position = 3)
-	private List<Map<String, List<String>>> dataMapList;
+	private List<Map<String, List<Object>>> dataMapList;
 
 }
