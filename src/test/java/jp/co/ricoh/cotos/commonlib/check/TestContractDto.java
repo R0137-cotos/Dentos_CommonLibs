@@ -1084,10 +1084,11 @@ public class TestContractDto {
 		BeanUtils.copyProperties(dto, testTarget);
 		testTarget.setLifecycleStatus(null);
 		testTarget.setWorkflowStatus(null);
+		testTarget.setWebOrderNumber(null);
 		testTarget.setContractPicSaEmp(null);
 		testTarget.setCustomerContract(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 4);
+		Assert.assertTrue(result.getErrorInfoList().size() == 5);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "契約担当SA社員が設定されていません。"));
 
