@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
@@ -158,4 +159,8 @@ public class ProductMaster extends EntityBaseMaster {
 	@Size(max = 255)
 	@ApiModelProperty(value = "商品種類区分", required = false, position = 14, allowableValues = "range[0,255]")
 	private String productClassDiv;
+
+	@OneToOne(mappedBy = "productMaster")
+	@ApiModelProperty(value = "IFSその他機器情報管理マスタ", required = false, position = 15)
+	private IfsCsvMaster ifsCsvMaster;
 }
