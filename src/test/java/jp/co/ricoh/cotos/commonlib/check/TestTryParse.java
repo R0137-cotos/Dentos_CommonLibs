@@ -53,6 +53,11 @@ public class TestTryParse {
 	}
 
 	@Test
+	public void 変換可能なこと_NULL() {
+		Assert.assertTrue("変換可能であること（処理がスルーされること）", checkUtil.tryParseDate(null, "yyyy/MM/dd"));
+	}
+
+	@Test
 	public void 変換可能でないこと_日付() {
 		Assert.assertFalse("変換可能な日付でないこと", checkUtil.tryParseDate("error", "yyyy/MM/dd"));
 		Assert.assertFalse("変換可能な日付でないこと", checkUtil.tryParseDate("error", "yyyyMMdd"));
@@ -62,10 +67,5 @@ public class TestTryParse {
 	public void 変換可能でないこと_日時() {
 		Assert.assertFalse("変換可能な日付でないこと", checkUtil.tryParseDate("error", "yyyy/MM/dd"));
 		Assert.assertFalse("変換可能な日付でないこと", checkUtil.tryParseDate("error", "yyyyMMddhhmmss"));
-	}
-
-	@Test
-	public void 変換可能でないこと_NULL() {
-		Assert.assertFalse("変換可能な日付でないこと", checkUtil.tryParseDate(null, "yyyy/MM/dd"));
 	}
 }
