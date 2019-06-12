@@ -310,6 +310,16 @@ public class TestMaster {
 	}
 
 	@Test
+	public void CommonMasterDetailRepository_CommonMasterDetailRepositoryのテスト() {
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/commonMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/commonMasterDetail.sql");
+		List<CommonMasterDetail> foundList = commonMasterDetailRepository.findByCommonMasterColumnNameAndAvailablePeriodBetween("sales_tax_rate", "20190101");
+		Assert.assertEquals("取得件数が1件であること", foundList.size(), 1);
+		Assert.assertEquals("取得データの税率が8(%)であること", foundList.get(0).getCodeValue(), "8");
+	}
+
+	@Test
 	public void MailTemplateMasterRepositoryのテスト() throws Exception {
 
 		// テストデータ登録
