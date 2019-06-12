@@ -166,9 +166,9 @@ public class CheckUtil {
 	 */
 	public boolean tryParseDate(String dateString, String format) {
 
-		// Nullの場合、変換不可とする
+		// Nullの場合、変換可能（処理スルー）とする
 		if (dateString == null) {
-			return false;
+			return true;
 		}
 
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
