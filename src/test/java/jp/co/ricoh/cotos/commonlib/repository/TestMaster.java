@@ -37,6 +37,7 @@ import jp.co.ricoh.cotos.commonlib.entity.master.EquipmentCompMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.EstimationChecklistCompMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.ExtendsParameterCorrelationCheckMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.GpCheckMatterMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.IfsCsvMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.ItemMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.ItemTransCompMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.JsonSchemaMaster;
@@ -83,6 +84,7 @@ import jp.co.ricoh.cotos.commonlib.repository.master.EquipmentCompMasterReposito
 import jp.co.ricoh.cotos.commonlib.repository.master.EstimationChecklistCompMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ExtendsParameterCorrelationCheckMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.GpCheckMatterMasterRepository;
+import jp.co.ricoh.cotos.commonlib.repository.master.IfsCsvMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ItemMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ItemTransCompMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.JsonSchemaMasterRepository;
@@ -212,6 +214,8 @@ public class TestMaster {
 	private ReportPageMasterRepository reportPageMasterRepository;
 	@Autowired
 	private MvWjmoc020OrgAllInfoComRepository mvWjmoc020OrgAllInfoComRepository;
+	@Autowired
+	private IfsCsvMasterRepository ifsCsvMasterRepository;
 
 	@Autowired
 	TestTools testTool = null;
@@ -741,6 +745,7 @@ public class TestMaster {
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/productGrpMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/jsonMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/extendsParameterCorrelationCheckMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/ifsCsvMaster.sql");
 
 		// エンティティの取得
 		Long id = 1L;
@@ -1239,7 +1244,7 @@ public class TestMaster {
 			Assert.fail("throw Exception :" + e.getMessage());
 		}
 	}
-	
+
 	@Test
 	public void ProductGrpMasterRepository_findByProductGrpCodeのテスト() {
 		// テストデータ登録
@@ -1256,5 +1261,23 @@ public class TestMaster {
 		} catch (Exception e) {
 			Assert.fail("throw Exception :" + e.getMessage());
 		}
+
+	}
+
+	@Test
+	public void IfsCsvMasterのテスト() throws Exception {
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/productMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/ifsCsvMaster.sql");
+
+		// エンティティの取得
+		Long id = 1L;
+		IfsCsvMaster found = ifsCsvMasterRepository.findOne(id);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		testTool.assertColumnsNotNull(found);
 	}
 }
