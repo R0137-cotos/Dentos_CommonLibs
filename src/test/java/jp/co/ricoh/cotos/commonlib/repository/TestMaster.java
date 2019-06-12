@@ -1246,6 +1246,25 @@ public class TestMaster {
 	}
 
 	@Test
+	public void ProductGrpMasterRepository_findByProductGrpCodeのテスト() {
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/productGrpMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/approvalRouteGrpMaster.sql");
+		List<String> foundTestString = Arrays.asList("1234");
+		List<ProductGrpMaster> foundList = productGrpMasterRepository.findByProductGrpCodeIn(foundTestString);
+		// データが取得できていることを確認
+		Assert.assertTrue(foundList.size() > 0);
+
+		// Entity の各項目の値が null ではないことを確認
+		try {
+			testTool.assertColumnsNotNull(foundList.get(0));
+		} catch (Exception e) {
+			Assert.fail("throw Exception :" + e.getMessage());
+		}
+
+	}
+
+	@Test
 	public void IfsCsvMasterのテスト() throws Exception {
 		// テストデータ登録
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/productMaster.sql");
