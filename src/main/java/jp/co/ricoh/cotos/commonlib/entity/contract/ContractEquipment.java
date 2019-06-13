@@ -32,7 +32,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Table(name = "contarct_equipment")
+@Table(name = "contract_equipment")
 public class ContractEquipment extends EntityBase {
 
 	public enum IsysoneProcStatus {
