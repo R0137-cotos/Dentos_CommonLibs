@@ -767,7 +767,7 @@ public class TestContract {
 		// 異常系（@Valid：契約機種）
 		entity = contractRepository.findOne(4L);
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.getContarctEquipmentList().get(0).setEquipmentCode(null);
+		testTarget.getContractEquipmentList().get(0).setEquipmentCode(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
@@ -1001,7 +1001,7 @@ public class TestContract {
 	}
 
 	@Test
-	public void ContarctEquipmentのテスト() throws Exception {
+	public void ContractEquipmentのテスト() throws Exception {
 		ContractEquipment entity = contractEquipmentRepository.findOne(401L);
 		ContractEquipment testTarget = new ContractEquipment();
 		BeanUtils.copyProperties(testTarget, entity);

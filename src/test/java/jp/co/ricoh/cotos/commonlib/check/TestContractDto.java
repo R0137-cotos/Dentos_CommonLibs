@@ -463,11 +463,11 @@ public class TestContractDto {
 		dto.setContractPicIntSsOrg(picIntSsOrg);
 
 		// 契約機種
-		dto.setContarctEquipmentList(new ArrayList<ContractEquipmentDto>());
-		entity.getContarctEquipmentList().forEach(s -> {
+		dto.setContractEquipmentList(new ArrayList<ContractEquipmentDto>());
+		entity.getContractEquipmentList().forEach(s -> {
 			ContractEquipmentDto node = new ContractEquipmentDto();
 			BeanUtils.copyProperties(s, node);
-			dto.getContarctEquipmentList().add(node);
+			dto.getContractEquipmentList().add(node);
 		});
 
 		// 設置先(契約用)
@@ -566,7 +566,7 @@ public class TestContractDto {
 		testTarget.getContractPicAccSsOrg().setMomOrgId(STR_256);
 		testTarget.getContractPicIntSsOrg().setMomOrgId(STR_256);
 		testTarget.getContractPicMntSsOrg().setMomOrgId(STR_256);
-		testTarget.getContarctEquipmentList().get(0).setEquipmentCode(STR_256);
+		testTarget.getContractEquipmentList().get(0).setEquipmentCode(STR_256);
 		testTarget.getContractInstallationLocation().setMomKjbSystemId(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 20);

@@ -142,7 +142,7 @@ public class TestCheckEntityWithEntityName {
 		Contract testTarget = new Contract();
 
 		BeanUtils.copyProperties(testTarget, entity);
-		testTarget.getContarctEquipmentList().get(0).setEquipmentCode(null);
+		testTarget.getContractEquipmentList().get(0).setEquipmentCode(null);
 
 		ParamterCheckResult result = testUtilController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
