@@ -453,7 +453,7 @@ public class ContractDto extends DtoBase {
 	@Valid
 	@OneToMany(mappedBy = "contract")
 	@ApiModelProperty(value = "契約機種", required = false, position = 60)
-	private List<ContractEquipmentDto> contarctEquipmentList;
+	private List<ContractEquipmentDto> contractEquipmentList;
 
 	/**
 	 * 契約受付担当SS組織

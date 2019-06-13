@@ -81,8 +81,8 @@ public class ContractEquipment extends EntityBase {
 	 * ID
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contarct_equipment_seq")
-	@SequenceGenerator(name = "contarct_equipment_seq", sequenceName = "contarct_equipment_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_equipment_seq")
+	@SequenceGenerator(name = "contract_equipment_seq", sequenceName = "contract_equipment_seq", allocationSize = 1)
 	@ApiModelProperty(value = "ID(作成時不要)", required = true, position = 1, allowableValues = "range[0,9223372036854775807]", readOnly = true)
 	private long id;
 
