@@ -748,6 +748,13 @@ public class TestMaster {
 			Assert.assertTrue(false);
 		if (found.getJsonSchemaMaster() == null)
 			Assert.assertTrue(false);
+
+		id = 2L;
+		found = productMasterRepository.findOne(id);
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+		if (found.getJsonSchemaMaster() != null)
+			Assert.assertTrue(false);
 	}
 
 	@Test
