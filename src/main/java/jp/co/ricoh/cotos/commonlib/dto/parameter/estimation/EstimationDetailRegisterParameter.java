@@ -63,38 +63,34 @@ public class EstimationDetailRegisterParameter {
 	@Digits(integer = 19, fraction = 2)
 	@ApiParam(value = "見積金額", allowableValues = "range[0.00,9999999999999999999.99]", required = true)
 	private BigDecimal amountSummary;
-	
+
 	/**
 	 * R原価
 	 */
-	@NotNull
 	@DecimalMin("0.00")
 	@Digits(integer = 19, fraction = 2)
 	@ApiParam(value = "R原価", allowableValues = "range[0.00,9999999999999999999.99]", required = true)
 	private BigDecimal rCost;
-	
+
 	/**
 	 * ＲＪ仕入価格
 	 */
-	@NotNull
 	@DecimalMin("0.00")
 	@Digits(integer = 19, fraction = 2)
 	@ApiParam(value = "ＲＪ仕入価格", allowableValues = "range[0.00,9999999999999999999.99]", required = true)
 	private BigDecimal rjPurchasePrice;
-	
+
 	/**
 	 * ＲＪ仕切価格
 	 */
-	@NotNull
 	@DecimalMin("0.00")
 	@Digits(integer = 19, fraction = 2)
 	@ApiParam(value = "ＲＪ仕切価格", allowableValues = "range[0.00,9999999999999999999.99]", required = true)
 	private BigDecimal rjDividingPrice;
-	
+
 	/**
 	 * 母店売価(接点店仕切)
 	 */
-	@NotNull
 	@DecimalMin("0.00")
 	@Digits(integer = 19, fraction = 2)
 	@ApiParam(value = "母店売価(接点店仕切)", allowableValues = "range[0.00,9999999999999999999.99]", required = true)
