@@ -9,6 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -99,18 +101,19 @@ public class ProductMaster extends EntityBaseMaster {
 	/**
 	 * JSONスキーママスタ
 	 */
-	@OneToMany(mappedBy = "productMaster")
-	@ApiModelProperty(value = "JSONスキーママスタ", required = false, position = 10)
-	private List<JsonSchemaMaster> jsonSchemaMasterList;
+	@ManyToOne
+	@JoinColumn(name = "json_schema_master_id", referencedColumnName = "id")
+	@ApiModelProperty(value = "JSONスキーママスタ", required = true, position = 10)
+	private JsonSchemaMaster jsonSchemaMaster;
 
 	/**
 	 * 拡張項目相関チェックマスタ
 	 */
 	@OneToMany(mappedBy = "productMaster", orphanRemoval = true, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @Fetch(FetchMode.SUBSELECT)
+	@Fetch(FetchMode.SUBSELECT)
 	@ApiModelProperty(value = "拡張項目相関チェックマスタ", required = false, position = 11)
 	private List<ExtendsParameterCorrelationCheckMaster> extendsParameterCorrelationCheckMasterList;
-	
+
 	/**
 	 * 商品種類区分
 	 */
