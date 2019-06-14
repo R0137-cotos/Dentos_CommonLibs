@@ -1,16 +1,16 @@
 package jp.co.ricoh.cotos.commonlib.entity.master;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -37,18 +37,10 @@ public class JsonSchemaMaster extends EntityBaseMaster {
 	/**
 	 * 商品マスタ
 	 */
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "product_master_id", referencedColumnName = "id")
-	@JsonIgnore
+	@OneToMany(mappedBy = "jsonSchemaMaster")
 	@ApiModelProperty(value = "商品マスタ", required = true, position = 2)
-	private ProductMaster productMaster;
-
-	/**
-	 * アプリケーションID
-	 */
-	@Size(max = 255)
-	@ApiModelProperty(value = "アプリケーションID", required = false, position = 3, allowableValues = "range[0,255]")
-	private String appId;
+	@JsonIgnore
+	private List<ProductMaster> productMasterList;
 
 	/**
 	 * JSONスキーマ

@@ -739,9 +739,9 @@ public class TestMaster {
 			Assert.assertTrue(false);
 		if (found.getItemMasterList() == null || found.getItemMasterList().size() == 0)
 			Assert.assertTrue(false);
-		if (found.getJsonSchemaMasterList() == null || found.getJsonSchemaMasterList().size() == 0)
-			Assert.assertTrue(false);
 		if (found.getExtendsParameterCorrelationCheckMasterList() == null || found.getExtendsParameterCorrelationCheckMasterList().size() == 0)
+			Assert.assertTrue(false);
+		if (found.getJsonSchemaMaster() == null)
 			Assert.assertTrue(false);
 	}
 
@@ -1053,6 +1053,9 @@ public class TestMaster {
 
 		// Entity の各項目の値が null ではないことを確認
 		testTool.assertColumnsNotNull(found);
+
+		if (found.getProductMasterList() == null || found.getProductMasterList().size() == 0)
+			Assert.assertTrue(false);
 	}
 
 	@Test
