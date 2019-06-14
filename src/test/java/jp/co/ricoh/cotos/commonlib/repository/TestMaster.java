@@ -451,6 +451,7 @@ public class TestMaster {
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/arrangementWorkTypeMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/productMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/approvalRouteGrpMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/jsonMaster.sql");
 
 		// エンティティの取得
 		Long id = 1L;
@@ -506,6 +507,7 @@ public class TestMaster {
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/estimationChecklistCompMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/productMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/gpCheckMatterMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/jsonMaster.sql");
 
 		// エンティティの取得
 		Long id = 1L;
@@ -531,6 +533,7 @@ public class TestMaster {
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/contractChecklistCompMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/productMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/gpCheckMatterMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/jsonMaster.sql");
 
 		// エンティティの取得
 		Long id = 1L;
@@ -560,6 +563,7 @@ public class TestMaster {
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/recordDecomposeCompMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/arrangementChecklistCompMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/approvalRouteGrpMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/jsonMaster.sql");
 
 		// エンティティの取得
 		Long id = 1L;
@@ -662,6 +666,7 @@ public class TestMaster {
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/productGrpMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/approvalRouteGrpMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/productMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/jsonMaster.sql");
 
 		// エンティティの取得
 		Long id = 1L;
@@ -756,6 +761,7 @@ public class TestMaster {
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/arrangementWorkTypeMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/recordDecomposeMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/approvalRouteGrpMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/jsonMaster.sql");
 
 		// エンティティの取得
 		Long id = 1L;
@@ -786,6 +792,7 @@ public class TestMaster {
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/recordDecomposeCompMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/arrangementWorkTypeMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/recordDecomposeMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/jsonMaster.sql");
 
 		// エンティティの取得
 		Long id = 1L;
@@ -814,6 +821,7 @@ public class TestMaster {
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/recordDecomposeCompMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/arrangementWorkTypeMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/recordDecomposeMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/jsonMaster.sql");
 
 		// エンティティの取得
 		Long id = 1L;
@@ -989,6 +997,7 @@ public class TestMaster {
 	public void ProductMasterRepositoryの条件テスト() throws Exception {
 		// テストデータ登録
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/productMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/jsonMaster.sql");
 		List<String> appId = Arrays.asList("electric");
 		List<ProductMaster> list = productMasterRepository.findByAppIdNotInOrderByIdAsc(appId);
 		Assert.assertNotEquals(0, list.size());
@@ -1063,6 +1072,7 @@ public class TestMaster {
 		// テストデータ登録
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/productMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/extendsParameterCorrelationCheckMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/jsonMaster.sql");
 
 		// エンティティの取得
 		ExtendsParameterCorrelationCheckMaster found = extendsParameterCorrelationCheckMasterRepository.findByProductMasterIdAndDomain(1L, "1");
