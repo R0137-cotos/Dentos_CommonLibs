@@ -101,7 +101,7 @@ public class ProductMaster extends EntityBaseMaster {
 	/**
 	 * JSONスキーママスタ
 	 */
-	@ManyToOne(optional = false)
+	@ManyToOne
 	@JoinColumn(name = "json_schema_master_id", referencedColumnName = "id")
 	@ApiModelProperty(value = "JSONスキーママスタ", required = true, position = 10)
 	private JsonSchemaMaster jsonSchemaMaster;
