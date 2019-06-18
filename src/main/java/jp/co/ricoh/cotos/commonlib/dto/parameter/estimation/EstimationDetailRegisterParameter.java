@@ -32,6 +32,13 @@ public class EstimationDetailRegisterParameter {
 	@Size(max = 255)
 	@ApiParam(value = "品種コード", allowableValues = "range[0,255]", required = true)
 	private String ricohItemCode;
+	
+	/**
+	 * 品種名
+	 */
+	@Size(max = 255)
+	@ApiParam(value = "品種名", allowableValues = "range[0,255]", required = true)
+	private String ricohItemName;
 
 	/**
 	 * 変更前数量
