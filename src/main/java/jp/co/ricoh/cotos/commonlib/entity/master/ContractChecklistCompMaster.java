@@ -89,7 +89,7 @@ public class ContractChecklistCompMaster extends EntityBaseMaster {
 	 */
 	@Column(nullable = false)
 	@ApiModelProperty(value = "対象契約種別<br /> "//
-			+ "共通/新規/プラン変更/情報変更", required = true, allowableValues = "共通(\"1\"), 新規(\"2\"), プラン変更(\"3\"), 情報変更(\"4\")", example = "1", position = 3)
+			+ "共通/新規/契約変更/情報変更", required = true, allowableValues = "共通(\"1\"), 新規(\"2\"), 契約変更(\"3\"), 情報変更(\"4\")", example = "1", position = 3)
 	private TargetContractType targetContractType;
 
 	/**
