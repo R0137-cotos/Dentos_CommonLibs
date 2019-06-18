@@ -30,6 +30,7 @@ import jp.co.ricoh.cotos.commonlib.dto.parameter.arrangement.ArrangementWorkAppr
 import jp.co.ricoh.cotos.commonlib.dto.parameter.arrangement.ArrangementWorkAttachedFileDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.arrangement.ArrangementWorkCheckResultDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.arrangement.ArrangementWorkDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.arrangementDelegation.ArrangementResultDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.common.AttachedFileDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.common.CheckResultUpdateParameter;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.communication.CommunicationRegisterParameter;
@@ -753,9 +754,14 @@ public class TestSecurityController {
 	public ParamterCheckResult callParamterCheck(@RequestBody @Validated OrderBasicInfoDto dto, BindingResult result) {
 		return createParameterCheckResult(result);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/OrderListDto")
 	public ParamterCheckResult callParamterCheck(@RequestBody @Validated OrderListDto dto, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ArrangementResultDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ArrangementResultDto dto, BindingResult result) {
 		return createParameterCheckResult(result);
 	}
 }
