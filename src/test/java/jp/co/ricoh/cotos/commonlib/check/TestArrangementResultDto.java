@@ -47,7 +47,6 @@ public class TestArrangementResultDto {
 	public void injectContext(ConfigurableApplicationContext injectContext) {
 		context = injectContext;
 		context.getBean(DBConfig.class).clearData();
-		//context.getBean(DBConfig.class).initTargetTestData("repository/contract/Electric.sql");
 	}
 
 	@Autowired
