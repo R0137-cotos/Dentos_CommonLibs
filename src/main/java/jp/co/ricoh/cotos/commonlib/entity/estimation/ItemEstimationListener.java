@@ -30,7 +30,8 @@ public class ItemEstimationListener {
 	public void appendsEstimationItemFields(ItemEstimation itemEstimation) {
 		ItemMaster itemMaster = itemMasterRepository.findByRicohItemCode(itemEstimation.getRicohItemCode());
 		itemEstimation.setItemMasterId(itemMaster.getId());
-		BeanUtils.copyProperties(itemMaster, itemEstimation, "id", "updatedAt", "updatedUserId", "createdAt", "createdUserId", "version");
+		// CPQより連携される項目に関してはCOTOS品種マスタコピー対象外
+		BeanUtils.copyProperties(itemMaster, itemEstimation, "id", "updatedAt", "updatedUserId", "createdAt", "createdUserId", "version", "itemName", "partitionPrice", "rCost", "rjPurchasePrice", "rjDividingPrice", "motherStorePrice");
 		itemEstimation.setItemEstimationName(itemMaster.getItemName());
 	}
 
