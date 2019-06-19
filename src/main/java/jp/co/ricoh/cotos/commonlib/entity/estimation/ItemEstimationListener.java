@@ -31,8 +31,7 @@ public class ItemEstimationListener {
 		ItemMaster itemMaster = itemMasterRepository.findByRicohItemCode(itemEstimation.getRicohItemCode());
 		itemEstimation.setItemMasterId(itemMaster.getId());
 		// CPQより連携される項目に関してはCOTOS品種マスタコピー対象外
-		BeanUtils.copyProperties(itemMaster, itemEstimation, "id", "updatedAt", "updatedUserId", "createdAt", "createdUserId", "version", "itemName", "partitionPrice", "rCost", "rjPurchasePrice", "rjDividingPrice", "motherStorePrice");
-		itemEstimation.setItemEstimationName(itemMaster.getItemName());
+		BeanUtils.copyProperties(itemMaster, itemEstimation, "id", "updatedAt", "updatedUserId", "createdAt", "createdUserId", "version", "itemName", "partitionPrice", "RCost", "rjPurchasePrice", "rjDividingPrice", "motherStorePrice");
 	}
 
 }
