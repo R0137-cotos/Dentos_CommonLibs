@@ -73,7 +73,7 @@ public class TestArrangementResultDto {
 
 		//異常系_オブジェクトNull
 		arrangementResultDto.setArrangementResultInfo(null);
-		arrangementResultDto.setContractInfo(null);
+		arrangementResultDto.setContructInfo(null);
 		result = testSecurityController.callParameterCheck(arrangementResultDto, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 
@@ -131,7 +131,7 @@ public class TestArrangementResultDto {
 
 		ArrangementResultDto arrangementResultDto = new ArrangementResultDto();
 		arrangementResultDto.setArrangementResultInfo(arrangementResultInfoDto);
-		arrangementResultDto.setContractInfo(contractInfoDto);
+		arrangementResultDto.setContructInfo(contractInfoDto);
 
 		return arrangementResultDto;
 	}
@@ -169,7 +169,7 @@ public class TestArrangementResultDto {
 
 		ArrangementResultDto arrangementResultDto = new ArrangementResultDto();
 		arrangementResultDto.setArrangementResultInfo(arrangementResultInfoDto);
-		arrangementResultDto.setContractInfo(contractInfoDto);
+		arrangementResultDto.setContructInfo(contractInfoDto);
 
 		return arrangementResultDto;
 	}
@@ -217,7 +217,7 @@ public class TestArrangementResultDto {
 
 		ArrangementResultDto arrangementResultDto = new ArrangementResultDto();
 		arrangementResultDto.setArrangementResultInfo(arrangementResultInfoDto);
-		arrangementResultDto.setContractInfo(contractInfoDto);
+		arrangementResultDto.setContructInfo(contractInfoDto);
 
 		return arrangementResultDto;
 	}
