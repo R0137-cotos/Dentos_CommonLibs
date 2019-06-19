@@ -1249,6 +1249,27 @@ public class TestMaster {
 	}
 
 	@Test
+	public void MvTJmcj005Master_キーで取得するテスト() throws Exception {
+
+		// テストデータはなし
+
+		// エンティティの取得
+		MvTJmcj005Master found = mvTJmcj005MasterRepository.findByHanshCdAndRingsTkiskCdAndRingsTodokesakiCd("702", "10027811", "001");
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+		//判定に使用するカラムを確認
+		Assert.assertEquals("支社コードが一致すること", "702", found.getHanshCd());
+		Assert.assertEquals("RINGS得意先コードが一致すること", "10027811", found.getRingsTkiskCd());
+		Assert.assertEquals("RINGS届先コードが一致すること", "001", found.getRingsTodokesakiCd());
+		
+		//キー不一致
+		found = mvTJmcj005MasterRepository.findByHanshCdAndRingsTkiskCdAndRingsTodokesakiCd("702", "10027811", "002");
+		// Entity が null であることを確認
+		Assert.assertNull(found);
+	}
+
+	@Test
 	public void VDirectDeliveryDealerInfoMasterRepositoryのテスト() throws Exception {
 
 		// テストデータはなし
