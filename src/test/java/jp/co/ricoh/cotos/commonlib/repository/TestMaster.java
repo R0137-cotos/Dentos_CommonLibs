@@ -46,6 +46,7 @@ import jp.co.ricoh.cotos.commonlib.entity.master.MailTemplateMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvEmployeeMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmci101Master;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmci105Master;
+import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmcj005Master;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTjmmb010UtlItem;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTjmmb020UtlCd;
 import jp.co.ricoh.cotos.commonlib.entity.master.ProductCompMaster;
@@ -59,6 +60,7 @@ import jp.co.ricoh.cotos.commonlib.entity.master.SuperUserMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.SystemMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.Domain;
+import jp.co.ricoh.cotos.commonlib.entity.master.VDirectDeliveryDealerInfoMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.VKjbMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.VPicAffiliateMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.VPicAffiliateMasterFull;
@@ -90,6 +92,7 @@ import jp.co.ricoh.cotos.commonlib.repository.master.MailTemplateMasterRepositor
 import jp.co.ricoh.cotos.commonlib.repository.master.MvEmployeeMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTJmci101MasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTJmci105Repository;
+import jp.co.ricoh.cotos.commonlib.repository.master.MvTJmcj005MasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTjmmb010UtlItemRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTjmmb020UtlCdRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ProductCompMasterRepository;
@@ -102,6 +105,7 @@ import jp.co.ricoh.cotos.commonlib.repository.master.ReportTemplateMasterReposit
 import jp.co.ricoh.cotos.commonlib.repository.master.SuperUserMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.SystemMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.UrlAuthMasterRepository;
+import jp.co.ricoh.cotos.commonlib.repository.master.VDirectDeliveryDealerInfoMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.VKjbMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.VPicAffiliateMasterFullRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.VPicAffiliateMasterRepository;
@@ -204,7 +208,10 @@ public class TestMaster {
 	private ReportTemplateMasterRepository reportTemplateMasterRepository;
 	@Autowired
 	private ReportPageMasterRepository reportPageMasterRepository;
-
+	@Autowired
+	private MvTJmcj005MasterRepository mvTJmcj005MasterRepository;
+	@Autowired
+	private VDirectDeliveryDealerInfoMasterRepository vDirectDeliveryDealerInfoMasterRepository;
 	@Autowired
 	TestTools testTool = null;
 
@@ -1188,5 +1195,37 @@ public class TestMaster {
 
 		// Entity の各項目の値が null ではないことを確認
 		testTool.assertColumnsNotNull(found);
+	}
+
+	@Test
+	public void MvTJmcj005Masterのテスト() throws Exception {
+
+		// テストデータはなし
+
+		// エンティティの取得
+		String id = "000000004015129";
+		MvTJmcj005Master found = mvTJmcj005MasterRepository.findOne(id);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+		//判定に使用するカラムを確認
+		Assert.assertEquals("支社コードが一致すること", "702", found.getHanshCd());
+		Assert.assertEquals("RINGS得意先コードが一致すること", "10027811", found.getRingsTkiskCd());
+		Assert.assertEquals("RINGS届先コードが一致すること", "001", found.getRingsTodokesakiCd());
+	}
+
+	@Test
+	public void VDirectDeliveryDealerInfoMasterRepositoryのテスト() throws Exception {
+
+		// テストデータはなし
+
+		// エンティティの取得
+		VDirectDeliveryDealerInfoMaster.Id id = new VDirectDeliveryDealerInfoMaster.Id("83013", "00");
+		VDirectDeliveryDealerInfoMaster found = vDirectDeliveryDealerInfoMasterRepository.findOne(id);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+		//判定に使用するカラムを確認
+		Assert.assertNotNull("売上情報送信年月日がnullでないこと", found.getAdSalesSendDate());
 	}
 }
