@@ -18,6 +18,12 @@ public class AuthorityJudgeParameter {
 	/** 承認依頼者社員マスター */
 	private MvEmployeeMaster requesterMvEmployeeMaster;
 
+	/** 承認者社員マスター */
+	private List<MvEmployeeMaster> approverMvEmployeeMasterList;
+
+	/** 次回承認者社員マスター */
+	private MvEmployeeMaster nextApproverMvEmployeeMaster;
+
 	/** 承認者直接指定フラグ */
 	private boolean isManualApprover;
 

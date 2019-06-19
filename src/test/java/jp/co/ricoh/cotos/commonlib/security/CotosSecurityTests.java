@@ -357,7 +357,7 @@ public class CotosSecurityTests {
 
 		Mockito.reset(momAuthorityService);
 	}
-	
+
 	@Test
 	@Transactional
 	public void 正常_MoM権限_承認_直接指定() throws Exception {
@@ -369,6 +369,48 @@ public class CotosSecurityTests {
 		authParam.setManualApprover(true);
 
 		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.見積_契約_手配, AccessType.承認);
+		Assert.assertTrue("対象の権限があること", result);
+
+		Mockito.reset(momAuthorityService);
+	}
+
+	@Test
+	@Transactional
+	public void 正常_MoM権限_参照_承認者() throws Exception {
+
+		Mockito.doReturn(AuthLevel.不可).when(momAuthorityService).searchMomAuthority(Mockito.anyString(), Mockito.any(), Mockito.any());
+
+		AuthorityJudgeParameter authParam = new AuthorityJudgeParameter();
+		authParam.setActorMvEmployeeMaster(mvEmployeeMasterRepository.findOne("00220552"));
+		authParam.setManualApprover(true);
+
+		List<MvEmployeeMaster> approverList = new ArrayList<>();
+		MvEmployeeMaster approver1 = new MvEmployeeMaster();
+		approver1.setMomEmployeeId("00220552");
+		approverList.add(approver1);
+		authParam.setApproverMvEmployeeMasterList(approverList);
+
+		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.照会, AuthDiv.見積_契約_手配, AccessType.参照);
+		Assert.assertTrue("対象の権限があること", result);
+
+		Mockito.reset(momAuthorityService);
+	}
+
+	@Test
+	@Transactional
+	public void 正常_MoM権限_編集_次回承認者() throws Exception {
+
+		Mockito.doReturn(AuthLevel.不可).when(momAuthorityService).searchMomAuthority(Mockito.anyString(), Mockito.any(), Mockito.any());
+
+		AuthorityJudgeParameter authParam = new AuthorityJudgeParameter();
+		authParam.setActorMvEmployeeMaster(mvEmployeeMasterRepository.findOne("00220552"));
+		authParam.setManualApprover(true);
+
+		MvEmployeeMaster nextApprover = new MvEmployeeMaster();
+		nextApprover.setMomEmployeeId("00220552");
+		authParam.setNextApproverMvEmployeeMaster(nextApprover);
+
+		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.照会, AuthDiv.見積_契約_手配, AccessType.編集);
 		Assert.assertTrue("対象の権限があること", result);
 
 		Mockito.reset(momAuthorityService);
