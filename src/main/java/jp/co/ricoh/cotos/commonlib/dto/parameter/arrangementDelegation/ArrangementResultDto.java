@@ -29,6 +29,6 @@ public class ArrangementResultDto {
 	@Valid
 	@NotNull
 	@ApiModelProperty(value = "契約情報", required = true, position = 2)
-	private ContractInfoDto contractInfo;
+	private ContractInfoDto contructInfo;
 
 }
