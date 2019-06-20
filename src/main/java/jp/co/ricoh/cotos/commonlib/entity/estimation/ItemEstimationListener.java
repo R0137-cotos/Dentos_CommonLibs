@@ -3,6 +3,7 @@ package jp.co.ricoh.cotos.commonlib.entity.estimation;
 import javax.persistence.PrePersist;
 import javax.transaction.Transactional;
 
+import org.apache.axis.utils.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -30,8 +31,11 @@ public class ItemEstimationListener {
 	public void appendsEstimationItemFields(ItemEstimation itemEstimation) {
 		ItemMaster itemMaster = itemMasterRepository.findByRicohItemCode(itemEstimation.getRicohItemCode());
 		itemEstimation.setItemMasterId(itemMaster.getId());
-		// CPQより連携される項目に関してはCOTOS品種マスタコピー対象外
+		// 価格等の他システムにより連携される項目は品種マスタのコピー対象外
 		BeanUtils.copyProperties(itemMaster, itemEstimation, "id", "updatedAt", "updatedUserId", "createdAt", "createdUserId", "version", "itemName", "RCost", "rjPurchasePrice", "rjDividingPrice", "motherStorePrice");
+		if (StringUtils.isEmpty(itemEstimation.getItemEstimationName())) {
+			itemEstimation.setItemEstimationName(itemMaster.getItemName());
+		}
 	}
 
 }
