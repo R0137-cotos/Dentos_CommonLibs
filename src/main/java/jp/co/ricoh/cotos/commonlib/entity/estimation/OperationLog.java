@@ -38,7 +38,7 @@ import lombok.EqualsAndHashCode;
 public class OperationLog extends EntityBase {
 
 	public enum Operation {
-		キャンセル, 新規作成, 見積書出力, 新規作成_再見積, 新規作成_コピー, 新規作成_契約変更, 受注, 失注, 更新, 業務依頼, 業務処理完了, 破棄, 初期費情報更新
+		キャンセル, 新規作成, 帳票出力, 新規作成_再見積, 新規作成_コピー, 新規作成_契約変更, 受注, 失注, 更新, 業務依頼, 業務処理完了, 破棄, 初期費情報更新
 	}
 
 	@Id
