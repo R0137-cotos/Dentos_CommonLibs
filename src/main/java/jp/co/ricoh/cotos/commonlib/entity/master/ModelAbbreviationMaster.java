@@ -183,7 +183,7 @@ public class ModelAbbreviationMaster extends EntityBaseMaster {
 	@Max(99999)
 	@Min(0)
 	@ApiModelProperty(value = "以上枚数", required = false, position = 20, allowableValues = "range[0,99999]")
-	private Integer n_over_sheets;
+	private Integer nOverSheets;
 
 	/**
 	 * 点検枚数
@@ -199,7 +199,7 @@ public class ModelAbbreviationMaster extends EntityBaseMaster {
 	@Max(99999)
 	@Min(0)
 	@ApiModelProperty(value = "アローワンス", required = false, position = 22, allowableValues = "range[0,99999]")
-	private Integer n_allowance;
+	private Integer nAllowance;
 
 	/**
 	 * 限界
