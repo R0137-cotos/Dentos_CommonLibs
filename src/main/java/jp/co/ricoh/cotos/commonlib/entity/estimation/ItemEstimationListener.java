@@ -29,7 +29,7 @@ public class ItemEstimationListener {
 	@PrePersist
 	@Transactional
 	public void appendsEstimationItemFields(ItemEstimation itemEstimation) {
-		ItemMaster itemMaster = itemMasterRepository.findByRicohItemCode(itemEstimation.getRicohItemCode());
+		ItemMaster itemMaster = itemMasterRepository.findByProductMasterIdAndRicohItemCode(itemEstimation.getItemMasterId(), itemEstimation.getRicohItemCode());
 		itemEstimation.setItemMasterId(itemMaster.getId());
 		// 価格等の他システムにより連携される項目は品種マスタのコピー対象外
 		BeanUtils.copyProperties(itemMaster, itemEstimation, "id", "updatedAt", "updatedUserId", "createdAt", "createdUserId", "version", "itemName", "RCost", "rjPurchasePrice", "rjDividingPrice", "motherStorePrice");
