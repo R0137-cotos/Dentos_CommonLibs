@@ -806,6 +806,13 @@ public class TestMaster {
 			Assert.assertTrue(false);
 		if (found.getRecordDecomposeCompMasterList() == null || found.getRecordDecomposeCompMasterList().size() == 0)
 			Assert.assertTrue(false);
+
+		String ricohItemCode = "CP6573";
+		ItemMaster found2 = itemMasterRepository.findByProductMasterIdAndRicohItemCode(id, ricohItemCode);
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found2);
+		// Entity の各項目の値が null ではないことを確認
+		testTool.assertColumnsNotNull(found2);
 	}
 
 	@Test
@@ -1262,7 +1269,7 @@ public class TestMaster {
 		Assert.assertEquals("支社コードが一致すること", "702", found.getHanshCd());
 		Assert.assertEquals("RINGS得意先コードが一致すること", "10027811", found.getRingsTkiskCd());
 		Assert.assertEquals("RINGS届先コードが一致すること", "001", found.getRingsTodokesakiCd());
-		
+
 		//キー不一致
 		found = mvTJmcj005MasterRepository.findByHanshCdAndRingsTkiskCdAndRingsTodokesakiCd("702", "10027811", "002");
 		// Entity が null であることを確認
