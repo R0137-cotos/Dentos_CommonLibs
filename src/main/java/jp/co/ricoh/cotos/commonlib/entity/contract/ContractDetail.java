@@ -107,6 +107,27 @@ public class ContractDetail extends EntityBase {
 		}
 	}
 
+	public enum FfmAcceptanceLinkingStatus {
+		未作成("0"), 作成済み("1"), 作成エラー("2");
+
+		private final String text;
+
+		private FfmAcceptanceLinkingStatus(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		@JsonValue
+		public String toString() {
+			return this.text;
+		}
+
+		@JsonCreator
+		public static FfmAcceptanceLinkingStatus fromString(final String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+		}
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_detail_seq")
 	@SequenceGenerator(name = "contract_detail_seq", sequenceName = "contract_detail_seq", allocationSize = 1)
@@ -245,4 +266,10 @@ public class ContractDetail extends EntityBase {
 	@Temporal(TemporalType.DATE)
 	@ApiModelProperty(value = "ランニング売上計上処理日", required = false, position = 19)
 	private Date runningAccountSalesDate;
+
+	/**
+	 * FFM検収連携状態
+	 */
+	@ApiModelProperty(value = "FFM検収連携状態", required = false, position = 20)
+	private FfmAcceptanceLinkingStatus ffmAcceptanceLinkingStatus;
 }
