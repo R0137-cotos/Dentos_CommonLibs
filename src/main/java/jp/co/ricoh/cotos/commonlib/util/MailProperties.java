@@ -12,4 +12,6 @@ import lombok.Data;
 @ConfigurationProperties(prefix = "cotos.mail")
 public class MailProperties {
 	private String fromMailAddress;
+
+	private String envelopeFromMailAddress;
 }
