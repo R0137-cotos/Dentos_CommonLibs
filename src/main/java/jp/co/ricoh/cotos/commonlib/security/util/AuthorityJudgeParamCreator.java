@@ -250,7 +250,7 @@ public class AuthorityJudgeParamCreator {
 		}
 
 		// 承認ルートが存在する場合
-		if (arrangementWork.getArrangementWorkApprovalRoute() != null) {
+		if (arrangementWork != null && arrangementWork.getArrangementWorkApprovalRoute() != null) {
 
 			// 承認者情報
 			List<MvEmployeeMaster> approverList = arrangementWork.getArrangementWorkApprovalRoute().getArrangementWorkApprovalRouteNodeList().stream().map(arrangementWorkApprovalRouteNode -> {
