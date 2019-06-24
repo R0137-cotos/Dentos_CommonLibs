@@ -28,6 +28,7 @@ cotos:
     limitSize: 5
   mail:
     fromMailAddress: test@ricoh.co.jp
+    envelopeFromMailAddress: test_envelope_from_propaties@ricoh.co.jp
   mom:
     system:
       momEmpId: 99999999

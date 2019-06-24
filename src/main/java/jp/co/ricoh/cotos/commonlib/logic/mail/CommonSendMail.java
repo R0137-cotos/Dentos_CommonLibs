@@ -5,6 +5,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Optional;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Component;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
+import com.sun.mail.smtp.SMTPMessage;
 
 import jp.co.ricoh.cotos.commonlib.entity.EnumType.ServiceCategory;
 import jp.co.ricoh.cotos.commonlib.entity.master.MailTemplateMaster;
@@ -167,8 +169,9 @@ public class CommonSendMail {
 			FileSystemResource res = new FileSystemResource(uploadFile);
 			attachedHelper.addAttachment(res.getFilename(), res);
 		}
-
-		javaMailSender.send(attachedMsg);
+		SMTPMessage SMTPMessage = new SMTPMessage(attachedMsg);
+		SMTPMessage.setEnvelopeFrom(Optional.ofNullable(mailTemplateMaster.getEnvelopeFrom()).orElse(appProperties.getMailProperties().getEnvelopeFromMailAddress()));
+		javaMailSender.send(SMTPMessage);
 	}
 
 	/**
