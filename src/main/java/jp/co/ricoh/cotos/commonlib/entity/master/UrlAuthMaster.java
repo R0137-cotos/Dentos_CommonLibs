@@ -32,7 +32,7 @@ import lombok.EqualsAndHashCode;
 public class UrlAuthMaster extends EntityBaseMaster {
 
 	public enum Domain {
-		estimation, contract, arrangement, communication, master;
+		estimation, contract, arrangement, communication, master, arrangementDelegation;
 	}
 
 	public enum ParameterType {
@@ -52,8 +52,7 @@ public class UrlAuthMaster extends EntityBaseMaster {
 
 		@JsonCreator
 		public static ParameterType fromString(String string) {
-			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst()
-					.orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
 
@@ -74,8 +73,7 @@ public class UrlAuthMaster extends EntityBaseMaster {
 
 		@JsonCreator
 		public static ActionDiv fromString(String string) {
-			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst()
-					.orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
 
@@ -96,8 +94,7 @@ public class UrlAuthMaster extends EntityBaseMaster {
 
 		@JsonCreator
 		public static AuthDiv fromString(String string) {
-			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst()
-					.orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
 
@@ -118,8 +115,7 @@ public class UrlAuthMaster extends EntityBaseMaster {
 
 		@JsonCreator
 		public static AccessType fromString(String string) {
-			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst()
-					.orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
 
