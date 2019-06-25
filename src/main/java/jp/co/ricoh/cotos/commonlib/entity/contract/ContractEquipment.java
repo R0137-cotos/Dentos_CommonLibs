@@ -56,27 +56,6 @@ public class ContractEquipment extends EntityBase {
 		}
 	}
 
-	public enum MaintenanceLinkageCsvCreateStatus {
-		未作成("0"), 作成済み("1"), 作成不要("2"), 作成エラー("3");
-
-		private final String text;
-
-		private MaintenanceLinkageCsvCreateStatus(final String text) {
-			this.text = text;
-		}
-
-		@Override
-		@JsonValue
-		public String toString() {
-			return this.text;
-		}
-
-		@JsonCreator
-		public static MaintenanceLinkageCsvCreateStatus fromString(final String string) {
-			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
-		}
-	}
-
 	/**
 	 * ID
 	 */
@@ -170,39 +149,26 @@ public class ContractEquipment extends EntityBase {
 	private Date isysoneLinkageAt;
 
 	/**
-	 * 保守売上連携用CSV作成状態
-	 */
-	@ApiModelProperty(value = "保守売上連携用CSV作成状態", required = false, position = 14, allowableValues = "未作成(\"0\"),作成済み(\"1\"),作成不要(\"2\"),作成エラー(\"3\")")
-	private MaintenanceLinkageCsvCreateStatus maintenanceLinkageCsvCreateStatus;
-
-	/**
-	 * 保守売上連携用CSV作成日
-	 */
-	@Temporal(TemporalType.TIMESTAMP)
-	@ApiModelProperty(value = "保守売上連携用CSV作成日", required = false, position = 15)
-	private Date maintenanceLinkageCsvCreateDate;
-
-	/**
 	 * 契約
 	 */
 	@ManyToOne(optional = false)
 	@JsonIgnore
 	@JoinColumn(name = "contract_id", referencedColumnName = "id")
-	@ApiModelProperty(value = "契約", required = true, position = 16)
+	@ApiModelProperty(value = "契約", required = true, position = 14)
 	private Contract contract;
 
 	/**
 	 * 点検診断月指定
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "点検診断月指定", required = false, position = 17, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "点検診断月指定", required = false, position = 15, allowableValues = "range[0,255]")
 	private String inspectionMonth;
 
 	/**
 	 * 点検診断月(12ヶ月分)
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "点検診断月(12ヶ月分)", required = false, position = 18, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "点検診断月(12ヶ月分)", required = false, position = 16, allowableValues = "range[0,255]")
 	private String inspectionMonthYearWorth;
 
 }

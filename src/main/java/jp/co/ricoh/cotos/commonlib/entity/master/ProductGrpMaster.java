@@ -1,6 +1,7 @@
 
 package jp.co.ricoh.cotos.commonlib.entity.master;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -18,7 +19,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
@@ -35,6 +38,50 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "product_grp_master")
 public class ProductGrpMaster extends EntityBaseMaster {
+
+	public enum InitialExpensesInsideTransFlg {
+
+		OFF("0"), ON("1");
+
+		private final String text;
+
+		private InitialExpensesInsideTransFlg(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		@JsonValue
+		public String toString() {
+			return this.text;
+		}
+
+		@JsonCreator
+		public static InitialExpensesInsideTransFlg fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+		}
+	}
+
+	public enum PeriodSellingInsideTransFlg {
+
+		OFF("0"), ON("1");
+
+		private final String text;
+
+		private PeriodSellingInsideTransFlg(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		@JsonValue
+		public String toString() {
+			return this.text;
+		}
+
+		@JsonCreator
+		public static PeriodSellingInsideTransFlg fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+		}
+	}
 
 	/**
 	 * 商品グループマスタID
@@ -98,4 +145,16 @@ public class ProductGrpMaster extends EntityBaseMaster {
 	@Size(max = 255)
 	@ApiModelProperty(value = "商品グループコード", required = false, position = 8, allowableValues = "range[0,255]")
 	private String productGrpCode;
+
+	/**
+	 * 初期費内部振替対象フラグ
+	 */
+	@ApiModelProperty(value = "初期費内部振替対象フラグ", required = false, position = 9, allowableValues = "OFF(\"0\"), ON(\"1\")")
+	private InitialExpensesInsideTransFlg initialExpensesInsideTransFlg;
+
+	/**
+	 * 期間売内部振替対象フラグ
+	 */
+	@ApiModelProperty(value = "期間売内部振替対象フラグ", required = false, position = 10, allowableValues = "OFF(\"0\"), ON(\"1\")")
+	private PeriodSellingInsideTransFlg periodSellingInsideTransFlg;
 }

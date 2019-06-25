@@ -45,7 +45,7 @@ import lombok.EqualsAndHashCode;
 public class ContractDetail extends EntityBase {
 
 	public enum FfmInsideTransStatus {
-		未処理("0"), CSV作成済み("1"), 連携済み("2");
+		未処理("0"), CSV作成済み("1"), 連携済み("2"), 対象外("3");
 
 		private final String text;
 
@@ -66,7 +66,7 @@ public class ContractDetail extends EntityBase {
 	}
 
 	public enum AbsConInsideTransStatus {
-		未処理("0"), TSV作成済み("1"), 連携済み("2"), 連携エラー("3");
+		未処理("0"), TSV作成済み("1"), 連携済み("2"), 連携エラー("3"), 対象外("4");
 
 		private final String text;
 
@@ -231,7 +231,7 @@ public class ContractDetail extends EntityBase {
 	/**
 	 * FFM内部振替処理状態
 	 */
-	@ApiModelProperty(value = "FFM内部振替処理状態", required = false, allowableValues = "未処理中(\"0\"), 作成完了(\"1\"), 連携済み(\"2\")", position = 14)
+	@ApiModelProperty(value = "FFM内部振替処理状態", required = false, allowableValues = "未処理中(\"0\"), 作成完了(\"1\"), 連携済み(\"2\"), 対象外(\"3\")", position = 14)
 	private FfmInsideTransStatus ffmInsideTransStatus;
 
 	/**
@@ -244,7 +244,7 @@ public class ContractDetail extends EntityBase {
 	/**
 	 * 統合契約内部振替処理状態
 	 */
-	@ApiModelProperty(value = "統合契約内部振替処理状態", required = false, allowableValues = "未処理中(\"0\"), TSV作成済み(\"1\"), 連携済み(\"2\"), 連携エラー(\"3\")", position = 16)
+	@ApiModelProperty(value = "統合契約内部振替処理状態", required = false, allowableValues = "未処理中(\"0\"), TSV作成済み(\"1\"), 連携済み(\"2\"), 連携エラー(\"3\"), 対象外(\"4\")", position = 16)
 	private AbsConInsideTransStatus absConInsideTransStatus;
 
 	/**
