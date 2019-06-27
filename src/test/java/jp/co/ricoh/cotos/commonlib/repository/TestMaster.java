@@ -51,6 +51,7 @@ import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmci105Master;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTjmmb010UtlItem;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTjmmb020UtlCd;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvWjmoc020OrgAllInfoCom;
+import jp.co.ricoh.cotos.commonlib.entity.master.NonBusinessDayCalendarMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.ProductCompMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.ProductGrpMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.ProductMaster;
@@ -98,6 +99,7 @@ import jp.co.ricoh.cotos.commonlib.repository.master.MvTJmci105Repository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTjmmb010UtlItemRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTjmmb020UtlCdRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvWjmoc020OrgAllInfoComRepository;
+import jp.co.ricoh.cotos.commonlib.repository.master.NonBusinessDayCalendarMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ProductCompMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ProductGrpMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ProductMasterRepository;
@@ -216,6 +218,8 @@ public class TestMaster {
 	private MvWjmoc020OrgAllInfoComRepository mvWjmoc020OrgAllInfoComRepository;
 	@Autowired
 	private IfsCsvMasterRepository ifsCsvMasterRepository;
+	@Autowired
+	private NonBusinessDayCalendarMasterRepository nonBusinessDayCalendarMasterRepository;
 
 	@Autowired
 	TestTools testTool = null;
@@ -1282,6 +1286,23 @@ public class TestMaster {
 		// エンティティの取得
 		Long id = 1L;
 		IfsCsvMaster found = ifsCsvMasterRepository.findOne(id);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		testTool.assertColumnsNotNull(found);
+	}
+
+	@Test
+	public void NonBusinessDayCalendarMasterのテスト() throws Exception {
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/nonBusinessDayCalendarMaster.sql");
+
+		// エンティティの取得
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		Date date = sdf.parse("2019/01/01");
+		NonBusinessDayCalendarMaster found = nonBusinessDayCalendarMasterRepository.findOne(date);
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
