@@ -212,6 +212,7 @@ public class TestMaster {
 	private MvTJmcj005MasterRepository mvTJmcj005MasterRepository;
 	@Autowired
 	private VDirectDeliveryDealerInfoMasterRepository vDirectDeliveryDealerInfoMasterRepository;
+
 	@Autowired
 	TestTools testTool = null;
 

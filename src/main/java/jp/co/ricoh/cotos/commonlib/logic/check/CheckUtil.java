@@ -1,5 +1,7 @@
 package jp.co.ricoh.cotos.commonlib.logic.check;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -245,6 +247,32 @@ public class CheckUtil {
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * 日付文字列が指定のフォーマットに変換できるか確認します
+	 * 
+	 * @param dateString
+	 *            日付文字列
+	 * @param format
+	 *            日付フォーマット
+	 * @return True:変換可能/False:変換不可
+	 */
+	public boolean tryParseDate(String dateString, String format) {
+
+		// Nullの場合、変換可能（処理スルー）とする
+		if (dateString == null) {
+			return true;
+		}
+
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
+
+		try {
+			sdf.parse(dateString);
+			return true;
+		} catch (ParseException e) {
+			return false;
+		}
 	}
 
 	/**

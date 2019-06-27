@@ -17,6 +17,7 @@ public class ReportListParameter {
 	@ApiModelProperty(value = "出力形式", required = false, allowableValues = "PDF(\"1\"), Excel(\"2\")", example = "1", position = 1)
 	private String outputType;
 
+
 	/**
 	 * サービスカテゴリ
 	 */

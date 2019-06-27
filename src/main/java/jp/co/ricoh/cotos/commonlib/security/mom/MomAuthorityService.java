@@ -155,6 +155,20 @@ public class MomAuthorityService {
 		// 参照・編集処理、承認処理により認可処理を分岐
 		if (AccessType.参照.equals(accessType) || AccessType.編集.equals(accessType)) {
 
+			if (AccessType.参照.equals(accessType)) {
+				// 承認者に含まれる場合、参照権限を付与
+				if (authParam.getApproverMvEmployeeMasterList() != null && !authParam.getApproverMvEmployeeMasterList().isEmpty() && authParam.getApproverMvEmployeeMasterList().stream().filter(approver -> approver.getMomEmployeeId().equals(authParam.getActorMvEmployeeMaster().getMomEmployeeId())).count() > 0) {
+					return true;
+				}
+			}
+
+			if (AccessType.編集.equals(accessType)) {
+				// 次回承認者の場合、編集権限を付与
+				if (authParam.getNextApproverMvEmployeeMaster() != null && authParam.getNextApproverMvEmployeeMaster().getMomEmployeeId().equals(authParam.getActorMvEmployeeMaster().getMomEmployeeId())) {
+					return true;
+				}
+			}
+
 			// 参照・編集処理用の認可処理を実施
 			return this.hasEditAuthority(authLevel, authParam.getActorMvEmployeeMaster(), authParam.getVKjbMaster(), authParam.getMvEmployeeMasterList());
 		} else if (AccessType.承認.equals(accessType)) {
