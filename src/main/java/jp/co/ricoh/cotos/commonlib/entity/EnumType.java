@@ -42,7 +42,7 @@ public class EnumType {
 	 */
 	public enum TargetContractType {
 
-		共通("1"), 新規("2"), プラン変更("3"), 情報変更("4");
+		共通("1"), 新規("2"), 契約変更("3"), 情報変更("4");
 
 		private final String text;
 
@@ -67,8 +67,8 @@ public class EnumType {
 			switch (contractType) {
 			case 新規:
 				return TargetContractType.新規;
-			case プラン変更:
-				return TargetContractType.プラン変更;
+			case 契約変更:
+				return TargetContractType.契約変更;
 			case 情報変更:
 				return TargetContractType.情報変更;
 			default:
@@ -157,7 +157,7 @@ public class EnumType {
 	 */
 	public enum ApprovalTargetType {
 
-		新規("1"), 情報変更("2"), プラン変更("3"), キャンセル("4"), 解約("5"), 作業完了報告("6"), 非承認("7"), 売上指示("8"), 売上計上("9");
+		新規("1"), 情報変更("2"), 契約変更("3"), キャンセル("4"), 解約("5"), 作業完了報告("6"), 非承認("7"), 売上指示("8"), 売上計上("9");
 
 		private final String text;
 

@@ -94,7 +94,7 @@ public class Estimation extends EntityBase {
 
 	public enum EstimationType {
 
-		新規("1"), プラン変更("2");
+		新規("1"), 契約変更("2");
 
 		private final String text;
 
@@ -187,7 +187,7 @@ public class Estimation extends EntityBase {
 	 * 見積種別
 	 */
 	@Column(nullable = false)
-	@ApiModelProperty(value = "見積種別(作成時不要)", required = true, allowableValues = "新規(\"1\"), プラン変更(\"2\")", example = "1", position = 11, readOnly = true)
+	@ApiModelProperty(value = "見積種別(作成時不要)", required = true, allowableValues = "新規(\"1\"), 契約変更(\"2\")", example = "1", position = 11, readOnly = true)
 	private EstimationType estimationType;
 
 	/**
@@ -490,6 +490,20 @@ public class Estimation extends EntityBase {
 	@Size(max = 255)
 	@ApiModelProperty(value = "アプリケーションID", required = false, position = 53, allowableValues = "range[0,255]")
 	private String appId;
+
+	/**
+	 * RJ管理番号
+	 */
+	@Column
+	@ApiModelProperty(value = "RJ管理番号", required = false, position = 54, allowableValues = "range[0,255]")
+	private String rjManageNumber;
+
+	/**
+	 * 帳票用消費税率区分
+	 */
+	@Column
+	@ApiModelProperty(value = "帳票用消費税率区分", required = false, position = 55, allowableValues = "range[0,255]")
+	private String issueTaxCodeValue;
 
 	@PreUpdate
 	public void preUpdate() {

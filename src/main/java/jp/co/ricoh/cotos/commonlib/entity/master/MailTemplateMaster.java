@@ -68,12 +68,19 @@ public class MailTemplateMaster extends EntityBaseMaster {
 	@Lob
 	@ApiModelProperty(value = "メール本文", required = true, position = 6)
 	private String mailBody;
-	
+
 	/**
 	 * メール制御マスタ
 	 */
 	@OneToMany(mappedBy = "mailTemplateMaster")
 	@ApiModelProperty(value = "メール制御マスタ", required = false, position = 7)
 	private List<MailControlMaster> mailControlMasterList;
+
+	/**
+	 * バウンスメール戻り先
+	 */
+	@Column
+	@ApiModelProperty(value = "バウンスメール戻り先", required = true, position = 8)
+	private String envelopeFrom;
 
 }

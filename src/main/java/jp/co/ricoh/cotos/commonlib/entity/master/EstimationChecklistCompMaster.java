@@ -34,7 +34,7 @@ public class EstimationChecklistCompMaster extends EntityBaseMaster {
 
 	public enum TargetEstimationType {
 
-		共通("1"), 新規("2"), プラン変更("3");
+		共通("1"), 新規("2"), 契約変更("3");
 
 		private final String text;
 
@@ -59,8 +59,8 @@ public class EstimationChecklistCompMaster extends EntityBaseMaster {
 			switch (estimationType) {
 			case 新規:
 				return TargetEstimationType.新規;
-			case プラン変更:
-				return TargetEstimationType.プラン変更;
+			case 契約変更:
+				return TargetEstimationType.契約変更;
 			default:
 				throw new IllegalArgumentException(String.valueOf(estimationType.toString()));
 			}
@@ -119,7 +119,7 @@ public class EstimationChecklistCompMaster extends EntityBaseMaster {
 	 */
 	@Column(nullable = false)
 	@ApiModelProperty(value = "対象見積種別<br /> "//
-			+ "共通/新規/プラン変更<br /> ", required = true, allowableValues = "共通(\"1\"), 新規(\"2\"), プラン変更(\"3\")", example = "1", position = 3)
+			+ "共通/新規/契約変更<br /> ", required = true, allowableValues = "共通(\"1\"), 新規(\"2\"), 契約変更(\"3\")", example = "1", position = 3)
 	private TargetEstimationType targetEstimationType;
 
 	/**

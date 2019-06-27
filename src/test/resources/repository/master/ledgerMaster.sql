@@ -1,0 +1,2 @@
+INSERT INTO ledger_master (id,created_at,created_user_id,updated_at,updated_user_id,version,product_master_id,file_name,file_path) VALUES (1001,'2019/5/31','COTOS','2019/5/31','COTOS',1,1001,'① RICOH カンタンストレージ活用 for Box','https://www.google.co.jp');
+INSERT INTO ledger_master (id,created_at,created_user_id,updated_at,updated_user_id,version,product_master_id,file_name,file_path) VALUES (1015,'2019/5/31','COTOS','2019/5/31','COTOS',1,1001,'② RICOH カンタンストレージ活用 for Box','https://www.yahoo.co.jp');

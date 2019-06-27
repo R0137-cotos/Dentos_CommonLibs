@@ -29,6 +29,7 @@ import jp.co.ricoh.cotos.commonlib.entity.master.AuthPatternMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.BusinessCalendar;
 import jp.co.ricoh.cotos.commonlib.entity.master.CommonMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.CommonMasterDetail;
+import jp.co.ricoh.cotos.commonlib.entity.master.ContractAutoUpdateMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.ContractChecklistCompMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.DispUrlAuthMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.DummyUserMaster;
@@ -37,12 +38,15 @@ import jp.co.ricoh.cotos.commonlib.entity.master.ExtendsParameterCorrelationChec
 import jp.co.ricoh.cotos.commonlib.entity.master.GpCheckMatterMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.ItemMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.JsonSchemaMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.LedgerMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.MailControlMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.MailConvertValueMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.MailProductMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.MailTemplateMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvEmployeeMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmci101Master;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmci105Master;
+import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmcj005Master;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTjmmb010UtlItem;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTjmmb020UtlCd;
 import jp.co.ricoh.cotos.commonlib.entity.master.ProductCompMaster;
@@ -56,6 +60,7 @@ import jp.co.ricoh.cotos.commonlib.entity.master.SuperUserMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.SystemMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.Domain;
+import jp.co.ricoh.cotos.commonlib.entity.master.VDirectDeliveryDealerInfoMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.VKjbMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.VPicAffiliateMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.VPicAffiliateMasterFull;
@@ -70,6 +75,7 @@ import jp.co.ricoh.cotos.commonlib.repository.master.AuthPatternMasterRepository
 import jp.co.ricoh.cotos.commonlib.repository.master.BusinessCalendarRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.CommonMasterDetailRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.CommonMasterRepository;
+import jp.co.ricoh.cotos.commonlib.repository.master.ContractAutoUpdateMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ContractChecklistCompMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.DispUrlAuthMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.DummyUserMasterRepository;
@@ -78,12 +84,15 @@ import jp.co.ricoh.cotos.commonlib.repository.master.ExtendsParameterCorrelation
 import jp.co.ricoh.cotos.commonlib.repository.master.GpCheckMatterMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ItemMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.JsonSchemaMasterRepository;
+import jp.co.ricoh.cotos.commonlib.repository.master.LedgerMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MailControlMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MailConvertValueMasterRepository;
+import jp.co.ricoh.cotos.commonlib.repository.master.MailProductMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MailTemplateMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvEmployeeMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTJmci101MasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTJmci105Repository;
+import jp.co.ricoh.cotos.commonlib.repository.master.MvTJmcj005MasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTjmmb010UtlItemRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTjmmb020UtlCdRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ProductCompMasterRepository;
@@ -96,6 +105,7 @@ import jp.co.ricoh.cotos.commonlib.repository.master.ReportTemplateMasterReposit
 import jp.co.ricoh.cotos.commonlib.repository.master.SuperUserMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.SystemMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.UrlAuthMasterRepository;
+import jp.co.ricoh.cotos.commonlib.repository.master.VDirectDeliveryDealerInfoMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.VKjbMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.VPicAffiliateMasterFullRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.VPicAffiliateMasterRepository;
@@ -189,9 +199,19 @@ public class TestMaster {
 	@Autowired
 	private ExtendsParameterCorrelationCheckMasterRepository extendsParameterCorrelationCheckMasterRepository;
 	@Autowired
+	private ContractAutoUpdateMasterRepository contractAutoUpdateMasterRepository;
+	@Autowired
+	private LedgerMasterRepository ledgerMasterRepository;
+	@Autowired
+	private MailProductMasterRepository mailProductMasterRepository;
+	@Autowired
 	private ReportTemplateMasterRepository reportTemplateMasterRepository;
 	@Autowired
 	private ReportPageMasterRepository reportPageMasterRepository;
+	@Autowired
+	private MvTJmcj005MasterRepository mvTJmcj005MasterRepository;
+	@Autowired
+	private VDirectDeliveryDealerInfoMasterRepository vDirectDeliveryDealerInfoMasterRepository;
 
 	@Autowired
 	TestTools testTool = null;
@@ -787,6 +807,13 @@ public class TestMaster {
 			Assert.assertTrue(false);
 		if (found.getRecordDecomposeCompMasterList() == null || found.getRecordDecomposeCompMasterList().size() == 0)
 			Assert.assertTrue(false);
+
+		String ricohItemCode = "CP6573";
+		ItemMaster found2 = itemMasterRepository.findByProductMasterIdAndRicohItemCode(id, ricohItemCode);
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found2);
+		// Entity の各項目の値が null ではないことを確認
+		testTool.assertColumnsNotNull(found2);
 	}
 
 	@Test
@@ -1092,6 +1119,60 @@ public class TestMaster {
 	}
 
 	@Test
+	public void ContractAutoUpdateMasterRepositoryのテスト() throws Exception {
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/contractAutoUpdateMaster.sql");
+
+		// エンティティの取得
+		ContractAutoUpdateMaster found = contractAutoUpdateMasterRepository.findByItemMasterId(1003L);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		testTool.assertColumnsNotNull(found);
+	}
+
+	@Test
+	public void LedgerMasterRepositoryのテスト() throws Exception {
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/ledgerMaster.sql");
+
+		// エンティティの取得
+		List<LedgerMaster> found = ledgerMasterRepository.findByProductMasterId(1001L);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// 2件取得できることを確認
+		Assert.assertEquals(found.size(), 2);
+
+		// Entity の各項目の値が null ではないことを確認
+		found.stream().forEach(foundOne -> {
+			try {
+				testTool.assertColumnsNotNull(foundOne);
+			} catch (Exception e) {
+				Assert.fail("例外が発生した場合、エラー");
+			}
+		});
+	}
+
+	@Test
+	public void MailProductMasterRepositoryのテスト() throws Exception {
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/mailProductMasterRepository.sql");
+
+		// エンティティの取得
+		MailProductMaster found = mailProductMasterRepository.findOne(1001L);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		testTool.assertColumnsNotNull(found);
+	}
+
+	@Test
 	public void ReportTemplateMasterのテスト() throws Exception {
 		// テストデータ登録
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/reportTemplateMaster.sql");
@@ -1122,5 +1203,92 @@ public class TestMaster {
 
 		// Entity の各項目の値が null ではないことを確認
 		testTool.assertColumnsNotNull(found);
+	}
+
+	@Test
+	public void CommonMaster_findByColumnNameAndServiceCategoryAndDetailCodeValuesのテスト() {
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/commonMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/commonMasterDetail.sql");
+
+		List<CommonMaster> foundList = commonMasterRepository.findByColumnNameAndServiceCategoryAndDetailCodeValues("issue_format", "1", Arrays.asList("1"));
+		// データが取得できていることを確認
+		Assert.assertTrue(foundList.size() > 0);
+
+		// Entity の各項目の値が null ではないことを確認
+		try {
+			testTool.assertColumnsNotNull(foundList.get(0));
+		} catch (Exception e) {
+			Assert.fail("throw Exception :" + e.getMessage());
+		}
+	}
+
+	@Test
+	public void ReportTemplateMasterRepository_findByReportListParameterのテスト() {
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/reportTemplateMaster.sql");
+		List<ReportTemplateMaster> foundList = reportTemplateMasterRepository.findByReportListParameter("1", "1", "1", "1", 1L, "1", "2");
+		// データが取得できていることを確認
+		Assert.assertTrue(foundList.size() > 0);
+
+		// Entity の各項目の値が null ではないことを確認
+		try {
+			testTool.assertColumnsNotNull(foundList.get(0));
+		} catch (Exception e) {
+			Assert.fail("throw Exception :" + e.getMessage());
+		}
+	}
+
+	@Test
+	public void MvTJmcj005Masterのテスト() throws Exception {
+
+		// テストデータはなし
+
+		// エンティティの取得
+		String id = "000000004015129";
+		MvTJmcj005Master found = mvTJmcj005MasterRepository.findOne(id);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+		//判定に使用するカラムを確認
+		Assert.assertEquals("支社コードが一致すること", "702", found.getHanshCd());
+		Assert.assertEquals("RINGS得意先コードが一致すること", "10027811", found.getRingsTkiskCd());
+		Assert.assertEquals("RINGS届先コードが一致すること", "001", found.getRingsTodokesakiCd());
+	}
+
+	@Test
+	public void MvTJmcj005Master_キーで取得するテスト() throws Exception {
+
+		// テストデータはなし
+
+		// エンティティの取得
+		MvTJmcj005Master found = mvTJmcj005MasterRepository.findByHanshCdAndRingsTkiskCdAndRingsTodokesakiCd("702", "10027811", "001");
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+		//判定に使用するカラムを確認
+		Assert.assertEquals("支社コードが一致すること", "702", found.getHanshCd());
+		Assert.assertEquals("RINGS得意先コードが一致すること", "10027811", found.getRingsTkiskCd());
+		Assert.assertEquals("RINGS届先コードが一致すること", "001", found.getRingsTodokesakiCd());
+
+		//キー不一致
+		found = mvTJmcj005MasterRepository.findByHanshCdAndRingsTkiskCdAndRingsTodokesakiCd("702", "10027811", "002");
+		// Entity が null であることを確認
+		Assert.assertNull(found);
+	}
+
+	@Test
+	public void VDirectDeliveryDealerInfoMasterRepositoryのテスト() throws Exception {
+
+		// テストデータはなし
+
+		// エンティティの取得
+		VDirectDeliveryDealerInfoMaster.Id id = new VDirectDeliveryDealerInfoMaster.Id("83013", "00");
+		VDirectDeliveryDealerInfoMaster found = vDirectDeliveryDealerInfoMasterRepository.findOne(id);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+		//判定に使用するカラムを確認
+		Assert.assertNotNull("売上情報送信年月日がnullでないこと", found.getAdSalesSendDate());
 	}
 }

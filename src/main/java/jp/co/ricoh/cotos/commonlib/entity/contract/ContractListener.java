@@ -42,7 +42,7 @@ public class ContractListener {
 	}
 
 	/**
-	 * 契約番号・恒久契約識別番号を付与する。得意先コードについて、MoM請求売上先サイト情報マスタ上の存在チェックを行う。
+	 * 契約番号・恒久契約識別番号・RJ管理番号を付与する。得意先コードについて、MoM請求売上先サイト情報マスタ上の存在チェックを行う。
 	 *
 	 * @param contract
 	 */
@@ -62,6 +62,13 @@ public class ContractListener {
 		if (null == contract.getImmutableContIdentNumber()) {
 			long sequenceImmutable = dbUtil.loadSingleFromSQLFile("sql/nextImmutableContIdentNumberSequence.sql", GeneratedNumber.class).getGeneratedNumber();
 			contract.setImmutableContIdentNumber(ID_PREFIX_IMMUTABLE + new SimpleDateFormat("yyyyMMdd").format(new Date()) + String.format("%04d", sequenceImmutable));
+		}
+
+		/**
+		 * RJ管理番号
+		 */
+		if (null == contract.getRjManageNumber()) {
+			contract.setRjManageNumber(contract.getImmutableContIdentNumber());
 		}
 
 		/**

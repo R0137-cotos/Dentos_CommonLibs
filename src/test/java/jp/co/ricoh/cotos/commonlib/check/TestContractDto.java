@@ -274,8 +274,13 @@ public class TestContractDto {
 		testTarget.setDistributorMomSoshikiId(STR_256);
 		testTarget.setDistributorMomDepoCd(STR_256);
 		testTarget.setOrbSendSiteId(STR_256);
+		testTarget.setPicNameKana(STR_256);
+		testTarget.setDealerNameKana(STR_256);
+		testTarget.setCompanyRepresentativeName(STR_256);
+		testTarget.setCompanyRepresentativeNameKana(STR_256);
+		testTarget.setMomCustId(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 19);
+		Assert.assertTrue(result.getErrorInfoList().size() == 24);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "住所は最大文字数（1000）を超えています。"));
 	}
@@ -1079,10 +1084,11 @@ public class TestContractDto {
 		BeanUtils.copyProperties(dto, testTarget);
 		testTarget.setLifecycleStatus(null);
 		testTarget.setWorkflowStatus(null);
+		testTarget.setWebOrderNumber(null);
 		testTarget.setContractPicSaEmp(null);
 		testTarget.setCustomerContract(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 4);
+		Assert.assertTrue(result.getErrorInfoList().size() == 5);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "契約担当SA社員が設定されていません。"));
 

@@ -1,5 +1,6 @@
 package jp.co.ricoh.cotos.commonlib.dto.parameter.common;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -84,4 +85,85 @@ public class DealerAbstractDto extends DtoBase {
 	@NotNull
 	@ApiModelProperty(value = "販売店商流順", required = true, allowableValues = "販売店(\"1\"), 母店(\"2\")", example = "1", position = 60)
 	private DealerFlowOrder dealerFlowOrder;
+
+	/**
+	 * MoM会社ID
+	 */
+	@Size(max = 255)
+	@Column
+	@ApiModelProperty(value = "MoM会社ID", required = false, position = 61, allowableValues = "range[0,255]")
+	private String distributorMomCmpId;
+
+	/**
+	 * MoM販売店識別コード
+	 */
+	@Size(max = 255)
+	@Column
+	@ApiModelProperty(value = "MoM販売店識別コード", required = false, position = 62, allowableValues = "range[0,255]")
+	private String distributorMomShikiCd;
+
+	/**
+	 * MoM組織ID
+	 */
+	@Size(max = 255)
+	@Column
+	@ApiModelProperty(value = "MoM組織ID", required = false, position = 63, allowableValues = "range[0,255]")
+	private String distributorMomSoshikiId;
+
+	/**
+	 * MoMデポコード
+	 */
+	@Size(max = 255)
+	@Column
+	@ApiModelProperty(value = "MoMデポコード", required = false, position = 64, allowableValues = "range[0,255]")
+	private String distributorMomDepoCd;
+
+	/**
+	 * MoM設置届先サイトID
+	 */
+	@Size(max = 255)
+	@Column
+	@ApiModelProperty(value = "MoM設置届先サイトID", required = false, position = 65, allowableValues = "range[0,255]")
+	private String orbSendSiteId;
+
+	/**
+	 * 担当者名（カナ）
+	 */
+	@Size(max = 255)
+	@Column
+	@ApiModelProperty(value = "担当者名（カナ）", required = false, position = 66, allowableValues = "range[0,255]")
+	private String picNameKana;
+
+	/**
+	 * 販売店名（カナ）
+	 */
+	@Size(max = 255)
+	@Column
+	@ApiModelProperty(value = "販売店名（カナ）", required = false, position = 67, allowableValues = "range[0,255]")
+	private String dealerNameKana;
+
+	/**
+	 * MoM非連携_企業代表者名
+	 */
+	@Size(max = 255)
+	@Column
+	@ApiModelProperty(value = "MoM非連携_企業代表者名", required = false, position = 68, allowableValues = "range[0,255]")
+	private String companyRepresentativeName;
+
+	/**
+	 * MoM非連携_企業代表者名（カナ）
+	 */
+	@Size(max = 255)
+	@Column
+	@ApiModelProperty(value = "MoM非連携_企業代表者名（カナ）", required = false, position = 69, allowableValues = "range[0,255]")
+	private String companyRepresentativeNameKana;
+
+	/**
+	 * MoM企事部ID
+	 */
+	@Size(max = 255)
+	@Column
+	@ApiModelProperty(value = "MoM企事部ID", required = false, position = 70, allowableValues = "range[0,255]")
+	private String momCustId;
+
 }
