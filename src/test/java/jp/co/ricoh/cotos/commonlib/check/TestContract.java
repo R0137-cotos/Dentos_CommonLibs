@@ -578,7 +578,7 @@ public class TestContract {
 		testTarget.setFaxNumber(STR_256);
 		testTarget.setMailAddress(STR_256);
 		testTarget.setMomKjbSystemId(STR_256);
-		testTarget.setMomKjbId(STR_256);
+		testTarget.setMomCustId(STR_256);
 		testTarget.setSalesCompanyNameKana(STR_256);
 		testTarget.setCompanyRepresentativeName(STR_256);
 		testTarget.setCompanyRepresentativeNameKana(STR_256);
