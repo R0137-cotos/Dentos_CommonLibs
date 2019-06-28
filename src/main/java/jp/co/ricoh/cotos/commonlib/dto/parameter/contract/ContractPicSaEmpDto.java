@@ -31,7 +31,7 @@ public class ContractPicSaEmpDto extends EmployeeAbstractDto {
 	 */
 	@Size(max = 255)
 	@ApiModelProperty(value = "MoM非連携_MoM企事部ID", required = false, position = 3, allowableValues = "range[0,255]")
-	private String momKjbId;
+	private String momCustId;
 
 	/**
 	 * 販売店名（カナ）
