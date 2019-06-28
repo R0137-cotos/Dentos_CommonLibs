@@ -1,5 +1,7 @@
 package jp.co.ricoh.cotos.commonlib.repository;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
@@ -20,6 +22,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import jp.co.ricoh.cotos.commonlib.DBConfig;
 import jp.co.ricoh.cotos.commonlib.TestTools;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
+import jp.co.ricoh.cotos.commonlib.entity.contract.order.OrderManagementInfo;
 import jp.co.ricoh.cotos.commonlib.repository.contract.order.OrderBasicInfoRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.order.OrderBranchCustomerInfoRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.order.OrderContractorInfoRepository;
@@ -132,6 +135,17 @@ public class TestOrder {
 	@Test
 	public void 全てのカラムがNullではないことを確認_注文基本情報() {
 		全てのカラムがNullではないことを確認_共通(orderBasicInfoRepository, 4L, 5L);
+	}
+
+	@Test
+	@Transactional
+	public void 注文管理情報_契約取込状況_見取込_ID昇順のデータ取得() {
+		context.getBean(DBConfig.class).initTargetTestData("repository/order.sql");
+		List<OrderManagementInfo> list = orderManagementInfoRepository.findByContractCaptureStatusOrderById(OrderManagementInfo.CaptureStatus.未取込);
+		assertEquals("list.size()", 2, list.size());
+		assertEquals("1件目のID", 401L, list.get(0).getId());
+		assertEquals("2件目のID", 501L, list.get(1).getId());
+		list.forEach(omi -> assertEquals("契約状態" ,OrderManagementInfo.CaptureStatus.未取込, omi.getContractCaptureStatus()));
 	}
 
 	@Transactional
