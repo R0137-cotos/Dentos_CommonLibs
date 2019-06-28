@@ -281,4 +281,16 @@ public class TestContract {
 		});
 	}
 
+	@Test
+	public void 契約自動更新情報取得() throws Exception {
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/attachedFile.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/contract.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/contractAutoUpdateMaster.sql");
+
+		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+		Date date = format.parse("2020/12/31 01:59:59");
+		List<Contract> list = contractRepository.findByAutoUpdaterecord(date);
+		Assert.assertTrue(list.size() != 0);
+	}
 }
