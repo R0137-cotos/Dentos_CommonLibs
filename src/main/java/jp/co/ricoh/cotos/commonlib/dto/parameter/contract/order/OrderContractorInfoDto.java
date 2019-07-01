@@ -2,12 +2,15 @@ package jp.co.ricoh.cotos.commonlib.dto.parameter.contract.order;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import io.swagger.annotations.ApiModelProperty;
-import jp.co.ricoh.cotos.commonlib.dto.parameter.common.DtoBase;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -16,27 +19,28 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = false)
 @Data
-public class OrderContractorInfoDto extends DtoBase {
+public class OrderContractorInfoDto {
 
 	/**
 	 * 企業ＩＤ
 	 */
 	@Size(max = 255)
 	@ApiModelProperty(value = "企業ＩＤ", required = false, position = 2, allowableValues = "range[0,255]")
-	private String companyid;
+	private String companyId;
 
 	/**
 	 * 企事部ＩＤ
 	 */
 	@Size(max = 255)
 	@ApiModelProperty(value = "企事部ＩＤ", required = false, position = 3, allowableValues = "range[0,255]")
-	private String kjbid;
+	private String kjbId;
 
 	/**
 	 * 会員基本ID
 	 */
 	@Size(max = 255)
 	@ApiModelProperty(value = "会員基本ID", required = false, position = 4, allowableValues = "range[0,255]")
+	@JsonProperty("netRicohAccount")
 	private String netricohAccount;
 
 	/**
@@ -107,6 +111,7 @@ public class OrderContractorInfoDto extends DtoBase {
 	 */
 	@Size(max = 255)
 	@ApiModelProperty(value = "利用登録権限(NetRICOH)", required = false, position = 14, allowableValues = "range[0,255]")
+	@JsonProperty("authorityForNetRicoh")
 	private String authorityForNetricoh;
 
 	/**
@@ -114,6 +119,7 @@ public class OrderContractorInfoDto extends DtoBase {
 	 */
 	@Temporal(TemporalType.DATE)
 	@ApiModelProperty(value = "サービス開始希望日", required = false, position = 15)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private Date desiredServiceStartDate;
 
 }
