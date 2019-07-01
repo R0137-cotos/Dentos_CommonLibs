@@ -49,6 +49,7 @@ import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmci105Master;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmcj005Master;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTjmmb010UtlItem;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTjmmb020UtlCd;
+import jp.co.ricoh.cotos.commonlib.entity.master.MvWjmoco40EmpAllInfoCom;
 import jp.co.ricoh.cotos.commonlib.entity.master.ProductCompMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.ProductGrpMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.ProductMaster;
@@ -64,6 +65,8 @@ import jp.co.ricoh.cotos.commonlib.entity.master.VDirectDeliveryDealerInfoMaster
 import jp.co.ricoh.cotos.commonlib.entity.master.VKjbMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.VPicAffiliateMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.VPicAffiliateMasterFull;
+import jp.co.ricoh.cotos.commonlib.entity.master.MvWjmoc080DealerInfo;
+import jp.co.ricoh.cotos.commonlib.entity.master.MvWjmoc080DealerInfo.Id;
 import jp.co.ricoh.cotos.commonlib.repository.master.AppMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ApprovalRouteGrpMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ApprovalRouteMasterRepository;
@@ -95,6 +98,7 @@ import jp.co.ricoh.cotos.commonlib.repository.master.MvTJmci105Repository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTJmcj005MasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTjmmb010UtlItemRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTjmmb020UtlCdRepository;
+import jp.co.ricoh.cotos.commonlib.repository.master.MvWjmoco40EmpAllInfoComRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ProductCompMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ProductGrpMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ProductMasterRepository;
@@ -109,6 +113,7 @@ import jp.co.ricoh.cotos.commonlib.repository.master.VDirectDeliveryDealerInfoMa
 import jp.co.ricoh.cotos.commonlib.repository.master.VKjbMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.VPicAffiliateMasterFullRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.VPicAffiliateMasterRepository;
+import jp.co.ricoh.cotos.commonlib.repository.master.MvWjmoc080DealerInfoRepository;
 
 /**
  * Repository（マスタドメイン）のテストクラス
@@ -212,6 +217,11 @@ public class TestMaster {
 	private MvTJmcj005MasterRepository mvTJmcj005MasterRepository;
 	@Autowired
 	private VDirectDeliveryDealerInfoMasterRepository vDirectDeliveryDealerInfoMasterRepository;
+	@Autowired
+	private MvWjmoco40EmpAllInfoComRepository mvWjmoco40EmpAllInfoComRepository;
+	@Autowired
+	private MvWjmoc080DealerInfoRepository mvWjmoc080DealerInfoRepository;
+
 	@Autowired
 	TestTools testTool = null;
 
@@ -1249,7 +1259,7 @@ public class TestMaster {
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
-		//判定に使用するカラムを確認
+		// 判定に使用するカラムを確認
 		Assert.assertEquals("支社コードが一致すること", "702", found.getHanshCd());
 		Assert.assertEquals("RINGS得意先コードが一致すること", "10027811", found.getRingsTkiskCd());
 		Assert.assertEquals("RINGS届先コードが一致すること", "001", found.getRingsTodokesakiCd());
@@ -1265,12 +1275,12 @@ public class TestMaster {
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
-		//判定に使用するカラムを確認
+		// 判定に使用するカラムを確認
 		Assert.assertEquals("支社コードが一致すること", "702", found.getHanshCd());
 		Assert.assertEquals("RINGS得意先コードが一致すること", "10027811", found.getRingsTkiskCd());
 		Assert.assertEquals("RINGS届先コードが一致すること", "001", found.getRingsTodokesakiCd());
 
-		//キー不一致
+		// キー不一致
 		found = mvTJmcj005MasterRepository.findByHanshCdAndRingsTkiskCdAndRingsTodokesakiCd("702", "10027811", "002");
 		// Entity が null であることを確認
 		Assert.assertNull(found);
@@ -1287,7 +1297,116 @@ public class TestMaster {
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
-		//判定に使用するカラムを確認
+		// 判定に使用するカラムを確認
 		Assert.assertNotNull("売上情報送信年月日がnullでないこと", found.getAdSalesSendDate());
 	}
+
+	@Test
+	public void MvWjmoco40EmpAllInfoComRepositoryのテスト() {
+		final String empId = "00150194";
+		MvWjmoco40EmpAllInfoCom found = mvWjmoco40EmpAllInfoComRepository.findOne(empId);
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		Assert.assertEquals("Mom会社IDが一致すること", "000010", found.getCorpId());
+		Assert.assertEquals("SingleUserIdが一致すること", "u033014739", found.getSingleuserId());
+	}
+
+	@Test
+	public void MvWjmoco40EmpAllInfoComRepository_findByRingsHanshCdAndRingsEmpCdのテスト() {
+		final String ringsHanshCd = "601";
+		final String ringsEmpCd = "24396";
+		List<MvWjmoco40EmpAllInfoCom> found = mvWjmoco40EmpAllInfoComRepository.findByRingsHanshCdAndRingsEmpCd(ringsHanshCd, ringsEmpCd);
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		Assert.assertTrue("Mom会社IDが一致すること", found.stream().anyMatch(f -> f.getEmpId().equals("00150194")));
+		Assert.assertTrue("SingleUserIdが一致すること", found.stream().anyMatch(f -> f.getSingleuserId().equals("u033014739")));
+	}
+
+	@Test
+	public void VWjmoc080DealerInfoRepositoryのテスト() {
+		Id id = new Id();
+		id.setDealerDiscrimCd("00006");
+		id.setDpCd("00");
+		MvWjmoc080DealerInfo found = mvWjmoc080DealerInfoRepository.findOne(id);
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+	}
+
+	@Test
+	public void CommonMaster_findByColumnNameのテスト() {
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/commonMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/commonMasterDetail.sql");
+
+		List<CommonMaster> foundList = commonMasterRepository.findByColumnName("issue_format");
+		// データが取得できていることを確認
+		Assert.assertTrue(foundList.size() > 0);
+
+		// Entity の各項目の値が null ではないことを確認
+		try {
+			testTool.assertColumnsNotNull(foundList.get(0));
+		} catch (Exception e) {
+			Assert.fail("throw Exception :" + e.getMessage());
+		}
+	}
+
+	@Test
+	public void MvTJmcj005Master_findByOeTodokesakiCdAndRingsTodokesakiCdIsNotNullのテスト() throws Exception {
+
+		// テストデータはなし
+
+		// エンティティの取得
+		String oeTodokesakiCd = "01601ZZA282";
+		MvTJmcj005Master found = mvTJmcj005MasterRepository.findByOeTodokesakiCdAndRingsTodokesakiCdIsNotNull(oeTodokesakiCd);
+
+		// Entity が null ではないことを確認(実装時に販社別届先情報.RINGS届先コードがnullでないデータが存在しなかったため)
+		Assert.assertNull(found);
+	}
+
+	@Test
+	public void ProductGrpMaster_findByProductGroupCdのテスト() throws Exception {
+
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/approvalRouteMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/approvalRouteNodeMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/approvalRouteGrpMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/productGrpMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/productCompMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/arrangementWorkTypeMaster.sql");
+
+		// エンティティの取得
+		String productGroupCd = "CPG00001";
+		ProductGrpMaster found = productGrpMasterRepository.findByProductGroupCd(productGroupCd);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		// Entity の各項目の値が null ではないことを確認
+		testTool.assertColumnsNotNull(found);
+
+		// Entity の リストとエンティティクラスの項目の値が null ではないことを確認
+		if (found.getContractApprovalRouteGrpMaster() == null)
+			Assert.assertTrue(false);
+		if (found.getEstimationApprovalRouteGrpMaster() == null)
+			Assert.assertTrue(false);
+	}
+
+	@Test
+	public void VKjbMaster_findFirstByMclMomKjbIdAndMclDltFlgOrderByMclUpdateDtのテスト() throws Exception {
+
+		// テストデータはなし
+
+		// エンティティの取得
+		String mclMomKjbId = "000000002773772";
+		String mclDltFlg = "0";
+		List<VKjbMaster> found = vKjbMasterRepository.findByMclMomKjbIdAndMclDltFlgAndMaxMclUpdateDt(mclMomKjbId, mclDltFlg);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+	}
+
 }
