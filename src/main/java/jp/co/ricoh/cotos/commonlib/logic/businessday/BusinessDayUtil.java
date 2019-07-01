@@ -37,15 +37,17 @@ public class BusinessDayUtil {
 	 *            日付
 	 * @param leadTime
 	 *            日数
+	 * @param isSubtract
+	 *            減算するかどうか
 	 * @return
 	 */
-	public Date findShortestBusinessDay(Date date, int leadTime) {
+	public Date findShortestBusinessDay(Date date, int leadTime, boolean isSubtract) {
 		Date retDate = date;
 		Calendar calendar = Calendar.getInstance();
 		for (int i = 1; i <= leadTime + 1; i++) {
 			while (true) {
 				calendar.setTime(retDate);
-				calendar.add(Calendar.DATE, 1);
+				calendar.add(Calendar.DATE, !isSubtract ? 1 : -1);
 				retDate = calendar.getTime();
 				if (isBusinessDay(retDate)) {
 					break;
@@ -70,11 +72,16 @@ public class BusinessDayUtil {
 	public Date findShortestBusinessDayTimeCalc(Date date, int leadTime, Date baseDateTime) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(baseDateTime);
-		Date retDate = findShortestBusinessDay(date, leadTime);
+		Date retDate = findShortestBusinessDay(date, leadTime, false);
 		if (calendar.get(Calendar.AM_PM) == Calendar.PM) {
-			calendar.setTime(retDate);
-			calendar.add(Calendar.DATE, 1);
-			retDate = calendar.getTime();
+			while (true) {
+				calendar.setTime(retDate);
+				calendar.add(Calendar.DATE, 1);
+				retDate = calendar.getTime();
+				if (isBusinessDay(retDate)) {
+					break;
+				}
+			}
 		}
 
 		return retDate;
