@@ -50,14 +50,14 @@ private OrderBasicInfo orderBasicInfo;
  */
 @Column
 @ApiModelProperty(value = "企業ＩＤ", required = false, position = 2, allowableValues = "range[0,]")
-private String companyid;
+private String companyId;
 
 /**
  * 企事部ＩＤ
  */
 @Column
 @ApiModelProperty(value = "企事部ＩＤ", required = false, position = 3, allowableValues = "range[0,]")
-private String kjbid;
+private String kjbId;
 
 /**
  * 会員基本ID
