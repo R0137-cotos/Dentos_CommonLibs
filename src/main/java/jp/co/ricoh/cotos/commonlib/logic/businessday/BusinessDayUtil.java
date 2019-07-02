@@ -44,7 +44,7 @@ public class BusinessDayUtil {
 	public Date findShortestBusinessDay(Date date, int leadTime, boolean isSubtract) {
 		Date retDate = date;
 		Calendar calendar = Calendar.getInstance();
-		for (int i = 1; i <= leadTime + 1; i++) {
+		for (int i = 0; i < leadTime; i++) {
 			while (true) {
 				calendar.setTime(retDate);
 				calendar.add(Calendar.DATE, !isSubtract ? 1 : -1);

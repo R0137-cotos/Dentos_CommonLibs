@@ -60,8 +60,8 @@ public class TestBusinessDayUtil {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 		Date date = sdf.parse("2019/06/27");
-		Assert.assertEquals("最短営業日_加算が正しいこと", sdf.parse("2019/07/05"), businessDayUtil.findShortestBusinessDay(date, 5, false));
-		Assert.assertEquals("最短営業日_減算が正しいこと", sdf.parse("2019/06/19"), businessDayUtil.findShortestBusinessDay(date, 5, true));
+		Assert.assertEquals("最短営業日_加算が正しいこと", sdf.parse("2019/07/04"), businessDayUtil.findShortestBusinessDay(date, 5, false));
+		Assert.assertEquals("最短営業日_減算が正しいこと", sdf.parse("2019/06/20"), businessDayUtil.findShortestBusinessDay(date, 5, true));
 	}
 
 	@Test
@@ -73,11 +73,11 @@ public class TestBusinessDayUtil {
 		Date date = sdf.parse("2019/06/27");
 		SimpleDateFormat sdfTime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date baseDateTime = sdfTime.parse("2019/06/27 11:59:59");
-		Assert.assertEquals("最短営業日(午前)が正しいこと", sdf.parse("2019/07/05"), businessDayUtil.findShortestBusinessDayTimeCalc(date, 5, baseDateTime));
+		Assert.assertEquals("最短営業日(午前)が正しいこと", sdf.parse("2019/07/04"), businessDayUtil.findShortestBusinessDayTimeCalc(date, 5, baseDateTime));
 		baseDateTime = sdfTime.parse("2019/06/27 12:00:00");
-		Assert.assertEquals("最短営業日(午後)が正しいこと", sdf.parse("2019/07/06"), businessDayUtil.findShortestBusinessDayTimeCalc(date, 5, baseDateTime));
-		date = sdf.parse("2019/07/04");
-		baseDateTime = sdfTime.parse("2019/07/04 12:00:00");
+		Assert.assertEquals("最短営業日(午後)が正しいこと", sdf.parse("2019/07/05"), businessDayUtil.findShortestBusinessDayTimeCalc(date, 5, baseDateTime));
+		date = sdf.parse("2019/07/05");
+		baseDateTime = sdfTime.parse("2019/07/05 12:00:00");
 		Assert.assertEquals("最短営業日_加算時営業日考慮(午後)が正しいこと", sdf.parse("2019/07/16"), businessDayUtil.findShortestBusinessDayTimeCalc(date, 5, baseDateTime));
 	}
 
