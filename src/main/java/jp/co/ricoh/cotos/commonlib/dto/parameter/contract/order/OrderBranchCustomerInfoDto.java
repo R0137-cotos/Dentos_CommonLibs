@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = false)
 @Data
-public class OrderBranchCustomerInfoDto extends DtoBase {
+public class OrderBranchCustomerInfoDto {
 
 	/**
 	 * 支社コード
