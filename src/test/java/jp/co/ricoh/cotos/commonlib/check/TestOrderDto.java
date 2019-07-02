@@ -284,9 +284,9 @@ public class TestOrderDto {
 		BeanUtils.copyProperties(entity, testTarget);
 		testTarget.setQuantity(INT_MINUS_1);
 		testTarget.setBeforeQuantity(INT_MINUS_1);
-		testTarget.setDifferenceQuantity(INT_MINUS_1);
+		testTarget.setDifferenceQuantity(INT_MINUS_1); //マイナス登録可能に修正
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 3);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2); //differenceQuantityがマイナスでもエラーにならないことを確認
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "変更前数量は最小値（0）を下回っています。"));
 

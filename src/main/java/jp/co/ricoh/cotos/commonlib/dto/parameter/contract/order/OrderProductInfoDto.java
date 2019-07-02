@@ -74,7 +74,6 @@ public class OrderProductInfoDto {
 	/**
 	 * 差分
 	 */
-	@Min(0)
 	@Max(99999)
 	@ApiModelProperty(value = "差分", required = false, position = 9, allowableValues = "range[0,99999]")
 	private Integer differenceQuantity;
