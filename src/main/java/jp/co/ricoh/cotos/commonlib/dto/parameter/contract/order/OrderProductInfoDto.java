@@ -20,7 +20,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = false)
 @Data
-public class OrderProductInfoDto extends DtoBase {
+public class OrderProductInfoDto {
 
 	/**
 	 * 商品コード（RICOH品種コード）
