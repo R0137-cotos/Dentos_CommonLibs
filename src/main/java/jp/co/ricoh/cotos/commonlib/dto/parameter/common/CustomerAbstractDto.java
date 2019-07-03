@@ -1,6 +1,5 @@
 package jp.co.ricoh.cotos.commonlib.dto.parameter.common;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -169,7 +168,6 @@ public class CustomerAbstractDto extends DtoBase {
 	 * MoM非連携_企業代表者名（カナ）
 	 */
 	@Size(max = 255)
-	@Column
 	@ApiModelProperty(value = "MoM非連携_企業代表者名（カナ）", required = false, position = 72, allowableValues = "range[0,255]")
 	private String companyRepresentativeNameKana;
 

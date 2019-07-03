@@ -12,13 +12,6 @@ import lombok.EqualsAndHashCode;
 public class CustomerContractDto extends CustomerAbstractDto {
 
 	/**
-	 * MoM非連携_企業代表者名（カナ）
-	 */
-	@Size(max = 255)
-	@ApiModelProperty(value = "MoM非連携_企業代表者名（カナ）", required = false, position = 3, allowableValues = "range[0,255]")
-	private String companyRepresentativeNameKana;
-
-	/**
 	 * NetRicoh会員ID
 	 */
 	@Size(max = 255)
