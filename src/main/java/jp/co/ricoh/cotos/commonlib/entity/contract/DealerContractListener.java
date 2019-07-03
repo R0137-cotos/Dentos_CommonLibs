@@ -33,10 +33,12 @@ public class DealerContractListener {
 	@Transactional
 	public void appendsDealerContractFields(DealerContract dealerContract) {
 
-		VKjbMaster vKjbMaster = vKjbMasterRepository.findByMclMomRelId(dealerContract.getMomKjbSystemId());
-		if (vKjbMaster == null) {
-			String[] regexList = { "販売店（契約用）" };
-			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "MasterDoesNotExistKjbMaster", regexList));
+		if (null != dealerContract.getMomKjbSystemId()) {
+			VKjbMaster vKjbMaster = vKjbMasterRepository.findByMclMomRelId(dealerContract.getMomKjbSystemId());
+			if (vKjbMaster == null) {
+				String[] regexList = { "販売店（契約用）" };
+				throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "MasterDoesNotExistKjbMaster", regexList));
+			}
 		}
 
 	}
