@@ -37,13 +37,6 @@ public class CustomerContract extends CustomerAbstractEntity {
 	private long id;
 
 	/**
-	 * MoM非連携_企業代表者名（カナ）
-	 */
-	@Size(max = 255)
-	@ApiModelProperty(value = "MoM非連携_企業代表者名（カナ）", required = false, position = 2, allowableValues = "range[0,255]")
-	private String companyRepresentativeNameKana;
-
-	/**
 	 * 契約
 	 */
 	@OneToOne(optional = false)
