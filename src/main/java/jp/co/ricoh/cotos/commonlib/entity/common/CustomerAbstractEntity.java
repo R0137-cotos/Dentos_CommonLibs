@@ -163,6 +163,7 @@ public class CustomerAbstractEntity extends EntityBase {
 	/**
 	 * MoM非連携_企業代表者名（カナ）
 	 */
+	@Size(max = 255)
 	@Column
 	@ApiModelProperty(value = "MoM非連携_企業代表者名（カナ）", required = false, position = 72, allowableValues = "range[0,]")
 	private String companyRepresentativeNameKana;
