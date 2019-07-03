@@ -39,19 +39,21 @@ public class DealerEstimationListener {
 	@PrePersist
 	@Transactional
 	public void appendsEstimationDealerFields(DealerEstimation dealerEstimation) {
-		VKjbMaster vKjbMaster = vKjbMasterRepository.findByMclMomRelId(dealerEstimation.getMomKjbSystemId());
+		if (null != dealerEstimation.getMomKjbSystemId()) {
+			VKjbMaster vKjbMaster = vKjbMasterRepository.findByMclMomRelId(dealerEstimation.getMomKjbSystemId());
 
-		if (vKjbMaster == null) {
-			String[] regexList = { "販売店（見積用）" };
-			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "MasterDoesNotExistKjbMaster", regexList));
+			if (vKjbMaster == null) {
+				String[] regexList = { "販売店（見積用）" };
+				throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "MasterDoesNotExistKjbMaster", regexList));
+			}
+
+			// 結合して表示するものを設定
+			dealerEstimation.setDealerName(this.convertJoinedDealerName(vKjbMaster));
+			dealerEstimation.setAddress(this.convertJoinedAddress(vKjbMaster));
+
+			dealerEstimation.setPostNumber(vKjbMaster.getJgsJgsPostNum());
+			dealerEstimation.setOrgPhoneNumber(vKjbMaster.getKgyKgyTelNum());
 		}
-
-		// 結合して表示するものを設定
-		dealerEstimation.setDealerName(this.convertJoinedDealerName(vKjbMaster));
-		dealerEstimation.setAddress(this.convertJoinedAddress(vKjbMaster));
-
-		dealerEstimation.setPostNumber(vKjbMaster.getJgsJgsPostNum());
-		dealerEstimation.setOrgPhoneNumber(vKjbMaster.getKgyKgyTelNum());
 	}
 
 	private String convertJoinedDealerName(VKjbMaster kjbMaster) {
