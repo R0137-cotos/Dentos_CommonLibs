@@ -20,6 +20,9 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import jp.co.ricoh.cotos.commonlib.db.DBUtil;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.common.AuthorityJudgeParameter;
 import jp.co.ricoh.cotos.commonlib.dto.result.StringResult;
@@ -70,10 +73,12 @@ public class MomAuthorityService {
 			this.value = value;
 		}
 
+		@JsonValue
 		public String toValue() {
 			return this.value;
 		}
 		
+		@JsonCreator
 		public static AuthLevel fromString(String string) {
 			return Arrays.stream(values()).filter(v -> v.value.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
