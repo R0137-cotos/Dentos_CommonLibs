@@ -10,6 +10,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -93,6 +94,7 @@ public class AuthPatternMaster extends EntityBaseMaster {
 	/**
 	 * 画面URL権限マスタ
 	 */
+	@JsonIgnore
 	@OneToMany(mappedBy = "authPatternMaster")
 	@ApiModelProperty(value = "画面URL権限マスタ", required = false, position = 7)
 	private List<DispUrlAuthMaster> authPatternMasterList;
