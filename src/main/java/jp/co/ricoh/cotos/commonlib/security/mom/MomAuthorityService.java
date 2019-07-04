@@ -73,6 +73,10 @@ public class MomAuthorityService {
 		public String toValue() {
 			return this.value;
 		}
+		
+		public static AuthLevel fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.value.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+		}
 	}
 
 	/**
