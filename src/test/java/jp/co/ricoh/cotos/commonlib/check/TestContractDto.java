@@ -820,8 +820,13 @@ public class TestContractDto {
 		testTarget.setPhoneNumber(STR_256);
 		testTarget.setFaxNumber(STR_256);
 		testTarget.setMailAddress(STR_256);
+		testTarget.setMomKjbSystemId(STR_256);
+		testTarget.setMomCustId(STR_256);
+		testTarget.setSalesCompanyNameKana(STR_256);
+		testTarget.setCompanyRepresentativeName(STR_256);
+		testTarget.setCompanyRepresentativeNameKana(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 12);
+		Assert.assertTrue(result.getErrorInfoList().size() == 17);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "MoM社員IDは最大文字数（255）を超えています。"));
 
