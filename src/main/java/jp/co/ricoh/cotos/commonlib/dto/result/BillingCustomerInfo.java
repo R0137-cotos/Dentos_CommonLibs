@@ -33,6 +33,9 @@ public class BillingCustomerInfo {
 	@ApiModelProperty(value = "回収方法", required = true, position = 9, allowableValues = "range[0,1326")
 	private String collectMethodName;
 	
+	@ApiModelProperty(value = "バーチャル口座使用区分", required = true, position = 9, allowableValues = "range[0,1326")
+	private String virtualBnkAccountUseKbn;
+	
 	@ApiModelProperty(value = "バーチャル銀行コード", required = true, position = 10, allowableValues = "range[0,1326")
 	private String virtualBnkCd;
 	
