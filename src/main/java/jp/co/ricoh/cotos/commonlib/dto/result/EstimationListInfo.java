@@ -115,6 +115,18 @@ public class EstimationListInfo {
 	@ApiModelProperty(value = "担当支社名", required = false, position = 15, allowableValues = "range[0,255]")
 	private String picAffiliateName;
 
+	/**
+	 * RJ管理番号
+	 */
+	@ApiModelProperty(value = "RJ管理番号", required = false, position = 16, allowableValues = "range[0,255]")
+	private String rjManageNumber;
+
+	/**
+	 * 恒久契約識別番号
+	 */
+	@ApiModelProperty(value = "R恒久契約識別番号", required = false, position = 17, allowableValues = "range[0,255]")
+	private String immutableContIdentNumber;
+
 	@PrePersist
 	public void prePersist() {
 		throw new IllegalAccessError();

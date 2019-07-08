@@ -342,6 +342,14 @@ public class ArrangementSearchParameter {
 	private Integer holdingFlg;
 
 	// ===========================
+	/**
+	 * 恒久契約識別番号
+	 */
+	@ApiParam(value = "恒久契約識別番号:部分一致", required = false)
+	@ApiModelProperty(value = "恒久契約識別番号:部分一致<br />" //
+			+ "条件入力時、最低2文字以上の入力とする。", //
+			required = false, allowableValues = "range[2,255]") //
+	private String immutableContIdentNumber;
 
 	/**
 	 * ソート項目
@@ -366,7 +374,9 @@ public class ArrangementSearchParameter {
 			+ "13:担当支社<br />" //
 			+ "14:サービス開始日<br />" //
 			+ "15:サービス終了日<br />" //
-			+ "16:保留フラグ<br />", //
+			+ "16:保留フラグ<br />" //
+			+ "17:RJ管理番号<br />"//
+			+ "18:恒久契約識別番号", //
 			required = true, allowableValues = "range[0,14]") //
 	private int sortColumn;
 
