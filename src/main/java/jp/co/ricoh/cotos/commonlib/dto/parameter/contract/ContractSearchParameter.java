@@ -318,6 +318,15 @@ public class ContractSearchParameter {
 	private Long productId;
 
 	/**
+	 * 恒久契約識別番号
+	 */
+	@ApiParam(value = "恒久契約識別番号:部分一致", required = false)
+	@ApiModelProperty(value = "恒久契約識別番号:部分一致<br />" //
+			+ "条件入力時、最低2文字以上の入力とする。", //
+			required = false, allowableValues = "range[2,255]") //
+	private String immutableContIdentNumber;
+
+	/**
 	 * ソート項目
 	 */
 	@NotNull(message = "{SortColumn}{NotEmptyError}:{SortColumn}{NotEmptyErrorMsg}")
@@ -342,7 +351,9 @@ public class ContractSearchParameter {
 			+ "15:担当営業<br />" //
 			+ "16:担当営業所属<br />" //
 			+ "17:担当SS氏名<br />" //
-			+ "18:担当CE氏名", //
+			+ "18:担当CE氏名<br />" //
+			+ "19:RJ管理番号<br />"//
+			+ "20:恒久契約識別番号", //
 			required = true, allowableValues = "range[0,15]") //
 	private int sortColumn;
 
