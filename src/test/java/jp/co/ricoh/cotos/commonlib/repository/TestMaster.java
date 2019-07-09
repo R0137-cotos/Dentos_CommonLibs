@@ -49,6 +49,8 @@ import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmci105Master;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmcj005Master;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTjmmb010UtlItem;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTjmmb020UtlCd;
+import jp.co.ricoh.cotos.commonlib.entity.master.MvWjmoc080DealerInfo;
+import jp.co.ricoh.cotos.commonlib.entity.master.MvWjmoc080DealerInfo.Id;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvWjmoco40EmpAllInfoCom;
 import jp.co.ricoh.cotos.commonlib.entity.master.ProductCompMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.ProductGrpMaster;
@@ -65,8 +67,6 @@ import jp.co.ricoh.cotos.commonlib.entity.master.VDirectDeliveryDealerInfoMaster
 import jp.co.ricoh.cotos.commonlib.entity.master.VKjbMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.VPicAffiliateMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.VPicAffiliateMasterFull;
-import jp.co.ricoh.cotos.commonlib.entity.master.MvWjmoc080DealerInfo;
-import jp.co.ricoh.cotos.commonlib.entity.master.MvWjmoc080DealerInfo.Id;
 import jp.co.ricoh.cotos.commonlib.repository.master.AppMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ApprovalRouteGrpMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ApprovalRouteMasterRepository;
@@ -98,6 +98,7 @@ import jp.co.ricoh.cotos.commonlib.repository.master.MvTJmci105Repository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTJmcj005MasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTjmmb010UtlItemRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTjmmb020UtlCdRepository;
+import jp.co.ricoh.cotos.commonlib.repository.master.MvWjmoc080DealerInfoRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvWjmoco40EmpAllInfoComRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ProductCompMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ProductGrpMasterRepository;
@@ -113,7 +114,6 @@ import jp.co.ricoh.cotos.commonlib.repository.master.VDirectDeliveryDealerInfoMa
 import jp.co.ricoh.cotos.commonlib.repository.master.VKjbMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.VPicAffiliateMasterFullRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.VPicAffiliateMasterRepository;
-import jp.co.ricoh.cotos.commonlib.repository.master.MvWjmoc080DealerInfoRepository;
 
 /**
  * Repository（マスタドメイン）のテストクラス
@@ -1409,5 +1409,13 @@ public class TestMaster {
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
 	}
-
+	
+	@Test
+	public void CommonMasterDetailRepository_CommonMasterDetailRepositoryのテスト() {
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/commonMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/commonMasterDetail.sql");
+		CommonMasterDetail found = commonMasterDetailRepository.findByCommonMasterColumnNameAndAvailablePeriodBetween("sales_tax_rate", "20190101");
+		Assert.assertEquals("取得データの税率が8(%)であること", found.getCodeValue(), "8");
+	}
 }

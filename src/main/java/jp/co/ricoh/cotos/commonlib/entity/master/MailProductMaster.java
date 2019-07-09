@@ -2,6 +2,8 @@ package jp.co.ricoh.cotos.commonlib.entity.master;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -42,13 +44,14 @@ public class MailProductMaster extends EntityBaseMaster {
 	@JoinColumn(name = "mail_control_master_id", referencedColumnName = "id")
 	@JsonIgnore
 	private MailControlMaster mailControlMaster;
-
+	
 	/**
 	 * 対象マスタ区分
 	 */
 	@Column(nullable = false)
 	@ApiModelProperty(value = "対象マスタ区分", required = true, position = 1, allowableValues = "range[0,]")
-	private String targetMasterType;
+	@Enumerated(EnumType.STRING)
+	private TargetMasterType targetMasterType;
 
 	/**
 	 * 対象マスタID
@@ -56,5 +59,14 @@ public class MailProductMaster extends EntityBaseMaster {
 	@Column(nullable = false)
 	@ApiModelProperty(value = "対象マスタID", required = true, position = 2)
 	private long targetMasterId;
+	
+	/**
+	 * 対象マスタ区分
+	 * @author z00se03039
+	 *
+	 */
+	public enum TargetMasterType {
+		GROUP, PRODUCT, ITEM
+	}
 
 }

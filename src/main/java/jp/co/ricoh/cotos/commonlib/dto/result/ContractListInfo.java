@@ -161,6 +161,18 @@ public class ContractListInfo {
 	 */
 	@ApiModelProperty(value = "担当CE氏名", required = false, position = 22, allowableValues = "range[0,255]")
 	private String picCeName;
+	
+	/**
+	 * RJ管理番号
+	 */
+	@ApiModelProperty(value = "RJ管理番号", required = false, position = 23, allowableValues = "range[0,255]")
+	private String rjManageNumber;
+	
+	/**
+	 * 恒久契約識別番号
+	 */
+	@ApiModelProperty(value = "R恒久契約識別番号", required = false, position = 24, allowableValues = "range[0,255]")
+	private String immutableContIdentNumber;
 
 	@PrePersist
 	public void prePersist() {
