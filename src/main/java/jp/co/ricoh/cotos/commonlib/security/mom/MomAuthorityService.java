@@ -180,7 +180,7 @@ public class MomAuthorityService {
 			return targetEmployeeMasterList.stream().anyMatch(targetEmployeeMaster -> editor.getMomEmployeeId().equals(targetEmployeeMaster.getMomEmployeeId()));
 		case 配下:
 			// 担当SA、追加編集者、担当CE、担当SEの所属組織が配下であるか確認
-			return targetEmployeeMasterList.stream().anyMatch(targetEmployeeMaster -> this.isLowerOrg(targetEmployeeMaster.getMomOrgId(), editor.getMomOrgId(), editor.getOrgHierarchyLevel()));
+			return targetEmployeeMasterList.stream().anyMatch(targetEmployeeMaster -> this.isLowerOrg(targetEmployeeMaster.getMomOrgId(), editor.getMomOrgId()));
 		case 自社:
 			// 担当SA、追加編集者、担当CE、担当SEと販社が同一であるか確認
 			return targetEmployeeMasterList.stream().anyMatch(targetEmployeeMaster -> editor.getHanshCd().equals(targetEmployeeMaster.getHanshCd()));
@@ -224,11 +224,10 @@ public class MomAuthorityService {
 	/**
 	 * 対象の組織が下位組織か判定する
 	 */
-	protected boolean isLowerOrg(String targetOrgId, String rootOrgId, Integer rootOrgHierarchyLevel) {
+	protected boolean isLowerOrg(String targetOrgId, String rootOrgId) {
 
 		Map<String, Object> queryParams = new HashMap<>();
 		queryParams.put("orgId", rootOrgId);
-		queryParams.put("hierarchyLevel", rootOrgHierarchyLevel);
 
 		List<StringResult> orgIdList = dbUtil.loadFromSQLFile("sql/security/editorAuthority/getLowerOrgs.sql", StringResult.class, queryParams);
 
@@ -236,7 +235,7 @@ public class MomAuthorityService {
 			if (orgIdList.stream().anyMatch(orgId -> targetOrgId.equals(orgId.getResult()))) {
 				return true;
 			} else {
-				return orgIdList.stream().anyMatch(orgId -> this.isLowerOrg(targetOrgId, orgId.getResult(), rootOrgHierarchyLevel));
+				return false;
 			}
 		} else {
 			return false;
@@ -284,7 +283,7 @@ public class MomAuthorityService {
 			AuthoritySearch authoritySearch = new AuthoritySearch();
 			authorityInfoActionDtos = authoritySearch.getAuthSumFromEmpId((String[]) classify.toArray(new String[0]), remoteMomProperties.getRelatedid(), connection);
 		}
-		
+
 		if (authorityInfoActionDtos == null || authorityInfoActionDtos.length == 0) {
 			return null;
 		}
