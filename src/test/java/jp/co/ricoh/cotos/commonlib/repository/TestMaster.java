@@ -332,6 +332,14 @@ public class TestMaster {
 		// Entity の各項目の値が null ではないことを確認
 		testTool.assertColumnsNotNull(found);
 
+		MailTemplateMaster foundByServiceCategoryAndProcessCategoryAndProductGrpMasterId = mailTemplateMasterRepository.findByServiceCategoryAndProcessCategoryAndProductGrpMasterId("1", "3", 10L);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(foundByServiceCategoryAndProcessCategoryAndProductGrpMasterId);
+
+		//狙ったマスタが取得できていること
+		Assert.assertEquals("メールテンプレートマスタが取得できていること", 3, foundByServiceCategoryAndProcessCategoryAndProductGrpMasterId.getId());
+
 	}
 
 	@Test
@@ -1414,7 +1422,7 @@ public class TestMaster {
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
 	}
-	
+
 	@Test
 	public void CommonMasterDetailRepository_CommonMasterDetailRepositoryのテスト() {
 		// テストデータ登録
