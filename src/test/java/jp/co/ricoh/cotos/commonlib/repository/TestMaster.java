@@ -686,6 +686,11 @@ public class TestMaster {
 			Assert.assertTrue(false);
 		if (found.getArrangementWorkTypeMasterList() == null || found.getArrangementWorkTypeMasterList().size() == 0)
 			Assert.assertTrue(false);
+		
+		// 承認ルートマスタが条件判定順の昇順で取得できていること
+		for (int i = 0; i < found.getApprovalRouteMasterList().size() - 1; i = i + 1) {
+			Assert.assertTrue(found.getApprovalRouteMasterList().get(i).getCondDetermineOrder() < found.getApprovalRouteMasterList().get(i + 1).getCondDetermineOrder());
+		}
 	}
 
 	@Test

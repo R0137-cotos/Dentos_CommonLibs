@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -51,6 +52,7 @@ public class ApprovalRouteGrpMaster extends EntityBaseMaster {
 	/**
 	 * 承認ルートマスタ
 	 */
+	@OrderBy("condDetermineOrder ASC")
 	@OneToMany(mappedBy = "approvalRouteGrpMaster")
 	@ApiModelProperty(value = "承認ルートマスタ", required = true, position = 4)
 	private List<ApprovalRouteMaster> approvalRouteMasterList;
