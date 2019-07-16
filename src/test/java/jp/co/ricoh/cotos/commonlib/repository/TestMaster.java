@@ -45,6 +45,7 @@ import jp.co.ricoh.cotos.commonlib.entity.master.MailProductMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.MailTemplateMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvEmployeeMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmci101Master;
+import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmci102Master;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmci105Master;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmcj005Master;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTjmmb010UtlItem;
@@ -94,6 +95,7 @@ import jp.co.ricoh.cotos.commonlib.repository.master.MailProductMasterRepository
 import jp.co.ricoh.cotos.commonlib.repository.master.MailTemplateMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvEmployeeMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTJmci101MasterRepository;
+import jp.co.ricoh.cotos.commonlib.repository.master.MvTJmci102MasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTJmci105Repository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTJmcj005MasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTjmmb010UtlItemRepository;
@@ -222,6 +224,9 @@ public class TestMaster {
 	private MvWjmoco40EmpAllInfoComRepository mvWjmoco40EmpAllInfoComRepository;
 	@Autowired
 	private MvWjmoc080DealerInfoRepository mvWjmoc080DealerInfoRepository;
+
+	@Autowired
+	private MvTJmci102MasterRepository mvTJmci102MasterRepository;
 
 	@Autowired
 	TestTools testTool = null;
@@ -694,7 +699,7 @@ public class TestMaster {
 			Assert.assertTrue(false);
 		if (found.getArrangementWorkTypeMasterList() == null || found.getArrangementWorkTypeMasterList().size() == 0)
 			Assert.assertTrue(false);
-		
+
 		// 承認ルートマスタが条件判定順の昇順で取得できていること
 		for (int i = 0; i < found.getApprovalRouteMasterList().size() - 1; i = i + 1) {
 			Assert.assertTrue(found.getApprovalRouteMasterList().get(i).getCondDetermineOrder() < found.getApprovalRouteMasterList().get(i + 1).getCondDetermineOrder());
@@ -919,6 +924,24 @@ public class TestMaster {
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
+	}
+
+	@Test
+	public void MvTJmci102Masterのテスト() throws Exception {
+
+		// テストデータはなし
+
+		// エンティティの取得
+		String id = "19197";
+		MvTJmci102Master found = mvTJmci102MasterRepository.findOne(id);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+
+		String customerSiteNumber = "19197";
+		MvTJmci102Master foundByCustomerSiteNumber = mvTJmci102MasterRepository.findOne(customerSiteNumber);
+
+		Assert.assertNotNull(foundByCustomerSiteNumber);
 	}
 
 	@Test
