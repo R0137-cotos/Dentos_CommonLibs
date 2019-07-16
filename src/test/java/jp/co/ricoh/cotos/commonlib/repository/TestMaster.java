@@ -1424,7 +1424,7 @@ public class TestMaster {
 		// テストデータ登録
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/productGrpMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/approvalRouteGrpMaster.sql");
-		List<String> foundTestString = Arrays.asList("1234");
+		List<String> foundTestString = Arrays.asList("CPG00001");
 		List<ProductGrpMaster> foundList = productGrpMasterRepository.findByProductGroupCdIn(foundTestString);
 		// データが取得できていることを確認
 		Assert.assertTrue(foundList.size() > 0);
