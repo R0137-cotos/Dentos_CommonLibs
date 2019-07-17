@@ -109,9 +109,36 @@ public class ItemEstimation extends EntityBase {
 	@JsonIgnore
 	private EstimationDetail estimationDetail;
 
+	/**
+	 * Ｒ原価
+	 */
+	@Column
+	@ApiModelProperty(value = "Ｒ原価", required = false, position = 11)
+	private BigDecimal rCost;
+
+	/**
+	 * ＲＪ仕入価格
+	 */
+	@Column
+	@ApiModelProperty(value = "ＲＪ仕入価格", required = false, position = 12)
+	private BigDecimal rjPurchasePrice;
+
+	/**
+	 * ＲＪ仕切価格
+	 */
+	@Column
+	@ApiModelProperty(value = "ＲＪ仕切価格", required = false, position = 13)
+	private BigDecimal rjDividingPrice;
+
+	/**
+	 * 母店売価(接点店仕切)
+	 */
+	@Column
+	@ApiModelProperty(value = "母店売価(接点店仕切)", required = false, position = 14)
+	private BigDecimal motherStorePrice;
+
 	@PrePersist
 	public void prePersist() {
 		super.setCreatedAt(new Date());
 	}
-
 }

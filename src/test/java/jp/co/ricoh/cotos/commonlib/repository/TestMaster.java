@@ -812,6 +812,14 @@ public class TestMaster {
 			Assert.assertTrue(false);
 		if (found.getRecordDecomposeCompMasterList() == null || found.getRecordDecomposeCompMasterList().size() == 0)
 			Assert.assertTrue(false);
+		
+		String itemCd = "CP6572";
+		ItemMaster found2 = itemMasterRepository.findByProductMasterIdAndRicohItemCode(id, itemCd);
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found2);
+
+		// Entity の各項目の値が null ではないことを確認
+		testTool.assertColumnsNotNull(found2);
 	}
 
 	@Test
