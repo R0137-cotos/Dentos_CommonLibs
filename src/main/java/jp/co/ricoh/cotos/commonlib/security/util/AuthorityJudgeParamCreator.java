@@ -294,7 +294,7 @@ public class AuthorityJudgeParamCreator {
 	 *            承認処理カテゴリ
 	 * @return 承認ルートノード
 	 */
-	private EstimationApprovalRouteNode specifyEstimationApprovalRouteNode(List<EstimationApprovalRouteNode> estimationApprovalRouteNodeList, List<EstimationApprovalResult> estimationApprovalResultList) {
+	public EstimationApprovalRouteNode specifyEstimationApprovalRouteNode(List<EstimationApprovalRouteNode> estimationApprovalRouteNodeList, List<EstimationApprovalResult> estimationApprovalResultList) {
 
 		// 最新の承認依頼以降の実績を取得
 		List<EstimationApprovalResult> latestApprovalResults = new ArrayList<>();
@@ -341,7 +341,7 @@ public class AuthorityJudgeParamCreator {
 	 *            MoM社員ID
 	 * @return 承認ルートノードID
 	 */
-	private ContractApprovalRouteNode specifyContractApprovalRouteNode(List<ContractApprovalRouteNode> contractApprovalRouteNodeList, List<ContractApprovalResult> contractApprovalResultList) {
+	public ContractApprovalRouteNode specifyContractApprovalRouteNode(List<ContractApprovalRouteNode> contractApprovalRouteNodeList, List<ContractApprovalResult> contractApprovalResultList) {
 
 		// 最新の承認依頼以降の実績を取得
 		List<ContractApprovalResult> latestApprovalResults = new ArrayList<>();
