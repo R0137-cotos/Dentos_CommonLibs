@@ -86,6 +86,8 @@ public class TestCommunication {
 		appId = Arrays.asList("cotos_dev");
 		list = communicationRepository.findByProcessCategoryAndLoginUserMomEmployeeIdAndAppIdIn("1", "dummy_request_to_id_1", appId);
 		Assert.assertNotEquals(0, list.size());
+		list = communicationRepository.findByProcessCategoryAndLoginUserMomEmployeeId("1", "dummy_request_to_id_1");
+		Assert.assertEquals(1, list.size());
 	}
 
 	@Test
@@ -97,6 +99,8 @@ public class TestCommunication {
 		appId = Arrays.asList("cotos_dev");
 		list = contactRepository.findByEstimationIdAndServiceCategoryAndParentIdIsNullAndAppIdInOrderByIdDesc(4L, "1", appId);
 		Assert.assertNotEquals(0, list.size());
+		list = contactRepository.findByEstimationIdAndServiceCategoryAndParentIdIsNullOrderByIdDesc(4L, "1");
+		Assert.assertEquals(1, list.size());
 	}
 
 	@Test
