@@ -293,4 +293,17 @@ public class TestContract {
 		List<Contract> list = contractRepository.findByAutoUpdaterecord(date);
 		Assert.assertTrue(list.size() != 0);
 	}
+
+	@Test
+	public void ContractRepository_findByProductGrpMasterIdのテスト() {
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/productGrpMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/contract.sql");
+		List<Long> productGrpMasterIdList = Arrays.asList(7L, 8L, 9L);
+		List<Contract> foundList = contractRepository.findByProductGrpMasterId(productGrpMasterIdList);
+		// Entity の各項目の値が null ではないことを確認
+		Assert.assertNotNull(foundList);
+		// データが取得できていることを確認
+		Assert.assertTrue(foundList.size() > 0);
+	}
 }
