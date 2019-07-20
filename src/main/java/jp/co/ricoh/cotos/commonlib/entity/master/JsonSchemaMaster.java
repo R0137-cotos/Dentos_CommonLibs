@@ -49,4 +49,13 @@ public class JsonSchemaMaster extends EntityBaseMaster {
 	@ApiModelProperty(value = "JSONスキーマ", required = true, position = 4)
 	@Lob
 	private String jsonSchema;
+
+	/**
+	 * JSONスキーマ初期値
+	 */
+	@Column(nullable = true)
+	@ApiModelProperty(value = "JSONスキーマ初期値", required = true, position = 5)
+	@Lob
+	private String jsonSchemaInitial;
+
 }
