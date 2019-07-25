@@ -47,4 +47,8 @@ public interface ContractRepository extends CrudRepository<Contract, Long> {
 			+ "c.IMMUTABLE_CONT_IDENT_NUMBER NOT IN (SELECT ct.IMMUTABLE_CONT_IDENT_NUMBER FROM CONTRACT ct WHERE (ct.LIFECYCLE_STATUS = '5' OR ct.LIFECYCLE_STATUS = '11')) AND "
 			+ "c.SERVICE_TERM_END < :preferredDate", nativeQuery = true)
 	public List<Contract> findByAutoUpdaterecord(@Param("preferredDate") Date preferredDate);
+
+	@Query(value = "SELECT * FROM CONTRACT WHERE WORKFLOW_STATUS = '7' AND LIFECYCLE_STATUS = '2' AND CONTRACT_TYPE IN ('1', '2') AND PRODUCT_GRP_MASTER_ID IN (:productGrpMasterIdList)", nativeQuery = true)
+	public List<Contract> findByProductGrpMasterId(@Param("productGrpMasterIdList") List<Long> productGrpMasterIdList);
+
 }
