@@ -136,4 +136,17 @@ public class TestCheckEntityWithEntityName {
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "品種(契約用)の品種区分が設定されていません。"));
 	}
 
+	@Test
+	public void 契約機種() throws Exception {
+		Contract entity = contractRepository.findOne(4L);
+		Contract testTarget = new Contract();
+
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.getContractEquipmentList().get(0).setEquipmentCode(null);
+
+		ParamterCheckResult result = testUtilController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "契約機種の機種コードが設定されていません。"));
+	}
 }

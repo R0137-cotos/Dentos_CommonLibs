@@ -10,8 +10,8 @@ import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = false)
 @Data
-public class ContractPicCeEmpDto extends EmployeeAbstractDto {
-	
+public class ContractPicAccCeEmpDto extends EmployeeAbstractDto {
+
 	/**
 	 * MoM企事部システム連携ID
 	 */
@@ -51,5 +51,5 @@ public class ContractPicCeEmpDto extends EmployeeAbstractDto {
 	@Column
 	@ApiModelProperty(value = "MoM非連携_企業代表者名（カナ）", required = false, position = 19, allowableValues = "range[0,255]")
 	private String companyRepresentativeNameKana;
-	
+
 }

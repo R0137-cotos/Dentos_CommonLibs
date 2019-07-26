@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -34,11 +35,18 @@ public class CustomerEstimation extends CustomerAbstractEntity {
 	private long id;
 
 	/**
+	 * MoM非連携_企業代表者名(カナ)
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "MoM非連携_企業代表者名(カナ)", required = false, position = 2, allowableValues = "range[0,255]")
+	private String companyRepresentativeNameKana;
+
+	/**
 	 * 見積
 	 */
 	@OneToOne(optional = false)
 	@JoinColumn(name = "estimation_id", referencedColumnName = "id")
-	@ApiModelProperty(value = "見積", required = true, position = 2)
+	@ApiModelProperty(value = "見積", required = true, position = 3)
 	@JsonIgnore
 	private Estimation estimation;
 

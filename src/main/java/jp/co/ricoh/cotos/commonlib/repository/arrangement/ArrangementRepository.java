@@ -8,4 +8,6 @@ import jp.co.ricoh.cotos.commonlib.entity.arrangement.Arrangement;
 @Repository
 public interface ArrangementRepository extends CrudRepository<Arrangement, Long> {
 	public boolean existsByContractIdAndDisengagementFlg(long contractId, int disengagementFlg);
+
+	public Arrangement findByContractIdAndDisengagementFlg(long contractId, int disengagementFlg);
 }

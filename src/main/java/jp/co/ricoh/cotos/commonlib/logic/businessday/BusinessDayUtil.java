@@ -1,0 +1,89 @@
+package jp.co.ricoh.cotos.commonlib.logic.businessday;
+
+import java.util.Calendar;
+import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import jp.co.ricoh.cotos.commonlib.entity.master.NonBusinessDayCalendarMaster;
+import jp.co.ricoh.cotos.commonlib.repository.master.NonBusinessDayCalendarMasterRepository;
+
+/**
+ * 営業日共通クラス
+ */
+@Component
+public class BusinessDayUtil {
+
+	@Autowired
+	private NonBusinessDayCalendarMasterRepository nonBusinessDayCalendarMasterRepository;
+
+	/**
+	 * 営業日かどうか
+	 * 
+	 * @param date
+	 *            日付
+	 * @return
+	 */
+	public boolean isBusinessDay(Date date) {
+		NonBusinessDayCalendarMaster nonBusinessDayCalendarMaster = nonBusinessDayCalendarMasterRepository.findOne(date);
+		return nonBusinessDayCalendarMaster == null;
+	}
+
+	/**
+	 * 最短営業日取得
+	 * 
+	 * @param date
+	 *            日付
+	 * @param leadTime
+	 *            日数
+	 * @param isSubtract
+	 *            減算するかどうか
+	 * @return
+	 */
+	public Date findShortestBusinessDay(Date date, int leadTime, boolean isSubtract) {
+		Date retDate = date;
+		Calendar calendar = Calendar.getInstance();
+		for (int i = 0; i < leadTime; i++) {
+			while (true) {
+				calendar.setTime(retDate);
+				calendar.add(Calendar.DATE, !isSubtract ? 1 : -1);
+				retDate = calendar.getTime();
+				if (isBusinessDay(retDate)) {
+					break;
+				}
+			}
+		}
+
+		return retDate;
+	}
+
+	/**
+	 * 最短営業日取得_時間計算
+	 * 
+	 * @param date
+	 *            日付
+	 * @param leadTime
+	 *            日数
+	 * @param baseDate
+	 *            基準日時
+	 * @return
+	 */
+	public Date findShortestBusinessDayTimeCalc(Date date, int leadTime, Date baseDateTime) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(baseDateTime);
+		Date retDate = findShortestBusinessDay(date, leadTime, false);
+		if (calendar.get(Calendar.AM_PM) == Calendar.PM) {
+			while (true) {
+				calendar.setTime(retDate);
+				calendar.add(Calendar.DATE, 1);
+				retDate = calendar.getTime();
+				if (isBusinessDay(retDate)) {
+					break;
+				}
+			}
+		}
+
+		return retDate;
+	}
+}

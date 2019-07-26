@@ -1,6 +1,5 @@
 package jp.co.ricoh.cotos.commonlib.entity.contract;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
@@ -50,40 +49,35 @@ public class ContractPicSaEmp extends EmployeeAbstractEntity {
 	@ApiModelProperty(value = "拡張項目", required = false, position = 3)
 	@Lob
 	private String extendsParameter;
-	
+
 	/**
 	 * MoM企事部システム連携ID
 	 */
-	@Column
 	@ApiModelProperty(value = "MoM企事部システム連携ID", required = false, position = 15, allowableValues = "range[0,]")
 	private String momKjbSystemId;
 
 	/**
 	 * MoM企事部ID
 	 */
-	@Column
 	@ApiModelProperty(value = "MoM企事部ID", required = false, position = 16, allowableValues = "range[0,]")
 	private String momCustId;
 
 	/**
 	 * 販売会社名（カナ）
 	 */
-	@Column
 	@ApiModelProperty(value = "販売会社名（カナ）", required = false, position = 17, allowableValues = "range[0,]")
 	private String salesCompanyNameKana;
 
 	/**
 	 * MoM非連携_企業代表者名
 	 */
-	@Column
 	@ApiModelProperty(value = "MoM非連携_企業代表者名", required = false, position = 18, allowableValues = "range[0,]")
 	private String companyRepresentativeName;
 
 	/**
 	 * MoM非連携_企業代表者名（カナ）
 	 */
-	@Column
 	@ApiModelProperty(value = "MoM非連携_企業代表者名（カナ）", required = false, position = 19, allowableValues = "range[0,]")
 	private String companyRepresentativeNameKana;
-	
+
 }

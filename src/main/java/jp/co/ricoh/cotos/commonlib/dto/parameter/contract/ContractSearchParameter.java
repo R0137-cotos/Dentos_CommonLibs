@@ -248,22 +248,22 @@ public class ContractSearchParameter {
 	private String picEmptxId;
 
 	/**
-	 * 担当SS
+	 * 受付担当SS
 	 */
-	@ApiParam(value = "担当SS：MoM社員IDを指定", required = false)
-	@ApiModelProperty(value = "担当SS<br />" //
-			+ "担当SSにはMoM社員IDを指定する。", //
+	@ApiParam(value = "受付担当SS：MoM組織IDを指定", required = false)
+	@ApiModelProperty(value = "受付担当SS<br />" //
+			+ "受付担当SSにはMoM組織IDを指定する。", //
 			required = false, allowableValues = "range[0,255]") //
-	private String picSsId;
+	private String picAccSsId;
 
 	/**
-	 * 担当CE
+	 * 受付担当CE
 	 */
-	@ApiParam(value = "担当CE：MoM社員IDを指定", required = false)
-	@ApiModelProperty(value = "担当CE<br />" //
-			+ "担当CEにはMoM社員IDを指定する。", //
+	@ApiParam(value = "受付担当CE：MoM社員IDを指定", required = false)
+	@ApiModelProperty(value = "受付担当CE<br />" //
+			+ "受付担当CEにはMoM社員IDを指定する。", //
 			required = false, allowableValues = "range[0,255]") //
-	private String picCeId;
+	private String picAccCeId;
 
 	/**
 	 * 審査／承認者
@@ -327,6 +327,42 @@ public class ContractSearchParameter {
 	private String immutableContIdentNumber;
 
 	/**
+	 * 導入担当SS
+	 */
+	@ApiParam(value = "導入担当SS：MoM組織IDを指定", required = false)
+	@ApiModelProperty(value = "導入担当SS<br />" //
+			+ "導入担当SSにはMoM組織IDを指定する。", //
+			required = false, allowableValues = "range[0,255]") //
+	private String picIntSsId;
+
+	/**
+	 * 導入担当CE
+	 */
+	@ApiParam(value = "導入担当CE：MoM社員IDを指定", required = false)
+	@ApiModelProperty(value = "導入担当CE<br />" //
+			+ "導入担当CEにはMoM社員IDを指定する。", //
+			required = false, allowableValues = "range[0,255]") //
+	private String picIntCeId;
+
+	/**
+	 * 保守担当SS
+	 */
+	@ApiParam(value = "保守担当SS：MoM組織IDを指定", required = false)
+	@ApiModelProperty(value = "保守担当SS<br />" //
+			+ "保守担当SSにはMoM組織IDを指定する。", //
+			required = false, allowableValues = "range[0,255]") //
+	private String picMntSsId;
+
+	/**
+	 * 保守担当CE
+	 */
+	@ApiParam(value = "保守担当CE：MoM社員IDを指定", required = false)
+	@ApiModelProperty(value = "保守担当CE<br />" //
+			+ "保守担当CEにはMoM社員IDを指定する。", //
+			required = false, allowableValues = "range[0,255]") //
+	private String picMntCeId;
+
+	/**
 	 * ソート項目
 	 */
 	@NotNull(message = "{SortColumn}{NotEmptyError}:{SortColumn}{NotEmptyErrorMsg}")
@@ -338,22 +374,26 @@ public class ContractSearchParameter {
 			+ "2:契約種別<br />" //
 			+ "3:契約ステータス<br />" //
 			+ "4:契約状態<br />" //
-			+ "5:見積番号<br />" //
-			+ "6:見積件名<br />" //
-			+ "7:案件番号<br />" //
-			+ "8:請求開始月<br />" //
-			+ "9:お客様企業名<br />" //
-			+ "10:事業所<br />"//
-			+ "11:部門<br />" //
-			+ "12:サービス開始日<br />" //
-			+ "13:サービス終了日<br />" //
-			+ "14:商品名称<br />" //
-			+ "15:担当営業<br />" //
-			+ "16:担当営業所属<br />" //
-			+ "17:担当SS氏名<br />" //
-			+ "18:担当CE氏名<br />" //
-			+ "19:RJ管理番号<br />"//
-			+ "20:恒久契約識別番号", //
+			+ "5:見積ID" + "6:見積番号<br />" //
+			+ "7:見積件名<br />" //
+			+ "8:案件番号<br />" //
+			+ "9:請求開始月<br />" //
+			+ "10:お客様企業名<br />" //
+			+ "11:事業所<br />"//
+			+ "12:部門<br />" //
+			+ "13:サービス開始日<br />" //
+			+ "14:サービス終了日<br />" //
+			+ "15:商品名称<br />" //
+			+ "16:担当営業<br />" //
+			+ "17:担当営業所属<br />" //
+			+ "18:受付担当SS組織<br />" //
+			+ "19:受付担当CE氏名<br />" //
+			+ "20:導入担当SS組織<br />" //
+			+ "21:導入担当CE氏名<br />" //
+			+ "22:保守担当SS組織<br />" //
+			+ "23:保守担当CE氏名<br />" //
+			+ "24:登録日時<br />" //
+			+ "25:更新日時", //
 			required = true, allowableValues = "range[0,15]") //
 	private int sortColumn;
 

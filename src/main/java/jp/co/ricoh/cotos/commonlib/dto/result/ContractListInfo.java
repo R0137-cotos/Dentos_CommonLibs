@@ -151,28 +151,67 @@ public class ContractListInfo {
 	private String picAffiliateName;
 
 	/**
-	 * 担当SS氏名
+	 * 受付担当SS組織
 	 */
-	@ApiModelProperty(value = "担当SS氏名", required = false, position = 21, allowableValues = "range[0,255]")
-	private String picSsName;
+	@ApiModelProperty(value = "受付担当SS組織", required = false, position = 21, allowableValues = "range[0,255]")
+	private String picAccSsName;
 
 	/**
-	 * 担当CE氏名
+	 * 受付担当CE氏名
 	 */
-	@ApiModelProperty(value = "担当CE氏名", required = false, position = 22, allowableValues = "range[0,255]")
-	private String picCeName;
+	@ApiModelProperty(value = "受付担当CE氏名", required = false, position = 22, allowableValues = "range[0,255]")
+	private String picAccCeName;
+
+	/**
+	 * 導入担当SS組織
+	 */
+	@ApiModelProperty(value = "導入担当SS組織", required = false, position = 23, allowableValues = "range[0,255]")
+	private String picIntSsName;
+
+	/**
+	 * 導入担当CE氏名
+	 */
+	@ApiModelProperty(value = "導入担当CE氏名", required = false, position = 24, allowableValues = "range[0,255]")
+	private String picIntCeName;
+
+	/**
+	 * 保守担当SS組織
+	 */
+	@ApiModelProperty(value = "保守担当SS組織", required = false, position = 21, allowableValues = "range[0,255]")
+	private String picMntSsName;
+
+	/**
+	 * 保守担当CE氏名
+	 */
+	@ApiModelProperty(value = "保守担当CE氏名", required = false, position = 25, allowableValues = "range[0,255]")
+	private String picMntCeName;
 	
 	/**
 	 * RJ管理番号
 	 */
-	@ApiModelProperty(value = "RJ管理番号", required = false, position = 23, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "RJ管理番号", required = false, position = 26, allowableValues = "range[0,255]")
 	private String rjManageNumber;
 	
 	/**
 	 * 恒久契約識別番号
 	 */
-	@ApiModelProperty(value = "R恒久契約識別番号", required = false, position = 24, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "R恒久契約識別番号", required = false, position = 27, allowableValues = "range[0,255]")
 	private String immutableContIdentNumber;
+	
+	
+	/**
+	 * 登録日時
+	 */
+	@ApiModelProperty(value = "登録日時", required = false, position = 28)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createdAt;
+
+	/**
+	 * 更新日時
+	 */
+	@ApiModelProperty(value = "更新日時", required = false, position = 29)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date updatedAt;
 
 	@PrePersist
 	public void prePersist() {

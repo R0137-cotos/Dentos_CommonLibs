@@ -24,15 +24,23 @@ import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractAddedEditorEmp
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractApprovalRouteDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractApprovalRouteNodeDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractAttachedFileDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractAttachedFileHistoryDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractCheckResultDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractDetailDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractDto;
-import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractPicCeEmpDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractEquipmentDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractInstallationLocationDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractPicAccCeEmpDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractPicAccSsOrgDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractPicIntCeEmpDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractPicIntSsOrgDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractPicMntCeEmpDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractPicMntSsOrgDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ContractPicSaEmpDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.CustomerContractDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.DealerContractDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ItemContractDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ItemDetailContractDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ManagedEstimationDetailDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ProductContractDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.external.ContractExtCancelParameter;
@@ -44,31 +52,47 @@ import jp.co.ricoh.cotos.commonlib.entity.contract.ContractAddedEditorEmp;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractApprovalRoute;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractApprovalRouteNode;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractAttachedFile;
+import jp.co.ricoh.cotos.commonlib.entity.contract.ContractAttachedFileHistory;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractCheckResult;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractDetail;
-import jp.co.ricoh.cotos.commonlib.entity.contract.ContractPicCeEmp;
+import jp.co.ricoh.cotos.commonlib.entity.contract.ContractEquipment;
+import jp.co.ricoh.cotos.commonlib.entity.contract.ContractInstallationLocation;
+import jp.co.ricoh.cotos.commonlib.entity.contract.ContractPicAccCeEmp;
+import jp.co.ricoh.cotos.commonlib.entity.contract.ContractPicAccSsOrg;
+import jp.co.ricoh.cotos.commonlib.entity.contract.ContractPicIntCeEmp;
+import jp.co.ricoh.cotos.commonlib.entity.contract.ContractPicIntSsOrg;
+import jp.co.ricoh.cotos.commonlib.entity.contract.ContractPicMntCeEmp;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractPicMntSsOrg;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractPicSaEmp;
 import jp.co.ricoh.cotos.commonlib.entity.contract.CustomerContract;
 import jp.co.ricoh.cotos.commonlib.entity.contract.DealerContract;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ItemContract;
+import jp.co.ricoh.cotos.commonlib.entity.contract.ItemDetailContract;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ManagedEstimationDetail;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ProductContract;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractAddedEditorEmpRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractApprovalResultRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractApprovalRouteNodeRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractApprovalRouteRepository;
+import jp.co.ricoh.cotos.commonlib.repository.contract.ContractAttachedFileHistoryRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractAttachedFileRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractCheckResultRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractDetailRepository;
+import jp.co.ricoh.cotos.commonlib.repository.contract.ContractEquipmentRepository;
+import jp.co.ricoh.cotos.commonlib.repository.contract.ContractInstallationLocationRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractOperationLogRepository;
-import jp.co.ricoh.cotos.commonlib.repository.contract.ContractPicCeEmpRepository;
+import jp.co.ricoh.cotos.commonlib.repository.contract.ContractPicAccCeEmpRepository;
+import jp.co.ricoh.cotos.commonlib.repository.contract.ContractPicAccSsOrgRepository;
+import jp.co.ricoh.cotos.commonlib.repository.contract.ContractPicIntCeEmpRepository;
+import jp.co.ricoh.cotos.commonlib.repository.contract.ContractPicIntSsOrgRepository;
+import jp.co.ricoh.cotos.commonlib.repository.contract.ContractPicMntCeEmpRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractPicMntSsOrgRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractPicSaEmpRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ContractRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.CustomerContractRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.DealerContractRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ItemContractRepository;
+import jp.co.ricoh.cotos.commonlib.repository.contract.ItemDetailContractRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ManagedEstimationDetailRepository;
 import jp.co.ricoh.cotos.commonlib.repository.contract.ProductContractRepository;
 import jp.co.ricoh.cotos.commonlib.security.TestSecurityController;
@@ -135,22 +159,46 @@ public class TestContractDto {
 	CustomerContractRepository customerContractRepository;
 
 	@Autowired
+	ContractInstallationLocationRepository contractInstallationLocationRepository;
+
+	@Autowired
 	DealerContractRepository dealerContractRepository;
 
 	@Autowired
 	ItemContractRepository itemContractRepository;
 
 	@Autowired
+	ItemDetailContractRepository itemDetailContractRepository;
+
+	@Autowired
 	ProductContractRepository productContractRepository;
+
+	@Autowired
+	ContractEquipmentRepository contractEquipmentRepository;
 
 	@Autowired
 	ContractPicMntSsOrgRepository contractPicMntSsOrgRepository;
 
 	@Autowired
-	ContractPicCeEmpRepository contractPicCeEmpRepository;
+	ContractPicAccSsOrgRepository contractPicAccSsOrgRepository;
+
+	@Autowired
+	ContractPicIntSsOrgRepository contractPicIntSsOrgRepository;
+
+	@Autowired
+	ContractPicMntCeEmpRepository contractPicMntCeEmpRepository;
+
+	@Autowired
+	ContractPicIntCeEmpRepository contractPicIntCeEmpRepository;
+
+	@Autowired
+	ContractPicAccCeEmpRepository contractPicAccCeEmpRepository;
 
 	@Autowired
 	ManagedEstimationDetailRepository managedEstimationDetailRepository;
+
+	@Autowired
+	ContractAttachedFileHistoryRepository contractAttachedFileHistoryRepository;
 
 	@Autowired
 	TestTools testTool;
@@ -235,6 +283,34 @@ public class TestContractDto {
 	}
 
 	@Test
+	public void ContractInstallationLocationDtoのテスト() throws Exception {
+		ContractInstallationLocation entity = contractInstallationLocationRepository.findOne(401L);
+		ContractInstallationLocationDto testTarget = new ContractInstallationLocationDto();
+
+		// 正常系
+		BeanUtils.copyProperties(entity, testTarget);
+		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		testTool.assertValidationOk(result);
+
+		// 異常系（@Size(max) ：）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setCompanyRepresentativeNameKana(STR_256);
+		testTarget.setPicName(STR_256);
+		testTarget.setPicNameKana(STR_256);
+		testTarget.setPicDeptName(STR_256);
+		testTarget.setPicPhoneNumber(STR_256);
+		testTarget.setPicFaxNumber(STR_256);
+		testTarget.setPicMailAddress(STR_256);
+		testTarget.setInputPostNumber(STR_256);
+		testTarget.setInputAddress(STR_1001);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 9);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "MoM非連携_住所(手入力)は最大文字数（1000）を超えています。"));
+
+	}
+
+	@Test
 	public void DealerContractDtoのテスト() throws Exception {
 		DealerContract entity = dealerContractRepository.findOne(401L);
 		DealerContractDto testTarget = new DealerContractDto();
@@ -246,12 +322,11 @@ public class TestContractDto {
 
 		// 異常系（@NotNull：）
 		BeanUtils.copyProperties(entity, testTarget);
-		testTarget.setMomKjbSystemId(null);
 		testTarget.setDealerFlowOrder(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
-		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "MoM企事部システム連携IDが設定されていません。"));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "販売店商流順が設定されていません。"));
 
 		// 異常系（@Size(max) ：）
 		BeanUtils.copyProperties(entity, testTarget);
@@ -334,6 +409,14 @@ public class TestContractDto {
 		esAttached.setAttachedFile(attached);
 		dto.setContractAttachedFileList(Arrays.asList(esAttached));
 
+		// 契約添付ファイル履歴
+		ContractAttachedFileHistoryDto attachedFileHistory = new ContractAttachedFileHistoryDto();
+		BeanUtils.copyProperties(entity.getContractAttachedFileHistoryList().get(0), attachedFileHistory);
+		AttachedFileDto attachedHistory = new AttachedFileDto();
+		BeanUtils.copyProperties(entity.getContractAttachedFileHistoryList().get(0).getAttachedFile(), attachedHistory);
+		attachedFileHistory.setAttachedFile(attachedHistory);
+		dto.setContractAttachedFileHistoryList(Arrays.asList(attachedFileHistory));
+
 		// 商品（契約用）
 		ProductContractDto product = new ProductContractDto();
 		BeanUtils.copyProperties(entity.getProductContractList().get(0), product);
@@ -349,15 +432,48 @@ public class TestContractDto {
 		BeanUtils.copyProperties(entity.getContractCheckResultList().get(0), check);
 		dto.setContractCheckResultList(Arrays.asList(check));
 
-		// 契約担当CE社員
-		ContractPicCeEmpDto ce = new ContractPicCeEmpDto();
-		BeanUtils.copyProperties(entity.getContractPicCeEmp(), ce);
-		dto.setContractPicCeEmp(ce);
+		// 契約受付担当CE社員
+		ContractPicAccCeEmpDto picAccCeEmp = new ContractPicAccCeEmpDto();
+		BeanUtils.copyProperties(entity.getContractPicAccCeEmp(), picAccCeEmp);
+		dto.setContractPicAccCeEmp(picAccCeEmp);
+
+		// 契約保守担当CE社員
+		ContractPicMntCeEmpDto picMntCeEmp = new ContractPicMntCeEmpDto();
+		BeanUtils.copyProperties(entity.getContractPicMntCeEmp(), picMntCeEmp);
+		dto.setContractPicMntCeEmp(picMntCeEmp);
+
+		// 契約導入担当SS組織
+		ContractPicIntCeEmpDto picIntCeEmp = new ContractPicIntCeEmpDto();
+		BeanUtils.copyProperties(entity.getContractPicIntCeEmp(), picIntCeEmp);
+		dto.setContractPicIntCeEmp(picIntCeEmp);
+
+		// 契約受付担当SS組織
+		ContractPicAccSsOrgDto picAccSsOrg = new ContractPicAccSsOrgDto();
+		BeanUtils.copyProperties(entity.getContractPicAccSsOrg(), picAccSsOrg);
+		dto.setContractPicAccSsOrg(picAccSsOrg);
 
 		// 契約保守担当SS組織
-		ContractPicMntSsOrgDto ss = new ContractPicMntSsOrgDto();
-		BeanUtils.copyProperties(entity.getContractPicMntSsOrg(), ss);
-		dto.setContractPicMntSsOrg(ss);
+		ContractPicMntSsOrgDto picMntSsOrg = new ContractPicMntSsOrgDto();
+		BeanUtils.copyProperties(entity.getContractPicMntSsOrg(), picMntSsOrg);
+		dto.setContractPicMntSsOrg(picMntSsOrg);
+
+		// 契約導入担当SS組織
+		ContractPicIntSsOrgDto picIntSsOrg = new ContractPicIntSsOrgDto();
+		BeanUtils.copyProperties(entity.getContractPicIntSsOrg(), picIntSsOrg);
+		dto.setContractPicIntSsOrg(picIntSsOrg);
+
+		// 契約機種
+		dto.setContractEquipmentList(new ArrayList<ContractEquipmentDto>());
+		entity.getContractEquipmentList().forEach(s -> {
+			ContractEquipmentDto node = new ContractEquipmentDto();
+			BeanUtils.copyProperties(s, node);
+			dto.getContractEquipmentList().add(node);
+		});
+
+		// 設置先(契約用)
+		ContractInstallationLocationDto installationLocation = new ContractInstallationLocationDto();
+		BeanUtils.copyProperties(entity.getContractInstallationLocation(), installationLocation);
+		dto.setContractInstallationLocation(installationLocation);
 
 		// 正常系
 		BeanUtils.copyProperties(dto, testTarget);
@@ -399,8 +515,10 @@ public class TestContractDto {
 		testTarget.setWebOrderNumber(STR_256);
 		testTarget.setRjManageNumber(STR_256);
 		testTarget.setCancelOrderNo(STR_256);
+		testTarget.setContactNo(STR_256);
+		testTarget.setIssueTaxCodeValue(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 19);
+		Assert.assertTrue(result.getErrorInfoList().size() == 21);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "得意先宛先名は最大文字数（255）を超えています。"));
 
@@ -441,11 +559,90 @@ public class TestContractDto {
 		testTarget.getContractApprovalRouteList().get(0).setApprovalRequesterName(STR_256);
 		testTarget.getContractCheckResultList().get(0).setCheckedUserName(STR_256);
 		testTarget.getContractPicMntSsOrg().setServiceOrgName(STR_256);
-		testTarget.getContractPicCeEmp().setFaxNumber(STR_256);
+		testTarget.getContractPicMntCeEmp().setFaxNumber(STR_256);
+		testTarget.getContractPicAccCeEmp().setMomEmployeeId(STR_256);
+		testTarget.getContractPicIntCeEmp().setMomEmployeeId(STR_256);
+		testTarget.getContractPicMntCeEmp().setMomEmployeeId(STR_256);
+		testTarget.getContractPicAccSsOrg().setMomOrgId(STR_256);
+		testTarget.getContractPicIntSsOrg().setMomOrgId(STR_256);
+		testTarget.getContractPicMntSsOrg().setMomOrgId(STR_256);
+		testTarget.getContractEquipmentList().get(0).setEquipmentCode(STR_256);
+		testTarget.getContractInstallationLocation().setMomKjbSystemId(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 12);
+		Assert.assertTrue(result.getErrorInfoList().size() == 20);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "商品名は最大文字数（255）を超えています。"));
+	}
+
+	@Test
+	public void ItemDetailContractDtoのテスト() throws Exception {
+		ItemDetailContract entity = itemDetailContractRepository.findOne(401L);
+		ItemDetailContractDto testTarget = new ItemDetailContractDto();
+		BeanUtils.copyProperties(entity, testTarget);
+
+		// 正常系
+		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		testTool.assertValidationOk(result);
+
+		// 異常系（@Size(max) ：）
+		BeanUtils.copyProperties(entity, testTarget);
+		testTarget.setTransToServiceOrgCode(STR_256);
+		testTarget.setTransToServiceOrgName(STR_256);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "振替先課所コードは最大文字数（255）を超えています。"));
+
+		// 異常系（@DecimalMin ：）
+		BeanUtils.copyProperties(entity, testTarget);
+		testTarget.setPrice(DECIMAL_MINUS_001);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "原価は最小値（0.00）を下回っています。"));
+
+		// 異常系（@Digits ：）
+		BeanUtils.copyProperties(entity, testTarget);
+		testTarget.setPrice(DECIMAL_0001);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00028));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "原価は小数点以下2桁を超えています。"));
+	}
+
+	@Test
+	public void ContractEquipmentのテスト() throws Exception {
+		ContractEquipment entity = contractEquipmentRepository.findOne(401L);
+		ContractEquipmentDto testTarget = new ContractEquipmentDto();
+		BeanUtils.copyProperties(entity, testTarget);
+
+		// 正常系
+		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		testTool.assertValidationOk(result);
+
+		// 異常系（@NotNullの null チェック：)
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setEquipmentCode(null);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "機種コードが設定されていません。"));
+
+		// 異常系（@Size(max) ：）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setEquipmentCode(STR_256);
+		testTarget.setEquipmentNo(STR_256);
+		testTarget.setPurchaseForm(STR_256);
+		testTarget.setDeliveryForm(STR_256);
+		testTarget.setMaintenanceForm(STR_256);
+		testTarget.setDeliveryMachineDiv(STR_256);
+		testTarget.setMaintenanceNoteKana(STR_1001);
+		testTarget.setInspectionMonth(STR_256);
+		testTarget.setInspectionMonthYearWorth(STR_256);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 9);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "納入機器区分は最大文字数（255）を超えています。"));
 	}
 
 	@Test
@@ -737,8 +934,9 @@ public class TestContractDto {
 		// 異常系（@Size(max) ：）
 		BeanUtils.copyProperties(dto, testTarget);
 		testTarget.setDetailAbstract(STR_256);
+		testTarget.setOrderNo(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "摘要は最大文字数（255）を超えています。"));
 
@@ -848,9 +1046,9 @@ public class TestContractDto {
 	}
 
 	@Test
-	public void ContractPicCeEmpDtoのテスト() throws Exception {
-		ContractPicCeEmp entity = contractPicCeEmpRepository.findOne(401L);
-		ContractPicCeEmpDto testTarget = new ContractPicCeEmpDto();
+	public void ContractPicMntCeEmpDtoのテスト() throws Exception {
+		ContractPicMntCeEmp entity = contractPicMntCeEmpRepository.findOne(401L);
+		ContractPicMntCeEmpDto testTarget = new ContractPicMntCeEmpDto();
 
 		// 正常系
 		BeanUtils.copyProperties(entity, testTarget);
@@ -1007,6 +1205,90 @@ public class TestContractDto {
 	}
 
 	@Test
+	public void ContractPicMntCeEmpのテスト() throws Exception {
+		ContractPicMntCeEmp entity = contractPicMntCeEmpRepository.findOne(401L);
+		ContractPicMntCeEmp testTarget = new ContractPicMntCeEmp();
+
+		// 正常系
+		BeanUtils.copyProperties(entity, testTarget);
+		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		testTool.assertValidationOk(result);
+
+		// 異常系（@NotNullの null チェック：）
+		BeanUtils.copyProperties(entity, testTarget);
+		testTarget.setMomEmployeeId(null);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "MoM社員IDが設定されていません。"));
+
+		// 異常系（@Size(max) ：）
+		BeanUtils.copyProperties(entity, testTarget);
+		testTarget.setMomEmployeeId(STR_256);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "MoM社員IDは最大文字数（255）を超えています。"));
+
+	}
+
+	@Test
+	public void ContractPicIntCeEmpDtoのテスト() throws Exception {
+		ContractPicIntCeEmp entity = contractPicIntCeEmpRepository.findOne(401L);
+		ContractPicIntCeEmpDto testTarget = new ContractPicIntCeEmpDto();
+
+		// 正常系
+		BeanUtils.copyProperties(entity, testTarget);
+		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		testTool.assertValidationOk(result);
+
+		// 異常系（@NotNullの null チェック：）
+		BeanUtils.copyProperties(entity, testTarget);
+		testTarget.setMomEmployeeId(null);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "MoM社員IDが設定されていません。"));
+
+		// 異常系（@Size(max) ：）
+		BeanUtils.copyProperties(entity, testTarget);
+		testTarget.setMomEmployeeId(STR_256);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "MoM社員IDは最大文字数（255）を超えています。"));
+
+	}
+
+	@Test
+	public void ContractPicAccCeEmpDtoのテスト() throws Exception {
+		ContractPicAccCeEmp entity = contractPicAccCeEmpRepository.findOne(401L);
+		ContractPicAccCeEmpDto testTarget = new ContractPicAccCeEmpDto();
+
+		// 正常系
+		BeanUtils.copyProperties(entity, testTarget);
+		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		testTool.assertValidationOk(result);
+
+		// 異常系（@NotNullの null チェック：）
+		BeanUtils.copyProperties(entity, testTarget);
+		testTarget.setMomEmployeeId(null);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "MoM社員IDが設定されていません。"));
+
+		// 異常系（@Size(max) ：）
+		BeanUtils.copyProperties(entity, testTarget);
+		testTarget.setMomEmployeeId(STR_256);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "MoM社員IDは最大文字数（255）を超えています。"));
+
+	}
+
+	@Test
 	public void ContractPicMntSsOrgDtoのテスト() throws Exception {
 		ContractPicMntSsOrg entity = contractPicMntSsOrgRepository.findOne(401L);
 		ContractPicMntSsOrgDto testTarget = new ContractPicMntSsOrgDto();
@@ -1026,6 +1308,62 @@ public class TestContractDto {
 
 		// 異常系（@Size(max) ：）
 		BeanUtils.copyProperties(entity, testTarget);
+		testTarget.setMomOrgId(STR_256);
+		testTarget.setServiceOrgName(STR_256);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "課所名は最大文字数（255）を超えています。"));
+	}
+
+	@Test
+	public void ContractPicAccSsOrgDtoのテスト() throws Exception {
+		ContractPicAccSsOrg entity = contractPicAccSsOrgRepository.findOne(401L);
+		ContractPicAccSsOrgDto testTarget = new ContractPicAccSsOrgDto();
+
+		// 正常系
+		BeanUtils.copyProperties(entity, testTarget);
+		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		testTool.assertValidationOk(result);
+
+		// 異常系（@NotNullの null チェック：）
+		BeanUtils.copyProperties(entity, testTarget);
+		testTarget.setMomOrgId(null);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "所属組織MoM組織IDが設定されていません。"));
+
+		// 異常系（@Size(max) ：）
+		BeanUtils.copyProperties(entity, testTarget);
+		testTarget.setMomOrgId(STR_256);
+		testTarget.setServiceOrgName(STR_256);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "課所名は最大文字数（255）を超えています。"));
+	}
+
+	@Test
+	public void ContractPicIntSsOrgDtoのテスト() throws Exception {
+		ContractPicIntSsOrg entity = contractPicIntSsOrgRepository.findOne(401L);
+		ContractPicIntSsOrgDto testTarget = new ContractPicIntSsOrgDto();
+
+		// 正常系
+		BeanUtils.copyProperties(entity, testTarget);
+		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		testTool.assertValidationOk(result);
+
+		// 異常系（@NotNullの null チェック：）
+		BeanUtils.copyProperties(testTarget, entity);
+		testTarget.setMomOrgId(null);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "所属組織MoM組織IDが設定されていません。"));
+
+		// 異常系（@Size(max) ：）
+		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setMomOrgId(STR_256);
 		testTarget.setServiceOrgName(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
@@ -1412,5 +1750,47 @@ public class TestContractDto {
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00028));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "見積金額は小数点以下2桁を超えています。"));
 
+	}
+
+	@Test
+	public void ContractAttachedFileHistoryDtoのテスト() throws Exception {
+
+		ContractAttachedFileHistory entity = contractAttachedFileHistoryRepository.findOne(401L);
+		ContractAttachedFileHistoryDto dto = new ContractAttachedFileHistoryDto();
+		ContractAttachedFileHistoryDto testTarget = new ContractAttachedFileHistoryDto();
+
+		BeanUtils.copyProperties(entity, dto);
+		AttachedFileDto attachedFile = new AttachedFileDto();
+		BeanUtils.copyProperties(entity.getAttachedFile(), attachedFile);
+		dto.setAttachedFile(attachedFile);
+
+		// 正常系
+		BeanUtils.copyProperties(dto, testTarget);
+		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		testTool.assertValidationOk(result);
+
+		// 異常系（@NotNull
+		BeanUtils.copyProperties(dto, testTarget);
+		testTarget.setFileName(null);
+		testTarget.setAttachedFile(null);
+		testTarget.setAttachedEmpId(null);
+		testTarget.setAttachedEmpName(null);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 4);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "添付者氏名が設定されていません。"));
+
+		// 異常系（@Size(max)
+		BeanUtils.copyProperties(dto, testTarget);
+		testTarget.setFileName(STR_256);
+		testTarget.setFileKind(STR_256);
+		testTarget.setAttachedComment(STR_1001);
+		testTarget.setAttachedEmpId(STR_256);
+		testTarget.setAttachedEmpName(STR_256);
+		testTarget.setAttachedOrgName(STR_256);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 6);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "添付者MoM社員IDは最大文字数（255）を超えています。"));
 	}
 }

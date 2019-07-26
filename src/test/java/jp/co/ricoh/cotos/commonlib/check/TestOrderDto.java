@@ -70,12 +70,7 @@ import jp.co.ricoh.cotos.commonlib.util.HeadersProperties;
 public class TestOrderDto {
 
 	private static final String STR_256 = "0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345";
-	private static final String STR_1001 = "01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
 	private static final int INT_MINUS_1 = -1;
-	private static final Long LONG_MINUS_1 = -1L;
-	private static final int INT_10 = 10;
-	private static final int INT_100 = 100;
-	private static final int INT_1000 = 1000;
 	private static final int INT_100000 = 100000;
 	private static final BigDecimal DECIMAL_MINUS_001 = new BigDecimal("-0.01");
 	private static final BigDecimal DECIMAL_0001 = new BigDecimal("0.001");
@@ -284,9 +279,9 @@ public class TestOrderDto {
 		BeanUtils.copyProperties(entity, testTarget);
 		testTarget.setQuantity(INT_MINUS_1);
 		testTarget.setBeforeQuantity(INT_MINUS_1);
-		testTarget.setDifferenceQuantity(INT_MINUS_1); //マイナス登録可能に修正
+		testTarget.setDifferenceQuantity(INT_MINUS_1); // マイナス登録可能に修正
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 2); //differenceQuantityがマイナスでもエラーにならないことを確認
+		Assert.assertTrue(result.getErrorInfoList().size() == 2); // differenceQuantityがマイナスでもエラーにならないことを確認
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "変更前数量は最小値（0）を下回っています。"));
 
@@ -344,7 +339,7 @@ public class TestOrderDto {
 		testTool.assertValidationOk(result);
 
 		// 異常系（@NotNull）
-		//なし
+		// なし
 
 		// 異常系（@Size(max))
 		BeanUtils.copyProperties(entity, testTarget);
@@ -503,17 +498,17 @@ public class TestOrderDto {
 	@Test
 	public void OrderListDtoのテスト() throws Exception {
 
-		//子DTOのチェックが走っているかどうかの確認
+		// 子DTOのチェックが走っているかどうかの確認
 
-		//トップレベルDTO
+		// トップレベルDTO
 		OrderListDto testTopTarget = new OrderListDto();
 
-		//親
+		// 親
 		OrderBasicInfo entity = orderBasicInfoRepository.findOne(4L);
 		OrderBasicInfoDto testTarget = new OrderBasicInfoDto();
 		BeanUtils.copyProperties(entity, testTarget);
 
-		//子
+		// 子
 		OrderSetupInfoDto testOrderSetupInfoTarget = new OrderSetupInfoDto();
 		BeanUtils.copyProperties(entity.getOrderSetupInfo(), testOrderSetupInfoTarget);
 		testTarget.setSetupInfo(testOrderSetupInfoTarget);

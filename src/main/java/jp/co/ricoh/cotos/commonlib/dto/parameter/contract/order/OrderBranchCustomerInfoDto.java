@@ -3,7 +3,6 @@ package jp.co.ricoh.cotos.commonlib.dto.parameter.contract.order;
 import javax.validation.constraints.Size;
 
 import io.swagger.annotations.ApiModelProperty;
-import jp.co.ricoh.cotos.commonlib.dto.parameter.common.DtoBase;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
