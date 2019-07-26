@@ -66,7 +66,7 @@ public class SalesCalcResultWorkForCspRunning {
 	private ItemType itemType;
 
 	/**
-	 * 振替先箇所コード
+	 * 作成データパターン
 	 */
 	private String ffmDataPtn;
 
@@ -139,4 +139,14 @@ public class SalesCalcResultWorkForCspRunning {
 	 * 振替先課所コード
 	 */
 	private String transToServiceOrgCode;
+
+	/**
+	 * 恒久契約識別番号
+	 */
+	private String immutableContIdentNumber;
+
+	/**
+	 * 企業名（カナ）
+	 */
+	private String companyNameKana;
 }
