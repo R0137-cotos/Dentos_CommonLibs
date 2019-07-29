@@ -1,6 +1,7 @@
 package jp.co.ricoh.cotos.commonlib.entity.contract;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,9 +9,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
@@ -162,5 +165,13 @@ public class ItemContract extends EntityBase {
 	 */
 	@ApiModelProperty(value = "IFS連携フラグ", required = true, position = 16, allowableValues = "range[0,9]")
 	private Integer ifsLinkageFlg;
+
+	/**
+	 * 品種明細(契約用)
+	 */
+	@Valid
+	@OneToMany(mappedBy = "itemContract")
+	@ApiModelProperty(value = "品種明細(契約用)", required = false, position = 17)
+	private List<ItemDetailContract> itemDetailContractList;
 
 }

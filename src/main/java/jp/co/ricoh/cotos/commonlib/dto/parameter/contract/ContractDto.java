@@ -20,6 +20,7 @@ import jp.co.ricoh.cotos.commonlib.dto.parameter.common.DtoBase;
 import jp.co.ricoh.cotos.commonlib.entity.contract.Contract.ContractType;
 import jp.co.ricoh.cotos.commonlib.entity.contract.Contract.IfsLinkageCsvCreateStatus;
 import jp.co.ricoh.cotos.commonlib.entity.contract.Contract.LifecycleStatus;
+import jp.co.ricoh.cotos.commonlib.entity.contract.Contract.SsWorkRequestCreateStatus;
 import jp.co.ricoh.cotos.commonlib.entity.contract.Contract.WorkflowStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -123,23 +124,16 @@ public class ContractDto extends DtoBase {
 	private Long originContractId;
 
 	/**
-	 * 導入希望日
-	 */
-	@ApiModelProperty(value = "導入希望日", required = false, position = 16)
-	@Temporal(TemporalType.DATE)
-	private Date introductionPreferredDate;
-
-	/**
 	 * 変更希望日
 	 */
-	@ApiModelProperty(value = "変更希望日", required = false, position = 17)
+	@ApiModelProperty(value = "変更希望日", required = false, position = 16)
 	@Temporal(TemporalType.DATE)
 	private Date changePreferredDate;
 
 	/**
 	 * 契約日
 	 */
-	@ApiModelProperty(value = "契約日", required = false, position = 18)
+	@ApiModelProperty(value = "契約日", required = false, position = 17)
 	@Temporal(TemporalType.DATE)
 	private Date contractDate;
 
@@ -148,34 +142,34 @@ public class ContractDto extends DtoBase {
 	 */
 	@Min(0)
 	@Max(9)
-	@ApiModelProperty(value = "売上計上フラグ", required = true, position = 19, allowableValues = "range[0,9]")
+	@ApiModelProperty(value = "売上計上フラグ", required = true, position = 18, allowableValues = "range[0,9]")
 	private int accountSalesFlg;
 
 	/**
 	 * 請求開始日
 	 */
-	@ApiModelProperty(value = "請求開始日", required = false, position = 20)
+	@ApiModelProperty(value = "請求開始日", required = false, position = 19)
 	@Temporal(TemporalType.DATE)
 	private Date billingDate;
 
 	/**
 	 * サービス開始日
 	 */
-	@ApiModelProperty(value = "サービス開始日", required = false, position = 21)
+	@ApiModelProperty(value = "サービス開始日", required = false, position = 20)
 	@Temporal(TemporalType.DATE)
 	private Date serviceTermStart;
 
 	/**
 	 * サービス終了日
 	 */
-	@ApiModelProperty(value = "サービス終了日", required = false, position = 22)
+	@ApiModelProperty(value = "サービス終了日", required = false, position = 21)
 	@Temporal(TemporalType.DATE)
 	private Date serviceTermEnd;
 
 	/**
 	 * 解約予定日
 	 */
-	@ApiModelProperty(value = "解約予定日", required = false, position = 23)
+	@ApiModelProperty(value = "解約予定日", required = false, position = 22)
 	@Temporal(TemporalType.DATE)
 	private Date cancelScheduledDate;
 
@@ -183,7 +177,7 @@ public class ContractDto extends DtoBase {
 	 * 見積番号
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "見積番号", required = false, position = 24, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "見積番号", required = false, position = 23, allowableValues = "range[0,255]")
 	private String estimationNumber;
 
 	/**
@@ -191,83 +185,83 @@ public class ContractDto extends DtoBase {
 	 */
 	@Min(0)
 	@Max(99)
-	@ApiModelProperty(value = "見積番号枝番", required = false, position = 25, allowableValues = "range[0,99]")
+	@ApiModelProperty(value = "見積番号枝番", required = false, position = 24, allowableValues = "range[0,99]")
 	private Integer estimationBranchNumber;
 
 	/**
 	 * 見積ID
 	 */
 	@Min(0)
-	@ApiModelProperty(value = "見積ID", required = false, position = 26, allowableValues = "range[0,9223372036854775807]")
+	@ApiModelProperty(value = "見積ID", required = false, position = 25, allowableValues = "range[0,9223372036854775807]")
 	private Long estimationId;
 
 	/**
 	 * 見積件名
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "見積件名", required = false, position = 27, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "見積件名", required = false, position = 26, allowableValues = "range[0,255]")
 	private String estimationTitle;
 
 	/**
 	 * 商流区分
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "商流区分", required = false, position = 28, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "商流区分", required = false, position = 27, allowableValues = "range[0,255]")
 	private String commercialFlowDiv;
 
 	/**
 	 * 発行書式
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "発行書式", required = false, position = 29, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "発行書式", required = false, position = 28, allowableValues = "range[0,255]")
 	private String issueFormat;
 
 	/**
 	 * 得意先コード
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "得意先コード", required = false, position = 30, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "得意先コード", required = false, position = 29, allowableValues = "range[0,255]")
 	private String billingCustomerSpCode;
 
 	/**
 	 * 得意先宛先名
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "得意先宛先名", required = false, position = 31, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "得意先宛先名", required = false, position = 30, allowableValues = "range[0,255]")
 	private String billingCustomerSpName;
 
 	/**
 	 * 支払条件
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "支払条件", required = false, position = 32, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "支払条件", required = false, position = 31, allowableValues = "range[0,255]")
 	private String paymentTerms;
 
 	/**
 	 * 支払方法
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "支払方法", required = false, position = 33, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "支払方法", required = false, position = 32, allowableValues = "range[0,255]")
 	private String paymentMethod;
 
 	/**
 	 * 解約理由
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "解約理由", required = false, position = 34, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "解約理由", required = false, position = 33, allowableValues = "range[0,255]")
 	private String cancelReason;
 
 	/**
 	 * その他解約理由
 	 */
 	@Size(max = 1000)
-	@ApiModelProperty(value = "その他解約理由", required = false, position = 35, allowableValues = "range[0,1000]")
+	@ApiModelProperty(value = "その他解約理由", required = false, position = 34, allowableValues = "range[0,1000]")
 	private String cancelReasonEtc;
 
 	/**
 	 * 拡張項目
 	 */
-	@ApiModelProperty(value = "拡張項目", required = false, position = 36)
+	@ApiModelProperty(value = "拡張項目", required = false, position = 35)
 	@Lob
 	private String extendsParameter;
 
@@ -275,20 +269,20 @@ public class ContractDto extends DtoBase {
 	 * web受注注文番号
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "web受注注文番号", required = false, position = 37, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "web受注注文番号", required = false, position = 36, allowableValues = "range[0,255]")
 	private String webOrderNumber;
 
 	/**
 	 * RJ管理番号
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "RJ管理番号", required = false, position = 38, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "RJ管理番号", required = false, position = 37, allowableValues = "range[0,255]")
 	private String rjManageNumber;
 
 	/**
-	 * 課金開始日
+	 * 課金開始日(ランニング)
 	 */
-	@ApiModelProperty(value = "課金開始日", required = false, position = 39)
+	@ApiModelProperty(value = "課金開始日(ランニング)", required = false, position = 38)
 	@Temporal(TemporalType.DATE)
 	private Date billingStartDate;
 
@@ -296,28 +290,55 @@ public class ContractDto extends DtoBase {
 	 * 解約注文番号
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "解約注文番号", required = false, position = 40, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "解約注文番号", required = false, position = 39, allowableValues = "range[0,255]")
 	private String cancelOrderNo;
 
 	/**
-	 * 締結希望日
+	 * サービス利用希望日
 	 */
-	@ApiModelProperty(value = "締結希望日", required = false, position = 41)
+	@ApiModelProperty(value = "サービス利用希望日", required = false, position = 40)
 	@Temporal(TemporalType.DATE)
 	private Date conclusionPreferredDate;
 
 	/**
 	 * IFS連携用CSV作成状態
 	 */
-	@ApiModelProperty(value = "IFS連携用CSV作成状態", required = false, position = 42)
+	@ApiModelProperty(value = "IFS連携用CSV作成状態", required = false, position = 41)
 	private IfsLinkageCsvCreateStatus ifsLinkageCsvCreateStatus;
 
 	/**
 	 * IFS連携用CSV作成日
 	 */
-	@ApiModelProperty(value = "IFS連携用CSV作成日", required = false, position = 43)
+	@ApiModelProperty(value = "IFS連携用CSV作成日", required = false, position = 42)
 	@Temporal(TemporalType.DATE)
 	private Date ifsLinkageCsvCreateDate;
+
+	/**
+	 * お問い合わせ番号
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "お問い合わせ番号", required = false, position = 43, allowableValues = "range[0,255]")
+	private String contactNo;
+
+	/**
+	 * S&S作業依頼作成状態
+	 */
+	@ApiModelProperty(value = "S&S作業依頼作成状態", required = false, position = 44, allowableValues = "未作成(\"0\"),作成済み(\"1\"),作成エラー(\"2\")", example = "1")
+	private SsWorkRequestCreateStatus ssWorkRequestCreateStatus;
+
+	/**
+	 * 帳票用消費税率区分
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "帳票用消費税率区分", required = false, position = 45, allowableValues = "range[0,255]")
+	private String issueTaxCodeValue;
+
+	/**
+	 * 申込日
+	 */
+	@ApiModelProperty(value = "申込日", required = false, position = 46)
+	@Temporal(TemporalType.DATE)
+	private Date applicationDate;
 
 	/**
 	 * 契約明細
@@ -325,7 +346,7 @@ public class ContractDto extends DtoBase {
 	@Valid
 	@NotNull
 	@OneToMany(mappedBy = "contract")
-	@ApiModelProperty(value = "契約明細", required = true, position = 44)
+	@ApiModelProperty(value = "契約明細", required = true, position = 47)
 	private List<ContractDetailDto> contractDetailList;
 
 	/**
@@ -333,7 +354,7 @@ public class ContractDto extends DtoBase {
 	 */
 	@Valid
 	@OneToMany(mappedBy = "contract")
-	@ApiModelProperty(value = "契約チェック結果", required = false, position = 45)
+	@ApiModelProperty(value = "契約チェック結果", required = false, position = 48)
 	private List<ContractCheckResultDto> contractCheckResultList;
 
 	/**
@@ -341,7 +362,7 @@ public class ContractDto extends DtoBase {
 	 */
 	@Valid
 	@OneToMany(mappedBy = "contract")
-	@ApiModelProperty(value = "契約承認ルート", required = false, position = 46)
+	@ApiModelProperty(value = "契約承認ルート", required = false, position = 49)
 	private List<ContractApprovalRouteDto> contractApprovalRouteList;
 
 	/**
@@ -349,8 +370,16 @@ public class ContractDto extends DtoBase {
 	 */
 	@Valid
 	@OneToMany(mappedBy = "contract")
-	@ApiModelProperty(value = "契約添付ファイル", required = false, position = 47)
+	@ApiModelProperty(value = "契約添付ファイル", required = false, position = 50)
 	private List<ContractAttachedFileDto> contractAttachedFileList;
+
+	/**
+	 * 契約添付ファイル履歴
+	 */
+	@Valid
+	@OneToMany(mappedBy = "contract")
+	@ApiModelProperty(value = "契約添付ファイル履歴", required = false, position = 51)
+	private List<ContractAttachedFileHistoryDto> contractAttachedFileHistoryList;
 
 	/**
 	 * 契約担当SA社員
@@ -358,7 +387,7 @@ public class ContractDto extends DtoBase {
 	@Valid
 	@NotNull
 	@OneToOne(mappedBy = "contract")
-	@ApiModelProperty(value = "契約担当SA社員", required = true, position = 48)
+	@ApiModelProperty(value = "契約担当SA社員", required = true, position = 52)
 	private ContractPicSaEmpDto contractPicSaEmp;
 
 	/**
@@ -366,7 +395,7 @@ public class ContractDto extends DtoBase {
 	 */
 	@Valid
 	@OneToMany(mappedBy = "contract")
-	@ApiModelProperty(value = "契約追加編集者社員", required = false, position = 49)
+	@ApiModelProperty(value = "契約追加編集者社員", required = false, position = 53)
 	private List<ContractAddedEditorEmpDto> contractAddedEditorEmpList;
 
 	/**
@@ -374,7 +403,7 @@ public class ContractDto extends DtoBase {
 	 */
 	@Valid
 	@OneToMany(mappedBy = "contract")
-	@ApiModelProperty(value = "販売店(契約用)", required = false, position = 50)
+	@ApiModelProperty(value = "販売店(契約用)", required = false, position = 54)
 	private List<DealerContractDto> dealerContractList;
 
 	/**
@@ -383,7 +412,7 @@ public class ContractDto extends DtoBase {
 	@Valid
 	@NotNull
 	@OneToOne(mappedBy = "contract")
-	@ApiModelProperty(value = "顧客(契約用)", required = true, position = 51)
+	@ApiModelProperty(value = "顧客(契約用)", required = true, position = 55)
 	private CustomerContractDto customerContract;
 
 	/**
@@ -392,23 +421,23 @@ public class ContractDto extends DtoBase {
 	@Valid
 	@NotNull
 	@OneToMany(mappedBy = "contract")
-	@ApiModelProperty(value = "商品(契約用)", required = true, position = 52)
+	@ApiModelProperty(value = "商品(契約用)", required = true, position = 56)
 	private List<ProductContractDto> productContractList;
 
 	/**
-	 * 契約担当CE社員
+	 * 契約保守担当CE社員
 	 */
 	@Valid
 	@OneToOne(mappedBy = "contract")
-	@ApiModelProperty(value = "契約担当CE社員", required = false, position = 53)
-	private ContractPicCeEmpDto contractPicCeEmp;
+	@ApiModelProperty(value = "契約保守担当CE社員", required = false, position = 57)
+	private ContractPicMntCeEmpDto contractPicMntCeEmp;
 
 	/**
 	 * 契約保守担当SS組織
 	 */
 	@Valid
 	@OneToOne(mappedBy = "contract")
-	@ApiModelProperty(value = "契約保守担当SS組織", required = false, position = 54)
+	@ApiModelProperty(value = "契約保守担当SS組織", required = false, position = 58)
 	private ContractPicMntSsOrgDto contractPicMntSsOrg;
 
 	/**
@@ -416,21 +445,21 @@ public class ContractDto extends DtoBase {
 	 */
 	@Valid
 	@OneToMany(mappedBy = "contract")
-	@ApiModelProperty(value = "見積明細管理", required = false, position = 55)
+	@ApiModelProperty(value = "見積明細管理", required = false, position = 59)
 	private List<ManagedEstimationDetailDto> managedEstimationDetailList;
 
 	/**
 	 * アプリケーションID
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "アプリケーションID", required = false, position = 56, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "アプリケーションID", required = false, position = 60, allowableValues = "range[0,255]")
 	private String appId;
 
 	/**
 	 * 契約自動更新日
 	 */
 	@Column
-	@ApiModelProperty(value = "契約自動更新日", required = false, position = 57)
+	@ApiModelProperty(value = "契約自動更新日", required = false, position = 61)
 	private Date contractAutoUpdateDate;
 
 	/**
@@ -438,7 +467,7 @@ public class ContractDto extends DtoBase {
 	 */
 	@Size(max = 255)
 	@Column
-	@ApiModelProperty(value = "届先コード", required = false, position = 58, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "届先コード", required = false, position = 62, allowableValues = "range[0,255]")
 	private String deliveryCd;
 
 	/**
@@ -446,14 +475,55 @@ public class ContractDto extends DtoBase {
 	 */
 	@Size(max = 255)
 	@Column
-	@ApiModelProperty(value = "届先名", required = false, position = 59, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "届先名", required = false, position = 63, allowableValues = "range[0,255]")
 	private String deliveryName;
 
 	/**
-	 * 帳票用消費税率区分
+	 * 契約機種
 	 */
-	@Size(max = 255)
-	@Column
-	@ApiModelProperty(value = "帳票用消費税率区分", required = false, position = 60, allowableValues = "range[0,255]")
-	private String issueTaxCodeValue;
+	@Valid
+	@OneToMany(mappedBy = "contract")
+	@ApiModelProperty(value = "契約機種", required = false, position = 64)
+	private List<ContractEquipmentDto> contractEquipmentList;
+
+	/**
+	 * 契約受付担当SS組織
+	 */
+	@Valid
+	@OneToOne(mappedBy = "contract")
+	@ApiModelProperty(value = "契約受付担当SS組織", required = false, position = 65)
+	private ContractPicAccSsOrgDto contractPicAccSsOrg;
+
+	/**
+	 * 契約導入担当SS組織
+	 */
+	@Valid
+	@OneToOne(mappedBy = "contract")
+	@ApiModelProperty(value = "契約導入担当SS組織", required = false, position = 66)
+	private ContractPicIntSsOrgDto contractPicIntSsOrg;
+
+	/**
+	 * 契約導入担当CE社員
+	 */
+	@Valid
+	@OneToOne(mappedBy = "contract")
+	@ApiModelProperty(value = "契約導入担当CE社員", required = false, position = 67)
+	private ContractPicIntCeEmpDto contractPicIntCeEmp;
+
+	/**
+	 * 契約受付担当CE社員
+	 */
+	@Valid
+	@OneToOne(mappedBy = "contract")
+	@ApiModelProperty(value = "契約受付担当CE社員", required = false, position = 68)
+	private ContractPicAccCeEmpDto contractPicAccCeEmp;
+
+	/**
+	 * 設置先(契約用)
+	 */
+	@Valid
+	@OneToOne(mappedBy = "contract")
+	@ApiModelProperty(value = "設置先(契約用)", required = false, position = 69)
+	private ContractInstallationLocationDto contractInstallationLocation;
+
 }

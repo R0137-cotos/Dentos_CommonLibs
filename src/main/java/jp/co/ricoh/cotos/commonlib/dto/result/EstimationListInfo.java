@@ -126,6 +126,20 @@ public class EstimationListInfo {
 	 */
 	@ApiModelProperty(value = "R恒久契約識別番号", required = false, position = 17, allowableValues = "range[0,255]")
 	private String immutableContIdentNumber;
+	
+	/**
+	 * 登録日時
+	 */
+	@ApiModelProperty(value = "登録日時", required = false, position = 18)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createdAt;
+
+	/**
+	 * 更新日時
+	 */
+	@ApiModelProperty(value = "更新日時", required = false, position = 19)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date updatedAt;
 
 	@PrePersist
 	public void prePersist() {

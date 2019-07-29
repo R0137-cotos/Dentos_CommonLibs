@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
@@ -93,17 +94,11 @@ public class ProductMaster extends EntityBaseMaster {
 	private String appId;
 
 	/**
-	 * 商品固有項目VIEW識別子
-	 */
-	@ApiModelProperty(value = "商品固有項目VIEW識別子", required = false, position = 9)
-	private String viewNameSuffix;
-
-	/**
 	 * JSONスキーママスタ
 	 */
 	@ManyToOne
 	@JoinColumn(name = "json_schema_master_id", referencedColumnName = "id")
-	@ApiModelProperty(value = "JSONスキーママスタ", required = true, position = 10)
+	@ApiModelProperty(value = "JSONスキーママスタ", required = true, position = 9)
 	private JsonSchemaMaster jsonSchemaMaster;
 
 	/**
@@ -111,12 +106,23 @@ public class ProductMaster extends EntityBaseMaster {
 	 */
 	@OneToMany(mappedBy = "productMaster", orphanRemoval = true, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@Fetch(FetchMode.SUBSELECT)
-	@ApiModelProperty(value = "拡張項目相関チェックマスタ", required = false, position = 11)
+	@ApiModelProperty(value = "拡張項目相関チェックマスタ", required = false, position = 10)
 	private List<ExtendsParameterCorrelationCheckMaster> extendsParameterCorrelationCheckMasterList;
+
+	/**
+	 * 契約種類区分
+	 */
+	@ApiModelProperty(value = "契約種類区分", required = false, position = 11, allowableValues = "range[0,255]")
+	private String contractClassDiv;
 
 	/**
 	 * 商品種類区分
 	 */
-	@ApiModelProperty(value = "商品種類区分", required = false, position = 12)
+	@Size(max = 255)
+	@ApiModelProperty(value = "商品種類区分", required = false, position = 12, allowableValues = "range[0,255]")
 	private String productClassDiv;
+
+	@OneToOne(mappedBy = "productMaster")
+	@ApiModelProperty(value = "IFSその他機器情報管理マスタ", required = false, position = 13)
+	private IfsCsvMaster ifsCsvMaster;
 }

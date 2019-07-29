@@ -1,6 +1,5 @@
 package jp.co.ricoh.cotos.commonlib.dto.parameter.common;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -90,7 +89,6 @@ public class DealerAbstractDto extends DtoBase {
 	 * MoM会社ID
 	 */
 	@Size(max = 255)
-	@Column
 	@ApiModelProperty(value = "MoM会社ID", required = false, position = 61, allowableValues = "range[0,255]")
 	private String distributorMomCmpId;
 
@@ -98,7 +96,6 @@ public class DealerAbstractDto extends DtoBase {
 	 * MoM販売店識別コード
 	 */
 	@Size(max = 255)
-	@Column
 	@ApiModelProperty(value = "MoM販売店識別コード", required = false, position = 62, allowableValues = "range[0,255]")
 	private String distributorMomShikiCd;
 
@@ -106,7 +103,6 @@ public class DealerAbstractDto extends DtoBase {
 	 * MoM組織ID
 	 */
 	@Size(max = 255)
-	@Column
 	@ApiModelProperty(value = "MoM組織ID", required = false, position = 63, allowableValues = "range[0,255]")
 	private String distributorMomSoshikiId;
 
@@ -114,7 +110,6 @@ public class DealerAbstractDto extends DtoBase {
 	 * MoMデポコード
 	 */
 	@Size(max = 255)
-	@Column
 	@ApiModelProperty(value = "MoMデポコード", required = false, position = 64, allowableValues = "range[0,255]")
 	private String distributorMomDepoCd;
 
@@ -122,7 +117,6 @@ public class DealerAbstractDto extends DtoBase {
 	 * MoM設置届先サイトID
 	 */
 	@Size(max = 255)
-	@Column
 	@ApiModelProperty(value = "MoM設置届先サイトID", required = false, position = 65, allowableValues = "range[0,255]")
 	private String orbSendSiteId;
 
@@ -130,7 +124,6 @@ public class DealerAbstractDto extends DtoBase {
 	 * 担当者名（カナ）
 	 */
 	@Size(max = 255)
-	@Column
 	@ApiModelProperty(value = "担当者名（カナ）", required = false, position = 66, allowableValues = "range[0,255]")
 	private String picNameKana;
 
@@ -138,7 +131,6 @@ public class DealerAbstractDto extends DtoBase {
 	 * 販売店名（カナ）
 	 */
 	@Size(max = 255)
-	@Column
 	@ApiModelProperty(value = "販売店名（カナ）", required = false, position = 67, allowableValues = "range[0,255]")
 	private String dealerNameKana;
 
@@ -146,7 +138,6 @@ public class DealerAbstractDto extends DtoBase {
 	 * MoM非連携_企業代表者名
 	 */
 	@Size(max = 255)
-	@Column
 	@ApiModelProperty(value = "MoM非連携_企業代表者名", required = false, position = 68, allowableValues = "range[0,255]")
 	private String companyRepresentativeName;
 
@@ -154,7 +145,6 @@ public class DealerAbstractDto extends DtoBase {
 	 * MoM非連携_企業代表者名（カナ）
 	 */
 	@Size(max = 255)
-	@Column
 	@ApiModelProperty(value = "MoM非連携_企業代表者名（カナ）", required = false, position = 69, allowableValues = "range[0,255]")
 	private String companyRepresentativeNameKana;
 
@@ -162,7 +152,6 @@ public class DealerAbstractDto extends DtoBase {
 	 * MoM企事部ID
 	 */
 	@Size(max = 255)
-	@Column
 	@ApiModelProperty(value = "MoM企事部ID", required = false, position = 70, allowableValues = "range[0,255]")
 	private String momCustId;
 

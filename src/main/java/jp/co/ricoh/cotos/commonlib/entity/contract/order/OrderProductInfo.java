@@ -19,7 +19,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
-import jp.co.ricoh.cotos.commonlib.entity.contract.order.OrderManagementInfo.CaptureStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -52,7 +51,7 @@ public class OrderProductInfo extends EntityBase {
 			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
-	
+
 	public enum ProvideMethod {
 		初期("1"), 月額("2"), 年額("3");
 
@@ -73,6 +72,7 @@ public class OrderProductInfo extends EntityBase {
 			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}
+
 	/**
 	 * ID
 	 */

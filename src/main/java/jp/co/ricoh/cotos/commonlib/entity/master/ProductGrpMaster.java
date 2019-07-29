@@ -16,6 +16,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -94,7 +95,19 @@ public class ProductGrpMaster extends EntityBaseMaster {
 	/**
 	 * 商品グループコード
 	 */
-	@Column(nullable = false)
-	@ApiModelProperty(value = "商品グループコード", required = true, position = 8, allowableValues = "range[255]")
+	@Size(max = 255)
+	@ApiModelProperty(value = "商品グループコード", required = false, position = 8, allowableValues = "range[0,255]")
 	private String productGroupCd;
+
+	/**
+	 * 初期費内部振替対象フラグ
+	 */
+	@ApiModelProperty(value = "初期費内部振替対象フラグ", required = false, position = 9, allowableValues = "range[0,9]")
+	private Integer initialExpensesInsideTransFlg;
+
+	/**
+	 * 期間売内部振替対象フラグ
+	 */
+	@ApiModelProperty(value = "期間売内部振替対象フラグ", required = false, position = 10, allowableValues = "range[0,9]")
+	private Integer periodSellingInsideTransFlg;
 }

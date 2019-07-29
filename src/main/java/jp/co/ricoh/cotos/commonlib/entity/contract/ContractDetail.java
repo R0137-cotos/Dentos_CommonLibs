@@ -1,6 +1,7 @@
 package jp.co.ricoh.cotos.commonlib.entity.contract;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -23,7 +24,9 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
@@ -40,6 +43,90 @@ import lombok.EqualsAndHashCode;
 @Data
 @Table(name = "contract_detail")
 public class ContractDetail extends EntityBase {
+
+	public enum FfmInsideTransStatus {
+		未処理("0"), CSV作成済み("1"), 連携済み("2"), 対象外("3");
+
+		private final String text;
+
+		private FfmInsideTransStatus(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		@JsonValue
+		public String toString() {
+			return this.text;
+		}
+
+		@JsonCreator
+		public static FfmInsideTransStatus fromString(final String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+		}
+	}
+
+	public enum AbsConInsideTransStatus {
+		未処理("0"), TSV作成済み("1"), 連携済み("2"), 連携エラー("3"), 対象外("4");
+
+		private final String text;
+
+		private AbsConInsideTransStatus(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		@JsonValue
+		public String toString() {
+			return this.text;
+		}
+
+		@JsonCreator
+		public static AbsConInsideTransStatus fromString(final String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+		}
+	}
+
+	public enum RunningAccountSalesStatus {
+		正常("0"), 処理エラー("1");
+
+		private final String text;
+
+		private RunningAccountSalesStatus(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		@JsonValue
+		public String toString() {
+			return this.text;
+		}
+
+		@JsonCreator
+		public static RunningAccountSalesStatus fromString(final String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+		}
+	}
+
+	public enum FfmAcceptanceLinkingStatus {
+		未作成("0"), 作成済み("1"), 作成エラー("2");
+
+		private final String text;
+
+		private FfmAcceptanceLinkingStatus(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		@JsonValue
+		public String toString() {
+			return this.text;
+		}
+
+		@JsonCreator
+		public static FfmAcceptanceLinkingStatus fromString(final String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+		}
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_detail_seq")
@@ -133,4 +220,56 @@ public class ContractDetail extends EntityBase {
 	@OneToOne(mappedBy = "contractDetail")
 	@ApiModelProperty(value = "品種(契約用)", required = false, position = 12)
 	private ItemContract itemContract;
+
+	/**
+	 * 注文番号
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "注文番号", required = false, position = 13, allowableValues = "range[0,255]")
+	private String orderNo;
+
+	/**
+	 * FFM内部振替処理状態
+	 */
+	@ApiModelProperty(value = "FFM内部振替処理状態", required = false, allowableValues = "未処理中(\"0\"), 作成完了(\"1\"), 連携済み(\"2\"), 対象外(\"3\")", position = 14)
+	private FfmInsideTransStatus ffmInsideTransStatus;
+
+	/**
+	 * FFM内部振替連携日
+	 */
+	@Temporal(TemporalType.DATE)
+	@ApiModelProperty(value = "FFM内部振替連携日", required = false, position = 15)
+	private Date ffmInsideLinkDate;
+
+	/**
+	 * 統合契約内部振替処理状態
+	 */
+	@ApiModelProperty(value = "統合契約内部振替処理状態", required = false, allowableValues = "未処理中(\"0\"), TSV作成済み(\"1\"), 連携済み(\"2\"), 連携エラー(\"3\"), 対象外(\"4\")", position = 16)
+	private AbsConInsideTransStatus absConInsideTransStatus;
+
+	/**
+	 * 統合契約内部振替連携日
+	 */
+	@Temporal(TemporalType.DATE)
+	@ApiModelProperty(value = "統合契約内部振替連携日", required = false, position = 17)
+	private Date absConInsideLinkDate;
+
+	/**
+	 * ランニング売上計上処理状態
+	 */
+	@ApiModelProperty(value = "ランニング売上計上処理状態", required = false, allowableValues = "正常(\"0\"), 処理エラー(\"1\")", position = 18)
+	private RunningAccountSalesStatus runningAccountSalesStatus;
+
+	/**
+	 * ランニング売上計上処理日
+	 */
+	@Temporal(TemporalType.DATE)
+	@ApiModelProperty(value = "ランニング売上計上処理日", required = false, position = 19)
+	private Date runningAccountSalesDate;
+
+	/**
+	 * FFM検収連携状態
+	 */
+	@ApiModelProperty(value = "FFM検収連携状態", required = false, position = 20)
+	private FfmAcceptanceLinkingStatus ffmAcceptanceLinkingStatus;
 }

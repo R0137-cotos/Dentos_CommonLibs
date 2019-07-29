@@ -163,14 +163,28 @@ public class TestEstimation {
 		// 異常系（@Size(max)）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setMomKjbSystemId(STR_256);
+		testTarget.setMomCustId(STR_256);
+		testTarget.setCompanyId(STR_256);
+		testTarget.setOfficeId(STR_256);
+		testTarget.setCustomerName(STR_256);
+		testTarget.setCompanyName(STR_256);
+		testTarget.setCompanyNameKana(STR_256);
+		testTarget.setOfficeName(STR_256);
+		testTarget.setDepartmentName(STR_256);
+		testTarget.setPostNumber(STR_256);
+		testTarget.setAddress(STR_1001);
+		testTarget.setPhoneNumber(STR_256);
+		testTarget.setFaxNumber(STR_256);
+		testTarget.setCompanyRepresentativeName(STR_256);
 		testTarget.setPicName(STR_256);
 		testTarget.setPicNameKana(STR_256);
 		testTarget.setPicDeptName(STR_256);
 		testTarget.setPicPhoneNumber(STR_256);
 		testTarget.setPicFaxNumber(STR_256);
 		testTarget.setPicMailAddress(STR_256);
+		testTarget.setCompanyRepresentativeNameKana(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 7);
+		Assert.assertTrue(result.getErrorInfoList().size() == 21);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "MoM企事部システム連携IDは最大文字数（255）を超えています。"));
 
@@ -197,13 +211,22 @@ public class TestEstimation {
 		// 異常系（@Size(max) ：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setMomKjbSystemId(STR_256);
+		testTarget.setDealerName(STR_256);
+		testTarget.setPostNumber(STR_256);
+		testTarget.setAddress(STR_1001);
+		testTarget.setOrgPhoneNumber(STR_256);
 		testTarget.setPicName(STR_256);
 		testTarget.setPicDeptName(STR_256);
 		testTarget.setPicPhoneNumber(STR_256);
 		testTarget.setPicFaxNumber(STR_256);
 		testTarget.setPicMailAddress(STR_256);
+		testTarget.setPicNameKana(STR_256);
+		testTarget.setDealerNameKana(STR_256);
+		testTarget.setCompanyRepresentativeName(STR_256);
+		testTarget.setCompanyRepresentativeNameKana(STR_256);
+		testTarget.setMomCustId(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 6);
+		Assert.assertTrue(result.getErrorInfoList().size() == 15);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "MoM非連携_担当者メールアドレスは最大文字数（255）を超えています。"));
 
@@ -252,16 +275,19 @@ public class TestEstimation {
 		testTarget.setCompetitionInfo(STR_256);
 		testTarget.setCompetitionContractDiv(STR_256);
 		testTarget.setAppId(STR_256);
+		testTarget.setIssueTaxCodeValue(STR_256);
+		testTarget.setEstimationWorkId(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 27);
+		Assert.assertTrue(result.getErrorInfoList().size() == 29);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "見積発行元FAX番号は最大文字数（255）を超えています。"));
 
 		// 異常系（@Max ：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setOriginContractBranchNumber(INT_100);
+		testTarget.setVupLinkageFlg(INT_10);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "変更元契約番号枝番は最大値（99）を超えています。"));
 
@@ -270,8 +296,9 @@ public class TestEstimation {
 		testTarget.setProductGrpMasterId(INT_MINUS_1);
 		testTarget.setOriginContractBranchNumber(INT_MINUS_1);
 		testTarget.setOriginContractId((long) INT_MINUS_1);
+		testTarget.setVupLinkageFlg(INT_MINUS_1);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 3);
+		Assert.assertTrue(result.getErrorInfoList().size() == 4);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "商品グループマスタIDは最小値（0）を下回っています。"));
 
@@ -660,8 +687,24 @@ public class TestEstimation {
 		// 異常系（@Size(max) ：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setMomEmployeeId(STR_256);
+		testTarget.setMomOrgId(STR_256);
+		testTarget.setOrgName(STR_256);
+		testTarget.setSalesCompanyName(STR_256);
+		testTarget.setOrgPhoneNumber(STR_256);
+		testTarget.setEmployeeName(STR_256);
+		testTarget.setSalesDepartmentName(STR_256);
+		testTarget.setPostNumber(STR_256);
+		testTarget.setAddress(STR_1001);
+		testTarget.setPhoneNumber(STR_256);
+		testTarget.setFaxNumber(STR_256);
+		testTarget.setMailAddress(STR_256);
+		testTarget.setMomKjbSystemId(STR_256);
+		testTarget.setMomCustId(STR_256);
+		testTarget.setSalesCompanyNameKana(STR_256);
+		testTarget.setCompanyRepresentativeName(STR_256);
+		testTarget.setCompanyRepresentativeNameKana(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(result.getErrorInfoList().size() == 17);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "MoM社員IDは最大文字数（255）を超えています。"));
 	}
@@ -774,7 +817,7 @@ public class TestEstimation {
 		// 異常系（@Size(max) ：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setProductMasterId(INT_MINUS_1);
-		testTarget.setRepItemMasterId(Long.valueOf(INT_MINUS_1));
+		testTarget.setRepItemMasterId(new Long(INT_MINUS_1));
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));

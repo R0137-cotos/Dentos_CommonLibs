@@ -1,0 +1,1 @@
+INSERT INTO wjcmj303_gnk_hrke_cts_wk (rnki_mt_knr_misi_id,gnk_hrke_zyuhu_id,hrkemt_cubic_bmn_cd,hrkemt_zyugyuin_bngu,hrkesk_cubic_bmn_cd,hrkesk_zyugyuin_bngu,kiyk_no,hrke_kngk_sugk,kikzm_hrke_kngk_sugk) VALUES ('00011878000001001000',Null,'7014007',Null,'4084059',Null,'0001187800',1200,Null);

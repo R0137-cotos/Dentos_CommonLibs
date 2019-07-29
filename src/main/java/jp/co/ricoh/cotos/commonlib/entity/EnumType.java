@@ -82,7 +82,7 @@ public class EnumType {
 	 */
 	public enum ServiceCategory {
 
-		見積("1"), 契約("2"), 手配("3");
+		共通("0"), 見積("1"), 契約("2"), 手配("3");
 
 		private final String text;
 
@@ -291,6 +291,31 @@ public class EnumType {
 
 		@JsonCreator
 		public static InitialAccountSalesStatus fromString(String string) {
+			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
+		}
+	}
+
+	/**
+	 * イニシャル/ランニング区分
+	 */
+	public enum InitialRunningDiv {
+
+		イニシャル("1"), ランニング("2"), 期間売("3");
+
+		private final String text;
+
+		private InitialRunningDiv(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		@JsonValue
+		public String toString() {
+			return this.text;
+		}
+
+		@JsonCreator
+		public static InitialRunningDiv fromString(String string) {
 			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
 		}
 	}

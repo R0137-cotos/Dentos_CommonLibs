@@ -141,5 +141,4 @@ public class ItemEstimation extends EntityBase {
 	public void prePersist() {
 		super.setCreatedAt(new Date());
 	}
-
 }

@@ -179,6 +179,56 @@ public class ArrangementListInfo {
 	 */
 	@ApiModelProperty(value = "R恒久契約識別番号", required = false, position = 23, allowableValues = "range[0,255]")
 	private String immutableContIdentNumber;
+	
+	/**
+	 * 受付担当SS組織
+	 */
+	@ApiModelProperty(value = "受付担当SS組織", required = false, position = 24, allowableValues = "range[0,255]")
+	private String picAccSsName;
+
+	/**
+	 * 受付担当CE氏名
+	 */
+	@ApiModelProperty(value = "受付担当CE氏名", required = false, position = 25, allowableValues = "range[0,255]")
+	private String picAccCeName;
+
+	/**
+	 * 導入担当SS組織
+	 */
+	@ApiModelProperty(value = "導入担当SS組織", required = false, position = 26, allowableValues = "range[0,255]")
+	private String picIntSsName;
+
+	/**
+	 * 導入担当CE氏名
+	 */
+	@ApiModelProperty(value = "導入担当CE氏名", required = false, position = 27, allowableValues = "range[0,255]")
+	private String picIntCeName;
+
+	/**
+	 * 保守担当SS組織
+	 */
+	@ApiModelProperty(value = "保守担当SS組織", required = false, position = 28, allowableValues = "range[0,255]")
+	private String picMntSsName;
+
+	/**
+	 * 保守担当CE氏名
+	 */
+	@ApiModelProperty(value = "保守担当CE氏名", required = false, position = 29, allowableValues = "range[0,255]")
+	private String picMntCeName;
+
+	/**
+	 * 登録日時
+	 */
+	@ApiModelProperty(value = "登録日時", required = false, position = 30)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createdAt;
+
+	/**
+	 * 更新日時
+	 */
+	@ApiModelProperty(value = "更新日時", required = false, position = 31)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date updatedAt;
 
 	@PrePersist
 	public void prePersist() {

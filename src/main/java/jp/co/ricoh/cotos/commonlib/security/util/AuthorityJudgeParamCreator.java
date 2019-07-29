@@ -145,9 +145,9 @@ public class AuthorityJudgeParamCreator {
 			mvEmployeeMasterList.add(mvEmployeeMasterRepository.findByMomEmployeeId(contract.getContractPicSaEmp().getMomEmployeeId()));
 
 			// 担当CE
-			if (contract.getContractPicCeEmp() != null) {
-				log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("担当CE", "MoM社員ID", contract.getContractPicCeEmp().getMomEmployeeId()).toArray(new String[0])).getMsg());
-				mvEmployeeMasterList.add(mvEmployeeMasterRepository.findByMomEmployeeId(contract.getContractPicCeEmp().getMomEmployeeId()));
+			if (contract.getContractPicAccCeEmp() != null) {
+				log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("担当CE", "MoM社員ID", contract.getContractPicAccCeEmp().getMomEmployeeId()).toArray(new String[0])).getMsg());
+				mvEmployeeMasterList.add(mvEmployeeMasterRepository.findByMomEmployeeId(contract.getContractPicAccCeEmp().getMomEmployeeId()));
 			}
 
 			// 追加編集者
@@ -230,9 +230,9 @@ public class AuthorityJudgeParamCreator {
 			mvEmployeeMasterList.add(mvEmployeeMasterRepository.findByMomEmployeeId(contract.getContractPicSaEmp().getMomEmployeeId()));
 
 			// 担当CE
-			if (contract.getContractPicCeEmp() != null) {
-				log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("担当CE", "MoM社員ID", contract.getContractPicCeEmp().getMomEmployeeId()).toArray(new String[0])).getMsg());
-				mvEmployeeMasterList.add(mvEmployeeMasterRepository.findByMomEmployeeId(contract.getContractPicCeEmp().getMomEmployeeId()));
+			if (contract.getContractPicAccCeEmp() != null) {
+				log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("担当CE", "MoM社員ID", contract.getContractPicAccCeEmp().getMomEmployeeId()).toArray(new String[0])).getMsg());
+				mvEmployeeMasterList.add(mvEmployeeMasterRepository.findByMomEmployeeId(contract.getContractPicAccCeEmp().getMomEmployeeId()));
 			}
 
 			// 追加編集者
