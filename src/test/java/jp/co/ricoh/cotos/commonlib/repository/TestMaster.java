@@ -1238,6 +1238,7 @@ public class TestMaster {
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/productMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/itemMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/equipmentCompMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/jsonMaster.sql");
 
 		// エンティティの取得
 		Long id = 1L;
@@ -1439,12 +1440,13 @@ public class TestMaster {
 	}
 
 	@Test
-	public void ProductGrpMasterRepository_findByProductGrpCodeのテスト() {
+	public void ProductGrpMasterRepository_findByProductGroupCdのテスト() {
 		// テストデータ登録
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/productGrpMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/approvalRouteGrpMaster.sql");
-		List<String> foundTestString = Arrays.asList("1234");
+		List<String> foundTestString = Arrays.asList("CPG00001");
 		List<ProductGrpMaster> foundList = productGrpMasterRepository.findByProductGroupCdIn(foundTestString);
+
 		// データが取得できていることを確認
 		Assert.assertTrue(foundList.size() > 0);
 
