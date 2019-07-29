@@ -55,10 +55,10 @@ import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmci105Master;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmcj005Master;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTjmmb010UtlItem;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTjmmb020UtlCd;
+import jp.co.ricoh.cotos.commonlib.entity.master.MvWjmoc020OrgAllInfoCom;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvWjmoc080DealerInfo;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvWjmoc080DealerInfo.Id;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvWjmoco40EmpAllInfoCom;
-import jp.co.ricoh.cotos.commonlib.entity.master.MvWjmoc020OrgAllInfoCom;
 import jp.co.ricoh.cotos.commonlib.entity.master.NonBusinessDayCalendarMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.ProductCompMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.ProductGrpMaster;
@@ -112,9 +112,9 @@ import jp.co.ricoh.cotos.commonlib.repository.master.MvTJmci105Repository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTJmcj005MasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTjmmb010UtlItemRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTjmmb020UtlCdRepository;
+import jp.co.ricoh.cotos.commonlib.repository.master.MvWjmoc020OrgAllInfoComRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvWjmoc080DealerInfoRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvWjmoco40EmpAllInfoComRepository;
-import jp.co.ricoh.cotos.commonlib.repository.master.MvWjmoc020OrgAllInfoComRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.NonBusinessDayCalendarMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ProductCompMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ProductGrpMasterRepository;
@@ -1444,7 +1444,7 @@ public class TestMaster {
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/productGrpMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/approvalRouteGrpMaster.sql");
 		List<String> foundTestString = Arrays.asList("1234");
-		List<ProductGrpMaster> foundList = productGrpMasterRepository.findByProductGroupCdIn(foundTestString);
+		List<ProductGrpMaster> foundList = productGrpMasterRepository.findByProductGrpCodeIn(foundTestString);
 		// データが取得できていることを確認
 		Assert.assertTrue(foundList.size() > 0);
 
