@@ -10,8 +10,8 @@ import jp.co.ricoh.cotos.commonlib.entity.master.ProductGrpMaster;
 @Repository
 public interface ProductGrpMasterRepository extends CrudRepository<ProductGrpMaster, Long> {
 
-	public ProductGrpMaster findByProductGrpCode(String productGroupCd);
+	public ProductGrpMaster findByProductGroupCd(String productGroupCd);
 
-	public List<ProductGrpMaster> findByProductGrpCodeIn(List<String> productGrpCodeList);
+	public List<ProductGrpMaster> findByProductGroupCdIn(List<String> productGrpCodeList);
 
 }

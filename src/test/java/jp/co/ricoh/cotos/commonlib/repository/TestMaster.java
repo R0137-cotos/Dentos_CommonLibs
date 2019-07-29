@@ -241,14 +241,13 @@ public class TestMaster {
 	private MvTJmcj005MasterRepository mvTJmcj005MasterRepository;
 	@Autowired
 	private VDirectDeliveryDealerInfoMasterRepository vDirectDeliveryDealerInfoMasterRepository;
-
 	@Autowired
 	private MvWjmoco40EmpAllInfoComRepository mvWjmoco40EmpAllInfoComRepository;
 	@Autowired
 	private MvWjmoc080DealerInfoRepository mvWjmoc080DealerInfoRepository;
-
 	@Autowired
 	private MvTJmci102MasterRepository mvTJmci102MasterRepository;
+	@Autowired
 	private MvWjmoc020OrgAllInfoComRepository mvWjmoc020OrgAllInfoComRepository;
 	@Autowired
 	private IfsCsvMasterRepository ifsCsvMasterRepository;
@@ -1254,6 +1253,7 @@ public class TestMaster {
 	@Test
 	public void ItemTransCompMasterのテスト() throws Exception {
 		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/jsonMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/productMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/itemMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/itemTransCompMaster.sql");
@@ -1444,7 +1444,7 @@ public class TestMaster {
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/productGrpMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/approvalRouteGrpMaster.sql");
 		List<String> foundTestString = Arrays.asList("1234");
-		List<ProductGrpMaster> foundList = productGrpMasterRepository.findByProductGrpCodeIn(foundTestString);
+		List<ProductGrpMaster> foundList = productGrpMasterRepository.findByProductGroupCdIn(foundTestString);
 		// データが取得できていることを確認
 		Assert.assertTrue(foundList.size() > 0);
 
@@ -1462,6 +1462,7 @@ public class TestMaster {
 		// テストデータ登録
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/productMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/ifsCsvMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/jsonMaster.sql");
 
 		// エンティティの取得
 		Long id = 1L;
