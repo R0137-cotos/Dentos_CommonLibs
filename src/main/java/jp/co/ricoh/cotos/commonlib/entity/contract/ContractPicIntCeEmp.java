@@ -1,6 +1,7 @@
 package jp.co.ricoh.cotos.commonlib.entity.contract;
 
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,6 +21,7 @@ import lombok.EqualsAndHashCode;
  */
 @Entity
 @EqualsAndHashCode(callSuper = true)
+@EntityListeners(ContractPicIntCeEmpListener.class)
 @Data
 @Table(name = "contract_pic_int_ce_emp")
 public class ContractPicIntCeEmp extends EmployeeAbstractEntity {
@@ -32,7 +34,7 @@ public class ContractPicIntCeEmp extends EmployeeAbstractEntity {
 	@SequenceGenerator(name = "contract_pic_int_ce_emp_seq", sequenceName = "contract_pic_int_ce_emp_seq", allocationSize = 1)
 	@ApiModelProperty(value = "ID(作成時不要)", required = true, position = 1, allowableValues = "range[0,9223372036854775807]", readOnly = true)
 	private long Id;
-	
+
 	/**
 	 * 契約
 	 */
