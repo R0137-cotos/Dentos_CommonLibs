@@ -97,7 +97,7 @@ public class ProductGrpMaster extends EntityBaseMaster {
 	 */
 	@Size(max = 255)
 	@ApiModelProperty(value = "商品グループコード", required = false, position = 8, allowableValues = "range[0,255]")
-	private String productGrpCode;
+	private String productGroupCd;
 
 	/**
 	 * 初期費内部振替対象フラグ

@@ -88,7 +88,7 @@ public class EmployeeAbstractEntity extends EntityBase {
 	/**
 	 * 住所
 	 */
-	@Size(max = 255)
+	@Size(max = 1000)
 	@ApiModelProperty(value = "住所(作成時不要)", required = false, position = 60, allowableValues = "range[0,1000]", readOnly = true)
 	private String address;
 

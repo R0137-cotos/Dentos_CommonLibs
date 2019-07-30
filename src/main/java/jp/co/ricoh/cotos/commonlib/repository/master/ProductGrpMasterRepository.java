@@ -14,4 +14,4 @@ public interface ProductGrpMasterRepository extends CrudRepository<ProductGrpMas
 
 	public List<ProductGrpMaster> findByProductGroupCdIn(List<String> productGrpCodeList);
 
-}	
+}

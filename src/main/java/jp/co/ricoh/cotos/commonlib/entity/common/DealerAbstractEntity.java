@@ -45,7 +45,7 @@ public class DealerAbstractEntity extends EntityBase {
 	/**
 	 * 住所
 	 */
-	@Size(max = 1001)
+	@Size(max = 1000)
 	@ApiModelProperty(value = "住所(作成時不要)", required = false, position = 54, allowableValues = "range[0,1000]", readOnly = true)
 	private String address;
 

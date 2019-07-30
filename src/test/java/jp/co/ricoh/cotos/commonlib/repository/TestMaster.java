@@ -55,10 +55,10 @@ import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmci105Master;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmcj005Master;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTjmmb010UtlItem;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTjmmb020UtlCd;
+import jp.co.ricoh.cotos.commonlib.entity.master.MvWjmoc020OrgAllInfoCom;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvWjmoc080DealerInfo;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvWjmoc080DealerInfo.Id;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvWjmoco40EmpAllInfoCom;
-import jp.co.ricoh.cotos.commonlib.entity.master.MvWjmoc020OrgAllInfoCom;
 import jp.co.ricoh.cotos.commonlib.entity.master.NonBusinessDayCalendarMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.ProductCompMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.ProductGrpMaster;
@@ -112,9 +112,9 @@ import jp.co.ricoh.cotos.commonlib.repository.master.MvTJmci105Repository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTJmcj005MasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTjmmb010UtlItemRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTjmmb020UtlCdRepository;
+import jp.co.ricoh.cotos.commonlib.repository.master.MvWjmoc020OrgAllInfoComRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvWjmoc080DealerInfoRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvWjmoco40EmpAllInfoComRepository;
-import jp.co.ricoh.cotos.commonlib.repository.master.MvWjmoc020OrgAllInfoComRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.NonBusinessDayCalendarMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ProductCompMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ProductGrpMasterRepository;
@@ -241,14 +241,13 @@ public class TestMaster {
 	private MvTJmcj005MasterRepository mvTJmcj005MasterRepository;
 	@Autowired
 	private VDirectDeliveryDealerInfoMasterRepository vDirectDeliveryDealerInfoMasterRepository;
-
 	@Autowired
 	private MvWjmoco40EmpAllInfoComRepository mvWjmoco40EmpAllInfoComRepository;
 	@Autowired
 	private MvWjmoc080DealerInfoRepository mvWjmoc080DealerInfoRepository;
-
 	@Autowired
 	private MvTJmci102MasterRepository mvTJmci102MasterRepository;
+	@Autowired
 	private MvWjmoc020OrgAllInfoComRepository mvWjmoc020OrgAllInfoComRepository;
 	@Autowired
 	private IfsCsvMasterRepository ifsCsvMasterRepository;
@@ -1239,6 +1238,7 @@ public class TestMaster {
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/productMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/itemMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/equipmentCompMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/jsonMaster.sql");
 
 		// エンティティの取得
 		Long id = 1L;
@@ -1254,6 +1254,7 @@ public class TestMaster {
 	@Test
 	public void ItemTransCompMasterのテスト() throws Exception {
 		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/jsonMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/productMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/itemMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/itemTransCompMaster.sql");
@@ -1439,12 +1440,13 @@ public class TestMaster {
 	}
 
 	@Test
-	public void ProductGrpMasterRepository_findByProductGrpCodeのテスト() {
+	public void ProductGrpMasterRepository_findByProductGroupCdのテスト() {
 		// テストデータ登録
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/productGrpMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/approvalRouteGrpMaster.sql");
-		List<String> foundTestString = Arrays.asList("1234");
+		List<String> foundTestString = Arrays.asList("CPG00001");
 		List<ProductGrpMaster> foundList = productGrpMasterRepository.findByProductGroupCdIn(foundTestString);
+
 		// データが取得できていることを確認
 		Assert.assertTrue(foundList.size() > 0);
 
@@ -1462,6 +1464,7 @@ public class TestMaster {
 		// テストデータ登録
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/productMaster.sql");
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/ifsCsvMaster.sql");
+		context.getBean(DBConfig.class).initTargetTestData("repository/master/jsonMaster.sql");
 
 		// エンティティの取得
 		Long id = 1L;
