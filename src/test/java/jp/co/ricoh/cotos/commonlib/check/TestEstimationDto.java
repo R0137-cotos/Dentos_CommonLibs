@@ -915,7 +915,7 @@ public class TestEstimationDto {
 		// 異常系（@Min ：）
 		BeanUtils.copyProperties(entity, testTarget);
 		testTarget.setProductMasterId(INT_MINUS_1);
-		testTarget.setRepItemMasterId(Long.getLong("-1"));
+		testTarget.setRepItemMasterId(LONG_MINUS_1);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
