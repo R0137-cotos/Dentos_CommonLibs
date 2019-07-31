@@ -65,7 +65,7 @@ public class EstimationInitialCostDto {
 	 */
 	@Valid
 	@ApiModelProperty(value = "初期費情報", required = true, position = 7)
-	private List<EstimationInitialCostInfoDto> EstimationInitialCostInfoDtoList;
+	private List<EstimationInitialCostInfoDto> estimationInitialCostInfoDtoList;
 
 	/**
 	 * 販社CD
