@@ -540,7 +540,7 @@ public class TestAuthorityJudgeParamCreator {
 		Assert.assertNotNull("正常に社員情報が作成されていること", authParam.getRequesterMvEmployeeMaster());
 		Assert.assertTrue("ユーザー直接指定であること", authParam.isManualApprover());
 	}
-	
+
 	@Test
 	public void 正常_権限判定用パラメーター取得_手配_手配無し() {
 
@@ -550,6 +550,9 @@ public class TestAuthorityJudgeParamCreator {
 		// 契約
 		Contract contract = new Contract();
 		contract.setLifecycleStatus(LifecycleStatus.作成中);
+
+		// 手配業務
+		ArrangementWork arrangementWork = new ArrangementWork();
 
 		// 担当SA
 		contract.setContractPicSaEmp(new ContractPicSaEmp());
@@ -564,7 +567,7 @@ public class TestAuthorityJudgeParamCreator {
 		contract.setCustomerContract(new CustomerContract());
 		contract.getCustomerContract().setMomKjbSystemId("000000003985825");
 
-		AuthorityJudgeParameter authParam = authorityJudgeParamCreator.createFromArrangementWork(null, contract, actor, AccessType.参照);
+		AuthorityJudgeParameter authParam = authorityJudgeParamCreator.createFromArrangementWork(arrangementWork, contract, actor, AccessType.参照);
 
 		Assert.assertNotNull("正常に社員情報が作成されていること", authParam.getMvEmployeeMasterList());
 		Assert.assertNotNull("正常に顧客情報が作成されていること", authParam.getVKjbMaster());
