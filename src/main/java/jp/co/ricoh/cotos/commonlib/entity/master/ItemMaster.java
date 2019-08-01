@@ -234,4 +234,11 @@ public class ItemMaster extends EntityBaseMaster {
 	@OneToMany(mappedBy = "itemMaster")
 	@ApiModelProperty(value = "品種振替構成マスタ", required = false, position = 21)
 	private List<ItemTransCompMaster> itemTransCompMasterList;
+
+	/**
+	 * 被振替対象機種構成マスタ
+	 */
+	@OneToMany(mappedBy = "trnsItemMaster")
+	@ApiModelProperty(value = "被振替対象機種構成マスタ", required = false, position = 22)
+	private List<EquipmentCompMaster> trnsEquipmentCompMasterList;
 }
