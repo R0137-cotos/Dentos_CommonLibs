@@ -223,7 +223,7 @@ public class TestEstimationDto {
 		BeanUtils.copyProperties(entity, testTarget);
 		testTarget.setDealerFlowOrder(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 
 		// 異常系（@Size(max) ：）
