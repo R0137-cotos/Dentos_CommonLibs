@@ -198,8 +198,10 @@ public class TestCommunicationDto {
 	public void ContactRegisterParameterのテスト() throws Exception {
 		Contact entity = contactRepository.findOne(1L);
 		ContactRegisterParameter dto = new ContactRegisterParameter();
-		dto.setContact(entity);
-		dto.setParentContact(entity);
+		ContactDto contactDto = new ContactDto();
+		BeanUtils.copyProperties(entity, contactDto);
+		dto.setContact(contactDto);
+		dto.setParentContact(contactDto);
 		List<String> dummy_list = new ArrayList<String>();
 		dto.setMailSubjectRepalceValueList(dummy_list);
 		dto.setMailTextRepalceValueList(dummy_list);
