@@ -68,7 +68,6 @@ public class ContactDto extends DtoBase {
 	/**
 	 * 送信日時
 	 */
-	@NotNull
 	@ApiModelProperty(value = "送信日時", required = true, position = 9)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date sendAt;

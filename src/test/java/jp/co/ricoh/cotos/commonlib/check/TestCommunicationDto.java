@@ -199,7 +199,7 @@ public class TestCommunicationDto {
 		Contact entity = contactRepository.findOne(1L);
 		ContactRegisterParameter dto = new ContactRegisterParameter();
 		ContactDto contactDto = new ContactDto();
-		BeanUtils.copyProperties(entity, contactDto);
+		BeanUtils.copyProperties(contactDto, entity);
 		dto.setContact(contactDto);
 		dto.setParentContact(contactDto);
 		List<String> dummy_list = new ArrayList<String>();
