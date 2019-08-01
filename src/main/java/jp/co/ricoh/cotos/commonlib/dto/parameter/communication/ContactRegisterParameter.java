@@ -2,6 +2,7 @@ package jp.co.ricoh.cotos.commonlib.dto.parameter.communication;
 
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import io.swagger.annotations.ApiParam;
@@ -16,12 +17,14 @@ public class ContactRegisterParameter {
 	/**
 	 * 問い合わせエンティティ
 	 */
+	@Valid
 	@ApiParam(value = "問い合わせエンティティ", required = false)
 	private ContactDto contact;
 
 	/**
 	 * 親問い合わせエンティティ
 	 */
+	@Valid
 	@ApiParam(value = "親問い合わせエンティティ", required = false)
 	private ContactDto parentContact;
 
