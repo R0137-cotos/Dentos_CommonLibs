@@ -242,7 +242,7 @@ public class AuthorityJudgeParamCreator {
 			mvEmployeeMasterList.add(mvEmployeeMasterRepository.findByMomEmployeeId(contract.getContractPicSaEmp().getMomEmployeeId()));
 
 			// 手配担当者
-			if (arrangementWork.getArrangementPicWorkerEmp() != null) {
+			if (arrangementWork != null && arrangementWork.getArrangementPicWorkerEmp() != null) {
 				log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("担当作業者", "MoM社員ID", arrangementWork.getArrangementPicWorkerEmp().getMomEmployeeId()).toArray(new String[0])).getMsg());
 				mvEmployeeMasterList.add(mvEmployeeMasterRepository.findByMomEmployeeId(arrangementWork.getArrangementPicWorkerEmp().getMomEmployeeId()));
 			}
