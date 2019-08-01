@@ -98,8 +98,10 @@ public class TestCommunicationDto {
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setContactToList(null);
 		testTarget.setContactFromEmpId(null);
+		testTarget.setTitle(null);
+		testTarget.setContent(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(result.getErrorInfoList().size() == 4);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "送信者MoM社員IDが設定されていません。"));
 
