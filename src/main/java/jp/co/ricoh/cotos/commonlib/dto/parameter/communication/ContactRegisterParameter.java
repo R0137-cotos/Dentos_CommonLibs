@@ -2,10 +2,10 @@ package jp.co.ricoh.cotos.commonlib.dto.parameter.communication;
 
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import io.swagger.annotations.ApiParam;
-import jp.co.ricoh.cotos.commonlib.entity.communication.Contact;
 import lombok.Data;
 
 /**
@@ -17,14 +17,16 @@ public class ContactRegisterParameter {
 	/**
 	 * 問い合わせエンティティ
 	 */
+	@Valid
 	@ApiParam(value = "問い合わせエンティティ", required = false)
-	private Contact contact;
+	private ContactDto contact;
 
 	/**
 	 * 親問い合わせエンティティ
 	 */
+	@Valid
 	@ApiParam(value = "親問い合わせエンティティ", required = false)
-	private Contact parentContact;
+	private ContactDto parentContact;
 
 	/**
 	 * メール件名置換リスト

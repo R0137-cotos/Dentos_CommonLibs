@@ -540,7 +540,7 @@ public class TestAuthorityJudgeParamCreator {
 		Assert.assertNotNull("正常に社員情報が作成されていること", authParam.getRequesterMvEmployeeMaster());
 		Assert.assertTrue("ユーザー直接指定であること", authParam.isManualApprover());
 	}
-	
+
 	@Test
 	public void 正常_権限判定用パラメーター取得_手配_手配無し() {
 

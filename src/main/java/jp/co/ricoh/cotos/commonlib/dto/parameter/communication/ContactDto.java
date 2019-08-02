@@ -52,6 +52,7 @@ public class ContactDto extends DtoBase {
 	/**
 	 * タイトル
 	 */
+	@NotNull
 	@Size(max = 255)
 	@ApiModelProperty(value = "タイトル", required = false, position = 7, allowableValues = "range[0,255]")
 	private String title;
@@ -59,6 +60,7 @@ public class ContactDto extends DtoBase {
 	/**
 	 * 内容
 	 */
+	@NotNull
 	@ApiModelProperty(value = "内容", required = false, position = 8)
 	@Lob
 	private String content;
@@ -66,7 +68,6 @@ public class ContactDto extends DtoBase {
 	/**
 	 * 送信日時
 	 */
-	@NotNull
 	@ApiModelProperty(value = "送信日時", required = true, position = 9)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date sendAt;

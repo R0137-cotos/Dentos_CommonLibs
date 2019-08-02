@@ -98,8 +98,10 @@ public class TestCommunicationDto {
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setContactToList(null);
 		testTarget.setContactFromEmpId(null);
+		testTarget.setTitle(null);
+		testTarget.setContent(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(result.getErrorInfoList().size() == 4);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "送信者MoM社員IDが設定されていません。"));
 
@@ -196,8 +198,10 @@ public class TestCommunicationDto {
 	public void ContactRegisterParameterのテスト() throws Exception {
 		Contact entity = contactRepository.findOne(1L);
 		ContactRegisterParameter dto = new ContactRegisterParameter();
-		dto.setContact(entity);
-		dto.setParentContact(entity);
+		ContactDto contactDto = new ContactDto();
+		BeanUtils.copyProperties(contactDto, entity);
+		dto.setContact(contactDto);
+		dto.setParentContact(contactDto);
 		List<String> dummy_list = new ArrayList<String>();
 		dto.setMailSubjectRepalceValueList(dummy_list);
 		dto.setMailTextRepalceValueList(dummy_list);

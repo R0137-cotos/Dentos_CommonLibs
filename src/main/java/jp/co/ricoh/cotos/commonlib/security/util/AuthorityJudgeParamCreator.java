@@ -144,10 +144,22 @@ public class AuthorityJudgeParamCreator {
 			log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("担当SA", "MoM社員ID", contract.getContractPicSaEmp().getMomEmployeeId()).toArray(new String[0])).getMsg());
 			mvEmployeeMasterList.add(mvEmployeeMasterRepository.findByMomEmployeeId(contract.getContractPicSaEmp().getMomEmployeeId()));
 
-			// 担当CE
+			// 受付担当CE
 			if (contract.getContractPicAccCeEmp() != null) {
-				log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("担当CE", "MoM社員ID", contract.getContractPicAccCeEmp().getMomEmployeeId()).toArray(new String[0])).getMsg());
+				log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("受付担当CE", "MoM社員ID", contract.getContractPicAccCeEmp().getMomEmployeeId()).toArray(new String[0])).getMsg());
 				mvEmployeeMasterList.add(mvEmployeeMasterRepository.findByMomEmployeeId(contract.getContractPicAccCeEmp().getMomEmployeeId()));
+			}
+
+			// 導入担当CE
+			if (contract.getContractPicIntCeEmp() != null) {
+				log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("導入担当CE", "MoM社員ID", contract.getContractPicIntCeEmp().getMomEmployeeId()).toArray(new String[0])).getMsg());
+				mvEmployeeMasterList.add(mvEmployeeMasterRepository.findByMomEmployeeId(contract.getContractPicIntCeEmp().getMomEmployeeId()));
+			}
+
+			// 保守担当CE
+			if (contract.getContractPicMntCeEmp() != null) {
+				log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("保守担当CE", "MoM社員ID", contract.getContractPicMntCeEmp().getMomEmployeeId()).toArray(new String[0])).getMsg());
+				mvEmployeeMasterList.add(mvEmployeeMasterRepository.findByMomEmployeeId(contract.getContractPicMntCeEmp().getMomEmployeeId()));
 			}
 
 			// 追加編集者
@@ -229,10 +241,28 @@ public class AuthorityJudgeParamCreator {
 			log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("担当SA", "MoM社員ID", contract.getContractPicSaEmp().getMomEmployeeId()).toArray(new String[0])).getMsg());
 			mvEmployeeMasterList.add(mvEmployeeMasterRepository.findByMomEmployeeId(contract.getContractPicSaEmp().getMomEmployeeId()));
 
-			// 担当CE
+			// 手配担当者
+			if (arrangementWork != null && arrangementWork.getArrangementPicWorkerEmp() != null) {
+				log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("担当作業者", "MoM社員ID", arrangementWork.getArrangementPicWorkerEmp().getMomEmployeeId()).toArray(new String[0])).getMsg());
+				mvEmployeeMasterList.add(mvEmployeeMasterRepository.findByMomEmployeeId(arrangementWork.getArrangementPicWorkerEmp().getMomEmployeeId()));
+			}
+
+			// 受付担当CE
 			if (contract.getContractPicAccCeEmp() != null) {
-				log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("担当CE", "MoM社員ID", contract.getContractPicAccCeEmp().getMomEmployeeId()).toArray(new String[0])).getMsg());
+				log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("受付担当CE", "MoM社員ID", contract.getContractPicAccCeEmp().getMomEmployeeId()).toArray(new String[0])).getMsg());
 				mvEmployeeMasterList.add(mvEmployeeMasterRepository.findByMomEmployeeId(contract.getContractPicAccCeEmp().getMomEmployeeId()));
+			}
+
+			// 導入担当CE
+			if (contract.getContractPicIntCeEmp() != null) {
+				log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("導入担当CE", "MoM社員ID", contract.getContractPicIntCeEmp().getMomEmployeeId()).toArray(new String[0])).getMsg());
+				mvEmployeeMasterList.add(mvEmployeeMasterRepository.findByMomEmployeeId(contract.getContractPicIntCeEmp().getMomEmployeeId()));
+			}
+
+			// 保守担当CE
+			if (contract.getContractPicMntCeEmp() != null) {
+				log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("保守担当CE", "MoM社員ID", contract.getContractPicMntCeEmp().getMomEmployeeId()).toArray(new String[0])).getMsg());
+				mvEmployeeMasterList.add(mvEmployeeMasterRepository.findByMomEmployeeId(contract.getContractPicMntCeEmp().getMomEmployeeId()));
 			}
 
 			// 追加編集者
