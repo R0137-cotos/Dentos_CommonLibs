@@ -24,7 +24,6 @@ public class ContactRegisterParameter {
 	/**
 	 * 親問い合わせエンティティ
 	 */
-	@Valid
 	@ApiParam(value = "親問い合わせエンティティ", required = false)
 	private ContactDto parentContact;
 
