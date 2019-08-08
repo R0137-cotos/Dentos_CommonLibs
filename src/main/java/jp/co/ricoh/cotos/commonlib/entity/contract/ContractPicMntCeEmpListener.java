@@ -62,8 +62,7 @@ public class ContractPicMntCeEmpListener {
 			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "MasterDoesNotExistEmployeeMaster", regexList));
 		}
 
-		BeanUtils.copyProperties(employeeMaster, contractPicMntCeEmp);
-		contractPicMntCeEmp.setEmployeeName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
+		BeanUtils.copyProperties(employeeMaster, contractPicMntCeEmp, "salesDepartmentName", "phoneNumber", "mailAddress");
 		contractPicMntCeEmp.setAddress(convertJoinedAddress(employeeMaster));
 	}
 

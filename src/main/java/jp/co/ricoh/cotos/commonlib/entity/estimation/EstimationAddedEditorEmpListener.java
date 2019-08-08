@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import javax.persistence.PrePersist;
 import javax.transaction.Transactional;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -62,23 +61,7 @@ public class EstimationAddedEditorEmpListener {
 			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "MasterDoesNotExistEmployeeMaster", regexList));
 		}
 
-		BeanUtils.copyProperties(employeeMaster, estimationAddedEditorEmp);
-		estimationAddedEditorEmp.setEmployeeName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
-		estimationAddedEditorEmp.setAddress(convertJoinedAddress(employeeMaster));
-	}
-
-	private String convertJoinedAddress(MvEmployeeMaster master) {
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(StringUtils.defaultIfEmpty(master.getTdhknNmKnji(), StringUtils.EMPTY));
-		sb.append(StringUtils.defaultIfEmpty(master.getSkugnchosnKnji(), StringUtils.EMPTY));
-		sb.append(StringUtils.defaultIfEmpty(master.getOwaTusyoKnji(), StringUtils.EMPTY));
-		sb.append(StringUtils.defaultIfEmpty(master.getKowChomeKnji(), StringUtils.EMPTY));
-		sb.append(StringUtils.defaultIfEmpty(master.getStreet(), StringUtils.EMPTY));
-		sb.append(StringUtils.defaultIfEmpty(master.getBuilding(), StringUtils.EMPTY));
-
-		return sb.toString();
+		BeanUtils.copyProperties(employeeMaster, estimationAddedEditorEmp, "orgName", "salesCompanyName", "orgPhoneNumber", "postNumber", "phoneNumber", "mailAddress");
 	}
 
 }

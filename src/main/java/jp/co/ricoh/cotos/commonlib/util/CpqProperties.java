@@ -36,6 +36,10 @@ public class CpqProperties {
 	 */
 	String updateAssets;
 	/**
+	 * 契約更新時にコールするAPI情報
+	 */
+	String createReconfigUrl;
+	/**
 	 * 見積コピー時にコールするAPI情報
 	 */
 	String saveTransaction;

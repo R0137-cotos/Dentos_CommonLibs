@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.persistence.PrePersist;
 import javax.transaction.Transactional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -50,6 +51,7 @@ public class ContractAddedEditorEmpListener {
 			String[] regexList = { "契約追加編集者社員" };
 			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "MasterDoesNotExistEmployeeMaster", regexList));
 		}
+		BeanUtils.copyProperties(employeeMaster, contractAddedEditorEmp, "salesDepartmentName", "salesCompanyName", "orgPhoneNumber", "postNumber", "phoneNumber", "mailAddress");
 	}
 
 }
