@@ -27,6 +27,9 @@ public class AuthorityJudgeParameter {
 	/** 承認者直接指定フラグ */
 	private boolean isManualApprover;
 
+	/** 自己承認フラグ */
+	private boolean isSelfApprover = false;
+
 	/** 企事部マスター */
 	private VKjbMaster vKjbMaster;
 }
