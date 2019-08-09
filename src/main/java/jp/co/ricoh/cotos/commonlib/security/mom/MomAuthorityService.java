@@ -77,7 +77,7 @@ public class MomAuthorityService {
 		public String toValue() {
 			return this.value;
 		}
-		
+
 		@JsonCreator
 		public static AuthLevel fromString(String string) {
 			return Arrays.stream(values()).filter(v -> v.value.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
@@ -184,6 +184,11 @@ public class MomAuthorityService {
 
 			// 直接指定された承認者であれば、権限あり
 			if (authParam.isManualApprover()) {
+				return true;
+			}
+
+			// 自己承認フラグであれば、権限あり
+			if (authParam.isSelfApprover()) {
 				return true;
 			}
 
