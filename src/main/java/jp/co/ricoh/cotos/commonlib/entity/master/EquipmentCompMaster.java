@@ -105,9 +105,7 @@ public class EquipmentCompMaster extends EntityBaseMaster {
 	/**
 	 * 振替対象品種マスタ
 	 */
-	@ManyToOne
-	@JoinColumn(name = "trns_item_master_id", referencedColumnName = "id")
-	@JsonIgnore
-	@ApiModelProperty(value = "振替対象品種マスタ", required = true, position = 10)
-	private ItemMaster trnsItemMaster;
+	@Size(max = 255)
+	@ApiModelProperty(value = "振替対象品種マスタ", required = true, position = 10, allowableValues = "range[0,255]")
+	private String trnsItemMasterId;
 }
