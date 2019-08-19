@@ -133,5 +133,5 @@ public class ItemContractDto extends DtoBase {
 	@Valid
 	@OneToMany(mappedBy = "item_contract")
 	@ApiModelProperty(value = "品種明細(契約用)", required = false, position = 17)
-	private List<ItemDetailContractDto> itemDetailContractDtoList;
+	private List<ItemDetailContractDto> itemDetailContractList;
 }
