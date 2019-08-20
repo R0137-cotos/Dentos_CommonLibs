@@ -247,3 +247,4 @@
 |289|CSPIT1障害対応分マージ|
 |290|CSPIT1、IT2障害対応分マージ|
 |291|CSPIT1、IT2障害対応分マージ|
+|292|ErrorCheckException修正|

@@ -12,7 +12,12 @@ public class ErrorCheckException extends RuntimeException {
 		super();
 		this.errorInfoList = errorInfoList;
 	}
-	
+
+	public ErrorCheckException(List<ErrorInfo> errorInfoList, Throwable e) {
+		super(e);
+		this.errorInfoList = errorInfoList;
+	}
+
 	public List<ErrorInfo> getErrorInfoList() {
 		return errorInfoList;
 	}
