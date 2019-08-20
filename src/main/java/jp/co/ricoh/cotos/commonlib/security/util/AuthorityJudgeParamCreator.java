@@ -211,6 +211,15 @@ public class AuthorityJudgeParamCreator {
 					}
 					log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("承認者直接指定フラグ", "フラグ", Boolean.toString(isManualApprover)).toArray(new String[0])).getMsg());
 					authJudgeParam.setManualApprover(isManualApprover);
+
+					// 自己承認フラグ
+					boolean isSelfApprover = false;
+					// ログインユーザーが直接指定された承認者の場合
+					if (actor.getMomEmployeeId().equals(nextApproverNode.getApproverEmpId()) && ApproverDeriveMethodDiv.自己承認.equals(nextApproverNode.getApproverDeriveMethodDiv())) {
+						isSelfApprover = true;
+					}
+					log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("自己承認フラグ", "フラグ", Boolean.toString(isSelfApprover)).toArray(new String[0])).getMsg());
+					authJudgeParam.setSelfApprover(isSelfApprover);
 				}
 			}
 		}
