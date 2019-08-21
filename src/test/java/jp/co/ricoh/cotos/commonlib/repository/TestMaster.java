@@ -47,7 +47,9 @@ import jp.co.ricoh.cotos.commonlib.entity.master.MvEmployeeMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmci101Master;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmci102Master;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmci105Master;
+import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmci108Master;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmcj005Master;
+import jp.co.ricoh.cotos.commonlib.entity.master.MvTjmcc020HnbitnMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTjmmb010UtlItem;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTjmmb020UtlCd;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvWjmoc080DealerInfo;
@@ -97,7 +99,9 @@ import jp.co.ricoh.cotos.commonlib.repository.master.MvEmployeeMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTJmci101MasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTJmci102MasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTJmci105Repository;
+import jp.co.ricoh.cotos.commonlib.repository.master.MvTJmci108MasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTJmcj005MasterRepository;
+import jp.co.ricoh.cotos.commonlib.repository.master.MvTjmcc020HnbitnMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTjmmb010UtlItemRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTjmmb020UtlCdRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvWjmoc080DealerInfoRepository;
@@ -227,6 +231,12 @@ public class TestMaster {
 
 	@Autowired
 	private MvTJmci102MasterRepository mvTJmci102MasterRepository;
+
+	@Autowired
+	private MvTJmci108MasterRepository mvTJmci108MasterRepository;
+
+	@Autowired
+	private MvTjmcc020HnbitnMasterRepository mvTjmcc020HnbitnMasterRepository;
 
 	@Autowired
 	TestTools testTool = null;
@@ -1405,6 +1415,34 @@ public class TestMaster {
 	}
 
 	@Test
+	public void MvTJmci108Master_findByCustomerSiteNumberのテスト() throws Exception {
+
+		// テストデータはなし
+
+		// エンティティの取得
+		String customerSiteNumber = "2526642";
+		MvTJmci108Master found = mvTJmci108MasterRepository.findByCustomerSiteNumber(customerSiteNumber);
+
+		// Entity が null ではないことを確認(実装時に販社別届先情報.RINGS届先コードがnullでないデータが存在しなかったため)
+		Assert.assertNotNull(found);
+	}
+
+	@Test
+	public void MvTjmcc020HnbitnMaster_findByMomKgyIdAndHanshCdAndNendoのテスト() throws Exception {
+
+		// テストデータはなし
+
+		// エンティティの取得
+		String momKgyId = "000000000012704";
+		String hanshCd = "408";
+		String nendo = "2011";
+		MvTjmcc020HnbitnMaster found = mvTjmcc020HnbitnMasterRepository.findByMomKgyIdAndHanshCdAndNendo(momKgyId, hanshCd, nendo);
+
+		// Entity が null ではないことを確認(実装時に販社別届先情報.RINGS届先コードがnullでないデータが存在しなかったため)
+		Assert.assertNotNull(found);
+	}
+
+	@Test
 	public void ProductGrpMaster_findByProductGroupCdのテスト() throws Exception {
 
 		// テストデータ登録
@@ -1454,7 +1492,7 @@ public class TestMaster {
 		CommonMasterDetail found = commonMasterDetailRepository.findByCommonMasterColumnNameAndAvailablePeriodBetween("sales_tax_rate", "20190101");
 		Assert.assertEquals("取得データの税率が8(%)であること", found.getCodeValue(), "8");
 	}
-	
+
 	@Test
 	public void ProductGrpMasterRepository_findByProductGrpCodeのテスト() {
 		// テストデータ登録
