@@ -11,7 +11,7 @@ import javax.persistence.TemporalType;
 import lombok.Data;
 
 /**
- * MoM販社別販売店
+ * MoM企業
  */
 @Entity
 @Data
