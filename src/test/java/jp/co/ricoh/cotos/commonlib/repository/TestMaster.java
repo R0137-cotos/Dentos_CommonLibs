@@ -52,6 +52,7 @@ import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmcj005Master;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTjmcc020HnbitnMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTjmmb010UtlItem;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTjmmb020UtlCd;
+import jp.co.ricoh.cotos.commonlib.entity.master.MvVjmcb010MomKgyMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvWjmoc080DealerInfo;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvWjmoc080DealerInfo.Id;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvWjmoco40EmpAllInfoCom;
@@ -104,6 +105,7 @@ import jp.co.ricoh.cotos.commonlib.repository.master.MvTJmcj005MasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTjmcc020HnbitnMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTjmmb010UtlItemRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTjmmb020UtlCdRepository;
+import jp.co.ricoh.cotos.commonlib.repository.master.MvVjmcb010MomKgyMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvWjmoc080DealerInfoRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvWjmoco40EmpAllInfoComRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.ProductCompMasterRepository;
@@ -237,6 +239,9 @@ public class TestMaster {
 
 	@Autowired
 	private MvTjmcc020HnbitnMasterRepository mvTjmcc020HnbitnMasterRepository;
+
+	@Autowired
+	private MvVjmcb010MomKgyMasterRepository mvVjmcb010MomKgyMasterRepository;
 
 	@Autowired
 	TestTools testTool = null;
@@ -1437,6 +1442,19 @@ public class TestMaster {
 		String hanshCd = "408";
 		String nendo = "2011";
 		MvTjmcc020HnbitnMaster found = mvTjmcc020HnbitnMasterRepository.findByMomKgyIdAndHanshCdAndNendo(momKgyId, hanshCd, nendo);
+
+		// Entity が null ではないことを確認(実装時に販社別届先情報.RINGS届先コードがnullでないデータが存在しなかったため)
+		Assert.assertNotNull(found);
+	}
+
+	@Test
+	public void MvVjmcb010MomKgyMaster_findByMomKishIdのテスト() throws Exception {
+
+		// テストデータはなし
+
+		// エンティティの取得
+		String momKishId = "000001";
+		MvVjmcb010MomKgyMaster found = mvVjmcb010MomKgyMasterRepository.findByMomKishId(momKishId);
 
 		// Entity が null ではないことを確認(実装時に販社別届先情報.RINGS届先コードがnullでないデータが存在しなかったため)
 		Assert.assertNotNull(found);
