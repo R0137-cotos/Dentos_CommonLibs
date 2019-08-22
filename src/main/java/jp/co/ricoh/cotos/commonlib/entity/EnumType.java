@@ -314,9 +314,5 @@ public class EnumType {
 			return this.text;
 		}
 
-		@JsonCreator
-		public static DummyCodeValue fromString(String string) {
-			return Arrays.stream(values()).filter(v -> v.text.equals(string)).findFirst().orElseThrow(() -> new IllegalArgumentException(String.valueOf(string)));
-		}
 	}
 }
