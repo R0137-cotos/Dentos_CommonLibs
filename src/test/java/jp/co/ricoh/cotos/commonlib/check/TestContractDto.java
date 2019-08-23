@@ -3,6 +3,7 @@ package jp.co.ricoh.cotos.commonlib.check;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -35,11 +36,13 @@ import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.DealerContractDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ItemContractDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ManagedEstimationDetailDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ProductContractDto;
-import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.external.ContractExtCancelParameter;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.external.ContractExtCancelDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.external.ContractExtChangeDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.external.ContractExtCreateDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.external.ProductContractExtCreateDto;
 import jp.co.ricoh.cotos.commonlib.entity.contract.Contract;
+import jp.co.ricoh.cotos.commonlib.entity.contract.Contract.LifecycleStatus;
+import jp.co.ricoh.cotos.commonlib.entity.contract.Contract.WorkflowStatus;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractAddedEditorEmp;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractApprovalRoute;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractApprovalRouteNode;
@@ -1274,11 +1277,17 @@ public class TestContractDto {
 	}
 
 	@Test
-	public void ContractExtCancelParameterのテスト() throws Exception {
-		ContractExtCancelParameter entity = new ContractExtCancelParameter();
-		ContractExtCancelParameter testTarget = new ContractExtCancelParameter();
-		entity.setRjManageNumber("11111");
-		entity.setWebOrderNumber("11111");
+	public void ContractExtCancelDtoのテスト() throws Exception {
+		ContractExtCancelDto entity = new ContractExtCancelDto();
+		ContractExtCancelDto testTarget = new ContractExtCancelDto();
+		entity.setContractId(INT_10);
+		entity.setRjManageNumber("ROX000001");
+		entity.setLifecycleStatus(LifecycleStatus.作成中);
+		entity.setWorkflowStatus(WorkflowStatus.作成中);
+		entity.setCancelScheduledDate(new Date());
+		entity.setCancelReason("cancel");
+		entity.setCancelReasonEtc(STR_256);
+		entity.setCancelOrderNo("cancelNo");
 
 		// 正常系
 		BeanUtils.copyProperties(entity, testTarget);
@@ -1288,20 +1297,31 @@ public class TestContractDto {
 		// 異常系（@NotNull：）
 		BeanUtils.copyProperties(entity, testTarget);
 		testTarget.setRjManageNumber(null);
-		testTarget.setWebOrderNumber(null);
+		testTarget.setLifecycleStatus(null);
+		testTarget.setWorkflowStatus(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(result.getErrorInfoList().size() == 3);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "RJ管理番号が設定されていません。"));
 
 		// 異常系（@Size(max) ：）
 		BeanUtils.copyProperties(entity, testTarget);
 		testTarget.setRjManageNumber(STR_256);
-		testTarget.setWebOrderNumber(STR_256);
+		testTarget.setCancelReason(STR_256);
+		testTarget.setCancelReasonEtc(STR_1001);
+		testTarget.setCancelOrderNo(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(result.getErrorInfoList().size() == 4);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "RJ管理番号は最大文字数（255）を超えています。"));
+
+		// 異常系（@Min ：）
+		BeanUtils.copyProperties(entity, testTarget);
+		testTarget.setContractId(INT_MINUS_1);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "契約IDは最小値（0）を下回っています。"));
 	}
 
 	@Test
