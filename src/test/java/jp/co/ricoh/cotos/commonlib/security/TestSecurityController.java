@@ -52,6 +52,8 @@ import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.DealerContractDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ItemContractDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ManagedEstimationDetailDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ProductContractDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.detail.ContractForFindAllDetailsDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.detail.ProductContractForFindAllDetailsDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.external.ContractExtCancelParameter;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.external.ContractExtChangeDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.external.ContractExtCreateDto;
@@ -701,6 +703,16 @@ public class TestSecurityController {
 		return createParameterCheckResult(result);
 	}
 
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractForFindAllDetailsDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractForFindAllDetailsDto dto, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ProductContractForFindAllDetailsDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ProductContractForFindAllDetailsDto dto, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
 	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ManagedEstimationDetail")
 	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ManagedEstimationDetail entity, BindingResult result) {
 		return createParameterCheckResult(result);
@@ -765,7 +777,7 @@ public class TestSecurityController {
 	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ArrangementResultDto dto, BindingResult result) {
 		return createParameterCheckResult(result);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/OrderBasicContentsDto")
 	public ParamterCheckResult callParamterCheck(@RequestBody @Validated OrderBasicContentsDto dto, BindingResult result) {
 		return createParameterCheckResult(result);
