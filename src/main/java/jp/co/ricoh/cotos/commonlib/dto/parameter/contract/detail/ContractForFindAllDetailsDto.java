@@ -44,6 +44,9 @@ import lombok.EqualsAndHashCode;
 @Data
 public class ContractForFindAllDetailsDto extends EntityBase {
 
+	/**
+	 * ID
+	 */
 	@Min(0)
 	@ApiModelProperty(value = "契約ID(作成時不要)", required = true, position = 1, allowableValues = "range[0,9223372036854775807]", readOnly = true)
 	private long id;
