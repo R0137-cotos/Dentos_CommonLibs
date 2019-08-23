@@ -18,6 +18,7 @@ import javax.xml.rpc.ServiceException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -33,6 +34,7 @@ import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.AuthDiv;
 import jp.co.ricoh.cotos.commonlib.entity.master.VKjbMaster;
 import jp.co.ricoh.cotos.commonlib.logic.message.MessageUtil;
 import jp.co.ricoh.cotos.commonlib.repository.master.SuperUserMasterRepository;
+import jp.co.ricoh.cotos.commonlib.security.CotosAuthenticationDetails;
 import jp.co.ricoh.cotos.commonlib.util.DatasourceProperties;
 import jp.co.ricoh.cotos.commonlib.util.RemoteMomProperties;
 import jp.co.ricoh.jmo.cache.AuthoritySearch;
@@ -156,7 +158,7 @@ public class MomAuthorityService {
 	public boolean hasAuthority(AuthorityJudgeParameter authParam, ActionDiv actionDiv, AuthDiv authDiv, AccessType accessType) throws Exception {
 
 		// 権限レベルを取得
-		AuthLevel authLevel = this.searchMomAuthority(authParam.getActorMvEmployeeMaster().getSingleUserId(), actionDiv, authDiv);
+		AuthLevel authLevel = ((CotosAuthenticationDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getMomAuthorities().get(actionDiv).get(authDiv);
 
 		// 認可判定処理開始
 		log.info(messageUtil.createMessageInfo("AuthorizeProcessJudgeStartInfo", Arrays.asList(accessType.name(), authLevel.name()).toArray(new String[0])).getMsg());

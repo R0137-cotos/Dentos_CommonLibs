@@ -45,7 +45,7 @@ public class AccessLogOutputFilter extends OncePerRequestFilter {
 			filterChain.doFilter(request, response);
 		} finally {
 			// アクセス： end
-			log.info(messageUtil.createMessageInfo("AccessLogEndInfo", Arrays.asList(request.getMethod(), request.getRequestURL().toString(), HttpStatus.OK.value() == response.getStatus() ? "success" : "fail", singleUserId, momEmployeeId, String.valueOf(response.getStatus())).toArray(new String[0])).getMsg());
+			log.info(messageUtil.createMessageInfo("AccessLogEndInfo", Arrays.asList(request.getMethod(), request.getRequestURL().toString(), (HttpStatus.OK.value() == response.getStatus() || HttpStatus.CREATED.value() == response.getStatus()) ? "success" : "fail", singleUserId, momEmployeeId, String.valueOf(response.getStatus())).toArray(new String[0])).getMsg());
 		}
 	}
 }

@@ -1,1 +1,2 @@
 INSERT INTO super_user_master (id,created_at,created_user_id,updated_at,updated_user_id,version,user_id) VALUES (1,'2018/09/19 12:09:10','COTOS','2018/09/19 12:09:10','COTOS',1,'MOM_EMPLOYEE_ID');
+INSERT INTO super_user_master (id,created_at,created_user_id,updated_at,updated_user_id,version,user_id) VALUES (2,'2018/09/19 12:09:10','COTOS','2018/09/19 12:09:10','COTOS',1,'00500784');

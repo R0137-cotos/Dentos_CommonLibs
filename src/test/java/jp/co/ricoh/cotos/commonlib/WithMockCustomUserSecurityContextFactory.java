@@ -1,6 +1,7 @@
 package jp.co.ricoh.cotos.commonlib;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -21,7 +22,12 @@ public class WithMockCustomUserSecurityContextFactory implements WithSecurityCon
 	public SecurityContext createSecurityContext(WithMockCustomUser customUser) {
 		SecurityContext context = SecurityContextHolder.createEmptyContext();
 
-		CotosAuthenticationDetails principal = new CotosAuthenticationDetails(customUser.momEmployeeId(), customUser.singleUserId(), customUser.origin(), customUser.applicationId(), customUser.jwt(), customUser.isSuperUser(), customUser.isDummyUser(), createMomAuthorities());
+		CotosAuthenticationDetails principal = null;
+		if (customUser.actionDiv() == ActionDiv.なし) {
+		    principal = new CotosAuthenticationDetails(customUser.momEmployeeId(), customUser.singleUserId(), customUser.origin(), customUser.applicationId(), customUser.jwt(), customUser.isSuperUser(), customUser.isDummyUser(), createMomAuthorities());
+		} else {
+			principal = new CotosAuthenticationDetails(customUser.momEmployeeId(), customUser.singleUserId(), customUser.origin(), customUser.applicationId(), customUser.jwt(), customUser.isSuperUser(), customUser.isDummyUser(), createMomAuthorities(customUser));
+		}
 		Authentication auth = new PreAuthenticatedAuthenticationToken(principal, "password", principal.getAuthorities());
 		context.setAuthentication(auth);
 		return context;
@@ -40,5 +46,12 @@ public class WithMockCustomUserSecurityContextFactory implements WithSecurityCon
 		});
 
 		return userMomAuthorities;
+	}
+	
+	private Map<ActionDiv, Map<AuthDiv, AuthLevel>> createMomAuthorities(WithMockCustomUser customUser) {
+		
+		Map<AuthDiv, AuthLevel> authorities = Collections.singletonMap(customUser.authDiv(), customUser.authLevel());
+
+		return Collections.singletonMap(customUser.actionDiv(), authorities);
 	}
 }

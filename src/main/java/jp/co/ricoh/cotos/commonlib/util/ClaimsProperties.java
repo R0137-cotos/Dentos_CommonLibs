@@ -19,4 +19,6 @@ public class ClaimsProperties {
 	String origin;
 
 	String applicationId;
+	
+	String momAuth;
 }
