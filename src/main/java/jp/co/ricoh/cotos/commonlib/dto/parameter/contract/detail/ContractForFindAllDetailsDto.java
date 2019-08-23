@@ -414,7 +414,7 @@ public class ContractForFindAllDetailsDto extends EntityBase {
 	@Valid
 	@OneToMany(mappedBy = "contract")
 	@ApiModelProperty(value = "商品(契約用)", required = true, position = 52)
-	private List<ProductContractForFindAllDetailsDto> productContractForFindAllDetailsDtoList;
+	private List<ProductContractForFindAllDetailsDto> productContractList;
 
 	/**
 	 * 契約担当CE社員
