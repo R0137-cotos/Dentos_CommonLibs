@@ -101,6 +101,7 @@ public class CotosUserDetailsService implements AuthenticationUserDetailsService
 			
 			Map<ActionDiv, Map<AuthDiv, AuthLevel>> momAuthorities = null;
 			if (jwtProperties.isActivateNewAuthentication()) {
+				// JWTにある権限情報を取得
 				momAuthorities = objectMapper.readValue(jwt.getClaim(claimsProperties.getMomAuth()).asString(), new TypeReference<Map<ActionDiv, Map<AuthDiv, AuthLevel>>>(){});
 			} else {
 				// シングルユーザーIDに紐づく権限情報を取得
