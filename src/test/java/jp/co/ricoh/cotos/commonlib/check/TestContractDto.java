@@ -457,12 +457,12 @@ public class TestContractDto {
 		ContractForFindAllDetailsDto testTarget = new ContractForFindAllDetailsDto();
 		ContractForFindAllDetailsDto dto = new ContractForFindAllDetailsDto();
 
-		BeanUtils.copyProperties(entity, dto);
+		BeanUtils.copyProperties(entity, dto, "productContractList");
 
 		// 商品（契約用）
 		ProductContractForFindAllDetailsDto product = new ProductContractForFindAllDetailsDto();
 		BeanUtils.copyProperties(entity.getProductContractList().get(0), product);
-		dto.setProductContractForFindAllDetailsDtoList(Arrays.asList(product));
+		dto.setProductContractList(Arrays.asList(product));
 
 		// 正常系
 		BeanUtils.copyProperties(dto, testTarget);
@@ -527,9 +527,9 @@ public class TestContractDto {
 
 		// 異常系（@Valid：契約明細）
 		entity = contractRepository.findOne(4L);
-		BeanUtils.copyProperties(entity, dto);
+		BeanUtils.copyProperties(entity, dto, "productContractList");
 		BeanUtils.copyProperties(entity.getProductContractList().get(0), product);
-		dto.setProductContractForFindAllDetailsDtoList(Arrays.asList(product));
+		dto.setProductContractList(Arrays.asList(product));
 		BeanUtils.copyProperties(dto, testTarget);
 		testTarget.getContractDetailList().get(0).setState(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
@@ -539,9 +539,9 @@ public class TestContractDto {
 
 		// 異常系（@Valid：契約担当SA社員）
 		entity = contractRepository.findOne(4L);
-		BeanUtils.copyProperties(entity, dto);
+		BeanUtils.copyProperties(entity, dto, "productContractList");
 		BeanUtils.copyProperties(entity.getProductContractList().get(0), product);
-		dto.setProductContractForFindAllDetailsDtoList(Arrays.asList(product));
+		dto.setProductContractList(Arrays.asList(product));
 		BeanUtils.copyProperties(dto, testTarget);
 		testTarget.getContractPicSaEmp().setMomEmployeeId(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
@@ -551,9 +551,9 @@ public class TestContractDto {
 
 		// 異常系（@Valid：販売店(契約用)）
 		entity = contractRepository.findOne(4L);
-		BeanUtils.copyProperties(entity, dto);
+		BeanUtils.copyProperties(entity, dto, "productContractList");
 		BeanUtils.copyProperties(entity.getProductContractList().get(0), product);
-		dto.setProductContractForFindAllDetailsDtoList(Arrays.asList(product));
+		dto.setProductContractList(Arrays.asList(product));
 		BeanUtils.copyProperties(dto, testTarget);
 		testTarget.getDealerContractList().get(0).setDistributorCd(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
@@ -563,9 +563,9 @@ public class TestContractDto {
 
 		// 異常系（@Valid：顧客(契約用)）
 		entity = contractRepository.findOne(4L);
-		BeanUtils.copyProperties(entity, dto);
+		BeanUtils.copyProperties(entity, dto, "productContractList");
 		BeanUtils.copyProperties(entity.getProductContractList().get(0), product);
-		dto.setProductContractForFindAllDetailsDtoList(Arrays.asList(product));
+		dto.setProductContractList(Arrays.asList(product));
 		BeanUtils.copyProperties(dto, testTarget);
 		testTarget.getCustomerContract().setCompanyRepresentativeNameKana(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
@@ -575,11 +575,11 @@ public class TestContractDto {
 
 		// 異常系（@Valid：商品(契約用)）
 		entity = contractRepository.findOne(4L);
-		BeanUtils.copyProperties(entity, dto);
+		BeanUtils.copyProperties(entity, dto, "productContractList");
 		BeanUtils.copyProperties(entity.getProductContractList().get(0), product);
-		dto.setProductContractForFindAllDetailsDtoList(Arrays.asList(product));
+		dto.setProductContractList(Arrays.asList(product));
 		BeanUtils.copyProperties(dto, testTarget);
-		testTarget.getProductContractForFindAllDetailsDtoList().get(0).setProductMasterId(INT_MINUS_1);
+		testTarget.getProductContractList().get(0).setProductMasterId(INT_MINUS_1);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
@@ -587,9 +587,9 @@ public class TestContractDto {
 
 		// 異常系（@Valid：見積明細管理）
 		entity = contractRepository.findOne(4L);
-		BeanUtils.copyProperties(entity, dto);
+		BeanUtils.copyProperties(entity, dto, "productContractList");
 		BeanUtils.copyProperties(entity.getProductContractList().get(0), product);
-		dto.setProductContractForFindAllDetailsDtoList(Arrays.asList(product));
+		dto.setProductContractList(Arrays.asList(product));
 		BeanUtils.copyProperties(dto, testTarget);
 		testTarget.getManagedEstimationDetailList().get(0).setState(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);

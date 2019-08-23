@@ -45,6 +45,13 @@ import lombok.EqualsAndHashCode;
 public class ContractForFindAllDetailsDto extends EntityBase {
 
 	/**
+	 * ID
+	 */
+	@Min(0)
+	@ApiModelProperty(value = "契約ID(作成時不要)", required = true, position = 1, allowableValues = "range[0,9223372036854775807]", readOnly = true)
+	private long id;
+
+	/**
 	 * 契約種別
 	 */
 	@Column(nullable = false)
@@ -407,7 +414,7 @@ public class ContractForFindAllDetailsDto extends EntityBase {
 	@Valid
 	@OneToMany(mappedBy = "contract")
 	@ApiModelProperty(value = "商品(契約用)", required = true, position = 52)
-	private List<ProductContractForFindAllDetailsDto> productContractForFindAllDetailsDtoList;
+	private List<ProductContractForFindAllDetailsDto> productContractList;
 
 	/**
 	 * 契約担当CE社員
