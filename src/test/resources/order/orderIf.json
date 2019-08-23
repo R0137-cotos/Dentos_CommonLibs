@@ -10,6 +10,9 @@
         "commercialFlowDiv": "1",
         "ordererDateTime": "2019-07-10 23:59:59",
         "cancelScheduledDate": "2019-08-10",
+        "cancelReason1": "cancelReason1",
+        "cancelReason2": "cancelReason2",
+        "improvementPoint": "improvementPoint",
         "initialTotalAmount": 5000,
         "monthlyTotalAmount": 1500,
         "yearlyTotalAmount": 0
