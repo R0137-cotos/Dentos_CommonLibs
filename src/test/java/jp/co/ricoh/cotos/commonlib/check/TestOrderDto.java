@@ -473,9 +473,12 @@ public class TestOrderDto {
 		testTarget.setOrdererNumber(STR_256);
 		testTarget.setRjManageNumber(STR_256);
 		testTarget.setMakerManageNumber(STR_256);
+		testTarget.setCancelReason1(STR_256);
+		testTarget.setCancelReason2(STR_1001);
+		testTarget.setImprovementPoint(STR_1001);
 
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 3);
+		Assert.assertTrue(result.getErrorInfoList().size() == 6);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 
 		// 異常系（@DecimalMin：）

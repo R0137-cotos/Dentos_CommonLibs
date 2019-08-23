@@ -82,11 +82,32 @@ public class OrderBasicContentsDto {
 	private Date cancelScheduledDate;
 
 	/**
+	 * 解約理由1
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "解約理由1", required = false, position = 10, allowableValues = "range[0,255]")
+	private String cancelReason1;
+
+	/**
+	 * 解約理由2
+	 */
+	@Size(max = 1000)
+	@ApiModelProperty(value = "解約理由2", required = false, position = 11, allowableValues = "range[0,1000]")
+	private String cancelReason2;
+
+	/**
+	 * 改善ポイント
+	 */
+	@Size(max = 1000)
+	@ApiModelProperty(value = "改善ポイント", required = false, position = 12, allowableValues = "range[0,1000]")
+	private String improvementPoint;
+
+	/**
 	 * 初期費合計
 	 */
 	@DecimalMin("0.00")
 	@Digits(integer = 19, fraction = 2)
-	@ApiModelProperty(value = "初期費合計", required = false, position = 10, allowableValues = "range[0.00,9999999999999999999.99]")
+	@ApiModelProperty(value = "初期費合計", required = false, position = 13, allowableValues = "range[0.00,9999999999999999999.99]")
 	private BigDecimal initialTotalAmount;
 
 	/**
@@ -94,7 +115,7 @@ public class OrderBasicContentsDto {
 	 */
 	@DecimalMin("0.00")
 	@Digits(integer = 19, fraction = 2)
-	@ApiModelProperty(value = "月額費合計", required = false, position = 11, allowableValues = "range[0.00,9999999999999999999.99]")
+	@ApiModelProperty(value = "月額費合計", required = false, position = 14, allowableValues = "range[0.00,9999999999999999999.99]")
 	private BigDecimal monthlyTotalAmount;
 
 	/**
@@ -102,6 +123,6 @@ public class OrderBasicContentsDto {
 	 */
 	@DecimalMin("0.00")
 	@Digits(integer = 19, fraction = 2)
-	@ApiModelProperty(value = "年額費合計", required = false, position = 12, allowableValues = "range[0.00,9999999999999999999.99]")
+	@ApiModelProperty(value = "年額費合計", required = false, position = 15, allowableValues = "range[0.00,9999999999999999999.99]")
 	private BigDecimal yearlyTotalAmount;
 }
