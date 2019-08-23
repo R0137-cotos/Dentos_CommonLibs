@@ -49,7 +49,7 @@ public class CotosUserDetailsService implements AuthenticationUserDetailsService
 	MessageUtil messageUtil;
 	
 	@Autowired
-	ObjectMapper mp;
+	ObjectMapper objectMapper;
 
 	@Autowired
 	SuperUserMasterRepository superUserMasterRepository;
@@ -101,7 +101,7 @@ public class CotosUserDetailsService implements AuthenticationUserDetailsService
 			
 			Map<ActionDiv, Map<AuthDiv, AuthLevel>> momAuthorities = null;
 			if (jwtProperties.isActivateNewAuthentication()) {
-				momAuthorities = mp.readValue(jwt.getClaim(claimsProperties.getMomAuth()).asString(), new TypeReference<Map<ActionDiv, Map<AuthDiv, AuthLevel>>>(){});
+				momAuthorities = objectMapper.readValue(jwt.getClaim(claimsProperties.getMomAuth()).asString(), new TypeReference<Map<ActionDiv, Map<AuthDiv, AuthLevel>>>(){});
 			} else {
 				// シングルユーザーIDに紐づく権限情報を取得
 				momAuthorities = momAuthorityService.searchAllMomAuthorities(jwt.getClaim(claimsProperties.getSingleUserId()).asString());
