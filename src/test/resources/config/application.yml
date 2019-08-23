@@ -9,6 +9,8 @@ cotos:
         singleUserId: singleUserId
         origin: origin
         applicationId: applicationId
+        momAuth: momAuth
+      activateNewAuthentication: true
     headers:
       momEmpId: headers_mom_emp_id
       singleUserId: headers_single_user_id

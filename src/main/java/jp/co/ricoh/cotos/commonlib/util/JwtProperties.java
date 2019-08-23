@@ -19,4 +19,6 @@ public class JwtProperties {
 
 	@Autowired
 	private ClaimsProperties claimsProperties;
+	
+	boolean activateNewAuthentication;
 }
