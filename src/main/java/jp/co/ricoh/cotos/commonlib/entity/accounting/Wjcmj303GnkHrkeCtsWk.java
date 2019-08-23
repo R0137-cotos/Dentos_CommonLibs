@@ -41,4 +41,22 @@ public class Wjcmj303GnkHrkeCtsWk {
 	/** 経過済振替金額総額 **/
 	private BigDecimal kikzmHrkeKngkSugk;
 
+	/** 登録者ID **/
+	private String turksyId;
+
+	/** 登録者名 **/
+	private String turksyMi;
+
+	/** 登録履歴日時 **/
+	private String turkRrkNtj;
+
+	/** 更新者ID **/
+	private String kusnsyId;
+
+	/** 更新者名 **/
+	private String kusnsyMi;
+
+	/** 更新履歴日時ID **/
+	private String kusnRrkNtj;
+
 }
