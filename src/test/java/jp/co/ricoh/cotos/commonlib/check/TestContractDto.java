@@ -36,6 +36,8 @@ import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.DealerContractDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ItemContractDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ManagedEstimationDetailDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ProductContractDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.detail.ContractForFindAllDetailsDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.detail.ProductContractForFindAllDetailsDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.external.ContractExtCancelDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.external.ContractExtChangeDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.external.ContractExtCreateDto;
@@ -447,6 +449,174 @@ public class TestContractDto {
 		Assert.assertTrue(result.getErrorInfoList().size() == 12);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "商品名は最大文字数（255）を超えています。"));
+	}
+
+	@Test
+	public void ContractForFindAllDetailsDtoのテスト() throws Exception {
+		Contract entity = contractRepository.findOne(4L);
+		ContractForFindAllDetailsDto testTarget = new ContractForFindAllDetailsDto();
+		ContractForFindAllDetailsDto dto = new ContractForFindAllDetailsDto();
+
+		BeanUtils.copyProperties(entity, dto);
+
+		// 商品（契約用）
+		ProductContractForFindAllDetailsDto product = new ProductContractForFindAllDetailsDto();
+		BeanUtils.copyProperties(entity.getProductContractList().get(0), product);
+		dto.setProductContractForFindAllDetailsDtoList(Arrays.asList(product));
+
+		// 正常系
+		BeanUtils.copyProperties(dto, testTarget);
+		testTarget.setDealerContractList(null);
+		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		testTool.assertValidationOk(result);
+
+		// 異常系（@NotNullの null チェック：）
+		BeanUtils.copyProperties(dto, testTarget);
+		testTarget.setContractType(null);
+		;
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "契約種別が設定されていません。"));
+
+		// 異常系（@Size(max) ：）
+		BeanUtils.copyProperties(dto, testTarget);
+		testTarget.setCaseNumber(STR_256);
+		testTarget.setCaseTitle(STR_256);
+		testTarget.setContractTitle(STR_256);
+		testTarget.setOriginContractNumber(STR_256);
+		testTarget.setEstimationNumber(STR_256);
+		testTarget.setEstimationTitle(STR_256);
+		testTarget.setCommercialFlowDiv(STR_256);
+		testTarget.setIssueFormat(STR_256);
+		testTarget.setBillingCustomerSpCode(STR_256);
+		testTarget.setBillingCustomerSpName(STR_256);
+		testTarget.setPaymentTerms(STR_256);
+		testTarget.setPaymentMethod(STR_256);
+		testTarget.setCancelReason(STR_256);
+		testTarget.setCancelReasonEtc(STR_1001);
+		testTarget.setWebOrderNumber(STR_256);
+		testTarget.setRjManageNumber(STR_256);
+		testTarget.setCancelOrderNo(STR_256);
+		testTarget.setAppId(STR_256);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 18);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "変更元契約番号は最大文字数（255）を超えています。"));
+
+		// 異常系（@Max ：）
+		BeanUtils.copyProperties(dto, testTarget);
+		testTarget.setOriginContractBranchNumber(INT_100);
+		testTarget.setEstimationBranchNumber(INT_100);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "見積番号枝番は最大値（99）を超えています。"));
+
+		// 異常系（@Min ：）
+		BeanUtils.copyProperties(dto, testTarget);
+		testTarget.setProductGrpMasterId(INT_MINUS_1);
+		testTarget.setOriginContractBranchNumber(INT_MINUS_1);
+		testTarget.setOriginContractId((long) INT_MINUS_1);
+		testTarget.setEstimationBranchNumber(INT_MINUS_1);
+		testTarget.setEstimationId((long) INT_MINUS_1);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 5);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "見積IDは最小値（0）を下回っています。"));
+
+		// 異常系（@Valid：契約明細）
+		entity = contractRepository.findOne(4L);
+		BeanUtils.copyProperties(entity, dto);
+		BeanUtils.copyProperties(entity.getProductContractList().get(0), product);
+		dto.setProductContractForFindAllDetailsDtoList(Arrays.asList(product));
+		BeanUtils.copyProperties(dto, testTarget);
+		testTarget.getContractDetailList().get(0).setState(null);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "状態が設定されていません。"));
+
+		// 異常系（@Valid：契約担当SA社員）
+		entity = contractRepository.findOne(4L);
+		BeanUtils.copyProperties(entity, dto);
+		BeanUtils.copyProperties(entity.getProductContractList().get(0), product);
+		dto.setProductContractForFindAllDetailsDtoList(Arrays.asList(product));
+		BeanUtils.copyProperties(dto, testTarget);
+		testTarget.getContractPicSaEmp().setMomEmployeeId(null);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "MoM社員IDが設定されていません。"));
+
+		// 異常系（@Valid：販売店(契約用)）
+		entity = contractRepository.findOne(4L);
+		BeanUtils.copyProperties(entity, dto);
+		BeanUtils.copyProperties(entity.getProductContractList().get(0), product);
+		dto.setProductContractForFindAllDetailsDtoList(Arrays.asList(product));
+		BeanUtils.copyProperties(dto, testTarget);
+		testTarget.getDealerContractList().get(0).setDistributorCd(STR_256);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "販売店コードは最大文字数（255）を超えています。"));
+
+		// 異常系（@Valid：顧客(契約用)）
+		entity = contractRepository.findOne(4L);
+		BeanUtils.copyProperties(entity, dto);
+		BeanUtils.copyProperties(entity.getProductContractList().get(0), product);
+		dto.setProductContractForFindAllDetailsDtoList(Arrays.asList(product));
+		BeanUtils.copyProperties(dto, testTarget);
+		testTarget.getCustomerContract().setCompanyRepresentativeNameKana(STR_256);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "MoM非連携_企業代表者名（カナ）は最大文字数（255）を超えています。"));
+
+		// 異常系（@Valid：商品(契約用)）
+		entity = contractRepository.findOne(4L);
+		BeanUtils.copyProperties(entity, dto);
+		BeanUtils.copyProperties(entity.getProductContractList().get(0), product);
+		dto.setProductContractForFindAllDetailsDtoList(Arrays.asList(product));
+		BeanUtils.copyProperties(dto, testTarget);
+		testTarget.getProductContractForFindAllDetailsDtoList().get(0).setProductMasterId(INT_MINUS_1);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "商品マスタIDは最小値（0）を下回っています。"));
+
+		// 異常系（@Valid：見積明細管理）
+		entity = contractRepository.findOne(4L);
+		BeanUtils.copyProperties(entity, dto);
+		BeanUtils.copyProperties(entity.getProductContractList().get(0), product);
+		dto.setProductContractForFindAllDetailsDtoList(Arrays.asList(product));
+		BeanUtils.copyProperties(dto, testTarget);
+		testTarget.getManagedEstimationDetailList().get(0).setState(null);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 1);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00013));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "状態が設定されていません。"));
+	}
+
+	@Test
+	public void ProductContractForFindAllDetailsDtoのテスト() throws Exception {
+		ProductContract entity = productContractRepository.findOne(401L);
+		ProductContractForFindAllDetailsDto testTarget = new ProductContractForFindAllDetailsDto();
+		BeanUtils.copyProperties(entity, testTarget);
+
+		// 正常系
+		ParamterCheckResult result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		testTool.assertValidationOk(result);
+
+		// 異常系（@Min ：）
+		BeanUtils.copyProperties(entity, testTarget);
+		testTarget.setProductMasterId(INT_MINUS_1);
+		testTarget.setRepItemMasterId(-1L);
+		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
+		Assert.assertTrue(result.getErrorInfoList().size() == 2);
+		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
+		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "代表品種マスタIDは最小値（0）を下回っています。"));
+
 	}
 
 	@Test
