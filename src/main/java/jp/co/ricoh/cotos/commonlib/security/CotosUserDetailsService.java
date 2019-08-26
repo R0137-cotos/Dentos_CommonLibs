@@ -100,10 +100,11 @@ public class CotosUserDetailsService implements AuthenticationUserDetailsService
 			boolean isDummyUser = dummyUserMasterRepository.existsByUserId(jwt.getClaim(claimsProperties.getMomEmpId()).asString());
 			
 			Map<ActionDiv, Map<AuthDiv, AuthLevel>> momAuthorities = null;
-			if (jwtProperties.isActivateNewAuthentication()) {
+			// 認証ドメインでMoM権限が取得できた場合(取得できないとJWTからmomAuthの項目が削除される)
+			if (jwtProperties.isActivateNewAuthentication() && jwt.getClaim(claimsProperties.getMomAuth()) != null) {
 				// JWTにある権限情報を取得
 				momAuthorities = objectMapper.readValue(jwt.getClaim(claimsProperties.getMomAuth()).asString(), new TypeReference<Map<ActionDiv, Map<AuthDiv, AuthLevel>>>(){});
-			} else {
+			} else if (!jwtProperties.isActivateNewAuthentication()) {
 				// シングルユーザーIDに紐づく権限情報を取得
 				momAuthorities = momAuthorityService.searchAllMomAuthorities(jwt.getClaim(claimsProperties.getSingleUserId()).asString());
 			}
