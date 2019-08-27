@@ -4,7 +4,6 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -17,7 +16,7 @@ import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.ActionDiv;
 import jp.co.ricoh.cotos.commonlib.entity.master.UrlAuthMaster.AuthDiv;
 import jp.co.ricoh.cotos.commonlib.logic.check.BusinessCheck;
 import jp.co.ricoh.cotos.commonlib.security.mom.MomAuthorityService.AuthLevel;
-import jp.co.ricoh.cotos.commonlib.util.JwtProperties;
+import jp.co.ricoh.cotos.commonlib.util.ClaimsProperties;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -25,9 +24,9 @@ public class TestBusinessCheck {
 
 	@Autowired
 	BusinessCheck businessCheck;
-	
+
 	@SpyBean
-	JwtProperties jwtProperties;
+	ClaimsProperties claimsProperties;
 
 	static ConfigurableApplicationContext context;
 
@@ -44,29 +43,23 @@ public class TestBusinessCheck {
 	}
 
 	@Test
-	@WithMockCustomUser(actionDiv=ActionDiv.更新, authDiv=AuthDiv.見積_契約_手配, authLevel=AuthLevel.配下)
+	@WithMockCustomUser(actionDiv = ActionDiv.更新, authDiv = AuthDiv.見積_契約_手配, authLevel = AuthLevel.配下)
 	public void 代理承認者の承認権限チェック_配下() throws Exception {
-		
-		Mockito.doReturn(false).when(jwtProperties).isActivateNewAuthentication();
-		
+
 		Assert.assertTrue("「配下(30)」代理承認者の承認権限があること", businessCheck.existsSubApproverEmployeeAuthority("00230148", "00229692"));
 	}
-	
+
 	@Test
-	@WithMockCustomUser(actionDiv=ActionDiv.更新, authDiv=AuthDiv.見積_契約_手配, authLevel=AuthLevel.自社)
+	@WithMockCustomUser(actionDiv = ActionDiv.更新, authDiv = AuthDiv.見積_契約_手配, authLevel = AuthLevel.自社)
 	public void 代理承認者の承認権限チェック_自社() throws Exception {
-		
-		Mockito.doReturn(false).when(jwtProperties).isActivateNewAuthentication();
-		
+
 		Assert.assertTrue("「自社(50)」代理承認者の承認権限があること", businessCheck.existsSubApproverEmployeeAuthority("00220552", "00229692"));
 		Assert.assertFalse("「自社(50)」代理承認者の承認権限がないこと", businessCheck.existsSubApproverEmployeeAuthority("00229692", "00623100"));
 	}
-	
+
 	@Test
-	@WithMockCustomUser(actionDiv=ActionDiv.更新, authDiv=AuthDiv.見積_契約_手配, authLevel=AuthLevel.地域)
+	@WithMockCustomUser(actionDiv = ActionDiv.更新, authDiv = AuthDiv.見積_契約_手配, authLevel = AuthLevel.地域)
 	public void 代理承認者の承認権限チェック_地域() throws Exception {
-		
-		Mockito.doReturn(false).when(jwtProperties).isActivateNewAuthentication();
 
 		Assert.assertTrue("「地域(70)」代理承認者の承認権限があること", businessCheck.existsSubApproverEmployeeAuthority("00220552", "00220552"));
 		Assert.assertFalse("「地域(70)」代理承認者の承認権限がないこと", businessCheck.existsSubApproverEmployeeAuthority("00229692", "00623100"));

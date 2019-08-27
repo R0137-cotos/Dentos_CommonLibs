@@ -50,19 +50,22 @@ import jp.co.ricoh.cotos.commonlib.repository.master.UrlAuthMasterRepository;
 import jp.co.ricoh.cotos.commonlib.security.mom.MomAuthorityService;
 import jp.co.ricoh.cotos.commonlib.security.mom.MomAuthorityService.AuthLevel;
 import jp.co.ricoh.cotos.commonlib.util.HeadersProperties;
-import jp.co.ricoh.cotos.commonlib.util.JwtProperties;
 import lombok.val;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class CotosSecurityTests {
 
+	public String momAuth = "NO_AUTHORITIES";
+
 	private static final String WITHIN_PERIOD_HAS_MOM_AUTH_JWT = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJtb21BdXRoIjoie1wiMDNcIjp7XCIyMjEwXCI6XCIwMFwiLFwiMjIyMFwiOlwiMDBcIixcIjIyMzBcIjpcIjEwXCIsXCIyMjAwXCI6XCI1MFwifSxcIjA1XCI6e1wiMjIxMFwiOlwiMDBcIixcIjIyMjBcIjpcIjAwXCIsXCIyMjMwXCI6XCIxMFwiLFwiMjIwMFwiOlwiNTBcIn0sXCIwN1wiOntcIjIyMTBcIjpcIjAwXCIsXCIyMjIwXCI6XCIwMFwiLFwiMjIzMFwiOlwiMTBcIixcIjIyMDBcIjpcIjUwXCJ9LFwiMDFcIjp7XCIyMjEwXCI6XCIwMFwiLFwiMjIyMFwiOlwiMDBcIixcIjIyMzBcIjpcIjEwXCIsXCIyMjAwXCI6XCI1MFwifSxcIjA0XCI6e1wiMjIxMFwiOlwiMDBcIixcIjIyMjBcIjpcIjAwXCIsXCIyMjMwXCI6XCIxMFwiLFwiMjIwMFwiOlwiNTBcIn0sXCIwNlwiOntcIjIyMTBcIjpcIjAwXCIsXCIyMjIwXCI6XCIwMFwiLFwiMjIzMFwiOlwiMTBcIixcIjIyMDBcIjpcIjUwXCJ9LFwiMDJcIjp7XCIyMjEwXCI6XCIwMFwiLFwiMjIyMFwiOlwiMDBcIixcIjIyMzBcIjpcIjEwXCIsXCIyMjAwXCI6XCI1MFwifX0iLCJvcmlnaW4iOiJodHRwczovL2Rldi5jb3Rvcy5yaWNvaC5jby5qcCIsInNpbmdsZVVzZXJJZCI6InUwMjAxMTI1IiwibW9tRW1wSWQiOiIwMDIyOTc0NiIsImV4cCI6MjUzNDAyMjY4Mzk5LCJhcHBsaWNhdGlvbklkIjoiY290b3NfZGV2In0.DVREQfy-8H2hOAX44ktBfi8IVKB45I43dinEN_a8I5E";
 
-	private static final String WITHIN_PERIOD_MOM_AUTH_IS_NULL_JWT = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcmlnaW4iOiJodHRwczovL2Rldi5jb3Rvcy5yaWNvaC5jby5qcCIsInNpbmdsZVVzZXJJZCI6Im1pZCIsIm1vbUVtcElkIjoic2lkIiwiZXhwIjoyNTM0MDIyNjgzOTksImFwcGxpY2F0aW9uSWQiOiJjb3Rvc19kZXYifQ.U4i4IBpVXKIje2Vpo31K47diP80dMLV4C9GTjraKeIA";
-	
+	private static final String WITHIN_PERIOD_MOM_AUTH_IS_NO_AUTHORITIES_JWT = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJtb21BdXRoIjoiTk9fQVVUSE9SSVRJRVMiLCJvcmlnaW4iOiJodHRwczovL2Rldi5jb3Rvcy5yaWNvaC5jby5qcCIsInNpbmdsZVVzZXJJZCI6InUwMjAxMTI1IiwibW9tRW1wSWQiOiIwMDIyOTc0NiIsImV4cCI6MjUzNDAyMjY4Mzk5LCJhcHBsaWNhdGlvbklkIjoiY290b3NfZGV2In0.U3dw2g8fW4491FfQ4Tzo-ekEe73ukP2Deaxz9tw1vyw";
+
+	private static final String WITHIN_PERIOD_MOM_AUTH_IS_NULL_JWT = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcmlnaW4iOiJodHRwczovL2Rldi5jb3Rvcy5yaWNvaC5jby5qcCIsInNpbmdsZVVzZXJJZCI6InUwMjAxMTI1IiwibW9tRW1wSWQiOiIwMDIyOTc0NiIsImV4cCI6MjUzNDAyMjY4Mzk5LCJhcHBsaWNhdGlvbklkIjoiY290b3NfZGV2In0.OT-pRq6L-LfZOU_yaec7GhhTasROqt4qN1PWzIrntNk";
+
 	private static final String WITHIN_PERIOD_JWT = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcmlnaW4iOiJjb3Rvcy5yaWNvaC5jby5qcCIsInNpbmdsZVVzZXJJZCI6InNpZCIsIm1vbUVtcElkIjoibWlkIiwiZXhwIjoyNTM0MDIyNjgzOTksImFwcGxpY2F0aW9uSWQiOiJjb3Rvc19kZXYifQ.qJBFsMJFZcLdF7jWwEafZSOQfmL1EqPVDcRuz6WvsCI";
-	
+
 	private static final String WITHIN_PERIOD_JWT_SUPER_USER = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJtb21BdXRoIjoie1wiMDZcIjp7XCIyMjMwXCI6XCIxMFwiLFwiMjIyMFwiOlwiMDBcIixcIjIyMTBcIjpcIjAwXCIsXCIyMjAwXCI6XCI3MFwifSxcIjA1XCI6e1wiMjIzMFwiOlwiMTBcIixcIjIyMjBcIjpcIjAwXCIsXCIyMjEwXCI6XCIwMFwiLFwiMjIwMFwiOlwiNzBcIn0sXCIwMlwiOntcIjIyMzBcIjpcIjEwXCIsXCIyMjIwXCI6XCIwMFwiLFwiMjIxMFwiOlwiMDBcIixcIjIyMDBcIjpcIjcwXCJ9LFwiMDFcIjp7XCIyMjMwXCI6XCIxMFwiLFwiMjIyMFwiOlwiMDBcIixcIjIyMTBcIjpcIjAwXCIsXCIyMjAwXCI6XCI3MFwifSxcIjAzXCI6e1wiMjIzMFwiOlwiMTBcIixcIjIyMjBcIjpcIjAwXCIsXCIyMjEwXCI6XCIwMFwiLFwiMjIwMFwiOlwiNzBcIn0sXCIwNFwiOntcIjIyMzBcIjpcIjEwXCIsXCIyMjIwXCI6XCIwMFwiLFwiMjIxMFwiOlwiMDBcIixcIjIyMDBcIjpcIjcwXCJ9LFwiMDdcIjp7XCIyMjMwXCI6XCIxMFwiLFwiMjIyMFwiOlwiMDBcIixcIjIyMTBcIjpcIjAwXCIsXCIyMjAwXCI6XCI3MFwifX0iLCJvcmlnaW4iOiJodHRwczovL2Rldi5jb3Rvcy5yaWNvaC5jby5qcCIsInNpbmdsZVVzZXJJZCI6InUwMjkwMTE0OSIsIm1vbUVtcElkIjoiMDA1MDA3ODQiLCJleHAiOjI1MzQwMjI2ODM5OSwiYXBwbGljYXRpb25JZCI6ImNvdG9zX2RldiJ9.laSviNxIvxCQnOk2lLLtVtwmvlmYR6K8Nvgq34ZHsyY";
 
 	private static final String WITHOUT_PERIOD_JWT = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJtb21BdXRoIjoie1wiMDNcIjp7XCIyMjMwXCI6XCIxMFwiLFwiMjIwMFwiOlwiNzBcIixcIjIyMjBcIjpcIjAwXCIsXCIyMjEwXCI6XCIwMFwifSxcIjAyXCI6e1wiMjIzMFwiOlwiMTBcIixcIjIyMDBcIjpcIjcwXCIsXCIyMjIwXCI6XCIwMFwiLFwiMjIxMFwiOlwiMDBcIn0sXCIwNVwiOntcIjIyMzBcIjpcIjEwXCIsXCIyMjAwXCI6XCI3MFwiLFwiMjIyMFwiOlwiMDBcIixcIjIyMTBcIjpcIjAwXCJ9LFwiMDdcIjp7XCIyMjMwXCI6XCIxMFwiLFwiMjIwMFwiOlwiNzBcIixcIjIyMjBcIjpcIjAwXCIsXCIyMjEwXCI6XCIwMFwifSxcIjAxXCI6e1wiMjIzMFwiOlwiMTBcIixcIjIyMDBcIjpcIjcwXCIsXCIyMjIwXCI6XCIwMFwiLFwiMjIxMFwiOlwiMDBcIn0sXCIwNlwiOntcIjIyMzBcIjpcIjEwXCIsXCIyMjAwXCI6XCI3MFwiLFwiMjIyMFwiOlwiMDBcIixcIjIyMTBcIjpcIjAwXCJ9LFwiMDRcIjp7XCIyMjMwXCI6XCIxMFwiLFwiMjIwMFwiOlwiNzBcIixcIjIyMjBcIjpcIjAwXCIsXCIyMjEwXCI6XCIwMFwifX0iLCJvcmlnaW4iOiJodHRwczovL2Rldi5jb3Rvcy5yaWNvaC5jby5qcCIsInNpbmdsZVVzZXJJZCI6InUwMjkwMTE0OSIsIm1vbUVtcElkIjoiMDA1MDA3ODQiLCJleHAiOjI1MzQwMjI2OCwiYXBwbGljYXRpb25JZCI6ImNvdG9zX2RldiJ9.u2tE3LF_iaSJv5mIu870k7VKmq7hkIPMYY8oa72njOc";
@@ -83,9 +86,6 @@ public class CotosSecurityTests {
 
 	@Autowired
 	HeadersProperties headersProperties;
-	
-	@SpyBean
-	JwtProperties jwtProperties;
 
 	@Autowired
 	DummyUserMasterRepository dummyUserMasterRepository;
@@ -157,17 +157,15 @@ public class CotosSecurityTests {
 		Assert.assertEquals("正常終了", 200, response.getStatusCodeValue());
 		Assert.assertEquals("正常終了", "u02901149,00500784,https://dev.cotos.ricoh.co.jp,cotos_dev," + WITHIN_PERIOD_JWT_SUPER_USER + ",true,true", response.getBody());
 	}
-	
+
 	@Test
 	@Transactional
 	public void 認証_トークンあり_オリジンなし_正常_通常ユーザー_MoM権限取得() throws Exception {
-		
-		Mockito.doReturn(false).when(jwtProperties).isActivateNewAuthentication();
 
-		RestTemplate rest = initRest(WITHIN_PERIOD_HAS_MOM_AUTH_JWT);
+		RestTemplate rest = initRest(WITHIN_PERIOD_MOM_AUTH_IS_NULL_JWT);
 		ResponseEntity<String> response = rest.getForEntity(loadTopURL() + "test/api/test/1?isSuccess=true&hasBody=false", String.class);
 		Assert.assertEquals("正常終了", 200, response.getStatusCodeValue());
-		Assert.assertEquals("正常終了", "u0201125,00229746,https://dev.cotos.ricoh.co.jp,cotos_dev," + WITHIN_PERIOD_HAS_MOM_AUTH_JWT + ",false,true", response.getBody());
+		Assert.assertEquals("正常終了", "u0201125,00229746,https://dev.cotos.ricoh.co.jp,cotos_dev," + WITHIN_PERIOD_MOM_AUTH_IS_NULL_JWT + ",false,true", response.getBody());
 	}
 
 	@Test
@@ -193,7 +191,7 @@ public class CotosSecurityTests {
 			Assert.assertEquals("アクセス不可であること", 401, e.getStatusCode().value());
 		}
 	}
-	
+
 	@Test
 	@Transactional
 	public void 認証_トークンあり_異常_MoM権限がnull() throws Exception {
@@ -217,11 +215,11 @@ public class CotosSecurityTests {
 			Assert.assertEquals("アクセス不可であること", 401, e.getStatusCode().value());
 		}
 	}
-	
+
 	@Test
 	@Transactional
-	public void 認証_トークンあり_異常_MoM権限null() throws Exception {
-		RestTemplate rest = initRest(WITHIN_PERIOD_MOM_AUTH_IS_NULL_JWT);
+	public void 認証_トークンあり_異常_momAuthがNO_AUTHORITIES() throws Exception {
+		RestTemplate rest = initRest(WITHIN_PERIOD_MOM_AUTH_IS_NO_AUTHORITIES_JWT);
 		try {
 			rest.getForEntity(loadTopURL() + "test/api/test/1?isSuccess=true&hasBody=false", String.class);
 			Assert.fail("正常終了");
@@ -303,7 +301,7 @@ public class CotosSecurityTests {
 	}
 
 	@Test
-	@WithMockCustomUser(actionDiv=ActionDiv.更新, authDiv=AuthDiv.見積_契約_手配, authLevel=AuthLevel.すべて)
+	@WithMockCustomUser(actionDiv = ActionDiv.更新, authDiv = AuthDiv.見積_契約_手配, authLevel = AuthLevel.すべて)
 	@Transactional
 	public void 正常_MoM権限_編集_すべて() throws Exception {
 
@@ -319,7 +317,7 @@ public class CotosSecurityTests {
 	}
 
 	@Test
-	@WithMockCustomUser(actionDiv=ActionDiv.更新, authDiv=AuthDiv.見積_契約_手配, authLevel=AuthLevel.東西)
+	@WithMockCustomUser(actionDiv = ActionDiv.更新, authDiv = AuthDiv.見積_契約_手配, authLevel = AuthLevel.東西)
 	@Transactional
 	public void 正常_MoM権限_編集_東西() throws Exception {
 
@@ -335,7 +333,7 @@ public class CotosSecurityTests {
 	}
 
 	@Test
-	@WithMockCustomUser(actionDiv=ActionDiv.更新, authDiv=AuthDiv.見積_契約_手配, authLevel=AuthLevel.自顧客)
+	@WithMockCustomUser(actionDiv = ActionDiv.更新, authDiv = AuthDiv.見積_契約_手配, authLevel = AuthLevel.自顧客)
 	@Transactional
 	public void 正常_MoM権限_編集_自顧客() throws Exception {
 
@@ -353,7 +351,7 @@ public class CotosSecurityTests {
 	}
 
 	@Test
-	@WithMockCustomUser(actionDiv=ActionDiv.更新, authDiv=AuthDiv.見積_契約_手配, authLevel=AuthLevel.配下)
+	@WithMockCustomUser(actionDiv = ActionDiv.更新, authDiv = AuthDiv.見積_契約_手配, authLevel = AuthLevel.配下)
 	@Transactional
 	public void 正常_MoM権限_編集_配下() throws Exception {
 
@@ -371,7 +369,7 @@ public class CotosSecurityTests {
 	}
 
 	@Test
-	@WithMockCustomUser(actionDiv=ActionDiv.更新, authDiv=AuthDiv.見積_契約_手配, authLevel=AuthLevel.自社)
+	@WithMockCustomUser(actionDiv = ActionDiv.更新, authDiv = AuthDiv.見積_契約_手配, authLevel = AuthLevel.自社)
 	@Transactional
 	public void 正常_MoM権限_編集_自社() throws Exception {
 
@@ -389,7 +387,7 @@ public class CotosSecurityTests {
 	}
 
 	@Test
-	@WithMockCustomUser(actionDiv=ActionDiv.更新, authDiv=AuthDiv.見積_契約_手配, authLevel=AuthLevel.地域)
+	@WithMockCustomUser(actionDiv = ActionDiv.更新, authDiv = AuthDiv.見積_契約_手配, authLevel = AuthLevel.地域)
 	@Transactional
 	public void 正常_MoM権限_編集_地域() throws Exception {
 
@@ -407,7 +405,7 @@ public class CotosSecurityTests {
 	}
 
 	@Test
-	@WithMockCustomUser(actionDiv=ActionDiv.更新, authDiv=AuthDiv.見積_契約_手配, authLevel=AuthLevel.地域)
+	@WithMockCustomUser(actionDiv = ActionDiv.更新, authDiv = AuthDiv.見積_契約_手配, authLevel = AuthLevel.地域)
 	@Transactional
 	public void 正常_MoM権限_承認_直接指定() throws Exception {
 
@@ -424,7 +422,7 @@ public class CotosSecurityTests {
 	}
 
 	@Test
-	@WithMockCustomUser(actionDiv=ActionDiv.照会, authDiv=AuthDiv.見積_契約_手配, authLevel=AuthLevel.不可)
+	@WithMockCustomUser(actionDiv = ActionDiv.照会, authDiv = AuthDiv.見積_契約_手配, authLevel = AuthLevel.不可)
 	@Transactional
 	public void 正常_MoM権限_参照_承認者() throws Exception {
 
@@ -447,7 +445,7 @@ public class CotosSecurityTests {
 	}
 
 	@Test
-	@WithMockCustomUser(actionDiv=ActionDiv.照会, authDiv=AuthDiv.見積_契約_手配, authLevel=AuthLevel.不可)
+	@WithMockCustomUser(actionDiv = ActionDiv.照会, authDiv = AuthDiv.見積_契約_手配, authLevel = AuthLevel.不可)
 	@Transactional
 	public void 正常_MoM権限_編集_次回承認者() throws Exception {
 
@@ -468,7 +466,7 @@ public class CotosSecurityTests {
 	}
 
 	@Test
-	@WithMockCustomUser(actionDiv=ActionDiv.更新, authDiv=AuthDiv.見積_契約_手配, authLevel=AuthLevel.自顧客)
+	@WithMockCustomUser(actionDiv = ActionDiv.更新, authDiv = AuthDiv.見積_契約_手配, authLevel = AuthLevel.自顧客)
 	@Transactional
 	public void 異常_MoM権限_編集_自顧客() throws Exception {
 
@@ -486,7 +484,7 @@ public class CotosSecurityTests {
 	}
 
 	@Test
-	@WithMockCustomUser(actionDiv=ActionDiv.更新, authDiv=AuthDiv.見積_契約_手配, authLevel=AuthLevel.配下)
+	@WithMockCustomUser(actionDiv = ActionDiv.更新, authDiv = AuthDiv.見積_契約_手配, authLevel = AuthLevel.配下)
 	@Transactional
 	public void 異常_MoM権限_編集_配下() throws Exception {
 
@@ -504,7 +502,7 @@ public class CotosSecurityTests {
 	}
 
 	@Test
-	@WithMockCustomUser(actionDiv=ActionDiv.更新, authDiv=AuthDiv.見積_契約_手配, authLevel=AuthLevel.自社)
+	@WithMockCustomUser(actionDiv = ActionDiv.更新, authDiv = AuthDiv.見積_契約_手配, authLevel = AuthLevel.自社)
 	@Transactional
 	public void 異常_MoM権限_編集_自社() throws Exception {
 
@@ -522,7 +520,7 @@ public class CotosSecurityTests {
 	}
 
 	@Test
-	@WithMockCustomUser(actionDiv=ActionDiv.更新, authDiv=AuthDiv.見積_契約_手配, authLevel=AuthLevel.地域)
+	@WithMockCustomUser(actionDiv = ActionDiv.更新, authDiv = AuthDiv.見積_契約_手配, authLevel = AuthLevel.地域)
 	@Transactional
 	public void 異常_MoM権限_編集_地域() throws Exception {
 
@@ -540,7 +538,7 @@ public class CotosSecurityTests {
 	}
 
 	@Test
-	@WithMockCustomUser(actionDiv=ActionDiv.更新, authDiv=AuthDiv.見積_契約_手配, authLevel=AuthLevel.不可)
+	@WithMockCustomUser(actionDiv = ActionDiv.更新, authDiv = AuthDiv.見積_契約_手配, authLevel = AuthLevel.不可)
 	@Transactional
 	public void 異常_MoM権限_編集_不可() throws Exception {
 
@@ -556,7 +554,7 @@ public class CotosSecurityTests {
 	}
 
 	@Test
-	@WithMockCustomUser(actionDiv=ActionDiv.更新, authDiv=AuthDiv.見積_契約_手配, authLevel=AuthLevel.すべて)
+	@WithMockCustomUser(actionDiv = ActionDiv.更新, authDiv = AuthDiv.見積_契約_手配, authLevel = AuthLevel.すべて)
 	@Transactional
 	public void 正常_MoM権限_承認_すべて() throws Exception {
 
@@ -572,7 +570,7 @@ public class CotosSecurityTests {
 	}
 
 	@Test
-	@WithMockCustomUser(actionDiv=ActionDiv.更新, authDiv=AuthDiv.見積_契約_手配, authLevel=AuthLevel.東西)
+	@WithMockCustomUser(actionDiv = ActionDiv.更新, authDiv = AuthDiv.見積_契約_手配, authLevel = AuthLevel.東西)
 	@Transactional
 	public void 正常_MoM権限_承認_東西() throws Exception {
 
@@ -588,7 +586,7 @@ public class CotosSecurityTests {
 	}
 
 	@Test
-	@WithMockCustomUser(actionDiv=ActionDiv.更新, authDiv=AuthDiv.見積_契約_手配, authLevel=AuthLevel.配下)
+	@WithMockCustomUser(actionDiv = ActionDiv.更新, authDiv = AuthDiv.見積_契約_手配, authLevel = AuthLevel.配下)
 	@Transactional
 	public void 正常_MoM権限_承認_配下() throws Exception {
 
@@ -605,7 +603,7 @@ public class CotosSecurityTests {
 	}
 
 	@Test
-	@WithMockCustomUser(actionDiv=ActionDiv.更新, authDiv=AuthDiv.見積_契約_手配, authLevel=AuthLevel.自社)
+	@WithMockCustomUser(actionDiv = ActionDiv.更新, authDiv = AuthDiv.見積_契約_手配, authLevel = AuthLevel.自社)
 	@Transactional
 	public void 正常_MoM権限_承認_自社() throws Exception {
 
@@ -622,7 +620,7 @@ public class CotosSecurityTests {
 	}
 
 	@Test
-	@WithMockCustomUser(actionDiv=ActionDiv.更新, authDiv=AuthDiv.見積_契約_手配, authLevel=AuthLevel.地域)
+	@WithMockCustomUser(actionDiv = ActionDiv.更新, authDiv = AuthDiv.見積_契約_手配, authLevel = AuthLevel.地域)
 	@Transactional
 	public void 正常_MoM権限_承認_地域() throws Exception {
 
@@ -639,7 +637,7 @@ public class CotosSecurityTests {
 	}
 
 	@Test
-	@WithMockCustomUser(actionDiv=ActionDiv.更新, authDiv=AuthDiv.見積_契約_手配, authLevel=AuthLevel.不可)
+	@WithMockCustomUser(actionDiv = ActionDiv.更新, authDiv = AuthDiv.見積_契約_手配, authLevel = AuthLevel.不可)
 	@Transactional
 	public void 異常_MoM権限_承認_不可() throws Exception {
 
@@ -655,7 +653,7 @@ public class CotosSecurityTests {
 	}
 
 	@Test
-	@WithMockCustomUser(actionDiv=ActionDiv.更新, authDiv=AuthDiv.見積_契約_手配, authLevel=AuthLevel.自顧客)
+	@WithMockCustomUser(actionDiv = ActionDiv.更新, authDiv = AuthDiv.見積_契約_手配, authLevel = AuthLevel.自顧客)
 	@Transactional
 	public void 異常_MoM権限_承認_自顧客() throws Exception {
 
@@ -671,7 +669,7 @@ public class CotosSecurityTests {
 	}
 
 	@Test
-	@WithMockCustomUser(actionDiv=ActionDiv.更新, authDiv=AuthDiv.見積_契約_手配, authLevel=AuthLevel.配下)
+	@WithMockCustomUser(actionDiv = ActionDiv.更新, authDiv = AuthDiv.見積_契約_手配, authLevel = AuthLevel.配下)
 	@Transactional
 	public void 異常_MoM権限_承認_配下() throws Exception {
 
@@ -688,7 +686,7 @@ public class CotosSecurityTests {
 	}
 
 	@Test
-	@WithMockCustomUser(actionDiv=ActionDiv.更新, authDiv=AuthDiv.見積_契約_手配, authLevel=AuthLevel.自社)
+	@WithMockCustomUser(actionDiv = ActionDiv.更新, authDiv = AuthDiv.見積_契約_手配, authLevel = AuthLevel.自社)
 	@Transactional
 	public void 異常_MoM権限_承認_自社() throws Exception {
 
@@ -705,7 +703,7 @@ public class CotosSecurityTests {
 	}
 
 	@Test
-	@WithMockCustomUser(actionDiv=ActionDiv.更新, authDiv=AuthDiv.見積_契約_手配, authLevel=AuthLevel.地域)
+	@WithMockCustomUser(actionDiv = ActionDiv.更新, authDiv = AuthDiv.見積_契約_手配, authLevel = AuthLevel.地域)
 	@Transactional
 	public void 異常_MoM権限_承認_地域() throws Exception {
 
@@ -722,7 +720,7 @@ public class CotosSecurityTests {
 	}
 
 	@Test
-	@WithMockCustomUser(actionDiv=ActionDiv.更新, authDiv=AuthDiv.見積_契約_手配)
+	@WithMockCustomUser(actionDiv = ActionDiv.更新, authDiv = AuthDiv.見積_契約_手配)
 	@Transactional
 	public void 正常_MoM権限を取得できること() throws Exception {
 
