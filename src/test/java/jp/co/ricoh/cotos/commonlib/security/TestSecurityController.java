@@ -60,7 +60,9 @@ import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ItemContractDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ItemDetailContractDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ManagedEstimationDetailDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.ProductContractDto;
-import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.external.ContractExtCancelParameter;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.detail.ContractForFindAllDetailsDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.detail.ProductContractForFindAllDetailsDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.external.ContractExtCancelDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.external.ContractExtChangeDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.external.ContractExtCreateDto;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.contract.external.ProductContractExtCreateDto;
@@ -789,13 +791,23 @@ public class TestSecurityController {
 		return createParameterCheckResult(result);
 	}
 
-	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractExtCancelParameter")
-	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractExtCancelParameter dto, BindingResult result) {
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractExtCancelDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractExtCancelDto dto, BindingResult result) {
 		return createParameterCheckResult(result);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ProductContractExtCreateDto")
 	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ProductContractExtCreateDto dto, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ContractForFindAllDetailsDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ContractForFindAllDetailsDto dto, BindingResult result) {
+		return createParameterCheckResult(result);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/ParameterCheck/ProductContractForFindAllDetailsDto")
+	public ParamterCheckResult callParamterCheck(@RequestBody @Validated ProductContractForFindAllDetailsDto dto, BindingResult result) {
 		return createParameterCheckResult(result);
 	}
 

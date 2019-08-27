@@ -3,8 +3,6 @@ package jp.co.ricoh.cotos.commonlib.dto.parameter.common;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EnumType.DealerFlowOrder;
 import lombok.Data;
@@ -17,7 +15,6 @@ public class DealerAbstractDto extends DtoBase {
 	/**
 	 * MoM企事部システム連携ID
 	 */
-	@NotEmpty
 	@Size(max = 255)
 	@ApiModelProperty(value = "MoM企事部システム連携ID", required = true, position = 51, allowableValues = "range[0,255]")
 	private String momKjbSystemId;
