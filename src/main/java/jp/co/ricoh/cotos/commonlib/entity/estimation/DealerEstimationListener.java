@@ -39,7 +39,7 @@ public class DealerEstimationListener {
 	@PrePersist
 	@Transactional
 	public void appendsEstimationDealerFields(DealerEstimation dealerEstimation) {
-		if (null != dealerEstimation.getMomKjbSystemId()) {
+		if (StringUtils.isNotBlank(dealerEstimation.getMomKjbSystemId())) {
 			VKjbMaster vKjbMaster = vKjbMasterRepository.findByMclMomRelId(dealerEstimation.getMomKjbSystemId());
 
 			if (vKjbMaster == null) {

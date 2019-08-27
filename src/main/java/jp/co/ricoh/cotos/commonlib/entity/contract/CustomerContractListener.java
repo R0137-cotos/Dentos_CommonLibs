@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import jp.co.ricoh.cotos.commonlib.entity.EnumType.DummyCodeValue;
 import jp.co.ricoh.cotos.commonlib.entity.master.VKjbMaster;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorCheckException;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorInfo;
@@ -32,6 +33,10 @@ public class CustomerContractListener {
 	@PrePersist
 	@Transactional
 	public void appendsCustomerContractFields(CustomerContract customerContract) {
+
+		if (DummyCodeValue.Dummy_Mcl_MoM_Rel_Id.toString().equals(customerContract.getMomKjbSystemId())) {
+			return;
+		}
 
 		VKjbMaster vKjbMaster = vKjbMasterRepository.findByMclMomRelId(customerContract.getMomKjbSystemId());
 		if (vKjbMaster == null) {

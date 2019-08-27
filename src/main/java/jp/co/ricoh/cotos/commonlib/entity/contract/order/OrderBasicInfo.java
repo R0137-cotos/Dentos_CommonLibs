@@ -167,60 +167,81 @@ public class OrderBasicInfo extends EntityBase {
 	private Date cancelScheduledDate;
 
 	/**
+	 * 解約理由1
+	 */
+	@Column(name = "cancel_reason_1")
+	@ApiModelProperty(value = "解約理由1", required = false, position = 10)
+	private String cancelReason1;
+
+	/**
+	 * 解約理由2
+	 */
+	@Column(name = "cancel_reason_2")
+	@ApiModelProperty(value = "解約理由2", required = false, position = 11)
+	private String cancelReason2;
+
+	/**
+	 * 改善ポイント
+	 */
+	@Column
+	@ApiModelProperty(value = "改善ポイント", required = false, position = 12)
+	private String improvementPoint;
+
+	/**
 	 * 初期費合計
 	 */
 	@Column
-	@ApiModelProperty(value = "初期費合計", required = false, position = 10)
+	@ApiModelProperty(value = "初期費合計", required = false, position = 13)
 	private BigDecimal initialTotalAmount;
 
 	/**
 	 * 月額費合計
 	 */
 	@Column
-	@ApiModelProperty(value = "月額費合計", required = false, position = 11)
+	@ApiModelProperty(value = "月額費合計", required = false, position = 14)
 	private BigDecimal monthlyTotalAmount;
 
 	/**
 	 * 年額費合計
 	 */
 	@Column
-	@ApiModelProperty(value = "年額費合計", required = false, position = 12)
+	@ApiModelProperty(value = "年額費合計", required = false, position = 15)
 	private BigDecimal yearlyTotalAmount;
 
 	@OneToOne(mappedBy = "orderBasicInfo")
-	@ApiModelProperty(value = "注文商品グループ情報", required = false, position = 13)
+	@ApiModelProperty(value = "注文商品グループ情報", required = false, position = 16)
 	private OrderProductGroupInfo orderProductGroupInfo;
 
 	@OneToOne(mappedBy = "orderBasicInfo")
-	@ApiModelProperty(value = "注文サービス固有情報", required = false, position = 14)
+	@ApiModelProperty(value = "注文サービス固有情報", required = false, position = 17)
 	private OrderServiceInnerInfo orderServiceInnerInfo;
 
 	@OneToOne(mappedBy = "orderBasicInfo")
-	@ApiModelProperty(value = "注文販売店情報", required = false, position = 15)
+	@ApiModelProperty(value = "注文販売店情報", required = false, position = 18)
 	private OrderDistributorInfo orderDistributorInfo;
 
 	@OneToOne(mappedBy = "orderBasicInfo")
-	@ApiModelProperty(value = "注文セットアップ先情報", required = false, position = 16)
+	@ApiModelProperty(value = "注文セットアップ先情報", required = false, position = 19)
 	private OrderSetupInfo orderSetupInfo;
 
 	@OneToOne(mappedBy = "orderBasicInfo")
-	@ApiModelProperty(value = "注文者情報", required = false, position = 17)
+	@ApiModelProperty(value = "注文者情報", required = false, position = 20)
 	private OrdererInfo ordererInfo;
 
 	@OneToMany(mappedBy = "orderBasicInfo")
-	@ApiModelProperty(value = "注文商品情報", required = false, position = 18)
+	@ApiModelProperty(value = "注文商品情報", required = false, position = 21)
 	private List<OrderProductInfo> orderProductInfoList;
 
 	@OneToOne(mappedBy = "orderBasicInfo")
-	@ApiModelProperty(value = "注文担当支社情報", required = false, position = 19)
+	@ApiModelProperty(value = "注文担当支社情報", required = false, position = 21)
 	private OrderBranchCustomerInfo orderBranchCustomerInfo;
 
 	@OneToOne(mappedBy = "orderBasicInfo")
-	@ApiModelProperty(value = "注文顧客情報", required = false, position = 20)
+	@ApiModelProperty(value = "注文顧客情報", required = false, position = 22)
 	private OrderContractorInfo orderContractorInfo;
 
 	@OneToOne(mappedBy = "orderBasicInfo")
-	@ApiModelProperty(value = "注文管理情報", required = false, position = 21)
+	@ApiModelProperty(value = "注文管理情報", required = false, position = 23)
 	private OrderManagementInfo orderManagementInfo;
 
 }
