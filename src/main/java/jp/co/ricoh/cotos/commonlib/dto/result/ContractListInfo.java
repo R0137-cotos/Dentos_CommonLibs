@@ -49,7 +49,7 @@ public class ContractListInfo {
 	 */
 	@ApiModelProperty(value = "契約種別<br />" //
 			+ "新規, 契約変更, 解約などの契約種別を表す。", //
-			required = false, position = 5) //
+			required = false, allowableValues = "新規(\"1\"), 契約変更(\"2\"), 情報変更(\"3\")", position = 5) //
 	private ContractType contractType;
 
 	/**
@@ -57,7 +57,7 @@ public class ContractListInfo {
 	 */
 	@ApiModelProperty(value = "契約ステータス<br />" //
 			+ "状態遷移上のワークフローステータスを表す。", //
-			required = false, position = 6) //
+			required = false, allowableValues = "作成中(\"1\"), 承認依頼中(\"2\"), 承認済(\"3\"), 業務依頼中(\"4\"), 業務処理完了(\"5\"), キャンセル申請中(\"6\"), 売上可能(\"7\"), 解約申請中(\"8\")", position = 6) //
 	private WorkflowStatus workflowStatus;
 
 	/**
@@ -65,7 +65,7 @@ public class ContractListInfo {
 	 */
 	@ApiModelProperty(value = "契約状態<br />" //
 			+ "状態遷移上のライフサイクル状態を表す。", //
-			required = false, position = 7) //
+			required = false, allowableValues = "作成中(\"1\"), 作成完了(\"2\"), キャンセル手続き中(\"3\"), 破棄(\"4\"), 予定日待ち(\"5\"), 締結中(\"6\"), 解約手続き中(\"7\"), 解約予定日待ち(\"8\"), 解約(\"9\"), 旧契約(\"10\"), 締結待ち(\"11\")", position = 7) //
 	private LifecycleStatus lifecycleStatus;
 
 	/**
@@ -185,20 +185,19 @@ public class ContractListInfo {
 	 */
 	@ApiModelProperty(value = "保守担当CE氏名", required = false, position = 25, allowableValues = "range[0,255]")
 	private String picMntCeName;
-	
+
 	/**
 	 * RJ管理番号
 	 */
 	@ApiModelProperty(value = "RJ管理番号", required = false, position = 26, allowableValues = "range[0,255]")
 	private String rjManageNumber;
-	
+
 	/**
 	 * 恒久契約識別番号
 	 */
 	@ApiModelProperty(value = "R恒久契約識別番号", required = false, position = 27, allowableValues = "range[0,255]")
 	private String immutableContIdentNumber;
-	
-	
+
 	/**
 	 * 登録日時
 	 */

@@ -87,7 +87,7 @@ public class ContractDetailDto extends DtoBase {
 	/**
 	 * イニシャル売上計上処理状態
 	 */
-	@ApiModelProperty(value = "イニシャル売上計上処理状態", required = false, position = 10)
+	@ApiModelProperty(value = "イニシャル売上計上処理状態", required = false, allowableValues = "未計上(\"0\"), 計上済み(\"1\"), 処理不要(\"2\"), 処理不可(\"3\")", position = 10)
 	private InitialAccountSalesStatus initialAccountSalesStatus;
 
 	/**
@@ -107,7 +107,7 @@ public class ContractDetailDto extends DtoBase {
 	/**
 	 * FFM内部振替処理状態
 	 */
-	@ApiModelProperty(value = "FFM内部振替処理状態", required = false, position = 14)
+	@ApiModelProperty(value = "FFM内部振替処理状態", required = false, allowableValues = "未処理(\"0\"), CSV作成済み(\"1\"), 連携済み(\"2\"), 対象外(\"3\")", position = 14)
 	private FfmInsideTransStatus ffmInsideTransStatus;
 
 	/**
@@ -120,7 +120,7 @@ public class ContractDetailDto extends DtoBase {
 	/**
 	 * 統合契約内部振替処理状態
 	 */
-	@ApiModelProperty(value = "統合契約内部振替処理状態", required = false, position = 16)
+	@ApiModelProperty(value = "統合契約内部振替処理状態", required = false, allowableValues = "未処理(\"0\"), TSV作成済み(\"1\"), 連携済み(\"2\"), 連携エラー(\"3\"), 対象外(\"4\")", position = 16)
 	private AbsConInsideTransStatus absConInsideTransStatus;
 
 	/**
