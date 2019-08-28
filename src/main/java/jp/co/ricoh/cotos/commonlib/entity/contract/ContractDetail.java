@@ -203,7 +203,7 @@ public class ContractDetail extends EntityBase {
 	/**
 	 * イニシャル売上計上処理状態
 	 */
-	@ApiModelProperty(value = "イニシャル売上計上処理状態", required = false, position = 10)
+	@ApiModelProperty(value = "イニシャル売上計上処理状態", required = false, allowableValues = "未処理(\"0\"), CSV作成済み(\"1\"), 連携済み(\"2\"), 対象外(\"3\")", position = 10)
 	private InitialAccountSalesStatus initialAccountSalesStatus;
 
 	/**
@@ -270,6 +270,6 @@ public class ContractDetail extends EntityBase {
 	/**
 	 * FFM検収連携状態
 	 */
-	@ApiModelProperty(value = "FFM検収連携状態", required = false, position = 20)
+	@ApiModelProperty(value = "FFM検収連携状態", required = false, allowableValues = "未作成(\"0\"), 作成済み(\"1\"), 作成エラー(\"2\")", position = 20)
 	private FfmAcceptanceLinkingStatus ffmAcceptanceLinkingStatus;
 }

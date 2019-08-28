@@ -41,7 +41,7 @@ public class EstimationListInfo {
 	 */
 	@ApiModelProperty(value = "見積種別<br />" //
 			+ "新規、契約変更等の見積種別を表す。", //
-			required = false, position = 4) //
+			required = false, allowableValues = "新規(\"1\"), 契約変更(\"2\")", position = 4) //
 	private EstimationType estimationtype;
 
 	/**
@@ -55,7 +55,7 @@ public class EstimationListInfo {
 	 */
 	@ApiModelProperty(value = "見積ステータス<br />" //
 			+ "状態遷移上のワークフロー状態を表す。", //
-			required = false, position = 6) //
+			required = false, allowableValues = "作成中(\"1\"), 業務依頼中(\"2\"), 業務処理完了(\"3\"), 承認依頼中(\"4\"), 承認済(\"5\"), 顧客提示済(\"6\")", position = 6) //
 	private WorkflowStatus status;
 
 	/**
@@ -63,7 +63,7 @@ public class EstimationListInfo {
 	 */
 	@ApiModelProperty(value = "見積状態<br />" //
 			+ "状態遷移上のライフサイクル状態を表す。", //
-			required = false, position = 7) //
+			required = false, allowableValues = "作成中(\"1\"), 作成完了(\"2\"), 受注(\"3\"), 失注(\"4\"), 破棄(\"5\")", position = 7) //
 	private LifecycleStatus lifecycleStatus;
 
 	/**
@@ -126,7 +126,7 @@ public class EstimationListInfo {
 	 */
 	@ApiModelProperty(value = "R恒久契約識別番号", required = false, position = 17, allowableValues = "range[0,255]")
 	private String immutableContIdentNumber;
-	
+
 	/**
 	 * 登録日時
 	 */

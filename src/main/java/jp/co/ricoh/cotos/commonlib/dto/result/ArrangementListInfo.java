@@ -65,7 +65,7 @@ public class ArrangementListInfo {
 	 */
 	@ApiModelProperty(value = "契約状態<br />" //
 			+ "状態遷移上のライフサイクル状態を表す。", //
-			required = false, position = 7) //
+			required = false, allowableValues = "作成中(\"1\"), 作成完了(\"2\"), キャンセル手続き中(\"3\"), 破棄(\"4\"), 予定日待ち(\"5\"), 締結中(\"6\"), 解約手続き中(\"7\"), 解約予定日待ち(\"8\"), 解約(\"9\"), 旧契約(\"10\"), 締結待ち(\"11\")", position = 7) //
 	private LifecycleStatus lifecycleStatus;
 
 	/**
@@ -73,7 +73,7 @@ public class ArrangementListInfo {
 	 */
 	@ApiModelProperty(value = "契約種別<br />" //
 			+ "新規, 契約変更, 解約などの契約種別を表す。", //
-			required = false, position = 8) //
+			required = false, allowableValues = "新規(\"1\"), 契約変更(\"2\"), 情報変更(\"3\")", position = 8) //
 	private ContractType contractType;
 
 	/**
@@ -119,7 +119,7 @@ public class ArrangementListInfo {
 	 */
 	@ApiModelProperty(value = "手配業務ステータス<br />" //
 			+ "状態遷移上のワークフロー状態を表す。", //
-			required = false, position = 15) //
+			required = false, allowableValues = "受付待ち(\"1\"), 作業中(\"2\"), 作業完了報告(\"3\"), 承認依頼中(\"4\"), 作業完了(\"5\"), エラー(\"6\")", position = 15) //
 	private ArrangementWork.WorkflowStatus arrangementWorkStatus;
 
 	/**
@@ -165,7 +165,7 @@ public class ArrangementListInfo {
 	 */
 	@ApiModelProperty(value = "手配ステータス<br />" //
 			+ "状態遷移上のワークフロー状態を表す。", //
-			required = false, position = 22) //
+			required = false, allowableValues = "手配中(\"1\"), 手配完了(\"2\")", position = 22) //
 	private Arrangement.WorkflowStatus arrangementStatus;
 
 	/**
@@ -179,7 +179,7 @@ public class ArrangementListInfo {
 	 */
 	@ApiModelProperty(value = "R恒久契約識別番号", required = false, position = 23, allowableValues = "range[0,255]")
 	private String immutableContIdentNumber;
-	
+
 	/**
 	 * 受付担当SS組織
 	 */

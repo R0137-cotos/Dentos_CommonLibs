@@ -33,7 +33,7 @@ public class ContractDto extends DtoBase {
 	 * 契約種別
 	 */
 	@NotNull
-	@ApiModelProperty(value = "契約種別", required = true, position = 3)
+	@ApiModelProperty(value = "契約種別", required = true, allowableValues = "新規(\"1\"), 契約変更(\"2\"), 情報変更(\"3\")", position = 3)
 	private ContractType contractType;
 
 	/**
