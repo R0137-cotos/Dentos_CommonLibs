@@ -23,7 +23,7 @@ public interface ContractRepository extends CrudRepository<Contract, Long> {
 
 	public List<Contract> findByOriginContractId(Long originContractId);
 
-	@Query(value = "SELECT * FROM CONTRACT WHERE LIFECYCLE_STATUS = '8' AND CANCEL_SCHEDULED_DATE <= :opDate", nativeQuery = true)
+	@Query(value = "SELECT * FROM CONTRACT WHERE LIFECYCLE_STATUS = '8' AND CANCEL_SCHEDULED_DATE < :opDate", nativeQuery = true)
 	public List<Contract> findByLifecycleAndCancelScheduledDate(@Param("opDate") String opDate);
 
 	public List<Contract> findByRjManageNumber(String rjManageNumber);
