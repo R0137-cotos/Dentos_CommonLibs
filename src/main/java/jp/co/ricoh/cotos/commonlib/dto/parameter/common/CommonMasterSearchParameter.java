@@ -10,7 +10,7 @@ public class CommonMasterSearchParameter {
 	/**
 	 * サービスカテゴリ
 	 */
-	@ApiParam(value = "サービスカテゴリ", required = false)
+	@ApiParam(value = "サービスカテゴリ", required = false, allowableValues = "共通(\"0\"), 見積(\"1\"), 契約(\"2\"), 手配(\"3\")")
 	private ServiceCategory serviceCategory;
 
 	/**
