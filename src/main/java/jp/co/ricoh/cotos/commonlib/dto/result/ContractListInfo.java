@@ -193,22 +193,28 @@ public class ContractListInfo {
 	private String rjManageNumber;
 
 	/**
+	 * WEB受注番号
+	 */
+	@ApiModelProperty(value = "WEB受注番号", required = false, position = 27, allowableValues = "range[0,255]")
+	private String webOrderNumber;
+
+	/**
 	 * 恒久契約識別番号
 	 */
-	@ApiModelProperty(value = "R恒久契約識別番号", required = false, position = 27, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "R恒久契約識別番号", required = false, position = 28, allowableValues = "range[0,255]")
 	private String immutableContIdentNumber;
 
 	/**
 	 * 登録日時
 	 */
-	@ApiModelProperty(value = "登録日時", required = false, position = 28)
+	@ApiModelProperty(value = "登録日時", required = false, position = 29)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdAt;
 
 	/**
 	 * 更新日時
 	 */
-	@ApiModelProperty(value = "更新日時", required = false, position = 29)
+	@ApiModelProperty(value = "更新日時", required = false, position = 30)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedAt;
 
