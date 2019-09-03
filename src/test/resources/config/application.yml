@@ -22,7 +22,6 @@ cotos:
       filename: filename
   file:
     uploadFileDir: ./build/testTemp
-    fileMaxSize: 616110
     fileNmMaxSize: 14
     extension: xlsx, txt
   search:

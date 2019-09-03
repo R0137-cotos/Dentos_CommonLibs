@@ -51,10 +51,6 @@ public class FileUpDownload {
 			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "FileInfoNotFoundError"));
 		}
 
-		if (!existsFileSizeMaxOver(file)) {
-			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "FileSizeOverError", new String[] { "ファイルサイズ" }));
-		}
-
 		String fileName = file.getOriginalFilename();
 		int lastUnixPos = fileName.lastIndexOf('/');
 		int lastWindowsPos = fileName.lastIndexOf('\\');
@@ -159,17 +155,6 @@ public class FileUpDownload {
 		} catch (IOException e) {
 			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "FileDeleteError", new String[] { file.getAbsolutePath() }));
 		}
-	}
-
-	/**
-	 * ファイルサイズが最大を超えていないか確認
-	 *
-	 * @param multipartFile
-	 *            ファイル情報
-	 * @return チェック結果
-	 */
-	private boolean existsFileSizeMaxOver(MultipartFile multipartFile) {
-		return !(multipartFile.getSize() > appProperties.getFileProperties().getFileMaxSize());
 	}
 
 	/**

@@ -22,11 +22,6 @@ public class FileProperties {
 	String uploadFileDir;
 
 	/**
-	 * ファイル最大サイズ(バイト指定)
-	 */
-	Long fileMaxSize;
-
-	/**
 	 * 設定可能拡張子
 	 */
 	List<String> extension;
