@@ -102,14 +102,6 @@ public class TestFileUpDownload {
 		}
 
 		try {
-			fileUpDownload.fileUpload(ファイル情報作成("testFile2.xlsx"));
-			Assert.fail("正常終了してしまった");
-		} catch (ErrorCheckException e) {
-			Assert.assertEquals("エラーIDが正しく設定されること", "ROT00106", e.getErrorInfoList().get(0).getErrorId());
-			Assert.assertEquals("エラーメッセージが正しく設定されること", "アップロード対象ファイルのファイルサイズが最大サイズを超えています。", e.getErrorInfoList().get(0).getErrorMessage());
-		}
-
-		try {
 			fileUpDownload.fileUpload(ファイル情報作成("filename.aaa"));
 			Assert.fail("正常終了してしまった");
 		} catch (ErrorCheckException e) {
