@@ -83,7 +83,7 @@ public class EstimationApprovalRoute extends EntityBase {
 	/**
 	 * 承認ルートマスタID
 	 */
-	@ApiModelProperty(value = "承認ルートマスタID", required = false, position = 7, allowableValues = "range[0,9223372036854775807]")
+	@ApiModelProperty(value = "承認ルートマスタID", required = false, position = 7)
 	private Long approvalRouteMasterId;
 
 	/**

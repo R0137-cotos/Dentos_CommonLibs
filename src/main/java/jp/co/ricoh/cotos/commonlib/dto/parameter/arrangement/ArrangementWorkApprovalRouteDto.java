@@ -40,7 +40,7 @@ public class ArrangementWorkApprovalRouteDto extends DtoBase {
 	/**
 	 * 承認ルートマスタID
 	 */
-	@ApiModelProperty(value = "承認ルートマスタID", required = false, position = 6, allowableValues = "range[0,9223372036854775807]")
+	@ApiModelProperty(value = "承認ルートマスタID", required = false, position = 6)
 	private Long approvalRouteMasterId;
 
 	/**

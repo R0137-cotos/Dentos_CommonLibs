@@ -91,7 +91,7 @@ public class ContractApprovalRoute extends EntityBase {
 	/**
 	 * 承認ルートマスタID
 	 */
-	@ApiModelProperty(value = "承認ルートマスタID", required = false, position = 8, allowableValues = "range[0,9223372036854775807]")
+	@ApiModelProperty(value = "承認ルートマスタID", required = false, position = 8)
 	private Long approvalRouteMasterId;
 
 	/**
