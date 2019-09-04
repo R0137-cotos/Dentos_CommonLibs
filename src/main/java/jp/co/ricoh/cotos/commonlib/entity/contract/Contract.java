@@ -428,7 +428,7 @@ public class Contract extends EntityBase {
 	/**
 	 * IFS連携用CSV作成状態
 	 */
-	@ApiModelProperty(value = "IFS連携用CSV作成状態", required = false, position = 40)
+	@ApiModelProperty(value = "IFS連携用CSV作成状態", required = false, position = 40, allowableValues = "未作成(\"0\"), 作成済み(\"1\"), 作成対象外(\"2\"), 作成エラー(\"3\")")
 	private IfsLinkageCsvCreateStatus ifsLinkageCsvCreateStatus;
 
 	/**

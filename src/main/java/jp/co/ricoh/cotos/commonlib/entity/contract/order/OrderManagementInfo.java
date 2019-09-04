@@ -75,7 +75,7 @@ public class OrderManagementInfo extends EntityBase {
 	 * 契約取込状況
 	 */
 	@Column
-	@ApiModelProperty(value = "契約取込状況", required = true, position = 2, allowableValues = "range[0,]")
+	@ApiModelProperty(value = "契約取込状況", required = true, position = 2, allowableValues = "未取込(\"0\"), 取込済(\"1\"), 取込対象外(\"9\"), 処理不可(\"E\")")
 	private CaptureStatus contractCaptureStatus;
 
 	/**
