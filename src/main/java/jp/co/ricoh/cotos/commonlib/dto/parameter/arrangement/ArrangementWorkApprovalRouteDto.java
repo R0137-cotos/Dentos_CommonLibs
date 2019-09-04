@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.persistence.OneToMany;
 import javax.validation.Valid;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -41,7 +40,6 @@ public class ArrangementWorkApprovalRouteDto extends DtoBase {
 	/**
 	 * 承認ルートマスタID
 	 */
-	@Min(0)
 	@ApiModelProperty(value = "承認ルートマスタID", required = false, position = 6, allowableValues = "range[0,9223372036854775807]")
 	private Long approvalRouteMasterId;
 
