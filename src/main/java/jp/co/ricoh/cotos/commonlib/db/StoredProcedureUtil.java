@@ -7,11 +7,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import jp.co.ricoh.cotos.commonlib.dto.result.ApproverInfo;
 import jp.co.ricoh.cotos.commonlib.entity.master.ApprovalRouteNodeMaster.ApproverDeriveMethodDiv;
+import jp.co.ricoh.cotos.commonlib.security.AccessLogOutputFilter;
 
 /**
  * ストアドプロシージャー実行用ユーティリティー<br/>
@@ -19,6 +22,8 @@ import jp.co.ricoh.cotos.commonlib.entity.master.ApprovalRouteNodeMaster.Approve
  */
 @Component
 public class StoredProcedureUtil {
+
+	private static final Log log = LogFactory.getLog(AccessLogOutputFilter.class);
 
 	@Autowired
 	EntityManager entityManager;
@@ -43,6 +48,10 @@ public class StoredProcedureUtil {
 		query.setParameter("mom_id_", momId);
 		query.setParameter("mom_corp_id_", momCorpId);
 		query.setParameter("hierarchy_level_", hierarchyLevel);
+		log.info("processing_type_:" + processingType.toString());
+		log.info("mom_id_:" + momId);
+		log.info("mom_corp_id_:" + momCorpId);
+		log.info("hierarchy_level_:" + hierarchyLevel);
 		query.execute();
 
 		@SuppressWarnings("unchecked")

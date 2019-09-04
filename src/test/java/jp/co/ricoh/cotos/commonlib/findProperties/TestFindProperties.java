@@ -39,7 +39,6 @@ public class TestFindProperties {
 		Assert.assertEquals("DB設定：ユーザー名が正しく取得されること", "cotos_ci_commonlibs", appProperties.getDatasourceProperties().getUsername());
 		Assert.assertEquals("DB設定：パスワードが正しく取得されること", "cotos_ci_commonlibs", appProperties.getDatasourceProperties().getPassword());
 		Assert.assertEquals("ファイル設定：アップロードディレクトリが正しく取得されること", "./build/testTemp", appProperties.getFileProperties().getUploadFileDir());
-		Assert.assertEquals("ファイル設定：ファイル最大サイズが正しく取得されること", (Long) 616110L, appProperties.getFileProperties().getFileMaxSize());
 		List<String> extension = Arrays.asList("xlsx", "txt");
 		Assert.assertEquals("ファイル設定：設定可能拡張子が正しく取得されること", extension, appProperties.getFileProperties().getExtension());
 		Assert.assertEquals("ファイル設定：ファイル名最大サイズが正しく取得されること", (Long) 14L, appProperties.getFileProperties().getFileNmMaxSize());
