@@ -57,12 +57,19 @@ public class ContractApprovalRouteDto extends DtoBase {
 	private int specialPriceApprovalFlg;
 
 	/**
+	 * 承認ルートマスタID
+	 */
+	@Min(0)
+	@ApiModelProperty(value = "承認ルートマスタID", required = false, position = 8, allowableValues = "range[0,9223372036854775807]")
+	private Long approvalRouteMasterId;
+
+	/**
 	 * 契約承認ルートノード
 	 */
 	@NotNull
 	@Valid
 	@OneToMany(mappedBy = "contractApprovalRoute")
-	@ApiModelProperty(value = "契約承認ルートノード", required = true, position = 8)
+	@ApiModelProperty(value = "契約承認ルートノード", required = true, position = 9)
 	@OrderBy("approvalOrder ASC")
 	private List<ContractApprovalRouteNodeDto> contractApprovalRouteNodeList;
 }

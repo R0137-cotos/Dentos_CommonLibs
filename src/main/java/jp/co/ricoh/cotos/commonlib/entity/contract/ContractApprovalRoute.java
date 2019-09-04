@@ -89,18 +89,25 @@ public class ContractApprovalRoute extends EntityBase {
 	private int specialPriceApprovalFlg;
 
 	/**
+	 * 承認ルートマスタID
+	 */
+	@Min(0)
+	@ApiModelProperty(value = "承認ルートマスタID", required = false, position = 8, allowableValues = "range[0,9223372036854775807]")
+	private Long approvalRouteMasterId;
+
+	/**
 	 * 契約承認実績
 	 */
 	@OneToMany(mappedBy = "contractApprovalRoute")
 	@OrderBy("processedAt ASC")
-	@ApiModelProperty(value = "契約承認実績(作成時不要)", required = false, position = 8, readOnly = true)
+	@ApiModelProperty(value = "契約承認実績(作成時不要)", required = false, position = 9, readOnly = true)
 	private List<ContractApprovalResult> contractApprovalResultList;
 
 	/**
 	 * 契約承認ルートノード
 	 */
 	@OneToMany(mappedBy = "contractApprovalRoute")
-	@ApiModelProperty(value = "契約承認ルートノード(作成時不要)", required = true, position = 9, readOnly = true)
+	@ApiModelProperty(value = "契約承認ルートノード(作成時不要)", required = true, position = 10, readOnly = true)
 	@OrderBy("approvalOrder ASC")
 	private List<ContractApprovalRouteNode> contractApprovalRouteNodeList;
 }

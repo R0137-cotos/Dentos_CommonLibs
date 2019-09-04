@@ -47,10 +47,17 @@ public class EstimationApprovalRouteDto extends DtoBase {
 	private int specialPriceApprovalFlg;
 
 	/**
+	 * 承認ルートマスタID
+	 */
+	@Min(0)
+	@ApiModelProperty(value = "承認ルートマスタID", required = false, position = 7, allowableValues = "range[0,9223372036854775807]")
+	private Long approvalRouteMasterId;
+
+	/**
 	 * 見積承認ルートノード
 	 */
 	@NotNull
 	@Valid
-	@ApiModelProperty(value = "見積承認ルートノード", required = true, position = 7)
+	@ApiModelProperty(value = "見積承認ルートノード", required = true, position = 8)
 	private List<EstimationApprovalRouteNodeDto> estimationApprovalRouteNodeList;
 }

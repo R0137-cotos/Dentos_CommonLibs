@@ -12,6 +12,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -69,11 +70,18 @@ public class ArrangementWorkApprovalRoute extends EntityBase {
 	private String approvalRequesterOrgName;
 
 	/**
+	 * 承認ルートマスタID
+	 */
+	@Min(0)
+	@ApiModelProperty(value = "承認ルートマスタID", required = false, position = 6, allowableValues = "range[0,9223372036854775807]")
+	private Long approvalRouteMasterId;
+
+	/**
 	 * 手配業務承認実績
 	 */
 	@OneToMany(mappedBy = "arrangementWorkApprovalRoute")
 	@OrderBy("processedAt ASC")
-	@ApiModelProperty(value = "手配業務承認実績", required = false, position = 6)
+	@ApiModelProperty(value = "手配業務承認実績", required = false, position = 7)
 	private List<ArrangementWorkApprovalResult> arrangementWorkApprovalResultList;
 
 	/**
@@ -81,7 +89,7 @@ public class ArrangementWorkApprovalRoute extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "arrangementWorkApprovalRoute")
 	@OrderBy("approvalOrder ASC")
-	@ApiModelProperty(value = "手配業務承認ルートノード", required = true, position = 7)
+	@ApiModelProperty(value = "手配業務承認ルートノード", required = true, position = 8)
 	private List<ArrangementWorkApprovalRouteNode> arrangementWorkApprovalRouteNodeList;
 
 }
