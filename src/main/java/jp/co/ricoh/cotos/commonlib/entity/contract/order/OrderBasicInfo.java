@@ -120,14 +120,14 @@ public class OrderBasicInfo extends EntityBase {
 	 * 注文タイプ
 	 */
 	@Column
-	@ApiModelProperty(value = "注文タイプ", required = false, position = 3, allowableValues = "range[0,]")
+	@ApiModelProperty(value = "注文タイプ", required = false, position = 3, allowableValues = "新規(\"1\"), 変更(\"2\"), 解約(\"3\")")
 	private OrdererType ordererType;
 
 	/**
 	 * 商品種別
 	 */
 	@Column
-	@ApiModelProperty(value = "商品種別", required = false, position = 4, allowableValues = "range[0,]")
+	@ApiModelProperty(value = "商品種別", required = false, position = 4, allowableValues = "RSI(\"1\")")
 	private ProductType productType;
 
 	/**
@@ -148,7 +148,7 @@ public class OrderBasicInfo extends EntityBase {
 	 * 商流区分（代直区分）
 	 */
 	@Column
-	@ApiModelProperty(value = "商流区分（代直区分）", required = false, position = 7, allowableValues = "range[0,]")
+	@ApiModelProperty(value = "商流区分（代直区分）", required = false, position = 7, allowableValues = "代売(\"1\"), 直売(\"2\")")
 	private CommercialFlowDiv commercialFlowDiv;
 
 	/**

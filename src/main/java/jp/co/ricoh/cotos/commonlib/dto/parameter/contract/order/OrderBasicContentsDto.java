@@ -36,13 +36,13 @@ public class OrderBasicContentsDto {
 	/**
 	 * 注文タイプ
 	 */
-	@ApiModelProperty(value = "注文タイプ", required = true, position = 3)
+	@ApiModelProperty(value = "注文タイプ", required = true, allowableValues = "新規(\"1\"), 変更(\"2\"), 解約(\"3\")", position = 3)
 	private OrdererType ordererType;
 
 	/**
 	 * 商品種別
 	 */
-	@ApiModelProperty(value = "商品種別", required = true, position = 4)
+	@ApiModelProperty(value = "商品種別", required = true, allowableValues = "RSI(\"1\")", position = 4)
 	private ProductType productType;
 
 	/**
@@ -62,7 +62,7 @@ public class OrderBasicContentsDto {
 	/**
 	 * 商流区分（代直区分）
 	 */
-	@ApiModelProperty(value = "商流区分（代直区分）", required = true, position = 7)
+	@ApiModelProperty(value = "商流区分（代直区分）", required = true, allowableValues = "代売(\"1\"), 直売(\"2\")", position = 7)
 	private CommercialFlowDiv commercialFlowDiv;
 
 	/**
