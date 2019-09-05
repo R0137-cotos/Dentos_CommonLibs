@@ -81,7 +81,7 @@ public class ApprovalSearch {
 			// 承認ルートマスタIDがトランザクションに登録されている場合、承認ルートマスタIDでフィルタリング
 			applyApprovalRouteMaster = routemasterStream.filter(approvalRouteMaster -> approvalRouteMaster.getId() == approvalRouteMasterId).findFirst().orElse(null);
 		} else {
-			// 登録されている場合、既存処理
+			// 登録されていない場合、既存処理
 			applyApprovalRouteMaster = routemasterStream.findFirst().orElse(null);
 		}
 
