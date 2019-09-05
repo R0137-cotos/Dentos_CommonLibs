@@ -14,6 +14,7 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
@@ -198,11 +199,11 @@ public class ApprovalSearch {
 	 * @return 承認ルートマスタID
 	 */
 	private <T> Long findApprovalRouteMasterId(T entity) {
-		if (Contract.class.isInstance(entity)) {
+		if (Contract.class.isInstance(entity) && !CollectionUtils.isEmpty((Contract.class.cast(entity).getContractApprovalRouteList()))) {
 			return Contract.class.cast(entity).getContractApprovalRouteList().stream().findFirst().get().getApprovalRouteMasterId();
-		} else if (Estimation.class.isInstance(entity)) {
+		} else if (Estimation.class.isInstance(entity) && !ObjectUtils.isEmpty(Estimation.class.cast(entity).getEstimationApprovalRoute())) {
 			return Estimation.class.cast(entity).getEstimationApprovalRoute().getApprovalRouteMasterId();
-		} else if (ArrangementWork.class.isInstance(entity)) {
+		} else if (ArrangementWork.class.isInstance(entity) && !ObjectUtils.isEmpty(ArrangementWork.class.cast(entity).getArrangementWorkApprovalRoute())) {
 			return ArrangementWork.class.cast(entity).getArrangementWorkApprovalRoute().getApprovalRouteMasterId();
 		}
 		return null;
