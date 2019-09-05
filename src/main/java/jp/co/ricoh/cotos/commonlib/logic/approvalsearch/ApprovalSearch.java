@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.stream.Stream;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -14,6 +16,7 @@ import javax.script.ScriptException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
 
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
@@ -22,6 +25,9 @@ import com.github.mustachejava.MustacheFactory;
 import jp.co.ricoh.cotos.commonlib.dto.result.ApprovalRouteMasterResult;
 import jp.co.ricoh.cotos.commonlib.dto.result.RouteFormulaResult;
 import jp.co.ricoh.cotos.commonlib.dto.result.RouteFormulaResult.RouteFormulaStatus;
+import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangementWork;
+import jp.co.ricoh.cotos.commonlib.entity.contract.Contract;
+import jp.co.ricoh.cotos.commonlib.entity.estimation.Estimation;
 import jp.co.ricoh.cotos.commonlib.entity.master.ApprovalRouteGrpMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.ApprovalRouteMaster;
 import jp.co.ricoh.cotos.commonlib.exception.RouteFormulaScriptException;
@@ -63,11 +69,25 @@ public class ApprovalSearch {
 		ApprovalRouteGrpMaster approvalRouteGrpMaster = approvalRouteGrpMasterRepository.findOne(approvalRouteGrpId);
 
 		// ルート特定、または条件式実行結果ステータスの異常・警告が発生するまでループ
-		ApprovalRouteMaster applyApprovalRouteMaster = approvalRouteGrpMaster.getApprovalRouteMasterList().stream().filter(approvalRouteMaster -> {
+		Stream<ApprovalRouteMaster> routemasterStream = approvalRouteGrpMaster.getApprovalRouteMasterList().stream().filter(approvalRouteMaster -> {
 			// 条件式実行
 			RouteFormulaResult formulaResult = this.execRouteFormula(entity, domain, approvalRouteMaster);
 			return (RouteFormulaStatus.正常.equals(formulaResult.getStatus()) && formulaResult.isApplyRoute()) || RouteFormulaStatus.異常.equals(formulaResult.getStatus()) || RouteFormulaStatus.警告.equals(formulaResult.getStatus());
-		}).findFirst().get();
+		});
+
+		Long approvalRouteMasterId = findApprovalRouteMasterId(entity);
+		ApprovalRouteMaster applyApprovalRouteMaster = null;
+		if (approvalRouteMasterId != null) {
+			// 承認ルートマスタIDがトランザクションに登録されている場合、承認ルートマスタIDでフィルタリング
+			applyApprovalRouteMaster = routemasterStream.filter(approvalRouteMaster -> approvalRouteMaster.getId() == approvalRouteMasterId).findFirst().orElse(null);
+		} else {
+			// 登録されている場合、既存処理
+			applyApprovalRouteMaster = routemasterStream.findFirst().orElse(null);
+		}
+
+		if (ObjectUtils.isEmpty(applyApprovalRouteMaster)) {
+			throw new NoSuchElementException("ApprovalRouteMasterData linked by approvalRouteMasterId is Not Found.");
+		}
 
 		// 特定した承認ルートマスタの条件式を実行
 		RouteFormulaResult formulaResult = this.execRouteFormula(entity, domain, applyApprovalRouteMaster);
@@ -168,5 +188,23 @@ public class ApprovalSearch {
 		} catch (IOException neverOccure) {
 			throw new RuntimeException(neverOccure);
 		}
+	}
+
+	/**
+	 * 引数のエンティティから、承認ルートTBL配下の承認ルートマスタIDを取得し返却する
+	 * 
+	 * @param entity
+	 *            エンティティ
+	 * @return 承認ルートマスタID
+	 */
+	private <T> Long findApprovalRouteMasterId(T entity) {
+		if (Contract.class.isInstance(entity)) {
+			return Contract.class.cast(entity).getContractApprovalRouteList().stream().findFirst().get().getApprovalRouteMasterId();
+		} else if (Estimation.class.isInstance(entity)) {
+			return Estimation.class.cast(entity).getEstimationApprovalRoute().getApprovalRouteMasterId();
+		} else if (ArrangementWork.class.isInstance(entity)) {
+			return ArrangementWork.class.cast(entity).getArrangementWorkApprovalRoute().getApprovalRouteMasterId();
+		}
+		return null;
 	}
 }
