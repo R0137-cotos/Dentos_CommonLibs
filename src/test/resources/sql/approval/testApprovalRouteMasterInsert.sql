@@ -10,3 +10,15 @@ insert into approval_route_master(id,version,approval_route_grp_id,approval_rout
 values(3,0,3,'テスト3',null,1,'function () { validate("テスト",test.name); return true; }',1)/
 insert into approval_route_master(id,version,approval_route_grp_id,approval_route_name,description,special_price_approval_flg,route_condition_formula,cond_determine_order)
 values(6,0,3,'テスト3_2','複数ルート3',1,'function () { return true; }',2)/
+insert into approval_route_master(id,version,approval_route_grp_id,approval_route_name,description,special_price_approval_flg,route_condition_formula,cond_determine_order)
+values(7,0,4,'テスト4',null,1,'function () { return true; }',1)/
+insert into approval_route_master(id,version,approval_route_grp_id,approval_route_name,description,special_price_approval_flg,route_condition_formula,cond_determine_order)
+values(8,0,4,'テスト4_2','複数ルート4',1,'function () { return true; }',2)/
+insert into approval_route_master(id,version,approval_route_grp_id,approval_route_name,description,special_price_approval_flg,route_condition_formula,cond_determine_order)
+values(9,0,5,'テスト5',null,1,'function () { return true; }',1)/
+insert into approval_route_master(id,version,approval_route_grp_id,approval_route_name,description,special_price_approval_flg,route_condition_formula,cond_determine_order)
+values(10,0,5,'テスト5_2','複数ルート5',1,'function () { return true; }',2)/
+insert into approval_route_master(id,version,approval_route_grp_id,approval_route_name,description,special_price_approval_flg,route_condition_formula,cond_determine_order)
+values(11,0,6,'テスト6',null,1,'function () { return true; }',1)/
+insert into approval_route_master(id,version,approval_route_grp_id,approval_route_name,description,special_price_approval_flg,route_condition_formula,cond_determine_order)
+values(12,0,6,'テスト6_2','複数ルート6',1,'function () { return true; }',2)/
