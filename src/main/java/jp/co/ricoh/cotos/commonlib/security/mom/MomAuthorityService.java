@@ -109,7 +109,7 @@ public class MomAuthorityService {
 
 	/**
 	 * シングルユーザーIDに紐づく、すべてのCOTOS用MoM権限レベルを取得
-	 * 
+	 *
 	 * @throws Exception
 	 */
 	public Map<ActionDiv, Map<AuthDiv, AuthLevel>> searchAllMomAuthorities(String singleUserId) throws Exception {
@@ -148,6 +148,7 @@ public class MomAuthorityService {
 
 			allMomAuthorities.put(actionDiv, authorities);
 		});
+		allMomAuthorities.entrySet().stream().forEach(s -> log.info(s));
 
 		return allMomAuthorities;
 	}
