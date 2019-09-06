@@ -81,11 +81,17 @@ public class EstimationApprovalRoute extends EntityBase {
 	private int specialPriceApprovalFlg;
 
 	/**
+	 * 承認ルートマスタID
+	 */
+	@ApiModelProperty(value = "承認ルートマスタID", required = false, position = 7)
+	private Long approvalRouteMasterId;
+
+	/**
 	 * 見積承認実績
 	 */
 	@OneToMany(mappedBy = "estimationApprovalRoute")
 	@OrderBy("processedAt ASC")
-	@ApiModelProperty(value = "見積承認実績(作成時不要)", required = false, position = 7, readOnly = true)
+	@ApiModelProperty(value = "見積承認実績(作成時不要)", required = false, position = 8, readOnly = true)
 	private List<EstimationApprovalResult> estimationApprovalResultList;
 
 	/**
@@ -93,7 +99,7 @@ public class EstimationApprovalRoute extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "estimationApprovalRoute")
 	@OrderBy("approvalOrder ASC")
-	@ApiModelProperty(value = "見積承認ルートノード(作成時不要)", required = true, position = 8, readOnly = true)
+	@ApiModelProperty(value = "見積承認ルートノード(作成時不要)", required = true, position = 9, readOnly = true)
 	private List<EstimationApprovalRouteNode> estimationApprovalRouteNodeList;
 
 }

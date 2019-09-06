@@ -38,11 +38,17 @@ public class ArrangementWorkApprovalRouteDto extends DtoBase {
 	private String approvalRequesterOrgName;
 
 	/**
+	 * 承認ルートマスタID
+	 */
+	@ApiModelProperty(value = "承認ルートマスタID", required = false, position = 6)
+	private Long approvalRouteMasterId;
+
+	/**
 	 * 手配業務承認ルートノード
 	 */
 	@NotNull
 	@Valid
 	@OneToMany(mappedBy = "arrangementWorkApprovalRoute")
-	@ApiModelProperty(value = "手配業務承認ルートノード", required = true, position = 6)
+	@ApiModelProperty(value = "手配業務承認ルートノード", required = true, position = 7)
 	private List<ArrangementWorkApprovalRouteNodeDto> arrangementWorkApprovalRouteNodeList;
 }
