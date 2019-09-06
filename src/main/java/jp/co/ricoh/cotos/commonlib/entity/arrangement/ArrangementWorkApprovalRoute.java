@@ -69,11 +69,17 @@ public class ArrangementWorkApprovalRoute extends EntityBase {
 	private String approvalRequesterOrgName;
 
 	/**
+	 * 承認ルートマスタID
+	 */
+	@ApiModelProperty(value = "承認ルートマスタID", required = false, position = 6)
+	private Long approvalRouteMasterId;
+
+	/**
 	 * 手配業務承認実績
 	 */
 	@OneToMany(mappedBy = "arrangementWorkApprovalRoute")
 	@OrderBy("processedAt ASC")
-	@ApiModelProperty(value = "手配業務承認実績", required = false, position = 6)
+	@ApiModelProperty(value = "手配業務承認実績", required = false, position = 7)
 	private List<ArrangementWorkApprovalResult> arrangementWorkApprovalResultList;
 
 	/**
@@ -81,7 +87,7 @@ public class ArrangementWorkApprovalRoute extends EntityBase {
 	 */
 	@OneToMany(mappedBy = "arrangementWorkApprovalRoute")
 	@OrderBy("approvalOrder ASC")
-	@ApiModelProperty(value = "手配業務承認ルートノード", required = true, position = 7)
+	@ApiModelProperty(value = "手配業務承認ルートノード", required = true, position = 8)
 	private List<ArrangementWorkApprovalRouteNode> arrangementWorkApprovalRouteNodeList;
 
 }
