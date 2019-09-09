@@ -31,7 +31,7 @@ public class OrderProductInfoDto {
 	/**
 	 * 課金制約ルール
 	 */
-	@ApiModelProperty(value = "課金制約ルール", required = false, position = 3, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "課金制約ルール", required = false, position = 3, allowableValues = "有料(\"0\"), 初月無料(\"1\"), 無料期間指定(\"2\")")
 	private ChargeRule chargeRule;
 
 	/**
@@ -51,7 +51,7 @@ public class OrderProductInfoDto {
 	/**
 	 * 提供方法
 	 */
-	@ApiModelProperty(value = "提供方法", required = false, position = 6, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "提供方法", required = false, position = 6, allowableValues = "初期(\"1\"), 月額(\"2\"), 年額(\"3\")")
 	private ProvideMethod provideMethod;
 
 	/**

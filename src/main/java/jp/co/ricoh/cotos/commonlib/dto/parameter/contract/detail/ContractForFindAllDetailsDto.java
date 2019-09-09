@@ -56,7 +56,7 @@ public class ContractForFindAllDetailsDto extends EntityBase {
 	 */
 	@Column(nullable = false)
 	@NotNull
-	@ApiModelProperty(value = "契約種別", required = true, position = 2)
+	@ApiModelProperty(value = "契約種別", required = true, allowableValues = "新規(\"1\"), 契約変更(\"2\"), 情報変更(\"3\")", position = 2)
 	private ContractType contractType;
 
 	/**
@@ -329,7 +329,7 @@ public class ContractForFindAllDetailsDto extends EntityBase {
 	/**
 	 * IFS連携用CSV作成状態
 	 */
-	@ApiModelProperty(value = "IFS連携用CSV作成状態", required = false, position = 41)
+	@ApiModelProperty(value = "IFS連携用CSV作成状態", required = false, allowableValues = "未作成(\"0\"), 作成済み(\"1\"), 作成対象外(\"2\"), 作成エラー(\"3\")", position = 41)
 	private IfsLinkageCsvCreateStatus ifsLinkageCsvCreateStatus;
 
 	/**
