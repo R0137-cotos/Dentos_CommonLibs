@@ -1,8 +1,6 @@
 package jp.co.ricoh.cotos.commonlib.approvalsearch;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import javax.transaction.Transactional;
 
@@ -19,12 +17,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import jp.co.ricoh.cotos.commonlib.DBConfig;
 import jp.co.ricoh.cotos.commonlib.dto.result.ApprovalRouteMasterResult;
 import jp.co.ricoh.cotos.commonlib.dto.result.RouteFormulaResult.RouteFormulaStatus;
-import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangementWork;
-import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangementWorkApprovalRoute;
-import jp.co.ricoh.cotos.commonlib.entity.contract.Contract;
-import jp.co.ricoh.cotos.commonlib.entity.contract.ContractApprovalRoute;
-import jp.co.ricoh.cotos.commonlib.entity.estimation.Estimation;
-import jp.co.ricoh.cotos.commonlib.entity.estimation.EstimationApprovalRoute;
 import jp.co.ricoh.cotos.commonlib.logic.approvalsearch.ApprovalSearch;
 
 @RunWith(SpringRunner.class)
@@ -146,50 +138,6 @@ public class TestApprovalSearch {
 			});
 		} catch (Exception e) {
 			Assert.fail("異常終了");
-		}
-	}
-
-	@Test
-	@Transactional
-	public void 承認ルート特定_承認ルートマスタIDによる絞り込み() {
-
-		テストデータ作成();
-
-		Estimation estimation = new Estimation();
-		EstimationApprovalRoute estimationApprovalRoute = new EstimationApprovalRoute();
-		estimationApprovalRoute.setApprovalRouteMasterId(8L);
-		estimation.setEstimationApprovalRoute(estimationApprovalRoute);
-
-		Contract contract = new Contract();
-		ContractApprovalRoute contractApprovalRoute = new ContractApprovalRoute();
-		contractApprovalRoute.setApprovalRouteMasterId(9L);
-		contract.setContractApprovalRouteList(Arrays.asList(contractApprovalRoute));
-
-		ArrangementWork arrangementWork = new ArrangementWork();
-		ArrangementWorkApprovalRoute arrangementWorkApprovalRoute = new ArrangementWorkApprovalRoute();
-		arrangementWorkApprovalRoute.setApprovalRouteMasterId(12L);
-		arrangementWork.setArrangementWorkApprovalRoute(arrangementWorkApprovalRoute);
-
-		ApprovalRouteMasterResult result1 = approvalSearch.findApprovalRouteMaster(4L, estimation, "estimation");
-		Assert.assertNotNull("承認ルートが正しく取得されること", result1);
-		Assert.assertEquals("見積承認ルートの承認ルートマスタIDと一致する、承認ルートが取れること", result1.getApprovalRouteMaster().getId(), 8L);
-
-		ApprovalRouteMasterResult result2 = approvalSearch.findApprovalRouteMaster(5L, contract, "contrct");
-		Assert.assertNotNull("承認ルートが正しく取得されること", result2);
-		Assert.assertEquals("契約承認ルートの承認ルートマスタIDと一致する、承認ルートが取れること", result2.getApprovalRouteMaster().getId(), 9L);
-
-		ApprovalRouteMasterResult result3 = approvalSearch.findApprovalRouteMaster(6L, arrangementWork, "arrangementWork");
-		Assert.assertNotNull("承認ルートが正しく取得されること", result3);
-		Assert.assertEquals("手配業務承認ルートの承認ルートマスタIDと一致する、承認ルートが取れること", result3.getApprovalRouteMaster().getId(), 12L);
-
-		estimationApprovalRoute.setApprovalRouteMasterId(7L);
-		estimation.setEstimationApprovalRoute(estimationApprovalRoute);
-		try {
-			approvalSearch.findApprovalRouteMaster(1L, estimation, "estimation");
-			Assert.fail("例外が発生しない");
-		} catch (NoSuchElementException ignore) {
-		} catch (Exception e) {
-			Assert.fail("想定外の例外が発生した");
 		}
 	}
 

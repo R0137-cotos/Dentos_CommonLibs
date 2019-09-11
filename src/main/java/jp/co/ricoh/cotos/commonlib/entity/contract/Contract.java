@@ -648,4 +648,12 @@ public class Contract extends EntityBase {
 	@Column
 	@ApiModelProperty(value = "届先名", required = false, position = 69, allowableValues = "range[0,]")
 	private String deliveryName;
+
+	/**
+	 * 検収日
+	 */
+	@Column
+	@ApiModelProperty(value = "検収日", required = false, position = 70)
+	private Date acceptanceDate;
+
 }
