@@ -1,9 +1,11 @@
 package jp.co.ricoh.cotos.commonlib;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.junit.Assert;
@@ -157,5 +159,19 @@ public class TestTools {
 	 */
 	public boolean errorMessageMatchesOne(List<ErrorInfo> errorInfoList, String paramterErrorMessage) {
 		return (1 == (int) errorInfoList.stream().filter(info -> info != null && paramterErrorMessage.toString().equals(info.getErrorMessage())).count());
+	}
+
+	/**
+	 * dto-エンティティ整合性チェック
+	 *
+	 * @param entityClass エンティティクラス
+	 * @param dtoClass DTOクラス
+	 * @param ignoreFields 対象外とするフィールド
+	 */
+	public <T, U> void checkConsistency(Class<T> entityClass, Class<U> dtoClass, String... ignoreFields) {
+		List<String> entityField = Arrays.stream(entityClass.getDeclaredFields()).map(f -> f.getName()).collect(Collectors.toList());
+		Arrays.stream(dtoClass.getDeclaredFields()).map(field -> field.getName()).filter(fieldName -> !Arrays.asList(ignoreFields).contains(fieldName)).forEach(fieldName -> {
+			Assert.assertTrue(fieldName + "がエンティティのフィールドに含まれていること", entityField.contains(fieldName));
+		});
 	}
 }

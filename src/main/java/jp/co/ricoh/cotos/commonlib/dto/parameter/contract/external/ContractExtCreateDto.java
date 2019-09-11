@@ -114,13 +114,6 @@ public class ContractExtCreateDto extends DtoBase {
 	private Long originContractId;
 
 	/**
-	 * 導入希望日
-	 */
-	@ApiModelProperty(value = "導入希望日", required = false, position = 14)
-	@Temporal(TemporalType.DATE)
-	private Date introductionPreferredDate;
-
-	/**
 	 * 変更希望日
 	 */
 	@ApiModelProperty(value = "変更希望日", required = false, position = 15)
@@ -383,5 +376,5 @@ public class ContractExtCreateDto extends DtoBase {
 	@Valid
 	@OneToMany(mappedBy = "contract")
 	@ApiModelProperty(value = "追加編集者", required = false, position = 50)
-	private List<ContractAddedEditorEmpDto> contractAddedEditorEmpDtoList;
+	private List<ContractAddedEditorEmpDto> contractAddedEditorEmpList;
 }
