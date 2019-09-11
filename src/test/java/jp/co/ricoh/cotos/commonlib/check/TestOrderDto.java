@@ -191,6 +191,9 @@ public class TestOrderDto {
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 8);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+
+		//dto-エンティティ整合性チェック※DTOクラスでは必須
+		testTool.checkConsistency(OrderSetupInfo.class, OrderSetupInfoDto.class);
 	}
 
 	@Test
@@ -241,6 +244,9 @@ public class TestOrderDto {
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 30);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+
+		//dto-エンティティ整合性チェック※DTOクラスでは必須
+		testTool.checkConsistency(OrderServiceInnerInfo.class, OrderServiceInnerInfoDto.class);
 	}
 
 	@Test
@@ -304,6 +310,9 @@ public class TestOrderDto {
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00028));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "単価は小数点以下2桁を超えています。"));
 
+		//dto-エンティティ整合性チェック※DTOクラスでは必須
+		testTool.checkConsistency(OrderProductInfo.class, OrderProductInfoDto.class);
+
 	}
 
 	@Test
@@ -327,6 +336,9 @@ public class TestOrderDto {
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+
+		//dto-エンティティ整合性チェック※DTOクラスでは必須
+		testTool.checkConsistency(OrderProductGroupInfo.class, OrderProductGroupInfoDto.class);
 	}
 
 	@Test
@@ -356,6 +368,9 @@ public class TestOrderDto {
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 8);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+
+		//dto-エンティティ整合性チェック※DTOクラスでは必須
+		testTool.checkConsistency(OrdererInfo.class, OrdererInfoDto.class);
 	}
 
 	@Test
@@ -386,6 +401,9 @@ public class TestOrderDto {
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 9);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+
+		//dto-エンティティ整合性チェック※DTOクラスでは必須
+		testTool.checkConsistency(OrderDistributorInfo.class, OrderDistributorInfoDto.class);
 	}
 
 	@Test
@@ -420,6 +438,9 @@ public class TestOrderDto {
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 13);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+
+		//dto-エンティティ整合性チェック※DTOクラスでは必須
+		testTool.checkConsistency(OrderContractorInfo.class, OrderContractorInfoDto.class);
 	}
 
 	@Test
@@ -449,6 +470,9 @@ public class TestOrderDto {
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 8);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
+
+		//dto-エンティティ整合性チェック※DTOクラスでは必須
+		testTool.checkConsistency(OrderBranchCustomerInfo.class, OrderBranchCustomerInfoDto.class);
 	}
 
 	@Test
@@ -496,6 +520,9 @@ public class TestOrderDto {
 		Assert.assertTrue(result.getErrorInfoList().size() == 3);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00028));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "初期費合計は小数点以下2桁を超えています。"));
+
+		//dto-エンティティ整合性チェック※DTOクラスでは必須
+		testTool.checkConsistency(OrderBasicInfo.class, OrderBasicContentsDto.class);
 
 	}
 

@@ -16,6 +16,14 @@ import jp.co.ricoh.cotos.commonlib.DBConfig;
 import jp.co.ricoh.cotos.commonlib.TestTools;
 import jp.co.ricoh.cotos.commonlib.TestTools.ParameterErrorIds;
 import jp.co.ricoh.cotos.commonlib.dto.parameter.common.CheckResultUpdateParameter;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.common.CustomerAbstractDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.common.DealerAbstractDto;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.common.DtoBase;
+import jp.co.ricoh.cotos.commonlib.dto.parameter.common.EmployeeAbstractDto;
+import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
+import jp.co.ricoh.cotos.commonlib.entity.common.CustomerAbstractEntity;
+import jp.co.ricoh.cotos.commonlib.entity.common.DealerAbstractEntity;
+import jp.co.ricoh.cotos.commonlib.entity.common.EmployeeAbstractEntity;
 import jp.co.ricoh.cotos.commonlib.repository.common.AttachedFileRepository;
 import jp.co.ricoh.cotos.commonlib.security.TestSecurityController;
 import jp.co.ricoh.cotos.commonlib.security.bean.ParamterCheckResult;
@@ -78,5 +86,29 @@ public class TestCommonDto {
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "チェック結果IDは最小値（0）を下回っています。"));
+	}
+
+	@Test
+	public void DtoBaseのテスト() {
+		//dto-エンティティ整合性チェック※DTOクラスでは必須
+		testTool.checkConsistency(EntityBase.class, DtoBase.class, "id");
+	}
+
+	@Test
+	public void CustomerAbstractDtoのテスト() {
+		//dto-エンティティ整合性チェック※DTOクラスでは必須
+		testTool.checkConsistency(CustomerAbstractEntity.class, CustomerAbstractDto.class);
+	}
+
+	@Test
+	public void DealerAbstractDtoのテスト() {
+		//dto-エンティティ整合性チェック※DTOクラスでは必須
+		testTool.checkConsistency(DealerAbstractEntity.class, DealerAbstractDto.class);
+	}
+
+	@Test
+	public void EmployeeAbstractDtoのテスト() {
+		//dto-エンティティ整合性チェック※DTOクラスでは必須
+		testTool.checkConsistency(EmployeeAbstractEntity.class, EmployeeAbstractDto.class);
 	}
 }

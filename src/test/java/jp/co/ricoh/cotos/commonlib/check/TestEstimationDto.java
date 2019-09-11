@@ -210,6 +210,9 @@ public class TestEstimationDto {
 		Assert.assertTrue(result.getErrorInfoList().size() == 21);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "住所は最大文字数（1000）を超えています。"));
+
+		//dto-エンティティ整合性チェック※DTOクラスでは必須
+		testTool.checkConsistency(CustomerEstimation.class, CustomerEstimationDto.class);
 	}
 
 	@Test
@@ -251,6 +254,9 @@ public class TestEstimationDto {
 		Assert.assertTrue(result.getErrorInfoList().size() == 15);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "住所は最大文字数（1000）を超えています。"));
+
+		//dto-エンティティ整合性チェック※DTOクラスでは必須
+		testTool.checkConsistency(DealerEstimation.class, DealerEstimationDto.class);
 	}
 
 	@Test
@@ -427,6 +433,9 @@ public class TestEstimationDto {
 		Assert.assertTrue(result.getErrorInfoList().size() == 9);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "商品名は最大文字数（255）を超えています。"));
+
+		//dto-エンティティ整合性チェック※DTOクラスでは必須
+		testTool.checkConsistency(Estimation.class, EstimationDto.class);
 	}
 
 	@Test
@@ -483,6 +492,9 @@ public class TestEstimationDto {
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "所属組織階層レベルは最大値（9）を超えています。"));
+
+		//dto-エンティティ整合性チェック※DTOクラスでは必須
+		testTool.checkConsistency(EstimationAddedEditorEmp.class, EstimationAddedEditorEmpDto.class);
 	}
 
 	@Test
@@ -545,6 +557,9 @@ public class TestEstimationDto {
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "承認者氏名は最大文字数（255）を超えています。"));
+
+		//dto-エンティティ整合性チェック※DTOクラスでは必須
+		testTool.checkConsistency(EstimationApprovalRoute.class, EstimationApprovalRouteDto.class);
 	}
 
 	@Test
@@ -596,6 +611,9 @@ public class TestEstimationDto {
 		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "承認者組織階層レベルは最小値（0）を下回っています。"));
+
+		//dto-エンティティ整合性チェック※DTOクラスでは必須
+		testTool.checkConsistency(EstimationApprovalRouteNode.class, EstimationApprovalRouteNodeDto.class);
 	}
 
 	@Test
@@ -638,6 +656,9 @@ public class TestEstimationDto {
 		Assert.assertTrue(result.getErrorInfoList().size() == 6);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "添付者MoM社員IDは最大文字数（255）を超えています。"));
+
+		//dto-エンティティ整合性チェック※DTOクラスでは必須
+		testTool.checkConsistency(EstimationAttachedFile.class, EstimationAttachedFileDto.class);
 	}
 
 	@Test
@@ -687,6 +708,9 @@ public class TestEstimationDto {
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "表示順は最小値（0）を下回っています。"));
+
+		//dto-エンティティ整合性チェック※DTOクラスでは必須
+		testTool.checkConsistency(EstimationCheckResult.class, EstimationCheckResultDto.class);
 	}
 
 	@Test
@@ -766,6 +790,9 @@ public class TestEstimationDto {
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "リコー品種コードは最大文字数（255）を超えています。"));
+
+		//dto-エンティティ整合性チェック※DTOクラスでは必須
+		testTool.checkConsistency(EstimationDetail.class, EstimationDetailDto.class);
 	}
 
 	@Test
@@ -826,6 +853,9 @@ public class TestEstimationDto {
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00015));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "所属組織階層レベルは最大値（9）を超えています。"));
+
+		//dto-エンティティ整合性チェック※DTOクラスでは必須
+		testTool.checkConsistency(EstimationPicSaEmp.class, EstimationPicSaEmpDto.class);
 	}
 
 	@Test
@@ -884,6 +914,9 @@ public class TestEstimationDto {
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00028));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "仕切価格は小数点以下2桁を超えています。"));
 
+		//dto-エンティティ整合性チェック※DTOクラスでは必須
+		testTool.checkConsistency(ItemEstimation.class, ItemEstimationDto.class);
+
 	}
 
 	@Test
@@ -921,6 +954,9 @@ public class TestEstimationDto {
 		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "代表品種マスタIDは最小値（0）を下回っています。"));
+
+		//dto-エンティティ整合性チェック※DTOクラスでは必須
+		testTool.checkConsistency(ProductEstimation.class, ProductEstimationDto.class);
 	}
 
 	@Test
@@ -981,6 +1017,7 @@ public class TestEstimationDto {
 		Assert.assertTrue(result.getErrorInfoList().size() == 1);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "リコー品種コードは最大文字数（255）を超えています。"));
+
 	}
 
 	@Test
