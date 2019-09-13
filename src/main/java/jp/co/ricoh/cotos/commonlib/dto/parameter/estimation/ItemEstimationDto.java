@@ -73,7 +73,7 @@ public class ItemEstimationDto extends DtoBase {
 	@Digits(integer = 19, fraction = 2)
 	@ApiModelProperty(value = "仕切価格", required = true, position = 9, allowableValues = "range[0.00,9999999999999999999.99]")
 	private BigDecimal partitionPrice;
-	
+
 	/**
 	 * Ｒ原価
 	 */
@@ -101,4 +101,11 @@ public class ItemEstimationDto extends DtoBase {
 	@Column
 	@ApiModelProperty(value = "母店売価(接点店仕切)", required = false, position = 14)
 	private BigDecimal motherStorePrice;
+
+	/**
+	 * 標準価格
+	 */
+	@Column
+	@ApiModelProperty(value = "標準価格", required = false, position = 15)
+	private BigDecimal standardPrice;
 }
