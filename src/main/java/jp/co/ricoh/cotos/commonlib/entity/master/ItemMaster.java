@@ -208,30 +208,51 @@ public class ItemMaster extends EntityBaseMaster {
 	private Integer shortestDeliveryDate;
 
 	/**
+	 * 標準価格
+	 */
+	@DecimalMax("9999999999999999999.99")
+	@ApiModelProperty(value = "標準価格", required = false, position = 18, allowableValues = "range[0.00,9999999999999999999.99]")
+	private BigDecimal standardPrice;
+
+	/**
+	 * 申込書帳票出力無しフラグ
+	 */
+	@Max(9)
+	@ApiModelProperty(value = "申込書帳票出力無しフラグ", required = false, position = 19, allowableValues = "range[0,9]")
+	private Integer noApplicationFormOutputFlg;
+
+	/**
+	 * 作業完了報告書出力無しフラグ
+	 */
+	@Max(9)
+	@ApiModelProperty(value = "作業完了報告書出力無しフラグ", required = false, position = 20, allowableValues = "range[0,9]")
+	private Integer noWorkReportOutputFlg;
+
+	/**
 	 * 計上分解構成マスタ
 	 */
 	@OneToMany(mappedBy = "itemMaster")
-	@ApiModelProperty(value = "計上分解構成マスタ", required = false, position = 18)
+	@ApiModelProperty(value = "計上分解構成マスタ", required = false, position = 21)
 	private List<RecordDecomposeCompMaster> recordDecomposeCompMasterList;
 
 	/**
 	 * 手配業務構成マスタ
 	 */
 	@OneToMany(mappedBy = "itemMaster")
-	@ApiModelProperty(value = "手配業務構成マスタ", required = false, position = 19)
+	@ApiModelProperty(value = "手配業務構成マスタ", required = false, position = 22)
 	private List<ArrangementWorkCompMaster> arrangementWorkCompMasterList;
 
 	/**
 	 * 機種構成マスタ
 	 */
 	@OneToMany(mappedBy = "itemMaster")
-	@ApiModelProperty(value = "機種構成マスタ", required = false, position = 20)
+	@ApiModelProperty(value = "機種構成マスタ", required = false, position = 23)
 	private List<EquipmentCompMaster> equipmentCompMasterList;
 
 	/**
 	 * 品種振替構成マスタ
 	 */
 	@OneToMany(mappedBy = "itemMaster")
-	@ApiModelProperty(value = "品種振替構成マスタ", required = false, position = 21)
+	@ApiModelProperty(value = "品種振替構成マスタ", required = false, position = 24)
 	private List<ItemTransCompMaster> itemTransCompMasterList;
 }
