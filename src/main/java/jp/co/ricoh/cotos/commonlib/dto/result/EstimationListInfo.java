@@ -128,16 +128,64 @@ public class EstimationListInfo {
 	private String immutableContIdentNumber;
 
 	/**
+	 * MoM企業ID
+	 */
+	@ApiModelProperty(value = "MoM企業ID", required = false, position = 18, allowableValues = "range[0,255]")
+	private String companyId;
+
+	/**
+	 * MoM企事部ID
+	 */
+	@ApiModelProperty(value = "MoM企事部ID", required = false, position = 19, allowableValues = "range[0,255]")
+	private String momCustId;
+
+	/**
+	 * 商流区分
+	 */
+	@ApiModelProperty(value = "商流区分", required = false, position = 20, allowableValues = "range[0,255]")
+	private String commercialFlowDiv;
+
+	/**
+	 * 支社コード
+	 */
+	@ApiModelProperty(value = "支社コード", required = false, position = 21, allowableValues = "range[0,255]")
+	private String ringsHanshCd;
+
+	/**
+	 * CUBIC部門コード
+	 */
+	@ApiModelProperty(value = "CUBIC部門コード", required = false, position = 22, allowableValues = "range[0,255]")
+	private String cubicOrgId;
+
+	/**
+	 * 部署
+	 */
+	@ApiModelProperty(value = "部署", required = false, position = 23, allowableValues = "range[0,255]")
+	private String salesDepartmentName;
+
+	/**
+	 *  RINGS社員コード
+	 */
+	@ApiModelProperty(value = "RINGS社員コード", required = false, position = 24, allowableValues = "range[0,255]")
+	private String ringsEmpCd;
+
+	/**
+	 * 作成者
+	 */
+	@ApiModelProperty(value = "作成者", required = false, position = 25, allowableValues = "range[0,255]")
+	private String createdUser;
+
+	/**
 	 * 登録日時
 	 */
-	@ApiModelProperty(value = "登録日時", required = false, position = 18)
+	@ApiModelProperty(value = "登録日時", required = false, position = 26)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdAt;
 
 	/**
 	 * 更新日時
 	 */
-	@ApiModelProperty(value = "更新日時", required = false, position = 19)
+	@ApiModelProperty(value = "更新日時", required = false, position = 27)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedAt;
 

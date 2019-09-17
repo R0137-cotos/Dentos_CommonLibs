@@ -205,16 +205,76 @@ public class ContractListInfo {
 	private String immutableContIdentNumber;
 
 	/**
+	 * 上流システムコード
+	 */
+	@ApiModelProperty(value = "上流システムコード", required = false, position = 29, allowableValues = "range[0,255]")
+	private String billingCustomerSpCode;
+
+	/**
+	 * MoM企業ID
+	 */
+	@ApiModelProperty(value = "MoM企業ID", required = false, position = 30, allowableValues = "range[0,255]")
+	private String companyId;
+
+	/**
+	 * MoM企事部ID
+	 */
+	@ApiModelProperty(value = "MoM企事部ID", required = false, position = 31, allowableValues = "range[0,255]")
+	private String momCustId;
+
+	/**
+	 * 商流区分
+	 */
+	@ApiModelProperty(value = "商流区分", required = false, position = 32, allowableValues = "range[0,255]")
+	private String commercialFlowDiv;
+
+	/**
+	 * 支社コード
+	 */
+	@ApiModelProperty(value = "支社コード", required = false, position = 33, allowableValues = "range[0,255]")
+	private String ringsHanshCd;
+
+	/**
+	 * CUBIC部門コード
+	 */
+	@ApiModelProperty(value = "CUBIC部門コード", required = false, position = 34, allowableValues = "range[0,255]")
+	private String cubicOrgId;
+
+	/**
+	 * 部署
+	 */
+	@ApiModelProperty(value = "部署", required = false, position = 35, allowableValues = "range[0,255]")
+	private String salesDepartmentName;
+
+	/**
+	 *  RINGS社員コード
+	 */
+	@ApiModelProperty(value = "RINGS社員コード", required = false, position = 36, allowableValues = "range[0,255]")
+	private String ringsEmpCd;
+
+	/**
+	 * 作成者
+	 */
+	@ApiModelProperty(value = "作成者", required = false, position = 37, allowableValues = "range[0,255]")
+	private String createdUser;
+
+	/**
+	 *  課金開始日
+	 */
+	@ApiModelProperty(value = "課金開始日", required = false, position = 38, allowableValues = "range[0,255]")
+	private String billingStartDate;
+
+	/**
 	 * 登録日時
 	 */
-	@ApiModelProperty(value = "登録日時", required = false, position = 29)
+	@ApiModelProperty(value = "登録日時", required = false, position = 39)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdAt;
 
 	/**
 	 * 更新日時
 	 */
-	@ApiModelProperty(value = "更新日時", required = false, position = 30)
+	@ApiModelProperty(value = "更新日時", required = false, position = 40)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedAt;
 
