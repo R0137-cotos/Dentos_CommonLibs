@@ -261,8 +261,9 @@ public class ContractListInfo {
 	/**
 	 *  課金開始日
 	 */
+	@Temporal(TemporalType.DATE)
 	@ApiModelProperty(value = "課金開始日", required = false, position = 38, allowableValues = "range[0,255]")
-	private String billingStartDate;
+	private Date billingStartDate;
 
 	/**
 	 * 登録日時
