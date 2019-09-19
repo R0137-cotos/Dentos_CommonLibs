@@ -270,7 +270,7 @@ public class EstimationSearchParameter {
 			+ "条件入力時、最低2文字以上の入力とする。", //
 			required = false, allowableValues = "range[2,255]") //
 	private String immutableContIdentNumber;
-	
+
 	/**
 	 * ソート項目
 	 */
