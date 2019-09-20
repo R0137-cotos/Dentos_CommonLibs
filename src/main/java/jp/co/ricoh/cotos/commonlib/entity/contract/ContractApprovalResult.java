@@ -46,7 +46,7 @@ public class ContractApprovalResult extends EntityBase {
 	/**
 	 * 契約承認ルート
 	 */
-	@ManyToOne(optional = false)
+	@ManyToOne
 	@JoinColumn(name = "contract_approval_route_id", referencedColumnName = "id")
 	@JsonIgnore
 	@ApiModelProperty(value = "契約承認ルート", required = true, position = 2)
