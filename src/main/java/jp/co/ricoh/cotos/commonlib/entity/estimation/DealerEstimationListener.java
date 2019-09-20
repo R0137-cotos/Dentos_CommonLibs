@@ -49,11 +49,15 @@ public class DealerEstimationListener {
 
 			// 結合して表示するものを設定
 			// 値が設定されていない場合のみ補完する
-			if (StringUtils.isBlank(dealerEstimation.getDealerName())) dealerEstimation.setDealerName(this.convertJoinedDealerName(vKjbMaster));
-			if (StringUtils.isBlank(dealerEstimation.getAddress())) dealerEstimation.setAddress(this.convertJoinedAddress(vKjbMaster));
+			if (StringUtils.isBlank(dealerEstimation.getDealerName()))
+				dealerEstimation.setDealerName(this.convertJoinedDealerName(vKjbMaster));
+			if (StringUtils.isBlank(dealerEstimation.getAddress()))
+				dealerEstimation.setAddress(this.convertJoinedAddress(vKjbMaster));
 
-			if (StringUtils.isBlank(dealerEstimation.getPostNumber())) dealerEstimation.setPostNumber(vKjbMaster.getJgsJgsPostNum());
-			if (StringUtils.isBlank(dealerEstimation.getOrgPhoneNumber())) dealerEstimation.setOrgPhoneNumber(vKjbMaster.getKgyKgyTelNum());
+			if (StringUtils.isBlank(dealerEstimation.getPostNumber()))
+				dealerEstimation.setPostNumber(vKjbMaster.getJgsJgsPostNum());
+			if (StringUtils.isBlank(dealerEstimation.getOrgPhoneNumber()))
+				dealerEstimation.setOrgPhoneNumber(vKjbMaster.getKgyKgyTelNum());
 		}
 	}
 
