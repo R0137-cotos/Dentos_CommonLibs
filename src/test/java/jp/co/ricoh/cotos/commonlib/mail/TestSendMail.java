@@ -1,6 +1,7 @@
 package jp.co.ricoh.cotos.commonlib.mail;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -108,6 +109,27 @@ public class TestSendMail {
 		String uploadFile = path + "/src/test/resources/dummyFile/10130102146_201712.zip";
 		try {
 			commonSendMail.findMailTemplateMasterAndSendMail(3L, emailToList, emailCcList, emailBccList, mailSubjectRepalceValueList, mailTextRepalceValueList, uploadFile);
+		} catch (Exception e) {
+			Assert.fail("異常終了");
+		}
+	}
+
+	@Test
+	@Transactional
+	public void メール送信複数添付ファイル() throws MessagingException {
+		テストデータ作成();
+
+		List<String> emailToList = 送信先TOメールアドレスリスト作成();
+		List<String> emailCcList = 送信先CCメールアドレスリスト作成();
+		List<String> emailBccList = 送信先BCCメールアドレスリスト作成();
+		List<String> mailSubjectRepalceValueList = メール件名置換リスト作成();
+		List<String> mailTextRepalceValueList = メール本文置換リスト作成();
+		List<String> uploadFileList = new ArrayList<>();
+		String path = new File(".").getAbsoluteFile().getParent();
+		uploadFileList.add(path + "/src/test/resources/dummyFile/請求書_201909.pdf");
+		uploadFileList.add(path + "/src/test/resources/dummyFile/電力使用料金明細書_201909.xlsx");
+		try {
+			commonSendMail.findMailTemplateMasterAndSendMailAndAttachedFiles(3L, emailToList, emailCcList, emailBccList, mailSubjectRepalceValueList, mailTextRepalceValueList, uploadFileList);
 		} catch (Exception e) {
 			Assert.fail("異常終了");
 		}
