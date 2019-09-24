@@ -128,6 +128,48 @@ public class CommonSendMail {
 	}
 
 	/**
+	 * メールテンプレートマスタ特定&メール送信処理
+	 *
+	 * <pre>
+	 * 【処理内容】
+	 * ・引数のメールテンプレートマスタIDを元にメールテンプレートマスタTBL(MAIL_TEMPLATE_MASTER)からメールテンプレートマスタ情報を取得
+	 *  条件：
+	 *    メールテンプレートマスタID(MAIL_TEMPLATE_MASTER.ID)=引数のメールテンプレートマスタID
+	 * ・引数のメール件名置換リストとメールテンプレートマスタTBL.メール件名(MAIL_TEMPLATE_MASTER.MAIL_SUBJECT)を元にメール件名作成
+	 *  例：
+	 *    メールテンプレートマスタTBL.メール件名(MAIL_TEMPLATE_MASTER.MAIL_SUBJECT)
+	 *     【{{replaceValue1}}】見積承認依頼メール {{replaceValue2}}
+	 *    メール件名置換リスト
+	 *     テスト1,テスト2,テスト3
+	 *    各値が上記の場合、以下が生成されるメール件名
+	 *     【テスト1】見積承認依頼メール テスト2
+	 * ・引数のメール本文置換リストとメールテンプレートマスタTBL.メール本文(MAIL_TEMPLATE_MASTER.MAIL_BODY)を元にメール本文作成
+	 *  ※設定できる引数の数がメール件名と異なるだけで、文字列生成方法はメール件名と同一
+	 * ・引数のToメールアドレスリストとCCメールアドレスリストと上記で作成したメール件名やメール本文を使用してメール送信
+	 * ・送信元メールアドレスは、メールテンプレートマスタTBL.送信元メールアドレス(MAIL_TEMPLATE_MASTER.SEND_FROM_MAIL_ADDRESS)から取得
+	 * ・メールは文字コードをUTF-8で作成しており、複数のファイル添付も可能
+	 * </pre>
+	 *
+	 * @param mailTemplateMasterId
+	 *            メールテンプレートマスタID
+	 * @param emailToList
+	 *            Toメールアドレスリスト(複数設定可能)
+	 * @param emailCcList
+	 *            CCメールアドレスリスト(複数設定可能)
+	 * @param mailSubjectRepalceValueList
+	 *            メール件名置換リスト(最大5個まで)
+	 * @param mailTextRepalceValueList
+	 *            メール本文置換リスト(最大10個まで)
+	 * @param uploadFileList
+	 *            添付ファイル(複数)
+	 * @throws MessagingException
+	 */
+	public void findMailTemplateMasterAndSendMailAndAttachedFiles(long mailTemplateMasterId, List<String> emailToList, List<String> emailCcList, List<String> emailBccList, List<String> mailSubjectRepalceValueList, List<String> mailTextRepalceValueList, List<String> uploadFileList) throws MessagingException {
+		MailTemplateMaster mailTemplateMaster = mailTemplateMasterRepository.findOne(mailTemplateMasterId);
+		sendMail(emailToList, emailCcList, emailBccList, mailTemplateMaster, mailSubjectRepalceValueList, mailTextRepalceValueList, uploadFileList);
+	}
+
+	/**
 	 * メール送信処理_添付ファイルあり
 	 *
 	 * @param emailTo
@@ -169,6 +211,56 @@ public class CommonSendMail {
 			FileSystemResource res = new FileSystemResource(uploadFile);
 			attachedHelper.addAttachment(res.getFilename(), res);
 		}
+		SMTPMessage SMTPMessage = new SMTPMessage(attachedMsg);
+		SMTPMessage.setEnvelopeFrom(Optional.ofNullable(mailTemplateMaster.getEnvelopeFrom()).orElse(appProperties.getMailProperties().getEnvelopeFromMailAddress()));
+		javaMailSender.send(SMTPMessage);
+	}
+
+	/**
+	* メール送信処理_複数添付ファイルあり
+	*
+	* @param emailTo
+	*            Toメールアドレス
+	* @param emailCcList
+	*            CCメールアドレスリスト
+	* @param mailTemplateMaster
+	*            メールテンプレートマスタ
+	* @param mailSubjectRepalceValueList
+	*            メール件名置換リスト(最大5個まで)
+	* @param mailTextRepalceValueList
+	*            メール本文置換リスト(最大10個まで)
+	* @param uploadFileList
+	*            添付ファイル(複数)
+	* @throws MessagingException
+	*/
+	@Async
+	private void sendMail(List<String> emailToList, List<String> emailCcList, List<String> emailBccList, MailTemplateMaster mailTemplateMaster, List<String> mailSubjectRepalceValueList, List<String> mailTextRepalceValueList, List<String> uploadFileList) throws MessagingException {
+		MimeMessage attachedMsg = javaMailSender.createMimeMessage();
+		attachedMsg.setHeader("Content-Transfer-Encoding", "base64");
+		MimeMessageHelper attachedHelper = new MimeMessageHelper(attachedMsg, true, StandardCharsets.UTF_8.name());
+
+		Writer writerMailSubject = createMailSubject(mailTemplateMaster, mailSubjectRepalceValueList);
+		Writer writerMailText = createMailText(mailTemplateMaster, mailTextRepalceValueList);
+
+		String[] toEmail = (String[]) emailToList.toArray(new String[0]);
+		String[] ccEmail = (String[]) emailCcList.toArray(new String[0]);
+		String[] bccEmail = (String[]) emailBccList.toArray(new String[0]);
+		attachedHelper.setTo(toEmail);
+		attachedHelper.setFrom(appProperties.getMailProperties().getFromMailAddress());
+		attachedHelper.setCc(ccEmail);
+		attachedHelper.setBcc(bccEmail);
+		String subject = writerMailSubject.toString().replace("&#10;", "\r\n");
+		attachedHelper.setSubject(subject);
+		String text = writerMailText.toString().replace("&#10;", "\r\n");
+		attachedHelper.setText(text);
+
+		if (null != uploadFileList) {
+			for (String uploadFile : uploadFileList) {
+				FileSystemResource res = new FileSystemResource(uploadFile);
+				attachedHelper.addAttachment(res.getFilename(), res);
+			}
+		}
+
 		SMTPMessage SMTPMessage = new SMTPMessage(attachedMsg);
 		SMTPMessage.setEnvelopeFrom(Optional.ofNullable(mailTemplateMaster.getEnvelopeFrom()).orElse(appProperties.getMailProperties().getEnvelopeFromMailAddress()));
 		javaMailSender.send(SMTPMessage);
