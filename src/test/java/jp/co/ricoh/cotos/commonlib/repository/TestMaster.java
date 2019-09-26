@@ -57,8 +57,8 @@ import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmcj005Master;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTjmcc020HnbitnMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTjmmb010UtlItem;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTjmmb020UtlCd;
-import jp.co.ricoh.cotos.commonlib.entity.master.MvWjmoc020OrgAllInfoCom;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvVjmcb010MomKgyMaster;
+import jp.co.ricoh.cotos.commonlib.entity.master.MvWjmoc020OrgAllInfoCom;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvWjmoc080DealerInfo;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvWjmoc080DealerInfo.Id;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvWjmoco40EmpAllInfoCom;
@@ -117,8 +117,8 @@ import jp.co.ricoh.cotos.commonlib.repository.master.MvTJmcj005MasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTjmcc020HnbitnMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTjmmb010UtlItemRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTjmmb020UtlCdRepository;
-import jp.co.ricoh.cotos.commonlib.repository.master.MvWjmoc020OrgAllInfoComRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvVjmcb010MomKgyMasterRepository;
+import jp.co.ricoh.cotos.commonlib.repository.master.MvWjmoc020OrgAllInfoComRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvWjmoc080DealerInfoRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvWjmoco40EmpAllInfoComRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.NonBusinessDayCalendarMasterRepository;
@@ -1531,6 +1531,11 @@ public class TestMaster {
 
 		// Entity が null ではないことを確認(実装時に販社別届先情報.RINGS届先コードがnullでないデータが存在しなかったため)
 		Assert.assertNotNull(found);
+
+		found = mvVjmcb010MomKgyMasterRepository.findByMomKishIdAndCuicMcdbDltFlg(momKishId, "0");
+
+		// Entity が null ではないことを確認(実装時に販社別届先情報.RINGS届先コードがnullでないデータが存在しなかったため)
+		Assert.assertNotNull(found);
 	}
 
 	@Test
@@ -1574,7 +1579,6 @@ public class TestMaster {
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
 	}
-
 
 	public void NonBusinessDayCalendarMasterのテスト() throws Exception {
 		// テストデータ登録
