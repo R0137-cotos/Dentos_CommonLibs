@@ -98,6 +98,7 @@ public class TestBusinessDayUtil {
 		}
 
 		Assert.assertEquals("年月がyyyyMM形式でも月末最終営業日が取得できること", 日付想定値取得("2019/06/28"), businessDayUtil.getLastBusinessDayOfTheMonth("201906"));
+		Assert.assertEquals("年月がyyyy-MM形式でも月末最終営業日が取得できること", 日付想定値取得("2019/06/28"), businessDayUtil.getLastBusinessDayOfTheMonth("2019-06"));
 		Assert.assertNull("業務カレンダーマスタに登録されていない年月の場合はnullが返ること", businessDayUtil.getLastBusinessDayOfTheMonth("2919/06"));
 	}
 

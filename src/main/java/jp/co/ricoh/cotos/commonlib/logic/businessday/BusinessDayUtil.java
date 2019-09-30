@@ -105,7 +105,7 @@ public class BusinessDayUtil {
 	 */
 	public List<BusinessCalendar> findBusinessCalendarForSpecifiedMonth(String targetYm) {
 		int year = Integer.parseInt(StringUtils.substring(targetYm, 0, 4));
-		int month = StringUtils.length(targetYm) == 7 ? Integer.parseInt(StringUtils.substring(targetYm, 5, 7)) : Integer.parseInt(StringUtils.substring(targetYm, 4, 6));
+		int month = Integer.parseInt(StringUtils.substring(targetYm, -2));
 		return findBusinessCalendarForSpecifiedRange(getStartOfMonth(year, month), getEndOfMonth(year, month));
 	}
 
