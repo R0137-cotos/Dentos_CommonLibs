@@ -97,13 +97,25 @@ public class BusinessDayUtil {
 	}
 
 	/**
+	 * 引数月の月末最終営業日取得
+	 * 
+	 * @param targetYm
+	 *            月末最終営業日を取得したい月
+	 * @return 月末最終営業日
+	 */
+	public Date getLastBusinessDayOfTheMonth(String targetYm) {
+		BusinessCalendar result = findBusinessCalendarForSpecifiedMonth(targetYm).stream().sorted(Comparator.comparing(BusinessCalendar::getBusinessDay).reversed()).findFirst().orElse(null);
+		return ObjectUtils.isEmpty(result) ? null : result.getBusinessDay();
+	}
+
+	/**
 	 * 引数月の業務カレンダーリスト取得
 	 * 
 	 * @param targetYm
 	 *            業務カレンダーを取得したい月
 	 * @return 業務カレンダーリスト（1月分）
 	 */
-	public List<BusinessCalendar> findBusinessCalendarForSpecifiedMonth(String targetYm) {
+	private List<BusinessCalendar> findBusinessCalendarForSpecifiedMonth(String targetYm) {
 		int year = Integer.parseInt(StringUtils.substring(targetYm, 0, 4));
 		int month = Integer.parseInt(StringUtils.substring(targetYm, -2));
 		return findBusinessCalendarForSpecifiedRange(getStartOfMonth(year, month), getEndOfMonth(year, month));
@@ -118,20 +130,8 @@ public class BusinessDayUtil {
 	 *            業務カレンダー取得条件(To)
 	 * @return 業務カレンダーリスト
 	 */
-	public List<BusinessCalendar> findBusinessCalendarForSpecifiedRange(Date targetPriodFrom, Date targetPriodTo) {
+	private List<BusinessCalendar> findBusinessCalendarForSpecifiedRange(Date targetPriodFrom, Date targetPriodTo) {
 		return BusinessCalendarRepository.findByBusinessDayBetween(targetPriodFrom, targetPriodTo);
-	}
-
-	/**
-	 * 引数月の月末最終営業日取得
-	 * 
-	 * @param targetYm
-	 *            月末最終営業日を取得したい月
-	 * @return 月末最終営業日
-	 */
-	public Date getLastBusinessDayOfTheMonth(String targetYm) {
-		BusinessCalendar result = findBusinessCalendarForSpecifiedMonth(targetYm).stream().sorted(Comparator.comparing(BusinessCalendar::getBusinessDay).reversed()).findFirst().orElse(null);
-		return ObjectUtils.isEmpty(result) ? null : result.getBusinessDay();
 	}
 
 	/**
@@ -143,7 +143,7 @@ public class BusinessDayUtil {
 	 *            月
 	 * @return 月初日
 	 */
-	public Date getStartOfMonth(int year, int month) {
+	private Date getStartOfMonth(int year, int month) {
 		Calendar calendar = Calendar.getInstance();
 		// 指定年, 指定月, 1日, 0時0分0秒
 		calendar.set(year, month - 1, 1, 0, 0, 0);
@@ -161,7 +161,7 @@ public class BusinessDayUtil {
 	 *            月
 	 * @return 月末日
 	 */
-	public Date getEndOfMonth(int year, int month) {
+	private Date getEndOfMonth(int year, int month) {
 		Calendar calendar = Calendar.getInstance();
 
 		// 指定年, 指定月(-1), 1日, 0時0分0秒
