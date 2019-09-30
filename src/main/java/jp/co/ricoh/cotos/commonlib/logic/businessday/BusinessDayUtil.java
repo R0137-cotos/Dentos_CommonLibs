@@ -1,6 +1,7 @@
 package jp.co.ricoh.cotos.commonlib.logic.businessday;
 
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -100,7 +101,7 @@ public class BusinessDayUtil {
 	 * 
 	 * @param targetYm
 	 *            業務カレンダーを取得したい月
-	 * @return 業務カレンダーのリスト（1月分）
+	 * @return 業務カレンダーリスト（1月分）
 	 */
 	public List<BusinessCalendar> findBusinessCalendarForSpecifiedMonth(String targetYm) {
 		int year = Integer.parseInt(StringUtils.substring(targetYm, 0, 4));
@@ -115,10 +116,10 @@ public class BusinessDayUtil {
 	 *            業務カレンダー取得条件(From)
 	 * @param targetPriodTo
 	 *            業務カレンダー取得条件(To)
-	 * @return 業務カレンダーのリスト
+	 * @return 業務カレンダーリスト
 	 */
 	public List<BusinessCalendar> findBusinessCalendarForSpecifiedRange(Date targetPriodFrom, Date targetPriodTo) {
-		return BusinessCalendarRepository.findByBusinessDayBetweenOrderByBusinessDayDesc(targetPriodFrom, targetPriodTo);
+		return BusinessCalendarRepository.findByBusinessDayBetween(targetPriodFrom, targetPriodTo);
 	}
 
 	/**
@@ -129,7 +130,7 @@ public class BusinessDayUtil {
 	 * @return 月末最終営業日
 	 */
 	public Date getLastBusinessDayOfTheMonth(String targetYm) {
-		BusinessCalendar result = findBusinessCalendarForSpecifiedMonth(targetYm).stream().findFirst().orElse(null);
+		BusinessCalendar result = findBusinessCalendarForSpecifiedMonth(targetYm).stream().sorted(Comparator.comparing(BusinessCalendar::getBusinessDay).reversed()).findFirst().orElse(null);
 		return ObjectUtils.isEmpty(result) ? null : result.getBusinessDay();
 	}
 
@@ -158,7 +159,7 @@ public class BusinessDayUtil {
 	 *            年
 	 * @param month
 	 *            月
-	 * @return 月初日
+	 * @return 月末日
 	 */
 	public Date getEndOfMonth(int year, int month) {
 		Calendar calendar = Calendar.getInstance();

@@ -9,5 +9,5 @@ import jp.co.ricoh.cotos.commonlib.entity.master.BusinessCalendar;
 
 public interface BusinessCalendarRepository extends CrudRepository<BusinessCalendar, Date> {
 
-	public List<BusinessCalendar> findByBusinessDayBetweenOrderByBusinessDayDesc(Date priodFrom, Date priodTo);
+	public List<BusinessCalendar> findByBusinessDayBetween(Date priodFrom, Date priodTo);
 }
