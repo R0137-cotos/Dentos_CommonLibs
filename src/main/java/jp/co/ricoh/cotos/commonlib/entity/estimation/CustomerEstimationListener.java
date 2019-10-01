@@ -54,8 +54,11 @@ public class CustomerEstimationListener {
 
 		// 結合して表示するものを設定
 		// 値が設定されていない場合のみ補完する
+		if (StringUtils.isBlank(customerEstimation.getCompanyName())) // 画面からは法人格付きの会社名が送られてくる
+		customerEstimation.setCompanyName(vKjbMaster.getKgyKgyNmKnji());
+		
 		if (StringUtils.isBlank(customerEstimation.getCustomerName()))
-			customerEstimation.setCustomerName(this.convertJoinedCustomerName(vKjbMaster));
+			customerEstimation.setCustomerName(this.convertJoinedCustomerName(vKjbMaster, customerEstimation));
 		if (StringUtils.isBlank(customerEstimation.getAddress()))
 			customerEstimation.setAddress(vKjbMaster.getKgyCuicClnMaeAds());
 
@@ -78,15 +81,14 @@ public class CustomerEstimationListener {
 		customerEstimation.setOfficeName(vKjbMaster.getJgsJgsNmKnji());
 		customerEstimation.setMomCustId(vKjbMaster.getMclMomKjbId());
 		customerEstimation.setPostNumber(vKjbMaster.getJgsJgsPostNum());
-		customerEstimation.setCompanyName(vKjbMaster.getKgyKgyNmKnji());
 		customerEstimation.setDepartmentName(vKjbMaster.getBmnBmnNmKnji());
 	}
 
-	private String convertJoinedCustomerName(VKjbMaster kjbMaster) {
+	private String convertJoinedCustomerName(VKjbMaster kjbMaster, CustomerEstimation customerEstimation) {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(StringUtils.defaultIfEmpty(kjbMaster.getKgyKgyNmKnji(), StringUtils.EMPTY));
+		sb.append(StringUtils.defaultIfEmpty(customerEstimation.getCompanyName(), StringUtils.EMPTY));
 		sb.append(StringUtils.defaultIfEmpty(kjbMaster.getJgsJgsNmKnji(), StringUtils.EMPTY));
 
 		if (DepartmentDiv.企事部.equals(kjbMaster.getPrflKjbSetKbn())) {
