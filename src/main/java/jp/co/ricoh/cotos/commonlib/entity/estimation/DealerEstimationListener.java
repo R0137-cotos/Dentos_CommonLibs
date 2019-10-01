@@ -52,7 +52,7 @@ public class DealerEstimationListener {
 			if (StringUtils.isBlank(dealerEstimation.getDealerName()))
 				dealerEstimation.setDealerName(this.convertJoinedDealerName(vKjbMaster));
 			if (StringUtils.isBlank(dealerEstimation.getAddress()))
-				dealerEstimation.setAddress(this.convertJoinedAddress(vKjbMaster));
+				dealerEstimation.setAddress(vKjbMaster.getKgyCuicClnMaeAds());
 
 			if (StringUtils.isBlank(dealerEstimation.getPostNumber()))
 				dealerEstimation.setPostNumber(vKjbMaster.getJgsJgsPostNum());
@@ -70,17 +70,4 @@ public class DealerEstimationListener {
 
 		return sb.toString();
 	}
-
-	private String convertJoinedAddress(VKjbMaster kjbMaster) {
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(StringUtils.defaultIfEmpty(kjbMaster.getJgsJgsAdsAzatusyoNm(), StringUtils.EMPTY));
-		sb.append(StringUtils.defaultIfEmpty(kjbMaster.getJgsJgsAdsBantiNm(), StringUtils.EMPTY));
-		sb.append(StringUtils.defaultIfEmpty(kjbMaster.getJgsJgsAdsGoNm(), StringUtils.EMPTY));
-		sb.append(StringUtils.defaultIfEmpty(kjbMaster.getJgsJgsAdsFlorNm(), StringUtils.EMPTY));
-
-		return sb.toString();
-	}
-
 }

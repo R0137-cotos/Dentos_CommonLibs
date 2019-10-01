@@ -48,8 +48,11 @@ public class ContractInstallationLocationListener {
 		}
 
 		// 結合して表示するものを設定
-		contractInstallationLocation.setCustomerName(this.convertJoinedCustomerName(vKjbMaster));
-		contractInstallationLocation.setAddress(this.convertJoinedAddress(vKjbMaster));
+		// 値が設定されていない場合のみ補完する
+		if (StringUtils.isBlank(contractInstallationLocation.getCustomerName()))
+			contractInstallationLocation.setCustomerName(this.convertJoinedCustomerName(vKjbMaster));
+		if (StringUtils.isBlank(contractInstallationLocation.getAddress()))
+			contractInstallationLocation.setAddress(vKjbMaster.getKgyCuicClnMaeAds());
 
 		// 企事部設定区分により設定値を振り分け
 		if (DepartmentDiv.企事部.equals(vKjbMaster.getPrflKjbSetKbn())) {
@@ -80,18 +83,6 @@ public class ContractInstallationLocationListener {
 		if (DepartmentDiv.企事部.equals(kjbMaster.getPrflKjbSetKbn())) {
 			sb.append(StringUtils.defaultIfEmpty(kjbMaster.getBmnBmnNmKnji(), StringUtils.EMPTY));
 		}
-
-		return sb.toString();
-	}
-
-	private String convertJoinedAddress(VKjbMaster vKjbMaster) {
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(StringUtils.defaultIfEmpty(vKjbMaster.getJgsJgsAdsAzatusyoNm(), StringUtils.EMPTY));
-		sb.append(StringUtils.defaultIfEmpty(vKjbMaster.getJgsJgsAdsBantiNm(), StringUtils.EMPTY));
-		sb.append(StringUtils.defaultIfEmpty(vKjbMaster.getJgsJgsAdsGoNm(), StringUtils.EMPTY));
-		sb.append(StringUtils.defaultIfEmpty(vKjbMaster.getJgsJgsAdsFlorNm(), StringUtils.EMPTY));
 
 		return sb.toString();
 	}
