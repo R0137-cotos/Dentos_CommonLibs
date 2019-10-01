@@ -61,11 +61,15 @@ public class CustomerEstimationListener {
 
 		// 企事部設定区分により設定値を振り分け
 		if (DepartmentDiv.企事部.equals(vKjbMaster.getPrflKjbSetKbn())) {
-			customerEstimation.setPhoneNumber(vKjbMaster.getBmnBmnTelNum());
-			customerEstimation.setFaxNumber(vKjbMaster.getBmnBmnFaxNum());
+			if (StringUtils.isBlank(customerEstimation.getPhoneNumber()))
+				customerEstimation.setPhoneNumber(vKjbMaster.getBmnBmnTelNum());
+			if (StringUtils.isBlank(customerEstimation.getFaxNumber()))
+				customerEstimation.setFaxNumber(vKjbMaster.getBmnBmnFaxNum());
 		} else {
-			customerEstimation.setPhoneNumber(vKjbMaster.getJgsJgsTelNum());
-			customerEstimation.setFaxNumber(vKjbMaster.getJgsJgsFaxNum());
+			if (StringUtils.isBlank(customerEstimation.getPhoneNumber()))
+				customerEstimation.setPhoneNumber(vKjbMaster.getJgsJgsTelNum());
+			if (StringUtils.isBlank(customerEstimation.getFaxNumber()))
+				customerEstimation.setFaxNumber(vKjbMaster.getJgsJgsFaxNum());
 		}
 
 		customerEstimation.setDepartmentDiv(vKjbMaster.getPrflKjbSetKbn());

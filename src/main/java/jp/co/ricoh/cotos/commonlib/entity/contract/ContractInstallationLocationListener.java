@@ -56,11 +56,15 @@ public class ContractInstallationLocationListener {
 
 		// 企事部設定区分により設定値を振り分け
 		if (DepartmentDiv.企事部.equals(vKjbMaster.getPrflKjbSetKbn())) {
-			contractInstallationLocation.setPhoneNumber(vKjbMaster.getBmnBmnTelNum());
-			contractInstallationLocation.setFaxNumber(vKjbMaster.getBmnBmnFaxNum());
+			if (StringUtils.isBlank(contractInstallationLocation.getPhoneNumber()))
+				contractInstallationLocation.setPhoneNumber(vKjbMaster.getBmnBmnTelNum());
+			if (StringUtils.isBlank(contractInstallationLocation.getFaxNumber()))
+				contractInstallationLocation.setFaxNumber(vKjbMaster.getBmnBmnFaxNum());
 		} else {
-			contractInstallationLocation.setPhoneNumber(vKjbMaster.getJgsJgsTelNum());
-			contractInstallationLocation.setFaxNumber(vKjbMaster.getJgsJgsFaxNum());
+			if (StringUtils.isBlank(contractInstallationLocation.getPhoneNumber()))
+				contractInstallationLocation.setPhoneNumber(vKjbMaster.getJgsJgsTelNum());
+			if (StringUtils.isBlank(contractInstallationLocation.getFaxNumber()))
+				contractInstallationLocation.setFaxNumber(vKjbMaster.getJgsJgsFaxNum());
 		}
 
 		contractInstallationLocation.setDepartmentDiv(vKjbMaster.getPrflKjbSetKbn());
