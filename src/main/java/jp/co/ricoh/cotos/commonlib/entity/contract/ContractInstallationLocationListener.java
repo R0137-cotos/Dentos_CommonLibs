@@ -49,8 +49,11 @@ public class ContractInstallationLocationListener {
 
 		// 結合して表示するものを設定
 		// 値が設定されていない場合のみ補完する
+		if (StringUtils.isBlank(contractInstallationLocation.getCompanyName()))
+			contractInstallationLocation.setCompanyName(vKjbMaster.getKgyKgyNmKnji()); // 画面からは法人格付きの会社名が送られてくる
+
 		if (StringUtils.isBlank(contractInstallationLocation.getCustomerName()))
-			contractInstallationLocation.setCustomerName(this.convertJoinedCustomerName(vKjbMaster));
+			contractInstallationLocation.setCustomerName(this.convertJoinedCustomerName(vKjbMaster, contractInstallationLocation));
 		if (StringUtils.isBlank(contractInstallationLocation.getAddress()))
 			contractInstallationLocation.setAddress(vKjbMaster.getKgyCuicClnMaeAds());
 
@@ -73,15 +76,14 @@ public class ContractInstallationLocationListener {
 		contractInstallationLocation.setOfficeName(vKjbMaster.getJgsJgsNmKnji());
 		contractInstallationLocation.setMomCustId(vKjbMaster.getMclMomKjbId());
 		contractInstallationLocation.setPostNumber(vKjbMaster.getJgsJgsPostNum());
-		contractInstallationLocation.setCompanyName(vKjbMaster.getKgyKgyNmKnji());
 		contractInstallationLocation.setDepartmentName(vKjbMaster.getBmnBmnNmKnji());
 	}
 
-	private String convertJoinedCustomerName(VKjbMaster kjbMaster) {
+	private String convertJoinedCustomerName(VKjbMaster kjbMaster, ContractInstallationLocation contractInstallationLocation) {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(StringUtils.defaultIfEmpty(kjbMaster.getKgyKgyNmKnji(), StringUtils.EMPTY));
+		sb.append(StringUtils.defaultIfEmpty(contractInstallationLocation.getCompanyName(), StringUtils.EMPTY));
 		sb.append(StringUtils.defaultIfEmpty(kjbMaster.getJgsJgsNmKnji(), StringUtils.EMPTY));
 
 		if (DepartmentDiv.企事部.equals(kjbMaster.getPrflKjbSetKbn())) {
