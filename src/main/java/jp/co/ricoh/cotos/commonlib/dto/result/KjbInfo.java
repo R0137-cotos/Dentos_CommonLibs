@@ -1,14 +1,11 @@
 package jp.co.ricoh.cotos.commonlib.dto.result;
 
-import javax.persistence.Entity;
-
 import jp.co.ricoh.cotos.commonlib.entity.master.VKjbMaster;
 import lombok.Data;
 
 /**
  * 企事部情報取得Dto
  */
-@Entity
 @Data
 public class KjbInfo {
 
