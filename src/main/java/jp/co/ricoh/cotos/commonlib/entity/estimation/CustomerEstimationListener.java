@@ -53,8 +53,11 @@ public class CustomerEstimationListener {
 		}
 
 		// 結合して表示するものを設定
-		customerEstimation.setCustomerName(this.convertJoinedCustomerName(vKjbMaster));
-		customerEstimation.setAddress(this.convertJoinedAddress(vKjbMaster));
+		// 値が設定されていない場合のみ補完する
+		if (StringUtils.isBlank(customerEstimation.getCustomerName()))
+			customerEstimation.setCustomerName(this.convertJoinedCustomerName(vKjbMaster));
+		if (StringUtils.isBlank(customerEstimation.getAddress()))
+			customerEstimation.setAddress(vKjbMaster.getKgyCuicClnMaeAds());
 
 		// 企事部設定区分により設定値を振り分け
 		if (DepartmentDiv.企事部.equals(vKjbMaster.getPrflKjbSetKbn())) {
@@ -65,14 +68,22 @@ public class CustomerEstimationListener {
 			customerEstimation.setFaxNumber(vKjbMaster.getJgsJgsFaxNum());
 		}
 
-		customerEstimation.setDepartmentDiv(vKjbMaster.getPrflKjbSetKbn());
-		customerEstimation.setCompanyId(vKjbMaster.getPrflMomKgyId());
-		customerEstimation.setOfficeId(vKjbMaster.getPrflMomJgsId());
-		customerEstimation.setOfficeName(vKjbMaster.getJgsJgsNmKnji());
-		customerEstimation.setMomCustId(vKjbMaster.getMclMomKjbId());
-		customerEstimation.setPostNumber(vKjbMaster.getJgsJgsPostNum());
-		customerEstimation.setCompanyName(vKjbMaster.getKgyKgyNmKnji());
-		customerEstimation.setDepartmentName(vKjbMaster.getBmnBmnNmKnji());
+		if (null == customerEstimation.getDepartmentDiv())
+			customerEstimation.setDepartmentDiv(vKjbMaster.getPrflKjbSetKbn());
+		if (StringUtils.isBlank(customerEstimation.getCompanyId()))
+			customerEstimation.setCompanyId(vKjbMaster.getPrflMomKgyId());
+		if (StringUtils.isBlank(customerEstimation.getOfficeId()))
+			customerEstimation.setOfficeId(vKjbMaster.getPrflMomJgsId());
+		if (StringUtils.isBlank(customerEstimation.getOfficeName()))
+			customerEstimation.setOfficeName(vKjbMaster.getJgsJgsNmKnji());
+		if (StringUtils.isBlank(customerEstimation.getMomCustId()))
+			customerEstimation.setMomCustId(vKjbMaster.getMclMomKjbId());
+		if (StringUtils.isBlank(customerEstimation.getPostNumber()))
+			customerEstimation.setPostNumber(vKjbMaster.getJgsJgsPostNum());
+		if (StringUtils.isBlank(customerEstimation.getCompanyName()))
+			customerEstimation.setCompanyName(vKjbMaster.getKgyKgyNmKnji());
+		if (StringUtils.isBlank(customerEstimation.getDepartmentName()))
+			customerEstimation.setDepartmentName(vKjbMaster.getBmnBmnNmKnji());
 	}
 
 	private String convertJoinedCustomerName(VKjbMaster kjbMaster) {

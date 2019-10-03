@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.persistence.PrePersist;
 import javax.transaction.Transactional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -65,8 +66,12 @@ public class OperationLogListener {
 			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "MasterDoesNotExistEmployeeMaster", regexList));
 		}
 
-		operationLog.setOperatorName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
-		operationLog.setOperatorOrgName(employeeMaster.getOrgName());
+		if (StringUtils.isBlank(operationLog.getOperatorName())) {
+			operationLog.setOperatorName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
+		}
+		if (StringUtils.isBlank(operationLog.getOperatorOrgName())) {
+			operationLog.setOperatorOrgName(employeeMaster.getOrgName());
+		}
 	}
 
 }

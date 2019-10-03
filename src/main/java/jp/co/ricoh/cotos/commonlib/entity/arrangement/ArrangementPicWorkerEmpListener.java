@@ -63,22 +63,47 @@ public class ArrangementPicWorkerEmpListener {
 		}
 
 		BeanUtils.copyProperties(employeeMaster, arrangementPicWorkerEmp);
-		arrangementPicWorkerEmp.setEmployeeName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
-		arrangementPicWorkerEmp.setAddress(convertJoinedAddress(employeeMaster));
+
+		if (StringUtils.isBlank(arrangementPicWorkerEmp.getOrgName())) {
+			arrangementPicWorkerEmp.setOrgName(employeeMaster.getOrgName());
+		}
+		if (StringUtils.isBlank(arrangementPicWorkerEmp.getSalesCompanyName())) {
+			arrangementPicWorkerEmp.setEmployeeName(employeeMaster.getSalesCompanyName());
+		}
+		if (StringUtils.isBlank(arrangementPicWorkerEmp.getPostNumber())) {
+			arrangementPicWorkerEmp.setPostNumber(employeeMaster.getPostNumber());
+		}
+		if (StringUtils.isBlank(arrangementPicWorkerEmp.getOrgPhoneNumber())) {
+			arrangementPicWorkerEmp.setOrgPhoneNumber(employeeMaster.getOrgPhoneNumber());
+		}
+		if (StringUtils.isBlank(arrangementPicWorkerEmp.getSalesDepartmentName())) {
+			arrangementPicWorkerEmp.setSalesDepartmentName(employeeMaster.getSalesDepartmentName());
+		}
+		if (StringUtils.isBlank(arrangementPicWorkerEmp.getPhoneNumber())) {
+			arrangementPicWorkerEmp.setPhoneNumber(employeeMaster.getPhoneNumber());
+		}
+		if (StringUtils.isBlank(arrangementPicWorkerEmp.getFaxNumber())) {
+			arrangementPicWorkerEmp.setFaxNumber(employeeMaster.getFaxNumber());
+		}
+		if (StringUtils.isBlank(arrangementPicWorkerEmp.getMailAddress())) {
+			arrangementPicWorkerEmp.setMailAddress(employeeMaster.getMailAddress());
+		}
+		if (StringUtils.isBlank(arrangementPicWorkerEmp.getEmployeeName())) {
+			arrangementPicWorkerEmp.setEmployeeName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
+		}
+		if (StringUtils.isBlank(arrangementPicWorkerEmp.getAddress())) {
+			arrangementPicWorkerEmp.setAddress(convertJoinedAddress(employeeMaster));
+		}
 	}
 
 	private String convertJoinedAddress(MvEmployeeMaster master) {
-
 		StringBuilder sb = new StringBuilder();
-
 		sb.append(StringUtils.defaultIfEmpty(master.getTdhknNmKnji(), StringUtils.EMPTY));
 		sb.append(StringUtils.defaultIfEmpty(master.getSkugnchosnKnji(), StringUtils.EMPTY));
 		sb.append(StringUtils.defaultIfEmpty(master.getOwaTusyoKnji(), StringUtils.EMPTY));
 		sb.append(StringUtils.defaultIfEmpty(master.getKowChomeKnji(), StringUtils.EMPTY));
 		sb.append(StringUtils.defaultIfEmpty(master.getStreet(), StringUtils.EMPTY));
 		sb.append(StringUtils.defaultIfEmpty(master.getBuilding(), StringUtils.EMPTY));
-
 		return sb.toString();
 	}
-
 }

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.persistence.PrePersist;
 import javax.transaction.Transactional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -61,7 +62,49 @@ public class EstimationAddedEditorEmpListener {
 			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "MasterDoesNotExistEmployeeMaster", regexList));
 		}
 
-		BeanUtils.copyProperties(employeeMaster, estimationAddedEditorEmp, "orgName", "salesCompanyName", "orgPhoneNumber", "postNumber", "phoneNumber", "mailAddress");
+		BeanUtils.copyProperties(employeeMaster, estimationAddedEditorEmp, "orgName", "salesCompanyName", "postNumber", "orgPhoneNumber", "salesDepartmentName", "phoneNumber", "faxNumber", "mailAddress");
+
+		if (StringUtils.isBlank(estimationAddedEditorEmp.getOrgName())) {
+			estimationAddedEditorEmp.setOrgName(employeeMaster.getOrgName());
+		}
+		if (StringUtils.isBlank(estimationAddedEditorEmp.getSalesCompanyName())) {
+			estimationAddedEditorEmp.setEmployeeName(employeeMaster.getSalesCompanyName());
+		}
+		if (StringUtils.isBlank(estimationAddedEditorEmp.getPostNumber())) {
+			estimationAddedEditorEmp.setPostNumber(employeeMaster.getPostNumber());
+		}
+		if (StringUtils.isBlank(estimationAddedEditorEmp.getOrgPhoneNumber())) {
+			estimationAddedEditorEmp.setOrgPhoneNumber(employeeMaster.getOrgPhoneNumber());
+		}
+		if (StringUtils.isBlank(estimationAddedEditorEmp.getSalesDepartmentName())) {
+			estimationAddedEditorEmp.setSalesDepartmentName(employeeMaster.getSalesDepartmentName());
+		}
+		if (StringUtils.isBlank(estimationAddedEditorEmp.getPhoneNumber())) {
+			estimationAddedEditorEmp.setPhoneNumber(employeeMaster.getPhoneNumber());
+		}
+		if (StringUtils.isBlank(estimationAddedEditorEmp.getFaxNumber())) {
+			estimationAddedEditorEmp.setFaxNumber(employeeMaster.getFaxNumber());
+		}
+		if (StringUtils.isBlank(estimationAddedEditorEmp.getMailAddress())) {
+			estimationAddedEditorEmp.setMailAddress(employeeMaster.getMailAddress());
+		}
+		if (StringUtils.isBlank(estimationAddedEditorEmp.getEmployeeName())) {
+			estimationAddedEditorEmp.setEmployeeName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
+		}
+		if (StringUtils.isBlank(estimationAddedEditorEmp.getAddress())) {
+			estimationAddedEditorEmp.setAddress(convertJoinedAddress(employeeMaster));
+		}
+	}
+
+	private String convertJoinedAddress(MvEmployeeMaster master) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(StringUtils.defaultIfEmpty(master.getTdhknNmKnji(), StringUtils.EMPTY));
+		sb.append(StringUtils.defaultIfEmpty(master.getSkugnchosnKnji(), StringUtils.EMPTY));
+		sb.append(StringUtils.defaultIfEmpty(master.getOwaTusyoKnji(), StringUtils.EMPTY));
+		sb.append(StringUtils.defaultIfEmpty(master.getKowChomeKnji(), StringUtils.EMPTY));
+		sb.append(StringUtils.defaultIfEmpty(master.getStreet(), StringUtils.EMPTY));
+		sb.append(StringUtils.defaultIfEmpty(master.getBuilding(), StringUtils.EMPTY));
+		return sb.toString();
 	}
 
 }
