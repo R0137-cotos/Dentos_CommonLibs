@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.persistence.PrePersist;
 import javax.transaction.Transactional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -51,7 +52,53 @@ public class ContractAddedEditorEmpListener {
 			String[] regexList = { "契約追加編集者社員" };
 			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "MasterDoesNotExistEmployeeMaster", regexList));
 		}
-		BeanUtils.copyProperties(employeeMaster, contractAddedEditorEmp, "salesDepartmentName", "salesCompanyName", "orgPhoneNumber", "postNumber", "phoneNumber", "mailAddress");
+
+		BeanUtils.copyProperties(employeeMaster, contractAddedEditorEmp, "orgName", "salesCompanyName", "postNumber", "orgPhoneNumber", "salesDepartmentName", "phoneNumber", "faxNumber", "mailAddress");
+
+		if (StringUtils.isBlank(contractAddedEditorEmp.getOrgName())) {
+			contractAddedEditorEmp.setOrgName(employeeMaster.getOrgName());
+		}
+		if (StringUtils.isBlank(contractAddedEditorEmp.getSalesCompanyName())) {
+			contractAddedEditorEmp.setEmployeeName(employeeMaster.getSalesCompanyName());
+		}
+		if (StringUtils.isBlank(contractAddedEditorEmp.getPostNumber())) {
+			contractAddedEditorEmp.setPostNumber(employeeMaster.getPostNumber());
+		}
+		if (StringUtils.isBlank(contractAddedEditorEmp.getOrgPhoneNumber())) {
+			contractAddedEditorEmp.setOrgPhoneNumber(employeeMaster.getOrgPhoneNumber());
+		}
+		if (StringUtils.isBlank(contractAddedEditorEmp.getSalesDepartmentName())) {
+			contractAddedEditorEmp.setSalesDepartmentName(employeeMaster.getSalesDepartmentName());
+		}
+		if (StringUtils.isBlank(contractAddedEditorEmp.getPhoneNumber())) {
+			contractAddedEditorEmp.setPhoneNumber(employeeMaster.getPhoneNumber());
+		}
+		if (StringUtils.isBlank(contractAddedEditorEmp.getFaxNumber())) {
+			contractAddedEditorEmp.setFaxNumber(employeeMaster.getFaxNumber());
+		}
+		if (StringUtils.isBlank(contractAddedEditorEmp.getMailAddress())) {
+			contractAddedEditorEmp.setMailAddress(employeeMaster.getMailAddress());
+		}
+		if (StringUtils.isBlank(contractAddedEditorEmp.getEmployeeName())) {
+			contractAddedEditorEmp.setEmployeeName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
+		}
+		if (StringUtils.isBlank(contractAddedEditorEmp.getAddress())) {
+			contractAddedEditorEmp.setAddress(convertJoinedAddress(employeeMaster));
+		}
+	}
+
+	private String convertJoinedAddress(MvEmployeeMaster master) {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(StringUtils.defaultIfEmpty(master.getTdhknNmKnji(), StringUtils.EMPTY));
+		sb.append(StringUtils.defaultIfEmpty(master.getSkugnchosnKnji(), StringUtils.EMPTY));
+		sb.append(StringUtils.defaultIfEmpty(master.getOwaTusyoKnji(), StringUtils.EMPTY));
+		sb.append(StringUtils.defaultIfEmpty(master.getKowChomeKnji(), StringUtils.EMPTY));
+		sb.append(StringUtils.defaultIfEmpty(master.getStreet(), StringUtils.EMPTY));
+		sb.append(StringUtils.defaultIfEmpty(master.getBuilding(), StringUtils.EMPTY));
+
+		return sb.toString();
 	}
 
 }

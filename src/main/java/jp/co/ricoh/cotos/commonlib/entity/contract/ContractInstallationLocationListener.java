@@ -48,8 +48,11 @@ public class ContractInstallationLocationListener {
 		}
 
 		// 結合して表示するものを設定
-		contractInstallationLocation.setCustomerName(this.convertJoinedCustomerName(vKjbMaster));
-		contractInstallationLocation.setAddress(this.convertJoinedAddress(vKjbMaster));
+		// 値が設定されていない場合のみ補完する
+		if (StringUtils.isBlank(contractInstallationLocation.getCustomerName()))
+			contractInstallationLocation.setCustomerName(this.convertJoinedCustomerName(vKjbMaster));
+		if (StringUtils.isBlank(contractInstallationLocation.getAddress()))
+			contractInstallationLocation.setAddress(vKjbMaster.getKgyCuicClnMaeAds());
 
 		// 企事部設定区分により設定値を振り分け
 		if (DepartmentDiv.企事部.equals(vKjbMaster.getPrflKjbSetKbn())) {
@@ -60,14 +63,22 @@ public class ContractInstallationLocationListener {
 			contractInstallationLocation.setFaxNumber(vKjbMaster.getJgsJgsFaxNum());
 		}
 
-		contractInstallationLocation.setDepartmentDiv(vKjbMaster.getPrflKjbSetKbn());
-		contractInstallationLocation.setCompanyId(vKjbMaster.getPrflMomKgyId());
-		contractInstallationLocation.setOfficeId(vKjbMaster.getPrflMomJgsId());
-		contractInstallationLocation.setOfficeName(vKjbMaster.getJgsJgsNmKnji());
-		contractInstallationLocation.setMomCustId(vKjbMaster.getMclMomKjbId());
-		contractInstallationLocation.setPostNumber(vKjbMaster.getJgsJgsPostNum());
-		contractInstallationLocation.setCompanyName(vKjbMaster.getKgyKgyNmKnji());
-		contractInstallationLocation.setDepartmentName(vKjbMaster.getBmnBmnNmKnji());
+		if (null == contractInstallationLocation.getDepartmentDiv())
+			contractInstallationLocation.setDepartmentDiv(vKjbMaster.getPrflKjbSetKbn());
+		if (StringUtils.isBlank(contractInstallationLocation.getCompanyId()))
+			contractInstallationLocation.setCompanyId(vKjbMaster.getPrflMomKgyId());
+		if (StringUtils.isBlank(contractInstallationLocation.getOfficeId()))
+			contractInstallationLocation.setOfficeId(vKjbMaster.getPrflMomJgsId());
+		if (StringUtils.isBlank(contractInstallationLocation.getOfficeName()))
+			contractInstallationLocation.setOfficeName(vKjbMaster.getJgsJgsNmKnji());
+		if (StringUtils.isBlank(contractInstallationLocation.getMomCustId()))
+			contractInstallationLocation.setMomCustId(vKjbMaster.getMclMomKjbId());
+		if (StringUtils.isBlank(contractInstallationLocation.getPostNumber()))
+			contractInstallationLocation.setPostNumber(vKjbMaster.getJgsJgsPostNum());
+		if (StringUtils.isBlank(contractInstallationLocation.getCompanyName()))
+			contractInstallationLocation.setCompanyName(vKjbMaster.getKgyKgyNmKnji());
+		if (StringUtils.isBlank(contractInstallationLocation.getDepartmentName()))
+			contractInstallationLocation.setDepartmentName(vKjbMaster.getBmnBmnNmKnji());
 	}
 
 	private String convertJoinedCustomerName(VKjbMaster kjbMaster) {
@@ -83,17 +94,4 @@ public class ContractInstallationLocationListener {
 
 		return sb.toString();
 	}
-
-	private String convertJoinedAddress(VKjbMaster vKjbMaster) {
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(StringUtils.defaultIfEmpty(vKjbMaster.getJgsJgsAdsAzatusyoNm(), StringUtils.EMPTY));
-		sb.append(StringUtils.defaultIfEmpty(vKjbMaster.getJgsJgsAdsBantiNm(), StringUtils.EMPTY));
-		sb.append(StringUtils.defaultIfEmpty(vKjbMaster.getJgsJgsAdsGoNm(), StringUtils.EMPTY));
-		sb.append(StringUtils.defaultIfEmpty(vKjbMaster.getJgsJgsAdsFlorNm(), StringUtils.EMPTY));
-
-		return sb.toString();
-	}
-
 }

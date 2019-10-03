@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.persistence.PrePersist;
 import javax.transaction.Transactional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -61,7 +62,48 @@ public class EstimationPicSaEmpListener {
 			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "MasterDoesNotExistEmployeeMaster", regexList));
 		}
 
-		BeanUtils.copyProperties(employeeMaster, estimationPicSaEmp, "salesCompanyName", "salesCompanyNameKana", "postNumber", "orgPhoneNumber", "salesDepartmentName", "phoneNumber", "faxNumber", "mailAddress");
+		BeanUtils.copyProperties(employeeMaster, estimationPicSaEmp, "orgName", "salesCompanyName", "postNumber", "orgPhoneNumber", "salesDepartmentName", "phoneNumber", "faxNumber", "mailAddress");
+
+		if (StringUtils.isBlank(estimationPicSaEmp.getOrgName())) {
+			estimationPicSaEmp.setOrgName(employeeMaster.getOrgName());
+		}
+		if (StringUtils.isBlank(estimationPicSaEmp.getSalesCompanyName())) {
+			estimationPicSaEmp.setEmployeeName(employeeMaster.getSalesCompanyName());
+		}
+		if (StringUtils.isBlank(estimationPicSaEmp.getPostNumber())) {
+			estimationPicSaEmp.setPostNumber(employeeMaster.getPostNumber());
+		}
+		if (StringUtils.isBlank(estimationPicSaEmp.getOrgPhoneNumber())) {
+			estimationPicSaEmp.setOrgPhoneNumber(employeeMaster.getOrgPhoneNumber());
+		}
+		if (StringUtils.isBlank(estimationPicSaEmp.getSalesDepartmentName())) {
+			estimationPicSaEmp.setSalesDepartmentName(employeeMaster.getSalesDepartmentName());
+		}
+		if (StringUtils.isBlank(estimationPicSaEmp.getPhoneNumber())) {
+			estimationPicSaEmp.setPhoneNumber(employeeMaster.getPhoneNumber());
+		}
+		if (StringUtils.isBlank(estimationPicSaEmp.getFaxNumber())) {
+			estimationPicSaEmp.setFaxNumber(employeeMaster.getFaxNumber());
+		}
+		if (StringUtils.isBlank(estimationPicSaEmp.getMailAddress())) {
+			estimationPicSaEmp.setMailAddress(employeeMaster.getMailAddress());
+		}
+		if (StringUtils.isBlank(estimationPicSaEmp.getEmployeeName())) {
+			estimationPicSaEmp.setEmployeeName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
+		}
+		if (StringUtils.isBlank(estimationPicSaEmp.getAddress())) {
+			estimationPicSaEmp.setAddress(convertJoinedAddress(employeeMaster));
+		}
 	}
 
+	private String convertJoinedAddress(MvEmployeeMaster master) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(StringUtils.defaultIfEmpty(master.getTdhknNmKnji(), StringUtils.EMPTY));
+		sb.append(StringUtils.defaultIfEmpty(master.getSkugnchosnKnji(), StringUtils.EMPTY));
+		sb.append(StringUtils.defaultIfEmpty(master.getOwaTusyoKnji(), StringUtils.EMPTY));
+		sb.append(StringUtils.defaultIfEmpty(master.getKowChomeKnji(), StringUtils.EMPTY));
+		sb.append(StringUtils.defaultIfEmpty(master.getStreet(), StringUtils.EMPTY));
+		sb.append(StringUtils.defaultIfEmpty(master.getBuilding(), StringUtils.EMPTY));
+		return sb.toString();
+	}
 }

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.persistence.PrePersist;
 import javax.transaction.Transactional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -60,8 +61,12 @@ public class EstimationAttachedFileListener {
 			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "MasterDoesNotExistEmployeeMaster", regexList));
 		}
 
-		estimationAttachedFile.setAttachedEmpName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
-		estimationAttachedFile.setAttachedOrgName(employeeMaster.getOrgName());
+		if (StringUtils.isBlank(estimationAttachedFile.getAttachedEmpName())) {
+			estimationAttachedFile.setAttachedEmpName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
+		}
+		if (StringUtils.isBlank(estimationAttachedFile.getAttachedOrgName())) {
+			estimationAttachedFile.setAttachedOrgName(employeeMaster.getOrgName());
+		}
 	}
 
 }

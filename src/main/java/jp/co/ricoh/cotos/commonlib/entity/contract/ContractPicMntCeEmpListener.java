@@ -62,8 +62,38 @@ public class ContractPicMntCeEmpListener {
 			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "MasterDoesNotExistEmployeeMaster", regexList));
 		}
 
-		BeanUtils.copyProperties(employeeMaster, contractPicMntCeEmp, "salesDepartmentName", "phoneNumber", "mailAddress");
-		contractPicMntCeEmp.setAddress(convertJoinedAddress(employeeMaster));
+		BeanUtils.copyProperties(employeeMaster, contractPicMntCeEmp, "orgName", "salesCompanyName", "postNumber", "orgPhoneNumber", "salesDepartmentName", "phoneNumber", "faxNumber", "mailAddress");
+
+		if (StringUtils.isBlank(contractPicMntCeEmp.getOrgName())) {
+			contractPicMntCeEmp.setOrgName(employeeMaster.getOrgName());
+		}
+		if (StringUtils.isBlank(contractPicMntCeEmp.getSalesCompanyName())) {
+			contractPicMntCeEmp.setEmployeeName(employeeMaster.getSalesCompanyName());
+		}
+		if (StringUtils.isBlank(contractPicMntCeEmp.getPostNumber())) {
+			contractPicMntCeEmp.setPostNumber(employeeMaster.getPostNumber());
+		}
+		if (StringUtils.isBlank(contractPicMntCeEmp.getOrgPhoneNumber())) {
+			contractPicMntCeEmp.setOrgPhoneNumber(employeeMaster.getOrgPhoneNumber());
+		}
+		if (StringUtils.isBlank(contractPicMntCeEmp.getSalesDepartmentName())) {
+			contractPicMntCeEmp.setSalesDepartmentName(employeeMaster.getSalesDepartmentName());
+		}
+		if (StringUtils.isBlank(contractPicMntCeEmp.getPhoneNumber())) {
+			contractPicMntCeEmp.setPhoneNumber(employeeMaster.getPhoneNumber());
+		}
+		if (StringUtils.isBlank(contractPicMntCeEmp.getFaxNumber())) {
+			contractPicMntCeEmp.setFaxNumber(employeeMaster.getFaxNumber());
+		}
+		if (StringUtils.isBlank(contractPicMntCeEmp.getMailAddress())) {
+			contractPicMntCeEmp.setMailAddress(employeeMaster.getMailAddress());
+		}
+		if (StringUtils.isBlank(contractPicMntCeEmp.getEmployeeName())) {
+			contractPicMntCeEmp.setEmployeeName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
+		}
+		if (StringUtils.isBlank(contractPicMntCeEmp.getAddress())) {
+			contractPicMntCeEmp.setAddress(convertJoinedAddress(employeeMaster));
+		}
 	}
 
 	private String convertJoinedAddress(MvEmployeeMaster master) {
