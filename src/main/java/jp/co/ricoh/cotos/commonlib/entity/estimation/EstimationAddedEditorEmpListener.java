@@ -68,7 +68,7 @@ public class EstimationAddedEditorEmpListener {
 			estimationAddedEditorEmp.setOrgName(employeeMaster.getOrgName());
 		}
 		if (StringUtils.isBlank(estimationAddedEditorEmp.getSalesCompanyName())) {
-			estimationAddedEditorEmp.setEmployeeName(employeeMaster.getSalesCompanyName());
+			estimationAddedEditorEmp.setSalesCompanyName(employeeMaster.getHanshSeiskNm());
 		}
 		if (StringUtils.isBlank(estimationAddedEditorEmp.getPostNumber())) {
 			estimationAddedEditorEmp.setPostNumber(employeeMaster.getPostNumber());

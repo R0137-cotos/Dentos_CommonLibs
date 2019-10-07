@@ -59,7 +59,7 @@ public class ContractAddedEditorEmpListener {
 			contractAddedEditorEmp.setOrgName(employeeMaster.getOrgName());
 		}
 		if (StringUtils.isBlank(contractAddedEditorEmp.getSalesCompanyName())) {
-			contractAddedEditorEmp.setEmployeeName(employeeMaster.getSalesCompanyName());
+			contractAddedEditorEmp.setSalesCompanyName(employeeMaster.getHanshSeiskNm());
 		}
 		if (StringUtils.isBlank(contractAddedEditorEmp.getPostNumber())) {
 			contractAddedEditorEmp.setPostNumber(employeeMaster.getPostNumber());

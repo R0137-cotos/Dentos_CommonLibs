@@ -68,7 +68,7 @@ public class ArrangementPicWorkerEmpListener {
 			arrangementPicWorkerEmp.setOrgName(employeeMaster.getOrgName());
 		}
 		if (StringUtils.isBlank(arrangementPicWorkerEmp.getSalesCompanyName())) {
-			arrangementPicWorkerEmp.setEmployeeName(employeeMaster.getSalesCompanyName());
+			arrangementPicWorkerEmp.setSalesCompanyName(employeeMaster.getHanshSeiskNm());
 		}
 		if (StringUtils.isBlank(arrangementPicWorkerEmp.getPostNumber())) {
 			arrangementPicWorkerEmp.setPostNumber(employeeMaster.getPostNumber());
