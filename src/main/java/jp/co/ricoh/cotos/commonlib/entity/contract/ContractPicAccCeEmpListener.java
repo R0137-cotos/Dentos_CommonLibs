@@ -68,7 +68,7 @@ public class ContractPicAccCeEmpListener {
 			contractPicAccCeEmp.setOrgName(employeeMaster.getOrgName());
 		}
 		if (StringUtils.isBlank(contractPicAccCeEmp.getSalesCompanyName())) {
-			contractPicAccCeEmp.setEmployeeName(employeeMaster.getSalesCompanyName());
+			contractPicAccCeEmp.setSalesCompanyName(employeeMaster.getHanshSeiskNm());
 		}
 		if (StringUtils.isBlank(contractPicAccCeEmp.getPostNumber())) {
 			contractPicAccCeEmp.setPostNumber(employeeMaster.getPostNumber());

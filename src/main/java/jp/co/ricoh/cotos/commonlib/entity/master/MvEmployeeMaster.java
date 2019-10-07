@@ -990,7 +990,7 @@ public class MvEmployeeMaster {
 	 * 販社正式名称
 	 */
 	@Column(length = 120)
-	@ApiModelProperty(value = "更新区分", required = false, position = 139, allowableValues = "range[0,120]")
+	@ApiModelProperty(value = "販社正式名称", required = false, position = 139, allowableValues = "range[0,120]")
 	private String hanshSeiskNm;
 
 	/**

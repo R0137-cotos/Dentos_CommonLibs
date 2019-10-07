@@ -68,7 +68,7 @@ public class EstimationPicSaEmpListener {
 			estimationPicSaEmp.setOrgName(employeeMaster.getOrgName());
 		}
 		if (StringUtils.isBlank(estimationPicSaEmp.getSalesCompanyName())) {
-			estimationPicSaEmp.setEmployeeName(employeeMaster.getSalesCompanyName());
+			estimationPicSaEmp.setSalesCompanyName(employeeMaster.getHanshSeiskNm());
 		}
 		if (StringUtils.isBlank(estimationPicSaEmp.getPostNumber())) {
 			estimationPicSaEmp.setPostNumber(employeeMaster.getPostNumber());
