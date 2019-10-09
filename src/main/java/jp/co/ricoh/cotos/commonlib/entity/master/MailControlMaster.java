@@ -153,16 +153,28 @@ public class MailControlMaster extends EntityBaseMaster {
 	private MailTemplateMaster mailTemplateMaster;
 
 	/**
+	 * 条件式追加フラグ
+	 */
+	@ApiModelProperty(value = "条件式追加フラグ", required = false, position = 11, allowableValues = "range[0,9]")
+	private Long extendsQueryFlg;
+
+	/**
+	 * 追加条件式
+	 */
+	@ApiModelProperty(value = "追加条件式", required = false, position = 12)
+	private String extendsQuery;
+
+	/**
 	 * メール変換値マスタ
 	 */
 	@OneToMany(mappedBy = "mailControlMaster")
-	@ApiModelProperty(value = "メール変換値マスタ", required = false, position = 11)
+	@ApiModelProperty(value = "メール変換値マスタ", required = false, position = 13)
 	private List<MailConvertValueMaster> MailConvertValueMasterList;
 
 	/**
 	 *  通知メール対象商材マスタ
 	 */
 	@OneToMany(mappedBy = "mailControlMaster")
-	@ApiModelProperty(value = "通知メール対象商材マスタ", required = false, position = 12)
+	@ApiModelProperty(value = "通知メール対象商材マスタ", required = false, position = 14)
 	private List<MailProductMaster> mailProductMasterList;
 }
