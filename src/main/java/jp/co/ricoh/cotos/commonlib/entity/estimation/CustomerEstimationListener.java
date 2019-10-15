@@ -1,6 +1,8 @@
 package jp.co.ricoh.cotos.commonlib.entity.estimation;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.persistence.PrePersist;
 import javax.transaction.Transactional;
@@ -9,19 +11,25 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import jp.co.ricoh.cotos.commonlib.dto.parameter.common.MomCommonMasterSearchParameter;
+import jp.co.ricoh.cotos.commonlib.dto.result.CommonMasterResult;
 import jp.co.ricoh.cotos.commonlib.entity.EnumType.DummyCodeValue;
 import jp.co.ricoh.cotos.commonlib.entity.master.VKjbMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.VKjbMaster.DepartmentDiv;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorCheckException;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorInfo;
 import jp.co.ricoh.cotos.commonlib.logic.check.CheckUtil;
+import jp.co.ricoh.cotos.commonlib.logic.findcommonmaster.FindCommonMaster;
 import jp.co.ricoh.cotos.commonlib.repository.master.VKjbMasterRepository;
 
 @Component
 public class CustomerEstimationListener {
 
+	private static String HJN_KAKU_ITEM_CD = "JMC-HJN_KAKU_CD";
+
 	private static VKjbMasterRepository vKjbMasterRepository;
 	private static CheckUtil checkUtil;
+	private static FindCommonMaster findCommonMaster;
 
 	@Autowired
 	public void setVkjbMasterRepository(VKjbMasterRepository vKjbMasterRepository) {
@@ -31,6 +39,11 @@ public class CustomerEstimationListener {
 	@Autowired
 	public void setCheckUtil(CheckUtil checkUtil) {
 		CustomerEstimationListener.checkUtil = checkUtil;
+	}
+
+	@Autowired
+	public void setFindCommonMaster(FindCommonMaster findCommonMaster) {
+		CustomerEstimationListener.findCommonMaster = findCommonMaster;
 	}
 
 	/**
@@ -55,25 +68,17 @@ public class CustomerEstimationListener {
 		// 結合して表示するものを設定
 		// 値が設定されていない場合のみ補完する
 		if (StringUtils.isBlank(customerEstimation.getCompanyName())) // 画面からは法人格付きの会社名が送られてくる
-		customerEstimation.setCompanyName(vKjbMaster.getKgyKgyNmKnji());
-		
+			customerEstimation.setCompanyName(this.convertJoinedCompanyName(vKjbMaster));
+
 		if (StringUtils.isBlank(customerEstimation.getCustomerName()))
 			customerEstimation.setCustomerName(this.convertJoinedCustomerName(vKjbMaster, customerEstimation));
 		if (StringUtils.isBlank(customerEstimation.getAddress()))
-			customerEstimation.setAddress(vKjbMaster.getKgyCuicClnMaeAds());
+			customerEstimation.setAddress(this.convertJoinedAddress(vKjbMaster));
 
-		// 企事部設定区分により設定値を振り分け
-		if (DepartmentDiv.企事部.equals(vKjbMaster.getPrflKjbSetKbn())) {
-			if (StringUtils.isBlank(customerEstimation.getPhoneNumber()))
-				customerEstimation.setPhoneNumber(vKjbMaster.getBmnBmnTelNum());
-			if (StringUtils.isBlank(customerEstimation.getFaxNumber()))
-				customerEstimation.setFaxNumber(vKjbMaster.getBmnBmnFaxNum());
-		} else {
-			if (StringUtils.isBlank(customerEstimation.getPhoneNumber()))
-				customerEstimation.setPhoneNumber(vKjbMaster.getJgsJgsTelNum());
-			if (StringUtils.isBlank(customerEstimation.getFaxNumber()))
-				customerEstimation.setFaxNumber(vKjbMaster.getJgsJgsFaxNum());
-		}
+		if (StringUtils.isBlank(customerEstimation.getPhoneNumber()))
+			customerEstimation.setPhoneNumber(vKjbMaster.getKgyKgyTelNum());
+		if (StringUtils.isBlank(customerEstimation.getFaxNumber()))
+			customerEstimation.setFaxNumber(vKjbMaster.getKgyKgyFaxNum());
 
 		customerEstimation.setDepartmentDiv(vKjbMaster.getPrflKjbSetKbn());
 		customerEstimation.setCompanyId(vKjbMaster.getPrflMomKgyId());
@@ -82,6 +87,29 @@ public class CustomerEstimationListener {
 		customerEstimation.setMomCustId(vKjbMaster.getMclMomKjbId());
 		customerEstimation.setPostNumber(vKjbMaster.getJgsJgsPostNum());
 		customerEstimation.setDepartmentName(vKjbMaster.getBmnBmnNmKnji());
+	}
+
+	private String convertJoinedCompanyName(VKjbMaster kjbMaster) {
+		StringBuilder sb = new StringBuilder();
+
+		MomCommonMasterSearchParameter parameter = new MomCommonMasterSearchParameter();
+		parameter.setCommonArticleCdList(Arrays.asList(HJN_KAKU_ITEM_CD));
+		List<CommonMasterResult> commonMasterList = findCommonMaster.findMomCommonMaster(parameter);
+		commonMasterList.stream().forEach(commonMasterResult -> {
+			commonMasterResult.getCommonMasterDetailResultList().stream().forEach(commonMasterDetailResult -> {
+				if (commonMasterDetailResult.getCodeValue().equals(kjbMaster.getKgyHjnKakuCd())) {
+					if (kjbMaster.getKgyHjnKakuZengoCd().equals("1")) {
+						sb.append(StringUtils.defaultIfEmpty(commonMasterDetailResult.getDataArea1(), StringUtils.EMPTY));
+						sb.append(StringUtils.defaultIfEmpty(kjbMaster.getKgyKgyNmKnji(), StringUtils.EMPTY));
+					} else if (kjbMaster.getKgyHjnKakuZengoCd().equals("2")) {
+						sb.append(StringUtils.defaultIfEmpty(kjbMaster.getKgyKgyNmKnji(), StringUtils.EMPTY));
+						sb.append(StringUtils.defaultIfEmpty(commonMasterDetailResult.getDataArea1(), StringUtils.EMPTY));
+					}
+				}
+			});
+		});
+
+		return sb.toString();
 	}
 
 	private String convertJoinedCustomerName(VKjbMaster kjbMaster, CustomerEstimation customerEstimation) {
@@ -93,6 +121,28 @@ public class CustomerEstimationListener {
 
 		if (DepartmentDiv.企事部.equals(kjbMaster.getPrflKjbSetKbn())) {
 			sb.append(StringUtils.defaultIfEmpty(kjbMaster.getBmnBmnNmKnji(), StringUtils.EMPTY));
+		}
+
+		return sb.toString();
+	}
+
+	private String convertJoinedAddress(VKjbMaster kjbMaster) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(StringUtils.defaultIfEmpty(kjbMaster.getAdsKtdhknNmKnji(), StringUtils.EMPTY));
+		sb.append(StringUtils.defaultIfEmpty(kjbMaster.getAdsKskugnchosnKnji(), StringUtils.EMPTY));
+		sb.append(StringUtils.defaultIfEmpty(kjbMaster.getAdsKowaTusyoKnji(), StringUtils.EMPTY));
+		sb.append(StringUtils.defaultIfEmpty(kjbMaster.getAdsJkowChomeKnji(), StringUtils.EMPTY));
+		sb.append(StringUtils.defaultIfEmpty(kjbMaster.getJgsJgsAdsAzatusyoNm(), StringUtils.EMPTY));
+		sb.append(StringUtils.defaultIfEmpty(kjbMaster.getJgsJgsAdsBantiNm(), StringUtils.EMPTY));
+		if (!StringUtils.isEmpty(kjbMaster.getJgsJgsAdsGoNm())) {
+			sb.append("－" + kjbMaster.getJgsJgsAdsGoNm());
+		}
+		if (!StringUtils.isEmpty(kjbMaster.getJgsJgsAdsBldgNm())) {
+			sb.append("　" + kjbMaster.getJgsJgsAdsBldgNm());
+		}
+		if (!StringUtils.isEmpty(kjbMaster.getJgsJgsAdsFlorNm())) {
+			sb.append("　" + kjbMaster.getJgsJgsAdsFlorNm());
 		}
 
 		return sb.toString();
