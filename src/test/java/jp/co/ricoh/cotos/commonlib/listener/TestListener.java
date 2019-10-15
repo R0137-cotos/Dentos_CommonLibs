@@ -72,7 +72,7 @@ public class TestListener {
 		Assert.assertEquals("事業所名が正しく取得されること", "＊＊＊", customerEstimation.getOfficeName());
 		Assert.assertEquals("部門名が正しく取得されること", "＊＊", customerEstimation.getDepartmentName());
 		Assert.assertEquals("郵便番号が正しく取得されること", "1710014", customerEstimation.getPostNumber());
-		Assert.assertEquals("住所が正しく取得されること", "東京都豊島区池袋４丁目９９９９ＸＸＸビル", customerEstimation.getAddress());
+		Assert.assertEquals("住所が正しく取得されること", "東京都豊島区池袋４丁目９９－９９　ＸＸＸビル", customerEstimation.getAddress());
 		Assert.assertEquals("電話番号が正しく取得されること", "0339808999", customerEstimation.getPhoneNumber());
 		Assert.assertEquals("FAX番号が正しく取得されること", null, customerEstimation.getFaxNumber());
 	}
@@ -90,7 +90,7 @@ public class TestListener {
 		dealerEstimation = dealerEstimationRespository.findOne(dealerEstimation.getId());
 		Assert.assertEquals("販売店名が正しく取得されること", "花＊工＊株式会社", dealerEstimation.getDealerName());
 		Assert.assertEquals("郵便番号が正しく取得されること", "1710014", dealerEstimation.getPostNumber());
-		Assert.assertEquals("住所が正しく取得されること", "東京都豊島区池袋４丁目９９９９ＸＸＸビル", dealerEstimation.getAddress());
+		Assert.assertEquals("住所が正しく取得されること", "東京都豊島区池袋４丁目９９－９９　ＸＸＸビル", dealerEstimation.getAddress());
 		Assert.assertEquals("電話番号が正しく取得されること", "0339808999", dealerEstimation.getOrgPhoneNumber());
 	}
 
@@ -107,7 +107,7 @@ public class TestListener {
 		dealerContract = dealerContractRepository.findOne(dealerContract.getId());
 		Assert.assertEquals("販売店名が正しく取得されること", "花＊工＊株式会社", dealerContract.getDealerName());
 		Assert.assertEquals("郵便番号が正しく取得されること", "1710014", dealerContract.getPostNumber());
-		Assert.assertEquals("住所が正しく取得されること", "東京都豊島区池袋４丁目９９９９ＸＸＸビル", dealerContract.getAddress());
+		Assert.assertEquals("住所が正しく取得されること", "東京都豊島区池袋４丁目９９－９９　ＸＸＸビル", dealerContract.getAddress());
 		Assert.assertEquals("電話番号が正しく取得されること", "0339808999", dealerContract.getOrgPhoneNumber());
 	}
 }

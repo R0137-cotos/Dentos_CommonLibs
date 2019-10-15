@@ -135,9 +135,15 @@ public class CustomerEstimationListener {
 		sb.append(StringUtils.defaultIfEmpty(kjbMaster.getAdsJkowChomeKnji(), StringUtils.EMPTY));
 		sb.append(StringUtils.defaultIfEmpty(kjbMaster.getJgsJgsAdsAzatusyoNm(), StringUtils.EMPTY));
 		sb.append(StringUtils.defaultIfEmpty(kjbMaster.getJgsJgsAdsBantiNm(), StringUtils.EMPTY));
-		sb.append(StringUtils.defaultIfEmpty(kjbMaster.getJgsJgsAdsGoNm(), StringUtils.EMPTY));
-		sb.append(StringUtils.defaultIfEmpty(kjbMaster.getJgsJgsAdsBldgNm(), StringUtils.EMPTY));
-		sb.append(StringUtils.defaultIfEmpty(kjbMaster.getJgsJgsAdsFlorNm(), StringUtils.EMPTY));
+		if (!StringUtils.isEmpty(kjbMaster.getJgsJgsAdsGoNm())) {
+			sb.append("－" + kjbMaster.getJgsJgsAdsGoNm());
+		}
+		if (!StringUtils.isEmpty(kjbMaster.getJgsJgsAdsBldgNm())) {
+			sb.append("　" + kjbMaster.getJgsJgsAdsBldgNm());
+		}
+		if (!StringUtils.isEmpty(kjbMaster.getJgsJgsAdsFlorNm())) {
+			sb.append("　" + kjbMaster.getJgsJgsAdsFlorNm());
+		}
 
 		return sb.toString();
 	}
