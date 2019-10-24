@@ -110,4 +110,10 @@ public class ProductGrpMaster extends EntityBaseMaster {
 	 */
 	@ApiModelProperty(value = "期間売内部振替対象フラグ", required = false, position = 10, allowableValues = "range[0,9]")
 	private Integer periodSellingInsideTransFlg;
+
+	/**
+	 * VUP連携商品フラグ
+	 */
+	@ApiModelProperty(value = "VUP連携商品フラグ", required = false, position = 11, allowableValues = "range[0,9]")
+	private Integer vupLinkageProductFlg;
 }
