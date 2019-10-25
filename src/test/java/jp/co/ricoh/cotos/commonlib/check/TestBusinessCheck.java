@@ -56,7 +56,14 @@ public class TestBusinessCheck {
 	@WithMockCustomUser(actionDiv = ActionDiv.更新, authDiv = AuthDiv.見積_契約_手配, authLevel = AuthLevel.地域)
 	public void 代理承認者の承認権限チェック_地域() throws Exception {
 
-		Assert.assertTrue("「地域(70)」代理承認者の承認権限があること", businessCheck.existsSubApproverEmployeeAuthority("00220552", "00220552"));
+		Assert.assertTrue("「地域(70)」代理承認者の承認権限があること", businessCheck.existsSubApproverEmployeeAuthority("00229692", "00220552"));
 		Assert.assertFalse("「地域(70)」代理承認者の承認権限がないこと", businessCheck.existsSubApproverEmployeeAuthority("00229692", "00623100"));
+	}
+
+	@Test
+	@WithMockCustomUser(actionDiv = ActionDiv.更新, authDiv = AuthDiv.見積_契約_手配, authLevel = AuthLevel.配下)
+	public void 代理承認者の承認権限チェック_承認依頼者代理承認者チェックNG() throws Exception {
+
+		Assert.assertFalse("代理承認者の承認権限がないこと", businessCheck.existsSubApproverEmployeeAuthority("00230148", "00230148"));
 	}
 }
