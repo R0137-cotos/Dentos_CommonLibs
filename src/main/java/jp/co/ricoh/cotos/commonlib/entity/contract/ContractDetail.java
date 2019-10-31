@@ -66,7 +66,7 @@ public class ContractDetail extends EntityBase {
 	}
 
 	public enum AbsConInsideTransStatus {
-		未処理("0"), TSV作成済み("1"), 連携済み("2"), 連携エラー("3"), 対象外("4");
+		未処理("0"), 連携済み("1"), 対象外("4");
 
 		private final String text;
 
