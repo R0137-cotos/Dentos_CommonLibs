@@ -36,6 +36,10 @@ public class BusinessCheck {
 	public boolean existsSubApproverEmployeeAuthority(String approvalRequesterMomEmployeeId, String subApproverMomEmployeeId) throws Exception {
 		MvEmployeeMaster requester = mvEmployeeMasterRepository.findByMomEmployeeId(approvalRequesterMomEmployeeId);
 		MvEmployeeMaster approver = mvEmployeeMasterRepository.findByMomEmployeeId(subApproverMomEmployeeId);
+		if (approvalRequesterMomEmployeeId.equals(subApproverMomEmployeeId)) {
+			return false;
+		}
+
 		if (null != approver && !existsAcceptAuthority(requester, approver)) {
 			return false;
 		}
