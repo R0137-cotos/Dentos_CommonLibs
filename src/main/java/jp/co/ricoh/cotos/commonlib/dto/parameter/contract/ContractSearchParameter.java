@@ -117,7 +117,7 @@ public class ContractSearchParameter {
 	/**
 	 * 契約状態
 	 */
-	@ApiParam(value = "契約状態", required = false)
+	@ApiParam(value = "契約状態:カンマ区切りで複数指定可", required = false)
 	@ApiModelProperty(value = "契約状態<br />" //
 			+ "状態遷移上のライフサイクル状態を表す。", //
 			required = false) //
@@ -302,7 +302,7 @@ public class ContractSearchParameter {
 	/**
 	 * 契約ステータス
 	 */
-	@ApiParam(value = "契約ステータス", required = false)
+	@ApiParam(value = "契約ステータス:カンマ区切りで複数指定可", required = false)
 	@ApiModelProperty(value = "契約ステータス<br />" //
 			+ "状態遷移上のワークフローステータスを表す。", //
 			required = false) //

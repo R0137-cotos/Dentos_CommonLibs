@@ -223,7 +223,7 @@ public class EstimationSearchParameter {
 	/**
 	 * 見積ステータス
 	 */
-	@ApiParam(value = "見積ステータス", required = false)
+	@ApiParam(value = "見積ステータス:カンマ区切りで複数指定可", required = false)
 	@ApiModelProperty(value = "見積ステータス<br />" //
 			+ "状態遷移上のワークフロー状態を表す。", //
 			required = false) //
@@ -232,7 +232,7 @@ public class EstimationSearchParameter {
 	/**
 	 * 見積状態
 	 */
-	@ApiParam(value = "見積状態", required = false)
+	@ApiParam(value = "見積状態:カンマ区切りで複数指定可", required = false)
 	@ApiModelProperty(value = "見積状態<br />" //
 			+ "状態遷移上のライフサイクル状態を表す。", //
 			required = false) //
