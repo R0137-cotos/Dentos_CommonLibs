@@ -630,8 +630,9 @@ public class TestContract {
 		testTarget.setAppId(STR_256);
 		testTarget.setContactNo(STR_256);
 		testTarget.setIssueTaxCodeValue(STR_256);
+		testTarget.setInstallDeliverySiteId(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 20);
+		Assert.assertTrue(result.getErrorInfoList().size() == 21);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "変更元文書番号は最大文字数（255）を超えています。"));
 

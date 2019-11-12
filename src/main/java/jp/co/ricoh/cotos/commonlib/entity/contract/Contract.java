@@ -656,4 +656,11 @@ public class Contract extends EntityBase {
 	@ApiModelProperty(value = "検収日", required = false, position = 70)
 	private Date acceptanceDate;
 
+	/**
+	 * 設置届先サイトID
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "設置届先サイトID", required = false, position = 71, allowableValues = "range[0,255]")
+	private String installDeliverySiteId;
+
 }
