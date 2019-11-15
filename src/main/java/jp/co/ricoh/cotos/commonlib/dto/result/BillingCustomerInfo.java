@@ -102,4 +102,7 @@ public class BillingCustomerInfo {
 	@ApiModelProperty(value = "自振引落日", required = true, position = 31, allowableValues = "range[0,1326")
 	private String autoTransferDay;
 
+	@ApiModelProperty(value = "請求先分類", required = true, position = 32, allowableValues = "range[2,2]")
+	private String susBnri;
+
 }
