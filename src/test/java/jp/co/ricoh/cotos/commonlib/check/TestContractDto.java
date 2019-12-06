@@ -1671,8 +1671,9 @@ public class TestContractDto {
 		testTarget.setWebOrderNumber(STR_256);
 		testTarget.setRjManageNumber(STR_256);
 		testTarget.setCancelOrderNo(STR_256);
+		testTarget.setInstallDeliverySiteId(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 18);
+		Assert.assertTrue(result.getErrorInfoList().size() == 19);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "得意先宛先名は最大文字数（255）を超えています。"));
 
@@ -1795,8 +1796,9 @@ public class TestContractDto {
 		testTarget.setWebOrderNumber(STR_256);
 		testTarget.setRjManageNumber(STR_256);
 		testTarget.setCancelOrderNo(STR_256);
+		testTarget.setInstallDeliverySiteId(STR_256);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
-		Assert.assertTrue(result.getErrorInfoList().size() == 17);
+		Assert.assertTrue(result.getErrorInfoList().size() == 18);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00014));
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "得意先宛先名は最大文字数（255）を超えています。"));
 
