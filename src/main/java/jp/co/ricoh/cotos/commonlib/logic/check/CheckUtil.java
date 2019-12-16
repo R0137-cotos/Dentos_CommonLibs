@@ -19,6 +19,10 @@ import org.springframework.validation.FieldError;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import jp.co.ricoh.cotos.commonlib.dto.result.MessageInfo;
+import jp.co.ricoh.cotos.commonlib.entity.contract.Contract;
+import jp.co.ricoh.cotos.commonlib.entity.contract.Contract.ContractType;
+import jp.co.ricoh.cotos.commonlib.entity.contract.Contract.LifecycleStatus;
+import jp.co.ricoh.cotos.commonlib.entity.contract.Contract.WorkflowStatus;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorCheckException;
 import jp.co.ricoh.cotos.commonlib.exception.ErrorInfo;
 import jp.co.ricoh.cotos.commonlib.logic.message.MessageUtil;
@@ -374,5 +378,49 @@ public class CheckUtil {
 		errorInfo.setErrorId(messageInfo.getId());
 		errorInfo.setErrorMessage(messageUtil.convertSingleValue(columnNm) + messageInfo.getMsg());
 		return errorInfo;
+	}
+
+	/**
+	 * 契約情報確定APIのエラーチェック
+	 * 
+	 * @param contract
+	 */
+	public void fixCheck(Contract contract) {
+		// 契約.契約種別が「新規」または「契約変更」かどうかチェックする。
+		if (ContractType.新規 != contract.getContractType() && ContractType.契約変更 != contract.getContractType()) {
+			throw new ErrorCheckException(addErrorInfo(new ArrayList<ErrorInfo>(), "CannotContractActionByStatus", new String[] { "契約種別", "「新規」「契約変更」", "契約情報確定" }));
+		}
+
+		// 契約.ライフサイクル状態が「作成完了」かどうかチェックする。
+		if (LifecycleStatus.作成完了 != contract.getLifecycleStatus()) {
+			throw new ErrorCheckException(addErrorInfo(new ArrayList<ErrorInfo>(), "CannotContractActionByStatus", new String[] { "ライフサイクル状態", "「作成完了」", "契約情報確定" }));
+		}
+
+		// 契約.ワークフロー状態が「承認済」かどうかチェックする。
+		if (WorkflowStatus.承認済 != contract.getWorkflowStatus()) {
+			throw new ErrorCheckException(addErrorInfo(new ArrayList<ErrorInfo>(), "CannotContractActionByStatus", new String[] { "ワークフロー状態", "「承認済」", "契約情報確定" }));
+		}
+	}
+
+	/**
+	 * 締結開始指示APIのエラーチェック
+	 * 
+	 * @param contract
+	 */
+	public void startConclusionCheck(Contract contract) {
+		// 契約.契約種別が「新規」または「契約変更」かどうかチェックする。
+		if (ContractType.新規 != contract.getContractType() && ContractType.契約変更 != contract.getContractType()) {
+			throw new ErrorCheckException(addErrorInfo(new ArrayList<ErrorInfo>(), "CannotContractActionByStatus", new String[] { "契約種別", "「新規」「契約変更」", "締結開始指示" }));
+		}
+
+		// 契約.ライフサイクル状態が「作成完了」かどうかチェックする。
+		if (LifecycleStatus.作成完了 != contract.getLifecycleStatus()) {
+			throw new ErrorCheckException(addErrorInfo(new ArrayList<ErrorInfo>(), "CannotContractActionByStatus", new String[] { "ライフサイクル状態", "「作成完了」", "締結開始指示" }));
+		}
+
+		// 契約.ワークフロー状態が「売上可能」かどうかチェックする。
+		if (WorkflowStatus.売上可能 != contract.getWorkflowStatus()) {
+			throw new ErrorCheckException(addErrorInfo(new ArrayList<ErrorInfo>(), "CannotContractActionByStatus", new String[] { "ワークフロー状態", "「売上可能」", "締結開始指示" }));
+		}
 	}
 }
