@@ -125,4 +125,11 @@ public class ProductMaster extends EntityBaseMaster {
 	@OneToOne(mappedBy = "productMaster")
 	@ApiModelProperty(value = "IFSその他機器情報管理マスタ", required = false, position = 13)
 	private IfsCsvMaster ifsCsvMaster;
+	
+	/**
+	 * 商品種類区分
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "固有項目区分", required = false, position = 14, allowableValues = "range[0,255]")
+	private String extendsParameterDiv;
 }
