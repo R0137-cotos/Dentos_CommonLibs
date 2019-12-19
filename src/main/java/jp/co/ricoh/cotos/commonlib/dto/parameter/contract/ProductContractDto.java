@@ -50,4 +50,11 @@ public class ProductContractDto extends DtoBase {
 	@ApiModelProperty(value = "拡張項目", required = false, position = 7)
 	@Lob
 	private String extendsParameter;
+	
+	/**
+	 * 拡張項目繰返
+	 */
+	@ApiModelProperty(value = "拡張項目繰返", required = false, position = 8)
+	@Lob
+	private String extendsParameterIterance;
 }
