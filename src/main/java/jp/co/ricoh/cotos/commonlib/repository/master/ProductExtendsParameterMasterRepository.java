@@ -7,4 +7,4 @@ import jp.co.ricoh.cotos.commonlib.entity.master.ProductExtendsParameterMaster;
 
 @Repository
 public interface ProductExtendsParameterMasterRepository extends CrudRepository<ProductExtendsParameterMaster, Long> {
-}
+} 

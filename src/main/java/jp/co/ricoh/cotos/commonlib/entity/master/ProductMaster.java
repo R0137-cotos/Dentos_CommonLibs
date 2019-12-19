@@ -9,8 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
@@ -94,12 +92,10 @@ public class ProductMaster extends EntityBaseMaster {
 	private String appId;
 
 	/**
-	 * JSONスキーママスタ
+	 * JSONスキーママスタID
 	 */
-	@ManyToOne
-	@JoinColumn(name = "json_schema_master_id", referencedColumnName = "id")
-	@ApiModelProperty(value = "JSONスキーママスタ", required = true, position = 9)
-	private JsonSchemaMaster jsonSchemaMaster;
+	@ApiModelProperty(value = "JSONスキーママスタID", required = true, position = 9)
+	private Long jsonSchemaMasterId;
 
 	/**
 	 * 拡張項目相関チェックマスタ
@@ -127,9 +123,16 @@ public class ProductMaster extends EntityBaseMaster {
 	private IfsCsvMaster ifsCsvMaster;
 	
 	/**
+	 * 商品拡張項目マスタ
+	 */
+	@OneToMany(mappedBy = "productMaster")
+	@ApiModelProperty(value = "商品拡張項目マスタ", required = false, position = 14)
+	private List<ProductExtendsParameterMaster> productExtendsParameterMasterList;
+	
+	/**
 	 * 商品種類区分
 	 */
 	@Size(max = 255)
-	@ApiModelProperty(value = "固有項目区分", required = false, position = 14, allowableValues = "range[0,255]")
+	@ApiModelProperty(value = "固有項目区分", required = false, position = 15, allowableValues = "range[0,255]")
 	private String extendsParameterDiv;
 }
