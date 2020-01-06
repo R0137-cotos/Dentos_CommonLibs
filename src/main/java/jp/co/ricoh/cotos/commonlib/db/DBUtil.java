@@ -35,7 +35,7 @@ public class DBUtil {
 
 	/**
 	 * クラスパス上のファイルからSQLを生成します。
-	 * 
+	 *
 	 * @param sqlFilePathOnClasspath
 	 * @param responseClass
 	 * @return
@@ -46,7 +46,7 @@ public class DBUtil {
 
 	/**
 	 * クラスパス上のファイルからSQLを生成します。
-	 * 
+	 *
 	 * @param sqlFilePathOnClasspath
 	 * @param responseClass
 	 * @param params
@@ -61,7 +61,7 @@ public class DBUtil {
 
 	/**
 	 * クラスパス上のファイルから一件検索用SQLを生成します。
-	 * 
+	 *
 	 * @param sqlFilePathOnClasspath
 	 * @param responseClass
 	 * @return
@@ -72,7 +72,7 @@ public class DBUtil {
 
 	/**
 	 * クラスパス上のファイルから一件検索用SQLを生成します。
-	 * 
+	 *
 	 * @param sqlFilePathOnClasspath
 	 * @param responseClass
 	 * @param params
@@ -128,7 +128,7 @@ public class DBUtil {
 
 			// 部分一致検索の項目に対して、エスケープ処理を実施
 			if (key.startsWith("likeSearch")) {
-				return likeKeywordValue.replace("\\", "\\\\").replace("%", "\\%").replace("％", "\\％").replace("_", "\\_").replace("＿", "\\＿");
+				return likeKeywordValue.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_");
 			}
 		}
 
@@ -172,7 +172,7 @@ public class DBUtil {
 
 	/**
 	 * クラスパス上のファイルからSQLを取得します。
-	 * 
+	 *
 	 * @param sqlFilePathOnClasspath
 	 * @param params
 	 * @return
@@ -191,7 +191,7 @@ public class DBUtil {
 
 	/**
 	 * クラスパス上のファイルからSQLを取得します。
-	 * 
+	 *
 	 * @param sqlFilePathOnClasspath
 	 * @return
 	 */
@@ -209,7 +209,7 @@ public class DBUtil {
 
 	/**
 	 * クラスパス上のファイルから件数取得用SQLを生成します。
-	 * 
+	 *
 	 * @param sqlFilePathOnClasspath
 	 * @return
 	 */
@@ -219,7 +219,7 @@ public class DBUtil {
 
 	/**
 	 * クラスパス上のファイルから件数取得用SQLを生成します。
-	 * 
+	 *
 	 * @param sqlFilePathOnClasspath
 	 * @param params
 	 * @return
@@ -239,11 +239,11 @@ public class DBUtil {
 		params.entrySet().stream().filter(entry -> null != entry.getValue()).forEach(entry -> query.setParameter(entry.getKey(), entry.getValue()));
 		query.executeUpdate();
 	}
-	
+
 	public <T>List<T> executeSelectWithSQL(String sql) {
 		return executeSelectWithSQL(sql, new HashMap<String, Object>());
 	}
-	
+
 	public <T>List<T> executeSelectWithSQL(String sql, Map<String, Object> params) {
 		Query query = entityManager.createNativeQuery(sql);
 		params.entrySet().stream().filter(entry -> null != entry.getValue()).forEach(entry -> query.setParameter(entry.getKey(), entry.getValue()));
