@@ -8,6 +8,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+import javax.script.Bindings;
+import javax.script.Compilable;
+import javax.script.CompiledScript;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
@@ -36,6 +40,44 @@ public class ApprovalSearch {
 
 	@Autowired
 	CheckUtil checkUtil;
+
+	ScriptEngineManager manager;
+	ScriptEngine engine;
+	private static Map<Long, CompiledScript> compliledScriptMap = new HashMap<>();
+
+	/***
+	 * 初期化処理.
+	 *
+	 * <pre>
+	 * 承認ルートの判定式を事前コンパイルする
+	 * </pre>
+	 */
+	@PostConstruct
+	public void initialize() {
+
+		manager = new ScriptEngineManager();
+		engine = manager.getEngineByName("nashorn");
+
+		approvalRouteGrpMasterRepository.findAll().forEach(approvalRouteGrpMaster -> {
+			approvalRouteGrpMaster.getApprovalRouteMasterList().stream().forEach(approvalRouteMaster -> {
+
+				try {
+					CompiledScript compliledScript = null;
+
+					if (engine instanceof Compilable) {
+						Compilable compEngine = (Compilable) engine;
+						String script = loadScriptFromClasspath("js/routeFormulaTemplate.js", approvalRouteMaster.getRouteConditionFormula());
+						compliledScript = compEngine.compile(script);
+					}
+
+					compliledScriptMap.put(approvalRouteMaster.getId(), compliledScript);
+
+				} catch (Exception e) {
+					throw new RouteFormulaScriptException(e);
+				}
+			});
+		});
+	}
 
 	/**
 	 * 承認ルート特定
@@ -119,7 +161,34 @@ public class ApprovalSearch {
 	}
 
 	/**
-	 * ルート条件式を実行
+	 * ルート条件式を実行（標準モジュール）
+	 *
+	 * @param entity
+	 *            エンティティ
+	 * @param domain
+	 *            ドメイン
+	 * @param approvalRouteMaster
+	 *            条件式
+	 * @return 実施結果
+	 * @throws ScriptException
+	 */
+	@SuppressWarnings("hiding")
+	private <T> RouteFormulaResult execRouteFormula_org(T entityClass, String domain, ApprovalRouteMaster approvalRouteMaster) {
+
+		ScriptEngineManager manager = new ScriptEngineManager();
+		ScriptEngine engine = manager.getEngineByName("nashorn");
+
+		try {
+			engine.put(domain, entityClass);
+			engine.eval(loadScriptFromClasspath("js/routeFormulaTemplate.js", approvalRouteMaster.getRouteConditionFormula()));
+			return (RouteFormulaResult) engine.eval("result");
+		} catch (ScriptException e) {
+			throw new RouteFormulaScriptException(e);
+		}
+	}
+
+	/**
+	 * ルート条件式を実行（電力用改モジュール）
 	 *
 	 * @param entity
 	 *            エンティティ
@@ -133,14 +202,30 @@ public class ApprovalSearch {
 	@SuppressWarnings("hiding")
 	private <T> RouteFormulaResult execRouteFormula(T entityClass, String domain, ApprovalRouteMaster approvalRouteMaster) {
 
-		ScriptEngineManager manager = new ScriptEngineManager();
-		ScriptEngine engine = manager.getEngineByName("nashorn");
+		// コンパイル済みスクリプトを取得
+		CompiledScript compliledScript = compliledScriptMap.get(approvalRouteMaster.getId());
 
 		try {
-			engine.put(domain, entityClass);
-			engine.eval(loadScriptFromClasspath("js/routeFormulaTemplate.js", approvalRouteMaster.getRouteConditionFormula()));
-			return (RouteFormulaResult) engine.eval("result");
-		} catch (ScriptException e) {
+
+			if (compliledScript == null) {
+
+				// コンパイル済みスクリプトがなければコンパイル
+				if (engine instanceof Compilable) {
+					Compilable compEngine = (Compilable) engine;
+					String script = loadScriptFromClasspath("js/routeFormulaTemplate.js", approvalRouteMaster.getRouteConditionFormula());
+					compliledScript = compEngine.compile(script);
+				}
+
+				compliledScriptMap.put(approvalRouteMaster.getId(), compliledScript);
+			}
+
+			// スクリプト実行
+			Bindings bindings = engine.createBindings();
+			bindings.put(domain, entityClass);
+			compliledScript.eval(bindings);
+			return (RouteFormulaResult) compliledScript.getEngine().eval("result", bindings);
+
+		} catch (Exception e) {
 			throw new RouteFormulaScriptException(e);
 		}
 	}
