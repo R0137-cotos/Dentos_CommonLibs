@@ -52,6 +52,7 @@ import jp.co.ricoh.cotos.commonlib.entity.master.MvEmployeeMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmci101Master;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmci102Master;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmci105Master;
+import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmci106Master;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmci108Master;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTJmcj005Master;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTjmcc020HnbitnMaster;
@@ -113,6 +114,7 @@ import jp.co.ricoh.cotos.commonlib.repository.master.MvEmployeeMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTJmci101MasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTJmci102MasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTJmci105Repository;
+import jp.co.ricoh.cotos.commonlib.repository.master.MvTJmci106MasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTJmci108MasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTJmcj005MasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTjmcc020HnbitnMasterRepository;
@@ -272,6 +274,9 @@ public class TestMaster {
 
 	@Autowired
 	private MvVjmcb010MomKgyMasterRepository mvVjmcb010MomKgyMasterRepository;
+
+	@Autowired
+	private MvTJmci106MasterRepository mvTJmci106MasterRepository;
 
 	@Autowired
 	TestTools testTool = null;
@@ -1231,8 +1236,6 @@ public class TestMaster {
 		// Entity の各項目の値が null ではないことを確認
 		testTool.assertColumnsNotNull(found);
 	}
-	
-	
 
 	@Test
 	public void ContractAutoUpdateMasterRepositoryのテスト() throws Exception {
@@ -1248,7 +1251,7 @@ public class TestMaster {
 		// Entity の各項目の値が null ではないことを確認
 		testTool.assertColumnsNotNull(found);
 	}
-	
+
 	@Test
 	public void ProductExtendsParameterMasterのテスト() throws Exception {
 		// テストデータ登録
@@ -1269,8 +1272,8 @@ public class TestMaster {
 		if (found.getProductMaster() == null)
 			Assert.assertTrue(false);
 		if (found.getJsonSchemaMaster() == null)
-		if (found.getProductMaster() == null)
-			Assert.assertTrue(false);
+			if (found.getProductMaster() == null)
+				Assert.assertTrue(false);
 	}
 
 	@Test
@@ -1691,6 +1694,19 @@ public class TestMaster {
 
 		// Entity の各項目の値が null ではないことを確認
 		testTool.assertColumnsNotNull(found);
+	}
+
+	@Test
+	public void MvTJmci106Master_findByBusinessPlaceIdのテスト() throws Exception {
+
+		// テストデータはなし
+
+		// エンティティの取得
+		String businessPlaceId = "000000003581698";
+		MvTJmci106Master found = mvTJmci106MasterRepository.findOne(businessPlaceId);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
 	}
 
 }

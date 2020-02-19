@@ -39,7 +39,7 @@ public class ApprovalSearch {
 
 	/**
 	 * 承認ルート特定
-	 * 
+	 *
 	 * <pre>
 	 * 【処理内容】
 	 * ・引数の承認ルートグループIDを元に承認ルートグループマスタTBL(APPROVAL_ROUTE_GRP_MASTER)から承認ルートグループマスタ情報取得
@@ -47,7 +47,7 @@ public class ApprovalSearch {
 	 *  ※上記処理で失敗した場合は、処理結果ステータスに「警告」または「異常」を設定し戻り値返却
 	 * ・承認ルートマスタ情報に紐づく承認ルードノード情報は各ドメインの共通処理で取得
 	 * </pre>
-	 * 
+	 *
 	 * @param approvalRouteGrpId
 	 *            承認ルートグループID
 	 * @param entity
@@ -80,7 +80,7 @@ public class ApprovalSearch {
 
 	/**
 	 * 複数承認ルート特定
-	 * 
+	 *
 	 * <pre>
 	 * 【処理内容】
 	 * ・引数の承認ルートグループIDを元に承認ルートグループマスタTBL(APPROVAL_ROUTE_GRP_MASTER)から承認ルートグループマスタ情報取得
@@ -88,7 +88,7 @@ public class ApprovalSearch {
 	 *  ※上記処理で失敗した場合は、処理結果ステータスに「警告」または「異常」を設定し戻り値返却
 	 * ・承認ルートマスタ情報に紐づく承認ルードノード情報は各ドメインの共通処理で取得
 	 * </pre>
-	 * 
+	 *
 	 * @param approvalRouteGrpId
 	 *            承認ルートグループID
 	 * @param entity
