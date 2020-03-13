@@ -734,6 +734,11 @@ public class TestMaster {
 			Assert.assertTrue(false);
 		if (found.getApprovalRouteNodeMasterList() == null || found.getApprovalRouteNodeMasterList().size() == 0)
 			Assert.assertTrue(false);
+
+		List<Long> idList = Arrays.asList(1L, 2L);
+		List<ApprovalRouteMaster> masterList = approvalRouteMasterRepository.findByIdIn(idList);
+		Assert.assertNotNull(masterList);
+		Assert.assertTrue(masterList.size() == 2);
 	}
 
 	@Test
