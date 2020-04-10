@@ -70,7 +70,7 @@ public class DealerEstimationListener {
 			if (StringUtils.isBlank(dealerEstimation.getPostNumber()))
 				dealerEstimation.setPostNumber(vKjbMaster.getJgsJgsPostNum());
 			if (StringUtils.isBlank(dealerEstimation.getOrgPhoneNumber()))
-				dealerEstimation.setOrgPhoneNumber(vKjbMaster.getKgyKgyTelNum());
+				dealerEstimation.setOrgPhoneNumber(vKjbMaster.getJgsJgsTelNum());
 		}
 	}
 
@@ -101,9 +101,9 @@ public class DealerEstimationListener {
 	private String convertJoinedAddress(VKjbMaster kjbMaster) {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(StringUtils.defaultIfEmpty(kjbMaster.getAdsKtdhknNmKnji(), StringUtils.EMPTY));
-		sb.append(StringUtils.defaultIfEmpty(kjbMaster.getAdsKskugnchosnKnji(), StringUtils.EMPTY));
-		sb.append(StringUtils.defaultIfEmpty(kjbMaster.getAdsKowaTusyoKnji(), StringUtils.EMPTY));
+		sb.append(StringUtils.defaultIfEmpty(kjbMaster.getAdsJtdhknNmKnji(), StringUtils.EMPTY));
+		sb.append(StringUtils.defaultIfEmpty(kjbMaster.getAdsJskugnchosnKnji(), StringUtils.EMPTY));
+		sb.append(StringUtils.defaultIfEmpty(kjbMaster.getAdsJowaTusyoKnji(), StringUtils.EMPTY));
 		sb.append(StringUtils.defaultIfEmpty(kjbMaster.getAdsJkowChomeKnji(), StringUtils.EMPTY));
 		sb.append(StringUtils.defaultIfEmpty(kjbMaster.getJgsJgsAdsAzatusyoNm(), StringUtils.EMPTY));
 		sb.append(StringUtils.defaultIfEmpty(kjbMaster.getJgsJgsAdsBantiNm(), StringUtils.EMPTY));
