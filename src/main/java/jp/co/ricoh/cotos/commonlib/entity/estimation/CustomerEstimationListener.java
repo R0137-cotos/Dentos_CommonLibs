@@ -65,37 +65,19 @@ public class CustomerEstimationListener {
 			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "MasterDoesNotExistKjbMaster", regexList));
 		}
 
-		// 結合して表示するものを設定
-		// 値が設定されていない場合のみ補完する
-		if (StringUtils.isBlank(customerEstimation.getCompanyName())) // 画面からは法人格付きの会社名が送られてくる
-			customerEstimation.setCompanyName(this.convertJoinedCompanyName(vKjbMaster));
-
-		if (StringUtils.isBlank(customerEstimation.getCustomerName()))
-			customerEstimation.setCustomerName(this.convertJoinedCustomerName(vKjbMaster, customerEstimation));
-		if (StringUtils.isBlank(customerEstimation.getAddress()))
-			customerEstimation.setAddress(this.convertJoinedAddress(vKjbMaster));
-
-		if (StringUtils.isBlank(customerEstimation.getPhoneNumber()))
-			customerEstimation.setPhoneNumber(vKjbMaster.getJgsJgsTelNum());
-		if (StringUtils.isBlank(customerEstimation.getFaxNumber()))
-			customerEstimation.setFaxNumber(vKjbMaster.getJgsJgsFaxNum());
-
-		if (null == customerEstimation.getDepartmentDiv())
-			customerEstimation.setDepartmentDiv(vKjbMaster.getPrflKjbSetKbn());
-		if (StringUtils.isBlank(customerEstimation.getCompanyId()))
-			customerEstimation.setCompanyId(vKjbMaster.getPrflMomKgyId());
-		if (StringUtils.isBlank(customerEstimation.getOfficeId()))
-			customerEstimation.setOfficeId(vKjbMaster.getPrflMomJgsId());
-		if (StringUtils.isBlank(customerEstimation.getOfficeName()))
-			customerEstimation.setOfficeName(vKjbMaster.getJgsJgsNmKnji());
-		if (StringUtils.isBlank(customerEstimation.getMomCustId()))
-			customerEstimation.setMomCustId(vKjbMaster.getMclMomKjbId());
-		if (StringUtils.isBlank(customerEstimation.getPostNumber()))
-			customerEstimation.setPostNumber(vKjbMaster.getJgsJgsPostNum());
-		if (StringUtils.isBlank(customerEstimation.getCompanyName()))
-			customerEstimation.setCompanyName(vKjbMaster.getKgyKgyNmKnji());
-		if (StringUtils.isBlank(customerEstimation.getDepartmentName()))
-			customerEstimation.setDepartmentName(vKjbMaster.getBmnBmnNmKnji());
+		customerEstimation.setCompanyName(this.convertJoinedCompanyName(vKjbMaster));
+		customerEstimation.setCustomerName(this.convertJoinedCustomerName(vKjbMaster, customerEstimation));
+		customerEstimation.setAddress(this.convertJoinedAddress(vKjbMaster));
+		customerEstimation.setPhoneNumber(vKjbMaster.getJgsJgsTelNum());
+		customerEstimation.setFaxNumber(vKjbMaster.getJgsJgsFaxNum());
+		customerEstimation.setDepartmentDiv(vKjbMaster.getPrflKjbSetKbn());
+		customerEstimation.setCompanyId(vKjbMaster.getPrflMomKgyId());
+		customerEstimation.setOfficeId(vKjbMaster.getPrflMomJgsId());
+		customerEstimation.setOfficeName(vKjbMaster.getJgsJgsNmKnji());
+		customerEstimation.setMomCustId(vKjbMaster.getMclMomKjbId());
+		customerEstimation.setPostNumber(vKjbMaster.getJgsJgsPostNum());
+		customerEstimation.setCompanyNameKana(vKjbMaster.getKgyKgyNmKana());
+		customerEstimation.setDepartmentName(vKjbMaster.getBmnBmnNmKnji());
 	}
 
 	private String convertJoinedCompanyName(VKjbMaster kjbMaster) {
