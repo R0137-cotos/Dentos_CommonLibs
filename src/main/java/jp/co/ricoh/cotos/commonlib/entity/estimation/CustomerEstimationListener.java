@@ -89,10 +89,10 @@ public class CustomerEstimationListener {
 		commonMasterList.stream().forEach(commonMasterResult -> {
 			commonMasterResult.getCommonMasterDetailResultList().stream().forEach(commonMasterDetailResult -> {
 				if (commonMasterDetailResult.getCodeValue().equals(kjbMaster.getKgyHjnKakuCd())) {
-					if (kjbMaster.getKgyHjnKakuZengoCd().equals("1")) {
+					if ("1".equals(kjbMaster.getKgyHjnKakuZengoCd())) {
 						sb.append(StringUtils.defaultIfEmpty(commonMasterDetailResult.getDataArea1(), StringUtils.EMPTY));
 						sb.append(StringUtils.defaultIfEmpty(kjbMaster.getKgyKgyNmKnji(), StringUtils.EMPTY));
-					} else if (kjbMaster.getKgyHjnKakuZengoCd().equals("2")) {
+					} else if ("2".equals(kjbMaster.getKgyHjnKakuZengoCd())) {
 						sb.append(StringUtils.defaultIfEmpty(kjbMaster.getKgyKgyNmKnji(), StringUtils.EMPTY));
 						sb.append(StringUtils.defaultIfEmpty(commonMasterDetailResult.getDataArea1(), StringUtils.EMPTY));
 					}
