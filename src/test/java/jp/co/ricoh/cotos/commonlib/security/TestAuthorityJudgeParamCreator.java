@@ -152,6 +152,48 @@ public class TestAuthorityJudgeParamCreator {
 	}
 
 	@Test
+	public void 正常_権限判定用パラメーター取得_見積_承認_代理承認者あり() {
+
+		// ログインユーザー
+		MvEmployeeMaster actor = mvEmployeeMasterRepository.findByMomEmployeeId("00500784");
+
+		// 見積
+		Estimation estimation = new Estimation();
+
+		// 承認ルート
+		estimation.setEstimationApprovalRoute(new EstimationApprovalRoute());
+		estimation.getEstimationApprovalRoute().setApprovalRequesterEmpId("00229692");
+
+		// 承認ルートノード
+		List<EstimationApprovalRouteNode> estimationApprovalRouteNodeList = new ArrayList<>();
+		EstimationApprovalRouteNode estimationApprovalRouteNode = new EstimationApprovalRouteNode();
+		estimationApprovalRouteNode.setApproverEmpId("00229692");
+		estimationApprovalRouteNode.setSubApproverEmpId("00500784");
+		estimationApprovalRouteNodeList.add(estimationApprovalRouteNode);
+		estimation.getEstimationApprovalRoute().setEstimationApprovalRouteNodeList(estimationApprovalRouteNodeList);
+
+		// 担当SA
+		estimation.setEstimationPicSaEmp(new EstimationPicSaEmp());
+		estimation.getEstimationPicSaEmp().setMomEmployeeId("00500784");
+
+		// 顧客
+		estimation.setCustomerEstimation(new CustomerEstimation());
+		estimation.getCustomerEstimation().setMomKjbSystemId("000000003985825");
+
+		AuthorityJudgeParameter authParam = authorityJudgeParamCreator.createFromEstimation(estimation, actor, AccessType.承認);
+
+		Assert.assertNull("正常に社員情報が作成されていること", authParam.getMvEmployeeMasterList());
+		Assert.assertNull("正常に会社情報が作成されていること", authParam.getVKjbMaster());
+		Assert.assertNotNull("正常にログインユーザー情報が作成されていること", authParam.getActorMvEmployeeMaster());
+		Assert.assertNotNull("正常に承認者の社員情報が作成されていること", authParam.getApproverMvEmployeeMasterList());
+		Assert.assertNotNull("正常に次回承認者の社員情報が作成されていること", authParam.getNextApproverMvEmployeeMaster());
+		Assert.assertNotNull("正常に次回代理承認者の社員情報が作成されていること", authParam.getNextSubApproverMvEmployeeMaster());
+		Assert.assertNotNull("正常に承認依頼者の社員情報が作成されていること", authParam.getRequesterMvEmployeeMaster());
+		Assert.assertFalse("ユーザー直接指定でないこと", authParam.isManualApprover());
+		Assert.assertFalse("自己承認でないこと", authParam.isSelfApprover());
+	}
+
+	@Test
 	public void 正常_権限判定用パラメーター取得_見積_承認_ユーザー直接指定() {
 
 		// ログインユーザー
@@ -329,6 +371,50 @@ public class TestAuthorityJudgeParamCreator {
 		contract.setContractAddedEditorEmpList(new ArrayList<>());
 		contract.getContractAddedEditorEmpList().add(new ContractAddedEditorEmp());
 		contract.getContractAddedEditorEmpList().get(0).setMomEmployeeId("00500784");
+
+		// 顧客
+		contract.setCustomerContract(new CustomerContract());
+		contract.getCustomerContract().setMomKjbSystemId("000000003985825");
+
+		AuthorityJudgeParameter authParam = authorityJudgeParamCreator.createFromContract(contract, actor, AccessType.承認);
+
+		Assert.assertNull("正常に社員情報が作成されていること", authParam.getMvEmployeeMasterList());
+		Assert.assertNull("正常に会社情報が作成されていること", authParam.getVKjbMaster());
+		Assert.assertNotNull("正常にログインユーザー情報が作成されていること", authParam.getActorMvEmployeeMaster());
+		Assert.assertNotNull("正常に承認者の社員情報が作成されていること", authParam.getApproverMvEmployeeMasterList());
+		Assert.assertNotNull("正常に次回承認者の社員情報が作成されていること", authParam.getNextApproverMvEmployeeMaster());
+		Assert.assertNotNull("正常に承認依頼者の社員情報が作成されていること", authParam.getRequesterMvEmployeeMaster());
+		Assert.assertFalse("ユーザー直接指定でないこと", authParam.isManualApprover());
+	}
+
+	@Test
+	public void 正常_権限判定用パラメーター取得_契約_承認_代理承認者あり() {
+
+		// ログインユーザー
+		MvEmployeeMaster actor = mvEmployeeMasterRepository.findByMomEmployeeId("00229692");
+
+		// 契約
+		Contract contract = new Contract();
+		contract.setLifecycleStatus(LifecycleStatus.作成中);
+
+		// 承認ルート
+		contract.setContractApprovalRouteList(new ArrayList<>());
+		ContractApprovalRoute contractApprovalRoute = new ContractApprovalRoute();
+		contractApprovalRoute.setApprovalRequesterEmpId("00500784");
+		contractApprovalRoute.setTargetLifecycleStatus(LifecycleStatus.作成中);
+
+		// 承認ルートノード
+		List<ContractApprovalRouteNode> contractApprovalRouteNodeList = new ArrayList<>();
+		ContractApprovalRouteNode contractApprovalRouteNode = new ContractApprovalRouteNode();
+		contractApprovalRouteNode.setApproverEmpId("00229692");
+		contractApprovalRouteNode.setSubApproverEmpId("00500784");
+		contractApprovalRouteNodeList.add(contractApprovalRouteNode);
+		contractApprovalRoute.setContractApprovalRouteNodeList(contractApprovalRouteNodeList);
+		contract.getContractApprovalRouteList().add(contractApprovalRoute);
+
+		// 担当SA
+		contract.setContractPicSaEmp(new ContractPicSaEmp());
+		contract.getContractPicSaEmp().setMomEmployeeId("00500784");
 
 		// 顧客
 		contract.setCustomerContract(new CustomerContract());

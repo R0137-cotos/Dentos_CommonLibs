@@ -25,7 +25,7 @@ public class BusinessCheck {
 
 	/**
 	 * 代理承認者に承認権限があるか確認
-	 * 
+	 *
 	 * @param approvalRequesterMomEmployeeId
 	 *            承認依頼者MoM社員ID
 	 * @param subApproverMomEmployeeId
@@ -49,7 +49,7 @@ public class BusinessCheck {
 
 	/**
 	 * 権限区分を元に承認権限があるか確認
-	 * 
+	 *
 	 * @param requester
 	 *            承認者情報
 	 * @param approver
@@ -63,5 +63,21 @@ public class BusinessCheck {
 		authParam.setActorMvEmployeeMaster(approver);
 
 		return momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.見積_契約_手配, AccessType.承認);
+	}
+
+	/**
+	 * 代理承認者と承認依頼者が同一人物でないことを確認
+	 *
+	 * @param approvalRequesterMomEmployeeId
+	 *            承認依頼者MoM社員ID
+	 * @param subApproverMomEmployeeId
+	 *            代理承認者MoM社員ID
+	 * @return チェック結果
+	 */
+	public boolean confirmApprovalRequesterAndApprovarDiff(String approvalRequesterMomEmployeeId, String subApproverMomEmployeeId) {
+		if (approvalRequesterMomEmployeeId.equals(subApproverMomEmployeeId)) {
+			return false;
+		}
+		return true;
 	}
 }

@@ -66,4 +66,12 @@ public class TestBusinessCheck {
 
 		Assert.assertFalse("代理承認者の承認権限がないこと", businessCheck.existsSubApproverEmployeeAuthority("00230148", "00230148"));
 	}
+
+	@Test
+	@WithMockCustomUser(actionDiv = ActionDiv.更新, authDiv = AuthDiv.見積_契約_手配, authLevel = AuthLevel.配下)
+	public void 代理承認者と承認依頼者が同一人物でないことを確認() throws Exception {
+
+		Assert.assertTrue("別人であること", businessCheck.existsSubApproverEmployeeAuthority("00229692", "00220552"));
+		Assert.assertFalse("同一人物であること", businessCheck.existsSubApproverEmployeeAuthority("00230148", "00230148"));
+	}
 }
