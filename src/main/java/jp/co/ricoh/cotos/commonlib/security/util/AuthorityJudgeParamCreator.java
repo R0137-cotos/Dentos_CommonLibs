@@ -11,7 +11,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ObjectUtils;
 
 import jp.co.ricoh.cotos.commonlib.dto.parameter.common.AuthorityJudgeParameter;
 import jp.co.ricoh.cotos.commonlib.entity.EnumType.ApprovalProcessCategory;
@@ -94,7 +93,7 @@ public class AuthorityJudgeParamCreator {
 			nodeList.stream().forEach(node -> {
 				log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("承認者", "MoM社員ID", node.getApproverEmpId()).toArray(new String[0])).getMsg());
 				authJudgeParam.getApproverMvEmployeeMasterList().add(mvEmployeeMasterRepository.findByMomEmployeeId(node.getApproverEmpId()));
-				if (!ObjectUtils.isEmpty(node.getSubApproverEmpId())) {
+				if (node.getSubApproverEmpId() != null) {
 					log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("代理承認者", "MoM社員ID", node.getSubApproverEmpId()).toArray(new String[0])).getMsg());
 					authJudgeParam.getApproverMvEmployeeMasterList().add(mvEmployeeMasterRepository.findByMomEmployeeId(node.getSubApproverEmpId()));
 				}
@@ -108,7 +107,7 @@ public class AuthorityJudgeParamCreator {
 				MvEmployeeMaster nextApprover = mvEmployeeMasterRepository.findByMomEmployeeId(nextApproverNode.getApproverEmpId());
 				authJudgeParam.setNextApproverMvEmployeeMaster(nextApprover);
 
-				if (!ObjectUtils.isEmpty(nextApproverNode.getSubApproverEmpId())) {
+				if (nextApproverNode.getSubApproverEmpId() != null) {
 					log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("次回代理承認者", "MoM社員ID", nextApproverNode.getSubApproverEmpId()).toArray(new String[0])).getMsg());
 					MvEmployeeMaster nextSubApprover = mvEmployeeMasterRepository.findByMomEmployeeId(nextApproverNode.getSubApproverEmpId());
 					authJudgeParam.setNextSubApproverMvEmployeeMaster(nextSubApprover);
@@ -203,7 +202,7 @@ public class AuthorityJudgeParamCreator {
 				nodeList.stream().forEach(node -> {
 					log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("承認者", "MoM社員ID", node.getApproverEmpId()).toArray(new String[0])).getMsg());
 					authJudgeParam.getApproverMvEmployeeMasterList().add(mvEmployeeMasterRepository.findByMomEmployeeId(node.getApproverEmpId()));
-					if (!ObjectUtils.isEmpty(node.getSubApproverEmpId())) {
+					if (node.getSubApproverEmpId() != null) {
 						log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("代理承認者", "MoM社員ID", node.getSubApproverEmpId()).toArray(new String[0])).getMsg());
 						authJudgeParam.getApproverMvEmployeeMasterList().add(mvEmployeeMasterRepository.findByMomEmployeeId(node.getSubApproverEmpId()));
 					}
@@ -217,7 +216,7 @@ public class AuthorityJudgeParamCreator {
 					MvEmployeeMaster nextApprover = mvEmployeeMasterRepository.findByMomEmployeeId(nextApproverNode.getApproverEmpId());
 					authJudgeParam.setNextApproverMvEmployeeMaster(nextApprover);
 
-					if (!ObjectUtils.isEmpty(nextApproverNode.getSubApproverEmpId())) {
+					if (nextApproverNode.getSubApproverEmpId() != null) {
 						log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("次回代理承認者", "MoM社員ID", nextApproverNode.getSubApproverEmpId()).toArray(new String[0])).getMsg());
 						MvEmployeeMaster nextSubApprover = mvEmployeeMasterRepository.findByMomEmployeeId(nextApproverNode.getSubApproverEmpId());
 						authJudgeParam.setNextSubApproverMvEmployeeMaster(nextSubApprover);

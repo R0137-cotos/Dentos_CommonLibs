@@ -170,7 +170,7 @@ public class MomAuthorityService {
 
 			if (AccessType.参照.equals(accessType)) {
 				// 承認者に含まれる場合、参照権限を付与
-				if (!ObjectUtils.isEmpty(authParam.getApproverMvEmployeeMasterList()) && !authParam.getApproverMvEmployeeMasterList().isEmpty() && authParam.getApproverMvEmployeeMasterList().stream().filter(approver -> approver.getMomEmployeeId().equals(authParam.getActorMvEmployeeMaster().getMomEmployeeId())).count() > 0) {
+				if (!ObjectUtils.isEmpty(authParam.getApproverMvEmployeeMasterList()) && authParam.getApproverMvEmployeeMasterList().stream().filter(approver -> approver.getMomEmployeeId().equals(authParam.getActorMvEmployeeMaster().getMomEmployeeId())).count() > 0) {
 					return true;
 				}
 			}
