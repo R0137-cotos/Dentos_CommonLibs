@@ -82,6 +82,7 @@ public class CustomerEstimationListener {
 
 	private String convertJoinedCompanyName(VKjbMaster kjbMaster) {
 		StringBuilder sb = new StringBuilder();
+		sb.append(StringUtils.defaultIfEmpty(kjbMaster.getKgyKgyNmKnji(), StringUtils.EMPTY));
 
 		MomCommonMasterSearchParameter parameter = new MomCommonMasterSearchParameter();
 		parameter.setCommonArticleCdList(Arrays.asList(HJN_KAKU_ITEM_CD));
@@ -90,9 +91,11 @@ public class CustomerEstimationListener {
 			commonMasterResult.getCommonMasterDetailResultList().stream().forEach(commonMasterDetailResult -> {
 				if (commonMasterDetailResult.getCodeValue().equals(kjbMaster.getKgyHjnKakuCd())) {
 					if ("1".equals(kjbMaster.getKgyHjnKakuZengoCd())) {
+						sb.setLength(0);
 						sb.append(StringUtils.defaultIfEmpty(commonMasterDetailResult.getDataArea1(), StringUtils.EMPTY));
 						sb.append(StringUtils.defaultIfEmpty(kjbMaster.getKgyKgyNmKnji(), StringUtils.EMPTY));
 					} else if ("2".equals(kjbMaster.getKgyHjnKakuZengoCd())) {
+						sb.setLength(0);
 						sb.append(StringUtils.defaultIfEmpty(kjbMaster.getKgyKgyNmKnji(), StringUtils.EMPTY));
 						sb.append(StringUtils.defaultIfEmpty(commonMasterDetailResult.getDataArea1(), StringUtils.EMPTY));
 					}
