@@ -182,6 +182,13 @@ public class MomAuthorityService {
 				} else if (!ObjectUtils.isEmpty(authParam.getNextSubApproverMvEmployeeMaster()) && authParam.getNextSubApproverMvEmployeeMaster().getMomEmployeeId().equals(authParam.getActorMvEmployeeMaster().getMomEmployeeId())) {
 					return true;
 				}
+
+				// 前回承認者または前回代理承認者の場合、編集権限を付与
+				if (!ObjectUtils.isEmpty(authParam.getPrevApproverMvEmployeeMaster()) && authParam.getPrevApproverMvEmployeeMaster().getMomEmployeeId().equals(authParam.getActorMvEmployeeMaster().getMomEmployeeId())) {
+					return true;
+				} else if (!ObjectUtils.isEmpty(authParam.getPrevSubApproverMvEmployeeMaster()) && authParam.getPrevSubApproverMvEmployeeMaster().getMomEmployeeId().equals(authParam.getActorMvEmployeeMaster().getMomEmployeeId())) {
+					return true;
+				}
 			}
 
 			// 参照・編集処理用の認可処理を実施

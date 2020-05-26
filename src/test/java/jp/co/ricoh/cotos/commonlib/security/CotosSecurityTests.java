@@ -491,6 +491,50 @@ public class CotosSecurityTests {
 	}
 
 	@Test
+	@WithMockCustomUser(actionDiv = ActionDiv.照会, authDiv = AuthDiv.見積_契約_手配, authLevel = AuthLevel.不可)
+	@Transactional
+	public void 正常_MoM権限_編集_前回承認者() throws Exception {
+
+		Mockito.doReturn(AuthLevel.不可).when(momAuthorityService).searchMomAuthority(Mockito.anyString(), Mockito.any(), Mockito.any());
+
+		AuthorityJudgeParameter authParam = new AuthorityJudgeParameter();
+		authParam.setActorMvEmployeeMaster(mvEmployeeMasterRepository.findOne("00220552"));
+
+		MvEmployeeMaster prevApprover = new MvEmployeeMaster();
+		prevApprover.setMomEmployeeId("00220552");
+		authParam.setPrevApproverMvEmployeeMaster(prevApprover);
+
+		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.照会, AuthDiv.見積_契約_手配, AccessType.編集);
+		Assert.assertTrue("対象の権限があること", result);
+
+		Mockito.reset(momAuthorityService);
+	}
+
+	@Test
+	@WithMockCustomUser(actionDiv = ActionDiv.照会, authDiv = AuthDiv.見積_契約_手配, authLevel = AuthLevel.不可)
+	@Transactional
+	public void 正常_MoM権限_編集_前回代理承認者() throws Exception {
+
+		Mockito.doReturn(AuthLevel.不可).when(momAuthorityService).searchMomAuthority(Mockito.anyString(), Mockito.any(), Mockito.any());
+
+		AuthorityJudgeParameter authParam = new AuthorityJudgeParameter();
+		authParam.setActorMvEmployeeMaster(mvEmployeeMasterRepository.findOne("00500784"));
+
+		MvEmployeeMaster prevApprover = new MvEmployeeMaster();
+		prevApprover.setMomEmployeeId("00220552");
+		authParam.setPrevApproverMvEmployeeMaster(prevApprover);
+
+		MvEmployeeMaster prevSubApprover = new MvEmployeeMaster();
+		prevSubApprover.setMomEmployeeId("00500784");
+		authParam.setPrevSubApproverMvEmployeeMaster(prevSubApprover);
+
+		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.照会, AuthDiv.見積_契約_手配, AccessType.編集);
+		Assert.assertTrue("対象の権限があること", result);
+
+		Mockito.reset(momAuthorityService);
+	}
+
+	@Test
 	@WithMockCustomUser(actionDiv = ActionDiv.更新, authDiv = AuthDiv.見積_契約_手配, authLevel = AuthLevel.自顧客)
 	@Transactional
 	public void 異常_MoM権限_編集_自顧客() throws Exception {
