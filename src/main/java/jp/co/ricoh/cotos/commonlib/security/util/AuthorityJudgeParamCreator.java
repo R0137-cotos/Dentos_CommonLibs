@@ -441,8 +441,8 @@ public class AuthorityJudgeParamCreator {
 			// 最新の承認実績を取得
 			EstimationApprovalResult estimationApprovalResult = estimationApprovalResultList.get(estimationApprovalResultList.size() - 1);
 
-			// 実績が存在し、区分が承認の場合
-			if (!ObjectUtils.isEmpty(estimationApprovalResult) && ApprovalProcessCategory.承認.equals(estimationApprovalResult.getApprovalProcessCategory())) {
+			// 区分が承認の場合
+			if (ApprovalProcessCategory.承認.equals(estimationApprovalResult.getApprovalProcessCategory())) {
 				List<EstimationApprovalRouteNode> targetNode = estimationApprovalRouteNodeList.stream().filter(node -> Long.compare(estimationApprovalResult.getEstimationApprovalRouteNodeId(), node.getId()) == 0).collect(Collectors.toList());
 				if (!ObjectUtils.isEmpty(targetNode)) {
 					return targetNode.stream().findFirst().get();
@@ -520,7 +520,7 @@ public class AuthorityJudgeParamCreator {
 			ContractApprovalResult contractApprovalResult = contractApprovalResultList.get(contractApprovalResultList.size() - 1);
 
 			// 実績が存在し、区分が承認の場合
-			if (!ObjectUtils.isEmpty(contractApprovalResult) && ApprovalProcessCategory.承認.equals(contractApprovalResult.getApprovalProcessCategory())) {
+			if (ApprovalProcessCategory.承認.equals(contractApprovalResult.getApprovalProcessCategory())) {
 				List<ContractApprovalRouteNode> targetNode = contractApprovalRouteNodeList.stream().filter(node -> Long.compare(contractApprovalResult.getContractApprovalRouteNodeId(), node.getId()) == 0).collect(Collectors.toList());
 				if (!ObjectUtils.isEmpty(targetNode)) {
 					return targetNode.stream().findFirst().get();
