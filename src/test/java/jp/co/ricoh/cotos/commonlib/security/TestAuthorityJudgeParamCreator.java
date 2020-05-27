@@ -1,5 +1,7 @@
 package jp.co.ricoh.cotos.commonlib.security;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,12 +16,14 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import jp.co.ricoh.cotos.commonlib.dto.parameter.common.AuthorityJudgeParameter;
+import jp.co.ricoh.cotos.commonlib.entity.EnumType.ApprovalProcessCategory;
 import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangementWork;
 import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangementWorkApprovalRoute;
 import jp.co.ricoh.cotos.commonlib.entity.arrangement.ArrangementWorkApprovalRouteNode;
 import jp.co.ricoh.cotos.commonlib.entity.contract.Contract;
 import jp.co.ricoh.cotos.commonlib.entity.contract.Contract.LifecycleStatus;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractAddedEditorEmp;
+import jp.co.ricoh.cotos.commonlib.entity.contract.ContractApprovalResult;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractApprovalRoute;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractApprovalRouteNode;
 import jp.co.ricoh.cotos.commonlib.entity.contract.ContractPicSaEmp;
@@ -27,6 +31,7 @@ import jp.co.ricoh.cotos.commonlib.entity.contract.CustomerContract;
 import jp.co.ricoh.cotos.commonlib.entity.estimation.CustomerEstimation;
 import jp.co.ricoh.cotos.commonlib.entity.estimation.Estimation;
 import jp.co.ricoh.cotos.commonlib.entity.estimation.EstimationAddedEditorEmp;
+import jp.co.ricoh.cotos.commonlib.entity.estimation.EstimationApprovalResult;
 import jp.co.ricoh.cotos.commonlib.entity.estimation.EstimationApprovalRoute;
 import jp.co.ricoh.cotos.commonlib.entity.estimation.EstimationApprovalRouteNode;
 import jp.co.ricoh.cotos.commonlib.entity.estimation.EstimationPicSaEmp;
@@ -61,7 +66,7 @@ public class TestAuthorityJudgeParamCreator {
 	}
 
 	@Test
-	public void 正常_権限判定用パラメーター取得_見積_参照() {
+	public void 正常_権限判定用パラメーター取得_見積_参照() throws ParseException {
 
 		// ログインユーザー
 		MvEmployeeMaster actor = mvEmployeeMasterRepository.findByMomEmployeeId("00500784");
@@ -70,16 +75,39 @@ public class TestAuthorityJudgeParamCreator {
 		Estimation estimation = new Estimation();
 
 		// 承認ルート
-		estimation.setEstimationApprovalRoute(new EstimationApprovalRoute());
-		estimation.getEstimationApprovalRoute().setApprovalRequesterEmpId("00500784");
+		EstimationApprovalRoute estimationApprovalRoute = new EstimationApprovalRoute();
+		estimationApprovalRoute.setApprovalRequesterEmpId("00500784");
 
 		// 承認ルートノード
 		List<EstimationApprovalRouteNode> estimationApprovalRouteNodeList = new ArrayList<>();
-		EstimationApprovalRouteNode estimationApprovalRouteNode = new EstimationApprovalRouteNode();
-		estimationApprovalRouteNode.setApproverEmpId("00229692");
-		estimationApprovalRouteNode.setApproverDeriveMethodDiv(ApproverDeriveMethodDiv.直属上司指定);
-		estimationApprovalRouteNodeList.add(estimationApprovalRouteNode);
-		estimation.getEstimationApprovalRoute().setEstimationApprovalRouteNodeList(estimationApprovalRouteNodeList);
+		List<EstimationApprovalResult> estimationApprovalResultList = new ArrayList<>();
+		EstimationApprovalRouteNode estimationApprovalRouteNode1 = new EstimationApprovalRouteNode();
+		estimationApprovalRouteNode1.setId(1L);
+		estimationApprovalRouteNode1.setApproverEmpId("00229692");
+		estimationApprovalRouteNode1.setSubApproverEmpId("01901115");
+		estimationApprovalRouteNode1.setApproverDeriveMethodDiv(ApproverDeriveMethodDiv.直属上司指定);
+		estimationApprovalRouteNodeList.add(estimationApprovalRouteNode1);
+		EstimationApprovalRouteNode estimationApprovalRouteNode2 = new EstimationApprovalRouteNode();
+		estimationApprovalRouteNode2.setId(2L);
+		estimationApprovalRouteNode2.setApproverEmpId("01901306");
+		estimationApprovalRouteNode2.setSubApproverEmpId("01901177");
+		estimationApprovalRouteNode2.setApproverDeriveMethodDiv(ApproverDeriveMethodDiv.直属上司指定);
+		estimationApprovalRouteNodeList.add(estimationApprovalRouteNode2);
+		EstimationApprovalResult estimationApprovalResult1 = new EstimationApprovalResult();
+		estimationApprovalResult1.setApprovalProcessCategory(ApprovalProcessCategory.承認依頼);
+		estimationApprovalResult1.setActualEmpId("00500784");
+		estimationApprovalResult1.setProcessedAt(new SimpleDateFormat("yyyy/MM/dd").parse("2020/05/25"));
+		estimationApprovalResultList.add(estimationApprovalResult1);
+		EstimationApprovalResult estimationApprovalResult2 = new EstimationApprovalResult();
+		estimationApprovalResult2.setApprovalProcessCategory(ApprovalProcessCategory.承認);
+		estimationApprovalResult2.setActualEmpId("00229692");
+		estimationApprovalResult2.setProcessedAt(new SimpleDateFormat("yyyy/MM/dd").parse("2020/05/26"));
+		estimationApprovalResult2.setEstimationApprovalRouteNodeId(estimationApprovalRouteNode1.getId());
+		estimationApprovalResultList.add(estimationApprovalResult2);
+
+		estimationApprovalRoute.setEstimationApprovalRouteNodeList(estimationApprovalRouteNodeList);
+		estimationApprovalRoute.setEstimationApprovalResultList(estimationApprovalResultList);
+		estimation.setEstimationApprovalRoute(estimationApprovalRoute);
 
 		// 担当SA
 		estimation.setEstimationPicSaEmp(new EstimationPicSaEmp());
@@ -101,6 +129,9 @@ public class TestAuthorityJudgeParamCreator {
 		Assert.assertNotNull("正常にログインユーザー情報が作成されていること", authParam.getActorMvEmployeeMaster());
 		Assert.assertNotNull("正常に承認者の社員情報が作成されていること", authParam.getApproverMvEmployeeMasterList());
 		Assert.assertNotNull("正常に次回承認者の社員情報が作成されていること", authParam.getNextApproverMvEmployeeMaster());
+		Assert.assertNotNull("正常に次回代理承認者の社員情報が作成されていること", authParam.getNextSubApproverMvEmployeeMaster());
+		Assert.assertNotNull("正常に前回承認者の社員情報が作成されていること", authParam.getPrevApproverMvEmployeeMaster());
+		Assert.assertNotNull("正常に前回代理承認者の社員情報が作成されていること", authParam.getPrevSubApproverMvEmployeeMaster());
 		Assert.assertNull("承認依頼者の社員情報が作成されていないこと", authParam.getRequesterMvEmployeeMaster());
 		Assert.assertFalse("ユーザー直接指定でないこと", authParam.isManualApprover());
 	}
@@ -241,7 +272,7 @@ public class TestAuthorityJudgeParamCreator {
 	}
 
 	@Test
-	public void 正常_権限判定用パラメーター取得_契約_参照() {
+	public void 正常_権限判定用パラメーター取得_契約_参照() throws ParseException {
 
 		// ログインユーザー
 		MvEmployeeMaster actor = mvEmployeeMasterRepository.findByMomEmployeeId("00500784");
@@ -258,11 +289,33 @@ public class TestAuthorityJudgeParamCreator {
 
 		// 承認ルートノード
 		List<ContractApprovalRouteNode> contractApprovalRouteNodeList = new ArrayList<>();
-		ContractApprovalRouteNode contractApprovalRouteNode = new ContractApprovalRouteNode();
-		contractApprovalRouteNode.setApproverEmpId("00229692");
-		contractApprovalRouteNode.setApproverDeriveMethodDiv(ApproverDeriveMethodDiv.直属上司指定);
-		contractApprovalRouteNodeList.add(contractApprovalRouteNode);
+		List<ContractApprovalResult> contractApprovalResultList = new ArrayList<>();
+		ContractApprovalRouteNode contractApprovalRouteNode1 = new ContractApprovalRouteNode();
+		contractApprovalRouteNode1.setId(1L);
+		contractApprovalRouteNode1.setApproverEmpId("00229692");
+		contractApprovalRouteNode1.setSubApproverEmpId("01901115");
+		contractApprovalRouteNode1.setApproverDeriveMethodDiv(ApproverDeriveMethodDiv.直属上司指定);
+		contractApprovalRouteNodeList.add(contractApprovalRouteNode1);
+		ContractApprovalRouteNode contractApprovalRouteNode2 = new ContractApprovalRouteNode();
+		contractApprovalRouteNode2.setId(2L);
+		contractApprovalRouteNode2.setApproverEmpId("01901306");
+		contractApprovalRouteNode2.setSubApproverEmpId("01901177");
+		contractApprovalRouteNode2.setApproverDeriveMethodDiv(ApproverDeriveMethodDiv.直属上司指定);
+		contractApprovalRouteNodeList.add(contractApprovalRouteNode2);
+		ContractApprovalResult contractApprovalResult1 = new ContractApprovalResult();
+		contractApprovalResult1.setApprovalProcessCategory(ApprovalProcessCategory.承認依頼);
+		contractApprovalResult1.setActualEmpId("00500784");
+		contractApprovalResult1.setProcessedAt(new SimpleDateFormat("yyyy/MM/dd").parse("2020/05/25"));
+		contractApprovalResultList.add(contractApprovalResult1);
+		ContractApprovalResult contractApprovalResult2 = new ContractApprovalResult();
+		contractApprovalResult2.setApprovalProcessCategory(ApprovalProcessCategory.承認);
+		contractApprovalResult2.setActualEmpId("00229692");
+		contractApprovalResult2.setProcessedAt(new SimpleDateFormat("yyyy/MM/dd").parse("2020/05/26"));
+		contractApprovalResult2.setContractApprovalRouteNodeId(contractApprovalRouteNode1.getId());
+		contractApprovalResultList.add(contractApprovalResult2);
+
 		contractApprovalRoute.setContractApprovalRouteNodeList(contractApprovalRouteNodeList);
+		contractApprovalRoute.setContractApprovalResultList(contractApprovalResultList);
 		contract.getContractApprovalRouteList().add(contractApprovalRoute);
 
 		// 担当SA
@@ -285,6 +338,9 @@ public class TestAuthorityJudgeParamCreator {
 		Assert.assertNotNull("正常にログインユーザー情報が作成されていること", authParam.getActorMvEmployeeMaster());
 		Assert.assertNotNull("正常に承認者の社員情報が作成されていること", authParam.getApproverMvEmployeeMasterList());
 		Assert.assertNotNull("正常に次回承認者の社員情報が作成されていること", authParam.getNextApproverMvEmployeeMaster());
+		Assert.assertNotNull("正常に次回代理承認者の社員情報が作成されていること", authParam.getNextSubApproverMvEmployeeMaster());
+		Assert.assertNotNull("正常に前回承認者の社員情報が作成されていること", authParam.getPrevApproverMvEmployeeMaster());
+		Assert.assertNotNull("正常に前回代理承認者の社員情報が作成されていること", authParam.getPrevSubApproverMvEmployeeMaster());
 		Assert.assertNull("承認依頼者の社員情報が作成されていないこと", authParam.getRequesterMvEmployeeMaster());
 		Assert.assertFalse("ユーザー直接指定でないこと", authParam.isManualApprover());
 	}

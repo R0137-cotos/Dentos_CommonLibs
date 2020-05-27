@@ -11,6 +11,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
 
 import jp.co.ricoh.cotos.commonlib.dto.parameter.common.AuthorityJudgeParameter;
 import jp.co.ricoh.cotos.commonlib.entity.EnumType.ApprovalProcessCategory;
@@ -122,6 +123,21 @@ public class AuthorityJudgeParamCreator {
 				}
 				log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("承認者直接指定フラグ", "フラグ", Boolean.toString(isManualApprover)).toArray(new String[0])).getMsg());
 				authJudgeParam.setManualApprover(isManualApprover);
+			}
+
+			// 前回承認者情報
+			EstimationApprovalRouteNode prevApproverNode = this.specifyPrevEstimationApprovalRouteNode(nodeList, estimation.getEstimationApprovalRoute().getEstimationApprovalResultList());
+			if (prevApproverNode != null) {
+
+				log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("前回承認者", "MoM社員ID", prevApproverNode.getApproverEmpId()).toArray(new String[0])).getMsg());
+				MvEmployeeMaster prevApprover = mvEmployeeMasterRepository.findByMomEmployeeId(prevApproverNode.getApproverEmpId());
+				authJudgeParam.setPrevApproverMvEmployeeMaster(prevApprover);
+
+				if (prevApproverNode.getSubApproverEmpId() != null) {
+					log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("前回代理承認者", "MoM社員ID", prevApproverNode.getSubApproverEmpId()).toArray(new String[0])).getMsg());
+					MvEmployeeMaster prevSubApprover = mvEmployeeMasterRepository.findByMomEmployeeId(prevApproverNode.getSubApproverEmpId());
+					authJudgeParam.setPrevSubApproverMvEmployeeMaster(prevSubApprover);
+				}
 			}
 		}
 
@@ -240,6 +256,21 @@ public class AuthorityJudgeParamCreator {
 					}
 					log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("自己承認フラグ", "フラグ", Boolean.toString(isSelfApprover)).toArray(new String[0])).getMsg());
 					authJudgeParam.setSelfApprover(isSelfApprover);
+				}
+
+				// 前回承認者情報
+				ContractApprovalRouteNode prevApproverNode = this.specifyPrevContractApprovalRouteNode(nodeList, targetContractApprovalRoute.get().getContractApprovalResultList());
+				if (prevApproverNode != null) {
+
+					log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("前回承認者", "MoM社員ID", prevApproverNode.getApproverEmpId()).toArray(new String[0])).getMsg());
+					MvEmployeeMaster prevApprover = mvEmployeeMasterRepository.findByMomEmployeeId(prevApproverNode.getApproverEmpId());
+					authJudgeParam.setPrevApproverMvEmployeeMaster(prevApprover);
+
+					if (prevApproverNode.getSubApproverEmpId() != null) {
+						log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("前回代理承認者", "MoM社員ID", prevApproverNode.getSubApproverEmpId()).toArray(new String[0])).getMsg());
+						MvEmployeeMaster prevSubApprover = mvEmployeeMasterRepository.findByMomEmployeeId(prevApproverNode.getSubApproverEmpId());
+						authJudgeParam.setPrevSubApproverMvEmployeeMaster(prevSubApprover);
+					}
 				}
 			}
 		}
@@ -390,6 +421,38 @@ public class AuthorityJudgeParamCreator {
 	}
 
 	/**
+	 * 承認実績を元に承認ルートノード特定 最新の承認実績を取得し、それに紐づく承認ルートノードを返します
+	 *
+	 * @param estimationApprovalRouteNodeList
+	 *            承認ルートノードリスト
+	 * @param estimationApprovalResultList
+	 *            承認実績リスト
+	 * @param empId
+	 *            MoM社員ID
+	 * @param approvalProcessCategory
+	 *            承認処理カテゴリ
+	 * @return 承認ルートノード
+	 */
+	public EstimationApprovalRouteNode specifyPrevEstimationApprovalRouteNode(List<EstimationApprovalRouteNode> estimationApprovalRouteNodeList, List<EstimationApprovalResult> estimationApprovalResultList) {
+
+		// 実績が存在する場合
+		if (!ObjectUtils.isEmpty(estimationApprovalResultList)) {
+
+			// 最新の承認実績を取得
+			EstimationApprovalResult estimationApprovalResult = estimationApprovalResultList.get(estimationApprovalResultList.size() - 1);
+
+			// 区分が承認の場合
+			if (ApprovalProcessCategory.承認.equals(estimationApprovalResult.getApprovalProcessCategory())) {
+				List<EstimationApprovalRouteNode> targetNode = estimationApprovalRouteNodeList.stream().filter(node -> Long.compare(estimationApprovalResult.getEstimationApprovalRouteNodeId(), node.getId()) == 0).collect(Collectors.toList());
+				if (!ObjectUtils.isEmpty(targetNode)) {
+					return targetNode.stream().findFirst().get();
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * 承認実績を元に承認ルートノード特定 最新の承認依頼以降の実績を取得し、実績のリストにまだ存在しないルートノードを返します。
 	 *
 	 * @param contractApprovalRouteNodeList
@@ -432,6 +495,38 @@ public class AuthorityJudgeParamCreator {
 			}
 		}
 
+		return null;
+	}
+
+	/**
+	 * 承認実績を元に承認ルートノード特定 最新の承認実績を取得し、それに紐づく承認ルートノードを返します
+	 *
+	 * @param estimationApprovalRouteNodeList
+	 *            承認ルートノードリスト
+	 * @param estimationApprovalResultList
+	 *            承認実績リスト
+	 * @param empId
+	 *            MoM社員ID
+	 * @param approvalProcessCategory
+	 *            承認処理カテゴリ
+	 * @return 承認ルートノード
+	 */
+	public ContractApprovalRouteNode specifyPrevContractApprovalRouteNode(List<ContractApprovalRouteNode> contractApprovalRouteNodeList, List<ContractApprovalResult> contractApprovalResultList) {
+
+		// 実績が存在する場合
+		if (!ObjectUtils.isEmpty(contractApprovalResultList)) {
+
+			// 最新の承認実績を取得
+			ContractApprovalResult contractApprovalResult = contractApprovalResultList.get(contractApprovalResultList.size() - 1);
+
+			// 実績が存在し、区分が承認の場合
+			if (ApprovalProcessCategory.承認.equals(contractApprovalResult.getApprovalProcessCategory())) {
+				List<ContractApprovalRouteNode> targetNode = contractApprovalRouteNodeList.stream().filter(node -> Long.compare(contractApprovalResult.getContractApprovalRouteNodeId(), node.getId()) == 0).collect(Collectors.toList());
+				if (!ObjectUtils.isEmpty(targetNode)) {
+					return targetNode.stream().findFirst().get();
+				}
+			}
+		}
 		return null;
 	}
 
