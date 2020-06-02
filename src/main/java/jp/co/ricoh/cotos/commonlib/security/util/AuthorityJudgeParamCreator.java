@@ -94,7 +94,7 @@ public class AuthorityJudgeParamCreator {
 			nodeList.stream().forEach(node -> {
 				log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("承認者", "MoM社員ID", node.getApproverEmpId()).toArray(new String[0])).getMsg());
 				authJudgeParam.getApproverMvEmployeeMasterList().add(mvEmployeeMasterRepository.findByMomEmployeeId(node.getApproverEmpId()));
-				if (!ObjectUtils.isEmpty(node.getSubApproverEmpId())) {
+				if (node.getSubApproverEmpId() != null) {
 					log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("代理承認者", "MoM社員ID", node.getSubApproverEmpId()).toArray(new String[0])).getMsg());
 					authJudgeParam.getApproverMvEmployeeMasterList().add(mvEmployeeMasterRepository.findByMomEmployeeId(node.getSubApproverEmpId()));
 				}
@@ -108,7 +108,7 @@ public class AuthorityJudgeParamCreator {
 				MvEmployeeMaster nextApprover = mvEmployeeMasterRepository.findByMomEmployeeId(nextApproverNode.getApproverEmpId());
 				authJudgeParam.setNextApproverMvEmployeeMaster(nextApprover);
 
-				if (!ObjectUtils.isEmpty(nextApproverNode.getSubApproverEmpId())) {
+				if (nextApproverNode.getSubApproverEmpId() != null) {
 					log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("次回代理承認者", "MoM社員ID", nextApproverNode.getSubApproverEmpId()).toArray(new String[0])).getMsg());
 					MvEmployeeMaster nextSubApprover = mvEmployeeMasterRepository.findByMomEmployeeId(nextApproverNode.getSubApproverEmpId());
 					authJudgeParam.setNextSubApproverMvEmployeeMaster(nextSubApprover);
@@ -206,23 +206,25 @@ public class AuthorityJudgeParamCreator {
 		// 承認ルートが存在する場合
 		if (!CollectionUtils.isEmpty(contract.getContractApprovalRouteList())) {
 
+			// 承認者情報
+			authJudgeParam.setApproverMvEmployeeMasterList(new ArrayList<>());
+			contract.getContractApprovalRouteList().stream().forEach(contractApprovalRoute -> {
+				contractApprovalRoute.getContractApprovalRouteNodeList().stream().forEach(node -> {
+					log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("承認者", "MoM社員ID", node.getApproverEmpId()).toArray(new String[0])).getMsg());
+					authJudgeParam.getApproverMvEmployeeMasterList().add(mvEmployeeMasterRepository.findByMomEmployeeId(node.getApproverEmpId()));
+					if (node.getSubApproverEmpId() != null) {
+						log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("代理承認者", "MoM社員ID", node.getSubApproverEmpId()).toArray(new String[0])).getMsg());
+						authJudgeParam.getApproverMvEmployeeMasterList().add(mvEmployeeMasterRepository.findByMomEmployeeId(node.getSubApproverEmpId()));
+					}
+				});
+			});
+
 			// 対象の契約承認ルートを特定
 			Optional<ContractApprovalRoute> targetContractApprovalRoute = contract.getContractApprovalRouteList().stream().filter(contractApprovalRoute -> contract.getLifecycleStatus().equals(contractApprovalRoute.getTargetLifecycleStatus())).findFirst();
 
 			if (targetContractApprovalRoute.isPresent()) {
 
 				List<ContractApprovalRouteNode> nodeList = targetContractApprovalRoute.get().getContractApprovalRouteNodeList();
-
-				// 承認者情報
-				authJudgeParam.setApproverMvEmployeeMasterList(new ArrayList<>());
-				nodeList.stream().forEach(node -> {
-					log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("承認者", "MoM社員ID", node.getApproverEmpId()).toArray(new String[0])).getMsg());
-					authJudgeParam.getApproverMvEmployeeMasterList().add(mvEmployeeMasterRepository.findByMomEmployeeId(node.getApproverEmpId()));
-					if (!ObjectUtils.isEmpty(node.getSubApproverEmpId())) {
-						log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("代理承認者", "MoM社員ID", node.getSubApproverEmpId()).toArray(new String[0])).getMsg());
-						authJudgeParam.getApproverMvEmployeeMasterList().add(mvEmployeeMasterRepository.findByMomEmployeeId(node.getSubApproverEmpId()));
-					}
-				});
 
 				// 次回承認者情報
 				ContractApprovalRouteNode nextApproverNode = this.specifyContractApprovalRouteNode(nodeList, targetContractApprovalRoute.get().getContractApprovalResultList());
@@ -232,7 +234,8 @@ public class AuthorityJudgeParamCreator {
 					MvEmployeeMaster nextApprover = mvEmployeeMasterRepository.findByMomEmployeeId(nextApproverNode.getApproverEmpId());
 					authJudgeParam.setNextApproverMvEmployeeMaster(nextApprover);
 
-					if (!ObjectUtils.isEmpty(nextApproverNode.getSubApproverEmpId())) {
+					if (nextApproverNode.getSubApproverEmpId() != null) {
+
 						log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("次回代理承認者", "MoM社員ID", nextApproverNode.getSubApproverEmpId()).toArray(new String[0])).getMsg());
 						MvEmployeeMaster nextSubApprover = mvEmployeeMasterRepository.findByMomEmployeeId(nextApproverNode.getSubApproverEmpId());
 						authJudgeParam.setNextSubApproverMvEmployeeMaster(nextSubApprover);
