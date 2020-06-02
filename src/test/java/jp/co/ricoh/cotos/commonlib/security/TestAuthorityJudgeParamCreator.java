@@ -355,21 +355,6 @@ public class TestAuthorityJudgeParamCreator {
 		Contract contract = new Contract();
 		contract.setLifecycleStatus(LifecycleStatus.作成完了);
 
-		// 承認ルート
-		contract.setContractApprovalRouteList(new ArrayList<>());
-		ContractApprovalRoute contractApprovalRoute = new ContractApprovalRoute();
-		contractApprovalRoute.setApprovalRequesterEmpId("00500784");
-		contractApprovalRoute.setTargetLifecycleStatus(LifecycleStatus.作成中);
-
-		// 承認ルートノード
-		List<ContractApprovalRouteNode> contractApprovalRouteNodeList = new ArrayList<>();
-		ContractApprovalRouteNode contractApprovalRouteNode = new ContractApprovalRouteNode();
-		contractApprovalRouteNode.setApproverEmpId("00229692");
-		contractApprovalRouteNode.setApproverDeriveMethodDiv(ApproverDeriveMethodDiv.直属上司指定);
-		contractApprovalRouteNodeList.add(contractApprovalRouteNode);
-		contractApprovalRoute.setContractApprovalRouteNodeList(contractApprovalRouteNodeList);
-		contract.getContractApprovalRouteList().add(contractApprovalRoute);
-
 		// 担当SA
 		contract.setContractPicSaEmp(new ContractPicSaEmp());
 		contract.getContractPicSaEmp().setMomEmployeeId("00500784");
@@ -390,6 +375,178 @@ public class TestAuthorityJudgeParamCreator {
 		Assert.assertNotNull("正常にログインユーザー情報が作成されていること", authParam.getActorMvEmployeeMaster());
 		Assert.assertNull("正常に承認者の社員情報が作成されていないこと", authParam.getApproverMvEmployeeMasterList());
 		Assert.assertNull("正常に次回承認者の社員情報が作成されていないこと", authParam.getNextApproverMvEmployeeMaster());
+		Assert.assertNull("承認依頼者の社員情報が作成されていないこと", authParam.getRequesterMvEmployeeMaster());
+		Assert.assertFalse("ユーザー直接指定でないこと", authParam.isManualApprover());
+	}
+
+	@Test
+	public void 正常_権限判定用パラメーター取得_契約_参照_前回及び次回承認者情報なし() throws ParseException {
+
+		// ログインユーザー
+		MvEmployeeMaster actor = mvEmployeeMasterRepository.findByMomEmployeeId("00500784");
+
+		// 契約
+		Contract contract = new Contract();
+		contract.setLifecycleStatus(LifecycleStatus.締結中);
+
+		// 承認ルート
+		contract.setContractApprovalRouteList(new ArrayList<>());
+		ContractApprovalRoute contractApprovalRoute = new ContractApprovalRoute();
+		contractApprovalRoute.setApprovalRequesterEmpId("00500784");
+		contractApprovalRoute.setTargetLifecycleStatus(LifecycleStatus.作成中);
+
+		// 承認ルートノード
+		List<ContractApprovalRouteNode> contractApprovalRouteNodeList = new ArrayList<>();
+		List<ContractApprovalResult> contractApprovalResultList = new ArrayList<>();
+		ContractApprovalRouteNode contractApprovalRouteNode1 = new ContractApprovalRouteNode();
+		contractApprovalRouteNode1.setId(1L);
+		contractApprovalRouteNode1.setApproverEmpId("00229692");
+		contractApprovalRouteNode1.setSubApproverEmpId("01901115");
+		contractApprovalRouteNodeList.add(contractApprovalRouteNode1);
+		ContractApprovalRouteNode contractApprovalRouteNode2 = new ContractApprovalRouteNode();
+		contractApprovalRouteNode2.setId(2L);
+		contractApprovalRouteNode2.setApproverEmpId("01901306");
+		contractApprovalRouteNode2.setSubApproverEmpId("01901177");
+		contractApprovalRouteNodeList.add(contractApprovalRouteNode2);
+		ContractApprovalResult contractApprovalResult1 = new ContractApprovalResult();
+		contractApprovalResult1.setApprovalProcessCategory(ApprovalProcessCategory.承認依頼);
+		contractApprovalResult1.setActualEmpId("00500784");
+		contractApprovalResult1.setProcessedAt(new SimpleDateFormat("yyyy/MM/dd").parse("2020/05/25"));
+		contractApprovalResultList.add(contractApprovalResult1);
+		ContractApprovalResult contractApprovalResult2 = new ContractApprovalResult();
+		contractApprovalResult2.setApprovalProcessCategory(ApprovalProcessCategory.承認);
+		contractApprovalResult2.setActualEmpId("00229692");
+		contractApprovalResult2.setProcessedAt(new SimpleDateFormat("yyyy/MM/dd").parse("2020/05/26"));
+		contractApprovalResult2.setContractApprovalRouteNodeId(contractApprovalRouteNode1.getId());
+		ContractApprovalResult contractApprovalResult3 = new ContractApprovalResult();
+		contractApprovalResult3.setApprovalProcessCategory(ApprovalProcessCategory.承認);
+		contractApprovalResult3.setActualEmpId("01901306");
+		contractApprovalResult3.setProcessedAt(new SimpleDateFormat("yyyy/MM/dd").parse("2020/05/27"));
+		contractApprovalResult3.setContractApprovalRouteNodeId(contractApprovalRouteNode2.getId());
+		contractApprovalResultList.add(contractApprovalResult3);
+
+		contractApprovalRoute.setContractApprovalRouteNodeList(contractApprovalRouteNodeList);
+		contractApprovalRoute.setContractApprovalResultList(contractApprovalResultList);
+		contract.getContractApprovalRouteList().add(contractApprovalRoute);
+
+		// 担当SA
+		contract.setContractPicSaEmp(new ContractPicSaEmp());
+		contract.getContractPicSaEmp().setMomEmployeeId("00500784");
+
+		// 追加編集者
+		contract.setContractAddedEditorEmpList(new ArrayList<>());
+		contract.getContractAddedEditorEmpList().add(new ContractAddedEditorEmp());
+		contract.getContractAddedEditorEmpList().get(0).setMomEmployeeId("00500784");
+
+		// 顧客
+		contract.setCustomerContract(new CustomerContract());
+		contract.getCustomerContract().setMomKjbSystemId("000000003985825");
+
+		AuthorityJudgeParameter authParam = authorityJudgeParamCreator.createFromContract(contract, actor, AccessType.参照);
+
+		Assert.assertEquals("正常に社員情報が作成されていること", 2, authParam.getMvEmployeeMasterList().size());
+		Assert.assertNotNull("正常に会社情報が作成されていること", authParam.getVKjbMaster());
+		Assert.assertNotNull("正常にログインユーザー情報が作成されていること", authParam.getActorMvEmployeeMaster());
+		Assert.assertNotNull("正常に承認者の社員情報が作成されていること", authParam.getApproverMvEmployeeMasterList());
+		Assert.assertNull("次回承認者の社員情報が作成されていないこと", authParam.getNextApproverMvEmployeeMaster());
+		Assert.assertNull("次回代理承認者の社員情報が作成されていないこと", authParam.getNextSubApproverMvEmployeeMaster());
+		Assert.assertNull("前回承認者の社員情報が作成されていないこと", authParam.getPrevApproverMvEmployeeMaster());
+		Assert.assertNull("前回代理承認者の社員情報が作成されていないこと", authParam.getPrevSubApproverMvEmployeeMaster());
+		Assert.assertNull("承認依頼者の社員情報が作成されていないこと", authParam.getRequesterMvEmployeeMaster());
+		Assert.assertFalse("ユーザー直接指定でないこと", authParam.isManualApprover());
+	}
+
+	@Test
+	public void 正常_権限判定用パラメーター取得_契約_参照_解約フロー() throws ParseException {
+
+		// ログインユーザー
+		MvEmployeeMaster actor = mvEmployeeMasterRepository.findByMomEmployeeId("00500784");
+
+		// 契約
+		Contract contract = new Contract();
+		contract.setLifecycleStatus(LifecycleStatus.解約予定日待ち);
+
+		// 承認ルート
+		contract.setContractApprovalRouteList(new ArrayList<>());
+		ContractApprovalRoute contractApprovalRouteCreate = new ContractApprovalRoute();
+		ContractApprovalRoute contractApprovalRouteCancel = new ContractApprovalRoute();
+		contractApprovalRouteCreate.setApprovalRequesterEmpId("00500784");
+		contractApprovalRouteCancel.setApprovalRequesterEmpId("00500784");
+		contractApprovalRouteCreate.setTargetLifecycleStatus(LifecycleStatus.作成中);
+		contractApprovalRouteCancel.setTargetLifecycleStatus(LifecycleStatus.解約手続き中);
+
+		// 承認ルートノード
+		List<ContractApprovalRouteNode> contractApprovalRouteNodeCreateList = new ArrayList<>();
+		List<ContractApprovalRouteNode> contractApprovalRouteNodeCancelList = new ArrayList<>();
+		List<ContractApprovalResult> contractApprovalResultCreateList = new ArrayList<>();
+		List<ContractApprovalResult> contractApprovalResultCancelList = new ArrayList<>();
+
+		ContractApprovalRouteNode contractApprovalRouteNodeCreate = new ContractApprovalRouteNode();
+		contractApprovalRouteNodeCreate.setId(1L);
+		contractApprovalRouteNodeCreate.setApproverEmpId("00229692");
+		contractApprovalRouteNodeCreate.setSubApproverEmpId("01901115");
+		contractApprovalRouteNodeCreateList.add(contractApprovalRouteNodeCreate);
+		ContractApprovalResult contractApprovalResultCreate1 = new ContractApprovalResult();
+		contractApprovalResultCreate1.setApprovalProcessCategory(ApprovalProcessCategory.承認依頼);
+		contractApprovalResultCreate1.setActualEmpId("00500784");
+		contractApprovalResultCreate1.setProcessedAt(new SimpleDateFormat("yyyy/MM/dd").parse("2020/05/25"));
+		contractApprovalResultCreateList.add(contractApprovalResultCreate1);
+		ContractApprovalResult contractApprovalResultCreate2 = new ContractApprovalResult();
+		contractApprovalResultCreate2.setApprovalProcessCategory(ApprovalProcessCategory.承認);
+		contractApprovalResultCreate2.setActualEmpId("00229692");
+		contractApprovalResultCreate2.setProcessedAt(new SimpleDateFormat("yyyy/MM/dd").parse("2020/05/26"));
+		contractApprovalResultCreate2.setContractApprovalRouteNodeId(contractApprovalRouteNodeCreate.getId());
+		contractApprovalResultCreateList.add(contractApprovalResultCreate2);
+
+		contractApprovalRouteCreate.setContractApprovalRouteNodeList(contractApprovalRouteNodeCreateList);
+		contractApprovalRouteCreate.setContractApprovalResultList(contractApprovalResultCreateList);
+
+		ContractApprovalRouteNode contractApprovalRouteNodeCancel = new ContractApprovalRouteNode();
+		contractApprovalRouteNodeCancel.setId(1L);
+		contractApprovalRouteNodeCancel.setApproverEmpId("00229692");
+		contractApprovalRouteNodeCancel.setSubApproverEmpId("01901177");
+		contractApprovalRouteNodeCancelList.add(contractApprovalRouteNodeCancel);
+		ContractApprovalResult contractApprovalResultCancel1 = new ContractApprovalResult();
+		contractApprovalResultCancel1.setApprovalProcessCategory(ApprovalProcessCategory.承認依頼);
+		contractApprovalResultCancel1.setActualEmpId("00500784");
+		contractApprovalResultCancel1.setProcessedAt(new SimpleDateFormat("yyyy/MM/dd").parse("2020/05/25"));
+		contractApprovalResultCancelList.add(contractApprovalResultCancel1);
+		ContractApprovalResult contractApprovalResultCancel2 = new ContractApprovalResult();
+		contractApprovalResultCancel2.setApprovalProcessCategory(ApprovalProcessCategory.承認);
+		contractApprovalResultCancel2.setActualEmpId("00229692");
+		contractApprovalResultCancel2.setProcessedAt(new SimpleDateFormat("yyyy/MM/dd").parse("2020/05/26"));
+		contractApprovalResultCancel2.setContractApprovalRouteNodeId(contractApprovalRouteNodeCancel.getId());
+		contractApprovalResultCancelList.add(contractApprovalResultCancel2);
+
+		contractApprovalRouteCancel.setContractApprovalRouteNodeList(contractApprovalRouteNodeCancelList);
+		contractApprovalRouteCancel.setContractApprovalResultList(contractApprovalResultCancelList);
+
+		contract.getContractApprovalRouteList().add(contractApprovalRouteCreate);
+		contract.getContractApprovalRouteList().add(contractApprovalRouteCancel);
+
+		// 担当SA
+		contract.setContractPicSaEmp(new ContractPicSaEmp());
+		contract.getContractPicSaEmp().setMomEmployeeId("00500784");
+
+		// 追加編集者
+		contract.setContractAddedEditorEmpList(new ArrayList<>());
+		contract.getContractAddedEditorEmpList().add(new ContractAddedEditorEmp());
+		contract.getContractAddedEditorEmpList().get(0).setMomEmployeeId("00500784");
+
+		// 顧客
+		contract.setCustomerContract(new CustomerContract());
+		contract.getCustomerContract().setMomKjbSystemId("000000003985825");
+
+		AuthorityJudgeParameter authParam = authorityJudgeParamCreator.createFromContract(contract, actor, AccessType.参照);
+
+		Assert.assertEquals("正常に社員情報が作成されていること", 2, authParam.getMvEmployeeMasterList().size());
+		Assert.assertNotNull("正常に会社情報が作成されていること", authParam.getVKjbMaster());
+		Assert.assertNotNull("正常にログインユーザー情報が作成されていること", authParam.getActorMvEmployeeMaster());
+		Assert.assertNotNull("正常に承認者の社員情報が作成されていること", authParam.getApproverMvEmployeeMasterList());
+		Assert.assertNull("次回承認者の社員情報が作成されていないこと", authParam.getNextApproverMvEmployeeMaster());
+		Assert.assertNull("次回代理承認者の社員情報が作成されていないこと", authParam.getNextSubApproverMvEmployeeMaster());
+		Assert.assertNull("前回承認者の社員情報が作成されていないこと", authParam.getPrevApproverMvEmployeeMaster());
+		Assert.assertNull("前回代理承認者の社員情報が作成されていないこと", authParam.getPrevSubApproverMvEmployeeMaster());
 		Assert.assertNull("承認依頼者の社員情報が作成されていないこと", authParam.getRequesterMvEmployeeMaster());
 		Assert.assertFalse("ユーザー直接指定でないこと", authParam.isManualApprover());
 	}
