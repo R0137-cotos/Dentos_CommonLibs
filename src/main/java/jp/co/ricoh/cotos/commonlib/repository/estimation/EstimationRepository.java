@@ -9,7 +9,7 @@ import jp.co.ricoh.cotos.commonlib.entity.estimation.Estimation;
 
 @Repository
 public interface EstimationRepository extends CrudRepository<Estimation, Long> {
-	
+
 	public Estimation findByIdAndAppIdIn(Long id, List<String> appId);
 
 	public Estimation findByIdAndAppIdNotIn(Long id, List<String> appId);
@@ -21,4 +21,6 @@ public interface EstimationRepository extends CrudRepository<Estimation, Long> {
 	public List<Estimation> findByEstimationNumberAndEstimationBranchNumber(String estimationNumber, int estimationBranchNumber);
 
 	public List<Estimation> findByOriginContractId(Long originContractId);
+
+	public List<Estimation> findByCaseNumber(String caseNumber);
 }

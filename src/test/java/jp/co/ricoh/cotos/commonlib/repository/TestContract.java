@@ -155,6 +155,25 @@ public class TestContract {
 	}
 
 	@Test
+	public void 全てのカラムがNullではないことを確認_契約を案件番号より取得() {
+		// テストデータ登録
+		context.getBean(DBConfig.class).initTargetTestData("repository/contract.sql");
+
+		List<Contract> actualList = contractRepository.findByCaseNumber("[テストパターン4]見積→契約→手配→解約手配まで");
+
+		Assert.assertNotNull(actualList);
+		Assert.assertEquals("一致するレコードが1件存在すること", 1, actualList.size());
+		// 全てのカラムがNullではないことを確認
+		actualList.stream().forEach(actual -> {
+			try {
+				testTools.assertColumnsNotNull(actual);
+			} catch (Exception e1) {
+				Assert.fail("例外が発生した場合、エラー");
+			}
+		});
+	}
+
+	@Test
 	public void 全てのカラムがNullではないことを確認_契約追加編集者社員() {
 		全てのカラムがNullではないことを確認_共通(contractAddedEditorEmpRepository, 401L, 501L);
 	}

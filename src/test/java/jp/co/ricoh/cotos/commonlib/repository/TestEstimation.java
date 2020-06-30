@@ -325,6 +325,21 @@ public class TestEstimation {
 
 		// Entity の各項目の値が null ではないことを確認
 		testTool.assertColumnsNotNull(found);
+
+		// 案件番号検索
+		List<Estimation> foundList = estimationRepository.findByCaseNumber("[テストパターン4]見積→契約→手配→解約手配まで");
+
+		// EntityList が null ではないことを確認
+		Assert.assertNotNull(foundList);
+
+		foundList.stream().forEach(f -> {
+			try {
+				// Entity の各項目の値が null ではないことを確認
+				testTool.assertColumnsNotNull(f);
+			} catch (Exception e) {
+				Assert.fail("例外が発生した場合、エラー");
+			}
+		});
 	}
 
 	@Test
