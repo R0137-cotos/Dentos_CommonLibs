@@ -75,7 +75,7 @@ uploadArchives {
     repositories {
         mavenDeployer {
             repository url: "file://${repo.absolutePath}"
-            pom.version = '0.0.343'
+            pom.version = '0.0.344'
             pom.groupId = 'jp.co.ricoh.cotos'
             pom.artifactId = 'dentos-common-libraries'
         }
