@@ -1,0 +1,90 @@
+buildscript {
+    ext {
+        springBootVersion = '1.5.9.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.5")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: "org.sonarqube"
+apply plugin: "jacoco"
+apply plugin: 'maven'
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile('org.springframework.boot:spring-boot-starter-security')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-mail')
+    compile group: 'com.github.spullara.mustache.java', name: 'compiler', version: '0.9.5'
+    compileOnly('org.projectlombok:lombok')
+    compile('org.hibernate:hibernate-validator:5.3.5.Final')
+    compile('com.fasterxml.jackson.dataformat:jackson-dataformat-csv:2.9.6')
+    compile 'org.jxls:jxls:2.4.3'
+    compile 'org.jxls:jxls-poi:1.0.14'
+    compile group: 'org.apache.poi', name : 'poi', version: '3.17'
+    compile('com.auth0:java-jwt:3.4.0')
+
+    compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.7.0'
+    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.7.0'
+    compile group: 'io.swagger', name: 'swagger-core', version: '1.5.15'
+    compile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.3'
+    compile group: 'org.apache.axis', name: 'axis', version: '1.4'
+    compile group: 'javax.xml', name: 'jaxrpc-api', version: '1.1'
+    compile group: 'wsdl4j', name: 'wsdl4j', version: '1.5.2'
+    compile group: 'commons-discovery', name: 'commons-discovery', version: '0.4'
+    compile fileTree(dir: 'libs', include: '*.jar')
+    runtime('org.springframework.boot:spring-boot-devtools')
+
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.jmockit:jmockit:1.21'
+    testCompile('org.dbunit:dbunit:2.5.4')
+    testCompileOnly('org.projectlombok:lombok')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.springframework.security:spring-security-test')
+    testCompile group: 'com.ninja-squad', name: 'DbSetup', version: '2.1.0'
+    testCompile 'org.apache.commons:commons-lang3:3.4'
+    testRuntime('com.h2database:h2')
+}
+
+sonarqube {
+    properties {
+        property "sonar.host.url", "http://sonar.cotos.ricoh.co.jp/"
+        property "sonar.jacoco.reportPaths", "${project.buildDir}/jacoco/test.exec"
+    }
+}
+
+def repo = new File(rootDir, "repository")
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository url: "file://${repo.absolutePath}"
+            pom.version = '0.0.343'
+            pom.groupId = 'jp.co.ricoh.cotos'
+            pom.artifactId = 'dentos-common-libraries'
+        }
+    }
+}
+task sourcesJar(type: Jar, dependsOn:classes) {
+     classifier = 'sources'
+     from sourceSets.main.allSource
+}
+artifacts {
+     archives sourcesJar
+}

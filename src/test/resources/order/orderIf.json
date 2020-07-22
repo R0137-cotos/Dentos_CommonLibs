@@ -1,0 +1,115 @@
+{
+  "orderList": [
+    {
+      "basicContents": {
+        "ordererNumber": "SCE-17",
+        "ordererType": "1",
+        "productType": "1",
+        "rjManageNumber": "dummy_rjManageNumber",
+        "makerManageNumber": "dummy_makerManageNumber",
+        "commercialFlowDiv": "1",
+        "ordererDateTime": "2019-07-10 23:59:59",
+        "cancelScheduledDate": "2019-08-10",
+        "cancelReason1": "cancelReason1",
+        "cancelReason2": "cancelReason2",
+        "improvementPoint": "improvementPoint",
+        "initialTotalAmount": 5000,
+        "monthlyTotalAmount": 1500,
+        "yearlyTotalAmount": 0
+      },
+      "contractorInfo": {
+        "companyId": "000000000309596",
+        "kjbId": " 000000002889476",
+        "netRicohAccount": "netRicohAccount01",
+        "customerCd": "_TBD_",
+        "contractorCompanyName": "リ＊ー＊Ｔソリューションズ(WEB Input)",
+        "contractorNameKanji": "担当者漢字（姓＋名）(WEB Input)",
+        "contractorNameKana": "担当者カナ（姓＋名）(WEB Input)",
+        "contractorMailAddress": "contractorMailAddress_001_WEB Input@example.com",
+        "contractorPostNumber": "郵便番号(WEB Input)",
+        "contractorOfficeName": "事業所名(WEB Input)",
+        "contractorAddress": "住所(WEB Input)",
+        "contractorPhoneNumber": "住所(WEB Input)",
+        "authorityForNetRicoh": "利用登録権限(NetRICOH)(WEB Input)",
+        "desiredServiceStartDate": "2099-12-31"
+      },
+      "ordererInfo": {
+        "ordererCompanyName": "ordererCompanyName(WEB Input)",
+        "ordererNameKanji": "ordererNameKanji(WEB Input)",
+        "ordererNameKana": "ordererNameKana(WEB Input)",
+        "ordererMailAddress": "ordererMailAddress(WEB Input)",
+        "ordererPostNumber": "ordererPostNumber(WEB Input)",
+        "ordererOfficeName": "ordererOfficeName(WEB Input)",
+        "ordererAddress": "ordererAddress(WEB Input)",
+        "ordererPhoneNumber": "ordererPhoneNumber(WEB Input)"
+      },
+      "setupInfo": {
+        "setupCompanyName": "setupCompanyName(WEB Input)",
+        "setupNameKanji": "setupNameKanji(WEB Input)",
+        "setupNameKana": "setupNameKana(WEB Input)",
+        "setupMailAddress": "setupMailAddress(WEB Input)",
+        "setupPostNumber": "setupPostNumber(WEB Input)",
+        "setupOfficeName": "setupOfficeName(WEB Input)",
+        "setupAddress": "setupAddress(WEB Input)",
+        "setupPhoneNumber": "setupPhoneNumber(WEB Input)"
+      },
+      "productGroupInfo": {
+        "productGroupCd": "CPG00001",
+        "productGroupName": "RICOH カンタンストレージ活用 for Box"
+      },
+      "productInfo": [
+        {
+          "productCd": "312982",
+          "chargeRule": "1",
+          "freePeriod": "dummy_freePeriod",
+          "productName": "RICOH クラウドアプリケーション スタートパック",
+          "provideMethod": "1",
+          "quantity": 1,
+          "beforeQuantity": 0,
+          "differenceQuantity": 1,
+          "unitPrice": 5000,
+          "amountSummary": 5000
+        },
+        {
+          "productCd": "311266",
+          "chargeRule": "1",
+          "freePeriod": "dummy_freePeriod",
+          "productName": "RICOH カンタンストレージ活用 for Box 月額契約",
+          "provideMethod": "2",
+          "quantity": 2,	
+          "beforeQuantity": 0,
+          "differenceQuantity": 2,
+          "unitPrice": 1500,
+          "amountSummary": 3000
+        }
+      ],
+      "branchCustomerInfo": {
+        "branchCustomerCd": "101",
+        "branchCustomerName": "Ｒジャパン（北海道）(WEB Input)",
+        "officeCd": "unknown(WEB Input)",
+        "officeName": "南西第一営業所(WEB Input)",
+        "employeeCd": "00078",
+        "employeeName": "一戸満(WEB Input)",
+        "employeePhoneNumber": "050-9999-9999(WEB Input)",
+        "employeeMailAddress": "employeeMailAddress-001_WEB Input@example.com"
+      },
+      "distributorInfo": {
+        "distributorCd": "distributorCd(WEB Input)",
+        "distributorName": "distributorName(WEB Input)",
+        "oeDeliveryCd": "oeDeliveryCd(WEB Input)",
+        "distributorCustomerType": "distributorCustomerType(WEB Input)",
+        "distributorEmployeeName": "distributorEmployeeName(WEB Input)",
+        "distributorEmployeeMailAddress": "distributorEmployeeMailAddress(WEB Input)",
+        "ringsCustomerCd": "ringsCustomerCd(WEB Input)",
+        "distributorPostNumber": "distributorPostNumber(WEB Input)",
+        "distributorAddress": "distributorAddress(WEB Input)"
+      },
+	  "serviceInnerInfo": {
+        "item1": "利用していない",
+        "item2": "引継がない",
+        "item3": "dummy_item3",
+        "item4": "2019-07-15"
+      }
+    }
+  ]
+}

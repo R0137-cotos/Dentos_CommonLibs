@@ -1,0 +1,1 @@
+select id, moji, like_search_string from test_data where id = (select max(id) as id from test_data);

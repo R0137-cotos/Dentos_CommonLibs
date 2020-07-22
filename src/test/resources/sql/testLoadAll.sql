@@ -1,0 +1,1 @@
+select id, moji, like_search_string from test_data

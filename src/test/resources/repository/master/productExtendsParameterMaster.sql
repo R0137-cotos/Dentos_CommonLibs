@@ -1,0 +1,2 @@
+INSERT INTO product_extends_parameter_master (id,created_at,created_user_id,updated_at,updated_user_id,version,product_master_id,json_schema_master_id,registry_type) VALUES (1,'2018/9/19','COTOS','2018/9/19','COTOS',1,1,1,'1');
+INSERT INTO product_extends_parameter_master (id,created_at,created_user_id,updated_at,updated_user_id,version,product_master_id,json_schema_master_id,registry_type) VALUES (2,'2018/9/19','COTOS','2018/9/19','COTOS',1,2,2,'2');

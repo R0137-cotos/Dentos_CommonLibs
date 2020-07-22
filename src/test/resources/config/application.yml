@@ -1,0 +1,71 @@
+cotos:
+  auth:
+    throughURIs: /dummy, /swagger-ui.html, /dummy2
+    jwt:
+      secretKey: cotosSecretKey
+      tillExpired: 10
+      claims:
+        momEmpId: momEmpId
+        singleUserId: singleUserId
+        origin: origin
+        applicationId: applicationId
+        momAuth: momAuth
+    headers:
+      momEmpId: headers_mom_emp_id
+      singleUserId: headers_single_user_id
+      applicationId: headers_applicationId
+      pass: headers_pass
+      authorization: X-Cotos-Authorization
+      requireDispAuthorize: X-Cotos-Require-Disp-Authorize
+      dispAuthorization: X-Cotos-Disp-Authorization
+      contentType: Content-type
+      filename: filename
+  file:
+    uploadFileDir: ./build/testTemp
+    fileNmMaxSize: 14
+    extension: xlsx, txt
+  search:
+    limitSize: 5
+  mail:
+    fromMailAddress: test@ricoh.co.jp
+    envelopeFromMailAddress: test_envelope_from_propaties@ricoh.co.jp
+  mom:
+    system:
+      momEmpId: 99999999
+      operatorName: dummy_batch_operator
+      operatorOrgName: dummy_batch_operator_org
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@dev-db.cotos.ricoh.co.jp:1521/pdb1
+    username: cotos_ci_commonlibs_el_std
+    password: cotos_ci_commonlibs_el_std
+    driverClassName: oracle.jdbc.OracleDriver
+  jpa:
+    database-platform: org.hibernate.dialect.Oracle12cDialect
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        show_sql: true
+        use_sql_comments: true
+        format_sql: true
+        default_schema: cotos_ci_commonlibs_el_std
+        proc:
+          param_null_passing: true
+        enable_lazy_load_no_trans: true
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+  mail:
+    default-encoding: UTF-8
+    host: shipyard.cotos.ricoh.co.jp
+    port: 1025
+    username: koike.shinichi
+    password: koike.shinichi
+  messages:
+    basename: Messages
+    defaultEncoding: UTF-8
+remote:
+  momauthority:
+    url: http://165.96.254.183:10110/jmo/services/KengenService
+    relatedid: CSP
