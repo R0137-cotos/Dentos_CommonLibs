@@ -1,0 +1,1 @@
+insert into auth_pattern_master (auth_pattern_id,action_div,auth_div,access_type,version,auth_judge_div,mom_threshold_level) values (1,'01','2200','1',1,'01','90');

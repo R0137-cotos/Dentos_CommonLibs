@@ -1,0 +1,1 @@
+INSERT INTO extends_parameter_correlation_check_master (product_master_id,domain,created_at,created_user_id,updated_at,updated_user_id,version,correlation_check_condition_formula) VALUES (1,'1','2018/09/19 12:09:10','COTOS','2018/09/19 12:09:10','COTOS',1,'相関チェック1');

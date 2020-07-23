@@ -1,0 +1,2 @@
+INSERT INTO json_schema_master (id,created_at,created_user_id,updated_at,updated_user_id,version,json_schema,json_schema_initial) VALUES (1,'2018/09/19 12:09:10','COTOS','2018/09/19 12:09:10','COTOS',1,'JSON�X�L�[�}','JSON');
+INSERT INTO json_schema_master (id,created_at,created_user_id,updated_at,updated_user_id,version,json_schema,json_schema_initial) VALUES (2,'2018/09/19 12:09:10','COTOS','2018/09/19 12:09:10','COTOS',1,'JSON�X�L�[�}','JSON');

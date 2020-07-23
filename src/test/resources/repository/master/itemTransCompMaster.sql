@@ -1,0 +1,2 @@
+INSERT INTO item_trans_comp_master (id,created_at,created_user_id,updated_at,updated_user_id,version,price,trans_to_service_org_code,initial_running_div,item_master_id) VALUES (1,'2012/08/27','SIMONS','2010/06/27','SIMONS',1,1429,'0','1',1);
+INSERT INTO item_trans_comp_master (id,created_at,created_user_id,updated_at,updated_user_id,version,price,trans_to_service_org_code,initial_running_div,item_master_id) VALUES (2,'1982/03/16','SIMONS','2010/06/27','SIMONS',1,1430,'0','1',2);
