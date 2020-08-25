@@ -55,6 +55,11 @@ public class EstimationAddedEditorEmpListener {
 			return;
 		}
 
+		// RJ社員マスタから情報取得済みであれば再設定しない
+		if (estimationAddedEditorEmp.isAcquiredInfo()) {
+			return;
+		}
+
 		MvEmployeeMaster employeeMaster = mvEmployeeMasterRepository.findByMomEmployeeId(estimationAddedEditorEmp.getMomEmployeeId());
 
 		if (employeeMaster == null) {

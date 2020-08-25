@@ -59,6 +59,11 @@ public class CustomerEstimationListener {
 			return;
 		}
 
+		// 企事部マスタから情報取得済みであれば再設定しない
+		if (customerEstimation.isAcquiredInfo()) {
+			return;
+		}
+
 		VKjbMaster vKjbMaster = vKjbMasterRepository.findByMclMomRelId(customerEstimation.getMomKjbSystemId());
 		if (vKjbMaster == null) {
 			String[] regexList = { "顧客（見積用）" };
