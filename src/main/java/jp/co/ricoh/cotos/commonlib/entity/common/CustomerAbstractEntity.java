@@ -5,6 +5,8 @@ import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.apache.commons.lang3.StringUtils;
+
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import jp.co.ricoh.cotos.commonlib.entity.master.VKjbMaster.DepartmentDiv;
@@ -181,5 +183,16 @@ public class CustomerAbstractEntity extends EntityBase {
 	@Column
 	@ApiModelProperty(value = "MoM非連携_企業代表者名（カナ）", required = false, position = 72, allowableValues = "range[0,]")
 	private String companyRepresentativeNameKana;
+
+	/**
+	 * 企事部マスタから導出済みか
+	 */
+	public boolean isAcquiredInfo() {
+		// 以下どれか1項目でも設定されていたら導出済みと捉える
+		return StringUtils.isNotEmpty(customerName) || StringUtils.isNotEmpty(companyName) || StringUtils.isNotEmpty(companyNameKana) ||
+				StringUtils.isNotEmpty(officeName) || StringUtils.isNotEmpty(departmentName) || StringUtils.isNotEmpty(postNumber) ||
+				StringUtils.isNotEmpty(address) || StringUtils.isNotEmpty(phoneNumber) || StringUtils.isNotEmpty(faxNumber) ||
+				StringUtils.isNotEmpty(companyRepresentativeName);
+	}
 
 }

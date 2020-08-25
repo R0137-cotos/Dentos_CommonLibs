@@ -38,6 +38,11 @@ public class CustomerContractListener {
 			return;
 		}
 
+		// 企事部マスタから情報取得済みであればチェックしない
+		if (customerContract.isAcquiredInfo()) {
+			return;
+		}
+
 		VKjbMaster vKjbMaster = vKjbMasterRepository.findByMclMomRelId(customerContract.getMomKjbSystemId());
 		if (vKjbMaster == null) {
 			String[] regexList = { "顧客（契約用）" };
