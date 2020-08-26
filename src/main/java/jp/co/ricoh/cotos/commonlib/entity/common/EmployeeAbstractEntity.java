@@ -7,6 +7,8 @@ import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import lombok.Data;
@@ -117,6 +119,7 @@ public class EmployeeAbstractEntity extends EntityBase {
 	/**
 	 * RJ社員マスタから導出済みか
 	 */
+	@JsonIgnore
 	public boolean isAcquiredInfo() {
 		// 以下どれか1項目でも設定されていたら導出済みと捉える
 		return StringUtils.isNotEmpty(orgName) || StringUtils.isNotEmpty(salesCompanyName) || StringUtils.isNotEmpty(orgPhoneNumber) ||
