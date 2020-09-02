@@ -407,6 +407,25 @@ public class CotosSecurityTests {
 	@Test
 	@WithMockCustomUser(actionDiv = ActionDiv.更新, authDiv = AuthDiv.見積_契約_手配, authLevel = AuthLevel.地域)
 	@Transactional
+	public void 正常_MoM権限_編集_地域_退職者混在() throws Exception {
+
+		Mockito.doReturn(AuthLevel.地域).when(momAuthorityService).searchMomAuthority(Mockito.anyString(), Mockito.any(), Mockito.any());
+
+		AuthorityJudgeParameter authParam = new AuthorityJudgeParameter();
+		authParam.setActorMvEmployeeMaster(mvEmployeeMasterRepository.findOne("00220552"));
+		authParam.setMvEmployeeMasterList(new ArrayList<MvEmployeeMaster>());
+		authParam.getMvEmployeeMasterList().add(mvEmployeeMasterRepository.findOne("99999999"));
+		authParam.getMvEmployeeMasterList().add(mvEmployeeMasterRepository.findOne("00229692"));
+
+		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.見積_契約_手配, AccessType.編集);
+		Assert.assertTrue("対象の権限があること", result);
+
+		Mockito.reset(momAuthorityService);
+	}
+
+	@Test
+	@WithMockCustomUser(actionDiv = ActionDiv.更新, authDiv = AuthDiv.見積_契約_手配, authLevel = AuthLevel.地域)
+	@Transactional
 	public void 正常_MoM権限_承認_直接指定() throws Exception {
 
 		Mockito.doReturn(AuthLevel.地域).when(momAuthorityService).searchMomAuthority(Mockito.anyString(), Mockito.any(), Mockito.any());
@@ -798,6 +817,23 @@ public class CotosSecurityTests {
 		AuthorityJudgeParameter authParam = new AuthorityJudgeParameter();
 		authParam.setActorMvEmployeeMaster(mvEmployeeMasterRepository.findOne("00623100"));
 		authParam.setRequesterMvEmployeeMaster(mvEmployeeMasterRepository.findOne("00229692"));
+
+		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.見積_契約_手配, AccessType.承認);
+		Assert.assertFalse("対象の権限がないこと", result);
+
+		Mockito.reset(momAuthorityService);
+	}
+
+	@Test
+	@WithMockCustomUser(actionDiv = ActionDiv.更新, authDiv = AuthDiv.見積_契約_手配, authLevel = AuthLevel.地域)
+	@Transactional
+	public void 異常_MoM権限_承認_地域_退職者() throws Exception {
+
+		Mockito.doReturn(AuthLevel.地域).when(momAuthorityService).searchMomAuthority(Mockito.anyString(), Mockito.any(), Mockito.any());
+
+		AuthorityJudgeParameter authParam = new AuthorityJudgeParameter();
+		authParam.setActorMvEmployeeMaster(mvEmployeeMasterRepository.findOne("00623100"));
+		authParam.setRequesterMvEmployeeMaster(mvEmployeeMasterRepository.findOne("99999999"));
 
 		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.見積_契約_手配, AccessType.承認);
 		Assert.assertFalse("対象の権限がないこと", result);

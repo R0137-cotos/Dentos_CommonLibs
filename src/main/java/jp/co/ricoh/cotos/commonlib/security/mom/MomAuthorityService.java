@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import javax.xml.rpc.ServiceException;
@@ -228,16 +229,16 @@ public class MomAuthorityService {
 			return false;
 		case 自顧客:
 			// 担当SA、追加編集者、担当CE、担当SEであるかを確認
-			return targetEmployeeMasterList.stream().anyMatch(targetEmployeeMaster -> editor.getMomEmployeeId().equals(targetEmployeeMaster.getMomEmployeeId()));
+			return targetEmployeeMasterList.stream().filter(Objects::nonNull).anyMatch(targetEmployeeMaster -> editor.getMomEmployeeId().equals(targetEmployeeMaster.getMomEmployeeId()));
 		case 配下:
 			// 担当SA、追加編集者、担当CE、担当SEの所属組織が配下であるか確認
-			return targetEmployeeMasterList.stream().anyMatch(targetEmployeeMaster -> this.isLowerOrg(targetEmployeeMaster.getMomOrgId(), editor.getMomOrgId()));
+			return targetEmployeeMasterList.stream().filter(Objects::nonNull).anyMatch(targetEmployeeMaster -> this.isLowerOrg(targetEmployeeMaster.getMomOrgId(), editor.getMomOrgId()));
 		case 自社:
 			// 担当SA、追加編集者、担当CE、担当SEと販社が同一であるか確認
-			return targetEmployeeMasterList.stream().anyMatch(targetEmployeeMaster -> editor.getHanshCd().equals(targetEmployeeMaster.getHanshCd()));
+			return targetEmployeeMasterList.stream().filter(Objects::nonNull).anyMatch(targetEmployeeMaster -> editor.getHanshCd().equals(targetEmployeeMaster.getHanshCd()));
 		case 地域:
 			// 担当SA、追加編集者、担当CE、担当SEの販社と関連販社であるか確認
-			return targetEmployeeMasterList.stream().anyMatch(targetEmployeeMaster -> this.isRelatedOrg(targetEmployeeMaster.getSingleUserId(), editor.getSingleUserId()));
+			return targetEmployeeMasterList.stream().filter(Objects::nonNull).anyMatch(targetEmployeeMaster -> this.isRelatedOrg(targetEmployeeMaster.getSingleUserId(), editor.getSingleUserId()));
 		case 東西:
 		case すべて:
 			return true;
@@ -259,6 +260,10 @@ public class MomAuthorityService {
 		case 配下:
 		case 自社:
 		case 地域:
+			if (requester == null) {
+				log.error("承認依頼者が社員マスタに存在しない");
+				return false;
+			}
 			Map<String, Object> queryParams = new HashMap<>();
 			queryParams.put("approverSingleUserId", approver.getSingleUserId());
 			queryParams.put("requesterSingleUserId", requester.getSingleUserId());

@@ -5,6 +5,10 @@ import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.apache.commons.lang3.StringUtils;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import lombok.Data;
@@ -111,5 +115,17 @@ public class EmployeeAbstractEntity extends EntityBase {
 	@Size(max = 255)
 	@ApiModelProperty(value = "メールアドレス", required = false, position = 63, allowableValues = "range[0,255]", readOnly = false)
 	private String mailAddress;
+
+	/**
+	 * RJ社員マスタから導出済みか
+	 */
+	@JsonIgnore
+	public boolean isAcquiredInfo() {
+		// 以下どれか1項目でも設定されていたら導出済みと捉える
+		return StringUtils.isNotEmpty(orgName) || StringUtils.isNotEmpty(salesCompanyName) || StringUtils.isNotEmpty(orgPhoneNumber) ||
+				StringUtils.isNotEmpty(employeeName) || StringUtils.isNotEmpty(salesDepartmentName) || StringUtils.isNotEmpty(postNumber) ||
+				StringUtils.isNotEmpty(address) || StringUtils.isNotEmpty(phoneNumber) || StringUtils.isNotEmpty(faxNumber) ||
+				StringUtils.isNotEmpty(mailAddress);
+	}
 
 }
