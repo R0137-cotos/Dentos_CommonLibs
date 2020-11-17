@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.0.25-el (17/11/2020)
+- [**closed**] #9230 MoM社員不存在エラーメッセージ追加 [#13](https://mygithub.ritscm.xyz/cotos/Dentos_CommonLibs/pull/13)
+
+---
+
 ## v1.0.10-el (14/09/2020)
 - [**closed**] #7996 認可判定ユーザがRJ社員マスタに存在しない場合判定から除外するよう修正 [#9](https://mygithub.ritscm.xyz/cotos/Dentos_CommonLibs/pull/9)
 - [**closed**] #7996 判定メソッドをJsonIgnore [#8](https://mygithub.ritscm.xyz/cotos/Dentos_CommonLibs/pull/8)
