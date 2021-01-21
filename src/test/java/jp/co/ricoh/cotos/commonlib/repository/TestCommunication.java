@@ -20,6 +20,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import jp.co.ricoh.cotos.commonlib.DBConfig;
 import jp.co.ricoh.cotos.commonlib.TestTools;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
+import jp.co.ricoh.cotos.commonlib.entity.EnumType.ApprovalTargetType;
+import jp.co.ricoh.cotos.commonlib.entity.EnumType.ServiceCategory;
+import jp.co.ricoh.cotos.commonlib.entity.EnumType.WorkflowType;
 import jp.co.ricoh.cotos.commonlib.entity.communication.Communication;
 import jp.co.ricoh.cotos.commonlib.entity.communication.Contact;
 import jp.co.ricoh.cotos.commonlib.repository.communication.CommunicationHistoryRepository;
@@ -87,6 +90,8 @@ public class TestCommunication {
 		list = communicationRepository.findByProcessCategoryAndLoginUserMomEmployeeIdAndAppIdIn("1", "dummy_request_to_id_1", appId);
 		Assert.assertNotEquals(0, list.size());
 		list = communicationRepository.findByProcessCategoryAndLoginUserMomEmployeeId("1", "dummy_request_to_id_1");
+		Assert.assertEquals(1, list.size());
+		list = communicationRepository.findByTargetDocKeyAndWorkflowTypeAndApprovalTargetTypeAndServiceCategory("4", WorkflowType.承認フロー, ApprovalTargetType.新規, ServiceCategory.見積);
 		Assert.assertEquals(1, list.size());
 	}
 
