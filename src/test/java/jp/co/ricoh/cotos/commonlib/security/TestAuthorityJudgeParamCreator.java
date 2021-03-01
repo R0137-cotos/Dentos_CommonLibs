@@ -183,7 +183,7 @@ public class TestAuthorityJudgeParamCreator {
 		Assert.assertNull("次回承認者の社員情報が作成されていないこと", authParam.getNextApproverMvEmployeeMaster());
 		Assert.assertNull("次回代理承認者の社員情報が作成されていないこと", authParam.getNextSubApproverMvEmployeeMaster());
 		Assert.assertNull("前回承認者の社員情報が作成されていないこと", authParam.getPrevApproverMvEmployeeMaster());
-		Assert.assertNull("正前回代理承認者の社員情報が作成されていないこと", authParam.getPrevSubApproverMvEmployeeMaster());
+		Assert.assertNull("前回代理承認者の社員情報が作成されていないこと", authParam.getPrevSubApproverMvEmployeeMaster());
 		Assert.assertNull("承認依頼者の社員情報が作成されていないこと", authParam.getRequesterMvEmployeeMaster());
 		Assert.assertFalse("ユーザー直接指定でないこと", authParam.isManualApprover());
 	}
@@ -447,7 +447,7 @@ public class TestAuthorityJudgeParamCreator {
 		Assert.assertNull("次回承認者の社員情報が作成されていないこと", authParam.getNextApproverMvEmployeeMaster());
 		Assert.assertNull("次回代理承認者の社員情報が作成されていないこと", authParam.getNextSubApproverMvEmployeeMaster());
 		Assert.assertNull("前回承認者の社員情報が作成されていないこと", authParam.getPrevApproverMvEmployeeMaster());
-		Assert.assertNull("正前回代理承認者の社員情報が作成されていないこと", authParam.getPrevSubApproverMvEmployeeMaster());
+		Assert.assertNull("前回代理承認者の社員情報が作成されていないこと", authParam.getPrevSubApproverMvEmployeeMaster());
 		Assert.assertNull("承認依頼者の社員情報が作成されていないこと", authParam.getRequesterMvEmployeeMaster());
 		Assert.assertFalse("ユーザー直接指定でないこと", authParam.isManualApprover());
 	}
