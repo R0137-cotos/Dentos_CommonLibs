@@ -93,10 +93,10 @@ public class AuthorityJudgeParamCreator {
 			authJudgeParam.setApproverMvEmployeeMasterList(new ArrayList<>());
 			nodeList.stream().forEach(node -> {
 				log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("承認者", "MoM社員ID", node.getApproverEmpId()).toArray(new String[0])).getMsg());
-				authJudgeParam.getApproverMvEmployeeMasterList().add(mvEmployeeMasterRepository.findByMomEmployeeId(node.getApproverEmpId()));
+				CollectionUtils.addIgnoreNull(authJudgeParam.getApproverMvEmployeeMasterList(), mvEmployeeMasterRepository.findByMomEmployeeId(node.getApproverEmpId()));
 				if (node.getSubApproverEmpId() != null) {
 					log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("代理承認者", "MoM社員ID", node.getSubApproverEmpId()).toArray(new String[0])).getMsg());
-					authJudgeParam.getApproverMvEmployeeMasterList().add(mvEmployeeMasterRepository.findByMomEmployeeId(node.getSubApproverEmpId()));
+					CollectionUtils.addIgnoreNull(authJudgeParam.getApproverMvEmployeeMasterList(), mvEmployeeMasterRepository.findByMomEmployeeId(node.getSubApproverEmpId()));
 				}
 			});
 
@@ -211,10 +211,10 @@ public class AuthorityJudgeParamCreator {
 			contract.getContractApprovalRouteList().stream().forEach(contractApprovalRoute -> {
 				contractApprovalRoute.getContractApprovalRouteNodeList().stream().forEach(node -> {
 					log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("承認者", "MoM社員ID", node.getApproverEmpId()).toArray(new String[0])).getMsg());
-					authJudgeParam.getApproverMvEmployeeMasterList().add(mvEmployeeMasterRepository.findByMomEmployeeId(node.getApproverEmpId()));
+					CollectionUtils.addIgnoreNull(authJudgeParam.getApproverMvEmployeeMasterList(), mvEmployeeMasterRepository.findByMomEmployeeId(node.getApproverEmpId()));
 					if (node.getSubApproverEmpId() != null) {
 						log.info(messageUtil.createMessageInfo("AuthorizeSetJudgeParamInfo", Arrays.asList("代理承認者", "MoM社員ID", node.getSubApproverEmpId()).toArray(new String[0])).getMsg());
-						authJudgeParam.getApproverMvEmployeeMasterList().add(mvEmployeeMasterRepository.findByMomEmployeeId(node.getSubApproverEmpId()));
+						CollectionUtils.addIgnoreNull(authJudgeParam.getApproverMvEmployeeMasterList(), mvEmployeeMasterRepository.findByMomEmployeeId(node.getSubApproverEmpId()));
 					}
 				});
 			});
