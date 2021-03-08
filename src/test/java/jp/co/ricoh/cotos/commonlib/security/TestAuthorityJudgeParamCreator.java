@@ -137,6 +137,58 @@ public class TestAuthorityJudgeParamCreator {
 	}
 
 	@Test
+	public void 正常_権限判定用パラメーター取得_見積_参照_承認者が退職済() throws ParseException {
+
+		// ログインユーザー
+		MvEmployeeMaster actor = mvEmployeeMasterRepository.findByMomEmployeeId("00500784");
+
+		// 見積
+		Estimation estimation = new Estimation();
+
+		// 承認ルート
+		EstimationApprovalRoute estimationApprovalRoute = new EstimationApprovalRoute();
+		estimationApprovalRoute.setApprovalRequesterEmpId("00500784");
+
+		// 承認ルートノード
+		List<EstimationApprovalRouteNode> estimationApprovalRouteNodeList = new ArrayList<>();
+		EstimationApprovalRouteNode estimationApprovalRouteNode = new EstimationApprovalRouteNode();
+		estimationApprovalRouteNode.setId(1L);
+		estimationApprovalRouteNode.setApproverEmpId("RETIRED_EMPLOYEE");
+		estimationApprovalRouteNode.setSubApproverEmpId("RETIRED_EMPLOYEE");
+		estimationApprovalRouteNode.setApproverDeriveMethodDiv(ApproverDeriveMethodDiv.直属上司指定);
+		estimationApprovalRouteNodeList.add(estimationApprovalRouteNode);
+
+		estimationApprovalRoute.setEstimationApprovalRouteNodeList(estimationApprovalRouteNodeList);
+		estimation.setEstimationApprovalRoute(estimationApprovalRoute);
+
+		// 担当SA
+		estimation.setEstimationPicSaEmp(new EstimationPicSaEmp());
+		estimation.getEstimationPicSaEmp().setMomEmployeeId("00500784");
+
+		// 追加編集者
+		estimation.setEstimationAddedEditorEmpList(new ArrayList<EstimationAddedEditorEmp>());
+		estimation.getEstimationAddedEditorEmpList().add(new EstimationAddedEditorEmp());
+		estimation.getEstimationAddedEditorEmpList().get(0).setMomEmployeeId("00500784");
+
+		// 顧客
+		estimation.setCustomerEstimation(new CustomerEstimation());
+		estimation.getCustomerEstimation().setMomKjbSystemId("000000003985825");
+
+		AuthorityJudgeParameter authParam = authorityJudgeParamCreator.createFromEstimation(estimation, actor, AccessType.参照);
+
+		Assert.assertEquals("正常に社員情報が作成されていること", 2, authParam.getMvEmployeeMasterList().size());
+		Assert.assertNotNull("正常に会社情報が作成されていること", authParam.getVKjbMaster());
+		Assert.assertNotNull("正常にログインユーザー情報が作成されていること", authParam.getActorMvEmployeeMaster());
+		Assert.assertEquals("承認者の社員情報が作成されていないこと", 0, authParam.getApproverMvEmployeeMasterList().size());
+		Assert.assertNull("次回承認者の社員情報が作成されていないこと", authParam.getNextApproverMvEmployeeMaster());
+		Assert.assertNull("次回代理承認者の社員情報が作成されていないこと", authParam.getNextSubApproverMvEmployeeMaster());
+		Assert.assertNull("前回承認者の社員情報が作成されていないこと", authParam.getPrevApproverMvEmployeeMaster());
+		Assert.assertNull("前回代理承認者の社員情報が作成されていないこと", authParam.getPrevSubApproverMvEmployeeMaster());
+		Assert.assertNull("承認依頼者の社員情報が作成されていないこと", authParam.getRequesterMvEmployeeMaster());
+		Assert.assertFalse("ユーザー直接指定でないこと", authParam.isManualApprover());
+	}
+
+	@Test
 	public void 正常_権限判定用パラメーター取得_見積_承認() {
 
 		// ログインユーザー
@@ -341,6 +393,61 @@ public class TestAuthorityJudgeParamCreator {
 		Assert.assertNotNull("正常に次回代理承認者の社員情報が作成されていること", authParam.getNextSubApproverMvEmployeeMaster());
 		Assert.assertNotNull("正常に前回承認者の社員情報が作成されていること", authParam.getPrevApproverMvEmployeeMaster());
 		Assert.assertNotNull("正常に前回代理承認者の社員情報が作成されていること", authParam.getPrevSubApproverMvEmployeeMaster());
+		Assert.assertNull("承認依頼者の社員情報が作成されていないこと", authParam.getRequesterMvEmployeeMaster());
+		Assert.assertFalse("ユーザー直接指定でないこと", authParam.isManualApprover());
+	}
+
+	@Test
+	public void 正常_権限判定用パラメーター取得_契約_参照_承認者が退職済() throws ParseException {
+
+		// ログインユーザー
+		MvEmployeeMaster actor = mvEmployeeMasterRepository.findByMomEmployeeId("00500784");
+
+		// 契約
+		Contract contract = new Contract();
+		contract.setLifecycleStatus(LifecycleStatus.締結中);
+
+		// 承認ルート
+		contract.setContractApprovalRouteList(new ArrayList<>());
+		ContractApprovalRoute contractApprovalRoute = new ContractApprovalRoute();
+		contractApprovalRoute.setApprovalRequesterEmpId("00500784");
+		contractApprovalRoute.setTargetLifecycleStatus(LifecycleStatus.作成中);
+
+		// 承認ルートノード
+		List<ContractApprovalRouteNode> contractApprovalRouteNodeList = new ArrayList<>();
+		ContractApprovalRouteNode contractApprovalRouteNode = new ContractApprovalRouteNode();
+		contractApprovalRouteNode.setId(1L);
+		contractApprovalRouteNode.setApproverEmpId("RETIRED_EMPLOYEE");
+		contractApprovalRouteNode.setSubApproverEmpId("RETIRED_EMPLOYEE");
+		contractApprovalRouteNode.setApproverDeriveMethodDiv(ApproverDeriveMethodDiv.直属上司指定);
+		contractApprovalRouteNodeList.add(contractApprovalRouteNode);
+
+		contractApprovalRoute.setContractApprovalRouteNodeList(contractApprovalRouteNodeList);
+		contract.getContractApprovalRouteList().add(contractApprovalRoute);
+
+		// 担当SA
+		contract.setContractPicSaEmp(new ContractPicSaEmp());
+		contract.getContractPicSaEmp().setMomEmployeeId("00500784");
+
+		// 追加編集者
+		contract.setContractAddedEditorEmpList(new ArrayList<>());
+		contract.getContractAddedEditorEmpList().add(new ContractAddedEditorEmp());
+		contract.getContractAddedEditorEmpList().get(0).setMomEmployeeId("00500784");
+
+		// 顧客
+		contract.setCustomerContract(new CustomerContract());
+		contract.getCustomerContract().setMomKjbSystemId("000000003985825");
+
+		AuthorityJudgeParameter authParam = authorityJudgeParamCreator.createFromContract(contract, actor, AccessType.参照);
+
+		Assert.assertEquals("正常に社員情報が作成されていること", 2, authParam.getMvEmployeeMasterList().size());
+		Assert.assertNotNull("正常に会社情報が作成されていること", authParam.getVKjbMaster());
+		Assert.assertNotNull("正常にログインユーザー情報が作成されていること", authParam.getActorMvEmployeeMaster());
+		Assert.assertEquals("承認者の社員情報が作成されていないこと", 0, authParam.getApproverMvEmployeeMasterList().size());
+		Assert.assertNull("次回承認者の社員情報が作成されていないこと", authParam.getNextApproverMvEmployeeMaster());
+		Assert.assertNull("次回代理承認者の社員情報が作成されていないこと", authParam.getNextSubApproverMvEmployeeMaster());
+		Assert.assertNull("前回承認者の社員情報が作成されていないこと", authParam.getPrevApproverMvEmployeeMaster());
+		Assert.assertNull("前回代理承認者の社員情報が作成されていないこと", authParam.getPrevSubApproverMvEmployeeMaster());
 		Assert.assertNull("承認依頼者の社員情報が作成されていないこと", authParam.getRequesterMvEmployeeMaster());
 		Assert.assertFalse("ユーザー直接指定でないこと", authParam.isManualApprover());
 	}
