@@ -70,7 +70,7 @@ public class EstimationAddedEditorEmpListener {
 		BeanUtils.copyProperties(employeeMaster, estimationAddedEditorEmp, "orgName", "salesCompanyName", "postNumber", "orgPhoneNumber", "salesDepartmentName", "phoneNumber", "faxNumber", "mailAddress");
 
 		if (StringUtils.isBlank(estimationAddedEditorEmp.getOrgName())) {
-			estimationAddedEditorEmp.setOrgName(employeeMaster.getOrgName());
+			estimationAddedEditorEmp.setOrgName(employeeMaster.getOrgBaseName());
 		}
 		if (StringUtils.isBlank(estimationAddedEditorEmp.getSalesCompanyName())) {
 			estimationAddedEditorEmp.setSalesCompanyName(employeeMaster.getHanshSeiskNm());

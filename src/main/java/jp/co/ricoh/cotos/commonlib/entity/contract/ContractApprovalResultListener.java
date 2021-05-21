@@ -65,7 +65,7 @@ public class ContractApprovalResultListener {
 			contractApprovalResult.setActualUserName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
 		}
 		if (StringUtils.isBlank(contractApprovalResult.getActualOrgName())) {
-			contractApprovalResult.setActualOrgName(employeeMaster.getOrgName());
+			contractApprovalResult.setActualOrgName(employeeMaster.getOrgBaseName());
 		}
 	}
 }
