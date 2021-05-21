@@ -71,7 +71,7 @@ public class ContractOperationLogListener {
 			contractOperationLog.setOperatorName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
 		}
 		if (StringUtils.isBlank(contractOperationLog.getOperatorOrgName())) {
-			contractOperationLog.setOperatorOrgName(employeeMaster.getOrgName());
+			contractOperationLog.setOperatorOrgName(employeeMaster.getOrgBaseName());
 		}
 	}
 
