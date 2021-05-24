@@ -70,7 +70,7 @@ public class OperationLogListener {
 			operationLog.setOperatorName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
 		}
 		if (StringUtils.isBlank(operationLog.getOperatorOrgName())) {
-			operationLog.setOperatorOrgName(employeeMaster.getOrgName());
+			operationLog.setOperatorOrgName(employeeMaster.getOrgBaseName());
 		}
 	}
 

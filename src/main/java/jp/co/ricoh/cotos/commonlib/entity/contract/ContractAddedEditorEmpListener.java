@@ -61,7 +61,7 @@ public class ContractAddedEditorEmpListener {
 		BeanUtils.copyProperties(employeeMaster, contractAddedEditorEmp, "orgName", "salesCompanyName", "postNumber", "orgPhoneNumber", "salesDepartmentName", "phoneNumber", "faxNumber", "mailAddress");
 
 		if (StringUtils.isBlank(contractAddedEditorEmp.getOrgName())) {
-			contractAddedEditorEmp.setOrgName(employeeMaster.getOrgName());
+			contractAddedEditorEmp.setOrgName(employeeMaster.getOrgBaseName());
 		}
 		if (StringUtils.isBlank(contractAddedEditorEmp.getSalesCompanyName())) {
 			contractAddedEditorEmp.setSalesCompanyName(employeeMaster.getHanshSeiskNm());
