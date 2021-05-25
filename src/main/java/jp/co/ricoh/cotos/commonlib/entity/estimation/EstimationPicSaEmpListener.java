@@ -70,7 +70,7 @@ public class EstimationPicSaEmpListener {
 		BeanUtils.copyProperties(employeeMaster, estimationPicSaEmp, "orgName", "salesCompanyName", "postNumber", "orgPhoneNumber", "salesDepartmentName", "phoneNumber", "faxNumber", "mailAddress");
 
 		if (StringUtils.isBlank(estimationPicSaEmp.getOrgName())) {
-			estimationPicSaEmp.setOrgName(employeeMaster.getOrgName());
+			estimationPicSaEmp.setOrgName(employeeMaster.getOrgBaseName());
 		}
 		if (StringUtils.isBlank(estimationPicSaEmp.getSalesCompanyName())) {
 			estimationPicSaEmp.setSalesCompanyName(employeeMaster.getHanshSeiskNm());

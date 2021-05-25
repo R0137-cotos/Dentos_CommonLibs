@@ -65,7 +65,7 @@ public class EstimationApprovalResultListener {
 			estimationApprovalResult.setActualUserName(employeeMaster.getJobname1() + employeeMaster.getJobname2());
 		}
 		if (StringUtils.isBlank(estimationApprovalResult.getActualOrgName())) {
-			estimationApprovalResult.setActualOrgName(employeeMaster.getOrgName());
+			estimationApprovalResult.setActualOrgName(employeeMaster.getOrgBaseName());
 		}
 	}
 }
