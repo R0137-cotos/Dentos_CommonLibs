@@ -5,8 +5,8 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EnumType.ApprovalTargetType;
@@ -144,7 +144,7 @@ public class CommunicationListInfo {
 	 * 伝達日時
 	 */
 	@ApiModelProperty(value = "伝達日時", required = true, position = 19, readOnly = true)
-	@Temporal(TemporalType.TIMESTAMP)
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssZ", timezone = "Asia/Tokyo")
 	private Date communicatedAt;
 
 	/**
