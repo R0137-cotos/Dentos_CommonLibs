@@ -60,6 +60,7 @@ import jp.co.ricoh.cotos.commonlib.entity.master.MvTjmmb010UtlItem;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvTjmmb020UtlCd;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvVjmcb010MomKgyMaster;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvWjmoc020OrgAllInfoCom;
+import jp.co.ricoh.cotos.commonlib.entity.master.MvWjmoc030CubicOrgInfoCom;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvWjmoc080DealerInfo;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvWjmoc080DealerInfo.Id;
 import jp.co.ricoh.cotos.commonlib.entity.master.MvWjmoco40EmpAllInfoCom;
@@ -122,6 +123,7 @@ import jp.co.ricoh.cotos.commonlib.repository.master.MvTjmmb010UtlItemRepository
 import jp.co.ricoh.cotos.commonlib.repository.master.MvTjmmb020UtlCdRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvVjmcb010MomKgyMasterRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvWjmoc020OrgAllInfoComRepository;
+import jp.co.ricoh.cotos.commonlib.repository.master.MvWjmoc030CubicOrgInfoComRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvWjmoc080DealerInfoRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MvWjmoco40EmpAllInfoComRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.NonBusinessDayCalendarMasterRepository;
@@ -261,6 +263,8 @@ public class TestMaster {
 	private MvTJmci102MasterRepository mvTJmci102MasterRepository;
 	@Autowired
 	private MvWjmoc020OrgAllInfoComRepository mvWjmoc020OrgAllInfoComRepository;
+	@Autowired
+	private MvWjmoc030CubicOrgInfoComRepository mvWjmoc030CubicOrgInfoComRepository;
 	@Autowired
 	private IfsCsvMasterRepository ifsCsvMasterRepository;
 	@Autowired
@@ -1377,6 +1381,18 @@ public class TestMaster {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 		Date formatDate = sdf.parse("2019/01/01");
 		MvWjmoc020OrgAllInfoCom found = mvWjmoc020OrgAllInfoComRepository.findByOrgId("0913849", formatDate);
+
+		// Entity が null ではないことを確認
+		Assert.assertNotNull(found);
+	}
+
+	@Test
+	public void MvWjmoc030CubicOrgInfoComのテスト() throws Exception {
+
+		// テストデータはなし
+
+		// エンティティの取得
+		MvWjmoc030CubicOrgInfoCom found = mvWjmoc030CubicOrgInfoComRepository.findByCubicCorpIdAndCubicOrgId("3139", "4080404");
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
