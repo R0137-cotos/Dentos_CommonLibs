@@ -5,6 +5,8 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -200,6 +202,45 @@ public class CommunicationListInfo {
 	 */
 	@ApiModelProperty(value = "事業所名", required = false, position = 28, allowableValues = "range[0,255]")
 	private String officeName;
+
+	/**
+	 * 案件番号
+	 */
+	@ApiModelProperty(value = "案件番号", required = false, position = 29, allowableValues = "range[0,255]")
+	private String caseNumber;
+
+	/**
+	 * 電力区分
+	 */
+	@ApiModelProperty(value = "電力区分", required = false, position = 30, allowableValues = "高圧(\"1\"), 低圧(\"2\")")
+	private String voltageCategory;
+
+	/**
+	 * 契約期間From
+	 */
+	@ApiModelProperty(value = "契約期間From", required = false, position = 31)
+	@Temporal(TemporalType.DATE)
+	private Date contractYmdStart;
+
+	/**
+	 * 契約期間To
+	 */
+	@ApiModelProperty(value = "契約期間To", required = false, position = 32)
+	@Temporal(TemporalType.DATE)
+	private Date contractYmdEnd;
+
+	/**
+	 * 供給開始予定月
+	 */
+	@ApiModelProperty(value = "供給開始予定月", required = false, position = 33, allowableValues = "range[0,255]")
+	private String supplyStartScheduledDate;
+
+	/**
+	 * 解約希望日
+	 */
+	@ApiModelProperty(value = "解約希望日", required = false, position = 34)
+	@Temporal(TemporalType.DATE)
+	private Date cancellationHopeDate;
 
 	@PrePersist
 	public void prePersist() {
