@@ -5,11 +5,15 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -82,7 +86,35 @@ public class CommonSendMail {
 	 */
 	public void findMailTemplateMasterAndSendMail(ServiceCategory serviceCategory, String processCategory, Long productGrpMasterId, List<String> emailToList, List<String> emailCcList, List<String> emailBccList, List<String> mailSubjectRepalceValueList, List<String> mailTextRepalceValueList, String uploadFile) throws MessagingException {
 		MailTemplateMaster mailTemplateMaster = mailTemplateMasterRepository.findByServiceCategoryAndProcessCategoryAndProductGrpMasterId(serviceCategory.toString(), processCategory, productGrpMasterId != null ? productGrpMasterId : 0L);
-		sendMail(emailToList, emailCcList, emailBccList, mailTemplateMaster, mailSubjectRepalceValueList, mailTextRepalceValueList, uploadFile);
+		sendMail(emailToList, emailCcList, emailBccList, mailTemplateMaster, mailSubjectRepalceValueList, mailTextRepalceValueList, uploadFile, null);
+	}
+
+	/**
+	 * メールテンプレートマスタ特定&メール送信処理&MIMEヘッダー
+	 *
+	 * @see #findMailTemplateMasterAndSendMail(ServiceCategory, String, Long, List, List, List, List, List, String)
+	 *
+	 * @param emailToList
+	 *            Toメールアドレスリスト(複数設定可能)
+	 * @param emailCcList
+	 *            CCメールアドレスリスト(複数設定可能)
+	 * @param serviceCategory
+	 *            サービスカテゴリー
+	 * @param processCategory
+	 *            処理カテゴリー
+	 * @param mailSubjectRepalceValueList
+	 *            メール件名置換リスト(最大5個まで)
+	 * @param mailTextRepalceValueList
+	 *            メール本文置換リスト(最大10個まで)
+	 * @param uploadFile
+	 *            添付ファイル
+	 * @param mimeHeaderMap
+	 *            MIMEヘッダーマップ
+	 * @throws MessagingException
+	 */
+	public void findMailTemplateMasterAndSendMail(ServiceCategory serviceCategory, String processCategory, Long productGrpMasterId, List<String> emailToList, List<String> emailCcList, List<String> emailBccList, List<String> mailSubjectRepalceValueList, List<String> mailTextRepalceValueList, String uploadFile, Map<String, String> mimeHeaderMap) throws MessagingException {
+		MailTemplateMaster mailTemplateMaster = mailTemplateMasterRepository.findByServiceCategoryAndProcessCategoryAndProductGrpMasterId(serviceCategory.toString(), processCategory, productGrpMasterId != null ? productGrpMasterId : 0L);
+		sendMail(emailToList, emailCcList, emailBccList, mailTemplateMaster, mailSubjectRepalceValueList, mailTextRepalceValueList, uploadFile, mimeHeaderMap);
 	}
 
 	/**
@@ -124,7 +156,33 @@ public class CommonSendMail {
 	 */
 	public void findMailTemplateMasterAndSendMail(long mailTemplateMasterId, List<String> emailToList, List<String> emailCcList, List<String> emailBccList, List<String> mailSubjectRepalceValueList, List<String> mailTextRepalceValueList, String uploadFile) throws MessagingException {
 		MailTemplateMaster mailTemplateMaster = mailTemplateMasterRepository.findOne(mailTemplateMasterId);
-		sendMail(emailToList, emailCcList, emailBccList, mailTemplateMaster, mailSubjectRepalceValueList, mailTextRepalceValueList, uploadFile);
+		sendMail(emailToList, emailCcList, emailBccList, mailTemplateMaster, mailSubjectRepalceValueList, mailTextRepalceValueList, uploadFile, null);
+	}
+
+	/**
+	 * メールテンプレートマスタ特定&メール送信処理&MIMEヘッダー
+	 *
+	 * @see #findMailTemplateMasterAndSendMail(long, List, List, List, List, List, String)
+	 *
+	 * @param mailTemplateMasterId
+	 *            メールテンプレートマスタID
+	 * @param emailToList
+	 *            Toメールアドレスリスト(複数設定可能)
+	 * @param emailCcList
+	 *            CCメールアドレスリスト(複数設定可能)
+	 * @param mailSubjectRepalceValueList
+	 *            メール件名置換リスト(最大5個まで)
+	 * @param mailTextRepalceValueList
+	 *            メール本文置換リスト(最大10個まで)
+	 * @param uploadFile
+	 *            添付ファイル
+	 * @param mimeHeaderMap
+	 *            MIMEヘッダーマップ
+	 * @throws MessagingException
+	 */
+	public void findMailTemplateMasterAndSendMail(long mailTemplateMasterId, List<String> emailToList, List<String> emailCcList, List<String> emailBccList, List<String> mailSubjectRepalceValueList, List<String> mailTextRepalceValueList, String uploadFile, Map<String, String> mimeHeaderMap) throws MessagingException {
+		MailTemplateMaster mailTemplateMaster = mailTemplateMasterRepository.findOne(mailTemplateMasterId);
+		sendMail(emailToList, emailCcList, emailBccList, mailTemplateMaster, mailSubjectRepalceValueList, mailTextRepalceValueList, uploadFile, mimeHeaderMap);
 	}
 
 	/**
@@ -166,7 +224,33 @@ public class CommonSendMail {
 	 */
 	public void findMailTemplateMasterAndSendMailAndAttachedFiles(long mailTemplateMasterId, List<String> emailToList, List<String> emailCcList, List<String> emailBccList, List<String> mailSubjectRepalceValueList, List<String> mailTextRepalceValueList, List<String> uploadFileList) throws MessagingException {
 		MailTemplateMaster mailTemplateMaster = mailTemplateMasterRepository.findOne(mailTemplateMasterId);
-		sendMail(emailToList, emailCcList, emailBccList, mailTemplateMaster, mailSubjectRepalceValueList, mailTextRepalceValueList, uploadFileList);
+		sendMail(emailToList, emailCcList, emailBccList, mailTemplateMaster, mailSubjectRepalceValueList, mailTextRepalceValueList, uploadFileList, null);
+	}
+
+	/**
+	 * メールテンプレートマスタ特定&メール送信処理&MIMEヘッダー
+	 *
+	 * @see #findMailTemplateMasterAndSendMailAndAttachedFiles(long, List, List, List, List, List, List)
+	 *
+	 * @param mailTemplateMasterId
+	 *            メールテンプレートマスタID
+	 * @param emailToList
+	 *            Toメールアドレスリスト(複数設定可能)
+	 * @param emailCcList
+	 *            CCメールアドレスリスト(複数設定可能)
+	 * @param mailSubjectRepalceValueList
+	 *            メール件名置換リスト(最大5個まで)
+	 * @param mailTextRepalceValueList
+	 *            メール本文置換リスト(最大10個まで)
+	 * @param uploadFileList
+	 *            添付ファイル(複数)
+	 * @param mimeHeaderMap
+	 *            MIMEヘッダーマップ
+	 * @throws MessagingException
+	 */
+	public void findMailTemplateMasterAndSendMailAndAttachedFiles(long mailTemplateMasterId, List<String> emailToList, List<String> emailCcList, List<String> emailBccList, List<String> mailSubjectRepalceValueList, List<String> mailTextRepalceValueList, List<String> uploadFileList, Map<String, String> mimeHeaderMap) throws MessagingException {
+		MailTemplateMaster mailTemplateMaster = mailTemplateMasterRepository.findOne(mailTemplateMasterId);
+		sendMail(emailToList, emailCcList, emailBccList, mailTemplateMaster, mailSubjectRepalceValueList, mailTextRepalceValueList, uploadFileList, mimeHeaderMap);
 	}
 
 	/**
@@ -184,10 +268,12 @@ public class CommonSendMail {
 	 *            メール本文置換リスト(最大10個まで)
 	 * @param uploadFile
 	 *            添付ファイル
+	 * @param mimeHeaderMap
+	 *            MIMEヘッダーマップ
 	 * @throws MessagingException
 	 */
 	@Async
-	private void sendMail(List<String> emailToList, List<String> emailCcList, List<String> emailBccList, MailTemplateMaster mailTemplateMaster, List<String> mailSubjectRepalceValueList, List<String> mailTextRepalceValueList, String uploadFile) throws MessagingException {
+	private void sendMail(List<String> emailToList, List<String> emailCcList, List<String> emailBccList, MailTemplateMaster mailTemplateMaster, List<String> mailSubjectRepalceValueList, List<String> mailTextRepalceValueList, String uploadFile, Map<String, String> mimeHeaderMap) throws MessagingException {
 		MimeMessage attachedMsg = javaMailSender.createMimeMessage();
 		attachedMsg.setHeader("Content-Transfer-Encoding", "base64");
 		MimeMessageHelper attachedHelper = new MimeMessageHelper(attachedMsg, true, StandardCharsets.UTF_8.name());
@@ -213,6 +299,14 @@ public class CommonSendMail {
 		}
 		SMTPMessage SMTPMessage = new SMTPMessage(attachedMsg);
 		SMTPMessage.setEnvelopeFrom(Optional.ofNullable(mailTemplateMaster.getEnvelopeFrom()).orElse(appProperties.getMailProperties().getEnvelopeFromMailAddress()));
+		// MIMEヘッダー追加
+		if (MapUtils.isNotEmpty(mimeHeaderMap)) {
+			for (Entry<String, String> entry : mimeHeaderMap.entrySet()) {
+				if (!StringUtils.isEmpty(entry.getValue())) {
+					SMTPMessage.setHeader(entry.getKey(), entry.getValue());
+				}
+			}
+		}
 		javaMailSender.send(SMTPMessage);
 	}
 
@@ -231,10 +325,12 @@ public class CommonSendMail {
 	*            メール本文置換リスト(最大10個まで)
 	* @param uploadFileList
 	*            添付ファイル(複数)
+	* @param mimeHeaderMap
+	*            MIMEヘッダーマップ
 	* @throws MessagingException
 	*/
 	@Async
-	private void sendMail(List<String> emailToList, List<String> emailCcList, List<String> emailBccList, MailTemplateMaster mailTemplateMaster, List<String> mailSubjectRepalceValueList, List<String> mailTextRepalceValueList, List<String> uploadFileList) throws MessagingException {
+	private void sendMail(List<String> emailToList, List<String> emailCcList, List<String> emailBccList, MailTemplateMaster mailTemplateMaster, List<String> mailSubjectRepalceValueList, List<String> mailTextRepalceValueList, List<String> uploadFileList, Map<String, String> mimeHeaderMap) throws MessagingException {
 		MimeMessage attachedMsg = javaMailSender.createMimeMessage();
 		attachedMsg.setHeader("Content-Transfer-Encoding", "base64");
 		MimeMessageHelper attachedHelper = new MimeMessageHelper(attachedMsg, true, StandardCharsets.UTF_8.name());
@@ -263,6 +359,14 @@ public class CommonSendMail {
 
 		SMTPMessage SMTPMessage = new SMTPMessage(attachedMsg);
 		SMTPMessage.setEnvelopeFrom(Optional.ofNullable(mailTemplateMaster.getEnvelopeFrom()).orElse(appProperties.getMailProperties().getEnvelopeFromMailAddress()));
+		// MIMEヘッダー追加
+		if (MapUtils.isNotEmpty(mimeHeaderMap)) {
+			for (Entry<String, String> entry : mimeHeaderMap.entrySet()) {
+				if (!StringUtils.isEmpty(entry.getValue())) {
+					SMTPMessage.setHeader(entry.getKey(), entry.getValue());
+				}
+			}
+		}
 		javaMailSender.send(SMTPMessage);
 	}
 
