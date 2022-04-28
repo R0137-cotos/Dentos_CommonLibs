@@ -67,5 +67,5 @@ spring:
     defaultEncoding: UTF-8
 remote:
   momauthority:
-    url: http://165.96.254.183:10110/jmo/services/KengenService
+    url: https://www.rizm.jw1.nihon-os.ricoh.co.jp/jmo/services/KengenService
     relatedid: CSP
