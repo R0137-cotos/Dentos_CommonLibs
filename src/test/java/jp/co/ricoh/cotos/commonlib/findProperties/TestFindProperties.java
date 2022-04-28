@@ -60,7 +60,7 @@ public class TestFindProperties {
 		Assert.assertEquals("権限:ヘッダー画面表示用ユーザー権限要否が正しく取得されること", "X-Cotos-Require-Disp-Authorize", appProperties.getAuthProperties().getHeadersProperties().getRequireDispAuthorize());
 		Assert.assertEquals("権限:ヘッダー画面表示用ユーザー権限が正しく取得されること", "X-Cotos-Disp-Authorization", appProperties.getAuthProperties().getHeadersProperties().getDispAuthorization());
 		Assert.assertEquals("権限:ヘッダーコンテントタイプが正しく取得されること", "Content-type", appProperties.getAuthProperties().getHeadersProperties().getContentType());
-		Assert.assertEquals("外部参照:MoM承認権限用URLが正しく取得されること", "http://165.96.254.183:10110/jmo/services/KengenService", appProperties.getRemoteMomProperties().getUrl());
+		Assert.assertEquals("外部参照:MoM承認権限用URLが正しく取得されること", "https://www.rizm.jw1.nihon-os.ricoh.co.jp/jmo/services/KengenService", appProperties.getRemoteMomProperties().getUrl());
 		Assert.assertEquals("外部参照:MoM承認権限用リテラルIDが正しく取得されること", "CSP", appProperties.getRemoteMomProperties().getRelatedid());
 		Assert.assertEquals("filenameが取得できること", "filename", appProperties.getAuthProperties().getHeadersProperties().getFilename());
 	}
