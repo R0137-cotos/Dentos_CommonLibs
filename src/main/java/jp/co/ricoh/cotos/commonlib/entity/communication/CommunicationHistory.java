@@ -237,6 +237,13 @@ public class CommunicationHistory extends EntityBase {
 	@ApiModelProperty(value = "アプリケーションID", required = false, position = 24, allowableValues = "range[0,255]")
 	private String appId;
 
+	/**
+	 * オブザーバー
+	 */
+	@Size(max = 255)
+	@ApiModelProperty(value = "オブザーバー", required = false, position = 25, allowableValues = "range[0,255]")
+	private String observer;
+
 	@PrePersist
 	public void prePersist() {
 		super.prePersist();
