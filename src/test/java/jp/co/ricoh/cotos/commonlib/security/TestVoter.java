@@ -1,11 +1,11 @@
 package jp.co.ricoh.cotos.commonlib.security;
 
-import java.util.Collection;
+import java.util.function.Supplier;
 
-import org.springframework.security.access.AccessDecisionVoter;
-import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.authorization.AuthorizationDecision;
+import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.web.FilterInvocation;
+import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,42 +14,30 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * テスト用投票クラス
  */
 @Component
-public class TestVoter implements AccessDecisionVoter<FilterInvocation> {
+public class TestVoter implements AuthorizationManager<RequestAuthorizationContext> {
 
 	@Override
-	public boolean supports(ConfigAttribute attribute) {
-		return true;
-	}
+	public AuthorizationDecision check(Supplier<Authentication> auth, RequestAuthorizationContext context) {
 
-	@Override
-	public boolean supports(Class<?> clazz) {
-		return true;
-	}
-
-	@Override
-	public int vote(Authentication authentication, FilterInvocation fi, Collection<ConfigAttribute> attributes) {
+		Authentication authentication = auth.get();
 
 		if (authentication == null) {
-			return ACCESS_DENIED;
+			return new AuthorizationDecision(false);
 		}
-		
-		boolean hasBody = Boolean.valueOf(fi.getRequest().getParameter("hasBody"));
-		boolean isSuccess = Boolean.valueOf(fi.getRequest().getParameter("isSuccess"));
+
+		boolean hasBody = Boolean.valueOf(context.getRequest().getParameter("hasBody"));
+		boolean isSuccess = Boolean.valueOf(context.getRequest().getParameter("isSuccess"));
 
 		if (hasBody) {
 			try {
 				// リクエストBODYから情報を取得
 				ObjectMapper om = new ObjectMapper();
-				om.readValue(fi.getHttpRequest().getInputStream(), TestEntity.class);
+				om.readValue(context.getRequest().getInputStream(), TestEntity.class);
 			} catch (Exception e) {
 				throw new RuntimeException();
 			}
 		}
 
-		if (isSuccess) {
-			return ACCESS_GRANTED;
-		} else {
-			return ACCESS_DENIED;
-		}
+		return new AuthorizationDecision(isSuccess);
 	}
 }

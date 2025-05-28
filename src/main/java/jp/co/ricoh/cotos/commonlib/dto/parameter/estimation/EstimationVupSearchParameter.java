@@ -2,7 +2,7 @@ package jp.co.ricoh.cotos.commonlib.dto.parameter.estimation;
 
 import java.util.List;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

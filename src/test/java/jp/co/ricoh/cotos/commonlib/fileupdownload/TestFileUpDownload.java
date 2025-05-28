@@ -13,7 +13,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -28,7 +27,7 @@ import jp.co.ricoh.cotos.commonlib.repository.common.AttachedFileRepository;
 import jp.co.ricoh.cotos.commonlib.util.AppProperties;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest
 public class TestFileUpDownload {
 
 	@Autowired
@@ -87,7 +86,7 @@ public class TestFileUpDownload {
 
 		File file = ファイルコピー("/src/test/resources/attachmentFiles/testFile1.xlsx", "1_testFile1_delete.xlsx");
 		fileUpDownload.deleteFile(11L);
-		Assert.assertTrue("添付ファイル情報が存在しないこと", !attachedFileRepository.exists(11L));
+		Assert.assertTrue("添付ファイル情報が存在しないこと", !attachedFileRepository.existsById(11L));
 		Assert.assertTrue("ファイルが存在しないこと", !file.exists());
 	}
 
@@ -196,7 +195,7 @@ public class TestFileUpDownload {
 				StreamUtils.copy(stream, out);
 			}
 			Assert.assertTrue("ファイル内容が一致していること", Arrays.equals(Files.readAllBytes(file.toPath()), Files.readAllBytes(compareFile.toPath())));
-			AttachedFile attachedFileDb = attachedFileRepository.findOne(attachedFileId);
+			AttachedFile attachedFileDb = attachedFileRepository.findById(attachedFileId).get();
 			Assert.assertEquals("物理ファイル名が正しく登録されていること", attachedFileId + "_" + compareFileNm, attachedFileDb.getFilePhysicsName());
 
 			// 作成した一時ファイルを削除

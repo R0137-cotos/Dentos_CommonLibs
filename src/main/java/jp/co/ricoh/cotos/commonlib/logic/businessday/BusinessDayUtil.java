@@ -35,7 +35,7 @@ public class BusinessDayUtil {
 	 * @return
 	 */
 	public boolean isBusinessDay(Date date) {
-		NonBusinessDayCalendarMaster nonBusinessDayCalendarMaster = nonBusinessDayCalendarMasterRepository.findOne(date);
+		NonBusinessDayCalendarMaster nonBusinessDayCalendarMaster = nonBusinessDayCalendarMasterRepository.findById(date).orElse(null);
 		return nonBusinessDayCalendarMaster == null;
 	}
 

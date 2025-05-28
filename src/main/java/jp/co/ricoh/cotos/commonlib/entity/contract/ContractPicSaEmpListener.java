@@ -2,8 +2,8 @@ package jp.co.ricoh.cotos.commonlib.entity.contract;
 
 import java.util.ArrayList;
 
-import javax.persistence.PrePersist;
-import javax.transaction.Transactional;
+import jakarta.persistence.PrePersist;
+import jakarta.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

@@ -1,11 +1,11 @@
 buildscript {
     ext {
-        springBootVersion = '1.5.9.RELEASE'
+        springBootVersion = '3.4.4'
     }
     repositories {
         mavenCentral()
         maven {
-            url "https://plugins.gradle.org/m2/"
+            url = "https://plugins.gradle.org/m2/"
         }
     }
     dependencies {
@@ -19,47 +19,64 @@ apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: "org.sonarqube"
 apply plugin: "jacoco"
-apply plugin: 'maven'
+apply plugin: 'maven-publish'
+
+java {
+    toolchain {
+         languageVersion = JavaLanguageVersion.of(21)
+    }
+}
 
 repositories {
-    jcenter()
     mavenCentral()
 }
 
 dependencies {
-    compile('org.springframework.boot:spring-boot-starter-data-jpa')
-    compile('org.springframework.boot:spring-boot-starter-security')
-    compile('org.springframework.boot:spring-boot-starter-web')
-    compile('org.springframework.boot:spring-boot-starter-mail')
-    compile group: 'com.github.spullara.mustache.java', name: 'compiler', version: '0.9.5'
-    compileOnly('org.projectlombok:lombok')
-    compile('org.hibernate:hibernate-validator:5.3.5.Final')
-    compile('com.fasterxml.jackson.dataformat:jackson-dataformat-csv:2.9.6')
-    compile 'org.jxls:jxls:2.4.3'
-    compile 'org.jxls:jxls-poi:1.0.14'
-    compile group: 'org.apache.poi', name : 'poi', version: '3.17'
-    compile('com.auth0:java-jwt:3.4.0')
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa:3.4.4')
+    implementation('org.springframework.boot:spring-boot-starter-security:3.4.4')
+    implementation('org.springframework.boot:spring-boot-starter-web:3.4.4')
+    implementation('org.springframework.boot:spring-boot-starter-mail:3.4.4')
+    implementation group: 'com.github.spullara.mustache.java', name: 'compiler', version: '0.9.14'
+    compileOnly('org.projectlombok:lombok:1.18.36')
+    annotationProcessor 'org.projectlombok:lombok:1.18.36'
+    implementation('org.hibernate:hibernate-validator:8.0.2.Final')
+    implementation ('org.hibernate.orm:hibernate-core:6.2.5.Final')
+    implementation('com.fasterxml.jackson.dataformat:jackson-dataformat-csv:2.9.6')
+    implementation ('org.jxls:jxls:3.0.0')
+    implementation ('org.jxls:jxls-poi:3.0.0')
+    implementation group: 'org.apache.poi', name : 'poi', version: '4.5'
+    implementation('com.auth0:java-jwt:4.5.0')
 
-    compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.7.0'
-    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.7.0'
-    compile group: 'io.swagger', name: 'swagger-core', version: '1.5.15'
-    compile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.3'
-    compile group: 'org.apache.axis', name: 'axis', version: '1.4'
-    compile group: 'javax.xml', name: 'jaxrpc-api', version: '1.1'
-    compile group: 'wsdl4j', name: 'wsdl4j', version: '1.5.2'
-    compile group: 'commons-discovery', name: 'commons-discovery', version: '0.4'
-    compile fileTree(dir: 'libs', include: '*.jar')
-    runtime('org.springframework.boot:spring-boot-devtools')
+    implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.8.0'
+    implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.8.0'
+    implementation group: 'io.swagger', name: 'swagger-core', version: '1.5.15'
+    implementation group: 'commons-beanutils', name: 'commons-beanutils', version: '1.10.1'
+    implementation group: 'org.apache.axis', name: 'axis', version: '1.4'
+    implementation group: 'javax.xml', name: 'jaxrpc-api', version: '1.1'
+    implementation group: 'wsdl4j', name: 'wsdl4j', version: '1.6.3'
+    implementation group: 'commons-discovery', name: 'commons-discovery', version: '0.5'
+    implementation fileTree(dir: 'libs', include: '*.jar')
+    runtimeOnly('org.springframework.boot:spring-boot-devtools:3.4.4')
 
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.jmockit:jmockit:1.21'
-    testCompile('org.dbunit:dbunit:2.5.4')
-    testCompileOnly('org.projectlombok:lombok')
-    testCompile('org.springframework.boot:spring-boot-starter-test')
-    testCompile('org.springframework.security:spring-security-test')
-    testCompile group: 'com.ninja-squad', name: 'DbSetup', version: '2.1.0'
-    testCompile 'org.apache.commons:commons-lang3:3.4'
-    testRuntime('com.h2database:h2')
+    testImplementation ('junit:junit:4.13.2')
+    testImplementation ('org.jmockit:jmockit:1.49')
+    testImplementation('org.dbunit:dbunit:3.0.0')
+    testCompileOnly('org.projectlombok:lombok:1.18.36')
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.36'
+    testImplementation('org.springframework.boot:spring-boot-starter-test:3.4.4')
+    testImplementation('org.springframework.security:spring-security-test:6.4.4')
+    testImplementation group: 'com.ninja-squad', name: 'DbSetup', version: '2.1.0'
+    testImplementation ('org.apache.commons:commons-lang3:3.17.0')
+    testRuntimeOnly('com.h2database:h2:2.3.232')
+    
+    implementation ('log4j:log4j:1.2.17')
+    implementation ('net.bytebuddy:byte-buddy:1.17.5')
+    implementation ('com.oracle.database.jdbc:ojdbc8:23.7.0.25.01')
+    
+    implementation ('org.openjdk.nashorn:nashorn-core:15.6')
+    implementation ('jakarta.validation:jakarta.validation-api:3.1.1')
+    implementation ('org.springframework.boot:spring-boot-starter-actuator:3.4.4')
+    implementation ('org.springframework.boot:spring-boot-starter-validation:3.4.4')
 }
 
 sonarqube {
@@ -71,20 +88,35 @@ sonarqube {
 
 def repo = new File(rootDir, "repository")
 
-uploadArchives {
+publishing {
     repositories {
-        mavenDeployer {
-            repository url: "file://${repo.absolutePath}"
-            pom.version = '0.0.362'
-            pom.groupId = 'jp.co.ricoh.cotos'
-            pom.artifactId = 'dentos-common-libraries'
+        maven {
+            url = "file://${repo.absolutePath}"
+            version = '0.0.362'
+            group = 'jp.co.ricoh.cotos'
+            name = 'dentos-common-libraries'
         }
     }
 }
 task sourcesJar(type: Jar, dependsOn:classes) {
-     classifier = 'sources'
+     archiveClassifier.set('sources')
      from sourceSets.main.allSource
 }
 artifacts {
      archives sourcesJar
+}
+
+test {
+	useJUnit()
+	forkEvery = 0L
+	maxHeapSize = '3G'
+
+	testLogging {
+		events "passed", "failed"
+		exceptionFormat "short"
+		showExceptions true
+		showCauses true
+		showStackTraces true
+	}
+
 }

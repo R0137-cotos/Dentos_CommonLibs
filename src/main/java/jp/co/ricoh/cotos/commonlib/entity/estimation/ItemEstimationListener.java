@@ -1,7 +1,7 @@
 package jp.co.ricoh.cotos.commonlib.entity.estimation;
 
-import javax.persistence.PrePersist;
-import javax.transaction.Transactional;
+import jakarta.persistence.PrePersist;
+import jakarta.transaction.Transactional;
 
 import org.apache.axis.utils.StringUtils;
 import org.springframework.beans.BeanUtils;

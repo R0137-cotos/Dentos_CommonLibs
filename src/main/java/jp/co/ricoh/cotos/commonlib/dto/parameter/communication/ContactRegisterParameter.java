@@ -2,8 +2,8 @@ package jp.co.ricoh.cotos.commonlib.dto.parameter.communication;
 
 import java.util.List;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 
 import io.swagger.annotations.ApiParam;
 import lombok.Data;

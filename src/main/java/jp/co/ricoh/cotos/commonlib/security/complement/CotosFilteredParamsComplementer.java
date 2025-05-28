@@ -5,7 +5,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -241,7 +241,7 @@ public class CotosFilteredParamsComplementer {
 	private Object find(CotosComplementTarget cotosComplementTarget, Object id) {
 		// コンテキストからRepositoryを取得
 		CrudRepository repository = (CrudRepository) context.getBean(cotosComplementTarget.repository());
-		Object found = repository.findOne((Serializable) id);
+		Object found = repository.findById((Serializable) id);
 
 		// 永続化解除
 		entityManager.clear();

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -12,7 +12,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -31,7 +30,7 @@ import jp.co.ricoh.cotos.commonlib.repository.communication.ContactRepository;
 import jp.co.ricoh.cotos.commonlib.repository.communication.ContactToRepository;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest
 public class TestCommunication {
 
 	@Autowired
@@ -116,7 +115,7 @@ public class TestCommunication {
 	@Test
 	public void 親がいない場合には親がnullになることを確認_問い合わせ() {
 		context.getBean(DBConfig.class).initTargetTestData("repository/communication.sql");
-		Contact child = contactRepository.findOne(4L);
+		Contact child = contactRepository.findById(4L).orElse(null);
 		Assert.assertNull(child.getParent());
 	}
 
@@ -129,7 +128,7 @@ public class TestCommunication {
 
 		idList.stream().forEach(id -> {
 			// データが取得できることを確認
-			T found = repository.findOne(id);
+			T found = repository.findById(id).get();
 
 			Assert.assertNotNull(found);
 			// 全てのカラムがNullではないことを確認

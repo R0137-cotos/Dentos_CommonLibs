@@ -9,7 +9,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -52,7 +51,7 @@ import jp.co.ricoh.cotos.commonlib.repository.estimation.ProductEstimationReposi
  *
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest
 public class TestEstimation {
 
 	static ConfigurableApplicationContext context;
@@ -124,7 +123,7 @@ public class TestEstimation {
 	@Test
 	public void AttachedFileRepositoryのテスト() throws Exception {
 
-		EstimationAttachedFile found = estimationAttachedFileRepository.findOne(401L);
+		EstimationAttachedFile found = estimationAttachedFileRepository.findById(401L).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -136,7 +135,7 @@ public class TestEstimation {
 	@Test
 	public void OperationLogRepositoryのテスト() throws Exception {
 
-		OperationLog found = operationLogRepository.findOne(401L);
+		OperationLog found = operationLogRepository.findById(401L).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -148,7 +147,7 @@ public class TestEstimation {
 	@Test
 	public void EstimationAddedEditorEmpRepositoryのテスト() throws Exception {
 
-		EstimationAddedEditorEmp found = estimationAddedEditorEmpRepository.findOne(401L);
+		EstimationAddedEditorEmp found = estimationAddedEditorEmpRepository.findById(401L).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -160,7 +159,7 @@ public class TestEstimation {
 	@Test
 	public void DealerEstimationRepositoryのテスト() throws Exception {
 
-		DealerEstimation found = dealerEstimationRepository.findOne(402L);
+		DealerEstimation found = dealerEstimationRepository.findById(402L).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -173,7 +172,7 @@ public class TestEstimation {
 	@Test
 	public void EstimationCheckResultRepositoryのテスト() throws Exception {
 
-		EstimationCheckResult found = estimationCheckResultRepository.findOne(401L);
+		EstimationCheckResult found = estimationCheckResultRepository.findById(401L).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -186,7 +185,7 @@ public class TestEstimation {
 	@Test
 	public void EstimationDetailRepositoryのテスト() throws Exception {
 
-		EstimationDetail found = estimationDetailRepository.findOne(401L);
+		EstimationDetail found = estimationDetailRepository.findById(401L).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -199,7 +198,7 @@ public class TestEstimation {
 	@Test
 	public void ProductEstimationRepositoryのテスト() throws Exception {
 
-		ProductEstimation found = productEstimationRepository.findOne(401L);
+		ProductEstimation found = productEstimationRepository.findById(401L).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -212,7 +211,7 @@ public class TestEstimation {
 	@Test
 	public void EstimationApprovalResultRepositoryのテスト() throws Exception {
 
-		EstimationApprovalResult found = estimationApprovalResultRepository.findOne(401L);
+		EstimationApprovalResult found = estimationApprovalResultRepository.findById(401L).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -225,7 +224,7 @@ public class TestEstimation {
 	@Test
 	public void EstimationApprovalRouteNodeRepositoryのテスト() throws Exception {
 
-		EstimationApprovalRouteNode found = estimationApprovalRouteNodeRepository.findOne(401L);
+		EstimationApprovalRouteNode found = estimationApprovalRouteNodeRepository.findById(401L).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -241,7 +240,7 @@ public class TestEstimation {
 	@Test
 	public void CustomerEstimationRepositoryのテスト() throws Exception {
 
-		CustomerEstimation found = customerEstimationRepository.findOne(401L);
+		CustomerEstimation found = customerEstimationRepository.findById(401L).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -254,7 +253,7 @@ public class TestEstimation {
 	@Test
 	public void EstimationPicSaEmpRepositoryのテスト() throws Exception {
 
-		EstimationPicSaEmp found = estimationPicSaEmpRepository.findOne(401L);
+		EstimationPicSaEmp found = estimationPicSaEmpRepository.findById(401L).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -267,7 +266,7 @@ public class TestEstimation {
 	@Test
 	public void EstimationApprovalRouteRepositoryのテスト() throws Exception {
 
-		EstimationApprovalRoute found = estimationApprovalRouteRepository.findOne(401L);
+		EstimationApprovalRoute found = estimationApprovalRouteRepository.findById(401L).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -282,7 +281,7 @@ public class TestEstimation {
 	@Test
 	public void ItemEstimationRepositoryのテスト() throws Exception {
 
-		ItemEstimation found = itemEstimationRepository.findOne(401L);
+		ItemEstimation found = itemEstimationRepository.findById(401L).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -295,7 +294,7 @@ public class TestEstimation {
 	@Test
 	public void EstimationRepositoryのテスト() throws Exception {
 
-		Estimation found = estimationRepository.findOne(4L);
+		Estimation found = estimationRepository.findById(4L).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);

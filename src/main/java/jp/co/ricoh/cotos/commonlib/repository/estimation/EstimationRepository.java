@@ -1,5 +1,6 @@
 package jp.co.ricoh.cotos.commonlib.repository.estimation;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
@@ -16,7 +17,7 @@ public interface EstimationRepository extends CrudRepository<Estimation, Long> {
 
 	public List<Estimation> findByIdInOrderByEstimationNumber(List<Long> id);
 
-	public List<Estimation> findByOriginContractNumberInOrderByEstimationNumber(String originContractNumber);
+	public List<Estimation> findByOriginContractNumberInOrderByEstimationNumber(Collection<String> originContractNumber);
 
 	public List<Estimation> findByEstimationNumberAndEstimationBranchNumber(String estimationNumber, int estimationBranchNumber);
 

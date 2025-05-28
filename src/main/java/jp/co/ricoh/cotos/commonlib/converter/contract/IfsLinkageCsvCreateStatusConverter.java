@@ -1,11 +1,11 @@
 package jp.co.ricoh.cotos.commonlib.converter.contract;
 
-import javax.persistence.AttributeConverter;
-import javax.persistence.Converter;
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 
 import jp.co.ricoh.cotos.commonlib.entity.contract.Contract.ContractType;
 
-@Converter(autoApply = true)
+@Converter(autoApply = false)
 public class IfsLinkageCsvCreateStatusConverter implements AttributeConverter<ContractType, String> {
 	@Override
 	public String convertToDatabaseColumn(ContractType contractType) {

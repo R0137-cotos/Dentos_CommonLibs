@@ -9,9 +9,9 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -37,7 +37,7 @@ import jp.co.ricoh.cotos.commonlib.util.HeadersProperties;
  * TestContactDtoのテストクラス
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, properties = "test.context.id = TestCommunicationDto")
 public class TestCommunicationDto {
 
 	private static final String STR_256 = "0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345";
@@ -86,7 +86,7 @@ public class TestCommunicationDto {
 
 	@Test
 	public void ContactDtoのテスト() throws Exception {
-		Contact entity = contactRepository.findOne(1L);
+		Contact entity = contactRepository.findById(1L).get();
 		ContactDto testTarget = new ContactDto();
 		BeanUtils.copyProperties(testTarget, entity);
 
@@ -140,7 +140,7 @@ public class TestCommunicationDto {
 
 	@Test
 	public void ContactToDtoのテスト() throws Exception {
-		ContactTo entity = contactToRepository.findOne(1L);
+		ContactTo entity = contactToRepository.findById(1L).get();
 		ContactToDto testTarget = new ContactToDto();
 		BeanUtils.copyProperties(testTarget, entity);
 
@@ -173,7 +173,7 @@ public class TestCommunicationDto {
 
 	@Test
 	public void CommunicationRegisterParameterのテスト() throws Exception {
-		Communication entity = communicationRepository.findOne(1L);
+		Communication entity = communicationRepository.findById(1L).get();
 		CommunicationRegisterParameter dto = new CommunicationRegisterParameter();
 		dto.setCommunication(entity);
 		List<String> dummy_list = new ArrayList<String>();
@@ -202,7 +202,7 @@ public class TestCommunicationDto {
 
 	@Test
 	public void ContactRegisterParameterのテスト() throws Exception {
-		Contact entity = contactRepository.findOne(1L);
+		Contact entity = contactRepository.findById(1L).get();
 		ContactRegisterParameter dto = new ContactRegisterParameter();
 		ContactDto contactDto = new ContactDto();
 		BeanUtils.copyProperties(contactDto, entity);

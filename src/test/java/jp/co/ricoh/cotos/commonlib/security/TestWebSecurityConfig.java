@@ -1,21 +1,19 @@
 package jp.co.ricoh.cotos.commonlib.security;
 
-import java.util.Arrays;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.Http401AuthenticationEntryPoint;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.access.AccessDecisionManager;
-import org.springframework.security.access.vote.AffirmativeBased;
 import org.springframework.security.authentication.AccountStatusUserDetailsChecker;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
@@ -23,7 +21,7 @@ import org.springframework.security.web.authentication.preauth.PreAuthenticatedA
 
 @Configuration
 @EnableWebSecurity
-public class TestWebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class TestWebSecurityConfig {
 
 	@Autowired
 	TestVoter testVoter;
@@ -33,38 +31,39 @@ public class TestWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	MultipleReadEnableFilter multipleReadEnableFilter;
-
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/test/api/swagger-ui.html");
-		web.debug(true);
+	
+	@Bean
+	public WebSecurityCustomizer webSecurityCustomizer() {
+		return (web) -> web.ignoring().requestMatchers("/test/api/swagger-ui.html").and().debug(true);
 	}
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
 
 		http.addFilterAfter(accessLogOutputFilter, PreAuthenticationFilter.class);
 		http.addFilterAfter(multipleReadEnableFilter, AccessLogOutputFilter.class);
 
-		http.csrf().disable()
+		http.csrf(csrf -> csrf.disable())
 
 				// 認証処理用のフィルターを追加
-				.addFilter(preAuthenticatedProcessingFilter()).exceptionHandling().authenticationEntryPoint(new Http401AuthenticationEntryPoint("Bearer error=\"invalid_token\""))
+				.addFilter(preAuthenticatedProcessingFilter(authenticationManager)).exceptionHandling(handler -> handler.authenticationEntryPoint(new Http401AuthenticationEntryPoint("Bearer error=\"invalid_token\"")))
 				// 成功・失敗処理のハンドラーを追加
-				.and().formLogin().and().logout().logoutSuccessHandler(new SimpleUrlLogoutSuccessHandler())
+				.formLogin(Customizer.withDefaults()).logout(logout -> logout.logoutSuccessHandler(new SimpleUrlLogoutSuccessHandler()))
 				// 認可処理用のインスタンスを追加
-				.and().authorizeRequests().anyRequest().authenticated().accessDecisionManager(createAccessDecisionManager())
+				.authorizeHttpRequests(httpRequests -> httpRequests.anyRequest().access(testVoter))
 				// 認証情報を取得できなければ、401エラー
-				.and().anonymous().disable().exceptionHandling().authenticationEntryPoint(new Http401AuthenticationEntryPoint("Bearer error=\"invalid_token\""));
+				.anonymous(anonymous -> anonymous.disable()).exceptionHandling(handler -> handler.authenticationEntryPoint(new Http401AuthenticationEntryPoint("Bearer error=\"invalid_token\"")));
 
-		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+		return http.build();
 	}
 
 	// フィルター
 	@Bean
-	public AbstractPreAuthenticatedProcessingFilter preAuthenticatedProcessingFilter() throws Exception {
+	public AbstractPreAuthenticatedProcessingFilter preAuthenticatedProcessingFilter(AuthenticationManager authenticationManager) throws Exception {
 		PreAuthenticationFilter filter = new PreAuthenticationFilter();
-		filter.setAuthenticationManager(authenticationManager());
+		filter.setAuthenticationManager(authenticationManager);
 		return filter;
 	}
 
@@ -72,22 +71,20 @@ public class TestWebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public AuthenticationUserDetailsService<PreAuthenticatedAuthenticationToken> authenticationUserDetailsService() {
 		return new CotosUserDetailsService();
 	}
+	
+	@Bean
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+		return authConfig.getAuthenticationManager();
+	}
 
 	// フィルター登録
 	@Bean
-	public PreAuthenticatedAuthenticationProvider preAuthenticatedAuthenticationProvider() {
+	public PreAuthenticatedAuthenticationProvider preAuthenticatedAuthenticationProvider(AuthenticationManagerBuilder auth) {
 		PreAuthenticatedAuthenticationProvider provider = new PreAuthenticatedAuthenticationProvider();
 		provider.setPreAuthenticatedUserDetailsService(authenticationUserDetailsService());
 		provider.setUserDetailsChecker(new AccountStatusUserDetailsChecker());
+		auth.authenticationProvider(provider);
 		return provider;
 	}
 
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.authenticationProvider(preAuthenticatedAuthenticationProvider());
-	}
-
-	private AccessDecisionManager createAccessDecisionManager() {
-		return new AffirmativeBased(Arrays.asList(testVoter));
-	}
 }

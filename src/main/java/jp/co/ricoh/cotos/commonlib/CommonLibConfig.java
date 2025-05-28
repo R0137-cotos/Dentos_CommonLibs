@@ -1,6 +1,6 @@
 package jp.co.ricoh.cotos.commonlib;
 
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
