@@ -109,14 +109,6 @@ artifacts {
 test {
 	useJUnit()
 	forkEvery = 0L
-	maxHeapSize = '3G'
-
-	testLogging {
-		events "passed", "failed"
-		exceptionFormat "short"
-		showExceptions true
-		showCauses true
-		showStackTraces true
-	}
-
+	def heapSize = System.getProperty('test.maxHeapSize') ?: '3G'
+	maxHeapSize = heapSize
 }
