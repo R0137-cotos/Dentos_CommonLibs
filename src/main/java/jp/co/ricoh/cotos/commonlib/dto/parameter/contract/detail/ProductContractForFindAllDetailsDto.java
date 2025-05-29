@@ -1,8 +1,8 @@
 package jp.co.ricoh.cotos.commonlib.dto.parameter.contract.detail;
 
-import javax.persistence.Column;
-import javax.persistence.Lob;
-import javax.validation.constraints.Min;
+import jakarta.persistence.Column;
+import jakarta.persistence.Lob;
+import jakarta.validation.constraints.Min;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;

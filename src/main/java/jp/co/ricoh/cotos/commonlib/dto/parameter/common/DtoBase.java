@@ -1,7 +1,7 @@
 package jp.co.ricoh.cotos.commonlib.dto.parameter.common;
 
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Version;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Version;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

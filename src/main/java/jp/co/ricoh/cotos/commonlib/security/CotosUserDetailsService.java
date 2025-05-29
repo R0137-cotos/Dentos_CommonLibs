@@ -103,10 +103,10 @@ public class CotosUserDetailsService implements AuthenticationUserDetailsService
 			
 			Map<ActionDiv, Map<AuthDiv, AuthLevel>> momAuthorities = null;
 			// 認証ドメインでMoM権限が取得できた場合(取得できないとJWTからmomAuthの項目が削除される)
-			if (!jwt.getClaim(claimsProperties.getMomAuth()).isNull() && !jwt.getClaim(claimsProperties.getMomAuth()).asString().equals(DUMMY_MOM_AUTH)) {
+			if (StringUtils.isNotEmpty(jwt.getClaim(claimsProperties.getMomAuth()).asString()) && !jwt.getClaim(claimsProperties.getMomAuth()).asString().equals(DUMMY_MOM_AUTH)) {
 				// JWTにある権限情報を取得
 				momAuthorities = objectMapper.readValue(jwt.getClaim(claimsProperties.getMomAuth()).asString(), new TypeReference<Map<ActionDiv, Map<AuthDiv, AuthLevel>>>(){});
-			} else if (jwt.getClaim(claimsProperties.getMomAuth()).isNull()) {
+			} else if (StringUtils.isEmpty(jwt.getClaim(claimsProperties.getMomAuth()).asString())) {
 				// シングルユーザーIDに紐づく権限情報を取得
 				momAuthorities = momAuthorityService.searchAllMomAuthorities(jwt.getClaim(claimsProperties.getSingleUserId()).asString());
 			}

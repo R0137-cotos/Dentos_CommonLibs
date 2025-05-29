@@ -3,7 +3,7 @@ package jp.co.ricoh.cotos.commonlib.entity.contract;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.persistence.PrePersist;
+import jakarta.persistence.PrePersist;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

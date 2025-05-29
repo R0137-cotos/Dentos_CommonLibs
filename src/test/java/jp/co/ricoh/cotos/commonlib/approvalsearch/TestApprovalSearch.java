@@ -2,7 +2,7 @@ package jp.co.ricoh.cotos.commonlib.approvalsearch;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -10,7 +10,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -20,7 +19,7 @@ import jp.co.ricoh.cotos.commonlib.dto.result.RouteFormulaResult.RouteFormulaSta
 import jp.co.ricoh.cotos.commonlib.logic.approvalsearch.ApprovalSearch;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest
 public class TestApprovalSearch {
 
 	@Autowired

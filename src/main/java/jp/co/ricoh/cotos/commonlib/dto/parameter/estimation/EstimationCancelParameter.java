@@ -1,6 +1,6 @@
 package jp.co.ricoh.cotos.commonlib.dto.parameter.estimation;
 
-import javax.validation.constraints.Min;
+import jakarta.validation.constraints.Min;
 
 import io.swagger.annotations.ApiParam;
 import lombok.Data;

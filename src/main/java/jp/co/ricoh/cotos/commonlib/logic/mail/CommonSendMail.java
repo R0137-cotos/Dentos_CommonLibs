@@ -9,11 +9,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.eclipse.angus.mail.smtp.SMTPMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -24,7 +25,6 @@ import org.springframework.stereotype.Component;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
-import com.sun.mail.smtp.SMTPMessage;
 
 import jp.co.ricoh.cotos.commonlib.entity.EnumType.ServiceCategory;
 import jp.co.ricoh.cotos.commonlib.entity.master.MailTemplateMaster;
@@ -155,7 +155,7 @@ public class CommonSendMail {
 	 * @throws MessagingException
 	 */
 	public void findMailTemplateMasterAndSendMail(long mailTemplateMasterId, List<String> emailToList, List<String> emailCcList, List<String> emailBccList, List<String> mailSubjectRepalceValueList, List<String> mailTextRepalceValueList, String uploadFile) throws MessagingException {
-		MailTemplateMaster mailTemplateMaster = mailTemplateMasterRepository.findOne(mailTemplateMasterId);
+		MailTemplateMaster mailTemplateMaster = mailTemplateMasterRepository.findById(mailTemplateMasterId).orElse(null);
 		sendMail(emailToList, emailCcList, emailBccList, mailTemplateMaster, mailSubjectRepalceValueList, mailTextRepalceValueList, uploadFile, null);
 	}
 
@@ -181,7 +181,7 @@ public class CommonSendMail {
 	 * @throws MessagingException
 	 */
 	public void findMailTemplateMasterAndSendMail(long mailTemplateMasterId, List<String> emailToList, List<String> emailCcList, List<String> emailBccList, List<String> mailSubjectRepalceValueList, List<String> mailTextRepalceValueList, String uploadFile, Map<String, String> mimeHeaderMap) throws MessagingException {
-		MailTemplateMaster mailTemplateMaster = mailTemplateMasterRepository.findOne(mailTemplateMasterId);
+		MailTemplateMaster mailTemplateMaster = mailTemplateMasterRepository.findById(mailTemplateMasterId).orElse(null);
 		sendMail(emailToList, emailCcList, emailBccList, mailTemplateMaster, mailSubjectRepalceValueList, mailTextRepalceValueList, uploadFile, mimeHeaderMap);
 	}
 
@@ -223,7 +223,7 @@ public class CommonSendMail {
 	 * @throws MessagingException
 	 */
 	public void findMailTemplateMasterAndSendMailAndAttachedFiles(long mailTemplateMasterId, List<String> emailToList, List<String> emailCcList, List<String> emailBccList, List<String> mailSubjectRepalceValueList, List<String> mailTextRepalceValueList, List<String> uploadFileList) throws MessagingException {
-		MailTemplateMaster mailTemplateMaster = mailTemplateMasterRepository.findOne(mailTemplateMasterId);
+		MailTemplateMaster mailTemplateMaster = mailTemplateMasterRepository.findById(mailTemplateMasterId).orElse(null);
 		sendMail(emailToList, emailCcList, emailBccList, mailTemplateMaster, mailSubjectRepalceValueList, mailTextRepalceValueList, uploadFileList, null);
 	}
 
@@ -249,7 +249,7 @@ public class CommonSendMail {
 	 * @throws MessagingException
 	 */
 	public void findMailTemplateMasterAndSendMailAndAttachedFiles(long mailTemplateMasterId, List<String> emailToList, List<String> emailCcList, List<String> emailBccList, List<String> mailSubjectRepalceValueList, List<String> mailTextRepalceValueList, List<String> uploadFileList, Map<String, String> mimeHeaderMap) throws MessagingException {
-		MailTemplateMaster mailTemplateMaster = mailTemplateMasterRepository.findOne(mailTemplateMasterId);
+		MailTemplateMaster mailTemplateMaster = mailTemplateMasterRepository.findById(mailTemplateMasterId).orElse(null);
 		sendMail(emailToList, emailCcList, emailBccList, mailTemplateMaster, mailSubjectRepalceValueList, mailTextRepalceValueList, uploadFileList, mimeHeaderMap);
 	}
 

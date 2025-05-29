@@ -10,9 +10,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -74,7 +74,7 @@ import jp.co.ricoh.cotos.commonlib.util.HeadersProperties;
  *
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, properties = "test.context.id = TestEstimationDto")
 public class TestEstimationDto {
 
 	private static final String STR_256 = "0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345";
@@ -162,7 +162,7 @@ public class TestEstimationDto {
 
 	@Test
 	public void CustomerEstimationDtoのテスト() throws Exception {
-		CustomerEstimation entity = customerEstimationRepository.findOne(401L);
+		CustomerEstimation entity = customerEstimationRepository.findById(401L).get();
 		CustomerEstimationDto testTarget = new CustomerEstimationDto();
 		BeanUtils.copyProperties(entity, testTarget);
 
@@ -217,7 +217,7 @@ public class TestEstimationDto {
 
 	@Test
 	public void DealerEstimationDtoのテスト() throws Exception {
-		DealerEstimation entity = dealerEstimationRepository.findOne(401L);
+		DealerEstimation entity = dealerEstimationRepository.findById(401L).get();
 		DealerEstimationDto testTarget = new DealerEstimationDto();
 
 		// 正常系
@@ -261,7 +261,7 @@ public class TestEstimationDto {
 
 	@Test
 	public void EstimationDtoのテスト() throws Exception {
-		Estimation entity = estimationRepository.findOne(4L);
+		Estimation entity = estimationRepository.findById(4L).get();
 		EstimationDto dto = new EstimationDto();
 		EstimationDto testTarget = new EstimationDto();
 
@@ -311,6 +311,9 @@ public class TestEstimationDto {
 		// 見積承認ルート
 		EstimationApprovalRouteDto route = new EstimationApprovalRouteDto();
 		BeanUtils.copyProperties(entity.getEstimationApprovalRoute(), route);
+		EstimationApprovalRouteNodeDto node = new EstimationApprovalRouteNodeDto();
+		BeanUtils.copyProperties(entity.getEstimationApprovalRoute().getEstimationApprovalRouteNodeList().get(0), node);
+		route.setEstimationApprovalRouteNodeList(Arrays.asList(node));
 		dto.setEstimationApprovalRoute(route);
 
 		// 見積チェック結果
@@ -440,7 +443,7 @@ public class TestEstimationDto {
 
 	@Test
 	public void EstimationAddedEditorEmpDtoのテスト() throws Exception {
-		EstimationAddedEditorEmp entity = estimationAddedEditorEmpRepository.findOne(401L);
+		EstimationAddedEditorEmp entity = estimationAddedEditorEmpRepository.findById(401L).get();
 		EstimationAddedEditorEmpDto testTarget = new EstimationAddedEditorEmpDto();
 		BeanUtils.copyProperties(entity, testTarget);
 
@@ -499,7 +502,7 @@ public class TestEstimationDto {
 
 	@Test
 	public void EstimationApprovalRouteDtoのテスト() throws Exception {
-		EstimationApprovalRoute entity = estimationApprovalRouteRepository.findOne(401L);
+		EstimationApprovalRoute entity = estimationApprovalRouteRepository.findById(401L).get();
 		EstimationApprovalRouteDto dto = new EstimationApprovalRouteDto();
 		EstimationApprovalRouteDto testTarget = new EstimationApprovalRouteDto();
 
@@ -564,7 +567,7 @@ public class TestEstimationDto {
 
 	@Test
 	public void EstimationApprovalRouteNodeDtoのテスト() throws Exception {
-		EstimationApprovalRouteNode entity = estimationApprovalRouteNodeRepository.findOne(401L);
+		EstimationApprovalRouteNode entity = estimationApprovalRouteNodeRepository.findById(401L).get();
 		EstimationApprovalRouteNodeDto testTarget = new EstimationApprovalRouteNodeDto();
 
 		// 正常系
@@ -619,7 +622,7 @@ public class TestEstimationDto {
 	@Test
 	public void EstimationAttachedFileDtoのテスト() throws Exception {
 
-		EstimationAttachedFile entity = estimationAttachedFileRepository.findOne(401L);
+		EstimationAttachedFile entity = estimationAttachedFileRepository.findById(401L).get();
 		EstimationAttachedFileDto dto = new EstimationAttachedFileDto();
 		EstimationAttachedFileDto testTarget = new EstimationAttachedFileDto();
 
@@ -663,7 +666,7 @@ public class TestEstimationDto {
 
 	@Test
 	public void EstimationCheckResultDtoのテスト() throws Exception {
-		EstimationCheckResult entity = estimationCheckResultRepository.findOne(401L);
+		EstimationCheckResult entity = estimationCheckResultRepository.findById(401L).get();
 		EstimationCheckResultDto testTarget = new EstimationCheckResultDto();
 
 		// 正常系
@@ -715,7 +718,7 @@ public class TestEstimationDto {
 
 	@Test
 	public void EstimationDetailDtoのテスト() throws Exception {
-		EstimationDetail entity = estimationDetailRepository.findOne(401L);
+		EstimationDetail entity = estimationDetailRepository.findById(401L).get();
 		EstimationDetailDto dto = new EstimationDetailDto();
 		EstimationDetailDto testTarget = new EstimationDetailDto();
 		BeanUtils.copyProperties(entity, dto);
@@ -797,7 +800,7 @@ public class TestEstimationDto {
 
 	@Test
 	public void EstimationPicSaEmpDtoのテスト() throws Exception {
-		EstimationPicSaEmp entity = estimationPicSaEmpRepository.findOne(401L);
+		EstimationPicSaEmp entity = estimationPicSaEmpRepository.findById(401L).get();
 		EstimationPicSaEmpDto testTarget = new EstimationPicSaEmpDto();
 
 		// 正常系
@@ -860,7 +863,7 @@ public class TestEstimationDto {
 
 	@Test
 	public void ItemEstimationDtoのテスト() throws Exception {
-		ItemEstimation entity = itemEstimationRepository.findOne(401L);
+		ItemEstimation entity = itemEstimationRepository.findById(401L).get();
 		ItemEstimationDto testTarget = new ItemEstimationDto();
 
 		// 正常系
@@ -921,7 +924,7 @@ public class TestEstimationDto {
 
 	@Test
 	public void ProductEstimationDtoのテスト() throws Exception {
-		ProductEstimation entity = productEstimationRepository.findOne(401L);
+		ProductEstimation entity = productEstimationRepository.findById(401L).get();
 		ProductEstimationDto testTarget = new ProductEstimationDto();
 
 		// 正常系

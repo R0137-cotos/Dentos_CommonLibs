@@ -10,6 +10,6 @@ import jp.co.ricoh.cotos.commonlib.entity.master.ExtendsParameterCorrelationChec
 
 @Repository
 public interface ExtendsParameterCorrelationCheckMasterRepository extends CrudRepository<ExtendsParameterCorrelationCheckMaster, Id> {
-	@Query(value = "FROM ExtendsParameterCorrelationCheckMaster WHERE product_master_id = :PRODUCT_MASTER_ID AND domain = :DOMAIN")
+	@Query(value = "SELECT * FROM extends_parameter_correlation_check_master WHERE product_master_id = :PRODUCT_MASTER_ID AND domain = :DOMAIN", nativeQuery = true)
 	public ExtendsParameterCorrelationCheckMaster findByProductMasterIdAndDomain(@Param("PRODUCT_MASTER_ID") long productMasterId, @Param("DOMAIN") String domain);
 }

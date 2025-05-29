@@ -11,6 +11,6 @@ import jp.co.ricoh.cotos.commonlib.entity.master.MvWjmoc020OrgAllInfoCom;
 
 @Repository
 public interface MvWjmoc020OrgAllInfoComRepository extends CrudRepository<MvWjmoc020OrgAllInfoCom, String> {
-	@Query(value = "FROM MvWjmoc020OrgAllInfoCom WHERE org_id = :ORG_ID AND :BASE_DATE BETWEEN start_date AND end_date")
+	@Query(value = "SELECT * FROM mv_wjmoc020_org_all_info_com WHERE org_id = :ORG_ID AND :BASE_DATE BETWEEN start_date AND end_date", nativeQuery = true)
 	public MvWjmoc020OrgAllInfoCom findByOrgId(@Param("ORG_ID") String orgId, @Param("BASE_DATE") Date baseDate);
 }

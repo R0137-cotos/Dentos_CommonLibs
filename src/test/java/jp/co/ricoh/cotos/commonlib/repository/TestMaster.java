@@ -11,7 +11,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.HttpMethod;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -150,7 +149,7 @@ import jp.co.ricoh.cotos.commonlib.repository.master.VPicAffiliateMasterReposito
  *
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest
 public class TestMaster {
 
 	static ConfigurableApplicationContext context;
@@ -307,7 +306,7 @@ public class TestMaster {
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/commonMasterDetail.sql");
 
 		Long id = 1L;
-		CommonMaster found = commonMasterRepository.findOne(id);
+		CommonMaster found = commonMasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -327,7 +326,7 @@ public class TestMaster {
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/systemMaster.sql");
 
 		String id = "cotos";
-		SystemMaster found = systemMasterRepository.findOne(id);
+		SystemMaster found = systemMasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -344,7 +343,7 @@ public class TestMaster {
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/appMaster.sql");
 
 		String id = "cotos_test";
-		AppMaster found = appMasterRepository.findOne(id);
+		AppMaster found = appMasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -361,7 +360,7 @@ public class TestMaster {
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/commonMasterDetail.sql");
 
 		Long id = 1L;
-		CommonMasterDetail found = commonMasterDetailRepository.findOne(id);
+		CommonMasterDetail found = commonMasterDetailRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -392,7 +391,7 @@ public class TestMaster {
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/mailConvertValueMaster.sql");
 
 		Long id = 1L;
-		MailTemplateMaster found = mailTemplateMasterRepository.findOne(id);
+		MailTemplateMaster found = mailTemplateMasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -419,7 +418,7 @@ public class TestMaster {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date id = sdf.parse("2018-09-20");
 
-		BusinessCalendar found = businessCalendarRepository.findOne(id);
+		BusinessCalendar found = businessCalendarRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -437,7 +436,7 @@ public class TestMaster {
 
 		// エンティティの取得
 		Long id = 1L;
-		SuperUserMaster found = superUserMasterRepository.findOne(id);
+		SuperUserMaster found = superUserMasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -466,7 +465,7 @@ public class TestMaster {
 		id.setUrlPattern("/api/estimation$");
 		id.setMethod(HttpMethod.GET);
 		id.setDomain(Domain.estimation);
-		UrlAuthMaster found = urlAuthMasterRepository.findOne(id);
+		UrlAuthMaster found = urlAuthMasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -484,7 +483,7 @@ public class TestMaster {
 
 		// エンティティの取得
 		Long id = 1L;
-		AuthPatternMaster found = authPatternMasterRepository.findOne(id);
+		AuthPatternMaster found = authPatternMasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -509,7 +508,7 @@ public class TestMaster {
 		id.setSystemDomain("cotos.ricoh.co.jp");
 		id.setUrlPattern("api/estimation/[0-9]+");
 		id.setActionId("test_action_001");
-		DispUrlAuthMaster found = dispUrlAuthMasterRepository.findOne(id);
+		DispUrlAuthMaster found = dispUrlAuthMasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -533,7 +532,7 @@ public class TestMaster {
 
 		// エンティティの取得
 		Long id = 1L;
-		ArrangementChecklistCompMaster found = arrangementChecklistCompMasterRepository.findOne(id);
+		ArrangementChecklistCompMaster found = arrangementChecklistCompMasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -562,7 +561,7 @@ public class TestMaster {
 
 		// エンティティの取得
 		Long id = 1L;
-		GpCheckMatterMaster found = gpCheckMatterMasterRepository.findOne(id);
+		GpCheckMatterMaster found = gpCheckMatterMasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -590,7 +589,7 @@ public class TestMaster {
 
 		// エンティティの取得
 		Long id = 1L;
-		ArrangementWorkTypeMaster found = arrangementWorkTypeMasterRepository.findOne(id);
+		ArrangementWorkTypeMaster found = arrangementWorkTypeMasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -619,7 +618,7 @@ public class TestMaster {
 
 		// エンティティの取得
 		Long id = 1L;
-		EstimationChecklistCompMaster found = estimationChecklistCompMasterRepository.findOne(id);
+		EstimationChecklistCompMaster found = estimationChecklistCompMasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -646,7 +645,7 @@ public class TestMaster {
 
 		// エンティティの取得
 		Long id = 1L;
-		ContractChecklistCompMaster found = contractChecklistCompMasterRepository.findOne(id);
+		ContractChecklistCompMaster found = contractChecklistCompMasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -677,7 +676,7 @@ public class TestMaster {
 
 		// エンティティの取得
 		Long id = 1L;
-		ArrangementWorkCompMaster found = arrangementWorkCompMasterRepository.findOne(id);
+		ArrangementWorkCompMaster found = arrangementWorkCompMasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -702,7 +701,7 @@ public class TestMaster {
 
 		// エンティティの取得
 		Long id = 1L;
-		ApprovalRouteNodeMaster found = approvalRouteNodeMasterRepository.findOne(id);
+		ApprovalRouteNodeMaster found = approvalRouteNodeMasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -725,7 +724,7 @@ public class TestMaster {
 
 		// エンティティの取得
 		Long id = 1L;
-		ApprovalRouteMaster found = approvalRouteMasterRepository.findOne(id);
+		ApprovalRouteMaster found = approvalRouteMasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -758,7 +757,7 @@ public class TestMaster {
 
 		// エンティティの取得
 		Long id = 1L;
-		ApprovalRouteGrpMaster found = approvalRouteGrpMasterRepository.findOne(id);
+		ApprovalRouteGrpMaster found = approvalRouteGrpMasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -791,7 +790,7 @@ public class TestMaster {
 
 		// エンティティの取得
 		Long id = 1L;
-		ProductCompMaster found = productCompMasterRepository.findOne(id);
+		ProductCompMaster found = productCompMasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -819,7 +818,7 @@ public class TestMaster {
 
 		// エンティティの取得
 		Long id = 1L;
-		ProductGrpMaster found = productGrpMasterRepository.findOne(id);
+		ProductGrpMaster found = productGrpMasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -852,7 +851,7 @@ public class TestMaster {
 
 		// エンティティの取得
 		Long id = 1L;
-		ProductMaster found = productMasterRepository.findOne(id);
+		ProductMaster found = productMasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -873,7 +872,7 @@ public class TestMaster {
 			Assert.assertTrue(false);
 
 		id = 2L;
-		found = productMasterRepository.findOne(id);
+		found = productMasterRepository.findById(id).get();
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
 		if (found.getJsonSchemaMasterId() != null)
@@ -896,7 +895,7 @@ public class TestMaster {
 
 		// エンティティの取得
 		Long id = 1L;
-		ItemMaster found = itemMasterRepository.findOne(id);
+		ItemMaster found = itemMasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -936,7 +935,7 @@ public class TestMaster {
 
 		// エンティティの取得
 		Long id = 1L;
-		RecordDecomposeCompMaster found = recordDecomposeCompMasterRepository.findOne(id);
+		RecordDecomposeCompMaster found = recordDecomposeCompMasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -966,7 +965,7 @@ public class TestMaster {
 
 		// エンティティの取得
 		Long id = 1L;
-		RecordDecomposeMaster found = recordDecomposeMasterRepository.findOne(id);
+		RecordDecomposeMaster found = recordDecomposeMasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -986,7 +985,7 @@ public class TestMaster {
 
 		// エンティティの取得
 		String id = "4930594";
-		MvTJmci105Master found = mvTJmci105Repository.findOne(id);
+		MvTJmci105Master found = mvTJmci105Repository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -999,7 +998,7 @@ public class TestMaster {
 
 		// エンティティの取得
 		String id = "1";
-		MvTJmci101Master found = mvTJmci101MasterRepository.findOne(id);
+		MvTJmci101Master found = mvTJmci101MasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -1012,13 +1011,13 @@ public class TestMaster {
 
 		// エンティティの取得
 		String id = "19197";
-		MvTJmci102Master found = mvTJmci102MasterRepository.findOne(id);
+		MvTJmci102Master found = mvTJmci102MasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
 
 		String customerSiteNumber = "19197";
-		MvTJmci102Master foundByCustomerSiteNumber = mvTJmci102MasterRepository.findOne(customerSiteNumber);
+		MvTJmci102Master foundByCustomerSiteNumber = mvTJmci102MasterRepository.findById(customerSiteNumber).get();
 
 		Assert.assertNotNull(foundByCustomerSiteNumber);
 	}
@@ -1045,7 +1044,7 @@ public class TestMaster {
 		MvTjmmb020UtlCd.Id id = new MvTjmmb020UtlCd.Id();
 		id.setItemId("JFCDM660");
 		id.setCdVal("subject");
-		MvTjmmb020UtlCd found = mvTjmmb020UtlCdRepository.findOne(id);
+		MvTjmmb020UtlCd found = mvTjmmb020UtlCdRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -1059,7 +1058,7 @@ public class TestMaster {
 
 		// エンティティの取得
 		String id = "00150194";
-		MvEmployeeMaster found = mvEmployeeMasterRepository.findOne(id);
+		MvEmployeeMaster found = mvEmployeeMasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -1072,7 +1071,7 @@ public class TestMaster {
 
 		// エンティティの取得
 		String id = "0263975";
-		VPicAffiliateMaster found = vPicAffiliateMasterRepository.findOne(id);
+		VPicAffiliateMaster found = vPicAffiliateMasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -1085,7 +1084,7 @@ public class TestMaster {
 
 		// エンティティの取得
 		String id = "0263975";
-		VPicAffiliateMasterFull found = vPicAffiliateMasterFullRepository.findOne(id);
+		VPicAffiliateMasterFull found = vPicAffiliateMasterFullRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -1098,7 +1097,7 @@ public class TestMaster {
 
 		// エンティティの取得
 		String id = "000000003985825";
-		VKjbMaster found = vKjbMasterRepository.findOne(id);
+		VKjbMaster found = vKjbMasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -1114,7 +1113,7 @@ public class TestMaster {
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/mailConvertValueMaster.sql");
 		// エンティティの取得
 		Long id = 1L;
-		MailControlMaster found = mailControlMasterRepository.findOne(id);
+		MailControlMaster found = mailControlMasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -1133,7 +1132,7 @@ public class TestMaster {
 
 		// エンティティの取得
 		Long id = 1L;
-		MailConvertValueMaster found = mailConvertValueMasterRepository.findOne(id);
+		MailConvertValueMaster found = mailConvertValueMasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -1146,7 +1145,7 @@ public class TestMaster {
 			Assert.assertTrue(false);
 
 		// メール制御マスタからデータ取得
-		MailControlMaster found2 = mailControlMasterRepository.findOne(id);
+		MailControlMaster found2 = mailControlMasterRepository.findById(id).get();
 		List<MailConvertValueMaster> result = mailConvertValueMasterRepository.findByMailControlMaster(found2);
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(result);
@@ -1189,7 +1188,7 @@ public class TestMaster {
 
 		// エンティティの取得
 		Long id = 1L;
-		DummyUserMaster found = dummyUserMasterRepository.findOne(id);
+		DummyUserMaster found = dummyUserMasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -1216,7 +1215,7 @@ public class TestMaster {
 
 		// エンティティの取得
 		Long id = 1L;
-		JsonSchemaMaster found = jsonSchemaMasterRepository.findOne(id);
+		JsonSchemaMaster found = jsonSchemaMasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -1270,7 +1269,7 @@ public class TestMaster {
 
 		// エンティティの取得
 		Long id = 1L;
-		ProductExtendsParameterMaster found = productExtendsParameterMasterRepository.findOne(id);
+		ProductExtendsParameterMaster found = productExtendsParameterMasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -1292,7 +1291,7 @@ public class TestMaster {
 
 		// エンティティの取得
 		Long id = 1L;
-		ModelAbbreviationMaster found = modelAbbreviationMasterRepository.findOne(id);
+		ModelAbbreviationMaster found = modelAbbreviationMasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -1311,7 +1310,7 @@ public class TestMaster {
 
 		// エンティティの取得
 		Long id = 1L;
-		EquipmentCompMaster found = equipmentCompMasterRepository.findOne(id);
+		EquipmentCompMaster found = equipmentCompMasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -1330,7 +1329,7 @@ public class TestMaster {
 
 		// エンティティの取得
 		Long id = 1L;
-		ItemTransCompMaster found = itemTransCompMasterRepository.findOne(id);
+		ItemTransCompMaster found = itemTransCompMasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -1346,7 +1345,7 @@ public class TestMaster {
 
 		// エンティティの取得
 		Long id = 1L;
-		ReportTemplateMaster found = reportTemplateMasterRepository.findOne(id);
+		ReportTemplateMaster found = reportTemplateMasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -1363,7 +1362,7 @@ public class TestMaster {
 
 		// エンティティの取得
 		Long id = 1L;
-		ReportPageMaster found = reportPageMasterRepository.findOne(id);
+		ReportPageMaster found = reportPageMasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -1439,7 +1438,7 @@ public class TestMaster {
 
 		// エンティティの取得
 		String id = "000000004015129";
-		MvTJmcj005Master found = mvTJmcj005MasterRepository.findOne(id);
+		MvTJmcj005Master found = mvTJmcj005MasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -1477,7 +1476,7 @@ public class TestMaster {
 
 		// エンティティの取得
 		VDirectDeliveryDealerInfoMaster.Id id = new VDirectDeliveryDealerInfoMaster.Id("83013", "00");
-		VDirectDeliveryDealerInfoMaster found = vDirectDeliveryDealerInfoMasterRepository.findOne(id);
+		VDirectDeliveryDealerInfoMaster found = vDirectDeliveryDealerInfoMasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -1488,7 +1487,7 @@ public class TestMaster {
 	@Test
 	public void MvWjmoco40EmpAllInfoComRepositoryのテスト() {
 		final String empId = "00150194";
-		MvWjmoco40EmpAllInfoCom found = mvWjmoco40EmpAllInfoComRepository.findOne(empId);
+		MvWjmoco40EmpAllInfoCom found = mvWjmoco40EmpAllInfoComRepository.findById(empId).get();
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
 
@@ -1515,7 +1514,7 @@ public class TestMaster {
 		Id id = new Id();
 		id.setDealerDiscrimCd("00006");
 		id.setDpCd("00");
-		MvWjmoc080DealerInfo found = mvWjmoc080DealerInfoRepository.findOne(id);
+		MvWjmoc080DealerInfo found = mvWjmoc080DealerInfoRepository.findById(id).get();
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
 	}
@@ -1549,7 +1548,7 @@ public class TestMaster {
 
 		// エンティティの取得
 		Long id = 1L;
-		IfsCsvMaster found = ifsCsvMasterRepository.findOne(id);
+		IfsCsvMaster found = ifsCsvMasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -1653,7 +1652,7 @@ public class TestMaster {
 		// エンティティの取得
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 		Date date = sdf.parse("2019/01/01");
-		NonBusinessDayCalendarMaster found = nonBusinessDayCalendarMasterRepository.findOne(date);
+		NonBusinessDayCalendarMaster found = nonBusinessDayCalendarMasterRepository.findById(date).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -1692,7 +1691,7 @@ public class TestMaster {
 		context.getBean(DBConfig.class).initTargetTestData("repository/master/mailProductMasterRepository.sql");
 
 		// エンティティの取得
-		MailProductMaster found = mailProductMasterRepository.findOne(1001L);
+		MailProductMaster found = mailProductMasterRepository.findById(1001L).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -1708,7 +1707,7 @@ public class TestMaster {
 
 		// エンティティの取得
 		Long id = 1L;
-		CeMaster found = ceMasterRepository.findOne(id);
+		CeMaster found = ceMasterRepository.findById(id).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -1724,7 +1723,7 @@ public class TestMaster {
 
 		// エンティティの取得
 		String businessPlaceId = "000000003581698";
-		MvTJmci106Master found = mvTJmci106MasterRepository.findOne(businessPlaceId);
+		MvTJmci106Master found = mvTJmci106MasterRepository.findById(businessPlaceId).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);

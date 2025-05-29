@@ -2,8 +2,8 @@ package jp.co.ricoh.cotos.commonlib;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -11,7 +11,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -24,7 +23,7 @@ import jp.co.ricoh.cotos.commonlib.repository.master.AuthPatternMasterRepository
 import jp.co.ricoh.cotos.commonlib.repository.master.DispUrlAuthMasterRepository;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest
 public class TestRepositories {
 
 	@Autowired
@@ -59,7 +58,7 @@ public class TestRepositories {
 
 		// リポジトリ作成
 		AuthPatternMasterRepository repository = context.getBean(AuthPatternMasterRepository.class);
-		AuthPatternMaster found = repository.findOne(1L);
+		AuthPatternMaster found = repository.findById(1L).get();
 		Assert.assertNotNull(found);
 
 		// 永続化コンテキストから除外
@@ -72,7 +71,7 @@ public class TestRepositories {
 		repository.save(found);
 
 		// 登録データを検索
-		AuthPatternMaster created = repository.findOne(newId);
+		AuthPatternMaster created = repository.findById(newId).get();
 		Assert.assertEquals(newId, created.getAuthPatternId());
 	}
 
@@ -100,7 +99,7 @@ public class TestRepositories {
 		repository.save(found);
 
 		// 登録データを検索
-		AppMaster created = repository.findOne(newId);
+		AppMaster created = repository.findById(newId).get();
 		Assert.assertEquals(newId, created.getAppId());
 	}
 
@@ -128,7 +127,7 @@ public class TestRepositories {
 		repository.save(found);
 
 		// 登録データを検索
-		DispUrlAuthMaster created = repository.findOne(found.getId());
+		DispUrlAuthMaster created = repository.findById(found.getId()).get();
 		Assert.assertEquals(newId, created.getId().getActionId());
 	}
 

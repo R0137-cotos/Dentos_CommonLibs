@@ -41,7 +41,7 @@ spring:
     password: cotos_ci_commonlibs_el_std
     driverClassName: oracle.jdbc.OracleDriver
   jpa:
-    database-platform: org.hibernate.dialect.Oracle12cDialect
+    database-platform: org.hibernate.dialect.OracleDialect
     hibernate:
       ddl-auto: none
     properties:
@@ -58,7 +58,7 @@ spring:
       fail-on-empty-beans: false
   mail:
     default-encoding: UTF-8
-    host: shipyard.cotos.ricoh.co.jp
+    host: el-st.shipyard.cotos.ricoh.co.jp
     port: 1025
     username: koike.shinichi
     password: koike.shinichi

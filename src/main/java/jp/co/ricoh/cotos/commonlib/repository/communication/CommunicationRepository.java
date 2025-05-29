@@ -16,12 +16,12 @@ import jp.co.ricoh.cotos.commonlib.entity.communication.Communication;
 public interface CommunicationRepository extends CrudRepository<Communication, Long> {
 	List<Communication> findByTargetDocKeyAndWorkflowTypeAndApprovalTargetTypeAndServiceCategory(String tartgetDocKey, WorkflowType workflowType, ApprovalTargetType approvalTargetType, ServiceCategory serviceCategory);
 
-	@Query(value = "FROM Communication WHERE process_category = :PROCESS_CATEGORY AND (request_to_id = :MOM_EMPLOYEE_ID OR request_to_candidate_id = :MOM_EMPLOYEE_ID) order by communicated_at")
+	@Query(value = "SELECT * FROM communication WHERE process_category = :PROCESS_CATEGORY AND (request_to_id = :MOM_EMPLOYEE_ID OR request_to_candidate_id = :MOM_EMPLOYEE_ID) order by communicated_at", nativeQuery = true)
 	public List<Communication> findByProcessCategoryAndLoginUserMomEmployeeId(@Param("PROCESS_CATEGORY") String processCategory, @Param("MOM_EMPLOYEE_ID") String momEmployeeId);
 
-	@Query(value = "FROM Communication WHERE process_category = :PROCESS_CATEGORY AND (request_to_id = :MOM_EMPLOYEE_ID OR request_to_candidate_id = :MOM_EMPLOYEE_ID) AND app_id in :APP_ID order by communicated_at")
+	@Query(value = "SELECT * FROM communication WHERE process_category = :PROCESS_CATEGORY AND (request_to_id = :MOM_EMPLOYEE_ID OR request_to_candidate_id = :MOM_EMPLOYEE_ID) AND app_id in :APP_ID order by communicated_at", nativeQuery = true)
 	public List<Communication> findByProcessCategoryAndLoginUserMomEmployeeIdAndAppIdIn(@Param("PROCESS_CATEGORY") String processCategory, @Param("MOM_EMPLOYEE_ID") String momEmployeeId, @Param("APP_ID") List<String> appId);
 
-	@Query(value = "FROM Communication WHERE process_category = :PROCESS_CATEGORY AND (request_to_id = :MOM_EMPLOYEE_ID OR request_to_candidate_id = :MOM_EMPLOYEE_ID) AND app_id not in :APP_ID order by communicated_at")
+	@Query(value = "SELECT * FROM communication WHERE process_category = :PROCESS_CATEGORY AND (request_to_id = :MOM_EMPLOYEE_ID OR request_to_candidate_id = :MOM_EMPLOYEE_ID) AND app_id not in :APP_ID order by communicated_at", nativeQuery = true)
 	public List<Communication> findByProcessCategoryAndLoginUserMomEmployeeIdAndAppIdNotIn(@Param("PROCESS_CATEGORY") String processCategory, @Param("MOM_EMPLOYEE_ID") String momEmployeeId, @Param("APP_ID") List<String> appId);
 }

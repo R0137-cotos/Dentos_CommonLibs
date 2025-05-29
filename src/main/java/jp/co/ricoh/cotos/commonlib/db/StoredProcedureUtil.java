@@ -3,9 +3,9 @@ package jp.co.ricoh.cotos.commonlib.db;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import javax.persistence.EntityManager;
-import javax.persistence.ParameterMode;
-import javax.persistence.StoredProcedureQuery;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.ParameterMode;
+import jakarta.persistence.StoredProcedureQuery;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

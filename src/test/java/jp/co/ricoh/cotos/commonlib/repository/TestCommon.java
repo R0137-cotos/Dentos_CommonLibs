@@ -8,7 +8,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -25,7 +24,7 @@ import jp.co.ricoh.cotos.commonlib.repository.common.VMailAddressListRepository;
 import jp.co.ricoh.cotos.commonlib.repository.master.MailControlMasterRepository;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest
 public class TestCommon {
 
 	/** 添付ファイル */
@@ -76,7 +75,7 @@ public class TestCommon {
 	@Test
 	public void AttachedFileRepositoryのテスト() throws Exception {
 
-		AttachedFile found = attachedFileRepository.findOne(1L);
+		AttachedFile found = attachedFileRepository.findById(1L).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -88,7 +87,7 @@ public class TestCommon {
 	@Test
 	public void MailSendHistoryRepositoryのテスト() throws Exception {
 
-		MailSendHistory found = mailSendHistoryRepository.findOne(1L);
+		MailSendHistory found = mailSendHistoryRepository.findById(1L).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -96,7 +95,7 @@ public class TestCommon {
 		// Entity の各項目の値が null ではないことを確認
 		testTool.assertColumnsNotNull(found);
 		
-		MailControlMaster mailControlMaster = mailControlMasterRepository.findOne(1L);
+		MailControlMaster mailControlMaster = mailControlMasterRepository.findById(1L).get();
 		MailSendHistory found2 = mailSendHistoryRepository.findByTargetDataIdAndMailControlMasterAndMailSendType(1L, mailControlMaster, MailSendType.完了);
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found2);
@@ -109,7 +108,7 @@ public class TestCommon {
 	@Test
 	public void VMailAddressListRepositoryのテスト() throws Exception {
 
-		VMailAddressList found = vMailAddressListRepository.findOne(1L);
+		VMailAddressList found = vMailAddressListRepository.findById(1L).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);

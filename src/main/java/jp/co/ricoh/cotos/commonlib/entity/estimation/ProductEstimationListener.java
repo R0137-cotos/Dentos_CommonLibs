@@ -1,7 +1,7 @@
 package jp.co.ricoh.cotos.commonlib.entity.estimation;
 
-import javax.persistence.PrePersist;
-import javax.transaction.Transactional;
+import jakarta.persistence.PrePersist;
+import jakarta.transaction.Transactional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class ProductEstimationListener {
 	@PrePersist
 	@Transactional
 	public void appendsEstimationProductsFields(ProductEstimation productEstimation) {
-		ProductMaster productMaster = productMasterRepository.findOne(productEstimation.getProductMasterId());
+		ProductMaster productMaster = productMasterRepository.findById(productEstimation.getProductMasterId()).get();
 		productEstimation.setProductMasterId(productMaster.getId());
 		BeanUtils.copyProperties(productMaster, productEstimation, "id", "updatedAt", "updatedUserId", "createdAt", "createdUserId", "version");
 		productEstimation.setProductEstimationName(productMaster.getProductName());
