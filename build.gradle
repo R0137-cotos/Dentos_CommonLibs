@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '3.4.4'
+        springBootVersion = '3.5.0'
     }
     repositories {
         mavenCentral()
@@ -32,10 +32,10 @@ repositories {
 }
 
 dependencies {
-    implementation('org.springframework.boot:spring-boot-starter-data-jpa:3.4.4')
-    implementation('org.springframework.boot:spring-boot-starter-security:3.4.4')
-    implementation('org.springframework.boot:spring-boot-starter-web:3.4.4')
-    implementation('org.springframework.boot:spring-boot-starter-mail:3.4.4')
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa:3.5.0')
+    implementation('org.springframework.boot:spring-boot-starter-security:3.5.0')
+    implementation('org.springframework.boot:spring-boot-starter-web:3.5.0')
+    implementation('org.springframework.boot:spring-boot-starter-mail:3.5.0')
     implementation group: 'com.github.spullara.mustache.java', name: 'compiler', version: '0.9.14'
     compileOnly('org.projectlombok:lombok:1.18.36')
     annotationProcessor 'org.projectlombok:lombok:1.18.36'
@@ -56,14 +56,14 @@ dependencies {
     implementation group: 'wsdl4j', name: 'wsdl4j', version: '1.6.3'
     implementation group: 'commons-discovery', name: 'commons-discovery', version: '0.5'
     implementation fileTree(dir: 'libs', include: '*.jar')
-    runtimeOnly('org.springframework.boot:spring-boot-devtools:3.4.4')
+    runtimeOnly('org.springframework.boot:spring-boot-devtools:3.5.0')
 
     testImplementation ('junit:junit:4.13.2')
     testImplementation ('org.jmockit:jmockit:1.49')
     testImplementation('org.dbunit:dbunit:3.0.0')
     testCompileOnly('org.projectlombok:lombok:1.18.36')
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.36'
-    testImplementation('org.springframework.boot:spring-boot-starter-test:3.4.4')
+    testImplementation('org.springframework.boot:spring-boot-starter-test:3.5.0')
     testImplementation('org.springframework.security:spring-security-test:6.4.4')
     testImplementation group: 'com.ninja-squad', name: 'DbSetup', version: '2.1.0'
     testImplementation ('org.apache.commons:commons-lang3:3.17.0')
@@ -75,8 +75,8 @@ dependencies {
     
     implementation ('org.openjdk.nashorn:nashorn-core:15.6')
     implementation ('jakarta.validation:jakarta.validation-api:3.1.1')
-    implementation ('org.springframework.boot:spring-boot-starter-actuator:3.4.4')
-    implementation ('org.springframework.boot:spring-boot-starter-validation:3.4.4')
+    implementation ('org.springframework.boot:spring-boot-starter-actuator:3.5.0')
+    implementation ('org.springframework.boot:spring-boot-starter-validation:3.5.0')
 }
 
 sonarqube {
@@ -89,21 +89,23 @@ sonarqube {
 def repo = new File(rootDir, "repository")
 
 publishing {
-    repositories {
-        maven {
-            url = "file://${repo.absolutePath}"
-            version = '0.0.362'
-            group = 'jp.co.ricoh.cotos'
-            name = 'dentos-common-libraries'
+    publications {
+        mavenJava(MavenPublication) {
+            version = '0.0.363'
+            groupId = 'jp.co.ricoh.cotos'
+            artifactId = 'dentos-common-libraries'
+            from components.java
         }
-    }
+     }
+     repositories {
+		maven {
+			url = "file://${repo.absolutePath}"
+		}
+     }
 }
-task sourcesJar(type: Jar, dependsOn:classes) {
-     archiveClassifier.set('sources')
-     from sourceSets.main.allSource
-}
-artifacts {
-     archives sourcesJar
+
+java {
+	withSourcesJar()
 }
 
 test {
