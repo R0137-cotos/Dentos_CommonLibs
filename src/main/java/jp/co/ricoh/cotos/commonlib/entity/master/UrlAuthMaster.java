@@ -16,6 +16,8 @@ import org.springframework.http.HttpMethod;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.converter.HttpMethodConverter;
@@ -143,6 +145,7 @@ public class UrlAuthMaster extends EntityBaseMaster {
 		@Convert(converter = HttpMethodConverter.class)
 		@Column(nullable = false)
 		@ApiModelProperty(value = "HTTPメソッド", required = true, position = 2)
+		@JsonSerialize(using = ToStringSerializer.class)
 		private HttpMethod method;
 
 		/**

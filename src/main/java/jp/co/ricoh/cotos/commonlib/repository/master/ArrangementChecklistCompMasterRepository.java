@@ -12,7 +12,7 @@ import jp.co.ricoh.cotos.commonlib.entity.master.ArrangementChecklistCompMaster;
 @Repository
 public interface ArrangementChecklistCompMasterRepository extends CrudRepository<ArrangementChecklistCompMaster, Long> {
 
-	@Query(value = "FROM ArrangementChecklistCompMaster WHERE arrangement_work_type_master_id = :ARRANGEMENT_WORK_TYPE_MASTER_ID order by id", nativeQuery = true)
+	@Query(value = "SELECT * FROM arrangement_checklist_comp_master WHERE arrangement_work_type_master_id = :ARRANGEMENT_WORK_TYPE_MASTER_ID order by id", nativeQuery = true)
 	public List<ArrangementChecklistCompMaster> findByArrangementWorkTypeMasterId(@Param("ARRANGEMENT_WORK_TYPE_MASTER_ID") Long arrangementWorkTypeMasterId);
 
 }
