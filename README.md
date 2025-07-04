@@ -321,3 +321,4 @@
 |363|EOSL対応|
 |364|EOSL対応 修正漏れ対応|
 |365|EOSL対応 Jenkinsfile追加|
+|366|EOSL対応 EqualsAndHashCodeアノテーションを修正|
