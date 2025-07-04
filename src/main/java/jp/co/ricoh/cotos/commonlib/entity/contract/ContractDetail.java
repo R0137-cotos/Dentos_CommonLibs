@@ -39,7 +39,7 @@ import lombok.EqualsAndHashCode;
  * 契約明細を表すEntity
  */
 @Entity
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude={"itemContract"})
 @Data
 @Table(name = "contract_detail")
 public class ContractDetail extends EntityBase {
