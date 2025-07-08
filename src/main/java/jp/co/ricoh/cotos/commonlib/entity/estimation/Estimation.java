@@ -37,12 +37,14 @@ import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import jp.co.ricoh.cotos.commonlib.security.CotosAuthenticationDetails;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * 見積を表すEntityです。
  */
 @Entity
 @EqualsAndHashCode(callSuper = true, exclude={"estimationApprovalRoute","estimationPicSaEmp","customerEstimation", "estimationCheckResultList", "operationLogList", "estimationAttachedFileList", "estimationAddedEditorEmpList", "dealerEstimationList", "estimationDetailList", "productEstimationList"})
+@ToString(callSuper = true, exclude = {"estimationApprovalRoute","estimationPicSaEmp","customerEstimation", "estimationCheckResultList", "operationLogList", "estimationAttachedFileList", "estimationAddedEditorEmpList", "dealerEstimationList", "estimationDetailList", "productEstimationList"})
 @EntityListeners(EstimationListener.class)
 @Data
 @Table(name = "estimation")
