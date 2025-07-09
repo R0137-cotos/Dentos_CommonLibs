@@ -34,12 +34,14 @@ import jp.co.ricoh.cotos.commonlib.entity.EnumType.DetailStatus;
 import jp.co.ricoh.cotos.commonlib.entity.EnumType.InitialAccountSalesStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * 契約明細を表すEntity
  */
 @Entity
 @EqualsAndHashCode(callSuper = true, exclude={"itemContract"})
+@ToString(callSuper = true, exclude={"itemContract"})
 @Data
 @Table(name = "contract_detail")
 public class ContractDetail extends EntityBase {

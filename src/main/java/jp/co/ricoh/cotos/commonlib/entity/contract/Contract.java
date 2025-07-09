@@ -31,12 +31,14 @@ import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * 契約鑑を表すEntity
  */
 @Entity
 @EqualsAndHashCode(callSuper = true, exclude = {"contractPicSaEmp", "customerContract", "contractPicMntCeEmp", "contractPicMntSsOrg", "contractPicAccSsOrg", "contractPicIntSsOrg", "contractPicAccCeEmp", "contractPicIntCeEmp", "contractInstallationLocation", "contractDetailList", "contractCheckResultList", "contractApprovalRouteList", "contractAttachedFileList", "contractAddedEditorEmpList", "dealerContractList", "contractOperationLogList", "productContractList", "contractAttachedFileHistoryList", "contractEquipmentList", "managedEstimationDetailList"})
+@ToString(callSuper = true, exclude = {"contractPicSaEmp", "customerContract", "contractPicMntCeEmp", "contractPicMntSsOrg", "contractPicAccSsOrg", "contractPicIntSsOrg", "contractPicAccCeEmp", "contractPicIntCeEmp", "contractInstallationLocation", "contractDetailList", "contractCheckResultList", "contractApprovalRouteList", "contractAttachedFileList", "contractAddedEditorEmpList", "dealerContractList", "contractOperationLogList", "productContractList", "contractAttachedFileHistoryList", "contractEquipmentList", "managedEstimationDetailList"})
 @Data
 @Table(name = "contract")
 @EntityListeners(ContractListener.class)
