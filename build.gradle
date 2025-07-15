@@ -77,6 +77,8 @@ dependencies {
     implementation ('jakarta.validation:jakarta.validation-api:3.1.1')
     implementation ('org.springframework.boot:spring-boot-starter-actuator:3.5.0')
     implementation ('org.springframework.boot:spring-boot-starter-validation:3.5.0')
+
+    implementation("javax.xml.soap:javax.xml.soap-api:1.4.0")
 }
 
 sonarqube {
@@ -91,7 +93,7 @@ def repo = new File(rootDir, "repository")
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            version = '0.0.367'
+            version = '0.0.368'
             groupId = 'jp.co.ricoh.cotos'
             artifactId = 'dentos-common-libraries'
             from components.java

@@ -317,53 +317,33 @@ public class MomAuthorityService {
 	 */
 	protected List<AuthorityInfoActionDto> searchMomAuthoritiesExternal(String singleUserId) throws SQLException, RemoteException, ServiceException {
 
-		// TODO kengenService.jarをjava21に差し替えたらコメントアウト解除
-//		// 権限情報取得用サービスを初期化
-//		KengenServiceServiceLocator kengenServiceLocator = new KengenServiceServiceLocator();
-//		kengenServiceLocator.setKengenServiceEndpointAddress(remoteMomProperties.getUrl());
-//
-//		// MoM提供モジュールから社員情報の取得
-//		EmployeeInfoDto[] employeeInfoDtos = kengenServiceLocator.getKengenService().getContactEmpFromSUID(singleUserId, Calendar.getInstance(), false, remoteMomProperties.getRelatedid());
-//		if (employeeInfoDtos.length != 1) {
-//			return null;
-//		}
-//
-//		// 社員情報から、権限分類を特定
-//		List<EmployeeAuthInfoDto> empAuthInfoList = new ArrayList<>();
-//		List<EmployeeOrgInfoDto> employeeOrgInfoDtoList = Arrays.asList(employeeInfoDtos[0].getOrgList());
-//		employeeOrgInfoDtoList.stream().forEach(employeeOrgInfoDto -> Collections.addAll(empAuthInfoList, employeeOrgInfoDto.getClassifyList()));
-//		List<String> classify = empAuthInfoList.stream().map(empAuthInfo -> empAuthInfo.getClassifyId()).collect(Collectors.toList());
-//
-//		AuthorityInfoActionDto[] authorityInfoActionDtos = null;
-//		try (Connection connection = DriverManager.getConnection(datasourceProperties.getUrl(), datasourceProperties.getUsername(), datasourceProperties.getPassword())) {
-//			// MoM提供モジュールから権限情報の取得
-//			AuthoritySearch authoritySearch = new AuthoritySearch();
-//			authorityInfoActionDtos = authoritySearch.getAuthSumFromEmpId((String[]) classify.toArray(new String[0]), remoteMomProperties.getRelatedid(), connection);
-//		}
-//
-//		if (authorityInfoActionDtos == null || authorityInfoActionDtos.length == 0) {
-//			return null;
-//		}
-//
-//		return Arrays.asList(authorityInfoActionDtos);
+		// 権限情報取得用サービスを初期化
+		KengenServiceServiceLocator kengenServiceLocator = new KengenServiceServiceLocator();
+		kengenServiceLocator.setKengenServiceEndpointAddress(remoteMomProperties.getUrl());
 
-		// TODO kengenService.jarをjava21に差し替えたら削除
-		AuthorityInfoLevelDto auth_2200_90 = new AuthorityInfoLevelDto("2200", "90");
-		AuthorityInfoLevelDto auth_2210_90 = new AuthorityInfoLevelDto("2210", "90");
-		AuthorityInfoLevelDto auth_2220_90 = new AuthorityInfoLevelDto("2220", "90");
-		AuthorityInfoLevelDto auth_2230_90 = new AuthorityInfoLevelDto("2230", "90");
-		AuthorityInfoLevelDto auth_2240_90 = new AuthorityInfoLevelDto("2240", "90");
-		AuthorityInfoLevelDto auth_2250_90 = new AuthorityInfoLevelDto("2250", "90");
-		AuthorityInfoLevelDto auth_2260_90 = new AuthorityInfoLevelDto("2260", "90");
-		AuthorityInfoLevelDto[] levelList = new AuthorityInfoLevelDto[] {auth_2200_90, auth_2210_90, auth_2220_90, auth_2230_90, auth_2240_90, auth_2250_90, auth_2260_90};
-		AuthorityInfoActionDto auth_01 = new AuthorityInfoActionDto("01", levelList);
-		AuthorityInfoActionDto auth_02 = new AuthorityInfoActionDto("02", levelList);
-		AuthorityInfoActionDto auth_03 = new AuthorityInfoActionDto("03", levelList);
-		AuthorityInfoActionDto auth_04 = new AuthorityInfoActionDto("04", levelList);
-		AuthorityInfoActionDto auth_05 = new AuthorityInfoActionDto("05", levelList);
-		AuthorityInfoActionDto auth_06 = new AuthorityInfoActionDto("06", levelList);
-		AuthorityInfoActionDto auth_07 = new AuthorityInfoActionDto("07", levelList);
+		// MoM提供モジュールから社員情報の取得
+		EmployeeInfoDto[] employeeInfoDtos = kengenServiceLocator.getKengenService().getContactEmpFromSUID(singleUserId, Calendar.getInstance(), false, remoteMomProperties.getRelatedid());
+		if (employeeInfoDtos.length != 1) {
+			return null;
+		}
 
-		return Arrays.asList(auth_01, auth_02, auth_03, auth_04, auth_05, auth_06, auth_07);
+		// 社員情報から、権限分類を特定
+		List<EmployeeAuthInfoDto> empAuthInfoList = new ArrayList<>();
+		List<EmployeeOrgInfoDto> employeeOrgInfoDtoList = Arrays.asList(employeeInfoDtos[0].getOrgList());
+		employeeOrgInfoDtoList.stream().forEach(employeeOrgInfoDto -> Collections.addAll(empAuthInfoList, employeeOrgInfoDto.getClassifyList()));
+		List<String> classify = empAuthInfoList.stream().map(empAuthInfo -> empAuthInfo.getClassifyId()).collect(Collectors.toList());
+
+		AuthorityInfoActionDto[] authorityInfoActionDtos = null;
+		try (Connection connection = DriverManager.getConnection(datasourceProperties.getUrl(), datasourceProperties.getUsername(), datasourceProperties.getPassword())) {
+			// MoM提供モジュールから権限情報の取得
+			AuthoritySearch authoritySearch = new AuthoritySearch();
+			authorityInfoActionDtos = authoritySearch.getAuthSumFromEmpId((String[]) classify.toArray(new String[0]), remoteMomProperties.getRelatedid(), connection);
+		}
+
+		if (authorityInfoActionDtos == null || authorityInfoActionDtos.length == 0) {
+			return null;
+		}
+
+		return Arrays.asList(authorityInfoActionDtos);
 	}
 }
