@@ -323,3 +323,4 @@
 |365|EOSL対応 Jenkinsfile追加|
 |366|EOSL対応 EqualsAndHashCodeアノテーションを修正|
 |367|EOSL対応 ToStringアノテーションを修正|
+|368|EOSL対応 MoM権限サービスのバージョンアップ対応|
