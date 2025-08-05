@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:oracle:thin:@dev-db.cotos.ricoh.co.jp:1521/pdb1
+    url: jdbc:oracle:thin:@el-st-db-aws.cotos.ricoh.co.jp:1521/pdb1
     username: cotos_ci_commonlibs_el_std
     password: cotos_ci_commonlibs_el_std
     driverClassName: oracle.jdbc.OracleDriver

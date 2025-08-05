@@ -34,7 +34,7 @@ public class TestFindProperties {
 	@Test
 	public void プロパティ取得() {
 		Assert.assertEquals("DB設定：ドライバーが正しく取得されること", "oracle.jdbc.OracleDriver", appProperties.getDatasourceProperties().getDriverClassName());
-		Assert.assertEquals("DB設定：URLが正しく取得されること", "jdbc:oracle:thin:@dev-db.cotos.ricoh.co.jp:1521/pdb1", appProperties.getDatasourceProperties().getUrl());
+		Assert.assertEquals("DB設定：URLが正しく取得されること", "jdbc:oracle:thin:@el-st-db-aws.cotos.ricoh.co.jp:1521/pdb1", appProperties.getDatasourceProperties().getUrl());
 		Assert.assertEquals("DB設定：ユーザー名が正しく取得されること", "cotos_ci_commonlibs_el_std", appProperties.getDatasourceProperties().getUsername());
 		Assert.assertEquals("DB設定：パスワードが正しく取得されること", "cotos_ci_commonlibs_el_std", appProperties.getDatasourceProperties().getPassword());
 		Assert.assertEquals("ファイル設定：アップロードディレクトリが正しく取得されること", "./build/testTemp", appProperties.getFileProperties().getUploadFileDir());
