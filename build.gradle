@@ -93,7 +93,7 @@ def repo = new File(rootDir, "repository")
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            version = '0.0.368'
+            version = '0.0.369'
             groupId = 'jp.co.ricoh.cotos'
             artifactId = 'dentos-common-libraries'
             from components.java

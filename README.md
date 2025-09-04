@@ -324,3 +324,4 @@
 |366|EOSL対応 EqualsAndHashCodeアノテーションを修正|
 |367|EOSL対応 ToStringアノテーションを修正|
 |368|EOSL対応 MoM権限サービスのバージョンアップ対応|
+|369|multipart/form-dataのリクエストの場合にInputStreamを消費しないように改修|
