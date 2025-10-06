@@ -21,7 +21,7 @@ pipeline {
             echo "ターゲットブランチ： ${env.CHANGE_TARGET}" 
             try {
               sh "gradle clean"
-              def springProfileActive = "${env.CHANGE_TARGET}" == 'master' ? 'ci_master' : 'ci'
+              def springProfileActive = "${env.CHANGE_TARGET}" == 'master' ? 'ci' : 'ci'
               def gradleTestOption = "${env.GRADLE_TEST_OPTION}"
               withEnv(["SPRING_PROFILES_ACTIVE=${springProfileActive}"]) {
                 sh "gradle ${gradleTestOption} test"
