@@ -6,7 +6,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -24,7 +23,7 @@ import jp.co.ricoh.cotos.commonlib.repository.estimation.CustomerEstimationRepos
 import jp.co.ricoh.cotos.commonlib.repository.estimation.DealerEstimationRepository;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest
 public class TestListener {
 
 	static ConfigurableApplicationContext context;
@@ -62,7 +61,7 @@ public class TestListener {
 		estimation.setId(1L);
 		customerEstimation.setEstimation(estimation);
 		customerEstimationRepository.save(customerEstimation);
-		customerEstimation = customerEstimationRepository.findOne(customerEstimation.getId());
+		customerEstimation = customerEstimationRepository.findById(customerEstimation.getId()).get();
 		Assert.assertEquals("MoM企事部IDが正しく取得されること", "000000000447380", customerEstimation.getMomCustId());
 		Assert.assertEquals("MoM企業IDが正しく取得されること", "000000000417365", customerEstimation.getCompanyId());
 		Assert.assertEquals("MoM事業所IDが正しく取得されること", "000000000445220", customerEstimation.getOfficeId());
@@ -87,7 +86,7 @@ public class TestListener {
 		estimation.setId(1L);
 		dealerEstimation.setEstimation(estimation);
 		dealerEstimationRespository.save(dealerEstimation);
-		dealerEstimation = dealerEstimationRespository.findOne(dealerEstimation.getId());
+		dealerEstimation = dealerEstimationRespository.findById(dealerEstimation.getId()).get();
 		Assert.assertEquals("販売店名が正しく取得されること", "花房工事株式会社", dealerEstimation.getDealerName());
 		Assert.assertEquals("郵便番号が正しく取得されること", "1710014", dealerEstimation.getPostNumber());
 		Assert.assertEquals("住所が正しく取得されること", "東京都豊島区池袋４丁目３６－１７", dealerEstimation.getAddress());
@@ -104,7 +103,7 @@ public class TestListener {
 		contract.setId(1L);
 		dealerContract.setContract(contract);
 		dealerContractRepository.save(dealerContract);
-		dealerContract = dealerContractRepository.findOne(dealerContract.getId());
+		dealerContract = dealerContractRepository.findById(dealerContract.getId()).get();
 		Assert.assertEquals("販売店名が正しく取得されること", "花房工事株式会社", dealerContract.getDealerName());
 		Assert.assertEquals("郵便番号が正しく取得されること", "1710014", dealerContract.getPostNumber());
 		Assert.assertEquals("住所が正しく取得されること", "東京都豊島区池袋４丁目３６－１７", dealerContract.getAddress());

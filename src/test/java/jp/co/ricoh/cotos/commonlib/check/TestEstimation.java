@@ -8,9 +8,9 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -56,7 +56,7 @@ import jp.co.ricoh.cotos.commonlib.util.HeadersProperties;
  *
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, properties = "test.context.id = TestEstimation")
 public class TestEstimation {
 
 	private static final String STR_256 = "0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345";
@@ -144,7 +144,7 @@ public class TestEstimation {
 
 	@Test
 	public void CustomerEstimationのテスト() throws Exception {
-		CustomerEstimation entity = customerEstimationRepository.findOne(401L);
+		CustomerEstimation entity = customerEstimationRepository.findById(401L).get();
 		CustomerEstimation testTarget = new CustomerEstimation();
 		BeanUtils.copyProperties(testTarget, entity);
 
@@ -192,7 +192,7 @@ public class TestEstimation {
 
 	@Test
 	public void DealerEstimationのテスト() throws Exception {
-		DealerEstimation entity = dealerEstimationRepository.findOne(401L);
+		DealerEstimation entity = dealerEstimationRepository.findById(401L).get();
 		DealerEstimation testTarget = new DealerEstimation();
 
 		// 正常系
@@ -234,7 +234,7 @@ public class TestEstimation {
 
 	@Test
 	public void Estimationのテスト() throws Exception {
-		Estimation entity = estimationRepository.findOne(4L);
+		Estimation entity = estimationRepository.findById(4L).get();
 		Estimation testTarget = new Estimation();
 
 		// 正常系
@@ -327,7 +327,7 @@ public class TestEstimation {
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "MoM企事部システム連携IDが設定されていません。"));
 
 		// 異常系（@Valid：見積添付ファイル）
-		entity = estimationRepository.findOne(4L);
+		entity = estimationRepository.findById(4L).get();
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.getEstimationAttachedFileList().get(0).setFileName(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
@@ -336,7 +336,7 @@ public class TestEstimation {
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "ファイル名が設定されていません。"));
 
 		// 異常系（@Valid：見積担当SA社員）
-		entity = estimationRepository.findOne(4L);
+		entity = estimationRepository.findById(4L).get();
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.getEstimationPicSaEmp().setMomEmployeeId(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
@@ -345,7 +345,7 @@ public class TestEstimation {
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "MoM社員IDが設定されていません。"));
 
 		// 異常系（@Valid ：見積明細）
-		entity = estimationRepository.findOne(4L);
+		entity = estimationRepository.findById(4L).get();
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.getEstimationDetailList().get(0).setState(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
@@ -354,7 +354,7 @@ public class TestEstimation {
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "状態が設定されていません。"));
 
 		// 異常系（@Valid ：販売店（見積用））
-		entity = estimationRepository.findOne(4L);
+		entity = estimationRepository.findById(4L).get();
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.getDealerEstimationList().get(0).setPicMailAddress(STR_256);
 		;
@@ -364,7 +364,7 @@ public class TestEstimation {
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "MoM非連携_担当者メールアドレスは最大文字数（255）を超えています。"));
 
 		// 異常系（@Valid ：見積追加編集者社員）
-		entity = estimationRepository.findOne(4L);
+		entity = estimationRepository.findById(4L).get();
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.getEstimationAddedEditorEmpList().get(0).setMomEmployeeId(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
@@ -376,7 +376,7 @@ public class TestEstimation {
 
 	@Test
 	public void EstimationAddedEditorEmpのテスト() throws Exception {
-		EstimationAddedEditorEmp entity = estimationAddedEditorEmpRepository.findOne(401L);
+		EstimationAddedEditorEmp entity = estimationAddedEditorEmpRepository.findById(401L).get();
 		EstimationAddedEditorEmp testTarget = new EstimationAddedEditorEmp();
 		BeanUtils.copyProperties(testTarget, entity);
 
@@ -404,7 +404,7 @@ public class TestEstimation {
 
 	@Test
 	public void EstimationApprovalResultのテスト() throws Exception {
-		EstimationApprovalResult entity = estimationApprovalResultRepository.findOne(401L);
+		EstimationApprovalResult entity = estimationApprovalResultRepository.findById(401L).get();
 		EstimationApprovalResult testTarget = new EstimationApprovalResult();
 		BeanUtils.copyProperties(testTarget, entity);
 
@@ -437,7 +437,7 @@ public class TestEstimation {
 
 	@Test
 	public void EstimationApprovalRouteのテスト() throws Exception {
-		EstimationApprovalRoute entity = estimationApprovalRouteRepository.findOne(401L);
+		EstimationApprovalRoute entity = estimationApprovalRouteRepository.findById(401L).get();
 		EstimationApprovalRoute testTarget = new EstimationApprovalRoute();
 
 		// 正常系
@@ -475,7 +475,7 @@ public class TestEstimation {
 
 	@Test
 	public void EstimationApprovalRouteNodeのテスト() throws Exception {
-		EstimationApprovalRouteNode entity = estimationApprovalRouteNodeRepository.findOne(401L);
+		EstimationApprovalRouteNode entity = estimationApprovalRouteNodeRepository.findById(401L).get();
 		EstimationApprovalRouteNode testTarget = new EstimationApprovalRouteNode();
 
 		// 正常系
@@ -527,7 +527,7 @@ public class TestEstimation {
 	@Test
 	public void EstimationAttachedFileのテスト() throws Exception {
 
-		EstimationAttachedFile entity = estimationAttachedFileRepository.findOne(401L);
+		EstimationAttachedFile entity = estimationAttachedFileRepository.findById(401L).get();
 		EstimationAttachedFile testTarget = new EstimationAttachedFile();
 		BeanUtils.copyProperties(testTarget, entity);
 
@@ -554,7 +554,7 @@ public class TestEstimation {
 		Assert.assertTrue(testTool.errorMessageMatchesOne(result.getErrorInfoList(), "コメントは最大文字数（1000）を超えています。"));
 
 		// 異常系（@Valid ：添付ファイル）
-		entity = estimationAttachedFileRepository.findOne(401L);
+		entity = estimationAttachedFileRepository.findById(401L).get();
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.getAttachedFile().setFilePhysicsName(null);
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
@@ -566,7 +566,7 @@ public class TestEstimation {
 
 	@Test
 	public void EstimationCheckResultのテスト() throws Exception {
-		EstimationCheckResult entity = estimationCheckResultRepository.findOne(401L);
+		EstimationCheckResult entity = estimationCheckResultRepository.findById(401L).get();
 		EstimationCheckResult testTarget = new EstimationCheckResult();
 
 		// 正常系
@@ -616,7 +616,7 @@ public class TestEstimation {
 
 	@Test
 	public void EstimationDetailのテスト() throws Exception {
-		EstimationDetail entity = estimationDetailRepository.findOne(401L);
+		EstimationDetail entity = estimationDetailRepository.findById(401L).get();
 		EstimationDetail testTarget = new EstimationDetail();
 		BeanUtils.copyProperties(testTarget, entity);
 
@@ -668,7 +668,7 @@ public class TestEstimation {
 
 	@Test
 	public void EstimationPicSaEmpのテスト() throws Exception {
-		EstimationPicSaEmp entity = estimationPicSaEmpRepository.findOne(401L);
+		EstimationPicSaEmp entity = estimationPicSaEmpRepository.findById(401L).get();
 		EstimationPicSaEmp testTarget = new EstimationPicSaEmp();
 
 		// 正常系
@@ -711,7 +711,7 @@ public class TestEstimation {
 
 	@Test
 	public void ItemEstimationのテスト() throws Exception {
-		ItemEstimation entity = itemEstimationRepository.findOne(401L);
+		ItemEstimation entity = itemEstimationRepository.findById(401L).get();
 		ItemEstimation testTarget = new ItemEstimation();
 
 		// 正常系
@@ -760,7 +760,7 @@ public class TestEstimation {
 
 	@Test
 	public void OperationLogのテスト() throws Exception {
-		OperationLog entity = operationLogRepository.findOne(401L);
+		OperationLog entity = operationLogRepository.findById(401L).get();
 		OperationLog testTarget = new OperationLog();
 
 		// 正常系
@@ -789,7 +789,7 @@ public class TestEstimation {
 
 	@Test
 	public void ProductEstimationのテスト() throws Exception {
-		ProductEstimation entity = productEstimationRepository.findOne(401L);
+		ProductEstimation entity = productEstimationRepository.findById(401L).get();
 		ProductEstimation testTarget = new ProductEstimation();
 
 		// 正常系
@@ -817,7 +817,7 @@ public class TestEstimation {
 		// 異常系（@Size(max) ：）
 		BeanUtils.copyProperties(testTarget, entity);
 		testTarget.setProductMasterId(INT_MINUS_1);
-		testTarget.setRepItemMasterId(new Long(INT_MINUS_1));
+		testTarget.setRepItemMasterId(Long.valueOf(INT_MINUS_1));
 		result = testSecurityController.callParameterCheck(testTarget, headersProperties, localServerPort);
 		Assert.assertTrue(result.getErrorInfoList().size() == 2);
 		Assert.assertTrue(testTool.errorIdMatchesAll(result.getErrorInfoList(), ParameterErrorIds.ROT00027));

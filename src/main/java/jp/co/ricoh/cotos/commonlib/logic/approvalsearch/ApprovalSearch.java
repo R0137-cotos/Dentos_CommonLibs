@@ -60,7 +60,7 @@ public class ApprovalSearch {
 	public <T> ApprovalRouteMasterResult findApprovalRouteMaster(long approvalRouteGrpId, T entity, String domain) {
 
 		ApprovalRouteMasterResult reslut = new ApprovalRouteMasterResult();
-		ApprovalRouteGrpMaster approvalRouteGrpMaster = approvalRouteGrpMasterRepository.findOne(approvalRouteGrpId);
+		ApprovalRouteGrpMaster approvalRouteGrpMaster = approvalRouteGrpMasterRepository.findById(approvalRouteGrpId).orElse(null);
 
 		// ルート特定、または条件式実行結果ステータスの異常・警告が発生するまでループ
 		ApprovalRouteMaster applyApprovalRouteMaster = approvalRouteGrpMaster.getApprovalRouteMasterList().stream().filter(approvalRouteMaster -> {
@@ -101,7 +101,7 @@ public class ApprovalSearch {
 	public <T> List<ApprovalRouteMasterResult> findApprovalRouteMasterCandidate(long approvalRouteGrpId, T entity, String domain) {
 
 		List<ApprovalRouteMasterResult> resultList = new ArrayList<>();
-		ApprovalRouteGrpMaster approvalRouteGrpMaster = approvalRouteGrpMasterRepository.findOne(approvalRouteGrpId);
+		ApprovalRouteGrpMaster approvalRouteGrpMaster = approvalRouteGrpMasterRepository.findById(approvalRouteGrpId).orElse(null);
 
 		// ルート特定、または条件式実行結果ステータスの異常・警告が発生するまでループ
 		approvalRouteGrpMaster.getApprovalRouteMasterList().stream().filter(approvalRouteMaster -> {

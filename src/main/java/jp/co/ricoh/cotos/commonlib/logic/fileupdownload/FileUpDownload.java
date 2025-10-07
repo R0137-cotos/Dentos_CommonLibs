@@ -103,7 +103,7 @@ public class FileUpDownload {
 	 * @throws IOException
 	 */
 	public ResponseEntity<InputStream> downloadFile(Long attachedFileId, String downloadFileNm) throws IOException {
-		AttachedFile attachedFile = attachedFileRepository.findOne(attachedFileId);
+		AttachedFile attachedFile = attachedFileRepository.findById(attachedFileId).orElse(null);
 		if (null == attachedFile) {
 			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "FileAttachedFileNotFoundError", new String[] { "ダウンロード" }));
 		}
@@ -138,7 +138,7 @@ public class FileUpDownload {
 	 * @throws IOException
 	 */
 	public void deleteFile(Long attachedFileId) throws ErrorCheckException, IOException {
-		AttachedFile attachedFile = attachedFileRepository.findOne(attachedFileId);
+		AttachedFile attachedFile = attachedFileRepository.findById(attachedFileId).orElse(null);
 		if (null == attachedFile) {
 			throw new ErrorCheckException(checkUtil.addErrorInfo(new ArrayList<ErrorInfo>(), "FileAttachedFileNotFoundError", new String[] { "削除" }));
 		}

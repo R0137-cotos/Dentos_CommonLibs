@@ -36,12 +36,12 @@ cotos:
       operatorOrgName: dummy_batch_operator_org
 spring:
   datasource:
-    url: jdbc:oracle:thin:@dev-db.cotos.ricoh.co.jp:1521/pdb1
+    url: jdbc:oracle:thin:@el-st-db-aws.cotos.ricoh.co.jp:1521/pdb1
     username: cotos_ci_commonlibs_el_std
     password: cotos_ci_commonlibs_el_std
     driverClassName: oracle.jdbc.OracleDriver
   jpa:
-    database-platform: org.hibernate.dialect.Oracle12cDialect
+    database-platform: org.hibernate.dialect.OracleDialect
     hibernate:
       ddl-auto: none
     properties:
@@ -58,7 +58,7 @@ spring:
       fail-on-empty-beans: false
   mail:
     default-encoding: UTF-8
-    host: shipyard.cotos.ricoh.co.jp
+    host: el-st.shipyard.cotos.ricoh.co.jp
     port: 1025
     username: koike.shinichi
     password: koike.shinichi

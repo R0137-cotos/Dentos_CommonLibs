@@ -2,7 +2,7 @@ package jp.co.ricoh.cotos.commonlib.dto.parameter.contract.order;
 
 import java.util.List;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

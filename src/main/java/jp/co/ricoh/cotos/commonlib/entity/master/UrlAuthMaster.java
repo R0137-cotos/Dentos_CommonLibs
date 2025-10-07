@@ -3,20 +3,24 @@ package jp.co.ricoh.cotos.commonlib.entity.master;
 import java.io.Serializable;
 import java.util.Arrays;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Table;
 
 import org.springframework.http.HttpMethod;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 import io.swagger.annotations.ApiModelProperty;
+import jp.co.ricoh.cotos.commonlib.converter.HttpMethodConverter;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBaseMaster;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -138,9 +142,10 @@ public class UrlAuthMaster extends EntityBaseMaster {
 		/**
 		 * HTTPメソッド
 		 */
+		@Convert(converter = HttpMethodConverter.class)
 		@Column(nullable = false)
-		@Enumerated(EnumType.STRING)
 		@ApiModelProperty(value = "HTTPメソッド", required = true, position = 2)
+		@JsonSerialize(using = ToStringSerializer.class)
 		private HttpMethod method;
 
 		/**

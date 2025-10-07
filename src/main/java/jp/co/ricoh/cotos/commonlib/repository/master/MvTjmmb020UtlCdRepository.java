@@ -12,6 +12,6 @@ import jp.co.ricoh.cotos.commonlib.entity.master.MvTjmmb020UtlCd.Id;
 
 @Repository
 public interface MvTjmmb020UtlCdRepository extends CrudRepository<MvTjmmb020UtlCd, Id> {
-	@Query(value = "FROM MvTjmmb020UtlCd WHERE item_id = :ITEM_ID AND del_flg = '0' order by sort_number")
+	@Query(value = "FROM MvTjmmb020UtlCd WHERE Id.itemId = :ITEM_ID AND delFlg = '0' order by sortNumber")
 	public List<MvTjmmb020UtlCd> findByItemId(@Param("ITEM_ID") String itemId);
 }

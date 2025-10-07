@@ -439,7 +439,7 @@ public class TestExcelUtil {
 	}
 
 	private static Object getCellValue(Cell cell) {
-		CellType cellType = cell.getCellTypeEnum();
+		CellType cellType = cell.getCellType();
 		if (CellType.STRING == cellType) {
 			return cell.getRichStringCellValue().getString();
 		} else if (CellType.NUMERIC == cellType) {

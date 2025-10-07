@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -23,6 +23,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -152,6 +153,11 @@ public class ControllerLoggingInterceptor {
 	private String outputLog(Object obj) {
 		if (null == obj) {
 			return null;
+		}
+
+		if (obj instanceof MultipartFile) {
+			MultipartFile file = (MultipartFile) obj;
+			return String.format("[MultipartFile] name=%s, originalFilename=%s, size=%d bytes", file.getName(), file.getOriginalFilename(), file.getSize());
 		}
 
 		String log = null;

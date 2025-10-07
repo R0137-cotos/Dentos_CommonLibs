@@ -7,21 +7,22 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.apache.poi.EncryptedDocumentException;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.jxls.common.Context;
-import org.jxls.util.JxlsHelper;
+import org.jxls.builder.JxlsOutput;
+import org.jxls.builder.KeepTemplateSheet;
+import org.jxls.transform.poi.JxlsPoiTemplateFillerBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -70,22 +71,21 @@ public class ExcelUtil {
 		}
 
 		// エクセルコンテキストへマッピング情報を設定
-		Context context = new Context();
-		for (Field field : entity.getClass().getDeclaredFields()) {
-			field.setAccessible(true);
-			try {
-				context.putVar(field.getName(), field.get(entity));
-			} catch (IllegalArgumentException | IllegalAccessException e) {
-				throw new ErrorFatalException(checkUtil.addErrorInfo(errorInfoList, "FileMappingFailed", new String[] { "マッピング用エンティティクラス" }));
-			}
-		}
+		Map<String, Object> contextMap = new HashMap<>();
+		contextMap.put(entity.getClass().getSimpleName().substring(0, 1).toLowerCase() + entity.getClass().getSimpleName().substring(1), entity);
 
 		// エクセル出力
-		try (InputStream in = new FileInputStream(inputTemplateFile)) {
+		try (InputStream in = new FileInputStream(inputTemplateFile); OutputStream out = new FileOutputStream(outputFile)) {
 			Files.createDirectories(outputFile.toPath().getParent());
-			try (OutputStream out = new FileOutputStream(outputFile)) {
-				JxlsHelper.getInstance().setUseFastFormulaProcessor(false).setDeleteTemplateSheet(true).processTemplate(in, out, context);
-			}
+
+			JxlsOutput output = new JxlsOutput() {
+				@Override
+				public OutputStream getOutputStream() throws IOException {
+					return out;
+				}
+			};
+			
+			JxlsPoiTemplateFillerBuilder.newInstance().withKeepTemplateSheet(KeepTemplateSheet.KEEP).withTemplate(in).buildAndFill(contextMap, output);
 		} catch (FileNotFoundException e) {
 			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "FileNotFoundError", new String[] { inputTemplateFile.getAbsolutePath() }));
 		} catch (IOException e) {
@@ -123,8 +123,7 @@ public class ExcelUtil {
 
 		try (InputStream in = new FileInputStream(inputFile)) {
 			// シート削除エクセルファイルをテンポラリとして作成
-			try (OutputStream out = new FileOutputStream(tempPath.toFile())) {
-				Workbook wb = WorkbookFactory.create(in);
+			try (OutputStream out = new FileOutputStream(tempPath.toFile()); Workbook wb = WorkbookFactory.create(in)) {
 				sheetNameList.stream().map(s -> wb.getSheetIndex(s)).filter(idx -> idx >= 0).forEach(idx -> wb.removeSheetAt(idx));
 				wb.write(out);
 			}
@@ -137,7 +136,7 @@ public class ExcelUtil {
 			}
 		} catch (FileNotFoundException e) {
 			throw new ErrorCheckException(checkUtil.addErrorInfo(errorInfoList, "FileNotFoundError", new String[] { inputFile.getAbsolutePath() }));
-		} catch (IOException | EncryptedDocumentException | InvalidFormatException e) {
+		} catch (IOException | EncryptedDocumentException e) {
 			throw new ErrorFatalException(checkUtil.addErrorInfo(errorInfoList, "FileOutputFailed", new String[] { inputFile.getAbsolutePath() }));
 		} finally {
 			// テンポラリファイル削除

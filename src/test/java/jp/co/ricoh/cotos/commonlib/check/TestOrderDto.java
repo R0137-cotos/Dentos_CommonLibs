@@ -14,9 +14,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -66,7 +66,7 @@ import jp.co.ricoh.cotos.commonlib.util.HeadersProperties;
  *
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, properties = "test.context.id = TestOrderDto")
 public class TestOrderDto {
 
 	private static final String STR_256 = "0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345";
@@ -167,7 +167,7 @@ public class TestOrderDto {
 
 	@Test
 	public void OrderSetupInfoDtoのテスト() throws Exception {
-		OrderSetupInfo entity = orderSetupInfoRepository.findOne(401L);
+		OrderSetupInfo entity = orderSetupInfoRepository.findById(401L).get();
 		OrderSetupInfoDto testTarget = new OrderSetupInfoDto();
 		BeanUtils.copyProperties(entity, testTarget);
 
@@ -198,7 +198,7 @@ public class TestOrderDto {
 
 	@Test
 	public void OrderServiceInnerInfoDtoのテスト() throws Exception {
-		OrderServiceInnerInfo entity = orderServiceInnerInfoRepository.findOne(401L);
+		OrderServiceInnerInfo entity = orderServiceInnerInfoRepository.findById(401L).get();
 		OrderServiceInnerInfoDto testTarget = new OrderServiceInnerInfoDto();
 		BeanUtils.copyProperties(entity, testTarget);
 
@@ -251,7 +251,7 @@ public class TestOrderDto {
 
 	@Test
 	public void OrderProductInfoDtoのテスト() throws Exception {
-		OrderProductInfo entity = orderProductInfoRepository.findOne(401L);
+		OrderProductInfo entity = orderProductInfoRepository.findById(401L).get();
 		OrderProductInfoDto testTarget = new OrderProductInfoDto();
 		BeanUtils.copyProperties(entity, testTarget);
 
@@ -317,7 +317,7 @@ public class TestOrderDto {
 
 	@Test
 	public void OrderProductGroupInfoDtoのテスト() throws Exception {
-		OrderProductGroupInfo entity = orderProductGroupInfoRepository.findOne(401L);
+		OrderProductGroupInfo entity = orderProductGroupInfoRepository.findById(401L).get();
 		OrderProductGroupInfoDto testTarget = new OrderProductGroupInfoDto();
 		BeanUtils.copyProperties(entity, testTarget);
 
@@ -343,7 +343,7 @@ public class TestOrderDto {
 
 	@Test
 	public void OrdererInfoDtoのテスト() throws Exception {
-		OrdererInfo entity = ordererInfoRepository.findOne(401L);
+		OrdererInfo entity = ordererInfoRepository.findById(401L).get();
 		OrdererInfoDto testTarget = new OrdererInfoDto();
 		BeanUtils.copyProperties(entity, testTarget);
 
@@ -375,7 +375,7 @@ public class TestOrderDto {
 
 	@Test
 	public void OrderDistributorInfoDtoのテスト() throws Exception {
-		OrderDistributorInfo entity = orderDistributorInfoRepository.findOne(401L);
+		OrderDistributorInfo entity = orderDistributorInfoRepository.findById(401L).get();
 		OrderDistributorInfoDto testTarget = new OrderDistributorInfoDto();
 		BeanUtils.copyProperties(entity, testTarget);
 
@@ -408,7 +408,7 @@ public class TestOrderDto {
 
 	@Test
 	public void OrderContractorInfoDtoのテスト() throws Exception {
-		OrderContractorInfo entity = orderContractorInfoRepository.findOne(401L);
+		OrderContractorInfo entity = orderContractorInfoRepository.findById(401L).get();
 		OrderContractorInfoDto testTarget = new OrderContractorInfoDto();
 		BeanUtils.copyProperties(entity, testTarget);
 
@@ -445,7 +445,7 @@ public class TestOrderDto {
 
 	@Test
 	public void OrderBranchCustomerInfoDtoのテスト() throws Exception {
-		OrderBranchCustomerInfo entity = orderBranchCustomerInfoRepository.findOne(401L);
+		OrderBranchCustomerInfo entity = orderBranchCustomerInfoRepository.findById(401L).get();
 		OrderBranchCustomerInfoDto testTarget = new OrderBranchCustomerInfoDto();
 		BeanUtils.copyProperties(entity, testTarget);
 
@@ -477,7 +477,7 @@ public class TestOrderDto {
 
 	@Test
 	public void OrderBasicContentsDto() throws Exception {
-		OrderBasicInfo entity = orderBasicInfoRepository.findOne(4L);
+		OrderBasicInfo entity = orderBasicInfoRepository.findById(4L).get();
 		OrderBasicContentsDto testTarget = new OrderBasicContentsDto();
 		BeanUtils.copyProperties(entity, testTarget);
 
@@ -535,7 +535,7 @@ public class TestOrderDto {
 		OrderListDto testTopTarget = new OrderListDto();
 
 		// 親
-		OrderBasicInfo entity = orderBasicInfoRepository.findOne(4L);
+		OrderBasicInfo entity = orderBasicInfoRepository.findById(4L).get();
 		OrderBasicInfoDto testTarget = new OrderBasicInfoDto();
 		BeanUtils.copyProperties(entity, testTarget);
 

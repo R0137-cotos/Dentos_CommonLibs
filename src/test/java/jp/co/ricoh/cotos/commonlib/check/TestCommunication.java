@@ -6,9 +6,9 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -34,7 +34,7 @@ import jp.co.ricoh.cotos.commonlib.util.HeadersProperties;
  *
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, properties = "test.context.id = TestCommunication")
 public class TestCommunication {
 
 	private static final String STR_256 = "0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345";
@@ -85,7 +85,7 @@ public class TestCommunication {
 
 	@Test
 	public void CommunicationHistoryのテスト() throws Exception {
-		CommunicationHistory entity = communicationHistoryRepository.findOne(1L);
+		CommunicationHistory entity = communicationHistoryRepository.findById(1L).get();
 		CommunicationHistory testTarget = new CommunicationHistory();
 		BeanUtils.copyProperties(testTarget, entity);
 
@@ -155,7 +155,7 @@ public class TestCommunication {
 
 	@Test
 	public void Communicationのテスト() throws Exception {
-		Communication entity = communicationRepository.findOne(1L);
+		Communication entity = communicationRepository.findById(1L).get();
 		Communication testTarget = new Communication();
 		BeanUtils.copyProperties(testTarget, entity);
 
@@ -224,7 +224,7 @@ public class TestCommunication {
 
 	@Test
 	public void Contactのテスト() throws Exception {
-		Contact entity = contactRepository.findOne(1L);
+		Contact entity = contactRepository.findById(1L).get();
 		Contact testTarget = new Contact();
 		BeanUtils.copyProperties(testTarget, entity);
 
@@ -271,7 +271,7 @@ public class TestCommunication {
 
 	@Test
 	public void ContactToのテスト() throws Exception {
-		ContactTo entity = contactToRepository.findOne(1L);
+		ContactTo entity = contactToRepository.findById(1L).get();
 		ContactTo testTarget = new ContactTo();
 		BeanUtils.copyProperties(testTarget, entity);
 

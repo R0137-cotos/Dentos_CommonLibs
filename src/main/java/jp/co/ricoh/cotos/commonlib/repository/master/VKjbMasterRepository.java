@@ -21,7 +21,7 @@ public interface VKjbMasterRepository extends CrudRepository<VKjbMaster, String>
 			"  v_kjb_master kjb " + //
 			"  inner join ( " + //
 			"    select" + //
-			"      kjb2.mcl_mom_rel_id" + //
+			"      kjb2.mcl_mom_rel_id as kjb2_mcl_mom_rel_id" + //
 			"      , max(mcl_updt_dt) " + //
 			"    from" + //
 			"      v_kjb_master kjb2 " + //
@@ -31,6 +31,6 @@ public interface VKjbMasterRepository extends CrudRepository<VKjbMaster, String>
 			"    group by" + //
 			"      mcl_mom_rel_id" + //
 			"  ) kjb2 " + //
-			"    on kjb.mcl_mom_rel_id = kjb2.mcl_mom_rel_id ", nativeQuery = true)
+			"    on kjb.mcl_mom_rel_id = kjb2_mcl_mom_rel_id ", nativeQuery = true)
 	public List<VKjbMaster> findByMclMomKjbIdAndMclDltFlgAndMaxMclUpdateDt(@Param("mclMomKjbId") String mclMomKjbId, @Param("mclDltFlg") String mclDltFlg);
 }

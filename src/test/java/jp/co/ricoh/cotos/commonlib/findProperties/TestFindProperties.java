@@ -8,7 +8,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.Environment;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -16,7 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import jp.co.ricoh.cotos.commonlib.util.AppProperties;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest
 public class TestFindProperties {
 
 	@Autowired
@@ -35,7 +34,7 @@ public class TestFindProperties {
 	@Test
 	public void プロパティ取得() {
 		Assert.assertEquals("DB設定：ドライバーが正しく取得されること", "oracle.jdbc.OracleDriver", appProperties.getDatasourceProperties().getDriverClassName());
-		Assert.assertEquals("DB設定：URLが正しく取得されること", "jdbc:oracle:thin:@dev-db.cotos.ricoh.co.jp:1521/pdb1", appProperties.getDatasourceProperties().getUrl());
+		Assert.assertEquals("DB設定：URLが正しく取得されること", "jdbc:oracle:thin:@el-st-db-aws.cotos.ricoh.co.jp:1521/pdb1", appProperties.getDatasourceProperties().getUrl());
 		Assert.assertEquals("DB設定：ユーザー名が正しく取得されること", "cotos_ci_commonlibs_el_std", appProperties.getDatasourceProperties().getUsername());
 		Assert.assertEquals("DB設定：パスワードが正しく取得されること", "cotos_ci_commonlibs_el_std", appProperties.getDatasourceProperties().getPassword());
 		Assert.assertEquals("ファイル設定：アップロードディレクトリが正しく取得されること", "./build/testTemp", appProperties.getFileProperties().getUploadFileDir());

@@ -318,3 +318,11 @@
 |360|MoM権限サービスRIZM対応（テストのみ）|
 |361|コミュニケーションにオブザーバーを追加|
 |362|特殊対応用の操作履歴を追加|
+|363|EOSL対応|
+|364|EOSL対応 修正漏れ対応|
+|365|EOSL対応 Jenkinsfile追加|
+|366|EOSL対応 EqualsAndHashCodeアノテーションを修正|
+|367|EOSL対応 ToStringアノテーションを修正|
+|368|EOSL対応 MoM権限サービスのバージョンアップ対応|
+|369|multipart/form-dataのリクエストの場合にInputStreamを消費しないように改修|
+|370|請求書出力バッチ用RestTemplate追加|

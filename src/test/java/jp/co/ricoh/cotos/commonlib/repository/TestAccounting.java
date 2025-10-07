@@ -6,7 +6,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -22,7 +21,7 @@ import jp.co.ricoh.cotos.commonlib.repository.accounting.Wjcmj302SikyuMisiCtsWkR
 import jp.co.ricoh.cotos.commonlib.repository.accounting.Wjcmj303GnkHrkeCtsWkRepository;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest
 public class TestAccounting {
 
 	static ConfigurableApplicationContext context;
@@ -60,7 +59,7 @@ public class TestAccounting {
 	@Test
 	public void AccountingRepositoryのテスト() throws Exception {
 
-		Accounting found = accountingRespository.findOne(1L);
+		Accounting found = accountingRespository.findById(1L).get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -75,7 +74,7 @@ public class TestAccounting {
 
 		context.getBean(DBConfig.class).initTargetTestData("repository/accounting/wjcmj301KiykSikyuCtsWk.sql");
 
-		Wjcmj301KiykSikyuCtsWk found = wjcmj301KiykSikyuCtsWkRepository.findOne("00011878000001000000");
+		Wjcmj301KiykSikyuCtsWk found = wjcmj301KiykSikyuCtsWkRepository.findById("00011878000001000000").get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -86,7 +85,7 @@ public class TestAccounting {
 
 		context.getBean(DBConfig.class).initTargetTestData("repository/accounting/wjcmj302SikyuMisiCtsWk.sql");
 
-		Wjcmj302SikyuMisiCtsWk found = wjcmj302SikyuMisiCtsWkRepository.findOne("00011878000001000000");
+		Wjcmj302SikyuMisiCtsWk found = wjcmj302SikyuMisiCtsWkRepository.findById("00011878000001000000").get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);
@@ -97,7 +96,7 @@ public class TestAccounting {
 
 		context.getBean(DBConfig.class).initTargetTestData("repository/accounting/wjcmj303GnkHrkeCtsWk.sql");
 
-		Wjcmj303GnkHrkeCtsWk found = wjcmj303GnkHrkeCtsWkRepository.findOne("00011878000001001000");
+		Wjcmj303GnkHrkeCtsWk found = wjcmj303GnkHrkeCtsWkRepository.findById("00011878000001001000").get();
 
 		// Entity が null ではないことを確認
 		Assert.assertNotNull(found);

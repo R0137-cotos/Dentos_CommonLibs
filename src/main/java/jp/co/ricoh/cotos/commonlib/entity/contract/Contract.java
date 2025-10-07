@@ -4,25 +4,25 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.OrderBy;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.Valid;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.OrderBy;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -31,12 +31,14 @@ import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * 契約鑑を表すEntity
  */
 @Entity
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = {"contractPicSaEmp", "customerContract", "contractPicMntCeEmp", "contractPicMntSsOrg", "contractPicAccSsOrg", "contractPicIntSsOrg", "contractPicAccCeEmp", "contractPicIntCeEmp", "contractInstallationLocation", "contractDetailList", "contractCheckResultList", "contractApprovalRouteList", "contractAttachedFileList", "contractAddedEditorEmpList", "dealerContractList", "contractOperationLogList", "productContractList", "contractAttachedFileHistoryList", "contractEquipmentList", "managedEstimationDetailList"})
+@ToString(callSuper = true, exclude = {"contractPicSaEmp", "customerContract", "contractPicMntCeEmp", "contractPicMntSsOrg", "contractPicAccSsOrg", "contractPicIntSsOrg", "contractPicAccCeEmp", "contractPicIntCeEmp", "contractInstallationLocation", "contractDetailList", "contractCheckResultList", "contractApprovalRouteList", "contractAttachedFileList", "contractAddedEditorEmpList", "dealerContractList", "contractOperationLogList", "productContractList", "contractAttachedFileHistoryList", "contractEquipmentList", "managedEstimationDetailList"})
 @Data
 @Table(name = "contract")
 @EntityListeners(ContractListener.class)
