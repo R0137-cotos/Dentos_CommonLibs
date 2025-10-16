@@ -20,10 +20,12 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import io.swagger.annotations.ApiModelProperty;
 import jp.co.ricoh.cotos.commonlib.entity.EntityBase;
 import jp.co.ricoh.cotos.commonlib.entity.EnumType.ApprovalProcessCategory;
+import jp.co.ricoh.cotos.commonlib.serializer.UnixTimestampDateSerializer;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -105,6 +107,7 @@ public class ContractApprovalResult extends EntityBase {
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	@NotNull
+	@JsonSerialize(using = UnixTimestampDateSerializer.class)
 	@ApiModelProperty(value = "実施日時(作成時不要)", required = true, position = 9, readOnly = true)
 	private Date processedAt;
 

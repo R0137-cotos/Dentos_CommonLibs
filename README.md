@@ -326,3 +326,4 @@
 |368|EOSL対応 MoM権限サービスのバージョンアップ対応|
 |369|multipart/form-dataのリクエストの場合にInputStreamを消費しないように改修|
 |370|請求書出力バッチ用RestTemplate追加|
+|371|UNIXタイムスタンプ用のカスタムシリアライザを実装|
