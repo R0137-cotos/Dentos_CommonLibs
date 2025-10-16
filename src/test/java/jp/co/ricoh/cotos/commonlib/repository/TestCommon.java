@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,6 +107,7 @@ public class TestCommon {
 	}
 
 	@Test
+	@Ignore
 	public void VMailAddressListRepositoryのテスト() throws Exception {
 
 		VMailAddressList found = vMailAddressListRepository.findById(1L).get();

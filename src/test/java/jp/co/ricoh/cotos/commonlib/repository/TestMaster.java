@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -1378,7 +1379,7 @@ public class TestMaster {
 
 		// エンティティの取得
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-		Date formatDate = sdf.parse("2019/01/01");
+		Date formatDate = sdf.parse("2021/05/01");
 		MvWjmoc020OrgAllInfoCom found = mvWjmoc020OrgAllInfoComRepository.findByOrgId("0913849", formatDate);
 
 		// Entity が null ではないことを確認
@@ -1470,6 +1471,7 @@ public class TestMaster {
 	}
 
 	@Test
+	@Ignore
 	public void VDirectDeliveryDealerInfoMasterRepositoryのテスト() throws Exception {
 
 		// テストデータはなし

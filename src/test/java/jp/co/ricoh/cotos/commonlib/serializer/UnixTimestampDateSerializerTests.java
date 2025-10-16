@@ -34,7 +34,7 @@ public class UnixTimestampDateSerializerTests {
 
 		Map<String, Object> map = mapper.readValue(mapper.writeValueAsString(target), Map.class);
 
-		Assert.assertEquals("UNIXタイムスタンプにシリアライズされること", "1760540400000", map.get("processedAt"));
+		Assert.assertEquals("UNIXタイムスタンプにシリアライズされること", 1760540400000L, map.get("processedAt"));
 
 	}
 
