@@ -365,7 +365,7 @@ public class CotosSecurityTests {
 		AuthorityJudgeParameter authParam = new AuthorityJudgeParameter();
 		authParam.setActorMvEmployeeMaster(mvEmployeeMasterRepository.findById("00220552").get());
 		authParam.setMvEmployeeMasterList(new ArrayList<MvEmployeeMaster>());
-		authParam.getMvEmployeeMasterList().add(mvEmployeeMasterRepository.findById("00599344").get());
+		authParam.getMvEmployeeMasterList().add(mvEmployeeMasterRepository.findById("00488631").get());
 
 		boolean result = momAuthorityService.hasAuthority(authParam, ActionDiv.更新, AuthDiv.見積_契約_手配, AccessType.編集);
 		Assert.assertTrue("対象の権限があること", result);
